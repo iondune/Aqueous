@@ -27,33 +27,29 @@ public:
 
 	static const int Resolution = 32;
 
-	unsigned char Data[Resolution / 8][Resolution][Resolution];
+	float Data[Resolution][Resolution][Resolution];
 
 	CVolumeData()
 	{
 		for (int z = 0; z < Resolution; ++ z)
 		for (int y = 0; y < Resolution; ++ y)
-		for (int x = 0; x < Resolution / 8; ++ x)
-			Data[x][y][z] = 0x00;
+		for (int x = 0; x < Resolution; ++ x)
+			Data[x][y][z] = 0.f;
 
 		for (int z = 0; z < Resolution; ++ z)
 		for (int y = 0; y < Resolution; ++ y)
 		for (int x = 0; x < Resolution; ++ x)
-			if (equals(pow(x - Resolution / 2.f, 2.f) + pow(y - Resolution / 2.f, 2.f) + pow(z - Resolution / 2.f, 2.f), pow(Resolution / 3.f, 2.f), 11.f))
-				setVolumeData(x, y, z, true);
+			setVolumeData(x, y, z, pow(x - Resolution / 2.f, 2.f) + pow(y - Resolution / 2.f, 2.f) + pow(z - Resolution / 2.f, 2.f) - pow(Resolution / 3.f, 2.f));
 	}
 
-	bool getVolumeData(int x, int y, int z)
+	float const getVolumeData(int const x, int const y, int const z) const
 	{
-		return (Data[x/8][y][z] & (1 << (x % 8))) != 0;
+		return Data[x][y][z];
 	}
 
-	void setVolumeData(int x, int y, int z, bool value)
+	void setVolumeData(int const x, int const y, int const z, float const value)
 	{
-		if (value)
-			Data[x/8][y][z] |= (1 << (x % 8));
-		else
-			Data[x/8][y][z] ^= (1 << (x % 8));
+		Data[x][y][z] = value;
 	}
 
 };
@@ -114,7 +110,7 @@ public:
 		for (int z = 0; z < VolumeData.Resolution; ++ z)
 		for (int y = 0; y < VolumeData.Resolution; ++ y)
 		for (int x = 0; x < VolumeData.Resolution; ++ x)
-			if (VolumeData.getVolumeData(x, y, z))
+			if (equals(VolumeData.getVolumeData(x, y, z), 0.f, 11.f))
 			{
 				CSceneObject * Object = SceneManager.addMeshSceneObject(Cube, Shader);
 				Object->setScale(SVector3(1.f)/8.f);
