@@ -1,0 +1,15 @@
+Ian Dunn (idunn01)
+
+make && lab4 to run
+
+Controls:
+WASD to move camera
+Right click + drag to pan camera
+Left click + drag to apply current tool
+E to select scale tool
+R to select rotate tool
+T to select translate tool
+Y to select light-translate tool
+
+Default tool is Y (light-translate)
+

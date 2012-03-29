@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCTargetsPath Condition="'$(VCTargetsPath11)' != '' and '$(VSVersion)' == '' and '$(VisualStudioVersion)' == ''">$(VCTargetsPath11)</VCTargetsPath>
+  </PropertyGroup>
+  <PropertyGroup Label="Globals">
+    <RootNamespace>CSC572Lab1</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <IncludePath>
+      ;$(VisualStudioDir)\Projects\glew-1.7.0\include;
+      ;$(VisualStudioDir)\Projects\SDL-1.2.15\include;
+      ;$(VisualStudioDir)\Projects\freetype-2.4.2\include;
+      ;$(ProjectDir)\CabbageCore;
+      ;$(ProjectDir)\CabbageFramework;
+      ;$(ProjectDir)\CabbageScene;
+      ;$(IncludePath);
+    </IncludePath>
+    <LibraryPath>
+      ;$(VisualStudioDir)\Projects\glew-1.7.0\lib;
+      ;$(VisualStudioDir)\Projects\SDL-1.2.15\lib\x86;
+      ;$(VisualStudioDir)\Projects\freetype-2.4.2\lib;
+      ;$(LibraryPath);
+    </LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <IgnoreSpecificDefaultLibraries>msvcrt.lib</IgnoreSpecificDefaultLibraries>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="CabbageFramework\CApplication.cpp" />
+    <ClCompile Include="CabbageFramework\CCameraControl.cpp" />
+    <ClCompile Include="CabbageFramework\CEventManager.cpp" />
+    <ClCompile Include="CabbageFramework\COrthoCamera.cpp" />
+    <ClCompile Include="CabbageFramework\CStateManager.cpp" />
+    <ClCompile Include="CabbageScene\CCamera.cpp" />
+    <ClCompile Include="CabbageScene\CImage.cpp" />
+    <ClCompile Include="CabbageScene\CImageLoader.cpp" />
+    <ClCompile Include="CabbageScene\CMaterial.cpp" />
+    <ClCompile Include="CabbageScene\CMesh.cpp" />
+    <ClCompile Include="CabbageScene\CMeshLoader.cpp" />
+    <ClCompile Include="CabbageScene\CMeshSceneObject.cpp" />
+    <ClCompile Include="CabbageScene\CRenderable.cpp" />
+    <ClCompile Include="CabbageScene\CSceneManager.cpp" />
+    <ClCompile Include="CabbageScene\CSceneObject.cpp" />
+    <ClCompile Include="CabbageScene\CShader.cpp" />
+    <ClCompile Include="CabbageScene\CShaderContext.cpp" />
+    <ClCompile Include="CabbageScene\CShaderLoader.cpp" />
+    <ClCompile Include="CabbageScene\CTexture.cpp" />
+    <ClCompile Include="CabbageScene\ImageLoaders\Texture.cpp" />
+    <ClCompile Include="CabbageScene\ISceneObject.cpp" />
+    <ClCompile Include="Main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CabbageCore\CabbageCore.h" />
+    <ClInclude Include="CabbageCore\SBoundingBox3.h" />
+    <ClInclude Include="CabbageCore\SColor.h" />
+    <ClInclude Include="CabbageCore\SLine3.h" />
+    <ClInclude Include="CabbageCore\SPosition2.h" />
+    <ClInclude Include="CabbageCore\SRect2.h" />
+    <ClInclude Include="CabbageCore\SSize2.h" />
+    <ClInclude Include="CabbageCore\STransformation3.h" />
+    <ClInclude Include="CabbageCore\SVector2.h" />
+    <ClInclude Include="CabbageCore\SVector3.h" />
+    <ClInclude Include="CabbageCore\Utils.h" />
+    <ClInclude Include="CabbageFramework\CabbageFramework.h" />
+    <ClInclude Include="CabbageFramework\CApplication.h" />
+    <ClInclude Include="CabbageFramework\CCameraControl.h" />
+    <ClInclude Include="CabbageFramework\CEventManager.h" />
+    <ClInclude Include="CabbageFramework\COrthoCamera.h" />
+    <ClInclude Include="CabbageFramework\CStateManager.h" />
+    <ClInclude Include="CabbageScene\CabbageScene.h" />
+    <ClInclude Include="CabbageScene\CBufferObject.h" />
+    <ClInclude Include="CabbageScene\CCamera.h" />
+    <ClInclude Include="CabbageScene\CImage.h" />
+    <ClInclude Include="CabbageScene\CImageLoader.h" />
+    <ClInclude Include="CabbageScene\CMaterial.h" />
+    <ClInclude Include="CabbageScene\CMesh.h" />
+    <ClInclude Include="CabbageScene\CMeshLoader.h" />
+    <ClInclude Include="CabbageScene\CMeshSceneObject.h" />
+    <ClInclude Include="CabbageScene\CRenderable.h" />
+    <ClInclude Include="CabbageScene\CSceneManager.h" />
+    <ClInclude Include="CabbageScene\CSceneObject.h" />
+    <ClInclude Include="CabbageScene\CShader.h" />
+    <ClInclude Include="CabbageScene\CShaderContext.h" />
+    <ClInclude Include="CabbageScene\CShaderLoader.h" />
+    <ClInclude Include="CabbageScene\CTexture.h" />
+    <ClInclude Include="CabbageScene\CTextureLoader.h" />
+    <ClInclude Include="CabbageScene\ImageLoaders\Texture.h" />
+    <ClInclude Include="CabbageScene\ISceneObject.h" />
+    <ClInclude Include="CabbageScene\SAttribute.h" />
+    <ClInclude Include="CabbageScene\SUniform.h" />
+    <ClInclude Include="CabbageScene\SVertex.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
