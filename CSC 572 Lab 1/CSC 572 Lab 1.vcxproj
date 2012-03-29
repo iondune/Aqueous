@@ -104,6 +104,7 @@
     <ClCompile Include="CabbageScene\CTexture.cpp" />
     <ClCompile Include="CabbageScene\ImageLoaders\Texture.cpp" />
     <ClCompile Include="CabbageScene\ISceneObject.cpp" />
+    <ClCompile Include="CInstancedSceneObject.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -146,6 +147,7 @@
     <ClInclude Include="CabbageScene\SAttribute.h" />
     <ClInclude Include="CabbageScene\SUniform.h" />
     <ClInclude Include="CabbageScene\SVertex.h" />
+    <ClInclude Include="CInstancedSceneObject.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

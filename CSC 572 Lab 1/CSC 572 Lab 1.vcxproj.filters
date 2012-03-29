@@ -65,6 +65,7 @@
     <ClCompile Include="CabbageScene\ImageLoaders\Texture.cpp">
       <Filter>CabbageScene\ImageLoaders</Filter>
     </ClCompile>
+    <ClCompile Include="CInstancedSceneObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="CabbageScene">
@@ -198,5 +199,6 @@
     <ClInclude Include="CabbageScene\ImageLoaders\Texture.h">
       <Filter>CabbageScene\ImageLoaders</Filter>
     </ClInclude>
+    <ClInclude Include="CInstancedSceneObject.h" />
   </ItemGroup>
 </Project>

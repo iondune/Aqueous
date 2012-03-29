@@ -20,6 +20,44 @@
 #include <SDL/SDL.h>
 #endif
 
+class CVolumeData
+{
+
+public:
+
+	static const int Resolution = 32;
+
+	unsigned char Data[Resolution / 8][Resolution][Resolution];
+
+	CVolumeData()
+	{
+		for (int z = 0; z < Resolution; ++ z)
+		for (int y = 0; y < Resolution; ++ y)
+		for (int x = 0; x < Resolution / 8; ++ x)
+			Data[x][y][z] = 0x00;
+
+		for (int z = 0; z < Resolution; ++ z)
+		for (int y = 0; y < Resolution; ++ y)
+		for (int x = 0; x < Resolution; ++ x)
+			if (equals(pow(x - Resolution / 2.f, 2.f) + pow(y - Resolution / 2.f, 2.f) + pow(z - Resolution / 2.f, 2.f), pow(Resolution / 3.f, 2.f), 11.f))
+				setVolumeData(x, y, z, true);
+	}
+
+	bool getVolumeData(int x, int y, int z)
+	{
+		return (Data[x/8][y][z] & (1 << (x % 8))) != 0;
+	}
+
+	void setVolumeData(int x, int y, int z, bool value)
+	{
+		if (value)
+			Data[x/8][y][z] |= (1 << (x % 8));
+		else
+			Data[x/8][y][z] ^= (1 << (x % 8));
+	}
+
+};
+
 class CMainState : public CState<CMainState>
 {
 
@@ -30,6 +68,8 @@ class CMainState : public CState<CMainState>
 
 	SVector3 LightPosition;
 	SUniform<SVector3> BindLightPosition;
+
+	CVolumeData VolumeData;
 
 public:
 
@@ -68,6 +108,19 @@ public:
 		// Add cube to show light location
 		LightObject = SceneManager.addMeshSceneObject(Cube, CShaderLoader::loadShader("Simple"));
 		LightObject->setScale(SVector3(0.09f));
+
+		CShader * Shader = CShaderLoader::loadShader("Diffuse");
+
+		for (int z = 0; z < VolumeData.Resolution; ++ z)
+		for (int y = 0; y < VolumeData.Resolution; ++ y)
+		for (int x = 0; x < VolumeData.Resolution; ++ x)
+			if (VolumeData.getVolumeData(x, y, z))
+			{
+				CSceneObject * Object = SceneManager.addMeshSceneObject(Cube, Shader);
+				Object->setScale(SVector3(1.f)/8.f);
+				Object->setTranslation(SVector3((float) x, (float) y, (float) z)/4.f);
+			}
+
 	}
 
 	void OnRenderStart(float const Elapsed)
