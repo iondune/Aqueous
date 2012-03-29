@@ -148,6 +148,7 @@
     <ClInclude Include="CabbageScene\SUniform.h" />
     <ClInclude Include="CabbageScene\SVertex.h" />
     <ClInclude Include="CInstancedSceneObject.h" />
+    <ClInclude Include="LookupTables.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -200,5 +200,6 @@
       <Filter>CabbageScene\ImageLoaders</Filter>
     </ClInclude>
     <ClInclude Include="CInstancedSceneObject.h" />
+    <ClInclude Include="LookupTables.h" />
   </ItemGroup>
 </Project>
