@@ -54,6 +54,8 @@ public:
 
 };
 
+#include "LookupTables.h"
+
 class CMainState : public CState<CMainState>
 {
 
@@ -116,6 +118,40 @@ public:
 				Object->setScale(SVector3(1.f)/8.f);
 				Object->setTranslation(SVector3((float) x, (float) y, (float) z)/4.f);
 			}
+
+		for (int z = 0; z < VolumeData.Resolution; ++ z)
+		for (int y = 0; y < VolumeData.Resolution; ++ y)
+		for (int x = 0; x < VolumeData.Resolution; ++ x)
+		{
+			int lookup = 0;
+			float const Range = 11.f;
+
+			if (equals(VolumeData.getVolumeData(x, y, z), 0.f, Range)) lookup |= 128;
+			if (equals(VolumeData.getVolumeData(x+1, y, z), 0.f, Range)) lookup |= 64;
+			if (equals(VolumeData.getVolumeData(x+1, y+1, z), 0.f, Range)) lookup |= 4;
+			if (equals(VolumeData.getVolumeData(x, y+1, z), 0.f, Range)) lookup |= 8;
+			if (equals(VolumeData.getVolumeData(x, y, z+1), 0.f, Range)) lookup |= 16;
+			if (equals(VolumeData.getVolumeData(x+1, y, z+1), 0.f, Range)) lookup |= 32;
+			if (equals(VolumeData.getVolumeData(x+1, y+1, z+1), 0.f, Range)) lookup |= 2;
+			if (equals(VolumeData.getVolumeData(x, y+1, z+1), 0.f, Range)) lookup |= 1;
+
+			int i, j;
+
+			for (i = 0; triTable[lookup][i] != -1; i+=3)
+			{
+				for (j = i; j < (i+3); j++)
+				{
+					glNormal3f( (float) this->verts[this->triTable[lookup][j]].normal_x, 
+								(float) this->verts[this->triTable[lookup][j]].normal_y, 
+								(float) this->verts[this->triTable[lookup][j]].normal_z);
+
+					glVertex3f(	(float) this->verts[this->triTable[lookup][j]].x_pos,
+								(float) this->verts[this->triTable[lookup][j]].y_pos,
+								(float) this->verts[this->triTable[lookup][j]].z_pos
+								);
+				}
+			}
+		}
 
 	}
 
