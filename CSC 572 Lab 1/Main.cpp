@@ -64,7 +64,7 @@ class CMainState : public CState<CMainState>
 
 	CMeshSceneObject * LightObject;
 
-	ISceneObject * SoupObject;
+	CSceneObject * SoupObject;
 	ISceneObject * VoxelObject;
 
 	SVector3 LightPosition;
@@ -126,6 +126,7 @@ public:
 				Object->setParent(VoxelObject);
 				Object->setScale(SVector3(1.f)/8.f);
 				Object->setTranslation(SVector3((float) x, (float) y, (float) z)/4.f);
+				Object->addUniform("uLightPosition", & BindLightPosition);
 			}
 		} // x - y - z
 
@@ -228,6 +229,7 @@ public:
 		SoupObject = SceneManager.addMeshSceneObject(Mesh, Shader);
 		SoupObject->setVisible(false);
 		SoupObject->setCullingEnabled(false);
+		SoupObject->addUniform("uLightPosition", & BindLightPosition);
 	}
 
 	void OnRenderStart(float const Elapsed)
@@ -373,11 +375,11 @@ public:
 	                else if (Mode == 1)
 	                {
 		                float const moveSpeed = 0.01f;
-		                glm::vec4 trans(difX*moveSpeed, difY*moveSpeed, 0, 0);
-		                trans = ViewMatrix * trans;
+		                glm::vec4 trans(difX*moveSpeed, -difY*moveSpeed, 0, 0);
+		                trans = glm::inverse(ViewMatrix) * trans;
 		                Translation.X += trans.x;
-		                Translation.Y -= trans.y;
-		                Translation.Z -= trans.z;
+		                Translation.Y += trans.y;
+		                Translation.Z += trans.z;
 	                }
 	                else if (Mode == 2)
 	                {
@@ -387,11 +389,11 @@ public:
 					else if (Mode == 3)
 	                {
 		                float const moveSpeed = 0.01f;
-		                glm::vec4 trans(difX*moveSpeed, difY*moveSpeed, 0, 0);
-		                trans = ViewMatrix * trans;
+		                glm::vec4 trans(difX*moveSpeed, -difY*moveSpeed, 0, 0);
+		                trans = glm::inverse(ViewMatrix) * trans;
 						LightPosition.X += trans.x;
-		                LightPosition.Y -= trans.y;
-		                LightPosition.Z -= trans.z;
+		                LightPosition.Y += trans.y;
+		                LightPosition.Z += trans.z;
 	                }
                 }
 
