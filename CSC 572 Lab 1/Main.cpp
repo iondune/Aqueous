@@ -25,7 +25,7 @@ class CVolumeData
 
 public:
 
-	static const int Resolution = 32;
+	static const int Resolution = 128;
 
 	float Data[Resolution][Resolution][Resolution];
 
@@ -116,21 +116,25 @@ public:
 		SceneManager.addSceneObject(VoxelObject);
 		VoxelObject->setCullingEnabled(false);
 
+		float const ScaleFactor = 4.f * VolumeData.Resolution / 32.f;
+
 		for (int z = 0; z < VolumeData.Resolution; ++ z)
 		for (int y = 0; y < VolumeData.Resolution; ++ y)
 		for (int x = 0; x < VolumeData.Resolution; ++ x)
 		{
-			if (equals(VolumeData.getVolumeData(x, y, z), 0.f, 11.f))
+			static float const Range = 11.f;
+			if (equals(VolumeData.getVolumeData(x, y, z), 0.f, Range))
 			{
 				CSceneObject * Object = SceneManager.addMeshSceneObject(Cube, Shader);
 				Object->setParent(VoxelObject);
-				Object->setScale(SVector3(1.f)/8.f);
-				Object->setTranslation(SVector3((float) x, (float) y, (float) z)/4.f);
+				Object->setScale(SVector3(1.f) / 2.f / ScaleFactor);
+				Object->setTranslation(SVector3((float) x, (float) y, (float) z) / ScaleFactor);
 				Object->addUniform("uLightPosition", & BindLightPosition);
 			}
 		} // x - y - z
 
 		CMesh * Mesh = new CMesh();
+		int CurrentBuffer = 0;
 		Mesh->MeshBuffers.push_back(new CMesh::SMeshBuffer());
 
 		for (int z = 0; z < VolumeData.Resolution - 1; ++ z)
@@ -138,7 +142,6 @@ public:
 		for (int x = 0; x < VolumeData.Resolution - 1; ++ x)
 		{
 			int lookup = 0;
-			float const Range = 11.f;
 
 			if ((VolumeData.getVolumeData(x, y, z)<0.f)) lookup |= 128;
 			if ((VolumeData.getVolumeData(x+1, y, z)< 0.f)) lookup |= 64;
@@ -151,10 +154,10 @@ public:
 
 			SVertex verts[12];
 
-			auto interpolate = [](SVector3 const v1, SVector3 const v2) -> SVertex
+			auto interpolate = [ScaleFactor](SVector3 const v1, SVector3 const v2) -> SVertex
 			{
 				SVertex v;
-				v.Position = (v1 + v2) / 2.f / 4.f;
+				v.Position = (v1 + v2) / 2.f / ScaleFactor;
 				return v;
 			};
 
@@ -212,15 +215,21 @@ public:
 					
 				for (i = 0; triTable[lookup][i] != -1; i+=3)
 				{
+					if (Mesh->MeshBuffers[CurrentBuffer]->Vertices.size() + 3 >= 1 << 16)
+					{
+						++ CurrentBuffer;
+						Mesh->MeshBuffers.push_back(new CMesh::SMeshBuffer());
+					}
+
 					for (j = i; j < (i+3); j++)
 					{
-						Mesh->MeshBuffers[0]->Vertices.push_back(verts[triTable[lookup][j]]);
+						Mesh->MeshBuffers[CurrentBuffer]->Vertices.push_back(verts[triTable[lookup][j]]);
 					}
 					CMesh::STriangle Tri;
-					Tri.Indices[0] = Mesh->MeshBuffers[0]->Vertices.size() - 3;
-					Tri.Indices[1] = Mesh->MeshBuffers[0]->Vertices.size() - 2;
-					Tri.Indices[2] = Mesh->MeshBuffers[0]->Vertices.size() - 1;
-					Mesh->MeshBuffers[0]->Triangles.push_back(Tri);
+					Tri.Indices[0] = Mesh->MeshBuffers[CurrentBuffer]->Vertices.size() - 3;
+					Tri.Indices[1] = Mesh->MeshBuffers[CurrentBuffer]->Vertices.size() - 2;
+					Tri.Indices[2] = Mesh->MeshBuffers[CurrentBuffer]->Vertices.size() - 1;
+					Mesh->MeshBuffers[CurrentBuffer]->Triangles.push_back(Tri);
 				}
 			}
 		} // x - y - z
