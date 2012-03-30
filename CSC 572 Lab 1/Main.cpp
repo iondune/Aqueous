@@ -64,6 +64,9 @@ class CMainState : public CState<CMainState>
 
 	CMeshSceneObject * LightObject;
 
+	ISceneObject * SoupObject;
+	ISceneObject * VoxelObject;
+
 	SVector3 LightPosition;
 	SUniform<SVector3> BindLightPosition;
 
@@ -109,50 +112,122 @@ public:
 
 		CShader * Shader = CShaderLoader::loadShader("Diffuse");
 
-		for (int z = 0; z < VolumeData.Resolution; ++ z)
-		for (int y = 0; y < VolumeData.Resolution; ++ y)
-		for (int x = 0; x < VolumeData.Resolution; ++ x)
-			if (equals(VolumeData.getVolumeData(x, y, z), 0.f, 11.f))
-			{
-				CSceneObject * Object = SceneManager.addMeshSceneObject(Cube, Shader);
-				Object->setScale(SVector3(1.f)/8.f);
-				Object->setTranslation(SVector3((float) x, (float) y, (float) z)/4.f);
-			}
+		VoxelObject = new ISceneObject();
+		SceneManager.addSceneObject(VoxelObject);
+		VoxelObject->setCullingEnabled(false);
 
 		for (int z = 0; z < VolumeData.Resolution; ++ z)
 		for (int y = 0; y < VolumeData.Resolution; ++ y)
 		for (int x = 0; x < VolumeData.Resolution; ++ x)
 		{
+			if (equals(VolumeData.getVolumeData(x, y, z), 0.f, 11.f))
+			{
+				CSceneObject * Object = SceneManager.addMeshSceneObject(Cube, Shader);
+				Object->setParent(VoxelObject);
+				Object->setScale(SVector3(1.f)/8.f);
+				Object->setTranslation(SVector3((float) x, (float) y, (float) z)/4.f);
+			}
+		} // x - y - z
+
+		CMesh * Mesh = new CMesh();
+		Mesh->MeshBuffers.push_back(new CMesh::SMeshBuffer());
+
+		for (int z = 0; z < VolumeData.Resolution - 1; ++ z)
+		for (int y = 0; y < VolumeData.Resolution - 1; ++ y)
+		for (int x = 0; x < VolumeData.Resolution - 1; ++ x)
+		{
 			int lookup = 0;
 			float const Range = 11.f;
 
-			if (equals(VolumeData.getVolumeData(x, y, z), 0.f, Range)) lookup |= 128;
-			if (equals(VolumeData.getVolumeData(x+1, y, z), 0.f, Range)) lookup |= 64;
-			if (equals(VolumeData.getVolumeData(x+1, y+1, z), 0.f, Range)) lookup |= 4;
-			if (equals(VolumeData.getVolumeData(x, y+1, z), 0.f, Range)) lookup |= 8;
-			if (equals(VolumeData.getVolumeData(x, y, z+1), 0.f, Range)) lookup |= 16;
-			if (equals(VolumeData.getVolumeData(x+1, y, z+1), 0.f, Range)) lookup |= 32;
-			if (equals(VolumeData.getVolumeData(x+1, y+1, z+1), 0.f, Range)) lookup |= 2;
-			if (equals(VolumeData.getVolumeData(x, y+1, z+1), 0.f, Range)) lookup |= 1;
+			if ((VolumeData.getVolumeData(x, y, z)<0.f)) lookup |= 128;
+			if ((VolumeData.getVolumeData(x+1, y, z)< 0.f)) lookup |= 64;
+			if ((VolumeData.getVolumeData(x+1, y+1, z)< 0.f)) lookup |= 4;
+			if ((VolumeData.getVolumeData(x, y+1, z)< 0.f)) lookup |= 8;
+			if ((VolumeData.getVolumeData(x, y, z+1)< 0.f)) lookup |= 16;
+			if ((VolumeData.getVolumeData(x+1, y, z+1)< 0.f)) lookup |= 32;
+			if ((VolumeData.getVolumeData(x+1, y+1, z+1)< 0.f)) lookup |= 2;
+			if ((VolumeData.getVolumeData(x, y+1, z+1)< 0.f)) lookup |= 1;
 
-			int i, j;
+			SVertex verts[12];
 
-			for (i = 0; triTable[lookup][i] != -1; i+=3)
+			auto interpolate = [](SVector3 const v1, SVector3 const v2) -> SVertex
 			{
-				for (j = i; j < (i+3); j++)
-				{
-					glNormal3f( (float) this->verts[this->triTable[lookup][j]].normal_x, 
-								(float) this->verts[this->triTable[lookup][j]].normal_y, 
-								(float) this->verts[this->triTable[lookup][j]].normal_z);
+				SVertex v;
+				v.Position = (v1 + v2) / 2.f / 4.f;
+				return v;
+			};
 
-					glVertex3f(	(float) this->verts[this->triTable[lookup][j]].x_pos,
-								(float) this->verts[this->triTable[lookup][j]].y_pos,
-								(float) this->verts[this->triTable[lookup][j]].z_pos
-								);
+			if ((lookup != 0) && (lookup != 255))
+			{
+				// 0 - 1
+				if (edgeTable[lookup] & 1)
+					verts[0] = interpolate(SVector3(x, y+1, z+1), SVector3(x+1, y+1, z+1));
+
+				// 1 - 2
+				if (edgeTable[lookup] & 2)
+					verts[1] = interpolate(SVector3(x+1, y+1, z+1), SVector3(x+1, y+1, z));
+
+				// 2 - 3
+				if (edgeTable[lookup] & 4)
+					verts[2] = interpolate(SVector3(x+1, y+1, z), SVector3(x, y+1, z));
+
+				// 3 - 0
+				if (edgeTable[lookup] & 8)
+					verts[3] = interpolate(SVector3(x, y+1, z), SVector3(x, y+1, z+1));
+			
+				// 4 - 5
+				if (edgeTable[lookup] & 16)
+					verts[4] = interpolate(SVector3(x, y, z+1), SVector3(x+1, y, z+1));
+
+				// 5 - 6
+				if (edgeTable[lookup] & 32)
+					verts[5] = interpolate(SVector3(x+1, y, z+1), SVector3(x+1, y, z));
+
+				// 6 - 7
+				if (edgeTable[lookup] & 64)
+					verts[6] = interpolate(SVector3(x+1, y, z), SVector3(x, y, z));
+
+				// 7 - 4
+				if (edgeTable[lookup] & 128)
+					verts[7] = interpolate(SVector3(x, y, z), SVector3(x, y, z+1));
+
+				// 0 - 4
+				if (edgeTable[lookup] & 256)
+					verts[8] = interpolate(SVector3(x, y+1, z+1), SVector3(x, y, z+1));
+
+				// 1 - 5
+				if (edgeTable[lookup] & 512)
+					verts[9] = interpolate(SVector3(x+1, y+1, z+1), SVector3(x+1, y, z+1));
+
+				// 2 - 6
+				if (edgeTable[lookup] & 1024)
+					verts[10] = interpolate(SVector3(x+1, y+1, z), SVector3(x+1, y, z));
+
+				// 3 - 7
+				if (edgeTable[lookup] & 2048)
+					verts[11] = interpolate(SVector3(x, y+1, z), SVector3(x, y, z));
+
+				int i, j;
+					
+				for (i = 0; triTable[lookup][i] != -1; i+=3)
+				{
+					for (j = i; j < (i+3); j++)
+					{
+						Mesh->MeshBuffers[0]->Vertices.push_back(verts[triTable[lookup][j]]);
+					}
+					CMesh::STriangle Tri;
+					Tri.Indices[0] = Mesh->MeshBuffers[0]->Vertices.size() - 3;
+					Tri.Indices[1] = Mesh->MeshBuffers[0]->Vertices.size() - 2;
+					Tri.Indices[2] = Mesh->MeshBuffers[0]->Vertices.size() - 1;
+					Mesh->MeshBuffers[0]->Triangles.push_back(Tri);
 				}
 			}
-		}
+		} // x - y - z
 
+		Mesh->calculateNormalsPerFace();
+		SoupObject = SceneManager.addMeshSceneObject(Mesh, Shader);
+		SoupObject->setVisible(false);
+		SoupObject->setCullingEnabled(false);
 	}
 
 	void OnRenderStart(float const Elapsed)
@@ -174,6 +249,24 @@ public:
     {
         switch (Event.Key)
         {
+
+		case SDLK_x:
+
+			if (! Event.Pressed)
+			{
+				SoupObject->setVisible(! SoupObject->isVisible());
+			}
+
+			break;
+
+		case SDLK_z:
+
+			if (! Event.Pressed)
+			{
+				VoxelObject->setVisible(! VoxelObject->isVisible());
+			}
+
+			break;
 
         case SDLK_n:
 
