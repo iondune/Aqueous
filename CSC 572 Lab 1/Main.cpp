@@ -129,7 +129,15 @@ public:
 				Object->setParent(VoxelObject);
 				Object->setScale(SVector3(1.f) / 2.f / ScaleFactor);
 				Object->setTranslation(SVector3((float) x, (float) y, (float) z) / ScaleFactor);
+				Object->addUniform("uLightPosition", & BindLightPosition);/*
+				CSceneObject * Object = SceneManager.addMeshSceneObject(TyraMesh, CShaderLoader::loadShader("NormalMap"), CMaterial());
+				Object->setCullingEnabled(false);
 				Object->addUniform("uLightPosition", & BindLightPosition);
+				CTexture * Texture = CTextureLoader::loadTexture("TyraNormals.bmp");
+				Object->setTexture(Texture);
+				Object->setParent(VoxelObject);
+				Object->setScale(SVector3(1.f) / 2.f / ScaleFactor);
+				Object->setTranslation(SVector3((float) x, (float) y, (float) z) / ScaleFactor);*/
 			}
 		} // x - y - z
 
@@ -422,7 +430,7 @@ int main(int argc, char * argv[])
 	CShaderLoader::ShaderDirectory = "Shaders/";
 
 	CApplication & Application = CApplication::get();
-	Application.init(SPosition2(1024, 768));
+	Application.init(SPosition2(1920, 1080));
 
 	Application.getStateManager().setState(& CMainState::get());
 
