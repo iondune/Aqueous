@@ -19,6 +19,6 @@ void main()
     vPosition = uModelMatrix * vec4(aPosition, 1);
     gl_Position = uProjMatrix * uViewMatrix * vPosition;
 
-    vLight = normalize(uLightPosition - vec3(vPosition));
+    vLight = (uLightPosition - vec3(vPosition));
     vNormal = normalize(vec3(uNormalMatrix * vec4(aNormal, 1)));
 }

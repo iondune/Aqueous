@@ -31,6 +31,7 @@ public:
 
 	CVolumeData()
 	{
+		std::cout << "Generating Volume Data..." << std::endl;
 		for (int z = 0; z < Resolution; ++ z)
 		for (int y = 0; y < Resolution; ++ y)
 		for (int x = 0; x < Resolution; ++ x)
@@ -145,6 +146,8 @@ public:
 		int CurrentBuffer = 0;
 		Mesh->MeshBuffers.push_back(new CMesh::SMeshBuffer());
 
+		std::cout << "Creating polygonal mesh..." << std::endl;
+
 		for (int z = 0; z < VolumeData.Resolution - 1; ++ z)
 		for (int y = 0; y < VolumeData.Resolution - 1; ++ y)
 		for (int x = 0; x < VolumeData.Resolution - 1; ++ x)
@@ -162,10 +165,15 @@ public:
 
 			SVertex verts[12];
 
-			auto interpolate = [ScaleFactor](SVector3 const v1, SVector3 const v2) -> SVertex
+			auto interpolate = [& ScaleFactor, this](int const v1x, int const v1y, int const v1z, int const v2x, int const v2y, int const v2z) -> SVertex
 			{
 				SVertex v;
-				v.Position = (v1 + v2) / 2.f / ScaleFactor;
+				float const d1 = VolumeData.getVolumeData(v1x, v1y, v1z);
+				float const d2 = VolumeData.getVolumeData(v2x, v2y, v2z);
+				float ratio = d1 / (d2 - d1);
+				if (ratio < 0.f)
+					ratio += 1.f;
+				v.Position = (SVector3((float) v1x, (float) v1y, (float) v1z) * (ratio) + SVector3((float) v2x, (float) v2y, (float) v2z) * (1 - ratio)) / ScaleFactor;
 				return v;
 			};
 
@@ -173,51 +181,51 @@ public:
 			{
 				// 0 - 1
 				if (edgeTable[lookup] & 1)
-					verts[0] = interpolate(SVector3(x, y+1, z+1), SVector3(x+1, y+1, z+1));
+					verts[0] = interpolate(x, y+1, z+1, x+1, y+1, z+1);
 
 				// 1 - 2
 				if (edgeTable[lookup] & 2)
-					verts[1] = interpolate(SVector3(x+1, y+1, z+1), SVector3(x+1, y+1, z));
+					verts[1] = interpolate(x+1, y+1, z+1, x+1, y+1, z);
 
 				// 2 - 3
 				if (edgeTable[lookup] & 4)
-					verts[2] = interpolate(SVector3(x+1, y+1, z), SVector3(x, y+1, z));
+					verts[2] = interpolate(x+1, y+1, z, x, y+1, z);
 
 				// 3 - 0
 				if (edgeTable[lookup] & 8)
-					verts[3] = interpolate(SVector3(x, y+1, z), SVector3(x, y+1, z+1));
+					verts[3] = interpolate(x, y+1, z, x, y+1, z+1);
 			
 				// 4 - 5
 				if (edgeTable[lookup] & 16)
-					verts[4] = interpolate(SVector3(x, y, z+1), SVector3(x+1, y, z+1));
+					verts[4] = interpolate(x, y, z+1, x+1, y, z+1);
 
 				// 5 - 6
 				if (edgeTable[lookup] & 32)
-					verts[5] = interpolate(SVector3(x+1, y, z+1), SVector3(x+1, y, z));
+					verts[5] = interpolate(x+1, y, z+1, x+1, y, z);
 
 				// 6 - 7
 				if (edgeTable[lookup] & 64)
-					verts[6] = interpolate(SVector3(x+1, y, z), SVector3(x, y, z));
+					verts[6] = interpolate(x+1, y, z, x, y, z);
 
 				// 7 - 4
 				if (edgeTable[lookup] & 128)
-					verts[7] = interpolate(SVector3(x, y, z), SVector3(x, y, z+1));
+					verts[7] = interpolate(x, y, z, x, y, z+1);
 
 				// 0 - 4
 				if (edgeTable[lookup] & 256)
-					verts[8] = interpolate(SVector3(x, y+1, z+1), SVector3(x, y, z+1));
+					verts[8] = interpolate(x, y+1, z+1, x, y, z+1);
 
 				// 1 - 5
 				if (edgeTable[lookup] & 512)
-					verts[9] = interpolate(SVector3(x+1, y+1, z+1), SVector3(x+1, y, z+1));
+					verts[9] = interpolate(x+1, y+1, z+1, x+1, y, z+1);
 
 				// 2 - 6
 				if (edgeTable[lookup] & 1024)
-					verts[10] = interpolate(SVector3(x+1, y+1, z), SVector3(x+1, y, z));
+					verts[10] = interpolate(x+1, y+1, z, x+1, y, z);
 
 				// 3 - 7
 				if (edgeTable[lookup] & 2048)
-					verts[11] = interpolate(SVector3(x, y+1, z), SVector3(x, y, z));
+					verts[11] = interpolate(x, y+1, z, x, y, z);
 
 				int i, j;
 					
