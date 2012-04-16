@@ -20,6 +20,8 @@
 #include <SDL/SDL.h>
 #endif
 
+#include "perlin/Perlin3.h"
+
 class CVolumeData
 {
 
@@ -36,10 +38,15 @@ public:
 		for (int x = 0; x < Resolution; ++ x)
 			Data[x][y][z] = 0.f;
 
+		
+		int TunnelSampleSize = 8;
+
+		Perlin * TunnelGen = new Perlin(TunnelSampleSize, 8, 1.0, 1.0, 25);
+
 		for (int z = 0; z < Resolution; ++ z)
 		for (int y = 0; y < Resolution; ++ y)
 		for (int x = 0; x < Resolution; ++ x)
-			setVolumeData(x, y, z, pow(x - Resolution / 2.f, 2.f) + pow(y - Resolution / 2.f, 2.f) + pow(z - Resolution / 2.f, 2.f) - pow(Resolution / 3.f, 2.f));
+			setVolumeData(x, y, z, TunnelGen->Get(x, y, z, false));//pow(x - Resolution / 2.f, 2.f) + pow(y - Resolution / 2.f, 2.f) + pow(z - Resolution / 2.f, 2.f) - pow(Resolution / 3.f, 2.f));
 	}
 
 	float const getVolumeData(int const x, int const y, int const z) const
@@ -118,6 +125,7 @@ public:
 
 		float const ScaleFactor = 4.f * VolumeData.Resolution / 32.f;
 
+#if 0
 		for (int z = 0; z < VolumeData.Resolution; ++ z)
 		for (int y = 0; y < VolumeData.Resolution; ++ y)
 		for (int x = 0; x < VolumeData.Resolution; ++ x)
@@ -140,6 +148,7 @@ public:
 				Object->setTranslation(SVector3((float) x, (float) y, (float) z) / ScaleFactor);*/
 			}
 		} // x - y - z
+#endif
 
 		CMesh * Mesh = new CMesh();
 		int CurrentBuffer = 0;
@@ -244,7 +253,7 @@ public:
 
 		Mesh->calculateNormalsPerFace();
 		SoupObject = SceneManager.addMeshSceneObject(Mesh, Shader);
-		SoupObject->setVisible(false);
+		SoupObject->setVisible(true);
 		SoupObject->setCullingEnabled(false);
 		SoupObject->addUniform("uLightPosition", & BindLightPosition);
 	}

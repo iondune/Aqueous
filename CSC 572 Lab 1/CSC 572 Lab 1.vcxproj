@@ -107,6 +107,7 @@
     <ClCompile Include="CabbageScene\ISceneObject.cpp" />
     <ClCompile Include="CInstancedSceneObject.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="perlin\Perlin3.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CabbageCore\CabbageCore.h" />
@@ -150,6 +151,7 @@
     <ClInclude Include="CabbageScene\SVertex.h" />
     <ClInclude Include="CInstancedSceneObject.h" />
     <ClInclude Include="LookupTables.h" />
+    <ClInclude Include="perlin\Perlin3.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
