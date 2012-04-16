@@ -19,6 +19,19 @@
 	r0 = t - (int)t;\
 	r1 = r0 - 1.0;
 
+long holdrand = 0;
+
+void my_srand (unsigned int seed)
+{
+	holdrand = (long)seed;
+}
+
+int my_rand (void)
+{
+    return(((holdrand = holdrand * 214013L + 2531011L) >> 16) & 0x7fff);
+}
+
+
 f64 Perlin::noise2(f64 vec[2])
 {
 	s32 bx0, bx1, by0, by1, b00, b10, b01, b11;
@@ -27,7 +40,7 @@ f64 Perlin::noise2(f64 vec[2])
 
 	if (mStart)
 	{
-		srand(mSeed);
+		my_srand(mSeed);
 		mStart = false;
 		init();
 	}
@@ -71,7 +84,7 @@ f64 Perlin::noise3(f64 vec[2])
 
 	if (mStart)
 	{
-		srand(mSeed);
+		my_srand(mSeed);
 		mStart = false;
 		init();
 	}
@@ -134,16 +147,16 @@ void Perlin::init()
 	for (i = 0 ; i < B ; i++)
 	{
 		p[i] = i;
-		g1[i] = (f64)((rand() % (B + B)) - B) / B;
+		g1[i] = (f64)((my_rand() % (B + B)) - B) / B;
 		for (j = 0 ; j < 2 ; j++)
-		g2[i][j] = (f64)((rand() % (B + B)) - B) / B;
+		g2[i][j] = (f64)((my_rand() % (B + B)) - B) / B;
 			normalize2(& g2[i][0]);
 	}
 
 	while (--i)
 	{
 		k = p[i];
-		p[i] = p[j = rand() % B];
+		p[i] = p[j = my_rand() % B];
 		p[j] = k;
 	}
 

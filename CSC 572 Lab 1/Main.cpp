@@ -42,12 +42,25 @@ public:
 		
 		int TunnelSampleSize = 8;
 
-		Perlin * TunnelGen = new Perlin(TunnelSampleSize, 8, 1.0, 1.0, 25);
+		Perlin * TunnelGen = new Perlin(TunnelSampleSize, 8, 0.2, 1.0, 25465);
 
 		for (int z = 0; z < Resolution; ++ z)
 		for (int y = 0; y < Resolution; ++ y)
-		for (int x = 0; x < Resolution; ++ x)
-			setVolumeData(x, y, z, TunnelGen->Get(x, y, z, false));//pow(x - Resolution / 2.f, 2.f) + pow(y - Resolution / 2.f, 2.f) + pow(z - Resolution / 2.f, 2.f) - pow(Resolution / 3.f, 2.f));
+		for (int x = 0; x < Resolution; ++ x)/*
+			setVolumeData(x, y, z, (float) (TunnelGen->Get(
+			x / (double) Resolution * TunnelSampleSize, 
+			y / (double) Resolution * TunnelSampleSize, 
+			z / (double) Resolution * TunnelSampleSize, false) < 0.0 ? -1.0 : 1.0));*/
+		{
+			if (x == 0 || y == 0 || z == 0 || x == Resolution - 1 || y == Resolution - 1 || z == Resolution - 1)
+				setVolumeData(x, y, z, 1.f);
+			else
+				setVolumeData(x, y, z, (float) (TunnelGen->Get(
+				x / (double) Resolution * TunnelSampleSize, 
+				y / (double) Resolution * TunnelSampleSize, 
+				z / (double) Resolution * TunnelSampleSize, false) * 1.0e+35));
+		}
+		//pow(x - Resolution / 2.f, 2.f) + pow(y - Resolution / 2.f, 2.f) + pow(z - Resolution / 2.f, 2.f) - pow(Resolution / 3.f, 2.f));
 	}
 
 	float const getVolumeData(int const x, int const y, int const z) const
@@ -58,6 +71,7 @@ public:
 	void setVolumeData(int const x, int const y, int const z, float const value)
 	{
 		Data[x][y][z] = value;
+		//printf("%f\n", value);
 	}
 
 };
@@ -274,7 +288,10 @@ public:
         Tyra->setScale(Scale);
         Tyra->setRotation(Rotation);
 
+		LightPosition = Camera->getPosition() + SVector3(0, 0, 0);
+
 		LightObject->setTranslation(LightPosition);
+
 
 		SceneManager.drawAll();
         SDL_GL_SwapBuffers();
@@ -447,7 +464,7 @@ int main(int argc, char * argv[])
 	CShaderLoader::ShaderDirectory = "Shaders/";
 
 	CApplication & Application = CApplication::get();
-	Application.init(SPosition2(1920, 1080));
+	Application.init(SPosition2(1600, 900));
 
 	Application.getStateManager().setState(& CMainState::get());
 
