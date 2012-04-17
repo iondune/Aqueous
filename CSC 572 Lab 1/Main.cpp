@@ -29,7 +29,7 @@ public:
 
 	static const int Resolution = 128;
 
-	float Data[Resolution][Resolution][Resolution];
+	double Data[Resolution][Resolution][Resolution];
 
 	CVolumeData()
 	{
@@ -40,9 +40,11 @@ public:
 			Data[x][y][z] = 0.f;
 
 		
-		int TunnelSampleSize = 8;
+		int TunnelSampleSize = 128;
 
-		Perlin * TunnelGen = new Perlin(TunnelSampleSize, 8, 0.2, 1.0, 25465);
+		Perlin * TunnelGen = new Perlin(TunnelSampleSize, 8, 0.2, 1.0, 205);
+
+		TunnelSampleSize = 512;
 
 		for (int z = 0; z < Resolution; ++ z)
 		for (int y = 0; y < Resolution; ++ y)
@@ -53,22 +55,22 @@ public:
 			z / (double) Resolution * TunnelSampleSize, false) < 0.0 ? -1.0 : 1.0));*/
 		{
 			if (x == 0 || y == 0 || z == 0 || x == Resolution - 1 || y == Resolution - 1 || z == Resolution - 1)
-				setVolumeData(x, y, z, 1.f);
+				setVolumeData(x, y, z, 1.0);
 			else
-				setVolumeData(x, y, z, (float) (TunnelGen->Get(
+				setVolumeData(x, y, z, (double) (TunnelGen->Get(
 				x / (double) Resolution * TunnelSampleSize, 
 				y / (double) Resolution * TunnelSampleSize, 
-				z / (double) Resolution * TunnelSampleSize, false) * 1.0e+35));
+				z / (double) Resolution * TunnelSampleSize, false)));
 		}
 		//pow(x - Resolution / 2.f, 2.f) + pow(y - Resolution / 2.f, 2.f) + pow(z - Resolution / 2.f, 2.f) - pow(Resolution / 3.f, 2.f));
 	}
 
-	float const getVolumeData(int const x, int const y, int const z) const
+	double const getVolumeData(int const x, int const y, int const z) const
 	{
 		return Data[x][y][z];
 	}
 
-	void setVolumeData(int const x, int const y, int const z, float const value)
+	void setVolumeData(int const x, int const y, int const z, double const value)
 	{
 		Data[x][y][z] = value;
 		//printf("%f\n", value);
@@ -178,25 +180,26 @@ public:
 			int lookup = 0;
 
 			if ((VolumeData.getVolumeData(x, y, z)<0.f)) lookup |= 128;
-			if ((VolumeData.getVolumeData(x+1, y, z)< 0.f)) lookup |= 64;
-			if ((VolumeData.getVolumeData(x+1, y+1, z)< 0.f)) lookup |= 4;
-			if ((VolumeData.getVolumeData(x, y+1, z)< 0.f)) lookup |= 8;
-			if ((VolumeData.getVolumeData(x, y, z+1)< 0.f)) lookup |= 16;
-			if ((VolumeData.getVolumeData(x+1, y, z+1)< 0.f)) lookup |= 32;
-			if ((VolumeData.getVolumeData(x+1, y+1, z+1)< 0.f)) lookup |= 2;
-			if ((VolumeData.getVolumeData(x, y+1, z+1)< 0.f)) lookup |= 1;
+			if ((VolumeData.getVolumeData(x+1, y, z)< 0.0)) lookup |= 64;
+			if ((VolumeData.getVolumeData(x+1, y+1, z)< 0.0)) lookup |= 4;
+			if ((VolumeData.getVolumeData(x, y+1, z)< 0.0)) lookup |= 8;
+			if ((VolumeData.getVolumeData(x, y, z+1)< 0.0)) lookup |= 16;
+			if ((VolumeData.getVolumeData(x+1, y, z+1)< 0.0)) lookup |= 32;
+			if ((VolumeData.getVolumeData(x+1, y+1, z+1)< 0.0)) lookup |= 2;
+			if ((VolumeData.getVolumeData(x, y+1, z+1)< 0.0)) lookup |= 1;
 
 			SVertex verts[12];
 
 			auto interpolate = [& ScaleFactor, this](int const v1x, int const v1y, int const v1z, int const v2x, int const v2y, int const v2z) -> SVertex
 			{
 				SVertex v;
-				float const d1 = VolumeData.getVolumeData(v1x, v1y, v1z);
-				float const d2 = VolumeData.getVolumeData(v2x, v2y, v2z);
-				float ratio = d1 / (d2 - d1);
-				if (ratio < 0.f)
-					ratio += 1.f;
-				v.Position = (SVector3((float) v1x, (float) v1y, (float) v1z) * (ratio) + SVector3((float) v2x, (float) v2y, (float) v2z) * (1 - ratio)) / ScaleFactor;
+				double const d1 = VolumeData.getVolumeData(v1x, v1y, v1z);
+				double const d2 = VolumeData.getVolumeData(v2x, v2y, v2z);
+				double dratio = d1 / (d2 - d1);
+				if (dratio < 0.0)
+					dratio += 1.0;
+				float ratio = (float) dratio;
+				v.Position = (SVector3((float) v1x, (float) v1y, (float) v1z) * (float) (ratio) + SVector3((float) v2x, (float) v2y, (float) v2z) * (1.f - ratio)) / ScaleFactor;
 				return v;
 			};
 

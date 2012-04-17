@@ -19,16 +19,16 @@
 	r0 = t - (int)t;\
 	r1 = r0 - 1.0;
 
-long holdrand = 0;
+int rseed = 100;
 
-void my_srand (unsigned int seed)
+void my_srand(int seed)
 {
-	holdrand = (long)seed;
+	rseed = seed;
 }
 
-int my_rand (void)
+int my_rand()
 {
-    return(((holdrand = holdrand * 214013L + 2531011L) >> 16) & 0x7fff);
+    return (rseed = (rseed * 214013 + 2531011) & ((1U << 31) - 1)) >> 16;
 }
 
 
