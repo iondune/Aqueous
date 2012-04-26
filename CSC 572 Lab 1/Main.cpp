@@ -22,6 +22,66 @@
 
 #include "perlin/Perlin3.h"
 
+typedef float perlinreal;
+
+class CPerlin
+{
+
+	static unsigned int const Size = 8;
+
+	perlinreal Data[Size][Size][Size];
+
+public:
+
+	CPerlin(unsigned int const Seed = 2980345890)
+	{
+		for (unsigned int z = 0; z < Size; ++ z)
+		for (unsigned int y = 0; y < Size; ++ y)
+		for (unsigned int x = 0; x < Size; ++ x)
+		{
+			Data[x][y][z] = frand() * 2.f - 1.f;
+		}
+	}
+
+	perlinreal noise(perlinreal x, perlinreal y, perlinreal z)
+	{
+		x = fmod(x, 1.f);
+		y = fmod(y, 1.f);
+		z = fmod(z, 1.f);
+		x *= Size;
+		y *= Size;
+		z *= Size;
+		perlinreal a = fmod(x, 1.f);
+		perlinreal b = fmod(y, 1.f);
+		perlinreal c = fmod(z, 1.f);
+
+		auto lerp = [](perlinreal a, perlinreal b, perlinreal mu)
+		{
+			return a * (1 - mu) + b * mu;
+		};
+
+		unsigned int x0, x1, y0, y1, z0, z1;
+		x0 = (unsigned int) x;
+		x1 = x0 + 1;
+		y0 = (unsigned int) y;
+		y1 = y0 + 1;
+		z0 = (unsigned int) z;
+		z1 = z0 + 1;
+
+		return 
+			Data[x0][y0][z0]*(1-a)*(1-b)*(1-c) + 
+			Data[x0][y0][z1]*(1-a)*(1-b)*  (c) + 
+			Data[x0][y1][z0]*(1-a)*  (b)*(1-c) + 
+			Data[x0][y1][z1]*(1-a)*  (b)*  (c) + 
+			Data[x0][y0][z0]*  (a)*(1-b)*(1-c) + 
+			Data[x1][y0][z1]*  (a)*(1-b)*  (c) + 
+			Data[x1][y1][z0]*  (a)*  (b)*(1-c) + 
+			Data[x1][y1][z1]*  (a)*  (b)*  (c);
+	}
+};
+
+CPerlin Perlin;
+
 class CVolumeData
 {
 
@@ -42,7 +102,7 @@ public:
 		
 		int TunnelSampleSize = 128;
 
-		Perlin * TunnelGen = new Perlin(TunnelSampleSize, 8, 0.2, 1.0, 205);
+		//Perlin * TunnelGen = new Perlin(TunnelSampleSize, 8, 0.2, 1.0, 205);
 
 		TunnelSampleSize = 512;
 
@@ -57,10 +117,10 @@ public:
 			if (x == 0 || y == 0 || z == 0 || x == Resolution - 1 || y == Resolution - 1 || z == Resolution - 1)
 				setVolumeData(x, y, z, 1.0);
 			else
-				setVolumeData(x, y, z, (double) (TunnelGen->Get(
+				setVolumeData(x, y, z, (double) Perlin.noise(x / (double) Resolution, y / (double) Resolution, z / (double) Resolution));/*(TunnelGen->Get(
 				x / (double) Resolution * TunnelSampleSize, 
 				y / (double) Resolution * TunnelSampleSize, 
-				z / (double) Resolution * TunnelSampleSize, false)));
+				z / (double) Resolution * TunnelSampleSize, false)));*/
 		}
 		//pow(x - Resolution / 2.f, 2.f) + pow(y - Resolution / 2.f, 2.f) + pow(z - Resolution / 2.f, 2.f) - pow(Resolution / 3.f, 2.f));
 	}
