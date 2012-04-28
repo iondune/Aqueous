@@ -24,6 +24,12 @@
 
 typedef float perlinreal;
 
+template <typename T>
+inline T clamp(T x, T a, T b)
+{
+    return x < a ? a : (x > b ? b : x);
+}
+
 class CPerlin
 {
 
@@ -45,9 +51,11 @@ public:
 
 	perlinreal noise(perlinreal x, perlinreal y, perlinreal z)
 	{
-		x = fmod(x, 1.f);
-		y = fmod(y, 1.f);
-		z = fmod(z, 1.f);
+		static perlinreal const Frequency = 2;
+
+		x = fmod(x * Frequency, 1.f);
+		y = fmod(y * Frequency, 1.f);
+		z = fmod(z * Frequency, 1.f);
 		x *= Size;
 		y *= Size;
 		z *= Size;
@@ -67,13 +75,29 @@ public:
 		y1 = y0 + 1;
 		z0 = (unsigned int) z;
 		z1 = z0 + 1;
+		
+		//x0 = clamp<unsigned int>(x0, 0, Size);
+		//y0 = clamp<unsigned int>(y0, 0, Size);
+		//z0 = clamp<unsigned int>(z0, 0, Size);
+
+		x0 %= Size;
+		y0 %= Size;
+		z0 %= Size;
+		
+		x1 %= Size;
+		y1 %= Size;
+		z1 %= Size;
+
+		//x1 = clamp<unsigned int>(x1, 0, Size);
+		///y1 = clamp<unsigned int>(y1, 0, Size);
+		//z1 = clamp<unsigned int>(z1, 0, Size);
 
 		return 
 			Data[x0][y0][z0]*(1-a)*(1-b)*(1-c) + 
 			Data[x0][y0][z1]*(1-a)*(1-b)*  (c) + 
 			Data[x0][y1][z0]*(1-a)*  (b)*(1-c) + 
 			Data[x0][y1][z1]*(1-a)*  (b)*  (c) + 
-			Data[x0][y0][z0]*  (a)*(1-b)*(1-c) + 
+			Data[x1][y0][z0]*  (a)*(1-b)*(1-c) + 
 			Data[x1][y0][z1]*  (a)*(1-b)*  (c) + 
 			Data[x1][y1][z0]*  (a)*  (b)*(1-c) + 
 			Data[x1][y1][z1]*  (a)*  (b)*  (c);
@@ -117,7 +141,7 @@ public:
 			if (x == 0 || y == 0 || z == 0 || x == Resolution - 1 || y == Resolution - 1 || z == Resolution - 1)
 				setVolumeData(x, y, z, 1.0);
 			else
-				setVolumeData(x, y, z, (double) Perlin.noise(x / (double) Resolution, y / (double) Resolution, z / (double) Resolution));/*(TunnelGen->Get(
+				setVolumeData(x, y, z, (double) Perlin.noise(x / (perlinreal) (Resolution), y / (perlinreal) (Resolution), z / (perlinreal) (Resolution)));/*(TunnelGen->Get(
 				x / (double) Resolution * TunnelSampleSize, 
 				y / (double) Resolution * TunnelSampleSize, 
 				z / (double) Resolution * TunnelSampleSize, false)));*/
