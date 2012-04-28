@@ -41,21 +41,40 @@ public:
 
 	CPerlin(unsigned int const Seed = 2980345890)
 	{
+		srand(Seed);
+
 		for (unsigned int z = 0; z < Size; ++ z)
 		for (unsigned int y = 0; y < Size; ++ y)
 		for (unsigned int x = 0; x < Size; ++ x)
 		{
-			Data[x][y][z] = frand() * 2.f - 1.f;
+			Data[x][y][z] = frand();
 		}
 	}
-
+	
 	perlinreal noise(perlinreal x, perlinreal y, perlinreal z)
 	{
-		static perlinreal const Frequency = 2;
+		static perlinreal const Frequency = 0.25f;
+		static int const Layers = 10;
 
-		x = fmod(x * Frequency, 1.f);
-		y = fmod(y * Frequency, 1.f);
-		z = fmod(z * Frequency, 1.f);
+		perlinreal Mult = Frequency;
+		perlinreal Result = 0;
+		perlinreal Amp = 0.5f;
+
+		for (int i = 0; i < Layers; ++ i)
+		{
+			Result += Amp * getSample(x * Mult, y * Mult, z * Mult);
+			Mult *= 2;
+			Amp /= 2;
+		}
+
+		return Result;
+	}
+
+	perlinreal getSample(perlinreal x, perlinreal y, perlinreal z)
+	{
+		x = fmod(x, 1.f);
+		y = fmod(y, 1.f);
+		z = fmod(z, 1.f);
 		x *= Size;
 		y *= Size;
 		z *= Size;
@@ -63,22 +82,10 @@ public:
 		perlinreal b = fmod(y, 1.f);
 		perlinreal c = fmod(z, 1.f);
 
-		auto lerp = [](perlinreal a, perlinreal b, perlinreal mu)
-		{
-			return a * (1 - mu) + b * mu;
-		};
-
 		unsigned int x0, x1, y0, y1, z0, z1;
-		x0 = (unsigned int) x;
-		x1 = x0 + 1;
-		y0 = (unsigned int) y;
-		y1 = y0 + 1;
-		z0 = (unsigned int) z;
-		z1 = z0 + 1;
-		
-		//x0 = clamp<unsigned int>(x0, 0, Size);
-		//y0 = clamp<unsigned int>(y0, 0, Size);
-		//z0 = clamp<unsigned int>(z0, 0, Size);
+		x1 = (x0 = (unsigned int) x) + 1;
+		y1 = (y0 = (unsigned int) y) + 1;
+		z1 = (z0 = (unsigned int) z) + 1;
 
 		x0 %= Size;
 		y0 %= Size;
@@ -87,10 +94,6 @@ public:
 		x1 %= Size;
 		y1 %= Size;
 		z1 %= Size;
-
-		//x1 = clamp<unsigned int>(x1, 0, Size);
-		///y1 = clamp<unsigned int>(y1, 0, Size);
-		//z1 = clamp<unsigned int>(z1, 0, Size);
 
 		return 
 			Data[x0][y0][z0]*(1-a)*(1-b)*(1-c) + 
@@ -141,7 +144,7 @@ public:
 			if (x == 0 || y == 0 || z == 0 || x == Resolution - 1 || y == Resolution - 1 || z == Resolution - 1)
 				setVolumeData(x, y, z, 1.0);
 			else
-				setVolumeData(x, y, z, (double) Perlin.noise(x / (perlinreal) (Resolution), y / (perlinreal) (Resolution), z / (perlinreal) (Resolution)));/*(TunnelGen->Get(
+				setVolumeData(x, y, z, (double) Perlin.noise(x / (perlinreal) (Resolution), y / (perlinreal) (Resolution), z / (perlinreal) (Resolution)) - 0.5f);/*(TunnelGen->Get(
 				x / (double) Resolution * TunnelSampleSize, 
 				y / (double) Resolution * TunnelSampleSize, 
 				z / (double) Resolution * TunnelSampleSize, false)));*/
