@@ -54,7 +54,7 @@ public:
 	perlinreal noise(perlinreal x, perlinreal y, perlinreal z)
 	{
 		static perlinreal const Frequency = 0.25f;
-		static int const Layers = 10;
+		static int const Layers = 6;
 
 		perlinreal Mult = Frequency;
 		perlinreal Result = 0;
@@ -114,7 +114,7 @@ class CVolumeData
 
 public:
 
-	static const int Resolution = 128;
+	static const int Resolution = 256;
 
 	double Data[Resolution][Resolution][Resolution];
 
