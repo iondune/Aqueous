@@ -108,6 +108,7 @@
     <ClCompile Include="CInstancedSceneObject.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="perlin\Perlin3.cpp" />
+    <ClCompile Include="SciDataParser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CabbageCore\CabbageCore.h" />
@@ -152,6 +153,8 @@
     <ClInclude Include="CInstancedSceneObject.h" />
     <ClInclude Include="LookupTables.h" />
     <ClInclude Include="perlin\Perlin3.h" />
+    <ClInclude Include="SciData.h" />
+    <ClInclude Include="SciDataParser.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

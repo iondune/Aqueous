@@ -69,6 +69,7 @@
     <ClCompile Include="perlin\Perlin3.cpp">
       <Filter>perlin</Filter>
     </ClCompile>
+    <ClCompile Include="SciDataParser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="CabbageScene">
@@ -210,5 +211,7 @@
     <ClInclude Include="perlin\Perlin3.h">
       <Filter>perlin</Filter>
     </ClInclude>
+    <ClInclude Include="SciData.h" />
+    <ClInclude Include="SciDataParser.h" />
   </ItemGroup>
 </Project>

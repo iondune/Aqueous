@@ -114,7 +114,7 @@ class CVolumeData
 
 public:
 
-	static const int Resolution = 256;
+	static const int Resolution = 512;
 
 	double Data[Resolution][Resolution][Resolution];
 
@@ -167,6 +167,8 @@ public:
 
 #include "LookupTables.h"
 
+#include "SciDataParser.h"
+
 class CMainState : public CState<CMainState>
 {
 
@@ -181,7 +183,7 @@ class CMainState : public CState<CMainState>
 	SVector3 LightPosition;
 	SUniform<SVector3> BindLightPosition;
 
-	CVolumeData VolumeData;
+	//CVolumeData VolumeData;
 
 public:
 
@@ -193,7 +195,7 @@ public:
 	{
 		SDL_WM_SetCaption("Dinosaurs in Space!", "");
 
-        glClearColor(0.6f, 0.4f, 0.3f, 1.0f);
+        glClearColor(0.2f, 0.2f, 0.1f, 1.0f);
 		glEnable(GL_DEPTH_TEST);
         glDepthFunc(GL_LEQUAL);
 
@@ -216,6 +218,7 @@ public:
 		SkyBox->setScale(SVector3(20.f));
 		SkyBox->setTexture("Space.bmp");
 		SkyBox->setCullingEnabled(false);
+		SkyBox->setVisible(false);
 
 		// Add cube to show light location
 		LightObject = SceneManager.addMeshSceneObject(Cube, CShaderLoader::loadShader("Simple"));
@@ -227,7 +230,35 @@ public:
 		SceneManager.addSceneObject(VoxelObject);
 		VoxelObject->setCullingEnabled(false);
 
-		float const ScaleFactor = 4.f * VolumeData.Resolution / 32.f;
+		//float const ScaleFactor = 4.f * VolumeData.Resolution / 32.f;
+		float const ScaleFactor = 4.f * 12.f;
+
+		SciDataParser p;
+		p.parseFile("ForZoe.txt");
+
+		int i = 0;
+
+		for (auto it = p.m_data.begin(); it != p.m_data.end(); ++ it)
+		{
+			CMeshSceneObject * Object = new CMeshSceneObject();
+			Object->setMesh(Cube);
+			Object->setParent(VoxelObject);
+			Object->setScale(SVector3(1.f) / 32.f);
+			Object->setTranslation(SVector3((float) it->getLocation().X, (float) it->getLocation().Z, (float) it->getLocation().Y) / ScaleFactor);
+			Object->addUniform("uLightPosition", & BindLightPosition);
+
+			double o2_ratio = (it->d1 - p.mind1) / (p.maxd1 - p.mind1);//(it->getO2Concenration() - p.m_minO2) / (p.m_maxO2 - p.m_minO2);
+
+			CMaterial mat;
+			mat.DiffuseColor = SColor((float) o2_ratio, (float) o2_ratio, (float) o2_ratio);
+			//mat.AmbientColor = SColor(0.f, 1.f, 1.f);
+			Object->setMaterial(mat);
+			Object->setShader(ERenderPass::ERP_DEFAULT, Shader);
+
+			i ++;
+		}
+
+		printf("Created %d points\n\n\n.", i);
 
 #if 0
 		for (int z = 0; z < VolumeData.Resolution; ++ z)
@@ -254,7 +285,7 @@ public:
 		} // x - y - z
 #endif
 
-		CMesh * Mesh = new CMesh();
+		/*CMesh * Mesh = new CMesh();
 		int CurrentBuffer = 0;
 		Mesh->MeshBuffers.push_back(new CMesh::SMeshBuffer());
 
@@ -367,7 +398,7 @@ public:
 		SoupObject = SceneManager.addMeshSceneObject(Mesh, Shader);
 		SoupObject->setVisible(true);
 		SoupObject->setCullingEnabled(false);
-		SoupObject->addUniform("uLightPosition", & BindLightPosition);
+		SoupObject->addUniform("uLightPosition", & BindLightPosition);*/
 	}
 
 	void OnRenderStart(float const Elapsed)
