@@ -176,8 +176,18 @@ void CRenderable::draw(CScene const * const Scene, ERenderPass const Pass)
     // And bind the synced buffer object to shader...
     ShaderContext.bindIndexBufferObject(IndexBufferObject->getHandle());
 
+	if (Parent->isDebugDataEnabled(EDebugData::Wireframe))
+    {
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	}
+
 	// Finally draw!
 	glDrawElements(DrawType, IndexBufferObject->getElements().size(), GL_UNSIGNED_SHORT, 0);
+
+	if (Parent->isDebugDataEnabled(EDebugData::Wireframe))
+    {
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	}
 
     // Draw the normal object if it is enabled
     if (Parent->isDebugDataEnabled(EDebugData::Normals) && NormalObject)

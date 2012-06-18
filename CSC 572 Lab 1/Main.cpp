@@ -103,6 +103,7 @@ public:
 			mat.DiffuseColor = SColor((float) o2_ratio, (float) o2_ratio, (float) o2_ratio);
 			Object->setMaterial(mat);
 			Object->setShader(ERenderPass::ERP_DEFAULT, Shader);
+			Object->enableDebugData(EDebugData::Wireframe);
 
 			i ++;
 		}
