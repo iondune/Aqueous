@@ -96,72 +96,99 @@ public:
 			Root->Datums.push_back(* it);
 		Root->Extents = SBoundingBox3(p.m_minLoc, p.m_maxLoc);
 
-		CSciTreeNode * NewRoot = new CSciTreeNode();
-		NewRoot->Extents = Root->Extents;
+		auto SubdivideNode = [](ISciTreeNode * & Node)
+		{
+			if (! Node->isLeaf())
+				return;
+
+			CSciTreeLeaf * Root = (CSciTreeLeaf *) Node;
+
+			CSciTreeNode * NewRoot = new CSciTreeNode();
+			NewRoot->Extents = Root->Extents;
+
+			for (int i = 0; i < EO_COUNT; ++ i)
+			{
+				NewRoot->Children[i] = new CSciTreeLeaf();
+
+				switch (i)
+				{
+				case EO_TOP_UPPER_LEFT:
+					NewRoot->Children[i]->Extents = SBoundingBox3(
+						SVector3(Root->Extents.MinCorner.X, Root->Extents.getCenter().Y, Root->Extents.getCenter().Z),
+						SVector3(Root->Extents.getCenter().X, Root->Extents.MaxCorner.Y, Root->Extents.MaxCorner.Z)
+						);
+					break;
+
+				case EO_TOP_UPPER_RIGHT:
+					NewRoot->Children[i]->Extents = SBoundingBox3(
+						SVector3(Root->Extents.getCenter().X, Root->Extents.getCenter().Y, Root->Extents.getCenter().Z),
+						SVector3(Root->Extents.MaxCorner.X, Root->Extents.MaxCorner.Y, Root->Extents.MaxCorner.Z)
+						);
+					break;
+
+				case EO_TOP_LOWER_LEFT:
+					NewRoot->Children[i]->Extents = SBoundingBox3(
+						SVector3(Root->Extents.MinCorner.X, Root->Extents.MinCorner.Y, Root->Extents.getCenter().Z),
+						SVector3(Root->Extents.getCenter().X, Root->Extents.getCenter().Y, Root->Extents.MaxCorner.Z)
+						);
+					break;
+
+				case EO_TOP_LOWER_RIGHT:
+					NewRoot->Children[i]->Extents = SBoundingBox3(
+						SVector3(Root->Extents.getCenter().X, Root->Extents.MinCorner.Y, Root->Extents.getCenter().Z),
+						SVector3(Root->Extents.MaxCorner.X, Root->Extents.getCenter().Y, Root->Extents.MaxCorner.Z)
+						);
+					break;
+
+				case EO_BOTTOM_UPPER_LEFT:
+					NewRoot->Children[i]->Extents = SBoundingBox3(
+						SVector3(Root->Extents.MinCorner.X, Root->Extents.getCenter().Y, Root->Extents.MinCorner.Z),
+						SVector3(Root->Extents.getCenter().X, Root->Extents.MaxCorner.Y, Root->Extents.getCenter().Z)
+						);
+					break;
+
+				case EO_BOTTOM_UPPER_RIGHT:
+					NewRoot->Children[i]->Extents = SBoundingBox3(
+						SVector3(Root->Extents.getCenter().X, Root->Extents.getCenter().Y, Root->Extents.MinCorner.Z),
+						SVector3(Root->Extents.MaxCorner.X, Root->Extents.MaxCorner.Y, Root->Extents.getCenter().Z)
+						);
+					break;
+
+				case EO_BOTTOM_LOWER_LEFT:
+					NewRoot->Children[i]->Extents = SBoundingBox3(
+						SVector3(Root->Extents.MinCorner.X, Root->Extents.MinCorner.Y, Root->Extents.MinCorner.Z),
+						SVector3(Root->Extents.getCenter().X, Root->Extents.getCenter().Y, Root->Extents.getCenter().Z)
+						);
+					break;
+
+				case EO_BOTTOM_LOWER_RIGHT:
+					NewRoot->Children[i]->Extents = SBoundingBox3(
+						SVector3(Root->Extents.getCenter().X, Root->Extents.MinCorner.Y, Root->Extents.MinCorner.Z),
+						SVector3(Root->Extents.MaxCorner.X, Root->Extents.getCenter().Y, Root->Extents.getCenter().Z)
+						);
+					break;
+				}
+			}
+
+			for (auto it = Root->Datums.begin(); it != Root->Datums.end(); ++ it)
+			{
+				for (int i = 0; i < EO_COUNT; ++ i)
+				{
+					if (NewRoot->Children[i]->Extents.isPointInside(it->getLocation()))
+						((CSciTreeLeaf *)NewRoot->Children[i])->Datums.push_back(* it);
+				}
+			}
+
+			delete Root;
+			Node = NewRoot;
+		};
+
+		SubdivideNode(DataTree);
+
+		CSciTreeNode * NewRoot = (CSciTreeNode *) DataTree;
 
 		for (int i = 0; i < EO_COUNT; ++ i)
 		{
-			NewRoot->Children[i] = new CSciTreeLeaf();
-
-			switch (i)
-			{
-			case EO_TOP_UPPER_LEFT:
-				NewRoot->Children[i]->Extents = SBoundingBox3(
-					SVector3(Root->Extents.MinCorner.X, Root->Extents.getCenter().Y, Root->Extents.getCenter().Z),
-					SVector3(Root->Extents.getCenter().X, Root->Extents.MaxCorner.Y, Root->Extents.MaxCorner.Z)
-					);
-				break;
-
-			case EO_TOP_UPPER_RIGHT:
-				NewRoot->Children[i]->Extents = SBoundingBox3(
-					SVector3(Root->Extents.getCenter().X, Root->Extents.getCenter().Y, Root->Extents.getCenter().Z),
-					SVector3(Root->Extents.MaxCorner.X, Root->Extents.MaxCorner.Y, Root->Extents.MaxCorner.Z)
-					);
-				break;
-
-			case EO_TOP_LOWER_LEFT:
-				NewRoot->Children[i]->Extents = SBoundingBox3(
-					SVector3(Root->Extents.MinCorner.X, Root->Extents.MinCorner.Y, Root->Extents.getCenter().Z),
-					SVector3(Root->Extents.getCenter().X, Root->Extents.getCenter().Y, Root->Extents.MaxCorner.Z)
-					);
-				break;
-
-			case EO_TOP_LOWER_RIGHT:
-				NewRoot->Children[i]->Extents = SBoundingBox3(
-					SVector3(Root->Extents.getCenter().X, Root->Extents.MinCorner.Y, Root->Extents.getCenter().Z),
-					SVector3(Root->Extents.MaxCorner.X, Root->Extents.getCenter().Y, Root->Extents.MaxCorner.Z)
-					);
-				break;
-
-			case EO_BOTTOM_UPPER_LEFT:
-				NewRoot->Children[i]->Extents = SBoundingBox3(
-					SVector3(Root->Extents.MinCorner.X, Root->Extents.getCenter().Y, Root->Extents.MinCorner.Z),
-					SVector3(Root->Extents.getCenter().X, Root->Extents.MaxCorner.Y, Root->Extents.getCenter().Z)
-					);
-				break;
-
-			case EO_BOTTOM_UPPER_RIGHT:
-				NewRoot->Children[i]->Extents = SBoundingBox3(
-					SVector3(Root->Extents.getCenter().X, Root->Extents.getCenter().Y, Root->Extents.MinCorner.Z),
-					SVector3(Root->Extents.MaxCorner.X, Root->Extents.MaxCorner.Y, Root->Extents.getCenter().Z)
-					);
-				break;
-
-			case EO_BOTTOM_LOWER_LEFT:
-				NewRoot->Children[i]->Extents = SBoundingBox3(
-					SVector3(Root->Extents.MinCorner.X, Root->Extents.MinCorner.Y, Root->Extents.MinCorner.Z),
-					SVector3(Root->Extents.getCenter().X, Root->Extents.getCenter().Y, Root->Extents.getCenter().Z)
-					);
-				break;
-
-			case EO_BOTTOM_LOWER_RIGHT:
-				NewRoot->Children[i]->Extents = SBoundingBox3(
-					SVector3(Root->Extents.getCenter().X, Root->Extents.MinCorner.Y, Root->Extents.MinCorner.Z),
-					SVector3(Root->Extents.MaxCorner.X, Root->Extents.getCenter().Y, Root->Extents.getCenter().Z)
-					);
-				break;
-			}
-
 			CMeshSceneObject * Object = new CMeshSceneObject();
 			Object->setMesh(Cube);
 			Object->setParent(VoxelObject);
@@ -176,18 +203,6 @@ public:
 			Object->enableDebugData(EDebugData::Wireframe);
 			Object->setCullingEnabled(false);
 		}
-
-		for (auto it = Root->Datums.begin(); it != Root->Datums.end(); ++ it)
-		{
-			for (int i = 0; i < EO_COUNT; ++ i)
-			{
-				if (NewRoot->Children[i]->Extents.isPointInside(it->getLocation()))
-					((CSciTreeLeaf *)NewRoot->Children[i])->Datums.push_back(* it);
-			}
-		}
-
-		delete Root;
-		DataTree = NewRoot;
 
 		for (int i = 0; i < EO_COUNT; ++ i)
 		{
@@ -206,7 +221,6 @@ public:
 				mat.DiffuseColor = SColor(1.f - (float) (o2_ratio / 2.0), (float) (o2_ratio - 0.5) * 2.f, (float) fmod(o2_ratio, 0.5) * 2.f);
 				Object->setMaterial(mat);
 				Object->setShader(ERenderPass::ERP_DEFAULT, Shader);
-				//Object->enableDebugData(EDebugData::Wireframe);
 				Object->setCullingEnabled(false);
 			}
 		}
