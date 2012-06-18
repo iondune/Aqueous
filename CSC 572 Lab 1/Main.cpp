@@ -36,6 +36,8 @@ class CMainState : public CState<CMainState>
 	SVector3 LightPosition;
 	SUniform<SVector3> BindLightPosition;
 
+	ISciTreeNode * DataTree;
+
 public:
 
 	CMainState()
@@ -94,7 +96,7 @@ public:
 			Object->setMesh(Cube);
 			Object->setParent(VoxelObject);
 			Object->setScale(SVector3(1.f) / 32.f);
-			Object->setTranslation(SVector3((float) it->getLocation().X, (float) it->getLocation().Z, (float) it->getLocation().Y) / ScaleFactor);
+			Object->setTranslation(SVector3((float) it->getLocation().X, (float) it->getLocation().Y, (float) it->getLocation().Z) / ScaleFactor);
 			Object->addUniform("uLightPosition", & BindLightPosition);
 
 			double o2_ratio = (it->d1 - p.mind1) / (p.maxd1 - p.mind1);//(it->getO2Concenration() - p.m_minO2) / (p.m_maxO2 - p.m_minO2);
@@ -103,10 +105,100 @@ public:
 			mat.DiffuseColor = SColor((float) o2_ratio, (float) o2_ratio, (float) o2_ratio);
 			Object->setMaterial(mat);
 			Object->setShader(ERenderPass::ERP_DEFAULT, Shader);
-			Object->enableDebugData(EDebugData::Wireframe);
+			//Object->enableDebugData(EDebugData::Wireframe);
 
 			i ++;
 		}
+
+		CSciTreeLeaf * Root = (CSciTreeLeaf *) (DataTree = new CSciTreeLeaf());
+
+		for (auto it = p.m_data.begin(); it != p.m_data.end(); ++ it)
+			Root->Datums.push_back(* it);
+		Root->Extents = SBoundingBox3(p.m_minLoc, p.m_maxLoc);
+
+
+		CSciTreeNode * NewRoot = new CSciTreeNode();
+		for (int i = 0; i < EO_COUNT; ++ i)
+		{
+			NewRoot->Children[i] = new CSciTreeLeaf();
+
+			switch (i)
+			{
+			case EO_TOP_UPPER_LEFT:
+				NewRoot->Children[i]->Extents = SBoundingBox3(
+					SVector3(Root->Extents.MinCorner.X, Root->Extents.getCenter().Y, Root->Extents.getCenter().Z),
+					SVector3(Root->Extents.getCenter().X, Root->Extents.MaxCorner.Y, Root->Extents.MaxCorner.Z)
+					);
+				break;
+
+			case EO_TOP_UPPER_RIGHT:
+				NewRoot->Children[i]->Extents = SBoundingBox3(
+					SVector3(Root->Extents.getCenter().X, Root->Extents.getCenter().Y, Root->Extents.getCenter().Z),
+					SVector3(Root->Extents.MaxCorner.X, Root->Extents.MaxCorner.Y, Root->Extents.MaxCorner.Z)
+					);
+				break;
+
+			case EO_TOP_LOWER_LEFT:
+				NewRoot->Children[i]->Extents = SBoundingBox3(
+					SVector3(Root->Extents.MinCorner.X, Root->Extents.MinCorner.Y, Root->Extents.getCenter().Z),
+					SVector3(Root->Extents.getCenter().X, Root->Extents.getCenter().Y, Root->Extents.MaxCorner.Z)
+					);
+				break;
+
+			case EO_TOP_LOWER_RIGHT:
+				NewRoot->Children[i]->Extents = SBoundingBox3(
+					SVector3(Root->Extents.getCenter().X, Root->Extents.MinCorner.Y, Root->Extents.getCenter().Z),
+					SVector3(Root->Extents.MaxCorner.X, Root->Extents.getCenter().Y, Root->Extents.MaxCorner.Z)
+					);
+				break;
+
+			case EO_BOTTOM_UPPER_LEFT:
+				NewRoot->Children[i]->Extents = SBoundingBox3(
+					SVector3(Root->Extents.MinCorner.X, Root->Extents.getCenter().Y, Root->Extents.MinCorner.Z),
+					SVector3(Root->Extents.getCenter().X, Root->Extents.MaxCorner.Y, Root->Extents.getCenter().Z)
+					);
+				break;
+
+			case EO_BOTTOM_UPPER_RIGHT:
+				NewRoot->Children[i]->Extents = SBoundingBox3(
+					SVector3(Root->Extents.getCenter().X, Root->Extents.getCenter().Y, Root->Extents.MinCorner.Z),
+					SVector3(Root->Extents.MaxCorner.X, Root->Extents.MaxCorner.Y, Root->Extents.getCenter().Z)
+					);
+				break;
+
+			case EO_BOTTOM_LOWER_LEFT:
+				NewRoot->Children[i]->Extents = SBoundingBox3(
+					SVector3(Root->Extents.MinCorner.X, Root->Extents.MinCorner.Y, Root->Extents.MinCorner.Z),
+					SVector3(Root->Extents.getCenter().X, Root->Extents.getCenter().Y, Root->Extents.getCenter().Z)
+					);
+				break;
+
+			case EO_BOTTOM_LOWER_RIGHT:
+				NewRoot->Children[i]->Extents = SBoundingBox3(
+					SVector3(Root->Extents.getCenter().X, Root->Extents.MinCorner.Y, Root->Extents.MinCorner.Z),
+					SVector3(Root->Extents.MaxCorner.X, Root->Extents.getCenter().Y, Root->Extents.getCenter().Z)
+					);
+				break;
+			}
+
+			CMeshSceneObject * Object = new CMeshSceneObject();
+			Object->setMesh(Cube);
+			Object->setParent(VoxelObject);
+			Object->setScale(NewRoot->Children[i]->Extents.getExtent() / ScaleFactor);
+			Object->setTranslation(NewRoot->Children[i]->Extents.getCenter() / ScaleFactor);
+			Object->addUniform("uLightPosition", & BindLightPosition);
+
+			CMaterial mat;
+			mat.DiffuseColor = SColor(0.8f, 0.8f, 0.8f);
+			Object->setMaterial(mat);
+			Object->setShader(ERenderPass::ERP_DEFAULT, Shader);
+			Object->enableDebugData(EDebugData::Wireframe);
+			Object->setCullingEnabled(false);
+
+			//for (auto it = Root->Datums.size(); 
+		}
+
+		
 
 		printf("Created %d points\n\n\n.", i);
 	}

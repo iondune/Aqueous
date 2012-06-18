@@ -60,7 +60,7 @@ int SciDataParser::parseFile(std::string const &data) {
    while(tok != NULL) {
 
       // scan in line information.  panic if the data does not match
-      if(sscanf(tok, "%f %f %f %f %f %f %f", &time, &x, &y, &z, &temp, &O2, &d1) <= 0) {
+      if(sscanf(tok, "%f %f %f %f %f %f %f", &time, &x, &z, &y, &temp, &O2, &d1) <= 0) {
          printf("Error: Malformed file on line %d\n", line);
          exit(1);
       }

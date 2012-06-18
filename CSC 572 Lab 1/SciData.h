@@ -67,10 +67,15 @@ protected:
 	// tm timestamp;
 };
 
+#include "CabbageCore/CabbageCore.h"
+#include <vector>
+
 class ISciTreeNode
 {
 
 public:
+
+	SBoundingBox3 Extents;
 
 	virtual bool const isLeaf() const =0;
 
