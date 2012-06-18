@@ -84,6 +84,7 @@ public:
 		VoxelObject->setCullingEnabled(false);
 
 		SoupObject = new ISceneObject();
+		SoupObject->setVisible(false);
 		SceneManager.addSceneObject(SoupObject);
 		SoupObject->setCullingEnabled(false);
 
@@ -105,7 +106,7 @@ public:
 
 			double o2_ratio = (it->getO2Concenration() - p.m_minO2) / (p.m_maxO2 - p.m_minO2);
 			CMaterial mat;
-			mat.DiffuseColor = SColor(1.f - (float) o2_ratio, (float) o2_ratio, (float) 1.f - o2_ratio);
+			mat.DiffuseColor = SColor(1.f - (float) o2_ratio, (float) o2_ratio, 1.f - (float) o2_ratio);
 			Object->setMaterial(mat);
 			Object->setShader(ERenderPass::ERP_DEFAULT, Shader);
 			Object->setCullingEnabled(false);
@@ -194,20 +195,6 @@ public:
 						);
 					break;
 				}
-
-				CMeshSceneObject * Object = new CMeshSceneObject();
-				Object->setMesh(Cube);
-				Object->setParent(SoupObject);
-				Object->setScale(NewRoot->Children[i]->Extents.getExtent() / ScaleFactor);
-				Object->setTranslation(NewRoot->Children[i]->Extents.getCenter() / ScaleFactor);
-				Object->addUniform("uLightPosition", & BindLightPosition);
-
-				CMaterial mat;
-				mat.DiffuseColor = SColor(0.8f, 0.8f, 0.8f);
-				Object->setMaterial(mat);
-				Object->setShader(ERenderPass::ERP_DEFAULT, Shader);
-				Object->enableDebugData(EDebugData::Wireframe);
-				Object->setCullingEnabled(false);
 			}
 
 			for (auto it = Root->Datums.begin(); it != Root->Datums.end(); ++ it)
@@ -226,6 +213,23 @@ public:
 			{
 				if (((CSciTreeLeaf *)NewRoot->Children[i])->Datums.size() > 1)
 					SubdivideNode(NewRoot->Children[i]);
+				else if (((CSciTreeLeaf *)NewRoot->Children[i])->Datums.size() == 1)
+				{
+					CMeshSceneObject * Object = new CMeshSceneObject();
+					Object->setMesh(Cube);
+					Object->setParent(SoupObject);
+					Object->setScale(NewRoot->Children[i]->Extents.getExtent() / ScaleFactor);
+					Object->setTranslation(NewRoot->Children[i]->Extents.getCenter() / ScaleFactor);
+					Object->addUniform("uLightPosition", & BindLightPosition);
+
+					double o2_ratio = (((CSciTreeLeaf *)NewRoot->Children[i])->Datums[0].getO2Concenration() - p.m_minO2) / (p.m_maxO2 - p.m_minO2);
+					CMaterial mat;
+					mat.DiffuseColor = SColor(1.f - (float) o2_ratio, (float) o2_ratio, 1.f - (float) o2_ratio);
+					Object->setMaterial(mat);
+					Object->setShader(ERenderPass::ERP_DEFAULT, Shader);
+					//Object->enableDebugData(EDebugData::Wireframe);
+					Object->setCullingEnabled(false);
+				}
 			}
 		};
 
