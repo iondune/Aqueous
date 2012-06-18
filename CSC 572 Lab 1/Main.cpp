@@ -90,34 +90,15 @@ public:
 
 		int i = 0;
 
-		for (auto it = p.m_data.begin(); it != p.m_data.end(); ++ it)
-		{
-			CMeshSceneObject * Object = new CMeshSceneObject();
-			Object->setMesh(Cube);
-			Object->setParent(VoxelObject);
-			Object->setScale(SVector3(1.f) / 32.f);
-			Object->setTranslation(SVector3((float) it->getLocation().X, (float) it->getLocation().Y, (float) it->getLocation().Z) / ScaleFactor);
-			Object->addUniform("uLightPosition", & BindLightPosition);
-
-			double o2_ratio = (it->d1 - p.mind1) / (p.maxd1 - p.mind1);//(it->getO2Concenration() - p.m_minO2) / (p.m_maxO2 - p.m_minO2);
-
-			CMaterial mat;
-			mat.DiffuseColor = SColor((float) o2_ratio, (float) o2_ratio, (float) o2_ratio);
-			Object->setMaterial(mat);
-			Object->setShader(ERenderPass::ERP_DEFAULT, Shader);
-			//Object->enableDebugData(EDebugData::Wireframe);
-
-			i ++;
-		}
-
 		CSciTreeLeaf * Root = (CSciTreeLeaf *) (DataTree = new CSciTreeLeaf());
 
 		for (auto it = p.m_data.begin(); it != p.m_data.end(); ++ it)
 			Root->Datums.push_back(* it);
 		Root->Extents = SBoundingBox3(p.m_minLoc, p.m_maxLoc);
 
-
 		CSciTreeNode * NewRoot = new CSciTreeNode();
+		NewRoot->Extents = Root->Extents;
+
 		for (int i = 0; i < EO_COUNT; ++ i)
 		{
 			NewRoot->Children[i] = new CSciTreeLeaf();
@@ -194,11 +175,41 @@ public:
 			Object->setShader(ERenderPass::ERP_DEFAULT, Shader);
 			Object->enableDebugData(EDebugData::Wireframe);
 			Object->setCullingEnabled(false);
-
-			//for (auto it = Root->Datums.size(); 
 		}
 
-		
+		for (auto it = Root->Datums.begin(); it != Root->Datums.end(); ++ it)
+		{
+			for (int i = 0; i < EO_COUNT; ++ i)
+			{
+				if (NewRoot->Children[i]->Extents.isPointInside(it->getLocation()))
+					((CSciTreeLeaf *)NewRoot->Children[i])->Datums.push_back(* it);
+			}
+		}
+
+		delete Root;
+		DataTree = NewRoot;
+
+		for (int i = 0; i < EO_COUNT; ++ i)
+		{
+			for (auto it = ((CSciTreeLeaf *)NewRoot->Children[i])->Datums.begin(); it != ((CSciTreeLeaf *)NewRoot->Children[i])->Datums.end(); ++ it)
+			{
+				CMeshSceneObject * Object = new CMeshSceneObject();
+				Object->setMesh(Cube);
+				Object->setParent(VoxelObject);
+				Object->setScale(SVector3(1.f) / 32.f);
+				Object->setTranslation(SVector3((float) it->getLocation().X, (float) it->getLocation().Y, (float) it->getLocation().Z) / ScaleFactor);
+				Object->addUniform("uLightPosition", & BindLightPosition);
+
+				double o2_ratio = (it->getO2Concenration() - p.m_minO2) / (p.m_maxO2 - p.m_minO2);
+				o2_ratio = (float) i / (float) (EO_COUNT - 1.f) * 2.0;
+				CMaterial mat;
+				mat.DiffuseColor = SColor(1.f - (float) (o2_ratio / 2.0), (float) (o2_ratio - 0.5) * 2.f, (float) fmod(o2_ratio, 0.5) * 2.f);
+				Object->setMaterial(mat);
+				Object->setShader(ERenderPass::ERP_DEFAULT, Shader);
+				//Object->enableDebugData(EDebugData::Wireframe);
+				Object->setCullingEnabled(false);
+			}
+		}
 
 		printf("Created %d points\n\n\n.", i);
 	}

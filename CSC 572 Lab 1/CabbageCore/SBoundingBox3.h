@@ -32,6 +32,14 @@ public:
         return (MaxCorner + MinCorner) / 2.f;
     }
 
+	bool isPointInside(SVector3 const & p) const
+	{
+		return 
+			p.X >= MinCorner.X && p.X <= MaxCorner.X &&
+			p.Y >= MinCorner.Y && p.Y <= MaxCorner.Y &&
+			p.Z >= MinCorner.Z && p.Z <= MaxCorner.Z;
+	}
+
     bool const intersects(SBoundingBox3 const & r) const
     {
         return (MaxCorner.Y > r.MinCorner.Y &&
