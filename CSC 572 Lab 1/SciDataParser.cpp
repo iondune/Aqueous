@@ -1,3 +1,5 @@
+#define _CRT_SECURE_NO_WARNINGS
+
 /***
  * Parser for .log and .oxy files.
  * ---------------------------------
