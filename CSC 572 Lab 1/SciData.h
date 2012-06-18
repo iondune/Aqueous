@@ -79,6 +79,9 @@ public:
 
 	virtual bool const isLeaf() const =0;
 
+	virtual ~ISciTreeNode()
+	{}
+
 };
 
 enum EOctant

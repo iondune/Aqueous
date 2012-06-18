@@ -30,7 +30,7 @@ class CMainState : public CState<CMainState>
 
 	CMeshSceneObject * LightObject;
 
-	CSceneObject * SoupObject;
+	ISceneObject * SoupObject;
 	ISceneObject * VoxelObject;
 
 	SVector3 LightPosition;
@@ -83,6 +83,10 @@ public:
 		SceneManager.addSceneObject(VoxelObject);
 		VoxelObject->setCullingEnabled(false);
 
+		SoupObject = new ISceneObject();
+		SceneManager.addSceneObject(SoupObject);
+		SoupObject->setCullingEnabled(false);
+
 		float const ScaleFactor = 4.f * 12.f;
 
 		SciDataParser p;
@@ -90,13 +94,35 @@ public:
 
 		int i = 0;
 
+		for (auto it = p.m_data.begin(); it != p.m_data.end(); ++ it)
+		{
+			CMeshSceneObject * Object = new CMeshSceneObject();
+			Object->setMesh(Cube);
+			Object->setParent(VoxelObject);
+			Object->setScale(SVector3(1.f) / 32.f);
+			Object->setTranslation(SVector3((float) it->getLocation().X, (float) it->getLocation().Y, (float) it->getLocation().Z) / ScaleFactor);
+			Object->addUniform("uLightPosition", & BindLightPosition);
+
+			double o2_ratio = (it->getO2Concenration() - p.m_minO2) / (p.m_maxO2 - p.m_minO2);
+			CMaterial mat;
+			mat.DiffuseColor = SColor(1.f - (float) o2_ratio, (float) o2_ratio, (float) 1.f - o2_ratio);
+			Object->setMaterial(mat);
+			Object->setShader(ERenderPass::ERP_DEFAULT, Shader);
+			Object->setCullingEnabled(false);
+
+			i ++;
+		}
+
+		printf("Created %d points\n\n\n.", i);
+
 		CSciTreeLeaf * Root = (CSciTreeLeaf *) (DataTree = new CSciTreeLeaf());
 
 		for (auto it = p.m_data.begin(); it != p.m_data.end(); ++ it)
 			Root->Datums.push_back(* it);
 		Root->Extents = SBoundingBox3(p.m_minLoc, p.m_maxLoc);
 
-		auto SubdivideNode = [](ISciTreeNode * & Node)
+		std::function<void(ISciTreeNode * & Node)> SubdivideNode;
+		SubdivideNode = [&](ISciTreeNode * & Node)
 		{
 			if (! Node->isLeaf())
 				return;
@@ -168,6 +194,20 @@ public:
 						);
 					break;
 				}
+
+				CMeshSceneObject * Object = new CMeshSceneObject();
+				Object->setMesh(Cube);
+				Object->setParent(SoupObject);
+				Object->setScale(NewRoot->Children[i]->Extents.getExtent() / ScaleFactor);
+				Object->setTranslation(NewRoot->Children[i]->Extents.getCenter() / ScaleFactor);
+				Object->addUniform("uLightPosition", & BindLightPosition);
+
+				CMaterial mat;
+				mat.DiffuseColor = SColor(0.8f, 0.8f, 0.8f);
+				Object->setMaterial(mat);
+				Object->setShader(ERenderPass::ERP_DEFAULT, Shader);
+				Object->enableDebugData(EDebugData::Wireframe);
+				Object->setCullingEnabled(false);
 			}
 
 			for (auto it = Root->Datums.begin(); it != Root->Datums.end(); ++ it)
@@ -181,12 +221,23 @@ public:
 
 			delete Root;
 			Node = NewRoot;
+
+			for (int i = 0; i < EO_COUNT; ++ i)
+			{
+				if (((CSciTreeLeaf *)NewRoot->Children[i])->Datums.size() > 1)
+					SubdivideNode(NewRoot->Children[i]);
+			}
 		};
 
+		printf("Beginning subdivision.\n");
+		unsigned int t0 = SDL_GetTicks(), t1;
 		SubdivideNode(DataTree);
+		t1 = SDL_GetTicks();
+		printf("End subdivision. Took %d ms.\n", t1 - t0);
 
 		CSciTreeNode * NewRoot = (CSciTreeNode *) DataTree;
 
+#if 0
 		for (int i = 0; i < EO_COUNT; ++ i)
 		{
 			CMeshSceneObject * Object = new CMeshSceneObject();
@@ -203,29 +254,7 @@ public:
 			Object->enableDebugData(EDebugData::Wireframe);
 			Object->setCullingEnabled(false);
 		}
-
-		for (int i = 0; i < EO_COUNT; ++ i)
-		{
-			for (auto it = ((CSciTreeLeaf *)NewRoot->Children[i])->Datums.begin(); it != ((CSciTreeLeaf *)NewRoot->Children[i])->Datums.end(); ++ it)
-			{
-				CMeshSceneObject * Object = new CMeshSceneObject();
-				Object->setMesh(Cube);
-				Object->setParent(VoxelObject);
-				Object->setScale(SVector3(1.f) / 32.f);
-				Object->setTranslation(SVector3((float) it->getLocation().X, (float) it->getLocation().Y, (float) it->getLocation().Z) / ScaleFactor);
-				Object->addUniform("uLightPosition", & BindLightPosition);
-
-				double o2_ratio = (it->getO2Concenration() - p.m_minO2) / (p.m_maxO2 - p.m_minO2);
-				o2_ratio = (float) i / (float) (EO_COUNT - 1.f) * 2.0;
-				CMaterial mat;
-				mat.DiffuseColor = SColor(1.f - (float) (o2_ratio / 2.0), (float) (o2_ratio - 0.5) * 2.f, (float) fmod(o2_ratio, 0.5) * 2.f);
-				Object->setMaterial(mat);
-				Object->setShader(ERenderPass::ERP_DEFAULT, Shader);
-				Object->setCullingEnabled(false);
-			}
-		}
-
-		printf("Created %d points\n\n\n.", i);
+#endif
 	}
 
 	void OnRenderStart(float const Elapsed)
