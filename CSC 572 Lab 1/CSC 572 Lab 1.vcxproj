@@ -49,12 +49,22 @@
       ;$(ProjectDir)\CabbageCore;
       ;$(ProjectDir)\CabbageFramework;
       ;$(ProjectDir)\CabbageScene;
+      ;$(VisualStudioDir)\Projects\matio-1.5.0\src;
+      ;$(VisualStudioDir)\Projects\matio-1.5.0\visual_studio;
       ;$(IncludePath);
     </IncludePath>
     <LibraryPath>
       ;$(VisualStudioDir)\Projects\glew-1.7.0\lib;
       ;$(VisualStudioDir)\Projects\SDL-1.2.15\lib\x86;
       ;$(VisualStudioDir)\Projects\freetype-2.4.2\lib;
+      ;$(LibraryPath);
+    </LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      ;$(VisualStudioDir)\Projects\matio-1.5.0\visual_studio\Win32\Debug;
+      ;$(LibraryPath);
+    </LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      ;$(VisualStudioDir)\Projects\matio-1.5.0\visual_studio\Release;
       ;$(LibraryPath);
     </LibraryPath>
   </PropertyGroup>

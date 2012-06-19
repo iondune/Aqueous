@@ -16,6 +16,8 @@
 #pragma comment(lib, "glu32.lib")
 #pragma comment(lib, "freetype.lib")
 
+#pragma comment(lib, "libmatio.lib")
+
 #include <GL/glew.h>
 #include <SDL/SDL.h>
 #endif
@@ -438,8 +440,33 @@ public:
 
 };
 
+#include <matio.h>
+
 int main(int argc, char * argv[])
 {
+	mat_t *matfp;
+    matvar_t *matvar;
+
+    matfp = Mat_Open("data2.mat", MAT_ACC_RDONLY);
+    if (NULL == matfp)
+	{
+        fprintf(stderr,"Error opening MAT file %s\n",argv[1]);
+    }
+	else
+	{
+		while ( NULL != (matvar = Mat_VarReadNext(matfp)) ) {
+			Mat_VarPrint(matvar,1);
+			Mat_VarFree(matvar);
+		}
+	}
+
+    Mat_Close(matfp);
+
+
+	waitForUser();
+
+
+
 	CTextureLoader::ImageDirectory = "Media/";
 	CMeshLoader::MeshDirectory = "Media/";
 	CShaderLoader::ShaderDirectory = "Shaders/";
