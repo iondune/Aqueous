@@ -65,6 +65,8 @@ int SciDataParser::parseFile(std::string const &data) {
          exit(1);
       }
 
+	  y *= 25.0;
+
 	  if (d1 > maxd1)
 		  maxd1 = d1;
 	  if (d1 < mind1)
