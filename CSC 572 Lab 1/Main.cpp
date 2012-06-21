@@ -451,8 +451,7 @@ public:
 
 int main(int argc, char * argv[])
 {
-	if (true
-		)
+	if (false)
 	{
 		MATFile * pmat;
 		const char* name = NULL;
@@ -516,9 +515,23 @@ int main(int argc, char * argv[])
 	else
 	{
 		MATFile * File = matOpen("data2.mat", "r");
+		FILE * Output = fopen("data2.csv", "w");
 
 		const char * name;
 		mxArray * ctd = matGetNextVariable(File, & name);
+
+		mxArray * MetaField = mxGetField(ctd, 0, "meta");
+		mxArray * sensorUnitsField = mxGetField(MetaField, 0, "sensorUnits");
+
+		int const NumberOfUnitFields = mxGetNumberOfFields(sensorUnitsField);
+		for (int i = 0; i < NumberOfUnitFields; ++ i)
+		{
+			printf("Sensor Unit [%d] = %s\n", i, mxGetFieldNameByNumber(sensorUnitsField, i));
+			fprintf(Output, "%s", mxGetFieldNameByNumber(sensorUnitsField, i));
+			if (i != NumberOfUnitFields - 1)
+				fprintf(Output, ",");
+		}
+		fprintf(Output, "\n");
 
 		mxArray * DataField = mxGetField(ctd, 0, "data");
 
@@ -528,29 +541,29 @@ int main(int argc, char * argv[])
 		for (int i = 0; i < NumberOfDimensions; ++ i)
 			printf("Dimension[%d] is %d\n", i, Dimensions[i]);
 
-		assert(NumberOfDimensions == 2);
-
 		printf("Data Field class type is %s\n", mxGetClassName(DataField));
-
-		printf("Accessing cells.\n");
-		for (int i = 0; i < Dimensions[0]; ++ i)
+		waitForUser();
+		printf("Writing csv.\n");
+		printf("%3d%%", 0);
+		double * Data = mxGetPr(DataField);
+		for (int j = 0; j < Dimensions[0]; ++ j)
 		{
-			for (int j = 0; j < Dimensions[1]; ++ j)
+			for (int i = 0; i < Dimensions[1]; ++ i)
 			{
-				int Subscript[2];
-				Subscript[0] = j;
-				Subscript[1] = i;
-				int index = mxCalcSingleSubscript(DataField, 2, Subscript);
+				int index = j + i * Dimensions[0];
 				
-				printf("Checking (%d, %d), subscript [%d]\n", i, j, index);
-
-				mxArray * Cell = mxGetCell(DataField, index);
-				if (Cell)
-					printf("Cell Class Type is %s\n", mxGetClassName(Cell));
-				else
-					printf("Subscript %d %d is not a cell.\n", i, j);
+				//printf("Trying to access %d %d with index %d\n", i, j, index);
+				fprintf(Output, "%.10e", Data[index]);
+				if (i != Dimensions[1] - 1)
+					fprintf(Output, ",");
+				//printf("Value (%d, %d) [%d] is %g\n", i, j, index, Data[index]);
+				//waitForUser();
 			}
+			fprintf(Output, "\n");
+			printf("\r%3d%%", (int) (100.f * (float) j / (float) (Dimensions[0] - 1.f)));
 		}
+
+		fclose(Output);
 	}
 
 
