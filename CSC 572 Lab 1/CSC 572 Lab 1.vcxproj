@@ -51,6 +51,7 @@
       ;$(ProjectDir)\CabbageScene;
       ;$(VisualStudioDir)\Projects\matio-1.5.0\src;
       ;$(VisualStudioDir)\Projects\matio-1.5.0\visual_studio;
+      ;$(ProjectDir)\matlib\include;
       ;$(IncludePath);
     </IncludePath>
     <LibraryPath>

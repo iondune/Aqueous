@@ -440,30 +440,124 @@ public:
 
 };
 
-#include <matio.h>
+#include "matlib/include/mat.h"
+
+#pragma comment(lib, "matlib/libmat.lib")
+#pragma comment(lib, "matlib/libmx.lib")
+#pragma comment(lib, "matlib/libmex.lib")
+#pragma comment(lib, "matlib/libeng.lib")
+#pragma comment(lib, "matlib/libmwlapack.lib")
+#pragma comment(lib, "matlib/libdflapack.lib")
 
 int main(int argc, char * argv[])
 {
-	mat_t *matfp;
-    matvar_t *matvar;
-
-    matfp = Mat_Open("data2.mat", MAT_ACC_RDONLY);
-    if (NULL == matfp)
+	if (true
+		)
 	{
-        fprintf(stderr,"Error opening MAT file %s\n",argv[1]);
-    }
+		MATFile * pmat;
+		const char* name = NULL;
+		mxArray * pa;
+
+		const char * filename = "data2.mat";
+    
+		/* open mat file and read it's content */
+		printf("Opening mat file '%s'!\n", filename);
+		pmat = matOpen(filename, "r");
+
+		if (pmat == NULL) 
+		{
+			printf("Error Opening File: \"%s\"\n", "data2.mat");
+			return 0;
+		}
+		else
+			printf("Successfully opened file!\n");
+    
+		/* Read in each array. */
+		pa = matGetNextVariable(pmat, & name);
+		while (pa != NULL)
+		{
+			/*
+			* Diagnose array pa
+			*/
+			int num_of_dim, num_of_field;
+			printf("\nArray %s has %d dimensions, %d elements and %d fields.\n", name, num_of_dim = mxGetNumberOfDimensions(pa), mxGetNumberOfElements(pa), num_of_field = mxGetNumberOfFields(pa));
+        
+			int const * dims = mxGetDimensions(pa);
+			for (int i = 0; i < num_of_dim; ++ i)
+			{
+				printf("Dimension %d has length %d.\n", i + 1, dims[i]);
+			}
+
+			for (int i = 0; i < num_of_field; ++ i)
+			{
+				char const * const fieldname = mxGetFieldNameByNumber(pa, i);
+				//printf("Field %d has named %s.\n", i + 1, fieldname);
+
+			
+				mxArray * field = mxGetFieldByNumber(pa, 0, i);
+				int num_of_dim, num_of_field;
+				printf("Field %33s has %d dim, %8d elmnts and %d fld\n", fieldname, num_of_dim = mxGetNumberOfDimensions(field), mxGetNumberOfElements(field), num_of_field = mxGetNumberOfFields(field));
+				int const * fieldDims = mxGetDimensions(field);
+			}
+			//print matrix elements
+			//mlfPrintMatrix(pa);
+
+			//mlfPrintMatrix(pa);
+
+			//destroy allocated matrix
+			mxDestroyArray(pa);
+        
+			//get next variable
+			pa = matGetNextVariable(pmat, & name);
+		}
+    
+		matClose(pmat);
+	}
 	else
 	{
-		while ( NULL != (matvar = Mat_VarReadNext(matfp)) ) {
-			Mat_VarPrint(matvar,1);
-			Mat_VarFree(matvar);
+		MATFile * File = matOpen("data2.mat", "r");
+
+		const char * name;
+		mxArray * ctd = matGetNextVariable(File, & name);
+
+		mxArray * DataField = mxGetField(ctd, 0, "data");
+
+		int const NumberOfDimensions = mxGetNumberOfDimensions(DataField);
+		int const * Dimensions = mxGetDimensions(DataField);
+
+		for (int i = 0; i < NumberOfDimensions; ++ i)
+			printf("Dimension[%d] is %d\n", i, Dimensions[i]);
+
+		assert(NumberOfDimensions == 2);
+
+		printf("Data Field class type is %s\n", mxGetClassName(DataField));
+
+		printf("Accessing cells.\n");
+		for (int i = 0; i < Dimensions[0]; ++ i)
+		{
+			for (int j = 0; j < Dimensions[1]; ++ j)
+			{
+				int Subscript[2];
+				Subscript[0] = j;
+				Subscript[1] = i;
+				int index = mxCalcSingleSubscript(DataField, 2, Subscript);
+				
+				printf("Checking (%d, %d), subscript [%d]\n", i, j, index);
+
+				mxArray * Cell = mxGetCell(DataField, index);
+				if (Cell)
+					printf("Cell Class Type is %s\n", mxGetClassName(Cell));
+				else
+					printf("Subscript %d %d is not a cell.\n", i, j);
+			}
 		}
 	}
 
-    Mat_Close(matfp);
 
 
 	waitForUser();
+
+	return 0;
 
 
 
