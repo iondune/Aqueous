@@ -70,6 +70,7 @@ public:
 		Tyra->addUniform("uLightPosition", & BindLightPosition);
 		CTexture * Texture = CTextureLoader::loadTexture("TyraNormals.bmp");
 		Tyra->setTexture(Texture);
+		Tyra->setVisible(false);
 
 		// Add space backdrop
 		CMesh * Cube = CMeshLoader::createCubeMesh();
@@ -96,7 +97,7 @@ public:
 
 		float const ScaleFactor = 4.f * 12.f;
 
-		if (!p.m_data.size())
+		if (! p.m_data.size())
 			p.parseFile("ForZoe.txt");
 
 		int i = 0;
@@ -555,7 +556,7 @@ int main(int argc, char * argv[])
 			printf("Dimension[%d] is %d\n", i, Dimensions[i]);
 
 		printf("Data Field class type is %s\n", mxGetClassName(DataField));
-		waitForUser();
+		//waitForUser();
 		printf("Reading data values from mat.\n");
 		if (writeCsv)
 			printf("%3d%%", 0);
@@ -619,17 +620,17 @@ int main(int argc, char * argv[])
 
 		p.m_minO2 = minSalinty;
 		p.m_maxO2 = maxSalinty;
-		p.m_maxLoc = SVector3(maxLat * 300, maxDepth * 30, maxLon * 300);
-		p.m_minLoc = SVector3(minLat * 300, minDepth * 30, minLon * 300);
+		p.m_maxLoc = SVector3(maxLat * 300, maxDepth * 60, maxLon * 300);
+		p.m_minLoc = SVector3(minLat * 300, minDepth * 60, minLon * 300);
 
-		for (int j = 0; j < Dimensions[0]; j += 50)
+		for (int j = 0; j < Dimensions[0]; j += 25)
 		{
 			double Lat = Data[j + 89 * Dimensions[0]];
 			double Lon = Data[j + 90 * Dimensions[0]];
 			double Depth = Data[j + 86 * Dimensions[0]];
 			double Salinty = Data[j + 95 * Dimensions[0]];
 			
-			SciData d((Lat - minLat) / (maxLat - minLat) * 300, (Depth - minDepth) / (maxDepth - minDepth) * 30, (Lon - minLon) / (maxLon - minLon) * 300, Salinty, 0);
+			SciData d((Lat - minLat) / (maxLat - minLat) * 300, (Depth - minDepth) / (maxDepth - minDepth) * 60, (Lon - minLon) / (maxLon - minLon) * 300, Salinty, 0);
 			p.m_data.push_back(d);
 		}
 
@@ -642,7 +643,7 @@ int main(int argc, char * argv[])
 
 
 
-	waitForUser();
+	//waitForUser();
 
 
 	CTextureLoader::ImageDirectory = "Media/";
