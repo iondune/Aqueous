@@ -24,6 +24,10 @@
 
 #include "SciDataParser.h"
 
+
+
+SciDataParser p;
+
 class CMainState : public CState<CMainState>
 {
 
@@ -92,8 +96,8 @@ public:
 
 		float const ScaleFactor = 4.f * 12.f;
 
-		SciDataParser p;
-		p.parseFile("ForZoe.txt");
+		if (!p.m_data.size())
+			p.parseFile("ForZoe.txt");
 
 		int i = 0;
 
@@ -451,6 +455,8 @@ public:
 
 int main(int argc, char * argv[])
 {
+	bool writeCsv = false;
+
 	if (false)
 	{
 		MATFile * pmat;
@@ -512,10 +518,13 @@ int main(int argc, char * argv[])
     
 		matClose(pmat);
 	}
-	else
+	else if (true)
 	{
 		MATFile * File = matOpen("data2.mat", "r");
-		FILE * Output = fopen("data2.csv", "w");
+		FILE * Output;
+		
+		if (writeCsv)
+			Output = fopen("data2.csv", "w");
 
 		const char * name;
 		mxArray * ctd = matGetNextVariable(File, & name);
@@ -527,11 +536,15 @@ int main(int argc, char * argv[])
 		for (int i = 0; i < NumberOfUnitFields; ++ i)
 		{
 			printf("Sensor Unit [%d] = %s\n", i, mxGetFieldNameByNumber(sensorUnitsField, i));
-			fprintf(Output, "%s", mxGetFieldNameByNumber(sensorUnitsField, i));
-			if (i != NumberOfUnitFields - 1)
-				fprintf(Output, ",");
+			if (writeCsv)
+			{
+				fprintf(Output, "%s", mxGetFieldNameByNumber(sensorUnitsField, i));
+				if (i != NumberOfUnitFields - 1)
+					fprintf(Output, ",");
+			}
 		}
-		fprintf(Output, "\n");
+		if (writeCsv)
+			fprintf(Output, "\n");
 
 		mxArray * DataField = mxGetField(ctd, 0, "data");
 
@@ -543,9 +556,18 @@ int main(int argc, char * argv[])
 
 		printf("Data Field class type is %s\n", mxGetClassName(DataField));
 		waitForUser();
-		printf("Writing csv.\n");
-		printf("%3d%%", 0);
+		printf("Reading data values from mat.\n");
+		if (writeCsv)
+			printf("%3d%%", 0);
+
+
 		double * Data = mxGetPr(DataField);
+
+		double minLat = DBL_MAX, maxLat = -DBL_MAX;
+		double minLon = DBL_MAX, maxLon = -DBL_MAX;
+		double minDepth = DBL_MAX, maxDepth = -DBL_MAX;
+		double minSalinty = DBL_MAX, maxSalinty = -DBL_MAX;
+
 		for (int j = 0; j < Dimensions[0]; ++ j)
 		{
 			for (int i = 0; i < Dimensions[1]; ++ i)
@@ -553,25 +575,74 @@ int main(int argc, char * argv[])
 				int index = j + i * Dimensions[0];
 				
 				//printf("Trying to access %d %d with index %d\n", i, j, index);
-				fprintf(Output, "%.10e", Data[index]);
-				if (i != Dimensions[1] - 1)
-					fprintf(Output, ",");
+				if (writeCsv)
+				{
+					fprintf(Output, "%.10e", i == 0 ? 0 : Data[j + (i-1) * Dimensions[0]]);
+					if (i != Dimensions[1] - 1)
+						fprintf(Output, ",");
+				}
 				//printf("Value (%d, %d) [%d] is %g\n", i, j, index, Data[index]);
 				//waitForUser();
 			}
-			fprintf(Output, "\n");
-			printf("\r%3d%%", (int) (100.f * (float) j / (float) (Dimensions[0] - 1.f)));
+			if (writeCsv)
+				fprintf(Output, "\n");
+
+
+			double Lat = Data[j + 89 * Dimensions[0]];
+			double Lon = Data[j + 90 * Dimensions[0]];
+			double Depth = Data[j + 86 * Dimensions[0]];
+			double Salinty = Data[j + 95 * Dimensions[0]];
+
+			if (Lat > maxLat)
+				maxLat = Lat;
+			if (Lat < minLat)
+				minLat = Lat;
+
+			if (Lon > maxLon)
+				maxLon = Lon;
+			if (Lon < minLon)
+				minLon = Lon;
+
+			if (Depth > maxDepth)
+				maxDepth = Depth;
+			if (Depth < minDepth)
+				minDepth = Depth;
+
+			if (Salinty > maxSalinty)
+				maxSalinty = Salinty;
+			if (Salinty < minSalinty)
+				minSalinty = Salinty;
+
+			if (writeCsv)
+				printf("\r%3d%%", (int) (100.f * (float) j / (float) (Dimensions[0] - 1.f)));
 		}
 
-		fclose(Output);
+		p.m_minO2 = minSalinty;
+		p.m_maxO2 = maxSalinty;
+		p.m_maxLoc = SVector3(maxLat * 300, maxDepth * 30, maxLon * 300);
+		p.m_minLoc = SVector3(minLat * 300, minDepth * 30, minLon * 300);
+
+		for (int j = 0; j < Dimensions[0]; j += 50)
+		{
+			double Lat = Data[j + 89 * Dimensions[0]];
+			double Lon = Data[j + 90 * Dimensions[0]];
+			double Depth = Data[j + 86 * Dimensions[0]];
+			double Salinty = Data[j + 95 * Dimensions[0]];
+			
+			SciData d((Lat - minLat) / (maxLat - minLat) * 300, (Depth - minDepth) / (maxDepth - minDepth) * 30, (Lon - minLon) / (maxLon - minLon) * 300, Salinty, 0);
+			p.m_data.push_back(d);
+		}
+
+		if (writeCsv)
+		{
+			fclose(Output);
+			printf("\nDone reading mat.\n");
+		}
 	}
 
 
 
 	waitForUser();
-
-	return 0;
-
 
 
 	CTextureLoader::ImageDirectory = "Media/";
