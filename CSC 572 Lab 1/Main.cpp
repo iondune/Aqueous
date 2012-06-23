@@ -519,7 +519,7 @@ int main(int argc, char * argv[])
     
 		matClose(pmat);
 	}
-	else if (true)
+	else if (false)
 	{
 		MATFile * File = matOpen("data2.mat", "r");
 		FILE * Output;
