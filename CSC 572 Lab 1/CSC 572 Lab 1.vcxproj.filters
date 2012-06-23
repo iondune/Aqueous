@@ -66,6 +66,12 @@
       <Filter>CabbageScene\ImageLoaders</Filter>
     </ClCompile>
     <ClCompile Include="SciDataParser.cpp" />
+    <ClCompile Include="CMainState.InitFunctions.cpp" />
+    <ClCompile Include="CMainState.cpp" />
+    <ClCompile Include="CMainState.MouseTracking.cpp" />
+    <ClCompile Include="CMainState.EventHandling.cpp" />
+    <ClCompile Include="CMainState.DataLoading.cpp" />
+    <ClCompile Include="CMainState.MatParser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="CabbageScene">
@@ -201,5 +207,6 @@
     </ClInclude>
     <ClInclude Include="SciData.h" />
     <ClInclude Include="SciDataParser.h" />
+    <ClInclude Include="CMainState.h" />
   </ItemGroup>
 </Project>
