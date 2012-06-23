@@ -65,10 +65,6 @@
     <ClCompile Include="CabbageScene\ImageLoaders\Texture.cpp">
       <Filter>CabbageScene\ImageLoaders</Filter>
     </ClCompile>
-    <ClCompile Include="CInstancedSceneObject.cpp" />
-    <ClCompile Include="perlin\Perlin3.cpp">
-      <Filter>perlin</Filter>
-    </ClCompile>
     <ClCompile Include="SciDataParser.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -83,9 +79,6 @@
     </Filter>
     <Filter Include="CabbageScene\ImageLoaders">
       <UniqueIdentifier>{7065b8c8-6fba-4f69-9c84-e0119a793cee}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="perlin">
-      <UniqueIdentifier>{c32a057d-0f52-41e4-9c92-dcde01210c78}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -205,11 +198,6 @@
     </ClInclude>
     <ClInclude Include="CabbageScene\ImageLoaders\Texture.h">
       <Filter>CabbageScene\ImageLoaders</Filter>
-    </ClInclude>
-    <ClInclude Include="CInstancedSceneObject.h" />
-    <ClInclude Include="LookupTables.h" />
-    <ClInclude Include="perlin\Perlin3.h">
-      <Filter>perlin</Filter>
     </ClInclude>
     <ClInclude Include="SciData.h" />
     <ClInclude Include="SciDataParser.h" />
