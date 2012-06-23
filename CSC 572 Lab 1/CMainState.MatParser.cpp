@@ -1,3 +1,5 @@
+#define _CRT_SECURE_NO_WARNINGS
+
 #include "CMainState.h"
 
 #include "matlib/include/mat.h"
@@ -168,8 +170,8 @@ void CMainState::parseMatFiles()
 
 		DataSet.m_minO2 = minSalinty;
 		DataSet.m_maxO2 = maxSalinty;
-		DataSet.m_maxLoc = SVector3((float) maxLat * 300, (float) maxDepth * 60, (float) maxLon * 300);
-		DataSet.m_minLoc = SVector3((float) minLat * 300, (float) minDepth * 60, (float) minLon * 300);
+		DataSet.m_maxLoc = SVector3f((float) maxLat * 300, (float) maxDepth * 60, (float) maxLon * 300);
+		DataSet.m_minLoc = SVector3f((float) minLat * 300, (float) minDepth * 60, (float) minLon * 300);
 
 		for (int j = 0; j < Dimensions[0]; j += 25)
 		{

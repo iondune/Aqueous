@@ -14,15 +14,15 @@ void CMainState::loadData()
 		CMeshSceneObject * Object = new CMeshSceneObject();
 		Object->setMesh(Cube);
 		Object->setParent(VoxelObject);
-		Object->setScale(SVector3(1.f) / 32.f);
-		Object->setTranslation(SVector3((float) it->getLocation().X, (float) it->getLocation().Y, (float) it->getLocation().Z) / ScaleFactor);
-		Object->addUniform("uLightPosition", & BindLightPosition);
+		Object->setScale(SVector3f(1.f) / 32.f);
+		Object->setTranslation(SVector3f((float) it->getLocation().X, (float) it->getLocation().Y, (float) it->getLocation().Z) / ScaleFactor);
+		Object->addUniform("uLightPosition", boost::shared_ptr<IUniform const>(& BindLightPosition));
 
 		double o2_ratio = (it->getO2Concenration() - DataSet.m_minO2) / (DataSet.m_maxO2 - DataSet.m_minO2);
-		CMaterial mat;
+		CRenderable::SMaterial mat;
 		mat.DiffuseColor = SColor(1.f - (float) o2_ratio, (float) o2_ratio, 1.f - (float) o2_ratio);
 		Object->setMaterial(mat);
-		Object->setShader(ERenderPass::ERP_DEFAULT, Shader);
+		Object->setShader(ERenderPass::Default, Shader);
 		Object->setCullingEnabled(false);
 
 		i ++;
@@ -55,57 +55,57 @@ void CMainState::loadData()
 			{
 			case EO_TOP_UPPER_LEFT:
 				NewRoot->Children[i]->Extents = SBoundingBox3(
-					SVector3(Root->Extents.MinCorner.X, Root->Extents.getCenter().Y, Root->Extents.getCenter().Z),
-					SVector3(Root->Extents.getCenter().X, Root->Extents.MaxCorner.Y, Root->Extents.MaxCorner.Z)
+					SVector3f(Root->Extents.MinCorner.X, Root->Extents.getCenter().Y, Root->Extents.getCenter().Z),
+					SVector3f(Root->Extents.getCenter().X, Root->Extents.MaxCorner.Y, Root->Extents.MaxCorner.Z)
 					);
 				break;
 
 			case EO_TOP_UPPER_RIGHT:
 				NewRoot->Children[i]->Extents = SBoundingBox3(
-					SVector3(Root->Extents.getCenter().X, Root->Extents.getCenter().Y, Root->Extents.getCenter().Z),
-					SVector3(Root->Extents.MaxCorner.X, Root->Extents.MaxCorner.Y, Root->Extents.MaxCorner.Z)
+					SVector3f(Root->Extents.getCenter().X, Root->Extents.getCenter().Y, Root->Extents.getCenter().Z),
+					SVector3f(Root->Extents.MaxCorner.X, Root->Extents.MaxCorner.Y, Root->Extents.MaxCorner.Z)
 					);
 				break;
 
 			case EO_TOP_LOWER_LEFT:
 				NewRoot->Children[i]->Extents = SBoundingBox3(
-					SVector3(Root->Extents.MinCorner.X, Root->Extents.MinCorner.Y, Root->Extents.getCenter().Z),
-					SVector3(Root->Extents.getCenter().X, Root->Extents.getCenter().Y, Root->Extents.MaxCorner.Z)
+					SVector3f(Root->Extents.MinCorner.X, Root->Extents.MinCorner.Y, Root->Extents.getCenter().Z),
+					SVector3f(Root->Extents.getCenter().X, Root->Extents.getCenter().Y, Root->Extents.MaxCorner.Z)
 					);
 				break;
 
 			case EO_TOP_LOWER_RIGHT:
 				NewRoot->Children[i]->Extents = SBoundingBox3(
-					SVector3(Root->Extents.getCenter().X, Root->Extents.MinCorner.Y, Root->Extents.getCenter().Z),
-					SVector3(Root->Extents.MaxCorner.X, Root->Extents.getCenter().Y, Root->Extents.MaxCorner.Z)
+					SVector3f(Root->Extents.getCenter().X, Root->Extents.MinCorner.Y, Root->Extents.getCenter().Z),
+					SVector3f(Root->Extents.MaxCorner.X, Root->Extents.getCenter().Y, Root->Extents.MaxCorner.Z)
 					);
 				break;
 
 			case EO_BOTTOM_UPPER_LEFT:
 				NewRoot->Children[i]->Extents = SBoundingBox3(
-					SVector3(Root->Extents.MinCorner.X, Root->Extents.getCenter().Y, Root->Extents.MinCorner.Z),
-					SVector3(Root->Extents.getCenter().X, Root->Extents.MaxCorner.Y, Root->Extents.getCenter().Z)
+					SVector3f(Root->Extents.MinCorner.X, Root->Extents.getCenter().Y, Root->Extents.MinCorner.Z),
+					SVector3f(Root->Extents.getCenter().X, Root->Extents.MaxCorner.Y, Root->Extents.getCenter().Z)
 					);
 				break;
 
 			case EO_BOTTOM_UPPER_RIGHT:
 				NewRoot->Children[i]->Extents = SBoundingBox3(
-					SVector3(Root->Extents.getCenter().X, Root->Extents.getCenter().Y, Root->Extents.MinCorner.Z),
-					SVector3(Root->Extents.MaxCorner.X, Root->Extents.MaxCorner.Y, Root->Extents.getCenter().Z)
+					SVector3f(Root->Extents.getCenter().X, Root->Extents.getCenter().Y, Root->Extents.MinCorner.Z),
+					SVector3f(Root->Extents.MaxCorner.X, Root->Extents.MaxCorner.Y, Root->Extents.getCenter().Z)
 					);
 				break;
 
 			case EO_BOTTOM_LOWER_LEFT:
 				NewRoot->Children[i]->Extents = SBoundingBox3(
-					SVector3(Root->Extents.MinCorner.X, Root->Extents.MinCorner.Y, Root->Extents.MinCorner.Z),
-					SVector3(Root->Extents.getCenter().X, Root->Extents.getCenter().Y, Root->Extents.getCenter().Z)
+					SVector3f(Root->Extents.MinCorner.X, Root->Extents.MinCorner.Y, Root->Extents.MinCorner.Z),
+					SVector3f(Root->Extents.getCenter().X, Root->Extents.getCenter().Y, Root->Extents.getCenter().Z)
 					);
 				break;
 
 			case EO_BOTTOM_LOWER_RIGHT:
 				NewRoot->Children[i]->Extents = SBoundingBox3(
-					SVector3(Root->Extents.getCenter().X, Root->Extents.MinCorner.Y, Root->Extents.MinCorner.Z),
-					SVector3(Root->Extents.MaxCorner.X, Root->Extents.getCenter().Y, Root->Extents.getCenter().Z)
+					SVector3f(Root->Extents.getCenter().X, Root->Extents.MinCorner.Y, Root->Extents.MinCorner.Z),
+					SVector3f(Root->Extents.MaxCorner.X, Root->Extents.getCenter().Y, Root->Extents.getCenter().Z)
 					);
 				break;
 			}
@@ -134,13 +134,13 @@ void CMainState::loadData()
 				Object->setParent(SoupObject);
 				Object->setScale(NewRoot->Children[i]->Extents.getExtent() / ScaleFactor);
 				Object->setTranslation(NewRoot->Children[i]->Extents.getCenter() / ScaleFactor);
-				Object->addUniform("uLightPosition", & BindLightPosition);
+				Object->addUniform("uLightPosition", boost::shared_ptr<IUniform const>(& BindLightPosition));
 
 				double o2_ratio = (((CSciTreeLeaf *)NewRoot->Children[i])->Datums[0].getO2Concenration() - DataSet.m_minO2) / (DataSet.m_maxO2 - DataSet.m_minO2);
-				CMaterial mat;
+				CRenderable::SMaterial mat;
 				mat.DiffuseColor = SColor(1.f - (float) o2_ratio, (float) o2_ratio, 1.f - (float) o2_ratio);
 				Object->setMaterial(mat);
-				Object->setShader(ERenderPass::ERP_DEFAULT, Shader);
+				Object->setShader(ERenderPass::Default, Shader);
 				//Object->enableDebugData(EDebugData::Wireframe);
 				Object->setCullingEnabled(false);
 			}

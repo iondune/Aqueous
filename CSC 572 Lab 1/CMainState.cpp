@@ -20,11 +20,12 @@ void CMainState::OnRenderStart(float const Elapsed)
     Tyra->setScale(Scale);
     Tyra->setRotation(Rotation);
 
-	LightPosition = Camera->getPosition() + SVector3(0, 0, 0);
+	LightPosition = Camera->getPosition() + SVector3f(0, 0, 0);
 
 	LightObject->setTranslation(LightPosition);
 
 
 	SceneManager.drawAll();
+	SceneManager.endDraw();
     SDL_GL_SwapBuffers();
 }

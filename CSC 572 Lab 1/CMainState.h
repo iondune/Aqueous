@@ -1,9 +1,9 @@
 #ifndef _CMAINSTATE_H_INCLUDED_
 #define _CMAINSTATE_H_INCLUDED_
 
-#include <CabbageCore.h>
-#include <CabbageScene.h>
-#include <CabbageFramework.h>
+#include <ionCore.h>
+#include <ionScene.h>
+#include <ionWindow.h>
 
 #include "SciDataParser.h"
 
@@ -18,8 +18,8 @@ class CMainState : public CState<CMainState>
 	ISceneObject * SoupObject;
 	ISceneObject * VoxelObject;
 
-	SVector3 LightPosition;
-	SUniform<SVector3> BindLightPosition;
+	SVector3f LightPosition;
+	SUniformReference<SVector3f> BindLightPosition;
 
 	ISciTreeNode * DataTree;
 
@@ -50,7 +50,7 @@ public:
     glm::vec3 makeSphereVec(int x, int y);
 
     int Mode;
-	SVector3 Translation, Scale;
+	SVector3f Translation, Scale;
     glm::mat4 Rotation;
 
     void OnMouseEvent(SMouseEvent const & Event);

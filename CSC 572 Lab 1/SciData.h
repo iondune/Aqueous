@@ -12,8 +12,8 @@
 #include <ctime>
 #include <exception>
 
-#include "CabbageCore/SVector3.h"
-typedef SVector3 Vector3;
+#include <SVector3.h>
+typedef SVector3f Vector3;
 
 
 /* Some error definitions */
@@ -67,7 +67,7 @@ protected:
 	// tm timestamp;
 };
 
-#include "CabbageCore/CabbageCore.h"
+#include "ionCore.h"
 #include <vector>
 
 class ISciTreeNode

@@ -1,8 +1,6 @@
-#define _CRT_SECURE_NO_WARNINGS
-
-#include <CabbageCore.h>
-#include <CabbageScene.h>
-#include <CabbageFramework.h>
+#include <ionCore.h>
+#include <ionScene.h>
+#include <ionWindow.h>
 
 #ifdef __unix__
 #include <GL/gl.h>
@@ -24,6 +22,10 @@
 #pragma comment(lib, "matlib/libeng.lib")
 #pragma comment(lib, "matlib/libmwlapack.lib")
 #pragma comment(lib, "matlib/libdflapack.lib")
+
+#pragma comment(lib, "ionWindow.lib")
+#pragma comment(lib, "ionScene.lib")
+#pragma comment(lib, "ionGUI.lib")
 
 #include <GL/glew.h>
 #include <SDL/SDL.h>

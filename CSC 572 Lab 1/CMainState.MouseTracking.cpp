@@ -65,7 +65,7 @@ void CMainState::OnMouseEvent(SMouseEvent const & Event)
 	            else if (Mode == 2)
 	            {
 		            float const scaleSpeed = 0.01f;
-                    Scale = SVector3(std::max(std::min(Scale.X + difX*scaleSpeed, 2.f), 0.1f));
+                    Scale = SVector3f(std::max(std::min(Scale.X + difX*scaleSpeed, 2.f), 0.1f));
 	            }
 				else if (Mode == 3)
 	            {

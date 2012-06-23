@@ -11,31 +11,31 @@ void CMainState::init()
 
 void CMainState::initScene()
 {
-	LightPosition = SVector3(0.2f, 0.4f, 0.2f);
+	LightPosition = SVector3f(0.2f, 0.4f, 0.2f);
 
-	SceneManager.setActiveCamera(Camera = new CCameraControl(SVector3(1.f, 0.3f, 1.5f), -1.9f));
+	SceneManager.setActiveCamera(Camera = new CCameraControl(SVector3f(1.f, 0.3f, 1.5f)));
 
 	// Load dino model and apply texture
 	CMesh * TyraMesh = CMeshLoader::loadObjMesh("Tyra.obj");
-	TyraMesh->centerMeshByExtents(SVector3());
-	Tyra = SceneManager.addMeshSceneObject(TyraMesh, CShaderLoader::loadShader("NormalMap"), CMaterial());
+	TyraMesh->centerMeshByExtents(SVector3f());
+	Tyra = SceneManager.addMeshSceneObject(TyraMesh, CShaderLoader::loadShader("NormalMap"), 0, CRenderable::SMaterial());
 	Tyra->setCullingEnabled(false);
-	Tyra->addUniform("uLightPosition", & BindLightPosition);
+	Tyra->addUniform("uLightPosition", boost::shared_ptr<IUniform const>(& BindLightPosition));
 	CTexture * Texture = CTextureLoader::loadTexture("TyraNormals.bmp");
-	Tyra->setTexture(Texture);
+	Tyra->setTexture(0, Texture);
 	Tyra->setVisible(false);
 
 	// Add space backdrop
 	Cube = CMeshLoader::createCubeMesh();
-	CMeshSceneObject * SkyBox = SceneManager.addMeshSceneObject(Cube, CShaderLoader::loadShader("DiffuseTexture"));
-	SkyBox->setScale(SVector3(20.f));
-	SkyBox->setTexture("Space.bmp");
+	CMeshSceneObject * SkyBox = SceneManager.addMeshSceneObject(Cube, CShaderLoader::loadShader("DiffuseTexture"), 0);
+	SkyBox->setScale(SVector3f(20.f));
+	SkyBox->setTexture(0, "Space.bmp");
 	SkyBox->setCullingEnabled(false);
 	SkyBox->setVisible(false);
 
 	// Add cube to show light location
-	LightObject = SceneManager.addMeshSceneObject(Cube, CShaderLoader::loadShader("Simple"));
-	LightObject->setScale(SVector3(0.09f));
+	LightObject = SceneManager.addMeshSceneObject(Cube, CShaderLoader::loadShader("Simple"), 0);
+	LightObject->setScale(SVector3f(0.09f));
 
 	Shader = CShaderLoader::loadShader("Diffuse");
 
