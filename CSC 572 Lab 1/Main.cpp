@@ -1,3 +1,5 @@
+#define _CRT_SECURE_NO_WARNINGS
+
 #include <CabbageCore.h>
 #include <CabbageScene.h>
 #include <CabbageFramework.h>
@@ -620,8 +622,8 @@ int main(int argc, char * argv[])
 
 		p.m_minO2 = minSalinty;
 		p.m_maxO2 = maxSalinty;
-		p.m_maxLoc = SVector3(maxLat * 300, maxDepth * 60, maxLon * 300);
-		p.m_minLoc = SVector3(minLat * 300, minDepth * 60, minLon * 300);
+		p.m_maxLoc = SVector3((float) maxLat * 300, (float) maxDepth * 60, (float) maxLon * 300);
+		p.m_minLoc = SVector3((float) minLat * 300, (float) minDepth * 60, (float) minLon * 300);
 
 		for (int j = 0; j < Dimensions[0]; j += 25)
 		{
