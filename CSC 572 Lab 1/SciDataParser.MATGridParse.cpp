@@ -100,7 +100,7 @@ int SciDataParser::parseMATGridFile(std::string const &data)
 				volumeData[index * 4 + 0] = (GLubyte) (Values[ValueIndex].ScalarFields["var2"] * 255.0);
 				volumeData[index * 4 + 1] = (GLubyte) (Values[ValueIndex].ScalarFields["var3"] * 255.0);
 				volumeData[index * 4 + 2] = (GLubyte) (Values[ValueIndex].ScalarFields["var4"] * 255.0);
-				volumeData[index * 4 + 3] = 200;//(GLubyte) (Values[ValueIndex].ScalarFields["var4"] * 255.0);
+				volumeData[index * 4 + 3] = clamp((volumeData[index * 4 + 0] + volumeData[index * 4 + 1] + volumeData[index * 4 + 2]) * 5 / 3, 0 , 255);//200;//(GLubyte) (Values[ValueIndex].ScalarFields["var4"] * 255.0);
 
 				 ++ ValueIndex;
 			}
