@@ -7,6 +7,7 @@ class SciDataParser : public SciDataSet
 
 public:
 
-	int parseFile(std::string const &data);
+	int parseTXTFile(std::string const & data);
+	int parseMATFile(std::string const & data);
 
 };

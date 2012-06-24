@@ -1,10 +1,10 @@
 #define _CRT_SECURE_NO_WARNINGS
 
-#include "CMainState.h"
+#include "SciDataParser.h"
 
 #include "matlib/include/mat.h"
 
-void CMainState::parseMatFiles()
+int SciDataParser::parseMATFile(std::string const &data)
 {
 	bool writeCsv = false;
 
@@ -14,7 +14,7 @@ void CMainState::parseMatFiles()
 		const char* name = NULL;
 		mxArray * pa;
 
-		const char * filename = "data2.mat";
+		const char * filename = data.c_str();
     
 		/* open mat file and read it's content */
 		printf("Opening mat file '%s'!\n", filename);
@@ -23,7 +23,7 @@ void CMainState::parseMatFiles()
 		if (pmat == NULL) 
 		{
 			printf("Error Opening File: \"%s\"\n", "data2.mat");
-			return;
+			return -1;
 		}
 		else
 			printf("Successfully opened file!\n");
@@ -69,7 +69,7 @@ void CMainState::parseMatFiles()
     
 		matClose(pmat);
 	}
-	else if (false)
+	else if (true)
 	{
 		MATFile * File = matOpen("data2.mat", "r");
 		FILE * Output;
@@ -114,7 +114,7 @@ void CMainState::parseMatFiles()
 
 		double * Data = mxGetPr(DataField);
 
-		for (int j = 0; j < Dimensions[0]; ++ j)
+		for (int j = 0; j < Dimensions[0]; j += 50)
 		{
 			for (int i = 0; i < Dimensions[1]; ++ i)
 			{
@@ -141,7 +141,7 @@ void CMainState::parseMatFiles()
 
 			SciData d(Lat, Depth, Lon);
 			d.ScalarFields["salinity"] = Salinty;
-			DataSet.Values.push_back(d);
+			Values.push_back(d);
 
 			if (writeCsv)
 				printf("\r%3d%%", (int) (100.f * (float) j / (float) (Dimensions[0] - 1.f)));
@@ -153,4 +153,8 @@ void CMainState::parseMatFiles()
 			printf("\nDone reading mat.\n");
 		}
 	}
+
+	normalizeField("salinity");
+
+	return Values.size();
 }

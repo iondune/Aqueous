@@ -98,10 +98,10 @@
     <ClCompile Include="CMainState.DataLoading.cpp" />
     <ClCompile Include="CMainState.EventHandling.cpp" />
     <ClCompile Include="CMainState.InitFunctions.cpp" />
-    <ClCompile Include="CMainState.MatParser.cpp" />
     <ClCompile Include="CMainState.MouseTracking.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="SciDataParser.cpp" />
+    <ClCompile Include=".\SciDataParser.TXTParse.cpp" />
+    <ClCompile Include="SciDataParser.MATParse.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CMainState.h" />

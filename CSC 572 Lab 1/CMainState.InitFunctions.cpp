@@ -32,7 +32,7 @@ void CMainState::initScene()
 	SkyBox->setScale(SVector3f(20.f));
 	SkyBox->setTexture(0, "Space.bmp");
 	SkyBox->setCullingEnabled(false);
-	SkyBox->setVisible(false);
+	//SkyBox->setVisible(false);
 
 	// Add cube to show light location
 	LightObject = SceneManager.addMeshSceneObject(Cube, CShaderLoader::loadShader("Simple"), 0);

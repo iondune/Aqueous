@@ -2,12 +2,23 @@
 
 void CMainState::loadData()
 {
-	float const ScaleFactor = 4.f * 12.f;
+	// Determine data source
+	std::string Field;
+	switch (1)
+	{
+	default:
+	case 0:
+		DataSet.parseTXTFile("ForZoe.txt");
+		Field = "o2";
+		break;
+	case 1:
+		DataSet.parseMATFile("data2.mat");
+		Field = "salinity";
+		break;
+	}
+	DataSet.setDataScale(Vector3(3, 2, 3));
 
-	if (! DataSet.Values.size())
-		DataSet.parseFile("ForZoe.txt");
-
-	int i = 0;
+	int PointsLoaded = 0;
 
 	for (auto it = DataSet.Values.begin(); it != DataSet.Values.end(); ++ it)
 	{
@@ -15,26 +26,26 @@ void CMainState::loadData()
 		Object->setMesh(Cube);
 		Object->setParent(VoxelObject);
 		Object->setScale(SVector3f(1.f) / 32.f);
-		Object->setTranslation(SVector3f((float) it->getLocation().X, (float) it->getLocation().Y, (float) it->getLocation().Z) / ScaleFactor);
+		Object->setTranslation(SVector3f((float) it->getLocation().X, (float) it->getLocation().Y, (float) it->getLocation().Z));
 		Object->addUniform("uLightPosition", boost::shared_ptr<IUniform const>(& BindLightPosition));
 
-		double o2_ratio = it->getField("o2");
+		double o2_ratio = it->getField(Field);
 		CRenderable::SMaterial mat;
 		mat.DiffuseColor = SColor(1.f - (float) o2_ratio, (float) o2_ratio, 1.f - (float) o2_ratio);
 		Object->setMaterial(mat);
 		Object->setShader(ERenderPass::Default, Shader);
 		Object->setCullingEnabled(false);
 
-		i ++;
+		PointsLoaded ++;
 	}
 
-	printf("Created %d points\n\n\n.", i);
+	printf("Created %d points\n\n\n.", PointsLoaded);
 
 	CSciTreeLeaf * Root = (CSciTreeLeaf *) (DataTree = new CSciTreeLeaf());
 
 	for (auto it = DataSet.Values.begin(); it != DataSet.Values.end(); ++ it)
 		Root->Datums.push_back(* it);
-	Root->Extents = SBoundingBox3(Vector3(0), Vector3(1));
+	Root->Extents = SBoundingBox3(Vector3(0), DataSet.DataScale);
 
 	std::function<void(ISciTreeNode * & Node)> SubdivideNode;
 	SubdivideNode = [&](ISciTreeNode * & Node)
@@ -132,11 +143,11 @@ void CMainState::loadData()
 				CMeshSceneObject * Object = new CMeshSceneObject();
 				Object->setMesh(Cube);
 				Object->setParent(SoupObject);
-				Object->setScale(NewRoot->Children[i]->Extents.getExtent() / ScaleFactor);
-				Object->setTranslation(NewRoot->Children[i]->Extents.getCenter() / ScaleFactor);
+				Object->setScale(NewRoot->Children[i]->Extents.getExtent());
+				Object->setTranslation(NewRoot->Children[i]->Extents.getCenter());
 				Object->addUniform("uLightPosition", boost::shared_ptr<IUniform const>(& BindLightPosition));
 
-				double o2_ratio = ((CSciTreeLeaf *)NewRoot->Children[i])->Datums[0].getField("o2");
+				double o2_ratio = ((CSciTreeLeaf *)NewRoot->Children[i])->Datums[0].getField(Field);
 				CRenderable::SMaterial mat;
 				mat.DiffuseColor = SColor(1.f - (float) o2_ratio, (float) o2_ratio, 1.f - (float) o2_ratio);
 				Object->setMaterial(mat);

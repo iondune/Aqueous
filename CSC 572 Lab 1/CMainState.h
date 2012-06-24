@@ -40,19 +40,24 @@ public:
 	void begin();
 	void OnRenderStart(float const Elapsed);
 
-	void parseMatFiles();
-
-	
     void OnKeyboardEvent(SKeyboardEvent const & Event);
 
+
+	//////////////////////////////
+	// Mouse Tracking Varaibles //
+	//////////////////////////////
+
     glm::vec3 LastVec;
-
-    glm::vec3 makeSphereVec(int x, int y);
-
     int Mode;
 	SVector3f Translation, Scale;
     glm::mat4 Rotation;
+	
 
+	////////////////////////////
+	// Mouse Tracking Methods //
+	////////////////////////////
+
+    glm::vec3 makeSphereVec(int x, int y);
     void OnMouseEvent(SMouseEvent const & Event);
 
 };

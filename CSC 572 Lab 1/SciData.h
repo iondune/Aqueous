@@ -132,16 +132,48 @@ public:
 
 };
 
+template<class _FwdIt>
+	_FwdIt max_element_real(_FwdIt _First, _FwdIt _Last)
+	{	// find largest element, using operator<
+	_FwdIt _Found = _First;
+	if (_First != _Last)
+		for (; ++_First != _Last; )
+			if (*_Found != *_Found || (_DEBUG_LT(*_Found, *_First) && *_First == *_First))
+				_Found = _First;
+	return (_Found);
+	}
+
+template<class _FwdIt>
+	_FwdIt min_element_real(_FwdIt _First, _FwdIt _Last)
+	{	// find smallest element, using operator<
+	_FwdIt _Found = _First;
+	if (_First != _Last)
+		for (; ++_First != _Last; )
+			if (*_Found != *_Found || (_DEBUG_LT(*_First, *_Found) && *_First == *_First))
+				_Found = _First;
+	return (_Found);
+	}
+
 class SciDataSet
 {
 
 public:
 
 	std::vector<SciData> Values;
+	Vector3 DataScale;
+
+	void setDataScale(Vector3 const & v)
+	{
+		normalizeField("x", v.X);
+		normalizeField("y", v.Y);
+		normalizeField("z", v.Z);
+
+		DataScale = v;
+	}
 
 	void normalizeField(std::string const & Field, double const Scale = 1)
 	{
-		double max = * std::max_element(begin(Field), end(Field)), min = * std::min_element(begin(Field), end(Field));
+		double max = * max_element_real(begin(Field), end(Field)), min = * min_element_real(begin(Field), end(Field));
 		std::for_each(begin(Field), end(Field), [min, max, Scale](double & d) { d = (d - min) / (max - min) * Scale; });
 	}
 

@@ -31,7 +31,7 @@ char *textFileRead(char const *fn)
 }
 
 
-int SciDataParser::parseFile(std::string const &data)
+int SciDataParser::parseTXTFile(std::string const &data)
 {
 	// read the files into buffers
 	char* dataBuf = textFileRead(data.c_str());
@@ -61,9 +61,6 @@ int SciDataParser::parseFile(std::string const &data)
 		line++;
 	}
 
-	normalizeField("x", 300);
-	normalizeField("y", 20);
-	normalizeField("z", 300);
 	normalizeField("o2");
 	normalizeField("temp");
 	normalizeField("d1");
