@@ -1,13 +1,3 @@
-#include <ionCore.h>
-#include <ionScene.h>
-#include <ionWindow.h>
-
-#ifdef __unix__
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <SDL/SDL.h>
-#endif
-
 #ifdef _WIN32
 #pragma comment(lib, "glew32.lib")
 #pragma comment(lib, "SDL.lib")
@@ -26,12 +16,14 @@
 #pragma comment(lib, "ionWindow.lib")
 #pragma comment(lib, "ionScene.lib")
 #pragma comment(lib, "ionGUI.lib")
-
-#include <GL/glew.h>
-#include <SDL/SDL.h>
 #endif
 
+#include <ionCore.h>
+#include <ionScene.h>
+#include <ionWindow.h>
+
 #include "CMainState.h"
+
 
 int main(int argc, char * argv[])
 {
