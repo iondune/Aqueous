@@ -11,4 +11,6 @@ public:
 	int parseMATFile(std::string const & data);
 	int parseMATGridFile(std::string const & data);
 
+	unsigned int VolumeHandle;
+
 };

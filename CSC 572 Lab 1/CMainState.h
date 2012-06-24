@@ -25,6 +25,10 @@ class CMainState : public CState<CMainState>
 
 	CShader * Shader;
 	CMesh * Cube;
+	CMesh * VolumeCube;
+
+	CFrameBufferObject * VolumeTarget;
+	CTexture * VolumeBuffer;
 
 public:
 
@@ -41,6 +45,9 @@ public:
 	void OnRenderStart(float const Elapsed);
 
     void OnKeyboardEvent(SKeyboardEvent const & Event);
+
+
+	void setupVolumeRender();
 
 
 	//////////////////////////////
