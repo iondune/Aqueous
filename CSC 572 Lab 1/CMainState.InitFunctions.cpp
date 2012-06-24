@@ -2,9 +2,9 @@
 
 void CMainState::init()
 {
-	SDL_WM_SetCaption("Dinosaurs in Space!", "");
+	SDL_WM_SetCaption("Underwater Volume Data Rendering... In Space!", "");
 
-    glClearColor(0.2f, 0.2f, 0.1f, 1.0f);
+    glClearColor(0.1f, 0.2f, 0.2f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
 }
@@ -28,7 +28,7 @@ void CMainState::initScene()
 
 	// Add space backdrop
 	Cube = CMeshLoader::createCubeMesh();
-	CMeshSceneObject * SkyBox = SceneManager.addMeshSceneObject(Cube, CShaderLoader::loadShader("DiffuseTexture"), 0);
+	SkyBox = SceneManager.addMeshSceneObject(Cube, CShaderLoader::loadShader("DiffuseTexture"), 0);
 	SkyBox->setScale(SVector3f(20.f));
 	SkyBox->setTexture(0, "Space.bmp");
 	SkyBox->setCullingEnabled(false);

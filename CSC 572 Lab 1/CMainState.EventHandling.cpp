@@ -8,18 +8,28 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 	case SDLK_x:
 
 		if (! Event.Pressed)
-		{
 			SoupObject->setVisible(! SoupObject->isVisible());
-		}
 
 		break;
 
 	case SDLK_z:
 
 		if (! Event.Pressed)
-		{
 			VoxelObject->setVisible(! VoxelObject->isVisible());
-		}
+
+		break;
+
+	case SDLK_c:
+
+		if (! Event.Pressed)
+			SkyBox->setVisible(! SkyBox->isVisible());
+
+		break;
+
+	case SDLK_v:
+
+		if (! Event.Pressed)
+			ShowVolume = ! ShowVolume;
 
 		break;
 

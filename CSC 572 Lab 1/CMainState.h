@@ -30,6 +30,10 @@ class CMainState : public CState<CMainState>
 	CFrameBufferObject * VolumeTarget;
 	CTexture * VolumeBuffer;
 
+	CMeshSceneObject * SkyBox;
+
+	bool ShowVolume;
+
 public:
 
 	SciDataParser DataSet;

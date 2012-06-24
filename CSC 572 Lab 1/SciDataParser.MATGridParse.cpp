@@ -85,60 +85,27 @@ int SciDataParser::parseMATGridFile(std::string const &data)
 
 
 	/// Generate Volume!
-	unsigned int const VOLUME_TEX_SIZE = 128;
-	int size = VOLUME_TEX_SIZE*VOLUME_TEX_SIZE*VOLUME_TEX_SIZE* 4;
+	int size = Dimensions[0]*Dimensions[1]*Dimensions[2]* 4;
 	GLubyte * volumeData = new GLubyte[size];
 
-	for(int x = 0; x < VOLUME_TEX_SIZE; x++)
-	{for(int y = 0; y < VOLUME_TEX_SIZE; y++)
-	{for(int z = 0; z < VOLUME_TEX_SIZE; z++)
+	int ValueIndex = 0;
+
+	for (int i = 0; i < Dimensions[2]; ++ i)
 	{
-		volumeData[(x*4)   + (y * VOLUME_TEX_SIZE * 4) + (z * VOLUME_TEX_SIZE * VOLUME_TEX_SIZE * 4)] = z%250;
-		volumeData[(x*4)+1 + (y * VOLUME_TEX_SIZE * 4) + (z * VOLUME_TEX_SIZE * VOLUME_TEX_SIZE * 4)] = y%250;
-		volumeData[(x*4)+2 + (y * VOLUME_TEX_SIZE * 4) + (z * VOLUME_TEX_SIZE * VOLUME_TEX_SIZE * 4)] = 250;
-		volumeData[(x*4)+3 + (y * VOLUME_TEX_SIZE * 4) + (z * VOLUME_TEX_SIZE * VOLUME_TEX_SIZE * 4)] = 230;
-	  
-		
-		Vector3 p =	Vector3(x,y,z)- Vector3(VOLUME_TEX_SIZE-20,VOLUME_TEX_SIZE-30,VOLUME_TEX_SIZE-30);
-		bool test = (p.length() < 42);
-		if(test)
-			volumeData[(x*4)+3 + (y * VOLUME_TEX_SIZE * 4) + (z * VOLUME_TEX_SIZE * VOLUME_TEX_SIZE * 4)] = 0;
-
-		p =	Vector3(x,y,z)- Vector3(VOLUME_TEX_SIZE/2,VOLUME_TEX_SIZE/2,VOLUME_TEX_SIZE/2);
-		test = (p.length() < 24);
-		if(test)
-			volumeData[(x*4)+3 + (y * VOLUME_TEX_SIZE * 4) + (z * VOLUME_TEX_SIZE * VOLUME_TEX_SIZE * 4)] = 0;
-
-		
-		if(x > 20 && x < 40 && y > 0 && y < VOLUME_TEX_SIZE && z > 10 &&  z < 50)
+		for (int j = 0; j < Dimensions[1]; ++ j)
 		{
-			volumeData[(x*4)   + (y * VOLUME_TEX_SIZE * 4) + (z * VOLUME_TEX_SIZE * VOLUME_TEX_SIZE * 4)] = 100;
-		    volumeData[(x*4)+1 + (y * VOLUME_TEX_SIZE * 4) + (z * VOLUME_TEX_SIZE * VOLUME_TEX_SIZE * 4)] = 250;
-		    volumeData[(x*4)+2 + (y * VOLUME_TEX_SIZE * 4) + (z * VOLUME_TEX_SIZE * VOLUME_TEX_SIZE * 4)] = y%100;
-			volumeData[(x*4)+3 + (y * VOLUME_TEX_SIZE * 4) + (z * VOLUME_TEX_SIZE * VOLUME_TEX_SIZE * 4)] = 250;
-		}
+			for (int k = 0; k < Dimensions[0]; ++ k)
+			{
+				int index = k + j * Dimensions[0] + i * Dimensions[1] * Dimensions[0];
+				volumeData[index * 4 + 0] = (GLubyte) (Values[ValueIndex].ScalarFields["var2"] * 255.0);
+				volumeData[index * 4 + 1] = (GLubyte) (Values[ValueIndex].ScalarFields["var3"] * 255.0);
+				volumeData[index * 4 + 2] = (GLubyte) (Values[ValueIndex].ScalarFields["var4"] * 255.0);
+				volumeData[index * 4 + 3] = 200;//(GLubyte) (Values[ValueIndex].ScalarFields["var4"] * 255.0);
 
-		if(x > 50 && x < 70 && y > 0 && y < VOLUME_TEX_SIZE && z > 10 &&  z < 50)
-		{
-			volumeData[(x*4)   + (y * VOLUME_TEX_SIZE * 4) + (z * VOLUME_TEX_SIZE * VOLUME_TEX_SIZE * 4)] = 250;
-		    volumeData[(x*4)+1 + (y * VOLUME_TEX_SIZE * 4) + (z * VOLUME_TEX_SIZE * VOLUME_TEX_SIZE * 4)] = 250;
-		    volumeData[(x*4)+2 + (y * VOLUME_TEX_SIZE * 4) + (z * VOLUME_TEX_SIZE * VOLUME_TEX_SIZE * 4)] = y%100;
-			volumeData[(x*4)+3 + (y * VOLUME_TEX_SIZE * 4) + (z * VOLUME_TEX_SIZE * VOLUME_TEX_SIZE * 4)] = 250;
+				 ++ ValueIndex;
+			}
 		}
-
-		if(x > 80 && x < 100 && y > 0 && y < VOLUME_TEX_SIZE && z > 10 &&  z < 50)
-		{
-			volumeData[(x*4)   + (y * VOLUME_TEX_SIZE * 4) + (z * VOLUME_TEX_SIZE * VOLUME_TEX_SIZE * 4)] = 250;
-		    volumeData[(x*4)+1 + (y * VOLUME_TEX_SIZE * 4) + (z * VOLUME_TEX_SIZE * VOLUME_TEX_SIZE * 4)] = 70;
-		    volumeData[(x*4)+2 + (y * VOLUME_TEX_SIZE * 4) + (z * VOLUME_TEX_SIZE * VOLUME_TEX_SIZE * 4)] = y%100;
-			volumeData[(x*4)+3 + (y * VOLUME_TEX_SIZE * 4) + (z * VOLUME_TEX_SIZE * VOLUME_TEX_SIZE * 4)] = 250;
-		}
-
-		p =	Vector3(x,y,z)- Vector3(24,24,24);
-		test = (p.length() < 40);
-		if(test)
-			volumeData[(x*4)+3 + (y * VOLUME_TEX_SIZE * 4) + (z * VOLUME_TEX_SIZE * VOLUME_TEX_SIZE * 4)] = 0;
-	}}}
+	}
 
 
 	glEnable(GL_TEXTURE_3D);
@@ -151,7 +118,7 @@ int SciDataParser::parseMATGridFile(std::string const &data)
 	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
 	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
 	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_BORDER);
-	glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA, VOLUME_TEX_SIZE, VOLUME_TEX_SIZE, VOLUME_TEX_SIZE, 0, GL_RGBA, GL_UNSIGNED_BYTE, volumeData);
+	glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA, Dimensions[0], Dimensions[1], Dimensions[2], 0, GL_RGBA, GL_UNSIGNED_BYTE, volumeData);
 
 	delete []volumeData;
 	std::cout << "volume texture created " << VolumeHandle << std::endl;

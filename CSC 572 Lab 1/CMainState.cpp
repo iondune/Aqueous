@@ -1,7 +1,8 @@
 #include "CMainState.h"
 
 CMainState::CMainState()
-	: Camera(0), Tyra(0), Scale(1), Mode(3), BindLightPosition(LightPosition)
+	: Camera(0), Tyra(0), Scale(1), Mode(3), BindLightPosition(LightPosition),
+	ShowVolume(false)
 {}
 
 void CMainState::begin()
@@ -129,8 +130,9 @@ void CMainState::OnRenderStart(float const Elapsed)
 
 	
 
-	
-	glEnable(GL_CULL_FACE);
+	if (ShowVolume)
+	{
+		glEnable(GL_CULL_FACE);
 
 		glCullFace(GL_FRONT);
 		{
@@ -174,7 +176,8 @@ void CMainState::OnRenderStart(float const Elapsed)
 			glDisable(GL_TEXTURE_3D);
 		}
 
-	glDisable(GL_CULL_FACE);
+		glDisable(GL_CULL_FACE);
+	}
 
 
     SDL_GL_SwapBuffers();
