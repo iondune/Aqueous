@@ -114,11 +114,6 @@ void CMainState::parseMatFiles()
 
 		double * Data = mxGetPr(DataField);
 
-		double minLat = DBL_MAX, maxLat = -DBL_MAX;
-		double minLon = DBL_MAX, maxLon = -DBL_MAX;
-		double minDepth = DBL_MAX, maxDepth = -DBL_MAX;
-		double minSalinty = DBL_MAX, maxSalinty = -DBL_MAX;
-
 		for (int j = 0; j < Dimensions[0]; ++ j)
 		{
 			for (int i = 0; i < Dimensions[1]; ++ i)
@@ -144,45 +139,12 @@ void CMainState::parseMatFiles()
 			double Depth = Data[j + 86 * Dimensions[0]];
 			double Salinty = Data[j + 95 * Dimensions[0]];
 
-			if (Lat > maxLat)
-				maxLat = Lat;
-			if (Lat < minLat)
-				minLat = Lat;
-
-			if (Lon > maxLon)
-				maxLon = Lon;
-			if (Lon < minLon)
-				minLon = Lon;
-
-			if (Depth > maxDepth)
-				maxDepth = Depth;
-			if (Depth < minDepth)
-				minDepth = Depth;
-
-			if (Salinty > maxSalinty)
-				maxSalinty = Salinty;
-			if (Salinty < minSalinty)
-				minSalinty = Salinty;
+			SciData d(Lat, Depth, Lon);
+			d.ScalarFields["salinity"] = Salinty;
+			DataSet.Values.push_back(d);
 
 			if (writeCsv)
 				printf("\r%3d%%", (int) (100.f * (float) j / (float) (Dimensions[0] - 1.f)));
-		}
-
-		DataSet.m_minO2 = minSalinty;
-		DataSet.m_maxO2 = maxSalinty;
-		DataSet.m_maxLoc = SVector3f((float) maxLat * 300, (float) maxDepth * 60, (float) maxLon * 300);
-		DataSet.m_minLoc = SVector3f((float) minLat * 300, (float) minDepth * 60, (float) minLon * 300);
-
-		for (int j = 0; j < Dimensions[0]; j += 25)
-		{
-			double Lat = Data[j + 89 * Dimensions[0]];
-			double Lon = Data[j + 90 * Dimensions[0]];
-			double Depth = Data[j + 86 * Dimensions[0]];
-			double Salinty = Data[j + 95 * Dimensions[0]];
-			
-			SciData d((Lat - minLat) / (maxLat - minLat) * 300, (Depth - minDepth) / (maxDepth - minDepth) * 60, (Lon - minLon) / (maxLon - minLon) * 300);
-			d.ScalarFields["salinity"] = Salinty;
-			DataSet.Values.push_back(d);
 		}
 
 		if (writeCsv)

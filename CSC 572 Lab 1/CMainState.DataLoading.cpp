@@ -18,7 +18,7 @@ void CMainState::loadData()
 		Object->setTranslation(SVector3f((float) it->getLocation().X, (float) it->getLocation().Y, (float) it->getLocation().Z) / ScaleFactor);
 		Object->addUniform("uLightPosition", boost::shared_ptr<IUniform const>(& BindLightPosition));
 
-		double o2_ratio = (it->getField("o2") - DataSet.m_minO2) / (DataSet.m_maxO2 - DataSet.m_minO2);
+		double o2_ratio = it->getField("o2");
 		CRenderable::SMaterial mat;
 		mat.DiffuseColor = SColor(1.f - (float) o2_ratio, (float) o2_ratio, 1.f - (float) o2_ratio);
 		Object->setMaterial(mat);
@@ -34,7 +34,7 @@ void CMainState::loadData()
 
 	for (auto it = DataSet.Values.begin(); it != DataSet.Values.end(); ++ it)
 		Root->Datums.push_back(* it);
-	Root->Extents = SBoundingBox3(DataSet.m_minLoc, DataSet.m_maxLoc);
+	Root->Extents = SBoundingBox3(Vector3(0), Vector3(1));
 
 	std::function<void(ISciTreeNode * & Node)> SubdivideNode;
 	SubdivideNode = [&](ISciTreeNode * & Node)
@@ -136,7 +136,7 @@ void CMainState::loadData()
 				Object->setTranslation(NewRoot->Children[i]->Extents.getCenter() / ScaleFactor);
 				Object->addUniform("uLightPosition", boost::shared_ptr<IUniform const>(& BindLightPosition));
 
-				double o2_ratio = (((CSciTreeLeaf *)NewRoot->Children[i])->Datums[0].getField("o2") - DataSet.m_minO2) / (DataSet.m_maxO2 - DataSet.m_minO2);
+				double o2_ratio = ((CSciTreeLeaf *)NewRoot->Children[i])->Datums[0].getField("o2");
 				CRenderable::SMaterial mat;
 				mat.DiffuseColor = SColor(1.f - (float) o2_ratio, (float) o2_ratio, 1.f - (float) o2_ratio);
 				Object->setMaterial(mat);

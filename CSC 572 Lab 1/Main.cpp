@@ -33,8 +33,6 @@
 
 #include "CMainState.h"
 
-
-
 int main(int argc, char * argv[])
 {
 	CTextureLoader::ImageDirectory = "Media/";

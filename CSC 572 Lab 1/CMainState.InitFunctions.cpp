@@ -14,6 +14,7 @@ void CMainState::initScene()
 	LightPosition = SVector3f(0.2f, 0.4f, 0.2f);
 
 	SceneManager.setActiveCamera(Camera = new CCameraControl(SVector3f(1.f, 0.3f, 1.5f)));
+	Camera->setVelocity(1.9f);
 
 	// Load dino model and apply texture
 	CMesh * TyraMesh = CMeshLoader::loadObjMesh("Tyra.obj");

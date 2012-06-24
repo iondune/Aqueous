@@ -35,9 +35,34 @@ public:
 
 	double const getField(std::string const & Field) const
 	{
+		if (Field == "x")
+			return Location.X;
+		if (Field == "y")
+			return Location.Y;
+		if (Field == "z")
+			return Location.Z;
+
 		std::map<std::string, double>::const_iterator it;
 		if ((it = ScalarFields.find(Field)) == ScalarFields.end())
 			return 0;
+		else
+			return it->second;
+	}
+
+	double & getField(std::string const & Field)
+	{
+		static double dummy = 0;
+
+		if (Field == "x")
+			return Location.X;
+		if (Field == "y")
+			return Location.Y;
+		if (Field == "z")
+			return Location.Z;
+
+		std::map<std::string, double>::iterator it;
+		if ((it = ScalarFields.find(Field)) == ScalarFields.end())
+			return dummy;
 		else
 			return it->second;
 	}
@@ -48,9 +73,15 @@ class SciDataIterator
 {
 
 	std::vector<SciData>::iterator Iterator;
-	std::string const & Field;
+	std::string Field;
 
 public:
+
+	typedef std::vector<SciData>::iterator::iterator_category iterator_category;
+	typedef double value_type;
+	typedef std::vector<SciData>::iterator::difference_type difference_type;
+	typedef double * pointer;
+	typedef double & reference;
 
 	SciDataIterator(std::vector<SciData>::iterator iterator, std::string const & field)
 		: Iterator(iterator), Field(field)
@@ -71,49 +102,32 @@ public:
 
 	double const operator *() const
 	{
-		std::map<std::string, double>::const_iterator it;
-		if ((it = Iterator->ScalarFields.find(Field)) == Iterator->ScalarFields.end())
-			return 0;
-		else
-			return it->second;
+		return Iterator->getField(Field);
 	}
 
 	double & operator *()
 	{
-		static double dummy = 0;
-		std::map<std::string, double>::iterator it;
-		if ((it = Iterator->ScalarFields.find(Field)) == Iterator->ScalarFields.end())
-			return dummy;
-		else
-			return it->second;
+		return Iterator->getField(Field);
 	}
 
 	double const * const operator ->() const
 	{
-		std::map<std::string, double>::const_iterator it;
-		if ((it = Iterator->ScalarFields.find(Field)) == Iterator->ScalarFields.end())
-			return 0;
-		else
-			return & it->second;
+		return & Iterator->getField(Field);
 	}
 
 	double * const operator ->()
 	{
-		std::map<std::string, double>::iterator it;
-		if ((it = Iterator->ScalarFields.find(Field)) == Iterator->ScalarFields.end())
-			return 0;
-		else
-			return & it->second;
+		return & Iterator->getField(Field);
 	}
 
 	bool const operator < (SciDataIterator const & other) const
 	{
-		return ** this < * other;
+		return Iterator < other.Iterator;
 	}
 
 	bool const operator != (SciDataIterator const & other) const
 	{
-		return ! equals(** this, * other);
+		return Iterator != other.Iterator;
 	}
 
 };
@@ -125,10 +139,10 @@ public:
 
 	std::vector<SciData> Values;
 
-	void normalizeField(std::string const & Field)
+	void normalizeField(std::string const & Field, double const Scale = 1)
 	{
-		double max = * std::max(begin(Field), end(Field)), min = * std::min(begin(Field), end(Field));
-		std::for_each(begin(Field), end(Field), [min, max](double & d) { d = (d - min) / (max - min); });
+		double max = * std::max_element(begin(Field), end(Field)), min = * std::min_element(begin(Field), end(Field));
+		std::for_each(begin(Field), end(Field), [min, max, Scale](double & d) { d = (d - min) / (max - min) * Scale; });
 	}
 
 	SciDataIterator begin(std::string const & Field)
@@ -140,6 +154,7 @@ public:
 	{
 		return SciDataIterator(Values.end(), Field);
 	}
+
 };
 
 #include "ionCore.h"
