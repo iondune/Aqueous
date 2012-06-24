@@ -133,11 +133,11 @@ public:
 };
 
 template<class Iterator>
-Iterator max_element_real(Iterator First, Iterator _Last)
+Iterator max_element_real(Iterator First, Iterator Last)
 {
 	Iterator Found = First;
-	if (First != _Last)
-		for (; ++ First != _Last; )
+	if (First != Last)
+		for (; ++ First != Last; )
 			if (*Found != *Found || (*Found < *First && *First == *First))
 				Found = First;
 	return Found;
