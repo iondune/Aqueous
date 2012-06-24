@@ -180,8 +180,9 @@ void CMainState::parseMatFiles()
 			double Depth = Data[j + 86 * Dimensions[0]];
 			double Salinty = Data[j + 95 * Dimensions[0]];
 			
-			SciData d((Lat - minLat) / (maxLat - minLat) * 300, (Depth - minDepth) / (maxDepth - minDepth) * 60, (Lon - minLon) / (maxLon - minLon) * 300, Salinty, 0);
-			DataSet.m_data.push_back(d);
+			SciData d((Lat - minLat) / (maxLat - minLat) * 300, (Depth - minDepth) / (maxDepth - minDepth) * 60, (Lon - minLon) / (maxLon - minLon) * 300);
+			d.ScalarFields["salinity"] = Salinty;
+			DataSet.Values.push_back(d);
 		}
 
 		if (writeCsv)

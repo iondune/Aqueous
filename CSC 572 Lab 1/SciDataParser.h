@@ -2,11 +2,11 @@
 
 #include <vector>
 
-class SciDataParser
+class SciDataParser : public SciDataSet
 {
 
 public:
-	
+
 	int parseFile(std::string const &data);
 
 	SVector3f m_minLoc;// = Vector3(DBL_MAX,DBL_MAX,DBL_MAX);
@@ -15,7 +15,5 @@ public:
 	double m_maxO2;// = -DBL_MAX;
 
 	double mind1;// = DBL_MAX;
-   double maxd1;// = -DBL_MAX;
-
-	std::vector<SciData> m_data;
+	double maxd1;// = -DBL_MAX;
 };

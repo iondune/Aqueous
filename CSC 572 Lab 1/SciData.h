@@ -1,70 +1,145 @@
-/**
-* Class for storing some interesting scientific data
-* ---------------------------------
-* author: Ryan Schmitt
-* date: 2-19-11
-*/
-
-#ifndef __SCI_DATA__
-#define __SCI_DATA__
+#ifndef _SCI_DATA_H_INCLUDED_
+#define _SCI_DATA_H_INCLUDED_
 
 #include <string>
-#include <ctime>
-#include <exception>
+#include <algorithm>
+#include <map>
+#include <vector>
 
 #include <SVector3.h>
-typedef SVector3f Vector3;
+typedef SVector3d Vector3;
 
 
-/* Some error definitions */
-const int BAD_ARGUMENT_EXCEPTION = 1;
-
-/* The main data class */
 class SciData
 {
+
 public:
+
 	SciData()
 	{}
 
-	SciData(double x, double y, double z, double o2conc, double temp1):temp(temp1),m_o2conc(o2conc),m_loc((float) x, (float)y, (float) z)
+	SciData(double x, double y, double z)
+		: Location(x, y, z)
 	{}
 
 	~SciData()
 	{}
-	void setLocation(double x, double y, double z);
 
-	Vector3 getLocation() const
-	{return m_loc;}
+	Vector3 Location;
+	std::map<std::string, double> ScalarFields;
 
-	void setO2Concentration(double concentration)
-	{m_o2conc = concentration;}
+	Vector3 const & getLocation() const
+	{
+		return Location;
+	}
 
-	double getO2Concenration() const
-	{return m_o2conc;}
+	double const getField(std::string const & Field) const
+	{
+		std::map<std::string, double>::const_iterator it;
+		if ((it = ScalarFields.find(Field)) == ScalarFields.end())
+			return 0;
+		else
+			return it->second;
+	}
 
-	void setTempConcentration(double temp1)
-	{temp = temp1;}
+};
 
-	double getTempConcenration() const
-	{return temp;}
+class SciDataIterator
+{
 
-	double d1; // ?
+	std::vector<SciData>::iterator Iterator;
+	std::string const & Field;
 
-	// void setDateTime(int day, int month, int year, int hour, int min, int sec);
-	// tm getDateTime() const {return timestamp;}
-	// void setAirSaturation(double saturation) {airSat = saturation;}
-	// double getAirSaturation() const {return airSat;}
-	// void setTemperature(double temperature) {temp = temperature;}
-	// double getTemperature() const {return temp;}
+public:
 
-protected:
+	SciDataIterator(std::vector<SciData>::iterator iterator, std::string const & field)
+		: Iterator(iterator), Field(field)
+	{}
 
-	Vector3 m_loc;
-	double m_o2conc;
-	double temp;
+	SciDataIterator & operator ++()
+	{
+		++ Iterator;
+		return * this;
+	}
 
-	// double airSat, temp;
-	// tm timestamp;
+	SciDataIterator operator ++(int)
+	{
+		SciDataIterator temp = * this;
+		++ Iterator;
+		return temp;
+	}
+
+	double const operator *() const
+	{
+		std::map<std::string, double>::const_iterator it;
+		if ((it = Iterator->ScalarFields.find(Field)) == Iterator->ScalarFields.end())
+			return 0;
+		else
+			return it->second;
+	}
+
+	double & operator *()
+	{
+		static double dummy = 0;
+		std::map<std::string, double>::iterator it;
+		if ((it = Iterator->ScalarFields.find(Field)) == Iterator->ScalarFields.end())
+			return dummy;
+		else
+			return it->second;
+	}
+
+	double const * const operator ->() const
+	{
+		std::map<std::string, double>::const_iterator it;
+		if ((it = Iterator->ScalarFields.find(Field)) == Iterator->ScalarFields.end())
+			return 0;
+		else
+			return & it->second;
+	}
+
+	double * const operator ->()
+	{
+		std::map<std::string, double>::iterator it;
+		if ((it = Iterator->ScalarFields.find(Field)) == Iterator->ScalarFields.end())
+			return 0;
+		else
+			return & it->second;
+	}
+
+	bool const operator < (SciDataIterator const & other) const
+	{
+		return ** this < * other;
+	}
+
+	bool const operator != (SciDataIterator const & other) const
+	{
+		return ! equals(** this, * other);
+	}
+
+};
+
+class SciDataSet
+{
+
+public:
+
+	std::vector<SciData> Values;
+
+	void normalizeField(std::string const & Field)
+	{
+		double max = * std::max(begin(Field), end(Field)), min = * std::min(begin(Field), end(Field));
+		std::for_each(begin(Field), end(Field), [min, max](double & d) { d = (d - min) / (max - min); });
+	}
+
+	SciDataIterator begin(std::string const & Field)
+	{
+		return SciDataIterator(Values.begin(), Field);
+	}
+
+	SciDataIterator end(std::string const & Field)
+	{
+		return SciDataIterator(Values.end(), Field);
+	}
 };
 
 #include "ionCore.h"

@@ -4,12 +4,12 @@ void CMainState::loadData()
 {
 	float const ScaleFactor = 4.f * 12.f;
 
-	if (! DataSet.m_data.size())
+	if (! DataSet.Values.size())
 		DataSet.parseFile("ForZoe.txt");
 
 	int i = 0;
 
-	for (auto it = DataSet.m_data.begin(); it != DataSet.m_data.end(); ++ it)
+	for (auto it = DataSet.Values.begin(); it != DataSet.Values.end(); ++ it)
 	{
 		CMeshSceneObject * Object = new CMeshSceneObject();
 		Object->setMesh(Cube);
@@ -18,7 +18,7 @@ void CMainState::loadData()
 		Object->setTranslation(SVector3f((float) it->getLocation().X, (float) it->getLocation().Y, (float) it->getLocation().Z) / ScaleFactor);
 		Object->addUniform("uLightPosition", boost::shared_ptr<IUniform const>(& BindLightPosition));
 
-		double o2_ratio = (it->getO2Concenration() - DataSet.m_minO2) / (DataSet.m_maxO2 - DataSet.m_minO2);
+		double o2_ratio = (it->getField("o2") - DataSet.m_minO2) / (DataSet.m_maxO2 - DataSet.m_minO2);
 		CRenderable::SMaterial mat;
 		mat.DiffuseColor = SColor(1.f - (float) o2_ratio, (float) o2_ratio, 1.f - (float) o2_ratio);
 		Object->setMaterial(mat);
@@ -32,7 +32,7 @@ void CMainState::loadData()
 
 	CSciTreeLeaf * Root = (CSciTreeLeaf *) (DataTree = new CSciTreeLeaf());
 
-	for (auto it = DataSet.m_data.begin(); it != DataSet.m_data.end(); ++ it)
+	for (auto it = DataSet.Values.begin(); it != DataSet.Values.end(); ++ it)
 		Root->Datums.push_back(* it);
 	Root->Extents = SBoundingBox3(DataSet.m_minLoc, DataSet.m_maxLoc);
 
@@ -136,7 +136,7 @@ void CMainState::loadData()
 				Object->setTranslation(NewRoot->Children[i]->Extents.getCenter() / ScaleFactor);
 				Object->addUniform("uLightPosition", boost::shared_ptr<IUniform const>(& BindLightPosition));
 
-				double o2_ratio = (((CSciTreeLeaf *)NewRoot->Children[i])->Datums[0].getO2Concenration() - DataSet.m_minO2) / (DataSet.m_maxO2 - DataSet.m_minO2);
+				double o2_ratio = (((CSciTreeLeaf *)NewRoot->Children[i])->Datums[0].getField("o2") - DataSet.m_minO2) / (DataSet.m_maxO2 - DataSet.m_minO2);
 				CRenderable::SMaterial mat;
 				mat.DiffuseColor = SColor(1.f - (float) o2_ratio, (float) o2_ratio, 1.f - (float) o2_ratio);
 				Object->setMaterial(mat);
