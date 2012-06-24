@@ -9,6 +9,7 @@
     <ClCompile Include="CMainState.DataLoading.cpp" />
     <ClCompile Include=".\SciDataParser.TXTParse.cpp" />
     <ClCompile Include="SciDataParser.MATParse.cpp" />
+    <ClCompile Include="SciDataParser.MATGridParse.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SciData.h" />

@@ -4,7 +4,7 @@ void CMainState::loadData()
 {
 	// Determine data source
 	std::string Field;
-	switch (1)
+	switch (2)
 	{
 	default:
 	case 0:
@@ -14,6 +14,10 @@ void CMainState::loadData()
 	case 1:
 		DataSet.parseMATFile("data2.mat");
 		Field = "salinity";
+		break;
+	case 2:
+		DataSet.parseMATGridFile("oxyMaps.mat");
+		Field = "mult";
 		break;
 	}
 	DataSet.setDataScale(Vector3(3, 2, 3));
@@ -29,9 +33,16 @@ void CMainState::loadData()
 		Object->setTranslation(SVector3f((float) it->getLocation().X, (float) it->getLocation().Y, (float) it->getLocation().Z));
 		Object->addUniform("uLightPosition", boost::shared_ptr<IUniform const>(& BindLightPosition));
 
-		double o2_ratio = it->getField(Field);
 		CRenderable::SMaterial mat;
-		mat.DiffuseColor = SColor(1.f - (float) o2_ratio, (float) o2_ratio, 1.f - (float) o2_ratio);
+		if (Field == "mult") 
+		{
+			mat.DiffuseColor = SColor((float) it->getField("var2"), (float) it->getField("var3"), (float) it->getField("var4"));
+		}
+		else
+		{
+			double o2_ratio = it->getField(Field);
+			mat.DiffuseColor = SColor(1.f - (float) o2_ratio, (float) o2_ratio, 1.f - (float) o2_ratio);
+		}
 		Object->setMaterial(mat);
 		Object->setShader(ERenderPass::Default, Shader);
 		Object->setCullingEnabled(false);
@@ -39,7 +50,7 @@ void CMainState::loadData()
 		PointsLoaded ++;
 	}
 
-	printf("Created %d points\n\n\n.", PointsLoaded);
+	printf("Created %d points.\n\n\n", PointsLoaded);
 
 	CSciTreeLeaf * Root = (CSciTreeLeaf *) (DataTree = new CSciTreeLeaf());
 

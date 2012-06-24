@@ -8,13 +8,13 @@ int SciDataParser::parseMATFile(std::string const &data)
 {
 	bool writeCsv = false;
 
+	const char * filename = data.c_str();
+
 	if (false)
 	{
 		MATFile * pmat;
 		const char* name = NULL;
 		mxArray * pa;
-
-		const char * filename = data.c_str();
     
 		/* open mat file and read it's content */
 		printf("Opening mat file '%s'!\n", filename);
@@ -71,7 +71,7 @@ int SciDataParser::parseMATFile(std::string const &data)
 	}
 	else if (true)
 	{
-		MATFile * File = matOpen("data2.mat", "r");
+		MATFile * File = matOpen(filename, "r");
 		FILE * Output;
 		
 		if (writeCsv)
