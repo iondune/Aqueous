@@ -132,27 +132,27 @@ public:
 
 };
 
-template<class _FwdIt>
-	_FwdIt max_element_real(_FwdIt _First, _FwdIt _Last)
-	{	// find largest element, using operator<
-	_FwdIt _Found = _First;
-	if (_First != _Last)
-		for (; ++_First != _Last; )
-			if (*_Found != *_Found || (_DEBUG_LT(*_Found, *_First) && *_First == *_First))
-				_Found = _First;
-	return (_Found);
-	}
+template<class Iterator>
+Iterator max_element_real(Iterator First, Iterator _Last)
+{
+	Iterator Found = First;
+	if (First != _Last)
+		for (; ++ First != _Last; )
+			if (*Found != *Found || (*Found < *First && *First == *First))
+				Found = First;
+	return Found;
+}
 
-template<class _FwdIt>
-	_FwdIt min_element_real(_FwdIt _First, _FwdIt _Last)
-	{	// find smallest element, using operator<
-	_FwdIt _Found = _First;
-	if (_First != _Last)
-		for (; ++_First != _Last; )
-			if (*_Found != *_Found || (_DEBUG_LT(*_First, *_Found) && *_First == *_First))
-				_Found = _First;
-	return (_Found);
-	}
+template<class Iterator>
+Iterator min_element_real(Iterator First, Iterator Last)
+{
+	Iterator Found = First;
+	if (First != Last)
+		for (; ++ First != Last; )
+			if (*Found != *Found || (*First < *Found && *First == *First))
+				Found = First;
+	return Found;
+}
 
 class SciDataSet
 {
