@@ -22,20 +22,25 @@ void CMainState::begin()
 	// setup GWEN
 	Gwen::Renderer::OpenGL * pRenderer = new Gwen::Renderer::OpenGL_DebugFont();
 
-	Gwen::Skin::Simple * skin = new Gwen::Skin::Simple();
+	//Gwen::Skin::Simple * skin = new Gwen::Skin::Simple();
+	//skin->SetRender(pRenderer);
+	Gwen::Skin::TexturedBase * skin = new Gwen::Skin::TexturedBase();
 	skin->SetRender(pRenderer);
-	/*Gwen::Skin::TexturedBase * skin = new Gwen::Skin::TexturedBase();
-	skin->SetRender(pRenderer);
-	skin->Init("DefaultSkin.png");*/
+	skin->Init("DefaultSkin.png");
 
 	pCanvas = new Gwen::Controls::Canvas(skin);
 	pCanvas->SetSize(500, 500);
-	pCanvas->SetDrawBackground(true);
-	pCanvas->SetBackgroundColor(Gwen::Color(240, 120, 120, 255));
+	//pCanvas->SetDrawBackground(true);
+	//pCanvas->SetBackgroundColor(Gwen::Color(240, 120, 120, 255));
 
 	Gwen::Controls::Button * pButton = new Gwen::Controls::Button(pCanvas);
-	pButton->SetBounds(0, 0, 200, 100);
+	pButton->SetBounds(10, 10, 200, 20);
 	pButton->SetText("My First Button");
+	pButton->SetTextColorOverride(Gwen::Color(0, 0, 0, 255));
+
+	Gwen::Controls::Label * pLabel = new Gwen::Controls::Label(pCanvas);
+	pLabel->SetBounds(10, 40, 200, 20);
+	pLabel->SetText("My First Label");
 
 	// Setup volume cube
 	VolumeCube = new CMesh();
@@ -196,8 +201,16 @@ void CMainState::OnRenderStart(float const Elapsed)
 			Context.bindIndexBufferObject(VolumeCube->MeshBuffers[0]->IndexBuffer.getHandle());
 
 			glEnable(GL_BLEND);
-			glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			glDrawElements(GL_TRIANGLES, VolumeCube->MeshBuffers[0]->IndexBuffer.getElements().size(), GL_UNSIGNED_SHORT, 0);
+
+			
+			glActiveTexture(GL_TEXTURE0 + 0);
+			glBindTexture(GL_TEXTURE_2D, 0);
+			
+			glActiveTexture(GL_TEXTURE0 + 1);
+			glBindTexture(GL_TEXTURE_3D, 0);
+
 			glDisable(GL_BLEND);
 			glDisable(GL_TEXTURE_3D);
 		}
@@ -230,6 +243,9 @@ void CMainState::OnRenderStart(float const Elapsed)
 			glEnable(GL_BLEND);
 			glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			glDrawElements(GL_TRIANGLES, VolumeCube->MeshBuffers[0]->IndexBuffer.getElements().size(), GL_UNSIGNED_SHORT, 0);
+
+			
+			glBindTexture(GL_TEXTURE_3D, 0);
 			glDisable(GL_BLEND);
 			glDisable(GL_TEXTURE_3D);
 		}
@@ -251,7 +267,7 @@ void CMainState::OnRenderStart(float const Elapsed)
 	glViewport(0, 0, right - left, bottom - top);
 	
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	//pCanvas->RenderCanvas();
+	pCanvas->RenderCanvas();
 
     SDL_GL_SwapBuffers();
 }
