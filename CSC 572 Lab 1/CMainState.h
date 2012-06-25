@@ -7,6 +7,9 @@
 
 #include "SciDataParser.h"
 
+
+#include <Gwen/Controls.h>
+
 class CMainState : public CState<CMainState>
 {
 
@@ -31,6 +34,8 @@ class CMainState : public CState<CMainState>
 	CTexture * VolumeBuffer;
 
 	CMeshSceneObject * SkyBox;
+
+	Gwen::Controls::Canvas* pCanvas;
 
 	bool ShowVolume;
 

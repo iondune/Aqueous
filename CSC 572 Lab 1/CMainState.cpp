@@ -1,5 +1,12 @@
 #include "CMainState.h"
 
+#include <Gwen/Gwen.h>
+#include <Gwen/Renderers/OpenGL.h>
+#include <Gwen/Renderers/OpenGL_DebugFont.h>
+#include <Gwen/Skins/TexturedBase.h>
+#include <Gwen/Skins/Simple.h>
+#include <Gwen/Controls.h>
+
 CMainState::CMainState()
 	: Camera(0), Tyra(0), Scale(1), Mode(3), BindLightPosition(LightPosition),
 	ShowVolume(false)
@@ -12,6 +19,25 @@ void CMainState::begin()
 
 	loadData();
 
+	// setup GWEN
+	Gwen::Renderer::OpenGL * pRenderer = new Gwen::Renderer::OpenGL_DebugFont();
+
+	Gwen::Skin::Simple * skin = new Gwen::Skin::Simple();
+	skin->SetRender(pRenderer);
+	/*Gwen::Skin::TexturedBase * skin = new Gwen::Skin::TexturedBase();
+	skin->SetRender(pRenderer);
+	skin->Init("DefaultSkin.png");*/
+
+	pCanvas = new Gwen::Controls::Canvas(skin);
+	pCanvas->SetSize(500, 500);
+	pCanvas->SetDrawBackground(true);
+	pCanvas->SetBackgroundColor(Gwen::Color(240, 120, 120, 255));
+
+	Gwen::Controls::Button * pButton = new Gwen::Controls::Button(pCanvas);
+	pButton->SetBounds(0, 0, 200, 100);
+	pButton->SetText("My First Button");
+
+	// Setup volume cube
 	VolumeCube = new CMesh();
     CMesh::SMeshBuffer * Mesh = new CMesh::SMeshBuffer();
 
@@ -114,7 +140,7 @@ void CMainState::OnRenderStart(float const Elapsed)
 	LightPosition = Camera->getPosition() + SVector3f(0, 0, 0);
 
 	LightObject->setTranslation(LightPosition);
-
+	
 
 	SceneManager.drawAll();
 	SceneManager.endDraw();
@@ -129,7 +155,7 @@ void CMainState::OnRenderStart(float const Elapsed)
 		VolumeCube->MeshBuffers[0]->IndexBuffer.syncData();
 
 	
-
+	
 	if (ShowVolume)
 	{
 		glEnable(GL_CULL_FACE);
@@ -178,7 +204,22 @@ void CMainState::OnRenderStart(float const Elapsed)
 
 		glDisable(GL_CULL_FACE);
 	}
+	
 
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+
+	glMatrixMode( GL_PROJECTION );
+	glLoadIdentity();
+	int left = 0, top = 0;
+	int right = 1600, bottom = 900;
+	glOrtho( left, right, bottom, top, -1.0, 1.0);
+	glMatrixMode( GL_MODELVIEW );
+	glLoadIdentity();
+	glViewport(0, 0, right - left, bottom - top);
+	
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	pCanvas->RenderCanvas();
 
     SDL_GL_SwapBuffers();
 }

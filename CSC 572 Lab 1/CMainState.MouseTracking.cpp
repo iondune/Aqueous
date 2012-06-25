@@ -33,7 +33,9 @@ void CMainState::OnMouseEvent(SMouseEvent const & Event)
             float difX = (float) Event.Movement.X;
             float difY = (float) Event.Movement.Y;
             glm::vec3 NewVec = makeSphereVec(Event.Location.X, Event.Location.Y);
-            glm::mat4 ViewMatrix = CApplication::get().getSceneManager().getActiveCamera()->getViewMatrix();
+            glm::mat4 ViewMatrix;
+			if (& CApplication::get().getSceneManager())
+				ViewMatrix = CApplication::get().getSceneManager().getActiveCamera()->getViewMatrix();
 
             if (CApplication::get().getEventManager().IsMouseDown[Event.Button.Left])
             {

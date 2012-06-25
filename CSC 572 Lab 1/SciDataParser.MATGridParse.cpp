@@ -109,7 +109,7 @@ int SciDataParser::parseMATGridFile(std::string const &data)
 
 
 	glEnable(GL_TEXTURE_3D);
-	glPixelStorei(GL_UNPACK_ALIGNMENT,1);
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 	glGenTextures(1, & VolumeHandle);
 	glBindTexture(GL_TEXTURE_3D, VolumeHandle);
 	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
@@ -119,6 +119,9 @@ int SciDataParser::parseMATGridFile(std::string const &data)
 	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
 	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_BORDER);
 	glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA, Dimensions[0], Dimensions[1], Dimensions[2], 0, GL_RGBA, GL_UNSIGNED_BYTE, volumeData);
+	
+	glBindTexture(GL_TEXTURE_3D, 0);
+	glDisable(GL_TEXTURE_3D);
 
 	delete []volumeData;
 	std::cout << "volume texture created " << VolumeHandle << std::endl;

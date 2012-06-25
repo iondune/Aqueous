@@ -23,7 +23,7 @@ void CMainState::loadData()
 	DataSet.setDataScale(Vector3(3, 2, 3));
 
 	int PointsLoaded = 0;
-
+	
 	for (auto it = DataSet.Values.begin(); it != DataSet.Values.end(); ++ it)
 	{
 		CMeshSceneObject * Object = new CMeshSceneObject();
