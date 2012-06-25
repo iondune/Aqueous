@@ -18,11 +18,9 @@
 #pragma comment(lib, "ionGUI.lib")
 
 #pragma comment(lib, "FreeImage.lib")
-#ifdef DEBUG
-//#pragma comment(lib, "GWENd-Renderer-OpenGL3_DebugFont.lib")
-#pragma comment(lib, "GWEND-Renderer-OpenGL_DebugFontd.lib")
+#ifdef _DEBUG
+#pragma comment(lib, "GWEN-Renderer-OpenGL_DebugFontd.lib")
 #else
-#pragma comment(lib, "gwen_static.lib")
 #pragma comment(lib, "GWEN-Renderer-OpenGL_DebugFont.lib")
 #endif
 
