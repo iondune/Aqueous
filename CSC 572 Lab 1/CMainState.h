@@ -37,7 +37,7 @@ class CMainState : public CState<CMainState>
 
 	Gwen::Controls::Canvas* pCanvas;
 
-	bool ShowVolume;
+	int ShowVolume;
 
 public:
 

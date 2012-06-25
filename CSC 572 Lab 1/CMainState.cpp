@@ -9,7 +9,7 @@
 
 CMainState::CMainState()
 	: Camera(0), Tyra(0), Scale(1), Mode(3), BindLightPosition(LightPosition),
-	ShowVolume(false)
+	ShowVolume(0)
 {}
 
 void CMainState::begin()
@@ -156,7 +156,7 @@ void CMainState::OnRenderStart(float const Elapsed)
 
 	
 	
-	if (ShowVolume)
+	if (ShowVolume == 1)
 	{
 		glEnable(GL_CULL_FACE);
 
@@ -204,6 +204,38 @@ void CMainState::OnRenderStart(float const Elapsed)
 
 		glDisable(GL_CULL_FACE);
 	}
+	else if (ShowVolume == 2)
+	{
+		glEnable(GL_CULL_FACE);
+
+		glCullFace(GL_FRONT);
+		{
+			CShaderContext Context(* CShaderLoader::loadShader("Volume2"));
+			Context.bindBufferObject("aColor", VolumeCube->MeshBuffers[0]->ColorBuffer.getHandle(), 3);
+			Context.bindBufferObject("aPosition", VolumeCube->MeshBuffers[0]->PositionBuffer.getHandle(), 3);
+
+			Context.uniform("uModelMatrix", STransformation3().getGLMMat4());
+			Context.uniform("uProjMatrix", Camera->getProjectionMatrix());
+			Context.uniform("uViewMatrix", Camera->getViewMatrix());
+
+			glEnable(GL_TEXTURE_3D);
+			glActiveTexture(GL_TEXTURE0 + 0); // Select Active Texture Slot
+			glBindTexture(GL_TEXTURE_3D, DataSet.VolumeHandle); // Bind Texture Handle
+			Context.uniform("uVolumeData", 0);
+
+			Context.uniform("uCameraPosition", Camera->getPosition());
+
+			Context.bindIndexBufferObject(VolumeCube->MeshBuffers[0]->IndexBuffer.getHandle());
+			
+			glEnable(GL_BLEND);
+			glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			glDrawElements(GL_TRIANGLES, VolumeCube->MeshBuffers[0]->IndexBuffer.getElements().size(), GL_UNSIGNED_SHORT, 0);
+			glDisable(GL_BLEND);
+			glDisable(GL_TEXTURE_3D);
+		}
+
+		glDisable(GL_CULL_FACE);
+	}
 	
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -219,7 +251,7 @@ void CMainState::OnRenderStart(float const Elapsed)
 	glViewport(0, 0, right - left, bottom - top);
 	
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	pCanvas->RenderCanvas();
+	//pCanvas->RenderCanvas();
 
     SDL_GL_SwapBuffers();
 }

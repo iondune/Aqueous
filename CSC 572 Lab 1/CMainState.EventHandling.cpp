@@ -29,7 +29,22 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 	case SDLK_v:
 
 		if (! Event.Pressed)
-			ShowVolume = ! ShowVolume;
+		{
+			ShowVolume ++;
+			if (ShowVolume > 2)
+				ShowVolume = 0;
+		}
+
+		break;
+
+	case SDLK_b:
+
+		if (! Event.Pressed)
+		{
+			ShowVolume --;
+			if (ShowVolume < 0)
+				ShowVolume = 2;
+		}
 
 		break;
 
