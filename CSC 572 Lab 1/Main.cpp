@@ -19,7 +19,7 @@
 
 #pragma comment(lib, "FreeImage.lib")
 #ifdef _DEBUG
-#pragma comment(lib, "GWEN-Renderer-OpenGL_DebugFontd.lib")
+#pragma comment(lib, "GWENd-Renderer-OpenGL_DebugFont.lib")
 #else
 #pragma comment(lib, "GWEN-Renderer-OpenGL_DebugFont.lib")
 #endif
