@@ -1,7 +1,5 @@
 #ifdef _WIN32
 #pragma comment(lib, "glew32.lib")
-#pragma comment(lib, "SDL.lib")
-#pragma comment(lib, "SDLmain.lib")
 #pragma comment(lib, "OpenGL32.lib")
 #pragma comment(lib, "glu32.lib")
 #pragma comment(lib, "freetype.lib")
@@ -24,6 +22,14 @@
 #pragma comment(lib, "GWEN-Renderer-OpenGL_DebugFont.lib")
 #endif
 
+#ifdef _DEBUG
+#pragma comment(lib, "sfml-system-s-d.lib")
+#pragma comment(lib, "sfml-window-s-d.lib")
+#else
+#pragma comment(lib, "sfml-system-s.lib")
+#pragma comment(lib, "sfml-window-s.lib")
+#endif
+
 #endif
 
 #include <ionCore.h>
@@ -33,8 +39,9 @@
 #include "CMainState.h"
 
 
-int main(int argc, char * argv[])
+int main()
 {
+	printf("Started...\n");
 	CTextureLoader::ImageDirectory = "Media/";
 	CMeshLoader::MeshDirectory = "Media/";
 	CShaderLoader::ShaderDirectory = "Shaders/";

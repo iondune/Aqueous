@@ -5,28 +5,28 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
     switch (Event.Key)
     {
 
-	case SDLK_x:
+	case EKey::x:
 
 		if (! Event.Pressed)
 			SoupObject->setVisible(! SoupObject->isVisible());
 
 		break;
 
-	case SDLK_z:
+	case EKey::z:
 
 		if (! Event.Pressed)
 			VoxelObject->setVisible(! VoxelObject->isVisible());
 
 		break;
 
-	case SDLK_c:
+	case EKey::c:
 
 		if (! Event.Pressed)
 			SkyBox->setVisible(! SkyBox->isVisible());
 
 		break;
 
-	case SDLK_v:
+	case EKey::v:
 
 		if (! Event.Pressed)
 		{
@@ -37,7 +37,7 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 
 		break;
 
-	case SDLK_b:
+	case EKey::b:
 
 		if (! Event.Pressed)
 		{
@@ -48,7 +48,7 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 
 		break;
 
-    case SDLK_n:
+    case EKey::n:
 
 		if (! Event.Pressed)
 		{
@@ -60,7 +60,7 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 
         break;
 
-    case SDLK_m:
+    case EKey::m:
 
         if (! Event.Pressed)
 		{
@@ -72,19 +72,19 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 
         break;
 
-    case SDLK_r:
+    case EKey::r:
         Mode = 0;
         break;
 
-    case SDLK_t:
+    case EKey::t:
         Mode = 1;
         break;
 
-    case SDLK_e:
+    case EKey::e:
         Mode = 2;
         break;
 
-	case SDLK_y:
+	case EKey::y:
 		Mode = 3;
 		break;
 

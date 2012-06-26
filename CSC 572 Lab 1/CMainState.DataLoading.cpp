@@ -175,9 +175,9 @@ void CMainState::loadData()
 		};
 
 		printf("Beginning subdivision.\n");
-		unsigned int t0 = SDL_GetTicks(), t1;
+		unsigned int t0 = time(0), t1;
 		SubdivideNode(DataTree);
-		t1 = SDL_GetTicks();
+		t1 = time(0);
 		printf("End subdivision. Took %d ms.\n", t1 - t0);
 
 		CSciTreeNode * NewRoot = (CSciTreeNode *) DataTree;

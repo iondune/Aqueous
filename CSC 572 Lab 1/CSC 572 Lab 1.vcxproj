@@ -54,7 +54,7 @@
     </IncludePath>
     <LibraryPath>
       ;$(VisualStudioDir)\SDKs\glew-1.7.0\lib;
-      ;$(VisualStudioDir)\SDKs\SDL-1.2.15\lib\x86;
+      ;$(VisualStudioDir)\SDKs\SFML-1.6\lib\vc2008;
       ;$(VisualStudioDir)\SDKs\freetype-2.4.2\lib;
       ;$(VisualStudioDir)\SDKs\gwen\lib;
       ;$(VisualStudioDir)\SDKs\gwen\lib\windows;
@@ -91,7 +91,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
