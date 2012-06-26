@@ -26,6 +26,13 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 
 		break;
 
+	case EKey::g:
+
+		if (! Event.Pressed)
+			ShowGUI = ! ShowGUI;
+
+		break;
+
 	case EKey::v:
 
 		if (! Event.Pressed)

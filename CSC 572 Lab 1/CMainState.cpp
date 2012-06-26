@@ -9,7 +9,7 @@
 
 CMainState::CMainState()
 	: Camera(0), Tyra(0), Scale(1), Mode(3), BindLightPosition(LightPosition),
-	ShowVolume(0)
+	ShowVolume(0), ShowGUI(false)
 {}
 
 class CGwenEventForwarder : public CApplicationEventReceiver
@@ -356,20 +356,23 @@ void CMainState::OnRenderStart(float const Elapsed)
 	}
 	
 
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	//glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+	if (ShowGUI)
+	{
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		//glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
-	glMatrixMode( GL_PROJECTION );
-	glLoadIdentity();
-	int left = 0, top = 0;
-	int right = 1600, bottom = 900;
-	glOrtho( left, right, bottom, top, -1.0, 1.0);
-	glMatrixMode( GL_MODELVIEW );
-	glLoadIdentity();
-	glViewport(0, 0, right - left, bottom - top);
+		glMatrixMode( GL_PROJECTION );
+		glLoadIdentity();
+		int left = 0, top = 0;
+		int right = 1600, bottom = 900;
+		glOrtho( left, right, bottom, top, -1.0, 1.0);
+		glMatrixMode( GL_MODELVIEW );
+		glLoadIdentity();
+		glViewport(0, 0, right - left, bottom - top);
 	
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	pCanvas->RenderCanvas();
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		pCanvas->RenderCanvas();
+	}
 
 	CApplication::get().swapBuffers();
 }
