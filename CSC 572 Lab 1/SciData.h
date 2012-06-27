@@ -173,6 +173,9 @@ public:
 
 	void normalizeField(std::string const & Field, double const Scale = 1)
 	{
+		if (! (begin(Field) != end(Field)))
+			return;
+
 		double max = * max_element_real(begin(Field), end(Field)), min = * min_element_real(begin(Field), end(Field));
 		std::for_each(begin(Field), end(Field), [min, max, Scale](double & d) { d = (d - min) / (max - min) * Scale; });
 	}

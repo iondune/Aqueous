@@ -1,8 +1,7 @@
 #include "CMainState.h"
 
 #include <Gwen/Gwen.h>
-#include <Gwen/Renderers/OpenGL.h>
-#include <Gwen/Renderers/OpenGL_DebugFont.h>
+#include <Gwen/Renderers/SFML.h>
 #include <Gwen/Skins/TexturedBase.h>
 #include <Gwen/Skins/Simple.h>
 #include <Gwen/Controls.h>
@@ -119,13 +118,14 @@ void CMainState::begin()
 	loadData();
 
 	// setup GWEN
-	Gwen::Renderer::OpenGL * pRenderer = new Gwen::Renderer::OpenGL_DebugFont();
+	Gwen::Renderer::SFML * pRenderer = new Gwen::Renderer::SFML(* CApplication::get().App);
 
 	//Gwen::Skin::Simple * skin = new Gwen::Skin::Simple();
 	//skin->SetRender(pRenderer);
-	Gwen::Skin::TexturedBase * skin = new Gwen::Skin::TexturedBase();
-	skin->SetRender(pRenderer);
-	skin->Init("DefaultSkin.png");
+	Gwen::Skin::TexturedBase * skin = new Gwen::Skin::TexturedBase(pRenderer);
+	//skin->SetRender(pRenderer);
+	skin->Init("DefaultSkin-Dark.png");
+	skin->SetDefaultFont(L"OpenSans.ttf");
 
 	pCanvas = new Gwen::Controls::Canvas(skin);
 	pCanvas->SetSize(500, 500);

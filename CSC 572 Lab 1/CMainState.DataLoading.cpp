@@ -36,7 +36,7 @@ void CMainState::loadData()
 		CRenderable::SMaterial mat;
 		if (Field == "mult") 
 		{
-			mat.DiffuseColor = SColor((float) it->getField("var2"), (float) it->getField("var3"), (float) it->getField("var4"));
+			mat.DiffuseColor = SColor((float) it->getField("o1"), (float) it->getField("o2"), (float) it->getField("o3"));
 		}
 		else
 		{
