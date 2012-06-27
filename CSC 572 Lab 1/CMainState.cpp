@@ -8,7 +8,7 @@
 
 CMainState::CMainState()
 	: Camera(0), Tyra(0), Scale(1), Mode(3), BindLightPosition(LightPosition),
-	ShowVolume(0), ShowGUI(true)
+	ShowVolume(0), ShowGUI(false)
 {}
 
 class CGwenEventForwarder : public CApplicationEventReceiver
@@ -375,8 +375,10 @@ void CMainState::OnRenderStart(float const Elapsed)
 	
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		pCanvas->RenderCanvas();
-
 	}
 
 	CApplication::get().swapBuffers();
+
+	//printOpenGLErrors("post swap");
+	//Sleep(3000);
 }

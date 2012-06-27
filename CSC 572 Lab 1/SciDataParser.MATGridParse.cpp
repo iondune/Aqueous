@@ -60,8 +60,10 @@ int SciDataParser::parseMATGridFile(std::string const &data)
 				int index = k + j * Dimensions[0] + i * Dimensions[1] * Dimensions[0];
 
 				SciData d(pointXData[index], pointYData[index], pointZData[index]);
-				//if (equals(d.ScalarFields["o1"], 0))
+				//if (d.ScalarFields["o1"] == 0.0 && )
 				//	continue;
+				//else
+				//	printf("Found a non-thrown-out value!\n");
 				d.ScalarFields["o1"] = pointO1Data[index];
 				d.ScalarFields["o2"] = pointO2Data[index];
 				d.ScalarFields["o3"] = pointO3Data[index];
@@ -99,9 +101,9 @@ int SciDataParser::parseMATGridFile(std::string const &data)
 			for (int k = 0; k < Dimensions[0]; ++ k)
 			{
 				int index = k + j * Dimensions[0] + i * Dimensions[1] * Dimensions[0];
-				volumeData[index * 4 + 0] = (GLubyte) (Values[ValueIndex].ScalarFields["o1"] * 255.0);
-				volumeData[index * 4 + 1] = (GLubyte) (Values[ValueIndex].ScalarFields["o2"] * 255.0);
-				volumeData[index * 4 + 2] = (GLubyte) (Values[ValueIndex].ScalarFields["o3"] * 255.0);
+				volumeData[index * 4 + 0] = (GLubyte) (Values[ValueIndex].ScalarFields["o2"] * 255.0);
+				volumeData[index * 4 + 1] = (GLubyte) (Values[ValueIndex].ScalarFields["o3"] * 255.0);
+				volumeData[index * 4 + 2] = (GLubyte) (Values[ValueIndex].ScalarFields["o4"] * 255.0);
 				volumeData[index * 4 + 3] = clamp((volumeData[index * 4 + 0] + volumeData[index * 4 + 1] + volumeData[index * 4 + 2]) * 5 / 3, 0 , 255);//200;//(GLubyte) (Values[ValueIndex].ScalarFields["var4"] * 255.0);
 
 				 ++ ValueIndex;
