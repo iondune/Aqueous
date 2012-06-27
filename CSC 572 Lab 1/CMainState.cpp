@@ -134,12 +134,12 @@ void CMainState::begin()
 
 	Gwen::Controls::Button * pButton = new Gwen::Controls::Button(pCanvas);
 	pButton->SetBounds(10, 10, 200, 20);
-	pButton->SetText("My First Button");
+	pButton->SetText("This is a Button");
 	//pButton->SetTextColorOverride(Gwen::Color(0, 0, 0, 255));
 	
 	Gwen::Controls::Label * pLabel = new Gwen::Controls::Label(pCanvas);
 	pLabel->SetBounds(10, 90, 200, 40);
-	pLabel->SetText("My First Label");
+	pLabel->SetText("This Label is RED");
 	pLabel->SetTextColor(Gwen::Color(255, 0, 0, 255));
 
 	CGwenEventForwarder * Forwarder = new CGwenEventForwarder(pCanvas);
