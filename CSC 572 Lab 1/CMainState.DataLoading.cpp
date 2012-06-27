@@ -201,5 +201,5 @@ void CMainState::loadData()
 		}
 #endif
 
-	}
+	}//*/
 }

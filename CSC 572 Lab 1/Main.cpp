@@ -17,22 +17,22 @@
 
 #pragma comment(lib, "FreeImage.lib")
 #ifdef _DEBUG
-#pragma comment(lib, "GWEND-Renderer-SFMLd.lib")
-#pragma comment(lib, "gwen_staticd.lib")
+#pragma comment(lib, "GWENd-Renderer-SFML.lib")
+#pragma comment(lib, "gwend_static.lib")
 #else
 #pragma comment(lib, "GWEN-Renderer-SFML.lib")
 #pragma comment(lib, "gwen_static.lib")
 #endif
 
 #ifdef _DEBUG
-#pragma comment(lib, "Debug/sfml-system-d.lib")
-#pragma comment(lib, "Debug/sfml-window-d.lib")
-#pragma comment(lib, "Debug/sfml-graphics-d.lib")
-#pragma comment(lib, "Debug/sfml-main-d.lib")
+#pragma comment(lib, "sfml-system-s-d.lib")
+#pragma comment(lib, "sfml-window-s-d.lib")
+#pragma comment(lib, "sfml-graphics-s-d.lib")
+//#pragma comment(lib, "sfml-main-s-d.lib")
 #else
-#pragma comment(lib, "Release/sfml-system.lib")
-#pragma comment(lib, "Release/sfml-window.lib")
-#pragma comment(lib, "Release/sfml-graphics.lib")
+#pragma comment(lib, "sfml-system-s.lib")
+#pragma comment(lib, "sfml-window-s.lib")
+#pragma comment(lib, "sfml-graphics-s.lib")
 #endif
 
 #endif

@@ -114,7 +114,7 @@ int SciDataParser::parseMATGridFile(std::string const &data)
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 	glGenTextures(1, & VolumeHandle);
 	glBindTexture(GL_TEXTURE_3D, VolumeHandle);
-	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+	//glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);

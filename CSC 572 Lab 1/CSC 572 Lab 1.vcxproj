@@ -51,7 +51,7 @@
     </IncludePath>
     <LibraryPath>
       ;$(VisualStudioDir)\SDKs\gwen\lib;
-      ;$(VisualStudioDir)\SDKs\gwen\lib\windows\vs2010;
+      ;$(VisualStudioDir)\SDKs\gwen\lib\windows;
       ;$(LibraryPath);
     </LibraryPath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

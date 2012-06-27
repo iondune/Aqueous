@@ -8,7 +8,7 @@
 
 CMainState::CMainState()
 	: Camera(0), Tyra(0), Scale(1), Mode(3), BindLightPosition(LightPosition),
-	ShowVolume(0), ShowGUI(false)
+	ShowVolume(0), ShowGUI(true)
 {}
 
 class CGwenEventForwarder : public CApplicationEventReceiver
@@ -122,10 +122,10 @@ void CMainState::begin()
 
 	//Gwen::Skin::Simple * skin = new Gwen::Skin::Simple();
 	//skin->SetRender(pRenderer);
-	Gwen::Skin::TexturedBase * skin = new Gwen::Skin::TexturedBase(pRenderer);
-	//skin->SetRender(pRenderer);
-	skin->Init("DefaultSkin-Dark.png");
-	skin->SetDefaultFont(L"OpenSans.ttf");
+	Gwen::Skin::TexturedBase * skin = new Gwen::Skin::TexturedBase(/*pRenderer*/);
+	skin->SetRender(pRenderer);
+	skin->Init("DefaultSkin.png");
+	skin->SetDefaultFont(L"OpenSans.ttf", 12.f);
 
 	pCanvas = new Gwen::Controls::Canvas(skin);
 	pCanvas->SetSize(500, 500);
@@ -136,9 +136,9 @@ void CMainState::begin()
 	pButton->SetBounds(10, 10, 200, 20);
 	pButton->SetText("My First Button");
 	//pButton->SetTextColorOverride(Gwen::Color(0, 0, 0, 255));
-
+	
 	Gwen::Controls::Label * pLabel = new Gwen::Controls::Label(pCanvas);
-	pLabel->SetBounds(10, 40, 200, 20);
+	pLabel->SetBounds(10, 90, 200, 40);
 	pLabel->SetText("My First Label");
 	pLabel->SetTextColor(Gwen::Color(255, 0, 0, 255));
 
@@ -233,7 +233,7 @@ void CMainState::begin()
 	Flags.MipMaps = false;
 	Flags.Wrap = GL_MIRRORED_REPEAT;
 	VolumeBuffer = new CTexture(SceneManager.getScreenSize(), true, Flags);
-	VolumeTarget->attach(VolumeBuffer, GL_COLOR_ATTACHMENT0);
+	VolumeTarget->attach(VolumeBuffer, GL_COLOR_ATTACHMENT0);//*/
 }
 
 void CMainState::OnRenderStart(float const Elapsed)
@@ -354,6 +354,9 @@ void CMainState::OnRenderStart(float const Elapsed)
 
 		glDisable(GL_CULL_FACE);
 	}
+
+	
+	glBindTexture(GL_TEXTURE_2D, 0);
 	
 
 	if (ShowGUI)
@@ -372,6 +375,7 @@ void CMainState::OnRenderStart(float const Elapsed)
 	
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		pCanvas->RenderCanvas();
+
 	}
 
 	CApplication::get().swapBuffers();
