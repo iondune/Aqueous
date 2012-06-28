@@ -13,7 +13,7 @@ void SciDataParser::generateVolumeFromGridValues(std::string const & RField, std
 
 	int ValueIndex = 0;
 
-	double const Cutoff = 10.0;
+	double const Cutoff = 1.0;
 
 	std::string const Fields[3] = {RField, GField, BField};
 
@@ -24,6 +24,11 @@ void SciDataParser::generateVolumeFromGridValues(std::string const & RField, std
 	ValueRanges[2] = GridValues.getValueRange(BField, Cutoff);
 	t3 = (unsigned int) time(0);
 
+	printf("Value ranges are from %f->%f, %f->%f, %f->%f. \n", 
+		ValueRanges[0].first, ValueRanges[0].second,
+		ValueRanges[1].first, ValueRanges[1].second,
+		ValueRanges[2].first, ValueRanges[2].second
+		);
 
 	for (int i = 0; i < GridDimensions[2]; ++ i)
 	{

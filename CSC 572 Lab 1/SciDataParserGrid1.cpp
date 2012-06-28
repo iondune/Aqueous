@@ -60,10 +60,6 @@ SciDataParserGrid1::SciDataParserGrid1(std::string const &data)
 				int index = k + j * Dimensions[0] + i * Dimensions[1] * Dimensions[0];
 
 				SciData d(pointXData[index], pointYData[index], pointZData[index]);
-				//if (pointO1Data[index] == 0.0)
-				//	continue;
-				//else
-				//	printf("Found a non-thrown-out value!\n");
 				d.ScalarFields["o1"] = pointO1Data[index];
 				d.ScalarFields["o2"] = pointO2Data[index];
 				d.ScalarFields["o3"] = pointO3Data[index];

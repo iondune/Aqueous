@@ -30,18 +30,25 @@ std::pair<double, double> SciDataSet::getValueRange(std::string const & Field, d
 	});
 
 	double Mean = 0;
+	unsigned int Count = DataCopy.size();
 	for (auto it = DataCopy.begin(); it != DataCopy.end(); ++ it)
 	{
-		Mean += it->getField(Field) / (double) (DataCopy.size());
+		if (it->getField(Field) == 0.0)
+			Count --;
+		Mean += it->getField(Field);
 	}
+	Mean /= (double) (Count);
+	printf("Data mean is %e with %d exclusions ", Mean, DataCopy.size() - Count);
 
 	double StdDeviation = 0;
 	for (auto it = DataCopy.begin(); it != DataCopy.end(); ++ it)
 	{
-		StdDeviation += sq(it->getField(Field) - Mean);
+		if (it->getField(Field) != 0.0)
+			StdDeviation += sq(it->getField(Field) - Mean);
 	}
-
+	StdDeviation /= (double) (Count - 1);
 	StdDeviation = sqrt(StdDeviation);
+	printf("- stdev is %e\n", StdDeviation);
 
 	double Min = std::numeric_limits<double>::max(), Max = -std::numeric_limits<double>::max();
 
@@ -49,12 +56,19 @@ std::pair<double, double> SciDataSet::getValueRange(std::string const & Field, d
 	{
 		double const v = it->getField(Field);
 
+		if (v == 0.0)
+			continue;
+
 		if (v < Mean + OutlierCutoff * StdDeviation && v > Mean - OutlierCutoff * StdDeviation)
 		{
 			if (v > Max)
 				Max = v;
 			if (v < Min)
 				Min = v;
+		}
+		else
+		{
+			//printf("Value %e was excluded from range!\n", v);
 		}
 	}
 
