@@ -7,14 +7,38 @@
     <ClCompile Include="CMainState.MouseTracking.cpp" />
     <ClCompile Include="CMainState.EventHandling.cpp" />
     <ClCompile Include="CMainState.DataLoading.cpp" />
-    <ClCompile Include=".\SciDataParser.TXTParse.cpp" />
-    <ClCompile Include="SciDataParser.MATParse.cpp" />
-    <ClCompile Include="SciDataParser.MATGridParse.cpp" />
+    <ClCompile Include="SciDataParser.MATGridParse.cpp">
+      <Filter>Data Management</Filter>
+    </ClCompile>
+    <ClCompile Include="SciDataParser.MATParse.cpp">
+      <Filter>Data Management</Filter>
+    </ClCompile>
+    <ClCompile Include=".\SciDataParser.TXTParse.cpp">
+      <Filter>Data Management</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SciData.h" />
-    <ClInclude Include="SciDataParser.h" />
     <ClInclude Include="CMainState.h" />
     <ClInclude Include="CGwenEventForwarder.h" />
+    <ClInclude Include="SciData.h">
+      <Filter>Data Management</Filter>
+    </ClInclude>
+    <ClInclude Include="SciDataParser.h">
+      <Filter>Data Management</Filter>
+    </ClInclude>
+    <ClInclude Include="SciDataIterator.h">
+      <Filter>Data Management</Filter>
+    </ClInclude>
+    <ClInclude Include="SciDataSet.h">
+      <Filter>Data Management</Filter>
+    </ClInclude>
+    <ClInclude Include="SciDataTree.h">
+      <Filter>Data Management</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Data Management">
+      <UniqueIdentifier>{015f304c-d126-40d8-8034-ca7d06cd4ff3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

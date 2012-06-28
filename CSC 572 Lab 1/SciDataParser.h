@@ -1,4 +1,7 @@
-#include "SciData.h"
+#ifndef _SCI_DATA_PARSER_H_INCLUDED_
+#define _SCI_DATA_PARSER_H_INCLUDED_
+
+#include "SciDataSet.h"
 
 #include <vector>
 
@@ -14,3 +17,5 @@ public:
 	unsigned int VolumeHandle;
 
 };
+
+#endif

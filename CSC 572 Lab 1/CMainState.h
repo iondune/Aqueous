@@ -6,6 +6,7 @@
 #include <ionWindow.h>
 
 #include "SciDataParser.h"
+#include "SciDataTree.h"
 
 
 #include <Gwen/Controls.h>
