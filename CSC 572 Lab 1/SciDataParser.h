@@ -12,6 +12,10 @@ class SciDataParser
 
 public:
 
+	SciDataParser()
+		: VolumeHandle(0)
+	{}
+
 	SciDataSet RawValues;
 	SciDataSet GridValues;
 
@@ -20,7 +24,7 @@ public:
 
 	int const * GridDimensions;
 
-	void generateVolumeFromGridValues(std::string const & RField, std::string const & GField, std::string const & BField);
+	void generateVolumeFromGridValues(std::string const & RField, std::string const & GField, std::string const & BField, double const StandardDeviations = 5.0);
 	void createDataTreeFromRawValues();
 
 };

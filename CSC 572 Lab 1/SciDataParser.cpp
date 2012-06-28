@@ -2,7 +2,7 @@
 
 #include <time.h>
 
-void SciDataParser::generateVolumeFromGridValues(std::string const & RField, std::string const & GField, std::string const & BField)
+void SciDataParser::generateVolumeFromGridValues(std::string const & RField, std::string const & GField, std::string const & BField, double const StandardDeviations)
 {
 	/// Generate Volume!
 	
@@ -13,7 +13,7 @@ void SciDataParser::generateVolumeFromGridValues(std::string const & RField, std
 
 	int ValueIndex = 0;
 
-	double const Cutoff = 1.0;
+	double const Cutoff = StandardDeviations;
 
 	std::string const Fields[3] = {RField, GField, BField};
 
@@ -60,7 +60,8 @@ void SciDataParser::generateVolumeFromGridValues(std::string const & RField, std
 
 	glEnable(GL_TEXTURE_3D);
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-	glGenTextures(1, & VolumeHandle);
+	if (! VolumeHandle)
+		glGenTextures(1, & VolumeHandle);
 	glBindTexture(GL_TEXTURE_3D, VolumeHandle);
 	//glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
