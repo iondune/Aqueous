@@ -103,6 +103,7 @@
     <ClCompile Include="SciDataParser.MATParse.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CGwenEventForwarder.h" />
     <ClInclude Include="CMainState.h" />
     <ClInclude Include="SciData.h" />
     <ClInclude Include="SciDataParser.h" />

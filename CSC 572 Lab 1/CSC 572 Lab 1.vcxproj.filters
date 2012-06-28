@@ -15,5 +15,6 @@
     <ClInclude Include="SciData.h" />
     <ClInclude Include="SciDataParser.h" />
     <ClInclude Include="CMainState.h" />
+    <ClInclude Include="CGwenEventForwarder.h" />
   </ItemGroup>
 </Project>
