@@ -4,7 +4,7 @@
 
 #include "matlib/include/mat.h"
 
-int SciDataParser::parseMATFile(std::string const &data)
+SciDataParserCTD::SciDataParserCTD(std::string const &data)
 {
 	bool writeCsv = false;
 
@@ -23,7 +23,7 @@ int SciDataParser::parseMATFile(std::string const &data)
 		if (pmat == NULL) 
 		{
 			printf("Error Opening File: \"%s\"\n", "data2.mat");
-			return -1;
+			return;
 		}
 		else
 			printf("Successfully opened file!\n");
@@ -141,7 +141,7 @@ int SciDataParser::parseMATFile(std::string const &data)
 
 			SciData d(Lat, Depth, Lon);
 			d.ScalarFields["salinity"] = Salinty;
-			Values.push_back(d);
+			RawValues.Values.push_back(d);
 
 			if (writeCsv)
 				printf("\r%3d%%", (int) (100.f * (float) j / (float) (Dimensions[0] - 1.f)));
@@ -153,8 +153,4 @@ int SciDataParser::parseMATFile(std::string const &data)
 			printf("\nDone reading mat.\n");
 		}
 	}
-
-	normalizeField("salinity");
-
-	return Values.size();
 }

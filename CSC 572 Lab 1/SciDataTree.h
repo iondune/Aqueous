@@ -62,4 +62,6 @@ public:
 
 };
 
+void SubdivideNode(ISciTreeNode * & Node);
+
 #endif

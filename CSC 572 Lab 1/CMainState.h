@@ -25,8 +25,6 @@ class CMainState : public CState<CMainState>
 	SVector3f LightPosition;
 	SUniformReference<SVector3f> BindLightPosition;
 
-	ISciTreeNode * DataTree;
-
 	CShader * Shader;
 	CMesh * Cube;
 	CMesh * VolumeCube;
@@ -41,9 +39,9 @@ class CMainState : public CState<CMainState>
 	int ShowVolume;
 	bool ShowGUI;
 
-public:
+	SciDataParser * DataParser;
 
-	SciDataParser DataSet;
+public:
 
 	CMainState();
 

@@ -98,9 +98,12 @@
     <ClCompile Include="CMainState.InitFunctions.cpp" />
     <ClCompile Include="CMainState.MouseTracking.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include=".\SciDataParser.TXTParse.cpp" />
-    <ClCompile Include="SciDataParser.MATGridParse.cpp" />
-    <ClCompile Include="SciDataParser.MATParse.cpp" />
+    <ClCompile Include=".\SciDataParserSimpleTXT.cpp" />
+    <ClCompile Include=".\SciDataParserGrid1.cpp" />
+    <ClCompile Include=".\SciDataParserCTD.cpp" />
+    <ClCompile Include="SciDataParser.cpp" />
+    <ClCompile Include="SciDataSet.cpp" />
+    <ClCompile Include="SciDataTree.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CGwenEventForwarder.h" />

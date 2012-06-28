@@ -10,7 +10,7 @@
 
 CMainState::CMainState()
 	: Camera(0), Tyra(0), Scale(1), Mode(3), BindLightPosition(LightPosition),
-	ShowVolume(0), ShowGUI(false)
+	ShowVolume(0), ShowGUI(false), DataParser(0)
 {}
 
 void CMainState::begin()
@@ -200,7 +200,7 @@ void CMainState::OnRenderStart(float const Elapsed)
 			Context.bindTexture("uBackPosition", VolumeBuffer->getTextureHandle());
 			glEnable(GL_TEXTURE_3D);
 			glActiveTexture(GL_TEXTURE0 + 1); // Select Active Texture Slot
-			glBindTexture(GL_TEXTURE_3D, DataSet.VolumeHandle); // Bind Texture Handle
+			glBindTexture(GL_TEXTURE_3D, DataParser->VolumeHandle); // Bind Texture Handle
 			Context.uniform("uVolumeData", 1);
 
 			Context.bindIndexBufferObject(VolumeCube->MeshBuffers[0]->IndexBuffer.getHandle());
@@ -238,7 +238,7 @@ void CMainState::OnRenderStart(float const Elapsed)
 
 			glEnable(GL_TEXTURE_3D);
 			glActiveTexture(GL_TEXTURE0 + 0); // Select Active Texture Slot
-			glBindTexture(GL_TEXTURE_3D, DataSet.VolumeHandle); // Bind Texture Handle
+			glBindTexture(GL_TEXTURE_3D, DataParser->VolumeHandle); // Bind Texture Handle
 			Context.uniform("uVolumeData", 0);
 
 			Context.uniform("uCameraPosition", Camera->getPosition());

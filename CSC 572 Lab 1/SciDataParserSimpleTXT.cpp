@@ -31,7 +31,7 @@ char *textFileRead(char const *fn)
 }
 
 
-int SciDataParser::parseTXTFile(std::string const &data)
+SciDataParserSimpleTXT::SciDataParserSimpleTXT(std::string const &data)
 {
 	// read the files into buffers
 	char* dataBuf = textFileRead(data.c_str());
@@ -46,7 +46,7 @@ int SciDataParser::parseTXTFile(std::string const &data)
 		if(sscanf(tok, "%f %f %f %f %f %f %f", &time, &x, &z, &y, &temp, &O2, &d1) <= 0)
 		{
 			printf("Error: Malformed file on line %d\n", line);
-			return -1;
+			return;
 		}
 
 		// push scidata into list
@@ -54,17 +54,10 @@ int SciDataParser::parseTXTFile(std::string const &data)
 		d.ScalarFields["o2"] = O2;
 		d.ScalarFields["temp"] = temp;
 		d.ScalarFields["d1"] = d1;
-		Values.push_back(d);
+		RawValues.Values.push_back(d);
 
 		// move onto next line
 		tok = strtok(NULL, "\n");
 		line++;
 	}
-
-	normalizeField("o2");
-	normalizeField("temp");
-	normalizeField("d1");
-
-	// return how many data items were read in
-	return Values.size();
 }

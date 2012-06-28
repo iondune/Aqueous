@@ -7,13 +7,22 @@
     <ClCompile Include="CMainState.MouseTracking.cpp" />
     <ClCompile Include="CMainState.EventHandling.cpp" />
     <ClCompile Include="CMainState.DataLoading.cpp" />
-    <ClCompile Include="SciDataParser.MATGridParse.cpp">
+    <ClCompile Include="SciDataSet.cpp">
       <Filter>Data Management</Filter>
     </ClCompile>
-    <ClCompile Include="SciDataParser.MATParse.cpp">
+    <ClCompile Include="SciDataTree.cpp">
       <Filter>Data Management</Filter>
     </ClCompile>
-    <ClCompile Include=".\SciDataParser.TXTParse.cpp">
+    <ClCompile Include=".\SciDataParserGrid1.cpp">
+      <Filter>Data Management\Parsers</Filter>
+    </ClCompile>
+    <ClCompile Include=".\SciDataParserCTD.cpp">
+      <Filter>Data Management\Parsers</Filter>
+    </ClCompile>
+    <ClCompile Include=".\SciDataParserSimpleTXT.cpp">
+      <Filter>Data Management\Parsers</Filter>
+    </ClCompile>
+    <ClCompile Include="SciDataParser.cpp">
       <Filter>Data Management</Filter>
     </ClCompile>
   </ItemGroup>
@@ -39,6 +48,9 @@
   <ItemGroup>
     <Filter Include="Data Management">
       <UniqueIdentifier>{015f304c-d126-40d8-8034-ca7d06cd4ff3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data Management\Parsers">
+      <UniqueIdentifier>{39c602da-763b-40fc-9eeb-1fd7df570632}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

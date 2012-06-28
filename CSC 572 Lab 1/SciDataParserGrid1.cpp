@@ -6,7 +6,7 @@
 
 #include <ionScene.h>
 
-int SciDataParser::parseMATGridFile(std::string const &data)
+SciDataParserGrid1::SciDataParserGrid1(std::string const &data)
 {
 	MATFile * File = matOpen(data.c_str(), "r");
 
@@ -35,10 +35,10 @@ int SciDataParser::parseMATGridFile(std::string const &data)
 		mxGetNumberOfDimensions(var4) != 3)
 	{
 		printf("Unexpected number of dimensions of input data.\n");
-		return -1;
+		return;
 	}
 
-	int const * Dimensions = mxGetDimensions(pointO1);
+	int const * Dimensions = GridDimensions = mxGetDimensions(pointO1);
 	double * pointO1Data = mxGetPr(pointO1);
 	double * pointO2Data = mxGetPr(pointO2);
 	double * pointO3Data = mxGetPr(pointO3);
@@ -60,8 +60,8 @@ int SciDataParser::parseMATGridFile(std::string const &data)
 				int index = k + j * Dimensions[0] + i * Dimensions[1] * Dimensions[0];
 
 				SciData d(pointXData[index], pointYData[index], pointZData[index]);
-				if (pointO1Data[index] == 0.0)
-					continue;
+				//if (pointO1Data[index] == 0.0)
+				//	continue;
 				//else
 				//	printf("Found a non-thrown-out value!\n");
 				d.ScalarFields["o1"] = pointO1Data[index];
@@ -72,65 +72,8 @@ int SciDataParser::parseMATGridFile(std::string const &data)
 				d.ScalarFields["var2"] = var2Data[index];
 				d.ScalarFields["var3"] = var3Data[index];
 				d.ScalarFields["var4"] = var4Data[index];
-				Values.push_back(d);
+				GridValues.Values.push_back(d);
 			}
 		}
 	}
-
-	normalizeField("o1");
-	normalizeField("o2");
-	normalizeField("o3");
-	normalizeField("o4");
-
-	normalizeField("var1");
-	normalizeField("var2");
-	normalizeField("var3");
-	normalizeField("var4");
-
-
-	/// Generate Volume!
-	int size = Dimensions[0]*Dimensions[1]*Dimensions[2]* 4;
-	GLubyte * volumeData = new GLubyte[size];
-
-	int ValueIndex = 0;
-
-	for (int i = 0; i < Dimensions[2]; ++ i)
-	{
-		for (int j = 0; j < Dimensions[1]; ++ j)
-		{
-			for (int k = 0; k < Dimensions[0]; ++ k)
-			{
-				int index = k + j * Dimensions[0] + i * Dimensions[1] * Dimensions[0];
-				if (pointO1Data[index] == 0.0)
-					continue;
-				volumeData[index * 4 + 0] = (GLubyte) (Values[ValueIndex].ScalarFields["o1"] * 255.0);
-				volumeData[index * 4 + 1] = (GLubyte) (Values[ValueIndex].ScalarFields["o2"] * 255.0);
-				volumeData[index * 4 + 2] = (GLubyte) (Values[ValueIndex].ScalarFields["o3"] * 255.0);
-				volumeData[index * 4 + 3] = clamp((volumeData[index * 4 + 0] + volumeData[index * 4 + 1] + volumeData[index * 4 + 2]) * 1 / 3, 0 , 255);//200;//(GLubyte) (Values[ValueIndex].ScalarFields["var4"] * 255.0);
-
-				 ++ ValueIndex;
-			}
-		}
-	}
-
-
-	glEnable(GL_TEXTURE_3D);
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-	glGenTextures(1, & VolumeHandle);
-	glBindTexture(GL_TEXTURE_3D, VolumeHandle);
-	//glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
-	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
-	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_BORDER);
-	glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA, Dimensions[0], Dimensions[1], Dimensions[2], 0, GL_RGBA, GL_UNSIGNED_BYTE, volumeData);
-	
-	glBindTexture(GL_TEXTURE_3D, 0);
-	glDisable(GL_TEXTURE_3D);
-
-	delete []volumeData;
-	std::cout << "volume texture created " << VolumeHandle << std::endl;
-
-	return Values.size();
 }
