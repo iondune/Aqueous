@@ -12,14 +12,16 @@ public:
 
 	std::vector<SciData> Values;
 	Vector3 DataScale;
-
+	
+	// Clamp x, y, z to volume range [0,v]
 	void setDataScale(Vector3 const & v);
 
 	// Clamp field to range
 	void normalizeField(std::string const & Field, double const Scale = 1);
 
-	SciDataIterator begin(std::string const & Field);
+	std::pair<double, double> getValueRange(std::string const & Field, double const OutlierCutoff);
 
+	SciDataIterator begin(std::string const & Field);
 	SciDataIterator end(std::string const & Field);
 
 };
