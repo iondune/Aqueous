@@ -23,11 +23,11 @@ static inline T sq(T const v) { return v * v; }
 
 std::pair<double, double> SciDataSet::getValueRange(std::string const & Field, double const OutlierCutoff)
 {
-	std::vector<SciData> DataCopy = Values;
-	std::sort(DataCopy.begin(), DataCopy.end(), [Field](SciData const & left, SciData const & right) -> bool
+	std::vector<SciData> const & DataCopy = Values;
+	/*std::sort(DataCopy.begin(), DataCopy.end(), [Field](SciData const & left, SciData const & right) -> bool
 	{
 		return left.getField(Field) < right.getField(Field);
-	});
+	});*/
 
 	double Mean = 0;
 	unsigned int Count = DataCopy.size();

@@ -5,7 +5,6 @@
 void SciDataParser::generateVolumeFromGridValues(std::string const & RField, std::string const & GField, std::string const & BField, double const StandardDeviations)
 {
 	/// Generate Volume!
-	
 	unsigned int t0 = (unsigned int) time(0), t1, t2, t3;
 
 	int size = GridDimensions[0]*GridDimensions[1]*GridDimensions[2]* 4;
