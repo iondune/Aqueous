@@ -4,6 +4,8 @@ varying vec4 vPosition;
 uniform sampler2D uBackPosition;
 uniform sampler3D uVolumeData;
 
+uniform float uAlphaIntensity;
+
 void main()
 {
 	vec2 texc = ((vPosition.xy / vPosition.w) + 1.0) / 2.0;
@@ -30,7 +32,7 @@ void main()
 	{
 		//vec4 color_sample = vec4(vec, 0.5);
 		vec4 color_sample = texture3D(uVolumeData, vec);
-		float alpha_sample = color_sample.a * stepsize;
+		float alpha_sample = color_sample.a * stepsize * uAlphaIntensity;
 		col_acc   += (1.0 - alpha_acc) * color_sample * alpha_sample * 3;
 		//col_acc   += color_sample;
 		alpha_acc += alpha_sample;
