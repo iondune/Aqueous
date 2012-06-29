@@ -17,7 +17,7 @@ void SciDataParser::generateVolumeFromGridValues(IColorMapper * ColorMapper)
 
 	GLubyte * volumeData = new GLubyte[size];
 
-	int ValueIndex = 0;
+	//int ValueIndex = 0;
 
 	for (int i = 0; i < GridDimensions[2]; ++ i)
 	{
@@ -27,12 +27,14 @@ void SciDataParser::generateVolumeFromGridValues(IColorMapper * ColorMapper)
 			{
 				int index = k + j * GridDimensions[0] + i * GridDimensions[1] * GridDimensions[0];
 
+				int ValueIndex = k + j * GridDimensions[0] + i * GridDimensions[1] * GridDimensions[0];
+
 				SColor Color = ColorMapper->getColor(GridValues.Values[ValueIndex]);
 
 				for (int t = 0; t < 4; ++ t)
 					volumeData[index * 4 + t] = clamp<unsigned char>((unsigned char) (Color[t] * 255.f), 0, 255);
 
-				 ++ ValueIndex;
+				//++ ValueIndex;
 			}
 		}
 	}
