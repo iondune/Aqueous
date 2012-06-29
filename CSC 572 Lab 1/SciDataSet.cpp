@@ -1,5 +1,10 @@
 #include "SciDataSet.h"
 
+bool const inRange(double const v, Range const & r)
+{
+	return v >= r.first && v <= r.second;
+}
+
 void SciDataSet::setDataScale(Vector3 const & v)
 {
 	normalizeField("x", v.X);
@@ -21,7 +26,7 @@ void SciDataSet::normalizeField(std::string const & Field, double const Scale)
 template <typename T>
 static inline T sq(T const v) { return v * v; }
 
-std::pair<double, double> SciDataSet::getValueRange(std::string const & Field, double const OutlierCutoff)
+std::pair<double, double> SciDataSet::getValueRange(std::string const & Field, double const OutlierCutoff, Range const & acceptedValues)
 {
 	std::vector<SciData> const & DataCopy = Values;
 	/*std::sort(DataCopy.begin(), DataCopy.end(), [Field](SciData const & left, SciData const & right) -> bool
@@ -33,7 +38,8 @@ std::pair<double, double> SciDataSet::getValueRange(std::string const & Field, d
 	unsigned int Count = DataCopy.size();
 	for (auto it = DataCopy.begin(); it != DataCopy.end(); ++ it)
 	{
-		if (it->getField(Field) == 0.0)
+		double const v = it->getField(Field);
+		if (! inRange(v, acceptedValues))
 			Count --;
 		Mean += it->getField(Field);
 	}
@@ -43,8 +49,9 @@ std::pair<double, double> SciDataSet::getValueRange(std::string const & Field, d
 	double StdDeviation = 0;
 	for (auto it = DataCopy.begin(); it != DataCopy.end(); ++ it)
 	{
-		if (it->getField(Field) != 0.0)
-			StdDeviation += sq(it->getField(Field) - Mean);
+		double const v = it->getField(Field);
+		if (inRange(v, acceptedValues))
+			StdDeviation += sq(v - Mean);
 	}
 	StdDeviation /= (double) (Count - 1);
 	StdDeviation = sqrt(StdDeviation);

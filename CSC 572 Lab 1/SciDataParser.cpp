@@ -7,7 +7,14 @@ void SciDataParser::generateVolumeFromGridValues(std::string const & RField, std
 	/// Generate Volume!
 	unsigned int t0 = (unsigned int) time(0), t1, t2, t3;
 
-	int size = GridDimensions[0]*GridDimensions[1]*GridDimensions[2]* 4;
+	unsigned int const size = GridDimensions[0]*GridDimensions[1]*GridDimensions[2]*4;
+
+	if (GridValues.Values.size() != size / 4)
+	{
+		printf("Unexpected size of grid data.\n");
+		return;
+	}
+
 	GLubyte * volumeData = new GLubyte[size];
 
 	int ValueIndex = 0;
@@ -15,6 +22,8 @@ void SciDataParser::generateVolumeFromGridValues(std::string const & RField, std
 	double const Cutoff = StandardDeviations;
 
 	std::string const Fields[3] = {RField, GField, BField};
+
+	Range AcceptedRange = Range(1.0, std::numeric_limits<double>::max());
 
 	std::pair<double, double> ValueRanges[3];
 	t2 = (unsigned int) time(0);
