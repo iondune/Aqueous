@@ -29,10 +29,6 @@ static inline T sq(T const v) { return v * v; }
 std::pair<double, double> SciDataSet::getValueRange(std::string const & Field, double const OutlierCutoff, Range const & acceptedValues)
 {
 	std::vector<SciData> const & DataCopy = Values;
-	/*std::sort(DataCopy.begin(), DataCopy.end(), [Field](SciData const & left, SciData const & right) -> bool
-	{
-		return left.getField(Field) < right.getField(Field);
-	});*/
 
 	double Mean = 0;
 	unsigned int Count = DataCopy.size();
@@ -51,10 +47,10 @@ std::pair<double, double> SciDataSet::getValueRange(std::string const & Field, d
 	{
 		double const v = it->getField(Field);
 		if (inRange(v, acceptedValues))
-			StdDeviation += sq(v - Mean);
+			StdDeviation += /*sq*/abs(v - Mean);
 	}
 	StdDeviation /= (double) (Count - 1);
-	StdDeviation = sqrt(StdDeviation);
+	//StdDeviation = sqrt(StdDeviation);
 	printf("- stdev is %e\n", StdDeviation);
 
 	double Min = std::numeric_limits<double>::max(), Max = -std::numeric_limits<double>::max();

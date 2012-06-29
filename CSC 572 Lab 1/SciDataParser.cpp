@@ -2,12 +2,10 @@
 
 #include <time.h>
 
-void SciDataParser::generateVolumeFromGridValues(std::string const & RField, std::string const & GField, std::string const & BField, double const StandardDeviations)
+void SciDataParser::generateVolumeFromGridValues(IColorMapper * ColorMapper)
 {
 	/// Generate Volume!
-	unsigned int t0 = (unsigned int) time(0), t1, t2, t3;
-
-	unsigned int const size = GridDimensions[0]*GridDimensions[1]*GridDimensions[2]*4;
+	unsigned int const size = GridDimensions[0] * GridDimensions[1] * GridDimensions[2] * 4;
 
 	if (GridValues.Values.size() != size / 4)
 	{
@@ -15,28 +13,11 @@ void SciDataParser::generateVolumeFromGridValues(std::string const & RField, std
 		return;
 	}
 
+	ColorMapper->preProcessValues(GridValues);
+
 	GLubyte * volumeData = new GLubyte[size];
 
 	int ValueIndex = 0;
-
-	double const Cutoff = StandardDeviations;
-
-	std::string const Fields[3] = {RField, GField, BField};
-
-	Range AcceptedRange = Range(1.0, std::numeric_limits<double>::max());
-
-	std::pair<double, double> ValueRanges[3];
-	t2 = (unsigned int) time(0);
-	ValueRanges[0] = GridValues.getValueRange(RField, Cutoff);
-	ValueRanges[1] = GridValues.getValueRange(GField, Cutoff);
-	ValueRanges[2] = GridValues.getValueRange(BField, Cutoff);
-	t3 = (unsigned int) time(0);
-
-	printf("Value ranges are from %f->%f, %f->%f, %f->%f. \n", 
-		ValueRanges[0].first, ValueRanges[0].second,
-		ValueRanges[1].first, ValueRanges[1].second,
-		ValueRanges[2].first, ValueRanges[2].second
-		);
 
 	for (int i = 0; i < GridDimensions[2]; ++ i)
 	{
@@ -46,19 +27,10 @@ void SciDataParser::generateVolumeFromGridValues(std::string const & RField, std
 			{
 				int index = k + j * GridDimensions[0] + i * GridDimensions[1] * GridDimensions[0];
 
-				int DataValues[3];
-				for (int t = 0; t < 3; ++ t)
-				{
-					DataValues[t] = 0;
-					double Value = GridValues.Values[ValueIndex].ScalarFields[Fields[t]];
-					if (Value < ValueRanges[t].second && Value > ValueRanges[t].first)
-					{
-						DataValues[t] = (int) ((Value - ValueRanges[t].first) / (ValueRanges[t].second - ValueRanges[t].first) * 255.0);
-					}
+				SColor Color = ColorMapper->getColor(GridValues.Values[ValueIndex]);
 
-					volumeData[index * 4 + t] = DataValues[t];
-				}
-				volumeData[index * 4 + 3] = clamp((DataValues[0] + DataValues[1] + DataValues[2]) * 1 / 3, 0 , 255);//200;//(GLubyte) (Values[ValueIndex].ScalarFields["var4"] * 255.0);
+				for (int t = 0; t < 4; ++ t)
+					volumeData[index * 4 + t] = clamp<unsigned char>((unsigned char) (Color[t] * 255.f), 0, 255);
 
 				 ++ ValueIndex;
 			}
@@ -82,11 +54,7 @@ void SciDataParser::generateVolumeFromGridValues(std::string const & RField, std
 	glBindTexture(GL_TEXTURE_3D, 0);
 	glDisable(GL_TEXTURE_3D);
 
-	t1 = (unsigned int) time(0);
-	printf("Volume data generation took %d ms of which %d ms was range finding.\n", t1 - t0, t3 - t2);
-
 	delete []volumeData;
-	std::cout << "volume texture created " << VolumeHandle << std::endl;
 }
 
 void SciDataParser::createDataTreeFromRawValues()

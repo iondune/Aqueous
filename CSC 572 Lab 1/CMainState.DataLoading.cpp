@@ -16,6 +16,7 @@ void CMainState::loadData()
 		DataParser->RawValues.setDataScale(Vector3(3, 2, 3));
 		Field = "o2";
 		break;
+
 	case 1:
 		DataParser = new SciDataParserCTD();
 		DataParser->load("data2.mat");
@@ -23,15 +24,20 @@ void CMainState::loadData()
 		DataParser->RawValues.setDataScale(Vector3(3, 2, 3));
 		Field = "salinity";
 		break;
+
 	case 2:
-		DataParser = new SciDataParserGrid1();
-		DataParser->load("oxyMaps.mat");
-		printf("Performing data operations...\n");
-		DataParser->GridValues.setDataScale(Vector3(3, 2, 3));
+		{
+			DataParser = new SciDataParserGrid1();
+			DataParser->load("oxyMaps.mat");
+			printf("Performing data operations...\n");
+			DataParser->GridValues.setDataScale(Vector3(3, 2, 3));
 		
-		printf("Performing volumetric operations...\n");
-		DataParser->generateVolumeFromGridValues("o1", "o2", "o3");
-		Field = "mult";
+			printf("Performing volumetric operations...\n");
+			CRGBIntensityColorMapper r("o1", "o2", "o3");
+			
+			DataParser->generateVolumeFromGridValues(& r);
+			Field = "mult";
+		}
 		break;
 	}
 
