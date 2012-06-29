@@ -139,9 +139,15 @@ public:
 	float EmphasisLocation;
 	Range HeightRange;
 
+	float LocalRange;
+	float MinimumAlpha;
+
 	COxygenLocalizedColorMapper()
 		: EmphasisLocation(0.5f)
-	{}
+	{
+		LocalRange = 0.1f;
+		MinimumAlpha = 0.03f;
+	}
 
 	virtual SColor const getColor(SciData const & d)
 	{
@@ -150,12 +156,9 @@ public:
 		double Z = d.getField("z");
 		float Height = (float) ((Z - HeightRange.first) / (HeightRange.second - HeightRange.first));
 
-		float LocalRange = 0.1f;
-		float MinimumAlpha = 0.03f;
-
-		if (abs(Height - EmphasisLocation) < LocalRange)
+		if (abs(Height - EmphasisLocation) < LocalRange / 2.f)
 		{
-			float Ratio = 1.f - abs(Height - EmphasisLocation) / LocalRange;
+			float Ratio = 1.f - abs(Height - EmphasisLocation) / (LocalRange / 2.f);
 			c.Alpha = Ratio * (1.f - MinimumAlpha) + MinimumAlpha;
 		}
 		else

@@ -61,38 +61,71 @@ void CMainState::begin()
 	IntensitySlider->SetRange(10.f, 0.5f);
 	IntensitySlider->SetNotchCount(10);
 
+	Gwen::Controls::VerticalSlider * LocalRangeSlider = new Gwen::Controls::VerticalSlider(pCanvas);
+	LocalRangeSlider->SetBounds(1400, 10, 40, 160);
+	LocalRangeSlider->SetRange(0.05f, 0.5f);
+	LocalRangeSlider->SetNotchCount(10);
+
+	Gwen::Controls::VerticalSlider * MinimumAlphaSlider = new Gwen::Controls::VerticalSlider(pCanvas);
+	MinimumAlphaSlider->SetBounds(1450, 10, 40, 160);
+	MinimumAlphaSlider->SetRange(0.01f, 0.5f);
+	MinimumAlphaSlider->SetNotchCount(10);
+
 	class Handler1 : public Gwen::Event::Handler
 	{
 
 	public:
-
-		Gwen::Controls::VerticalSlider * Slider;
-		Gwen::Controls::VerticalSlider * IntensitySlider;
 		SciDataParser * & Parser;
 		float & Intensity;
 
+		float LocalRange;
+		float MinimumAlpha;
+		float EmphasisLocation;
+
 		Handler1(SciDataParser * & pParser, float & intensity)
 			: Intensity(intensity), Parser(pParser)
-		{}
+		{
+			LocalRange = 0.1f;
+			MinimumAlpha = 0.03f;
+			EmphasisLocation = 0.5f;
+		}
+
+		void resetVolumeData()
+		{
+			COxygenLocalizedColorMapper l;
+			l.EmphasisLocation = EmphasisLocation;
+			l.MinimumAlpha = MinimumAlpha;
+			l.LocalRange = LocalRange;
+			Parser->generateVolumeFromGridValues(& l);
+		}
 
 		void OnEmphasisSlider(Gwen::Controls::Base * Control)
 		{
-			//Gwen::Controls::VerticalSlider * Bar = (Gwen::Controls::VerticalSlider *) Control;
-
+			Gwen::Controls::VerticalSlider * Bar = (Gwen::Controls::VerticalSlider *) Control;
 			//printf("Slider value: %f\n", Slider->GetValue());
-
-			COxygenLocalizedColorMapper l;
-			l.EmphasisLocation = Slider->GetValue();
-			Parser->generateVolumeFromGridValues(& l);
+			EmphasisLocation = Bar->GetValue();
+			resetVolumeData();
 		}
 
 		void OnIntensitySlider(Gwen::Controls::Base * Control)
 		{
-			//Gwen::Controls::VerticalSlider * Bar = (Gwen::Controls::VerticalSlider *) Control;
-
+			Gwen::Controls::VerticalSlider * Bar = (Gwen::Controls::VerticalSlider *) Control;
 			//printf("Slider value: %f\n", Slider->GetValue());
+			Intensity = Bar->GetValue();
+		}
 
-			Intensity = IntensitySlider->GetValue();
+		void OnMinimumAlphaSlider(Gwen::Controls::Base * Control)
+		{
+			Gwen::Controls::VerticalSlider * Bar = (Gwen::Controls::VerticalSlider *) Control;
+			MinimumAlpha = Bar->GetValue();
+			resetVolumeData();
+		}
+
+		void OnLocalRangeSlider(Gwen::Controls::Base * Control)
+		{
+			Gwen::Controls::VerticalSlider * Bar = (Gwen::Controls::VerticalSlider *) Control;
+			LocalRange = Bar->GetValue();
+			resetVolumeData();
 		}
 
 		void OnResetVolume(Gwen::Controls::Base * Control)
@@ -108,10 +141,10 @@ void CMainState::begin()
 	};
 
 	Handler1 * Handler = new Handler1(DataParser, AlphaIntensity);
-	Handler->Slider = EmphasisSlider;
-	Handler->IntensitySlider = IntensitySlider;
 	EmphasisSlider->onValueChanged.Add(Handler, & Handler1::OnEmphasisSlider);
 	IntensitySlider->onValueChanged.Add(Handler, & Handler1::OnIntensitySlider);
+	MinimumAlphaSlider->onValueChanged.Add(Handler, & Handler1::OnMinimumAlphaSlider);
+	LocalRangeSlider->onValueChanged.Add(Handler, & Handler1::OnLocalRangeSlider);
 	pButton->onPress.Add(Handler, & Handler1::OnResetVolume);
 	pButton2->onPress.Add(Handler, & Handler1::OnResetAlpha);
 
