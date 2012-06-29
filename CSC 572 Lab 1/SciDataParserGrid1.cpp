@@ -6,7 +6,7 @@
 
 #include <ionScene.h>
 
-SciDataParserGrid1::SciDataParserGrid1(std::string const &data)
+void SciDataParserGrid1::load(std::string const &data)
 {
 	MATFile * File = matOpen(data.c_str(), "r");
 

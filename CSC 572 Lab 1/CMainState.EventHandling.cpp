@@ -2,6 +2,8 @@
 
 void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 {
+	std::stringstream s;
+
     switch (Event.Key)
     {
 
@@ -9,6 +11,12 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 
 		if (! Event.Pressed)
 			SoupObject->setVisible(! SoupObject->isVisible());
+		s << "Point cloud object ";
+		if (SoupObject->isVisible())
+			s << "enabled.";
+		else
+			s << "disabled.";
+		addConsoleMessage(s.str());
 
 		break;
 
@@ -16,6 +24,12 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 
 		if (! Event.Pressed)
 			VoxelObject->setVisible(! VoxelObject->isVisible());
+		s << "Oct tree object ";
+		if (VoxelObject->isVisible())
+			s << "enabled.";
+		else
+			s << "disabled.";
+		addConsoleMessage(s.str());
 
 		break;
 
@@ -23,13 +37,27 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 
 		if (! Event.Pressed)
 			SkyBox->setVisible(! SkyBox->isVisible());
+		s << "Skybox object ";
+		if (SkyBox->isVisible())
+			s << "enabled.";
+		else
+			s << "disabled.";
+		addConsoleMessage(s.str());
 
 		break;
 
 	case EKey::g:
 
 		if (! Event.Pressed)
+		{
 			ShowGUI = ! ShowGUI;
+			s << "GUI ";
+			if (ShowGUI)
+				s << "enabled.";
+			else
+				s << "disabled.";
+			addConsoleMessage(s.str());
+		}
 
 		break;
 
@@ -37,9 +65,19 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 
 		if (! Event.Pressed)
 		{
+			s << "Volume mode: ";
 			ShowVolume ++;
 			if (ShowVolume > 2)
+			{
 				ShowVolume = 0;
+				s << "off.";
+				addConsoleMessage(s.str());
+			}
+			else
+			{
+				s << ShowVolume;
+				addConsoleMessage(s.str());
+			}
 		}
 
 		break;
@@ -48,36 +86,24 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 
 		if (! Event.Pressed)
 		{
+			s << "Volume mode: ";
 			ShowVolume --;
 			if (ShowVolume < 0)
 				ShowVolume = 2;
+			
+			if (ShowVolume != 0)
+			{
+				s << ShowVolume;
+				addConsoleMessage(s.str());
+			}
+			else
+			{
+				s << "off.";
+				addConsoleMessage(s.str());
+			}
 		}
 
 		break;
-
-    case EKey::n:
-
-		if (! Event.Pressed)
-		{
-			if (Tyra->isDebugDataEnabled(EDebugData::Normals))
-				Tyra->disableDebugData(EDebugData::Normals);
-			else
-				Tyra->enableDebugData(EDebugData::Normals);
-		}
-
-        break;
-
-    case EKey::m:
-
-        if (! Event.Pressed)
-		{
-			if (Tyra->isDebugDataEnabled(EDebugData::NormalColors))
-				Tyra->disableDebugData(EDebugData::NormalColors);
-			else
-				Tyra->enableDebugData(EDebugData::NormalColors);
-		}
-
-        break;
 
     case EKey::r:
         Mode = 0;

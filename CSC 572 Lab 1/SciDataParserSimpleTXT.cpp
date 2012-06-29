@@ -31,7 +31,7 @@ char *textFileRead(char const *fn)
 }
 
 
-SciDataParserSimpleTXT::SciDataParserSimpleTXT(std::string const &data)
+void SciDataParserSimpleTXT::load(std::string const &data)
 {
 	// read the files into buffers
 	char* dataBuf = textFileRead(data.c_str());

@@ -10,19 +10,22 @@ void CMainState::loadData()
 	{
 	default:
 	case 0:
-		DataParser = new SciDataParserSimpleTXT("ForZoe.txt");
+		DataParser = new SciDataParserSimpleTXT();
+		DataParser->load("ForZoe.txt");
 		printf("Performing data operations...\n");
 		DataParser->RawValues.setDataScale(Vector3(3, 2, 3));
 		Field = "o2";
 		break;
 	case 1:
-		DataParser = new SciDataParserCTD("data2.mat");
+		DataParser = new SciDataParserCTD();
+		DataParser->load("data2.mat");
 		printf("Performing data operations...\n");
 		DataParser->RawValues.setDataScale(Vector3(3, 2, 3));
 		Field = "salinity";
 		break;
 	case 2:
-		DataParser = new SciDataParserGrid1("oxyMaps.mat");
+		DataParser = new SciDataParserGrid1();
+		DataParser->load("oxyMaps.mat");
 		printf("Performing data operations...\n");
 		DataParser->GridValues.setDataScale(Vector3(3, 2, 3));
 		

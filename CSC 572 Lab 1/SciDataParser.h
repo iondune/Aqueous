@@ -27,6 +27,8 @@ public:
 	void generateVolumeFromGridValues(std::string const & RField, std::string const & GField, std::string const & BField, double const StandardDeviations = 5.0);
 	void createDataTreeFromRawValues();
 
+	virtual void load(std::string const & FileName) =0;
+
 };
 
 class SciDataParserCTD : public SciDataParser
@@ -34,7 +36,7 @@ class SciDataParserCTD : public SciDataParser
 
 public:
 
-	SciDataParserCTD(std::string const & FileName);
+	void load(std::string const & FileName);
 
 };
 
@@ -43,7 +45,7 @@ class SciDataParserSimpleTXT : public SciDataParser
 
 public:
 
-	SciDataParserSimpleTXT(std::string const & FileName);
+	void load(std::string const & FileName);
 
 };
 
@@ -52,7 +54,7 @@ class SciDataParserGrid1 : public SciDataParser
 
 public:
 
-	SciDataParserGrid1(std::string const & FileName);
+	void load(std::string const & FileName);
 
 };
 

@@ -7,10 +7,11 @@
 #include <Gwen/Controls.h>
 
 #include "CGwenEventForwarder.h"
+#include <CApplication.h>
 
 CMainState::CMainState()
 	: Camera(0), Tyra(0), Scale(1), Mode(3), BindLightPosition(LightPosition),
-	ShowVolume(0), ShowGUI(false), DataParser(0)
+	ShowVolume(0), ShowGUI(false), DataParser(0), ConsoleAccumulator(0.f)
 {}
 
 void CMainState::begin()
@@ -28,10 +29,10 @@ void CMainState::begin()
 	Gwen::Skin::TexturedBase * skin = new Gwen::Skin::TexturedBase(/*pRenderer*/);
 	skin->SetRender(pRenderer);
 	skin->Init("DefaultSkin.png");
-	skin->SetDefaultFont(L"OpenSans.ttf", 12.f);
+	skin->SetDefaultFont(L"OpenSans.ttf", 14.f);
 
 	pCanvas = new Gwen::Controls::Canvas(skin);
-	pCanvas->SetSize(500, 500);
+	pCanvas->SetSize(Application.getWindowSize().X, Application.getWindowSize().Y);
 	//pCanvas->SetDrawBackground(true);
 	//pCanvas->SetBackgroundColor(Gwen::Color(240, 120, 120, 255));
 
@@ -44,6 +45,20 @@ void CMainState::begin()
 	pLabel->SetBounds(10, 90, 200, 40);
 	pLabel->SetText("This Label is RED");
 	pLabel->SetTextColor(Gwen::Color(255, 0, 0, 255));
+
+	for (int i = 0; i < ConsoleSize; ++ i)
+	{
+		ConsoleMessages[i] = new Gwen::Controls::Label(pCanvas);
+		//ConsoleMessages[i]->SetText("Message!!!! These exclamation marks look like exclamation marks!!");
+		//ConsoleMessages[i]->SetTextColor(Gwen::Color(30 * i,234,255 - 20 * i,150));
+		ConsoleMessages[i]->SetPos(20, 900 - 50 - 25 * i);
+		ConsoleMessages[i]->SetSize(1500, 30);
+		ConsoleMessages[i]->SetShouldDrawBackground(true);
+	}
+
+	printf("In begin...\n");
+	addConsoleMessage("GUI Initialized.");
+	addConsoleMessage("Starting program...", Gwen::Colors::Red);
 
 	CGwenEventForwarder * Forwarder = new CGwenEventForwarder(pCanvas);
 
@@ -137,6 +152,8 @@ void CMainState::begin()
 	Flags.Wrap = GL_MIRRORED_REPEAT;
 	VolumeBuffer = new CTexture(SceneManager.getScreenSize(), true, Flags);
 	VolumeTarget->attach(VolumeBuffer, GL_COLOR_ATTACHMENT0);//*/
+
+	addConsoleMessage("Volume mesh created.", Gwen::Color(0, 255, 0));
 }
 
 void CMainState::OnRenderStart(float const Elapsed)
@@ -277,6 +294,31 @@ void CMainState::OnRenderStart(float const Elapsed)
 		glViewport(0, 0, right - left, bottom - top);
 	
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+
+
+		static float const AlphaTick = 0.1f;
+		ConsoleAccumulator += Elapsed;
+
+		while (ConsoleAccumulator > AlphaTick)
+		{
+			for (int i = 0; i < ConsoleSize; ++ i)
+			{
+				static int const Decrement = 3;
+				Gwen::Color & c = ConsoleMessageColors[i];//->GetTextColor();
+
+				if (c.a >= Decrement)
+					c.a -= Decrement;
+				else
+					c.a = 0;
+				
+				ConsoleMessages[i]->SetTextColor(c);
+			}
+
+			ConsoleAccumulator -= AlphaTick;
+		}
+
+
 		pCanvas->RenderCanvas();
 	}
 
@@ -284,4 +326,18 @@ void CMainState::OnRenderStart(float const Elapsed)
 
 	//printOpenGLErrors("post swap");
 	//Sleep(3000);
+}
+
+void CMainState::addConsoleMessage(std::string const & Message, Gwen::Color const & Color)
+{
+	for (int i = ConsoleSize - 1; i > 0; -- i)
+	{
+		ConsoleMessages[i]->SetText(ConsoleMessages[i-1]->GetText());
+		ConsoleMessageColors[i] = ConsoleMessageColors[i-1];
+		ConsoleMessages[i]->SetTextColor(ConsoleMessageColors[i]);
+	}
+
+	ConsoleMessages[0]->SetText(Message);
+	ConsoleMessageColors[0] = Color;
+	ConsoleMessages[0]->SetTextColor(Color);
 }

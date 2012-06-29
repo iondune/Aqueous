@@ -41,6 +41,12 @@ class CMainState : public CState<CMainState>
 
 	SciDataParser * DataParser;
 
+
+	static int const ConsoleSize = 5;
+	float ConsoleAccumulator;
+	Gwen::Color ConsoleMessageColors[ConsoleSize];
+	Gwen::Controls::Label * ConsoleMessages[ConsoleSize];
+
 public:
 
 	CMainState();
@@ -54,6 +60,8 @@ public:
 	void OnRenderStart(float const Elapsed);
 
     void OnKeyboardEvent(SKeyboardEvent const & Event);
+
+	void addConsoleMessage(std::string const & Message, Gwen::Color const & Color = Gwen::Color(255, 255, 255, 255));
 
 
 	void setupVolumeRender();

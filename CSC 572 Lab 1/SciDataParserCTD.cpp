@@ -4,7 +4,7 @@
 
 #include "matlib/include/mat.h"
 
-SciDataParserCTD::SciDataParserCTD(std::string const &data)
+void SciDataParserCTD::load(std::string const &data)
 {
 	bool writeCsv = false;
 
