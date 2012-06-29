@@ -4,7 +4,7 @@ void CMainState::init()
 {
 	///SDL_WM_SetCaption("Underwater Volume Data Rendering... In Space!", "");
 
-	glClearColor(0.1f, 0.2f, 0.2f, 1.0f);
+	glClearColor(0.2f, 0.4f, 0.4f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
 }

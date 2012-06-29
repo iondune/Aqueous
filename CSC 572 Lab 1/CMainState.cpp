@@ -5,6 +5,7 @@
 #include <Gwen/Skins/TexturedBase.h>
 #include <Gwen/Skins/Simple.h>
 #include <Gwen/Controls.h>
+#include <Gwen/Controls/VerticalSlider.h>
 
 #include "CGwenEventForwarder.h"
 #include <CApplication.h>
@@ -37,14 +38,82 @@ void CMainState::begin()
 	//pCanvas->SetBackgroundColor(Gwen::Color(240, 120, 120, 255));
 
 	Gwen::Controls::Button * pButton = new Gwen::Controls::Button(pCanvas);
-	pButton->SetBounds(10, 10, 200, 20);
-	pButton->SetText("This is a Button");
+	pButton->SetBounds(1300, 50 + 120 + 10, 200, 25);
+	pButton->SetText("Reset Volume Range");
+
+	Gwen::Controls::Button * pButton2 = new Gwen::Controls::Button(pCanvas);
+	pButton2->SetBounds(1300, 50 + 120 + 10 + 35, 200, 25);
+	pButton2->SetText("Reset Alpha Intensity");
 	//pButton->SetTextColorOverride(Gwen::Color(0, 0, 0, 255));
 	
-	Gwen::Controls::Label * pLabel = new Gwen::Controls::Label(pCanvas);
+	/*Gwen::Controls::Label * pLabel = new Gwen::Controls::Label(pCanvas);
 	pLabel->SetBounds(10, 90, 200, 40);
 	pLabel->SetText("This Label is RED");
-	pLabel->SetTextColor(Gwen::Color(255, 0, 0, 255));
+	pLabel->SetTextColor(Gwen::Color(255, 0, 0, 255));*/
+
+	EmphasisSlider = new Gwen::Controls::VerticalSlider(pCanvas);
+	EmphasisSlider->SetBounds(1300, 10, 40, 160);
+	EmphasisSlider->SetRange(0.f, 1.f);
+	EmphasisSlider->SetNotchCount(10);
+
+	Gwen::Controls::VerticalSlider * IntensitySlider = new Gwen::Controls::VerticalSlider(pCanvas);
+	IntensitySlider->SetBounds(1350, 10, 40, 160);
+	IntensitySlider->SetRange(10.f, 0.5f);
+	IntensitySlider->SetNotchCount(10);
+
+	class Handler1 : public Gwen::Event::Handler
+	{
+
+	public:
+
+		Gwen::Controls::VerticalSlider * Slider;
+		Gwen::Controls::VerticalSlider * IntensitySlider;
+		SciDataParser * & Parser;
+		float & Intensity;
+
+		Handler1(SciDataParser * & pParser, float & intensity)
+			: Intensity(intensity), Parser(pParser)
+		{}
+
+		void OnEmphasisSlider(Gwen::Controls::Base * Control)
+		{
+			//Gwen::Controls::VerticalSlider * Bar = (Gwen::Controls::VerticalSlider *) Control;
+
+			//printf("Slider value: %f\n", Slider->GetValue());
+
+			COxygenLocalizedColorMapper l;
+			l.EmphasisLocation = Slider->GetValue();
+			Parser->generateVolumeFromGridValues(& l);
+		}
+
+		void OnIntensitySlider(Gwen::Controls::Base * Control)
+		{
+			//Gwen::Controls::VerticalSlider * Bar = (Gwen::Controls::VerticalSlider *) Control;
+
+			//printf("Slider value: %f\n", Slider->GetValue());
+
+			Intensity = IntensitySlider->GetValue();
+		}
+
+		void OnResetVolume(Gwen::Controls::Base * Control)
+		{
+			COxygenColorMapper o;
+			Parser->generateVolumeFromGridValues(& o);
+		}
+
+		void OnResetAlpha(Gwen::Controls::Base * Control)
+		{
+			Intensity = 1.f;
+		}
+	};
+
+	Handler1 * Handler = new Handler1(DataParser, AlphaIntensity);
+	Handler->Slider = EmphasisSlider;
+	Handler->IntensitySlider = IntensitySlider;
+	EmphasisSlider->onValueChanged.Add(Handler, & Handler1::OnEmphasisSlider);
+	IntensitySlider->onValueChanged.Add(Handler, & Handler1::OnIntensitySlider);
+	pButton->onPress.Add(Handler, & Handler1::OnResetVolume);
+	pButton2->onPress.Add(Handler, & Handler1::OnResetAlpha);
 
 	for (int i = 0; i < ConsoleSize; ++ i)
 	{
@@ -201,7 +270,6 @@ void CMainState::OnRenderStart(float const Elapsed)
 			Context.uniform("uModelMatrix", STransformation3().getGLMMat4());
 			Context.uniform("uProjMatrix", Camera->getProjectionMatrix());
 			Context.uniform("uViewMatrix", Camera->getViewMatrix());
-			Context.uniform("uAlphaIntensity", AlphaIntensity);
 			Context.bindIndexBufferObject(VolumeCube->MeshBuffers[0]->IndexBuffer.getHandle());
 
 			VolumeTarget->bind();
@@ -259,6 +327,7 @@ void CMainState::OnRenderStart(float const Elapsed)
 			Context.uniform("uModelMatrix", STransformation3().getGLMMat4());
 			Context.uniform("uProjMatrix", Camera->getProjectionMatrix());
 			Context.uniform("uViewMatrix", Camera->getViewMatrix());
+			Context.uniform("uAlphaIntensity", AlphaIntensity);
 
 			glEnable(GL_TEXTURE_3D);
 			glActiveTexture(GL_TEXTURE0 + 0); // Select Active Texture Slot

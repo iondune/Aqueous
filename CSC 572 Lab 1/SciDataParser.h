@@ -150,8 +150,8 @@ public:
 		double Z = d.getField("z");
 		float Height = (float) ((Z - HeightRange.first) / (HeightRange.second - HeightRange.first));
 
-		float LocalRange = 0.15f;
-		float MinimumAlpha = 0.1f;
+		float LocalRange = 0.1f;
+		float MinimumAlpha = 0.03f;
 
 		if (abs(Height - EmphasisLocation) < LocalRange)
 		{

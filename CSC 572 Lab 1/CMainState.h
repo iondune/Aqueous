@@ -10,8 +10,9 @@
 
 
 #include <Gwen/Controls.h>
+#include <Gwen/Controls/VerticalSlider.h>
 
-class CMainState : public CState<CMainState>
+class CMainState : public CState<CMainState>, public Gwen::Event::Handler
 {
 
 	CCameraControl * Camera;
@@ -47,6 +48,8 @@ class CMainState : public CState<CMainState>
 	Gwen::Color ConsoleMessageColors[ConsoleSize];
 	Gwen::Controls::Label * ConsoleMessages[ConsoleSize];
 
+	Gwen::Controls::VerticalSlider * EmphasisSlider;
+
 
 
 	float Slider;
@@ -70,6 +73,8 @@ public:
 
 
 	void setupVolumeRender();
+
+	//void OnEmphasisSlider(Gwen::Controls::Base* control);
 
 
 	//////////////////////////////
