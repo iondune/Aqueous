@@ -34,8 +34,9 @@ void CMainState::loadData()
 		
 			printf("Performing volumetric operations...\n");
 			CRGBIntensityColorMapper r("o1", "o2", "o3");
+			COxygenColorMapper o;
 			
-			DataParser->generateVolumeFromGridValues(& r);
+			DataParser->generateVolumeFromGridValues(& o);
 			Field = "mult";
 		}
 		break;
