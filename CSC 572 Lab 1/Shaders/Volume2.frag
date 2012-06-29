@@ -6,6 +6,8 @@ uniform sampler3D uVolumeData;
 
 uniform vec3 uCameraPosition;
 
+uniform float uAlphaIntensity;
+
 float enter;
 float Exit;
 
@@ -127,7 +129,7 @@ void main()
 	{
 		//vec4 color_sample = vec4(vec, 0.5);
 		vec4 color_sample = texture3D(uVolumeData, vec);
-		float alpha_sample = color_sample.a * stepsize;
+		float alpha_sample = color_sample.a * stepsize * uAlphaIntensity;
 		col_acc   += (1.0 - alpha_acc) * color_sample * alpha_sample * 3;
 		//col_acc   += color_sample;
 		alpha_acc += alpha_sample;

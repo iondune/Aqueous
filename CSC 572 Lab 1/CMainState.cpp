@@ -11,7 +11,7 @@
 
 CMainState::CMainState()
 	: Camera(0), Tyra(0), Scale(1), Mode(3), BindLightPosition(LightPosition),
-	ShowVolume(0), ShowGUI(false), DataParser(0), ConsoleAccumulator(0.f)
+	ShowVolume(0), ShowGUI(true), DataParser(0), ConsoleAccumulator(0.f), Slider(0.f), AlphaIntensity(1.f)
 {}
 
 void CMainState::begin()
@@ -167,6 +167,11 @@ void CMainState::OnRenderStart(float const Elapsed)
 	LightPosition = Camera->getPosition() + SVector3f(0, 0, 0);
 
 	LightObject->setTranslation(LightPosition);
+
+	/*Slider += Elapsed * 0.5f;
+	COxygenLocalizedColorMapper l;
+	l.EmphasisLocation = (sin(Slider) + 1.f) / 2.f;
+	DataParser->generateVolumeFromGridValues(& l);*/
 	
 
 	SceneManager.drawAll();
@@ -196,6 +201,7 @@ void CMainState::OnRenderStart(float const Elapsed)
 			Context.uniform("uModelMatrix", STransformation3().getGLMMat4());
 			Context.uniform("uProjMatrix", Camera->getProjectionMatrix());
 			Context.uniform("uViewMatrix", Camera->getViewMatrix());
+			Context.uniform("uAlphaIntensity", AlphaIntensity);
 			Context.bindIndexBufferObject(VolumeCube->MeshBuffers[0]->IndexBuffer.getHandle());
 
 			VolumeTarget->bind();
@@ -213,6 +219,7 @@ void CMainState::OnRenderStart(float const Elapsed)
 			Context.uniform("uModelMatrix", STransformation3().getGLMMat4());
 			Context.uniform("uProjMatrix", Camera->getProjectionMatrix());
 			Context.uniform("uViewMatrix", Camera->getViewMatrix());
+			Context.uniform("uAlphaIntensity", AlphaIntensity);
 
 			Context.bindTexture("uBackPosition", VolumeBuffer->getTextureHandle());
 			glEnable(GL_TEXTURE_3D);

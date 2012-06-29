@@ -47,6 +47,11 @@ class CMainState : public CState<CMainState>
 	Gwen::Color ConsoleMessageColors[ConsoleSize];
 	Gwen::Controls::Label * ConsoleMessages[ConsoleSize];
 
+
+
+	float Slider;
+	float AlphaIntensity;
+
 public:
 
 	CMainState();

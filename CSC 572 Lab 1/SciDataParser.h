@@ -130,6 +130,49 @@ public:
 
 };
 
+
+class COxygenLocalizedColorMapper : public COxygenColorMapper
+{
+
+public:
+
+	float EmphasisLocation;
+	Range HeightRange;
+
+	COxygenLocalizedColorMapper()
+		: EmphasisLocation(0.5f)
+	{}
+
+	virtual SColor const getColor(SciData const & d)
+	{
+		SColor c = COxygenColorMapper::getColor(d);
+
+		double Z = d.getField("z");
+		float Height = (float) ((Z - HeightRange.first) / (HeightRange.second - HeightRange.first));
+
+		float LocalRange = 0.15f;
+		float MinimumAlpha = 0.1f;
+
+		if (abs(Height - EmphasisLocation) < LocalRange)
+		{
+			float Ratio = 1.f - abs(Height - EmphasisLocation) / LocalRange;
+			c.Alpha = Ratio * (1.f - MinimumAlpha) + MinimumAlpha;
+		}
+		else
+		{
+			c.Alpha = MinimumAlpha;
+		}
+
+		return c;
+	}
+
+	virtual void preProcessValues(SciDataSet & s)
+	{
+		HeightRange = s.getValueRange("z", 5.0);
+	}
+
+};
+
 class SciDataParser
 {
 
