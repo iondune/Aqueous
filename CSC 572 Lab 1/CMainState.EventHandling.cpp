@@ -105,6 +105,20 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 
 		break;
 
+	case EKey::m:
+		if (! Event.Pressed)
+		{
+			SceneManager.setActiveCamera(OrbitCamera);
+		}
+		break;
+		
+	case EKey::n:
+		if (! Event.Pressed)
+		{
+			SceneManager.setActiveCamera(Camera);
+		}
+		break;
+
     case EKey::r:
 		if (! Event.Pressed)
 		{

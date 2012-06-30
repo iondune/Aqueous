@@ -207,11 +207,19 @@ void CMainState::begin()
 	VolumeTarget->attach(VolumeBuffer, GL_COLOR_ATTACHMENT0);//*/
 
 	addConsoleMessage("Volume mesh created.", Gwen::Color(0, 255, 0));
+
+	Timer = 0.f;
 }
 
 void CMainState::OnRenderStart(float const Elapsed)
 {
 	Camera->update(Elapsed);
+
+	Timer += Elapsed * 0.22f;
+
+	float const Distance = 4.f;
+	OrbitCamera->setPosition(SVector3f(sin(Timer)*Distance, 2.3f, cos(Timer)*Distance));
+	OrbitCamera->setLookAtTarget(SVector3f());
 
 	Tyra->setTranslation(Translation);
     Tyra->setScale(Scale);
@@ -240,6 +248,9 @@ void CMainState::OnRenderStart(float const Elapsed)
 		VolumeCube->MeshBuffers[0]->IndexBuffer.syncData();
 
 	
+
+	STransformation3 Transform;
+	Transform.setScale(SVector3f(3.f));
 	
 	if (ShowVolume == 1)
 	{
@@ -251,9 +262,9 @@ void CMainState::OnRenderStart(float const Elapsed)
 			Context.bindBufferObject("aColor", VolumeCube->MeshBuffers[0]->ColorBuffer.getHandle(), 3);
 			Context.bindBufferObject("aPosition", VolumeCube->MeshBuffers[0]->PositionBuffer.getHandle(), 3);
 
-			Context.uniform("uModelMatrix", STransformation3().getGLMMat4());
-			Context.uniform("uProjMatrix", Camera->getProjectionMatrix());
-			Context.uniform("uViewMatrix", Camera->getViewMatrix());
+			Context.uniform("uModelMatrix", Transform.getGLMMat4());
+			Context.uniform("uProjMatrix", SceneManager.getActiveCamera()->getProjectionMatrix());
+			Context.uniform("uViewMatrix", SceneManager.getActiveCamera()->getViewMatrix());
 			Context.bindIndexBufferObject(VolumeCube->MeshBuffers[0]->IndexBuffer.getHandle());
 
 			VolumeTarget->bind();
@@ -268,9 +279,9 @@ void CMainState::OnRenderStart(float const Elapsed)
 			Context.bindBufferObject("aColor", VolumeCube->MeshBuffers[0]->ColorBuffer.getHandle(), 3);
 			Context.bindBufferObject("aPosition", VolumeCube->MeshBuffers[0]->PositionBuffer.getHandle(), 3);
 
-			Context.uniform("uModelMatrix", STransformation3().getGLMMat4());
-			Context.uniform("uProjMatrix", Camera->getProjectionMatrix());
-			Context.uniform("uViewMatrix", Camera->getViewMatrix());
+			Context.uniform("uModelMatrix", Transform.getGLMMat4());
+			Context.uniform("uProjMatrix", SceneManager.getActiveCamera()->getProjectionMatrix());
+			Context.uniform("uViewMatrix", SceneManager.getActiveCamera()->getViewMatrix());
 			Context.uniform("uAlphaIntensity", AlphaIntensity);
 
 			Context.bindTexture("uBackPosition", VolumeBuffer->getTextureHandle());
@@ -308,9 +319,9 @@ void CMainState::OnRenderStart(float const Elapsed)
 			Context.bindBufferObject("aColor", VolumeCube->MeshBuffers[0]->ColorBuffer.getHandle(), 3);
 			Context.bindBufferObject("aPosition", VolumeCube->MeshBuffers[0]->PositionBuffer.getHandle(), 3);
 
-			Context.uniform("uModelMatrix", STransformation3().getGLMMat4());
-			Context.uniform("uProjMatrix", Camera->getProjectionMatrix());
-			Context.uniform("uViewMatrix", Camera->getViewMatrix());
+			Context.uniform("uModelMatrix", Transform.getGLMMat4());
+			Context.uniform("uProjMatrix", SceneManager.getActiveCamera()->getProjectionMatrix());
+			Context.uniform("uViewMatrix", SceneManager.getActiveCamera()->getViewMatrix());
 			Context.uniform("uAlphaIntensity", AlphaIntensity);
 
 			glEnable(GL_TEXTURE_3D);
@@ -318,7 +329,7 @@ void CMainState::OnRenderStart(float const Elapsed)
 			glBindTexture(GL_TEXTURE_3D, DataParser->VolumeHandle); // Bind Texture Handle
 			Context.uniform("uVolumeData", 0);
 
-			Context.uniform("uCameraPosition", Camera->getPosition());
+			Context.uniform("uCameraPosition", SceneManager.getActiveCamera()->getPosition());
 
 			Context.bindIndexBufferObject(VolumeCube->MeshBuffers[0]->IndexBuffer.getHandle());
 			

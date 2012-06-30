@@ -139,6 +139,7 @@ class CMainState : public CState<CMainState>, public Gwen::Event::Handler
 {
 
 	CCameraControl * Camera;
+	ICameraSceneObject * OrbitCamera;
 	CMeshSceneObject * Tyra;
 
 	CMeshSceneObject * LightObject;
@@ -177,6 +178,8 @@ class CMainState : public CState<CMainState>, public Gwen::Event::Handler
 
 	float Slider;
 	float AlphaIntensity;
+
+	float Timer;
 
 public:
 

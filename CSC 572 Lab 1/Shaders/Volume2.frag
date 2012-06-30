@@ -4,6 +4,8 @@ varying vec4 vPosition;
 uniform sampler2D uBackPosition;
 uniform sampler3D uVolumeData;
 
+uniform mat4 uModelMatrix;
+
 uniform vec3 uCameraPosition;
 
 uniform float uAlphaIntensity;
@@ -71,25 +73,27 @@ void main()
 
 	vec3 FrontPosition;
 
+	vec4 CameraPosition = inverse(uModelMatrix) * vec4(uCameraPosition, 1.0);
+
 
 	int Debug = 0;
 
 	// Calculate surface point
-	if (uCameraPosition.x >= -0.5 && 
-		uCameraPosition.y >= -0.5 && 
-		uCameraPosition.z >= -0.5 && 
-		uCameraPosition.x <=  0.5 && 
-		uCameraPosition.y <=  0.5 && 
-		uCameraPosition.z <=  0.5)
+	if (CameraPosition.x >= -0.5 && 
+		CameraPosition.y >= -0.5 && 
+		CameraPosition.z >= -0.5 && 
+		CameraPosition.x <=  0.5 && 
+		CameraPosition.y <=  0.5 && 
+		CameraPosition.z <=  0.5)
 	{
-		FrontPosition = uCameraPosition;
+		FrontPosition = CameraPosition;
 		if (Debug)
 		{
 			gl_FragColor = vec4(1, 0, 0, 1);
 			return;
 		}
 	}
-	else if (rayAABBIntersect(uCameraPosition, (BackPosition - vec3(0.5)) - uCameraPosition, vec3(-0.5), vec3(0.5)))
+	else if (rayAABBIntersect(CameraPosition, (BackPosition - vec3(0.5)) - CameraPosition, vec3(-0.5), vec3(0.5)))
 	{
 		FrontPosition = penter;
 		if (Debug)
@@ -100,7 +104,7 @@ void main()
 	}
 	else
 	{
-		FrontPosition = uCameraPosition;
+		FrontPosition = CameraPosition;
 		if (Debug)
 		{
 			gl_FragColor = vec4(0, 0, 1, 1);
@@ -139,10 +143,5 @@ void main()
 			break; // terminate if opacity > 1 or the ray is outside the volume
 	}
 
-	//normalize(col_acc);
-    //gl_FragColor = vec4(texture3D(uVolumeData, vec3(0.5, 0.5, 0.5)).rgb, 1.0);
-    //gl_FragColor = vec4(col_acc.rgb, 1.0);
-    gl_FragColor = col_acc;//vec4(col_acc.rg, 1.0, 0.5);
-    //gl_FragColor = vec4(BackPosition, 0.75);
-    //gl_FragColor = vec4(norm_dir * 0.5 + 0.5, 0.75);
+    gl_FragColor = col_acc;
 }
