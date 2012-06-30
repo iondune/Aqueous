@@ -106,19 +106,35 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 		break;
 
     case EKey::r:
-        Mode = 0;
+		if (! Event.Pressed)
+		{
+			Mode = 0;
+			addConsoleMessage("Axis rotation mode enabled.");
+		}
         break;
 
     case EKey::t:
-        Mode = 1;
+        if (! Event.Pressed)
+		{
+			Mode = 1;
+			addConsoleMessage("Translation mode enabled.");
+		}
         break;
 
     case EKey::e:
-        Mode = 2;
+        if (! Event.Pressed)
+		{
+			Mode = 2;
+			addConsoleMessage("Scale mode enabled.");
+		}
         break;
 
 	case EKey::y:
-		Mode = 3;
+		if (! Event.Pressed)
+		{
+			Mode = 3;
+			addConsoleMessage("Light translation mode enabled.");
+		}
 		break;
 
     }

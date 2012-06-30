@@ -12,9 +12,11 @@
 #include <CApplication.h>
 
 CMainState::CMainState()
-	: Camera(0), Tyra(0), Scale(1), Mode(3), BindLightPosition(LightPosition),
+	: Camera(0), Tyra(0), Scale(1), Mode(0), BindLightPosition(LightPosition),
 	ShowVolume(0), ShowGUI(true), DataParser(0), ConsoleAccumulator(0.f), Slider(0.f), AlphaIntensity(1.f)
 {}
+
+Handler1 * Handler1::Instance = 0;
 
 void CMainState::begin()
 {
@@ -44,7 +46,19 @@ void CMainState::begin()
 
 	Gwen::Controls::Button * pButton2 = new Gwen::Controls::Button(pCanvas);
 	pButton2->SetBounds(1300, 50 + 120 + 10 + 35, 200, 25);
-	pButton2->SetText("Reset Alpha Intensity");
+	pButton2->SetText("Reset Alpha Intensity");	
+
+	Gwen::Controls::Button * pButtonX = new Gwen::Controls::Button(pCanvas);
+	pButtonX->SetBounds(1300, 50 + 120 + 10 + 45 + 25 + 35, 40, 25);
+	pButtonX->SetText("X");
+
+	Gwen::Controls::Button * pButtonY = new Gwen::Controls::Button(pCanvas);
+	pButtonY->SetBounds(1350, 50 + 120 + 10 + 45 + 25 + 35, 40, 25);
+	pButtonY->SetText("Y");
+
+	Gwen::Controls::Button * pButtonZ = new Gwen::Controls::Button(pCanvas);
+	pButtonZ->SetBounds(1400, 50 + 120 + 10 + 45 + 25 + 35, 40, 25);
+	pButtonZ->SetText("Z");
 	//pButton->SetTextColorOverride(Gwen::Color(0, 0, 0, 255));
 	
 	/*Gwen::Controls::Label * pLabel = new Gwen::Controls::Label(pCanvas);
@@ -73,100 +87,6 @@ void CMainState::begin()
 	VolumeMode->AddItem(L"Plane Slices");
 	VolumeMode->AddItem(L"Surface Values");
 
-	class Handler1 : public Gwen::Event::Handler
-	{
-
-	public:
-		SciDataParser * & Parser;
-		float & Intensity;
-
-		float LocalRange;
-		float MinimumAlpha;
-		float EmphasisLocation;
-
-		bool SurfaceValues;
-
-		Handler1(SciDataParser * & pParser, float & intensity)
-			: Intensity(intensity), Parser(pParser)
-		{
-			LocalRange = 0.1f;
-			MinimumAlpha = 0.03f;
-			EmphasisLocation = 0.5f;
-			SurfaceValues = false;
-		}
-
-		void resetVolumeData()
-		{
-			if (SurfaceValues)
-			{
-				COxygenIsoSurfaceColorMapper l;
-				l.EmphasisLocation = EmphasisLocation;
-				l.MinimumAlpha = MinimumAlpha;
-				l.LocalRange = LocalRange;
-				Parser->generateVolumeFromGridValues(& l);
-			}
-			else
-			{
-				COxygenLocalizedColorMapper l;
-				l.EmphasisLocation = EmphasisLocation;
-				l.MinimumAlpha = MinimumAlpha;
-				l.LocalRange = LocalRange;
-				Parser->generateVolumeFromGridValues(& l);
-			}
-		}
-
-		void OnEmphasisSlider(Gwen::Controls::Base * Control)
-		{
-			Gwen::Controls::VerticalSlider * Bar = (Gwen::Controls::VerticalSlider *) Control;
-			//printf("Slider value: %f\n", Slider->GetValue());
-			EmphasisLocation = Bar->GetValue();
-			resetVolumeData();
-		}
-
-		void OnIntensitySlider(Gwen::Controls::Base * Control)
-		{
-			Gwen::Controls::VerticalSlider * Bar = (Gwen::Controls::VerticalSlider *) Control;
-			//printf("Slider value: %f\n", Slider->GetValue());
-			Intensity = Bar->GetValue();
-		}
-
-		void OnMinimumAlphaSlider(Gwen::Controls::Base * Control)
-		{
-			Gwen::Controls::VerticalSlider * Bar = (Gwen::Controls::VerticalSlider *) Control;
-			MinimumAlpha = Bar->GetValue();
-			resetVolumeData();
-		}
-
-		void OnLocalRangeSlider(Gwen::Controls::Base * Control)
-		{
-			Gwen::Controls::VerticalSlider * Bar = (Gwen::Controls::VerticalSlider *) Control;
-			LocalRange = Bar->GetValue();
-			resetVolumeData();
-		}
-
-		void OnResetVolume(Gwen::Controls::Base * Control)
-		{
-			COxygenColorMapper o;
-			Parser->generateVolumeFromGridValues(& o);
-		}
-
-		void OnResetAlpha(Gwen::Controls::Base * Control)
-		{
-			Intensity = 1.f;
-		}
-
-		void OnVolumeMode(Gwen::Controls::Base * Control)
-		{
-			Gwen::Controls::ComboBox * Box = (Gwen::Controls::ComboBox *) Control;
-
-			if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Surface Values"))
-				SurfaceValues = true;
-			else
-				SurfaceValues = false;
-			resetVolumeData();
-		}
-	};
-
 	Handler1 * Handler = new Handler1(DataParser, AlphaIntensity);
 	EmphasisSlider->onValueChanged.Add(Handler, & Handler1::OnEmphasisSlider);
 	IntensitySlider->onValueChanged.Add(Handler, & Handler1::OnIntensitySlider);
@@ -174,6 +94,9 @@ void CMainState::begin()
 	LocalRangeSlider->onValueChanged.Add(Handler, & Handler1::OnLocalRangeSlider);
 	pButton->onPress.Add(Handler, & Handler1::OnResetVolume);
 	pButton2->onPress.Add(Handler, & Handler1::OnResetAlpha);
+	pButtonX->onPress.Add(Handler, & Handler1::OnSetXAxis);
+	pButtonY->onPress.Add(Handler, & Handler1::OnSetYAxis);
+	pButtonZ->onPress.Add(Handler, & Handler1::OnSetZAxis);
 	VolumeMode->onSelection.Add(Handler, & Handler1::OnVolumeMode);
 
 	for (int i = 0; i < ConsoleSize; ++ i)
