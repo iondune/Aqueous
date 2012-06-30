@@ -6,6 +6,7 @@
 #include <Gwen/Skins/Simple.h>
 #include <Gwen/Controls.h>
 #include <Gwen/Controls/VerticalSlider.h>
+#include <Gwen/Controls/ComboBox.h>
 
 #include "CGwenEventForwarder.h"
 #include <CApplication.h>
@@ -54,22 +55,23 @@ void CMainState::begin()
 	EmphasisSlider = new Gwen::Controls::VerticalSlider(pCanvas);
 	EmphasisSlider->SetBounds(1300, 10, 40, 160);
 	EmphasisSlider->SetRange(0.f, 1.f);
-	EmphasisSlider->SetNotchCount(10);
 
 	Gwen::Controls::VerticalSlider * IntensitySlider = new Gwen::Controls::VerticalSlider(pCanvas);
 	IntensitySlider->SetBounds(1350, 10, 40, 160);
 	IntensitySlider->SetRange(10.f, 0.5f);
-	IntensitySlider->SetNotchCount(10);
 
 	Gwen::Controls::VerticalSlider * LocalRangeSlider = new Gwen::Controls::VerticalSlider(pCanvas);
 	LocalRangeSlider->SetBounds(1400, 10, 40, 160);
 	LocalRangeSlider->SetRange(0.05f, 0.5f);
-	LocalRangeSlider->SetNotchCount(10);
 
 	Gwen::Controls::VerticalSlider * MinimumAlphaSlider = new Gwen::Controls::VerticalSlider(pCanvas);
 	MinimumAlphaSlider->SetBounds(1450, 10, 40, 160);
 	MinimumAlphaSlider->SetRange(0.01f, 0.5f);
-	MinimumAlphaSlider->SetNotchCount(10);
+
+	Gwen::Controls::ComboBox * VolumeMode = new Gwen::Controls::ComboBox(pCanvas);
+	VolumeMode->SetBounds(1300, 50 + 120 + 45 + 35, 200, 25);
+	VolumeMode->AddItem(L"Plane Slices");
+	VolumeMode->AddItem(L"Surface Values");
 
 	class Handler1 : public Gwen::Event::Handler
 	{
@@ -82,21 +84,35 @@ void CMainState::begin()
 		float MinimumAlpha;
 		float EmphasisLocation;
 
+		bool SurfaceValues;
+
 		Handler1(SciDataParser * & pParser, float & intensity)
 			: Intensity(intensity), Parser(pParser)
 		{
 			LocalRange = 0.1f;
 			MinimumAlpha = 0.03f;
 			EmphasisLocation = 0.5f;
+			SurfaceValues = false;
 		}
 
 		void resetVolumeData()
 		{
-			COxygenIsoSurfaceColorMapper l;
-			l.EmphasisLocation = EmphasisLocation;
-			l.MinimumAlpha = MinimumAlpha;
-			l.LocalRange = LocalRange;
-			Parser->generateVolumeFromGridValues(& l);
+			if (SurfaceValues)
+			{
+				COxygenIsoSurfaceColorMapper l;
+				l.EmphasisLocation = EmphasisLocation;
+				l.MinimumAlpha = MinimumAlpha;
+				l.LocalRange = LocalRange;
+				Parser->generateVolumeFromGridValues(& l);
+			}
+			else
+			{
+				COxygenLocalizedColorMapper l;
+				l.EmphasisLocation = EmphasisLocation;
+				l.MinimumAlpha = MinimumAlpha;
+				l.LocalRange = LocalRange;
+				Parser->generateVolumeFromGridValues(& l);
+			}
 		}
 
 		void OnEmphasisSlider(Gwen::Controls::Base * Control)
@@ -138,6 +154,17 @@ void CMainState::begin()
 		{
 			Intensity = 1.f;
 		}
+
+		void OnVolumeMode(Gwen::Controls::Base * Control)
+		{
+			Gwen::Controls::ComboBox * Box = (Gwen::Controls::ComboBox *) Control;
+
+			if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Surface Values"))
+				SurfaceValues = true;
+			else
+				SurfaceValues = false;
+			resetVolumeData();
+		}
 	};
 
 	Handler1 * Handler = new Handler1(DataParser, AlphaIntensity);
@@ -147,6 +174,7 @@ void CMainState::begin()
 	LocalRangeSlider->onValueChanged.Add(Handler, & Handler1::OnLocalRangeSlider);
 	pButton->onPress.Add(Handler, & Handler1::OnResetVolume);
 	pButton2->onPress.Add(Handler, & Handler1::OnResetAlpha);
+	VolumeMode->onSelection.Add(Handler, & Handler1::OnVolumeMode);
 
 	for (int i = 0; i < ConsoleSize; ++ i)
 	{
@@ -392,6 +420,7 @@ void CMainState::OnRenderStart(float const Elapsed)
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		//glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+		glClear(GL_DEPTH_BUFFER_BIT);
 
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();

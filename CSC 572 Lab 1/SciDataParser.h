@@ -136,10 +136,9 @@ class COxygenIsoSurfaceColorMapper : public COxygenColorMapper
 
 public:
 
-	float EmphasisLocation;
-	Range HeightRange;
 	Range ValueRange;
-
+	
+	float EmphasisLocation;
 	float LocalRange;
 	float MinimumAlpha;
 
@@ -173,7 +172,6 @@ public:
 
 	virtual void preProcessValues(SciDataSet & s)
 	{
-		HeightRange = s.getValueRange("z", 5.0);
 		ValueRange = s.getValueRange("o1", 5.0);
 	}
 
@@ -184,30 +182,40 @@ class COxygenLocalizedColorMapper : public COxygenColorMapper
 {
 
 public:
-
+	
+	Range XRange;
+	Range YRange;
+	Range ZRange;
+	
 	float EmphasisLocation;
-	Range HeightRange;
-
 	float LocalRange;
 	float MinimumAlpha;
 
+	SVector3f SliceAxis;
+
 	COxygenLocalizedColorMapper()
-		: EmphasisLocation(0.5f)
 	{
+		EmphasisLocation = 0.5f;
 		LocalRange = 0.1f;
 		MinimumAlpha = 0.03f;
+		SliceAxis = SVector3f(0.f, 1.f, 0.f);
 	}
 
 	virtual SColor const getColor(SciData const & d)
 	{
 		SColor c = COxygenColorMapper::getColor(d);
 
-		double Z = d.getField("z");
-		float Height = (float) ((Z - HeightRange.first) / (HeightRange.second - HeightRange.first));
+		float X = (float) ((d.getField("x") - XRange.first) / (XRange.second - XRange.first));
+		float Y = (float) ((d.getField("y") - YRange.first) / (YRange.second - YRange.first));
+		float Z = (float) ((d.getField("z") - ZRange.first) / (ZRange.second - ZRange.first));
 
-		if (abs(Height - EmphasisLocation) < LocalRange / 2.f)
+		SVector3f const LocalVector = SVector3f(X, Y, X) - SVector3f(0.5f);
+		SVector3f const PlanarVector = SliceAxis.getNormalized();
+		float const Distance = abs((LocalVector.dotProduct(PlanarVector) + 0.5f) - EmphasisLocation);
+
+		if (Distance < LocalRange / 2.f)
 		{
-			float Ratio = 1.f - abs(Height - EmphasisLocation) / (LocalRange / 2.f);
+			float Ratio = 1.f - Distance / (LocalRange / 2.f);
 			c.Alpha = Ratio * (1.f - MinimumAlpha) + MinimumAlpha;
 		}
 		else
@@ -220,7 +228,9 @@ public:
 
 	virtual void preProcessValues(SciDataSet & s)
 	{
-		HeightRange = s.getValueRange("z", 5.0);
+		XRange = s.getValueRange("x", 5.0);
+		YRange = s.getValueRange("y", 5.0);
+		ZRange = s.getValueRange("z", 5.0);
 	}
 
 };
