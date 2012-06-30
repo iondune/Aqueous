@@ -209,9 +209,25 @@ public:
 		float Y = (float) ((d.getField("y") - YRange.first) / (YRange.second - YRange.first));
 		float Z = (float) ((d.getField("z") - ZRange.first) / (ZRange.second - ZRange.first));
 
-		SVector3f const LocalVector = SVector3f(X, Y, X) - SVector3f(0.5f);
+		SVector3f const LocalVector = SVector3f(X, Y, Z) - SVector3f(0.5f);
 		SVector3f const PlanarVector = SliceAxis.getNormalized();
-		float const Distance = abs((LocalVector.dotProduct(PlanarVector) + 0.5f) - EmphasisLocation);
+
+		float Expansion;
+		SVector3f const MVec(abs(PlanarVector.X), abs(PlanarVector.Y), abs(PlanarVector.Z));
+		if (MVec.X > MVec.Y && MVec.X > MVec.Z)
+		{
+			Expansion = 1.f / MVec.X;
+		}
+		else if (MVec.Y > MVec.X && MVec.Y > MVec.Z)
+		{
+			Expansion = 1.f / MVec.Y;
+		}
+		else if (MVec.Z > MVec.X && MVec.Z > MVec.Y)
+		{
+			Expansion = 1.f / MVec.Z;
+		}
+
+		float const Distance = abs(((LocalVector / Expansion).dotProduct(PlanarVector) + 0.5f) - EmphasisLocation);
 
 		if (Distance < LocalRange / 2.f)
 		{

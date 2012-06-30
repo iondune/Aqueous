@@ -108,16 +108,19 @@ public:
 	void OnSetXAxis(Gwen::Controls::Base * Control)
 	{
 		AxisVector = SVector3f(1.f, 0.f, 0.f);
+		resetVolumeData();
 	}
 
 	void OnSetYAxis(Gwen::Controls::Base * Control)
 	{
 		AxisVector = SVector3f(0.f, 1.f, 0.f);
+		resetVolumeData();
 	}
 
 	void OnSetZAxis(Gwen::Controls::Base * Control)
 	{
 		AxisVector = SVector3f(0.f, 0.f, 1.f);
+		resetVolumeData();
 	}
 
 	void OnVolumeMode(Gwen::Controls::Base * Control)

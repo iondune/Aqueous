@@ -54,10 +54,10 @@ void CMainState::OnMouseEvent(SMouseEvent const & Event)
 			            glm::vec3 rotAxis(axis.x, axis.y, axis.z);
 						glm::mat4 Transformation = glm::rotate(glm::mat4(1.f), dot, rotAxis);
 			            Rotation = Transformation*Rotation;
-						if (! equals(difX, 0.f) && ! equals(difY, 0.f))
+						if (! equals(difX, 0.f) && ! equals(difY, 0.f) && Application.getEventManager().IsKeyDown[EKey::q])
 						{
-							glm::vec4 v = (Rotation * glm::vec4(0.f, 1.f, 0.f, 0.f));
-							//Handler1::Instance->AxisVector = SVector3f(v.x, v.y, v.z);
+							glm::vec4 v = Transformation * glm::vec4(Handler1::Instance->AxisVector.getGLMVector(), 0.f);//(Rotation * glm::vec4(1.f, 0.f, 0.f, 0.f));//
+							Handler1::Instance->AxisVector = SVector3f(v.x, v.y, v.z);
 							Handler1::Instance->resetVolumeData();
 						
 							printf("Setting new axis vector! %f %f %f \n", v.x, v.y, v.z);
