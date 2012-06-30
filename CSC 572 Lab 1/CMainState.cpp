@@ -92,7 +92,7 @@ void CMainState::begin()
 
 		void resetVolumeData()
 		{
-			COxygenLocalizedColorMapper l;
+			COxygenIsoSurfaceColorMapper l;
 			l.EmphasisLocation = EmphasisLocation;
 			l.MinimumAlpha = MinimumAlpha;
 			l.LocalRange = LocalRange;
