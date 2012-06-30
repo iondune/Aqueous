@@ -215,7 +215,7 @@ void CMainState::OnRenderStart(float const Elapsed)
 {
 	Camera->update(Elapsed);
 
-	Timer += Elapsed * 0.22f;
+	Timer += Elapsed * 0.16f;
 
 	float const Distance = 4.f;
 	OrbitCamera->setPosition(SVector3f(sin(Timer)*Distance, 2.3f, cos(Timer)*Distance));
