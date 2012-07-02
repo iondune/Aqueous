@@ -8,7 +8,7 @@ void CMainState::loadData()
 	std::string Field;
 
 	printf("Loading data...\n");
-	switch (0)
+	switch (2)
 	{
 	default:
 	case 0:
@@ -40,10 +40,12 @@ void CMainState::loadData()
 		
 			printf("Performing volumetric operations...\n");
 			CRGBIntensityColorMapper r("o1", "o2", "o3");
+			CSingleFieldColorMapper sf("o1");
 			COxygenColorMapper o;
 			COxygenLocalizedColorMapper l;
 			
 			DataParser->generateVolumeFromGridValues(& o);
+			DataParser->createPointCloudObjects(false, VoxelObject, SVector3f(6.f), & o);
 			Field = "mult";
 		}
 		break;

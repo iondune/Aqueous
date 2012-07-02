@@ -117,6 +117,7 @@
     <ClInclude Include="COxygenIsoSurfaceColorMapper.h" />
     <ClInclude Include="COxygenLocalizedColorMapper.h" />
     <ClInclude Include="CRGBIntensityColorMapper.h" />
+    <ClInclude Include=".\CSingleFieldColorMapper.h" />
     <ClInclude Include="CVolumeControlsHandler.h" />
     <ClInclude Include="IColorMapper.h" />
     <ClInclude Include="RFBInterpolator\newmat.h" />

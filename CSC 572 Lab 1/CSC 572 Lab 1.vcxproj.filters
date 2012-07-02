@@ -97,6 +97,9 @@
     <ClInclude Include="CVolumeControlsHandler.h">
       <Filter>MainState</Filter>
     </ClInclude>
+    <ClInclude Include=".\CSingleFieldColorMapper.h">
+      <Filter>Data Management\Color Mapping</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Data Management">
