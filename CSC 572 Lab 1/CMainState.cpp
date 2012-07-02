@@ -16,7 +16,7 @@ CMainState::CMainState()
 	ShowVolume(0), ShowGUI(true), DataParser(0), ConsoleAccumulator(0.f), Slider(0.f), AlphaIntensity(1.f)
 {}
 
-Handler1 * Handler1::Instance = 0;
+CVolumeControlsHandler * CVolumeControlsHandler::Instance = 0;
 
 void CMainState::begin()
 {
@@ -87,23 +87,21 @@ void CMainState::begin()
 	VolumeMode->AddItem(L"Plane Slices");
 	VolumeMode->AddItem(L"Surface Values");
 
-	Handler1 * Handler = new Handler1(DataParser, AlphaIntensity);
-	EmphasisSlider->onValueChanged.Add(Handler, & Handler1::OnEmphasisSlider);
-	IntensitySlider->onValueChanged.Add(Handler, & Handler1::OnIntensitySlider);
-	MinimumAlphaSlider->onValueChanged.Add(Handler, & Handler1::OnMinimumAlphaSlider);
-	LocalRangeSlider->onValueChanged.Add(Handler, & Handler1::OnLocalRangeSlider);
-	pButton->onPress.Add(Handler, & Handler1::OnResetVolume);
-	pButton2->onPress.Add(Handler, & Handler1::OnResetAlpha);
-	pButtonX->onPress.Add(Handler, & Handler1::OnSetXAxis);
-	pButtonY->onPress.Add(Handler, & Handler1::OnSetYAxis);
-	pButtonZ->onPress.Add(Handler, & Handler1::OnSetZAxis);
-	VolumeMode->onSelection.Add(Handler, & Handler1::OnVolumeMode);
+	CVolumeControlsHandler * Handler = new CVolumeControlsHandler(DataParser, AlphaIntensity);
+	EmphasisSlider->onValueChanged.Add(Handler, & CVolumeControlsHandler::OnEmphasisSlider);
+	IntensitySlider->onValueChanged.Add(Handler, & CVolumeControlsHandler::OnIntensitySlider);
+	MinimumAlphaSlider->onValueChanged.Add(Handler, & CVolumeControlsHandler::OnMinimumAlphaSlider);
+	LocalRangeSlider->onValueChanged.Add(Handler, & CVolumeControlsHandler::OnLocalRangeSlider);
+	pButton->onPress.Add(Handler, & CVolumeControlsHandler::OnResetVolume);
+	pButton2->onPress.Add(Handler, & CVolumeControlsHandler::OnResetAlpha);
+	pButtonX->onPress.Add(Handler, & CVolumeControlsHandler::OnSetXAxis);
+	pButtonY->onPress.Add(Handler, & CVolumeControlsHandler::OnSetYAxis);
+	pButtonZ->onPress.Add(Handler, & CVolumeControlsHandler::OnSetZAxis);
+	VolumeMode->onSelection.Add(Handler, & CVolumeControlsHandler::OnVolumeMode);
 
 	for (int i = 0; i < ConsoleSize; ++ i)
 	{
 		ConsoleMessages[i] = new Gwen::Controls::Label(pCanvas);
-		//ConsoleMessages[i]->SetText("Message!!!! These exclamation marks look like exclamation marks!!");
-		//ConsoleMessages[i]->SetTextColor(Gwen::Color(30 * i,234,255 - 20 * i,150));
 		ConsoleMessages[i]->SetPos(20, 900 - 50 - 25 * i);
 		ConsoleMessages[i]->SetSize(1500, 30);
 		ConsoleMessages[i]->SetShouldDrawBackground(true);

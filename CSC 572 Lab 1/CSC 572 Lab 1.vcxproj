@@ -101,13 +101,26 @@
     <ClCompile Include=".\SciDataParserSimpleTXT.cpp" />
     <ClCompile Include=".\SciDataParserGrid1.cpp" />
     <ClCompile Include=".\SciDataParserCTD.cpp" />
-    <ClCompile Include="SciDataParser.cpp" />
+    <ClCompile Include="RFBInterpolator\newmat.cpp" />
+    <ClCompile Include="RFBInterpolator\RBFInterpolator.cpp" />
+    <ClCompile Include=".\SciDataParser.Tree.cpp" />
+    <ClCompile Include="SciDataParser.PointCloud.cpp" />
+    <ClCompile Include="SciDataParser.Volume.cpp" />
     <ClCompile Include="SciDataSet.cpp" />
     <ClCompile Include="SciDataTree.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CGwenEventForwarder.h" />
     <ClInclude Include="CMainState.h" />
+    <ClInclude Include="ColorMappers.h" />
+    <ClInclude Include="COxygenColorMapper.h" />
+    <ClInclude Include="COxygenIsoSurfaceColorMapper.h" />
+    <ClInclude Include="COxygenLocalizedColorMapper.h" />
+    <ClInclude Include="CRGBIntensityColorMapper.h" />
+    <ClInclude Include="CVolumeControlsHandler.h" />
+    <ClInclude Include="IColorMapper.h" />
+    <ClInclude Include="RFBInterpolator\newmat.h" />
+    <ClInclude Include="RFBInterpolator\RBFInterpolator.h" />
     <ClInclude Include="SciData.h" />
     <ClInclude Include="SciDataIterator.h" />
     <ClInclude Include="SciDataParser.h" />

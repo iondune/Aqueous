@@ -2,17 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="CMainState.InitFunctions.cpp" />
-    <ClCompile Include="CMainState.cpp" />
-    <ClCompile Include="CMainState.MouseTracking.cpp" />
-    <ClCompile Include="CMainState.EventHandling.cpp" />
-    <ClCompile Include="CMainState.DataLoading.cpp" />
-    <ClCompile Include="SciDataSet.cpp">
-      <Filter>Data Management</Filter>
-    </ClCompile>
-    <ClCompile Include="SciDataTree.cpp">
-      <Filter>Data Management</Filter>
-    </ClCompile>
     <ClCompile Include=".\SciDataParserGrid1.cpp">
       <Filter>Data Management\Parsers</Filter>
     </ClCompile>
@@ -22,27 +11,91 @@
     <ClCompile Include=".\SciDataParserSimpleTXT.cpp">
       <Filter>Data Management\Parsers</Filter>
     </ClCompile>
-    <ClCompile Include="SciDataParser.cpp">
+    <ClCompile Include="CMainState.cpp">
+      <Filter>MainState</Filter>
+    </ClCompile>
+    <ClCompile Include="CMainState.DataLoading.cpp">
+      <Filter>MainState</Filter>
+    </ClCompile>
+    <ClCompile Include="CMainState.EventHandling.cpp">
+      <Filter>MainState</Filter>
+    </ClCompile>
+    <ClCompile Include="CMainState.InitFunctions.cpp">
+      <Filter>MainState</Filter>
+    </ClCompile>
+    <ClCompile Include="CMainState.MouseTracking.cpp">
+      <Filter>MainState</Filter>
+    </ClCompile>
+    <ClCompile Include="RFBInterpolator\newmat.cpp">
+      <Filter>RFBInterpolator</Filter>
+    </ClCompile>
+    <ClCompile Include="RFBInterpolator\RBFInterpolator.cpp">
+      <Filter>RFBInterpolator</Filter>
+    </ClCompile>
+    <ClCompile Include="SciDataSet.cpp">
+      <Filter>Data Management\Base Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="SciDataTree.cpp">
+      <Filter>Data Management\Base Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="SciDataParser.Volume.cpp">
+      <Filter>Data Management</Filter>
+    </ClCompile>
+    <ClCompile Include=".\SciDataParser.Tree.cpp">
+      <Filter>Data Management</Filter>
+    </ClCompile>
+    <ClCompile Include="SciDataParser.PointCloud.cpp">
       <Filter>Data Management</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CMainState.h" />
-    <ClInclude Include="CGwenEventForwarder.h" />
-    <ClInclude Include="SciData.h">
-      <Filter>Data Management</Filter>
-    </ClInclude>
     <ClInclude Include="SciDataParser.h">
       <Filter>Data Management</Filter>
     </ClInclude>
-    <ClInclude Include="SciDataIterator.h">
-      <Filter>Data Management</Filter>
+    <ClInclude Include="CMainState.h">
+      <Filter>MainState</Filter>
+    </ClInclude>
+    <ClInclude Include="CGwenEventForwarder.h">
+      <Filter>MainState\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="RFBInterpolator\newmat.h">
+      <Filter>RFBInterpolator</Filter>
+    </ClInclude>
+    <ClInclude Include="RFBInterpolator\RBFInterpolator.h">
+      <Filter>RFBInterpolator</Filter>
     </ClInclude>
     <ClInclude Include="SciDataSet.h">
-      <Filter>Data Management</Filter>
+      <Filter>Data Management\Base Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="SciData.h">
+      <Filter>Data Management\Base Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="SciDataIterator.h">
+      <Filter>Data Management\Base Objects</Filter>
     </ClInclude>
     <ClInclude Include="SciDataTree.h">
-      <Filter>Data Management</Filter>
+      <Filter>Data Management\Base Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="IColorMapper.h">
+      <Filter>Data Management\Color Mapping</Filter>
+    </ClInclude>
+    <ClInclude Include="CRGBIntensityColorMapper.h">
+      <Filter>Data Management\Color Mapping</Filter>
+    </ClInclude>
+    <ClInclude Include="COxygenIsoSurfaceColorMapper.h">
+      <Filter>Data Management\Color Mapping\Oxygen</Filter>
+    </ClInclude>
+    <ClInclude Include="COxygenLocalizedColorMapper.h">
+      <Filter>Data Management\Color Mapping\Oxygen</Filter>
+    </ClInclude>
+    <ClInclude Include="COxygenColorMapper.h">
+      <Filter>Data Management\Color Mapping\Oxygen</Filter>
+    </ClInclude>
+    <ClInclude Include="ColorMappers.h">
+      <Filter>Data Management\Color Mapping</Filter>
+    </ClInclude>
+    <ClInclude Include="CVolumeControlsHandler.h">
+      <Filter>MainState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -51,6 +104,24 @@
     </Filter>
     <Filter Include="Data Management\Parsers">
       <UniqueIdentifier>{39c602da-763b-40fc-9eeb-1fd7df570632}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainState">
+      <UniqueIdentifier>{06d12b70-0519-4c87-922b-bfa1f96bac06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainState\GUI">
+      <UniqueIdentifier>{e2f73951-6082-4d3a-bcd6-3f07b8ec41d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RFBInterpolator">
+      <UniqueIdentifier>{b020b00f-9710-43b6-a8a2-ea0d2483664b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data Management\Base Objects">
+      <UniqueIdentifier>{91f5d56d-29df-4cbf-8e61-de1d3fa7f9df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data Management\Color Mapping">
+      <UniqueIdentifier>{85018b9c-10cf-4a50-81b5-fdae04b04d76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data Management\Color Mapping\Oxygen">
+      <UniqueIdentifier>{303188e5-c275-4776-b1bf-65a8d73d632b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

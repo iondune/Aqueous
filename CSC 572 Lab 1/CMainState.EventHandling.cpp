@@ -10,27 +10,29 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 	case EKey::x:
 
 		if (! Event.Pressed)
+		{
 			SoupObject->setVisible(! SoupObject->isVisible());
-		s << "Point cloud object ";
-		if (SoupObject->isVisible())
-			s << "enabled.";
-		else
-			s << "disabled.";
-		addConsoleMessage(s.str());
-
+			s << "Point cloud object ";
+			if (SoupObject->isVisible())
+				s << "enabled.";
+			else
+				s << "disabled.";
+			addConsoleMessage(s.str());
+		}
 		break;
 
 	case EKey::z:
 
 		if (! Event.Pressed)
+		{
 			VoxelObject->setVisible(! VoxelObject->isVisible());
-		s << "Oct tree object ";
-		if (VoxelObject->isVisible())
-			s << "enabled.";
-		else
-			s << "disabled.";
-		addConsoleMessage(s.str());
-
+			s << "Oct tree object ";
+			if (VoxelObject->isVisible())
+				s << "enabled.";
+			else
+				s << "disabled.";
+			addConsoleMessage(s.str());
+		}
 		break;
 
 	case EKey::c:
