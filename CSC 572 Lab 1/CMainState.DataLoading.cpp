@@ -44,7 +44,7 @@ void CMainState::loadData()
 			COxygenColorMapper o;
 			COxygenLocalizedColorMapper l;
 			
-			DataParser->generateVolumeFromGridValues(& o);
+			DataParser->createVolumeFromGridValues(& o);
 			DataParser->createPointCloudObjects(false, VoxelObject, SVector3f(6.f), & o);
 			Field = "mult";
 		}

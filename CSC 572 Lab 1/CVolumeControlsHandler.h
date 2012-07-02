@@ -53,7 +53,7 @@ public:
 			l.EmphasisLocation = EmphasisLocation;
 			l.MinimumAlpha = MinimumAlpha;
 			l.LocalRange = LocalRange;
-			Parser->generateVolumeFromGridValues(& l);
+			Parser->createVolumeFromGridValues(& l);
 		}
 		else
 		{
@@ -62,7 +62,7 @@ public:
 			l.MinimumAlpha = MinimumAlpha;
 			l.LocalRange = LocalRange;
 			l.SliceAxis = AxisVector;
-			Parser->generateVolumeFromGridValues(& l);
+			Parser->createVolumeFromGridValues(& l);
 		}
 	}
 
@@ -98,7 +98,7 @@ public:
 	void OnResetVolume(Gwen::Controls::Base * Control)
 	{
 		COxygenColorMapper o;
-		Parser->generateVolumeFromGridValues(& o);
+		Parser->createVolumeFromGridValues(& o);
 	}
 
 	void OnResetAlpha(Gwen::Controls::Base * Control)

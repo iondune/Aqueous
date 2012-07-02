@@ -230,7 +230,7 @@ void CMainState::OnRenderStart(float const Elapsed)
 	/*Slider += Elapsed * 0.5f;
 	COxygenLocalizedColorMapper l;
 	l.EmphasisLocation = (sin(Slider) + 1.f) / 2.f;
-	DataParser->generateVolumeFromGridValues(& l);*/
+	DataParser->createVolumeFromGridValues(& l);*/
 	
 
 	SceneManager.drawAll();

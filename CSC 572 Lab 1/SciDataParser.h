@@ -28,7 +28,7 @@ public:
 
 	int const * GridDimensions;
 
-	void generateVolumeFromGridValues(IColorMapper * ColorMapper);
+	void createVolumeFromGridValues(IColorMapper * ColorMapper);
 	void createDataTreeFromRawValues();
 	void createPointCloudObjects(bool FromRaw, ISceneObject * RootParent, SVector3f const DataScale, IColorMapper * ColorMapper);
 

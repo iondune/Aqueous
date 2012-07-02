@@ -1,7 +1,7 @@
 #include "SciDataParser.h"
 
 
-void SciDataParser::generateVolumeFromGridValues(IColorMapper * ColorMapper)
+void SciDataParser::createVolumeFromGridValues(IColorMapper * ColorMapper)
 {
 	/// Generate Volume!
 	unsigned int const size = GridDimensions[0] * GridDimensions[1] * GridDimensions[2] * 4;
