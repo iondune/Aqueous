@@ -31,7 +31,7 @@ void SciDataParser::generateVolumeFromGridValues(IColorMapper * ColorMapper)
 				SColor Color = ColorMapper->getColor(GridValues.Values[ValueIndex]);
 
 				for (int t = 0; t < 4; ++ t)
-					volumeData[ValueIndex * 4 + t] = clamp<unsigned char>((unsigned char) (Color[t] * 255.f), 0, 255);
+					volumeData[index * 4 + t] = clamp<unsigned char>((unsigned char) (Color[t] * 255.f), 0, 255);
 
 				//++ ValueIndex;
 			}
@@ -50,7 +50,7 @@ void SciDataParser::generateVolumeFromGridValues(IColorMapper * ColorMapper)
 	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
 	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
 	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_BORDER);
-	glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA, GridDimensions[0], GridDimensions[1], GridDimensions[2], 0, GL_RGBA, GL_UNSIGNED_BYTE, volumeData);
+	glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA, GridDimensions[0], GridDimensions[2], GridDimensions[1], 0, GL_RGBA, GL_UNSIGNED_BYTE, volumeData);
 	
 	glBindTexture(GL_TEXTURE_3D, 0);
 	glDisable(GL_TEXTURE_3D);
