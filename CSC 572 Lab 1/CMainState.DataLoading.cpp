@@ -5,19 +5,23 @@
 void CMainState::loadData()
 {
 	// Determine data source
-	std::string Field;
+	//std::string Field;
 
 	printf("Loading data...\n");
-	switch (2)
+	switch (0)
 	{
 	default:
 	case 0:
 		{
 			DataParser = new SciDataParserSimpleTXT();
 			DataParser->load("ForZoe.txt");
-			printf("Performing data operations...\n");
-			DataParser->RawValues.setDataScale(Vector3(3, 2, 3));
-			Field = "o2";
+
+			//DataParser->RawValues.setDataScale(Vector3(3, 2, 3));
+
+			CSingleFieldColorMapper sf("o2");
+			sf.AcceptedRange = Range(-9999999.0, 9999999.0);
+
+			DataParser->createPointCloudObjects(true, VoxelObject, SVector3f(3.f), & sf);
 		}
 		break;
 
@@ -25,9 +29,12 @@ void CMainState::loadData()
 		{
 			DataParser = new SciDataParserCTD();
 			DataParser->load("data2.mat");
-			printf("Performing data operations...\n");
-			DataParser->RawValues.setDataScale(Vector3(3, 2, 3));
-			Field = "salinity";
+
+			//DataParser->RawValues.setDataScale(Vector3(3, 2, 3));
+
+			CSingleFieldColorMapper sf("salinity");
+
+			DataParser->createPointCloudObjects(true, VoxelObject, SVector3f(3.f), & sf);
 		}
 		break;
 
@@ -35,18 +42,16 @@ void CMainState::loadData()
 		{
 			DataParser = new SciDataParserGrid1();
 			DataParser->load("oxyMaps.mat");
-			printf("Performing data operations...\n");
-			DataParser->GridValues.setDataScale(Vector3(3, 2, 3));
+
+			//DataParser->GridValues.setDataScale(Vector3(3, 2, 3));
 		
-			printf("Performing volumetric operations...\n");
 			CRGBIntensityColorMapper r("o1", "o2", "o3");
 			CSingleFieldColorMapper sf("o1");
 			COxygenColorMapper o;
 			COxygenLocalizedColorMapper l;
 			
 			DataParser->createVolumeFromGridValues(& o);
-			DataParser->createPointCloudObjects(false, VoxelObject, SVector3f(6.f), & o);
-			Field = "mult";
+			DataParser->createPointCloudObjects(false, SoupObject, SVector3f(3.f), & o);
 		}
 		break;
 
