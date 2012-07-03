@@ -1,10 +1,13 @@
 #include "SciDataParser.h"
 
 #include "RFBInterpolator/RBFInterpolator.h"
+#include "ProgressPrinter.h"
 
 
 void SciDataParser::createGridDataFromRawValues()
 {
+
+
 	int const Size = 10;
 	GridDimensions = new int[3];
 	GridDimensions[0] = Size;
@@ -20,6 +23,12 @@ void SciDataParser::createGridDataFromRawValues()
 	Range	ZRange = RawValues.getValueRange("z", 5.0);
 	Range	FRange = RawValues.getValueRange("o2", 5.0, Range(-999999.0, 999999.0));
 
+
+	ProgressPrinter p;
+
+	printf("Interpolating volume data...\n");
+	p.begin();
+
 	for (auto it = RawValues.Values.begin(); it != RawValues.Values.end(); ++ it)
 	{
 		float x = (float) ((it->getField("x") - XRange.first) / (XRange.second - XRange.first));
@@ -34,14 +43,16 @@ void SciDataParser::createGridDataFromRawValues()
 	}
 
 	RBFInterpolator rbfi(X, Y, Z, F);
-
-	for (int i = 0; i < Size; ++ i)
-	for (int j = 0; j < Size; ++ j)
+	
+	for (int j = Size - 1; j >= 0; -- j)
 	for (int k = 0; k < Size; ++ k)
+	for (int i = 0; i < Size; ++ i)
 	{
+		p.update(k * 100 / Size);
 		SciData d(i / (float) Size, j / (float) Size, k / (float) Size);
 		d.ScalarFields["o2"] = rbfi.interpolate(i / (float) Size, j / (float) Size, k / (float) Size);
 
 		GridValues.Values.push_back(d);
 	}
+	p.end();
 }

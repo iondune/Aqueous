@@ -103,6 +103,9 @@
     <ClInclude Include=".\CSingleFieldColorMapper.h">
       <Filter>Data Management\Color Mapping</Filter>
     </ClInclude>
+    <ClInclude Include="ProgressPrinter.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Data Management">
@@ -128,6 +131,9 @@
     </Filter>
     <Filter Include="Data Management\Color Mapping\Oxygen">
       <UniqueIdentifier>{303188e5-c275-4776-b1bf-65a8d73d632b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utilities">
+      <UniqueIdentifier>{c5fafe06-1efa-415a-bd3a-d59efafe3cac}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

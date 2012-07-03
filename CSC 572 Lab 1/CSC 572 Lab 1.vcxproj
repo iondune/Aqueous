@@ -121,6 +121,7 @@
     <ClInclude Include=".\CSingleFieldColorMapper.h" />
     <ClInclude Include="CVolumeControlsHandler.h" />
     <ClInclude Include="IColorMapper.h" />
+    <ClInclude Include="ProgressPrinter.h" />
     <ClInclude Include="RFBInterpolator\newmat.h" />
     <ClInclude Include="RFBInterpolator\RBFInterpolator.h" />
     <ClInclude Include="SciData.h" />

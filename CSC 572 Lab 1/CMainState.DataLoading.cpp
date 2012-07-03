@@ -8,7 +8,7 @@ void CMainState::loadData()
 	//std::string Field;
 
 	printf("Loading data...\n");
-	switch (2)
+	switch (0)
 	{
 	default:
 	case 0:
