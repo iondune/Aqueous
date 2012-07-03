@@ -35,9 +35,10 @@ std::pair<double, double> SciDataSet::getValueRange(std::string const & Field, d
 	for (auto it = DataCopy.begin(); it != DataCopy.end(); ++ it)
 	{
 		double const v = it->getField(Field);
-		if (! inRange(v, acceptedValues))
+		if (! inRange(v, acceptedValues) || v != v)
 			Count --;
-		Mean += it->getField(Field);
+		else
+			Mean += it->getField(Field);
 	}
 	Mean /= (double) (Count);
 	printf("Data mean is %e with %d exclusions ", Mean, DataCopy.size() - Count);
@@ -46,7 +47,7 @@ std::pair<double, double> SciDataSet::getValueRange(std::string const & Field, d
 	for (auto it = DataCopy.begin(); it != DataCopy.end(); ++ it)
 	{
 		double const v = it->getField(Field);
-		if (inRange(v, acceptedValues))
+		if (inRange(v, acceptedValues) && v == v)
 			StdDeviation += /*sq*/abs(v - Mean);
 	}
 	StdDeviation /= (double) (Count - 1);

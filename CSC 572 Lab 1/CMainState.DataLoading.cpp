@@ -8,7 +8,7 @@ void CMainState::loadData()
 	//std::string Field;
 
 	printf("Loading data...\n");
-	switch (0)
+	switch (1)
 	{
 	default:
 	case 0:
@@ -36,8 +36,12 @@ void CMainState::loadData()
 			//DataParser->RawValues.setDataScale(Vector3(3, 2, 3));
 
 			CSingleFieldColorMapper sf("salinity");
+			sf.AcceptedRange = Range(-99999.0, 99999.0);
 
 			DataParser->createPointCloudObjects(true, VoxelObject, SVector3f(3.f), & sf);
+			DataParser->createGridDataFromRawValues();
+			DataParser->createPointCloudObjects(false, SoupObject, SVector3f(3.f), & sf);
+			DataParser->createVolumeFromGridValues(& sf);
 		}
 		break;
 
