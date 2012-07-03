@@ -3,7 +3,6 @@
 
 void SciDataParser::createVolumeFromGridValues(IColorMapper * ColorMapper)
 {
-	/// Generate Volume!
 	unsigned int const size = GridDimensions[0] * GridDimensions[1] * GridDimensions[2] * 4;
 
 	if (GridValues.Values.size() != size / 4)
@@ -15,8 +14,6 @@ void SciDataParser::createVolumeFromGridValues(IColorMapper * ColorMapper)
 	ColorMapper->preProcessValues(GridValues);
 
 	GLubyte * volumeData = new GLubyte[size];
-
-	//int ValueIndex = 0;
 
 	for (int i = 0; i < GridDimensions[2]; ++ i)
 	{
@@ -32,8 +29,6 @@ void SciDataParser::createVolumeFromGridValues(IColorMapper * ColorMapper)
 
 				for (int t = 0; t < 4; ++ t)
 					volumeData[index * 4 + t] = clamp<unsigned char>((unsigned char) (Color[t] * 255.f), 0, 255);
-
-				//++ ValueIndex;
 			}
 		}
 	}
@@ -44,7 +39,6 @@ void SciDataParser::createVolumeFromGridValues(IColorMapper * ColorMapper)
 	if (! VolumeHandle)
 		glGenTextures(1, & VolumeHandle);
 	glBindTexture(GL_TEXTURE_3D, VolumeHandle);
-	//glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
