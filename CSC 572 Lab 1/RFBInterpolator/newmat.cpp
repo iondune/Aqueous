@@ -1,3 +1,5 @@
+#define _CRT_SECURE_NO_WARNINGS
+
 //$$ newmat1.cpp   Matrix type functions
 
 // Copyright (C) 1991,2,3,4: R B Davies

@@ -32,13 +32,13 @@ RBFInterpolator::RBFInterpolator(vector<real> x, vector<real> y, vector<real> z,
 	Matrix G(M + 4,M + 4);
 
 	// copy function values
-	for (int i = 1; i <= M; i++)
+	for (unsigned int i = 1; i <= M; i++)
 		F(i) = f[i-1];
 	
 	F(M+1) = 0;  F(M+2) = 0;  F(M+3) = 0;  F(M+4) = 0;
 
 	// fill xyz coordinates into P 
-	for (int i = 1; i <= M; i++)
+	for (unsigned int i = 1; i <= M; i++)
 	{
 		P(i,1) = x[i-1];
 		P(i,2) = y[i-1];
@@ -46,8 +46,8 @@ RBFInterpolator::RBFInterpolator(vector<real> x, vector<real> y, vector<real> z,
 	}
 
 	// the matrix below is symmetric, so I could save some calculations Hmmm. must be a todo
-	for (int i = 1; i <= M; i++)
-	for (int j = 1; j <= M; j++)
+	for (unsigned int i = 1; i <= M; i++)
+	for (unsigned int j = 1; j <= M; j++)
 	{
 		real dx = x[i-1] - x[j-1];
 		real dy = y[i-1] - y[j-1];
@@ -59,7 +59,7 @@ RBFInterpolator::RBFInterpolator(vector<real> x, vector<real> y, vector<real> z,
 	}
 
 	//Set last 4 columns of G
-	for (int i = 1; i <= M; i++)
+	for (unsigned int i = 1; i <= M; i++)
 	{
 		G( i, M+1 ) = 1;
 		G( i, M+2 ) = x[i-1];
@@ -67,12 +67,12 @@ RBFInterpolator::RBFInterpolator(vector<real> x, vector<real> y, vector<real> z,
 		G( i, M+4 ) = z[i-1];
 	}
 
-	for (int i = M+1; i <= M+4; i++)
-	for (int j = M+1; j <= M+4; j++)
+	for (unsigned int i = M+1; i <= M+4; i++)
+	for (unsigned int j = M+1; j <= M+4; j++)
 		G( i, j ) = 0;
 
 	//Set last 4 rows of G
-	for (int j = 1; j <= M; j++)
+	for (unsigned int j = 1; j <= M; j++)
 	{
 		G( M+1, j ) = 1;
 		G( M+2, j ) = x[j-1];
@@ -104,19 +104,19 @@ real RBFInterpolator::interpolate(real x, real y, real z)
 	real sum = 0.0f;
 
 	// RBF part
-	for (int i = 1; i <= M; i++)
+	for (unsigned int i = 1; i <= M; i++)
 	{
-		real dx = x - P(i,1);
-		real dy = y - P(i,2);
-		real dz = z - P(i,3);
+		real dx = x - (real) P(i,1);
+		real dy = y - (real) P(i,2);
+		real dz = z - (real) P(i,3);
 
 		real distance_squared = dx*dx + dy*dy + dz*dz;
 
-		sum += A(i) * g(distance_squared);
+		sum += (real) (A(i) * g(distance_squared));
 	}
 	
 	//affine part
-	sum += A(M+1) + A(M+2)*x + A(M+3)*y + A(M+4)*z;
+	sum += (real) (A(M+1) + A(M+2)*x + A(M+3)*y + A(M+4)*z);
 
 	return sum;
 }
@@ -134,7 +134,7 @@ void RBFInterpolator::UpdateFunctionValues(vector<real> f)
 	ColumnVector F(M+4);
 
 	// copy function values
-	for (int i = 1; i <= M; i++)
+	for (unsigned int i = 1; i <= M; i++)
 		F(i) = f[i-1];
 	
 	F(M+1) = 0;  F(M+2) = 0;  F(M+3) = 0;  F(M+4) = 0;
