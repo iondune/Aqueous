@@ -65,6 +65,76 @@ bool rayAABBIntersect(vec3 start, vec3 dir, vec3 Min, vec3 Max)
     return true;
 }
 
+uniform int uHighlightMode;
+uniform vec3 uSliceAxis;
+uniform float uLocalRange;
+uniform float uMinimumAlpha;
+uniform float uEmphasisLocation;
+
+vec4 getColorSample(vec3 coords)
+{
+	vec4 sample = texture3D(uVolumeData, coords);
+
+	switch (uHighlightMode)
+	{
+	default:
+	case 0:
+		sample.a = 0.8;
+		break;
+
+	case 3:
+		break;
+
+	case 1:
+		vec3 LocalVector = coords - 0.5;
+		vec3 PlanarVector = normalize(uSliceAxis);
+
+		float Expansion;
+		vec3 MVec = abs(PlanarVector);
+		if (MVec.x > MVec.y && MVec.x > MVec.z)
+		{
+			Expansion = 1.0 / MVec.x;
+		}
+		else if (MVec.y > MVec.x && MVec.y > MVec.z)
+		{
+			Expansion = 1.0 / MVec.y;
+		}
+		else if (MVec.z > MVec.x && MVec.z > MVec.y)
+		{
+			Expansion = 1.0 / MVec.z;
+		}
+
+		float Distance = abs(dot(LocalVector / Expansion, PlanarVector) + 0.5 - uEmphasisLocation);
+
+		if (Distance < uLocalRange / 2.0)
+		{
+			float Ratio = 1.0 - Distance / (uLocalRange / 2.0);
+			sample.a = Ratio * (1.0 - uMinimumAlpha) + uMinimumAlpha;
+		}
+		else
+		{
+			sample.a = uMinimumAlpha;
+		}
+		break;
+
+	case 2:
+		float Height = sample.a;
+
+		if (abs(Height - uEmphasisLocation) < uLocalRange / 2.0)
+		{
+			float Ratio = 1.0 - abs(Height - uEmphasisLocation) / (uLocalRange / 2.0);
+			sample.a = Ratio * (1.0 - uMinimumAlpha) + uMinimumAlpha;
+		}
+		else
+		{
+			sample.a = uMinimumAlpha;
+		}
+		break;
+	}
+
+	return sample;
+}
+
 void main()
 {
 	vec2 texc = ((vPosition.xy / vPosition.w) + 1.0) / 2.0;
@@ -86,14 +156,14 @@ void main()
 		CameraPosition.y <=  0.5 && 
 		CameraPosition.z <=  0.5)
 	{
-		FrontPosition = CameraPosition;
+		FrontPosition = CameraPosition.xyz;
 		if (Debug)
 		{
 			gl_FragColor = vec4(1, 0, 0, 1);
 			return;
 		}
 	}
-	else if (rayAABBIntersect(CameraPosition, (BackPosition - vec3(0.5)) - CameraPosition, vec3(-0.5), vec3(0.5)))
+	else if (rayAABBIntersect(CameraPosition.xyz, (BackPosition - vec3(0.5)) - CameraPosition.xyz, vec3(-0.5), vec3(0.5)))
 	{
 		FrontPosition = penter;
 		if (Debug)
@@ -104,7 +174,7 @@ void main()
 	}
 	else
 	{
-		FrontPosition = CameraPosition;
+		FrontPosition = CameraPosition.xyz;
 		if (Debug)
 		{
 			gl_FragColor = vec4(0, 0, 1, 1);
@@ -114,7 +184,7 @@ void main()
 
 	FrontPosition += vec3(0.5);
 
-	float stepsize = 1.0 / 50.0;
+	float stepsize = 1.0 / 150.0;
 
 	vec3 start = FrontPosition;
 	vec3 dir = BackPosition - FrontPosition;
@@ -132,7 +202,7 @@ void main()
 	for(int i = 0; i < 1000; i ++)
 	{
 		//vec4 color_sample = vec4(vec, 0.5);
-		vec4 color_sample = texture3D(uVolumeData, vec);
+		vec4 color_sample = getColorSample(vec);
 		float alpha_sample = color_sample.a * stepsize * uAlphaIntensity;
 		col_acc   += (1.0 - alpha_acc) * color_sample * alpha_sample * 3;
 		//col_acc   += color_sample;

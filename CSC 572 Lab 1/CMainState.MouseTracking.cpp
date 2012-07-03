@@ -56,9 +56,8 @@ void CMainState::OnMouseEvent(SMouseEvent const & Event)
 			            Rotation = Transformation*Rotation;
 						if (! equals(difX, 0.f) && ! equals(difY, 0.f) && Application.getEventManager().IsKeyDown[EKey::q])
 						{
-							glm::vec4 v = Transformation * glm::vec4(CVolumeControlsHandler::Instance->AxisVector.getGLMVector(), 0.f);//(Rotation * glm::vec4(1.f, 0.f, 0.f, 0.f));//
-							CVolumeControlsHandler::Instance->AxisVector = SVector3f(v.x, v.y, v.z);
-							CVolumeControlsHandler::Instance->resetVolumeData();
+							glm::vec4 v = Transformation * glm::vec4(Volume.SliceAxis.getGLMVector(), 0.f);//(Rotation * glm::vec4(1.f, 0.f, 0.f, 0.f));//
+							Volume.SliceAxis = SVector3f(v.x, v.y, v.z);
 						
 							printf("Setting new axis vector! %f %f %f \n", v.x, v.y, v.z);
 						}

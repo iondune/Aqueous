@@ -12,8 +12,6 @@
 #include <Gwen/Controls/VerticalSlider.h>
 #include <Gwen/Controls/ComboBox.h>
 
-#include "CVolumeControlsHandler.h"
-
 
 class CMainState : public CState<CMainState>, public Gwen::Event::Handler
 {
@@ -51,11 +49,28 @@ class CMainState : public CState<CMainState>, public Gwen::Event::Handler
 	Gwen::Controls::VerticalSlider * EmphasisSlider;
 
 	float Slider;
-	float AlphaIntensity;
 
 	float Timer;
 
 public:
+
+	struct SVolumeControl
+	{
+		int Mode;
+		SVector3f SliceAxis;
+		float LocalRange;
+		float MinimumAlpha;
+		float EmphasisLocation;
+		float AlphaIntensity;
+
+		SVolumeControl()
+			: Mode(0), SliceAxis(1.f, 0.f, 0.f),
+			LocalRange(0.1f), MinimumAlpha(0.1f),
+			EmphasisLocation(0.5f), AlphaIntensity(1.f)
+		{}
+	};
+
+	SVolumeControl Volume;
 	
 	SUniformReference<SVector3f> BindLightPosition;
 

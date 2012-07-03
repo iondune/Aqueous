@@ -19,121 +19,75 @@ class CVolumeControlsHandler : public Gwen::Event::Handler
 {
 
 public:
+
 	SciDataParser * & Parser;
-	float & Intensity;
+	CMainState::SVolumeControl & VolumeControl;
 
-	float LocalRange;
-	float MinimumAlpha;
-	float EmphasisLocation;
-
-	bool SurfaceValues;
-
-	static CVolumeControlsHandler * Instance;
-
-	SVector3f AxisVector;
-
-	CVolumeControlsHandler(SciDataParser * & pParser, float & intensity)
-		: Intensity(intensity), Parser(pParser)
-	{
-		LocalRange = 0.1f;
-		MinimumAlpha = 0.03f;
-		EmphasisLocation = 0.5f;
-		SurfaceValues = false;
-		AxisVector = SVector3f(1.f, 0.f, 0.f);
-
-		if (! Instance)
-			Instance = this;
-	}
-
-	void resetVolumeData()
-	{
-		if (SurfaceValues)
-		{
-			COxygenIsoSurfaceColorMapper l;
-			l.EmphasisLocation = EmphasisLocation;
-			l.MinimumAlpha = MinimumAlpha;
-			l.LocalRange = LocalRange;
-			Parser->createVolumeFromGridValues(& l);
-		}
-		else
-		{
-			COxygenLocalizedColorMapper l;
-			l.EmphasisLocation = EmphasisLocation;
-			l.MinimumAlpha = MinimumAlpha;
-			l.LocalRange = LocalRange;
-			l.SliceAxis = AxisVector;
-			Parser->createVolumeFromGridValues(& l);
-		}
-	}
+	CVolumeControlsHandler(SciDataParser * & pParser)
+		: Parser(pParser), VolumeControl(CMainState::get().Volume)
+	{}
 
 	void OnEmphasisSlider(Gwen::Controls::Base * Control)
 	{
 		Gwen::Controls::VerticalSlider * Bar = (Gwen::Controls::VerticalSlider *) Control;
-		//printf("Slider value: %f\n", Slider->GetValue());
-		EmphasisLocation = Bar->GetValue();
-		resetVolumeData();
+		VolumeControl.EmphasisLocation = Bar->GetValue();
 	}
 
 	void OnIntensitySlider(Gwen::Controls::Base * Control)
 	{
 		Gwen::Controls::VerticalSlider * Bar = (Gwen::Controls::VerticalSlider *) Control;
-		//printf("Slider value: %f\n", Slider->GetValue());
-		Intensity = Bar->GetValue();
+		VolumeControl.AlphaIntensity = Bar->GetValue();
 	}
 
 	void OnMinimumAlphaSlider(Gwen::Controls::Base * Control)
 	{
 		Gwen::Controls::VerticalSlider * Bar = (Gwen::Controls::VerticalSlider *) Control;
-		MinimumAlpha = Bar->GetValue();
-		resetVolumeData();
+		VolumeControl.MinimumAlpha = Bar->GetValue();
 	}
 
 	void OnLocalRangeSlider(Gwen::Controls::Base * Control)
 	{
 		Gwen::Controls::VerticalSlider * Bar = (Gwen::Controls::VerticalSlider *) Control;
-		LocalRange = Bar->GetValue();
-		resetVolumeData();
+		VolumeControl.LocalRange = Bar->GetValue();
 	}
 
 	void OnResetVolume(Gwen::Controls::Base * Control)
 	{
-		COxygenColorMapper o;
-		Parser->createVolumeFromGridValues(& o);
+		VolumeControl.Mode = 0;
 	}
 
 	void OnResetAlpha(Gwen::Controls::Base * Control)
 	{
-		Intensity = 1.f;
+		VolumeControl.AlphaIntensity = 1.f;
 	}
 
 	void OnSetXAxis(Gwen::Controls::Base * Control)
 	{
-		AxisVector = SVector3f(1.f, 0.f, 0.f);
-		resetVolumeData();
+		VolumeControl.SliceAxis = SVector3f(1.f, 0.f, 0.f);
 	}
 
 	void OnSetYAxis(Gwen::Controls::Base * Control)
 	{
-		AxisVector = SVector3f(0.f, 1.f, 0.f);
-		resetVolumeData();
+		VolumeControl.SliceAxis = SVector3f(0.f, 1.f, 0.f);
 	}
 
 	void OnSetZAxis(Gwen::Controls::Base * Control)
 	{
-		AxisVector = SVector3f(0.f, 0.f, 1.f);
-		resetVolumeData();
+		VolumeControl.SliceAxis = SVector3f(0.f, 0.f, 1.f);
 	}
 
 	void OnVolumeMode(Gwen::Controls::Base * Control)
 	{
 		Gwen::Controls::ComboBox * Box = (Gwen::Controls::ComboBox *) Control;
 
-		if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Surface Values"))
-			SurfaceValues = true;
+		if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Plane Slices"))
+			VolumeControl.Mode = 1;
+		else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Isosurface"))
+			VolumeControl.Mode = 2;
 		else
-			SurfaceValues = false;
-		resetVolumeData();
+			VolumeControl.Mode = 0;
 	}
+
 };
 
 #endif

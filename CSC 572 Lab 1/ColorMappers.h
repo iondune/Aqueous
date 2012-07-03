@@ -4,7 +4,7 @@
 #include "CRGBIntensityColorMapper.h"
 #include "CSingleFieldColorMapper.h"
 #include "COxygenColorMapper.h"
-#include "COxygenIsoSurfaceColorMapper.h"
-#include "COxygenLocalizedColorMapper.h"
+//#include "COxygenIsoSurfaceColorMapper.h"
+//#include "COxygenLocalizedColorMapper.h"
 
 #endif

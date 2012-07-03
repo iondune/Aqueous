@@ -8,7 +8,7 @@ void CMainState::loadData()
 	//std::string Field;
 
 	printf("Loading data...\n");
-	switch (0)
+	switch (2)
 	{
 	default:
 	case 0:
@@ -51,7 +51,7 @@ void CMainState::loadData()
 			CRGBIntensityColorMapper r("o1", "o2", "o3");
 			CSingleFieldColorMapper sf("o1");
 			COxygenColorMapper o;
-			COxygenLocalizedColorMapper l;
+			//COxygenLocalizedColorMapper l;
 			
 			DataParser->createVolumeFromGridValues(& o);
 			DataParser->createPointCloudObjects(false, SoupObject, SVector3f(3.f), & o);

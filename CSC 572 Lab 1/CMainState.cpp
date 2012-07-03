@@ -11,12 +11,13 @@
 #include "CGwenEventForwarder.h"
 #include <CApplication.h>
 
+#include "CVolumeControlsHandler.h"
+
+
 CMainState::CMainState()
 	: Camera(0), Tyra(0), Scale(1), Mode(0), BindLightPosition(LightPosition),
-	ShowVolume(0), ShowGUI(true), DataParser(0), ConsoleAccumulator(0.f), Slider(0.f), AlphaIntensity(1.f)
+	ShowVolume(0), ShowGUI(true), DataParser(0), ConsoleAccumulator(0.f), Slider(0.f)
 {}
-
-CVolumeControlsHandler * CVolumeControlsHandler::Instance = 0;
 
 void CMainState::begin()
 {
@@ -28,8 +29,6 @@ void CMainState::begin()
 	// setup GWEN
 	Gwen::Renderer::SFML * pRenderer = new Gwen::Renderer::SFML(* CApplication::get().App);
 
-	//Gwen::Skin::Simple * skin = new Gwen::Skin::Simple();
-	//skin->SetRender(pRenderer);
 	Gwen::Skin::TexturedBase * skin = new Gwen::Skin::TexturedBase(/*pRenderer*/);
 	skin->SetRender(pRenderer);
 	skin->Init("DefaultSkin.png");
@@ -37,8 +36,6 @@ void CMainState::begin()
 
 	pCanvas = new Gwen::Controls::Canvas(skin);
 	pCanvas->SetSize(Application.getWindowSize().X, Application.getWindowSize().Y);
-	//pCanvas->SetDrawBackground(true);
-	//pCanvas->SetBackgroundColor(Gwen::Color(240, 120, 120, 255));
 
 	Gwen::Controls::Button * pButton = new Gwen::Controls::Button(pCanvas);
 	pButton->SetBounds(1300, 50 + 120 + 10, 200, 25);
@@ -59,12 +56,6 @@ void CMainState::begin()
 	Gwen::Controls::Button * pButtonZ = new Gwen::Controls::Button(pCanvas);
 	pButtonZ->SetBounds(1400, 50 + 120 + 10 + 45 + 25 + 35, 40, 25);
 	pButtonZ->SetText("Z");
-	//pButton->SetTextColorOverride(Gwen::Color(0, 0, 0, 255));
-	
-	/*Gwen::Controls::Label * pLabel = new Gwen::Controls::Label(pCanvas);
-	pLabel->SetBounds(10, 90, 200, 40);
-	pLabel->SetText("This Label is RED");
-	pLabel->SetTextColor(Gwen::Color(255, 0, 0, 255));*/
 
 	EmphasisSlider = new Gwen::Controls::VerticalSlider(pCanvas);
 	EmphasisSlider->SetBounds(1300, 10, 40, 160);
@@ -84,10 +75,11 @@ void CMainState::begin()
 
 	Gwen::Controls::ComboBox * VolumeMode = new Gwen::Controls::ComboBox(pCanvas);
 	VolumeMode->SetBounds(1300, 50 + 120 + 45 + 35, 200, 25);
+	VolumeMode->AddItem(L"Full Volume");
 	VolumeMode->AddItem(L"Plane Slices");
-	VolumeMode->AddItem(L"Surface Values");
+	VolumeMode->AddItem(L"Isosurface");
 
-	CVolumeControlsHandler * Handler = new CVolumeControlsHandler(DataParser, AlphaIntensity);
+	CVolumeControlsHandler * Handler = new CVolumeControlsHandler(DataParser);
 	EmphasisSlider->onValueChanged.Add(Handler, & CVolumeControlsHandler::OnEmphasisSlider);
 	IntensitySlider->onValueChanged.Add(Handler, & CVolumeControlsHandler::OnIntensitySlider);
 	MinimumAlphaSlider->onValueChanged.Add(Handler, & CVolumeControlsHandler::OnMinimumAlphaSlider);
@@ -107,7 +99,6 @@ void CMainState::begin()
 		ConsoleMessages[i]->SetShouldDrawBackground(true);
 	}
 
-	printf("In begin...\n");
 	addConsoleMessage("GUI Initialized.");
 	addConsoleMessage("Starting program...", Gwen::Colors::Red);
 
@@ -280,7 +271,7 @@ void CMainState::OnRenderStart(float const Elapsed)
 			Context.uniform("uModelMatrix", Transform.getGLMMat4());
 			Context.uniform("uProjMatrix", SceneManager.getActiveCamera()->getProjectionMatrix());
 			Context.uniform("uViewMatrix", SceneManager.getActiveCamera()->getViewMatrix());
-			Context.uniform("uAlphaIntensity", AlphaIntensity);
+			Context.uniform("uAlphaIntensity", Volume.AlphaIntensity);
 
 			Context.bindTexture("uBackPosition", VolumeBuffer->getTextureHandle());
 			glEnable(GL_TEXTURE_3D);
@@ -313,32 +304,43 @@ void CMainState::OnRenderStart(float const Elapsed)
 
 		glCullFace(GL_FRONT);
 		{
-			CShaderContext Context(* CShaderLoader::loadShader("Volume2"));
-			Context.bindBufferObject("aColor", VolumeCube->MeshBuffers[0]->ColorBuffer.getHandle(), 3);
-			Context.bindBufferObject("aPosition", VolumeCube->MeshBuffers[0]->PositionBuffer.getHandle(), 3);
+			CShader * Shader = CShaderLoader::loadShader("Volume2");
 
-			Context.uniform("uModelMatrix", Transform.getGLMMat4());
-			Context.uniform("uProjMatrix", SceneManager.getActiveCamera()->getProjectionMatrix());
-			Context.uniform("uViewMatrix", SceneManager.getActiveCamera()->getViewMatrix());
-			Context.uniform("uAlphaIntensity", AlphaIntensity);
+			if (Shader)
+			{
+				CShaderContext Context(* Shader);
+				Context.bindBufferObject("aColor", VolumeCube->MeshBuffers[0]->ColorBuffer.getHandle(), 3);
+				Context.bindBufferObject("aPosition", VolumeCube->MeshBuffers[0]->PositionBuffer.getHandle(), 3);
 
-			glEnable(GL_TEXTURE_3D);
-			glActiveTexture(GL_TEXTURE0 + 0); // Select Active Texture Slot
-			glBindTexture(GL_TEXTURE_3D, DataParser->VolumeHandle); // Bind Texture Handle
-			Context.uniform("uVolumeData", 0);
+				Context.uniform("uModelMatrix", Transform.getGLMMat4());
+				Context.uniform("uProjMatrix", SceneManager.getActiveCamera()->getProjectionMatrix());
+				Context.uniform("uViewMatrix", SceneManager.getActiveCamera()->getViewMatrix());
 
-			Context.uniform("uCameraPosition", SceneManager.getActiveCamera()->getPosition());
+				glEnable(GL_TEXTURE_3D);
+				glActiveTexture(GL_TEXTURE0 + 0); // Select Active Texture Slot
+				glBindTexture(GL_TEXTURE_3D, DataParser->VolumeHandle); // Bind Texture Handle
+				Context.uniform("uVolumeData", 0);
 
-			Context.bindIndexBufferObject(VolumeCube->MeshBuffers[0]->IndexBuffer.getHandle());
+				Context.uniform("uAlphaIntensity", Volume.AlphaIntensity);
+				Context.uniform("uHighlightMode", Volume.Mode);
+				Context.uniform("uSliceAxis", Volume.SliceAxis);
+				Context.uniform("uLocalRange", Volume.LocalRange);
+				Context.uniform("uMinimumAlpha", Volume.MinimumAlpha);
+				Context.uniform("uEmphasisLocation", Volume.EmphasisLocation);
+
+				Context.uniform("uCameraPosition", SceneManager.getActiveCamera()->getPosition());
+
+				Context.bindIndexBufferObject(VolumeCube->MeshBuffers[0]->IndexBuffer.getHandle());
 			
-			glEnable(GL_BLEND);
-			glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-			glDrawElements(GL_TRIANGLES, VolumeCube->MeshBuffers[0]->IndexBuffer.getElements().size(), GL_UNSIGNED_SHORT, 0);
+				glEnable(GL_BLEND);
+				glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+				glDrawElements(GL_TRIANGLES, VolumeCube->MeshBuffers[0]->IndexBuffer.getElements().size(), GL_UNSIGNED_SHORT, 0);
 
 			
-			glBindTexture(GL_TEXTURE_3D, 0);
-			glDisable(GL_BLEND);
-			glDisable(GL_TEXTURE_3D);
+				glBindTexture(GL_TEXTURE_3D, 0);
+				glDisable(GL_BLEND);
+				glDisable(GL_TEXTURE_3D);
+			}
 		}
 
 		glDisable(GL_CULL_FACE);

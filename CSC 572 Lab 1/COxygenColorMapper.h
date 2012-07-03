@@ -22,7 +22,7 @@ public:
 	{
 		double const v = d.getField("o1");
 
-		float Color[3] = {0.f, 0.f, 0.f};
+		float Color[4] = {0.f, 0.f, 0.f, 0.f};
 
 		if (30500.0 >= v && v >= 29000.0)
 		{
@@ -53,7 +53,9 @@ public:
 			Color[0] = 1.f - (float) ((v - 34200.0) / (36000.0 - 34200.0));
 		}
 
-		return SColor(Color[0], Color[1], Color[2], 0.8f);
+		Color[3] = (float) ((v - 29000.0) / (36000.0 - 29000.0));
+
+		return SColor(Color[0], Color[1], Color[2], Color[3]);
 	}
 
 	virtual void preProcessValues(SciDataSet & s)
