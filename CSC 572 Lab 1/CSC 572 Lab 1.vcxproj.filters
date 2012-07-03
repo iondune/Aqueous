@@ -47,6 +47,9 @@
     <ClCompile Include="SciDataParser.PointCloud.cpp">
       <Filter>Data Management</Filter>
     </ClCompile>
+    <ClCompile Include="SciDataParser.GridValues.cpp">
+      <Filter>Data Management</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SciDataParser.h">

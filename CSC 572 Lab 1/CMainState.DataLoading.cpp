@@ -22,6 +22,9 @@ void CMainState::loadData()
 			sf.AcceptedRange = Range(-9999999.0, 9999999.0);
 
 			DataParser->createPointCloudObjects(true, VoxelObject, SVector3f(3.f), & sf);
+			DataParser->createGridDataFromRawValues();
+			DataParser->createPointCloudObjects(false, SoupObject, SVector3f(3.f), & sf);
+			DataParser->createVolumeFromGridValues(& sf);
 		}
 		break;
 

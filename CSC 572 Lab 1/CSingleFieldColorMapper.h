@@ -47,7 +47,7 @@ public:
 		Color[1] = r;
 		
 
-		return SColor(Color[0], Color[1], Color[2], r);
+		return SColor(Color[0], Color[1], Color[2], 0.85f);
 	}
 
 	virtual void preProcessValues(SciDataSet & s)

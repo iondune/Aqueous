@@ -26,10 +26,11 @@ public:
 	unsigned int VolumeHandle;
 	ISciTreeNode * DataTree;
 
-	int const * GridDimensions;
+	int * GridDimensions;
 
 	void createVolumeFromGridValues(IColorMapper * ColorMapper);
 	void createDataTreeFromRawValues();
+	void createGridDataFromRawValues();
 	void createPointCloudObjects(bool FromRaw, ISceneObject * RootParent, SVector3f const DataScale, IColorMapper * ColorMapper);
 
 	virtual void load(std::string const & FileName) =0;

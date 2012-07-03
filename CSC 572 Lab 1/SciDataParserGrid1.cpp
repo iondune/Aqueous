@@ -38,7 +38,9 @@ void SciDataParserGrid1::load(std::string const &data)
 		return;
 	}
 
-	int const * Dimensions = GridDimensions = mxGetDimensions(pointO1);
+	int const * Dimensions = mxGetDimensions(pointO1);
+	for (int i = 0; i < 3; ++ i)
+		GridDimensions[i] = Dimensions[i];
 	double * pointO1Data = mxGetPr(pointO1);
 	double * pointO2Data = mxGetPr(pointO2);
 	double * pointO3Data = mxGetPr(pointO3);
