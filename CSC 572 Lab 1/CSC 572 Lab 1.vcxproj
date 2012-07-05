@@ -115,10 +115,9 @@
     <ClInclude Include="CMainState.h" />
     <ClInclude Include="ColorMappers.h" />
     <ClInclude Include="COxygenColorMapper.h" />
-    <ClInclude Include="COxygenIsoSurfaceColorMapper.h" />
-    <ClInclude Include="COxygenLocalizedColorMapper.h" />
     <ClInclude Include="CRGBIntensityColorMapper.h" />
     <ClInclude Include=".\CSingleFieldColorMapper.h" />
+    <ClInclude Include="CSpectrumColorMapper.h" />
     <ClInclude Include="CVolumeControlsHandler.h" />
     <ClInclude Include="IColorMapper.h" />
     <ClInclude Include="ProgressPrinter.h" />

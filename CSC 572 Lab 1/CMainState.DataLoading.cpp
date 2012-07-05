@@ -35,7 +35,7 @@ void CMainState::loadData()
 
 			//DataParser->RawValues.setDataScale(Vector3(3, 2, 3));
 
-			CSingleFieldColorMapper sf("salinity");
+			CSpectrumColorMapper sf("salinity");
 			sf.AcceptedRange = Range(-99999.0, 99999.0);
 
 			DataParser->createPointCloudObjects(true, VoxelObject, SVector3f(3.f), & sf);

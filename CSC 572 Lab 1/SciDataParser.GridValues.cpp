@@ -36,6 +36,12 @@ void SciDataParser::createGridDataFromRawValues()
 		float z = (float) ((it->getField("z") - ZRange.first) / (ZRange.second - ZRange.first));
 		float f = (float) ((it->getField("o2") - ZRange.first) / (ZRange.second - ZRange.first));
 
+		if (f != f ||
+			x != x ||
+			y != y ||
+			z != z)
+			continue;
+
 		X.push_back(x);
 		Y.push_back(y);
 		Z.push_back(z);
