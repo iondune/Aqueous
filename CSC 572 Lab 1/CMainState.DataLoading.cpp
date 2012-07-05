@@ -22,7 +22,7 @@ void CMainState::loadData()
 			sf.AcceptedRange = Range(-9999999.0, 9999999.0);
 
 			DataParser->createPointCloudObjects(true, VoxelObject, SVector3f(3.f), & sf);
-			DataParser->createGridDataFromRawValues();
+			DataParser->createGridDataFromRawValues(sf.AcceptedRange, 5.0, "o2");
 			DataParser->createPointCloudObjects(false, SoupObject, SVector3f(3.f), & sf);
 			DataParser->createVolumeFromGridValues(& sf);
 		}
@@ -39,7 +39,7 @@ void CMainState::loadData()
 			sf.AcceptedRange = Range(-99999.0, 99999.0);
 
 			DataParser->createPointCloudObjects(true, VoxelObject, SVector3f(3.f), & sf);
-			DataParser->createGridDataFromRawValues();
+			DataParser->createGridDataFromRawValues(sf.AcceptedRange, 5.0, "salinity");
 			DataParser->createPointCloudObjects(false, SoupObject, SVector3f(3.f), & sf);
 			DataParser->createVolumeFromGridValues(& sf);
 		}

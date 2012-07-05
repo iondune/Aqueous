@@ -1,13 +1,10 @@
 #include "SciDataParser.h"
 
 #include "RFBInterpolator/RBFInterpolator.h"
-#include "ProgressPrinter.h"
 
 
-void SciDataParser::createGridDataFromRawValues()
+void SciDataParser::createGridDataFromRawValues(Range AcceptedValues, double Deviations, std::string const & Field)
 {
-
-
 	int const Size = 10;
 	GridDimensions = new int[3];
 	GridDimensions[0] = Size;
@@ -18,28 +15,28 @@ void SciDataParser::createGridDataFromRawValues()
 
 	std::vector<float> X, Y, Z, F;
 
-	Range	XRange = RawValues.getValueRange("x", 5.0);
-	Range	YRange = RawValues.getValueRange("y", 5.0);
-	Range	ZRange = RawValues.getValueRange("z", 5.0);
-	Range	FRange = RawValues.getValueRange("o2", 5.0, Range(-999999.0, 999999.0));
-
-
-	ProgressPrinter p;
-
-	printf("Interpolating volume data...\n");
-	p.begin();
+	Range XRange = RawValues.getValueRange("x", Deviations, AcceptedValues);
+	Range YRange = RawValues.getValueRange("y", Deviations, AcceptedValues);
+	Range ZRange = RawValues.getValueRange("z", Deviations, AcceptedValues);
+	Range FRange = RawValues.getValueRange(Field, Deviations, AcceptedValues);
 
 	for (auto it = RawValues.Values.begin(); it != RawValues.Values.end(); ++ it)
 	{
 		float x = (float) ((it->getField("x") - XRange.first) / (XRange.second - XRange.first));
 		float y = (float) ((it->getField("y") - YRange.first) / (YRange.second - YRange.first));
 		float z = (float) ((it->getField("z") - ZRange.first) / (ZRange.second - ZRange.first));
-		float f = (float) ((it->getField("o2") - ZRange.first) / (ZRange.second - ZRange.first));
+		float f = (float) ((it->getField(Field) - FRange.first) / (FRange.second - FRange.first));
+
+		//if (! inRange(f, FRan
 
 		if (f != f ||
 			x != x ||
 			y != y ||
-			z != z)
+			z != z ||
+			! inRange(f, Range(0, 1)) ||
+			! inRange(x, Range(0, 1)) ||
+			! inRange(y, Range(0, 1)) ||
+			! inRange(z, Range(0, 1)))
 			continue;
 
 		X.push_back(x);
@@ -54,11 +51,9 @@ void SciDataParser::createGridDataFromRawValues()
 	for (int k = 0; k < Size; ++ k)
 	for (int i = 0; i < Size; ++ i)
 	{
-		p.update(k * 100 / Size);
 		SciData d(i / (float) Size, j / (float) Size, k / (float) Size);
-		d.ScalarFields["o2"] = rbfi.interpolate(i / (float) Size, j / (float) Size, k / (float) Size);
+		d.ScalarFields[Field] = rbfi.interpolate(i / (float) Size, j / (float) Size, k / (float) Size);
 
 		GridValues.Values.push_back(d);
 	}
-	p.end();
 }
