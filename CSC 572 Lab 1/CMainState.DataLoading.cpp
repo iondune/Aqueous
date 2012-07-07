@@ -26,7 +26,7 @@ void CMainState::loadData()
 
 	{
 		DataParser[1] = new SciDataParserCTD();
-		DataParser[1]->load("data2.mat");
+		//DataParser[1]->load("data2.mat");
 
 		//DataParser->RawValues.setDataScale(Vector3(3, 2, 3));
 
