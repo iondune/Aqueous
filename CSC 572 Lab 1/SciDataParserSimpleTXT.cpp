@@ -50,7 +50,7 @@ void SciDataParserSimpleTXT::load(std::string const &data)
 		}
 
 		// push scidata into list
-		SciData d(x, y, z);
+		SciData d(x, -y, z);
 		d.ScalarFields["o2"] = O2;
 		d.ScalarFields["temp"] = temp;
 		d.ScalarFields["d1"] = d1;
