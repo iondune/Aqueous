@@ -19,6 +19,15 @@ CMainState::CMainState()
 	ShowVolume(0), ShowGUI(true), DataParser(0), ConsoleAccumulator(0.f), Slider(0.f)
 {}
 
+Gwen::Font * LoadFont(Gwen::UnicodeString const & File, float const Size)
+{
+	Gwen::Font * Font = new Gwen::Font();
+	Font->facename = File;
+	Font->size = Size;
+
+	return Font;
+}
+
 void CMainState::begin()
 {
 	init();
@@ -33,18 +42,18 @@ void CMainState::begin()
 	skin->SetRender(pRenderer);
 	skin->Init("DefaultSkin.png");
 	skin->SetDefaultFont(L"OpenSans.ttf", 14.f);
-	Gwen::Font * LargeFont = new Gwen::Font();
-	LargeFont->facename = L"OpenSans.ttf";
-	LargeFont->size = 32.f;
+	Gwen::Font * LargeFont = LoadFont(L"OpenSans.ttf", 32.f);
+	Gwen::Font * MediumFont = LoadFont(L"OpenSans.ttf", 24.f);
+	Gwen::Font * RegularFont = LoadFont(L"OpenSans.ttf", 14.f);
 
 	pCanvas = new Gwen::Controls::Canvas(skin);
 	pCanvas->SetSize(Application.getWindowSize().X, Application.getWindowSize().Y);
 
 	Gwen::Controls::Label * BigLabel = new Gwen::Controls::Label(pCanvas);
 	BigLabel->SetFont(LargeFont);
-	BigLabel->SetText(L"This is a large font!\nThis is a new line!");
+	BigLabel->SetText(Gwen::UnicodeString(L"Dataset: ") + Gwen::UnicodeString());
 	BigLabel->SetBounds(0, 0, 600, 300);
-	BigLabel->SetTextColor(Gwen::Color(255, 220, 120, 215));
+	BigLabel->SetTextColor(Gwen::Color(255, 255, 255, 215));
 
 
 	Gwen::Controls::Button * pButton = new Gwen::Controls::Button(pCanvas);
