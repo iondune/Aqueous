@@ -16,8 +16,10 @@
 
 CMainState::CMainState()
 	: Camera(0), Tyra(0), Scale(1), Mode(0), BindLightPosition(LightPosition),
-	ShowVolume(0), ShowGUI(true), DataParser(0), ConsoleAccumulator(0.f), Slider(0.f)
-{}
+	ShowVolume(0), ShowGUI(true), ConsoleAccumulator(0.f), Slider(0.f)
+{
+	DataParser[0] = DataParser[1] = DataParser[2] = 0;
+}
 
 Gwen::Font * LoadFont(Gwen::UnicodeString const & File, float const Size)
 {
@@ -98,7 +100,7 @@ void CMainState::begin()
 	VolumeMode->AddItem(L"Plane Slices");
 	VolumeMode->AddItem(L"Isosurface");
 
-	CVolumeControlsHandler * Handler = new CVolumeControlsHandler(DataParser);
+	CVolumeControlsHandler * Handler = new CVolumeControlsHandler(/*DataParser*/);
 	EmphasisSlider->onValueChanged.Add(Handler, & CVolumeControlsHandler::OnEmphasisSlider);
 	IntensitySlider->onValueChanged.Add(Handler, & CVolumeControlsHandler::OnIntensitySlider);
 	MinimumAlphaSlider->onValueChanged.Add(Handler, & CVolumeControlsHandler::OnMinimumAlphaSlider);
@@ -295,7 +297,7 @@ void CMainState::OnRenderStart(float const Elapsed)
 			Context.bindTexture("uBackPosition", VolumeBuffer->getTextureHandle());
 			glEnable(GL_TEXTURE_3D);
 			glActiveTexture(GL_TEXTURE0 + 1); // Select Active Texture Slot
-			glBindTexture(GL_TEXTURE_3D, DataParser->VolumeHandle); // Bind Texture Handle
+			glBindTexture(GL_TEXTURE_3D, DataParser[2]->VolumeHandle); // Bind Texture Handle
 			Context.uniform("uVolumeData", 1);
 
 			Context.bindIndexBufferObject(VolumeCube->MeshBuffers[0]->IndexBuffer.getHandle());
@@ -337,7 +339,7 @@ void CMainState::OnRenderStart(float const Elapsed)
 
 				glEnable(GL_TEXTURE_3D);
 				glActiveTexture(GL_TEXTURE0 + 0); // Select Active Texture Slot
-				glBindTexture(GL_TEXTURE_3D, DataParser->VolumeHandle); // Bind Texture Handle
+				glBindTexture(GL_TEXTURE_3D, DataParser[2]->VolumeHandle); // Bind Texture Handle
 				Context.uniform("uVolumeData", 0);
 
 				Context.uniform("uAlphaIntensity", Volume.AlphaIntensity);

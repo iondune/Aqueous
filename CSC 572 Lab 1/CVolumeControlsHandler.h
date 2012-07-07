@@ -20,11 +20,11 @@ class CVolumeControlsHandler : public Gwen::Event::Handler
 
 public:
 
-	SciDataParser * & Parser;
+	//SciDataParser ** & Parser;
 	CMainState::SVolumeControl & VolumeControl;
 
-	CVolumeControlsHandler(SciDataParser * & pParser)
-		: Parser(pParser), VolumeControl(CMainState::get().Volume)
+	CVolumeControlsHandler(/*SciDataParser ** & pParser*/)
+		: /*Parser(pParser), */VolumeControl(CMainState::get().Volume)
 	{}
 
 	void OnEmphasisSlider(Gwen::Controls::Base * Control)

@@ -38,7 +38,7 @@ class CMainState : public CState<CMainState>, public Gwen::Event::Handler
 	int ShowVolume;
 	bool ShowGUI;
 
-	SciDataParser * DataParser;
+	SciDataParser * DataParser[3];
 
 
 	static int const ConsoleSize = 5;

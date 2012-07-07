@@ -8,61 +8,50 @@ void CMainState::loadData()
 	//std::string Field;
 
 	printf("Loading data...\n");
-	switch (2)
 	{
-	default:
-	case 0:
-		{
-			DataParser = new SciDataParserSimpleTXT();
-			DataParser->load("ForZoe.txt");
+		DataParser[0] = new SciDataParserSimpleTXT();
+		DataParser[0]->load("ForZoe.txt");
 
-			//DataParser->RawValues.setDataScale(Vector3(3, 2, 3));
+		//DataParser->RawValues.setDataScale(Vector3(3, 2, 3));
 
-			CSpectrumColorMapper sf("d1");
-			COxygenColorMapper o("d1");
-			sf.AcceptedRange = Range(-9999999.0, 9999999.0);
+		CSpectrumColorMapper sf("d1");
+		COxygenColorMapper o("d1");
+		sf.AcceptedRange = Range(-9999999.0, 9999999.0);
 
-			DataParser->createPointCloudObjects(true, VoxelObject, SVector3f(3.f), & o);
-			DataParser->createGridDataFromRawValues(FullRange, 5.0, "d1");
-			DataParser->createPointCloudObjects(false, SoupObject, SVector3f(3.f), & sf);
-			DataParser->createVolumeFromGridValues(& sf);
-		}
-		break;
+		DataParser[0]->createPointCloudObjects(true, VoxelObject, SVector3f(3.f), & o);
+		//DataParser[0]->createGridDataFromRawValues(FullRange, 5.0, "d1");
+		//DataParser[0]->createPointCloudObjects(false, SoupObject, SVector3f(3.f), & sf);
+		//DataParser[0]->createVolumeFromGridValues(& sf);
+	}
 
-	case 1:
-		{
-			DataParser = new SciDataParserCTD();
-			DataParser->load("data2.mat");
+	{
+		DataParser[1] = new SciDataParserCTD();
+		DataParser[1]->load("data2.mat");
 
-			//DataParser->RawValues.setDataScale(Vector3(3, 2, 3));
+		//DataParser->RawValues.setDataScale(Vector3(3, 2, 3));
 
-			CSpectrumColorMapper sf("salinity");
-			sf.AcceptedRange = Range(-99999.0, 99999.0);
+		CSpectrumColorMapper sf("salinity");
+		sf.AcceptedRange = Range(-99999.0, 99999.0);
 
-			DataParser->createPointCloudObjects(true, VoxelObject, SVector3f(3.f), & sf);
-			//DataParser->createGridDataFromRawValues(sf.AcceptedRange, 5.0, "salinity");
-			//DataParser->createPointCloudObjects(false, SoupObject, SVector3f(3.f), & sf);
-			//DataParser->createVolumeFromGridValues(& sf);
-		}
-		break;
+		//DataParser[1]->createPointCloudObjects(true, VoxelObject, SVector3f(3.f), & sf);
+		//DataParser->createGridDataFromRawValues(sf.AcceptedRange, 5.0, "salinity");
+		//DataParser->createPointCloudObjects(false, SoupObject, SVector3f(3.f), & sf);
+		//DataParser->createVolumeFromGridValues(& sf);
+	}
 
-	case 2:
-		{
-			DataParser = new SciDataParserGrid1();
-			DataParser->load("oxyMaps.mat");
+	{
+		DataParser[2] = new SciDataParserGrid1();
+		DataParser[2]->load("oxyMaps.mat");
 
-			//DataParser->GridValues.setDataScale(Vector3(3, 2, 3));
+		//DataParser->GridValues.setDataScale(Vector3(3, 2, 3));
 		
-			CRGBIntensityColorMapper r("o1", "o2", "o3");
-			CSingleFieldColorMapper sf("o1");
-			COxygenColorMapper o;
-			//COxygenLocalizedColorMapper l;
+		CRGBIntensityColorMapper r("o1", "o2", "o3");
+		CSingleFieldColorMapper sf("o1");
+		COxygenColorMapper o;
+		//COxygenLocalizedColorMapper l;
 			
-			DataParser->createVolumeFromGridValues(& o);
-			DataParser->createPointCloudObjects(false, SoupObject, SVector3f(3.f), & o);
-		}
-		break;
-
+		DataParser[2]->createVolumeFromGridValues(& o);
+		DataParser[2]->createPointCloudObjects(false, SoupObject, SVector3f(3.f), & o);
 	}
 
 	/*int PointsLoaded = 0;
