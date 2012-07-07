@@ -1,7 +1,7 @@
 #include "CMainState.h"
 
 void CMainState::init()
-{	glClearColor(0.2f, 0.4f, 0.4f, 1.0f);
+{	glClearColor(0.3f, 0.5f, 0.5f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
 }
