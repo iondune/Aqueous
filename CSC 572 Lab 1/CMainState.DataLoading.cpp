@@ -53,33 +53,4 @@ void CMainState::loadData()
 		DataParser[2]->createVolumeFromGridValues(& o);
 		DataParser[2]->createPointCloudObjects(false, SoupObject, SVector3f(3.f), & o);
 	}
-
-	/*int PointsLoaded = 0;
-	
-	printf("Creating visualization...\n");
-	for (auto it = DataParser->RawValues.Values.begin(); it != DataParser->RawValues.Values.end(); ++ it)
-	{
-		CMeshSceneObject * Object = new CMeshSceneObject();
-		Object->setMesh(Cube);
-		Object->setParent(VoxelObject);
-		Object->setScale(SVector3f(1.f) / 32.f);
-		Object->setTranslation(SVector3f((float) it->getLocation().X, (float) it->getLocation().Y, (float) it->getLocation().Z));
-		Object->addUniform("uLightPosition", boost::shared_ptr<IUniform const>(& BindLightPosition));
-
-		CRenderable::SMaterial mat;
-		if (Field == "mult") 
-		{
-			mat.DiffuseColor = SColor((float) it->getField("o1"), (float) it->getField("o2"), (float) it->getField("o3"));
-		}
-		else
-		{
-			double o2_ratio = it->getField(Field);
-			mat.DiffuseColor = SColor(1.f - (float) o2_ratio, (float) o2_ratio, 1.f - (float) o2_ratio);
-		}
-		Object->setMaterial(mat);
-		Object->setShader(ERenderPass::Default, Shader);
-		Object->setCullingEnabled(false);
-
-		PointsLoaded ++;
-	}*/
 }

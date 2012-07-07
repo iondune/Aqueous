@@ -239,11 +239,6 @@ void CMainState::OnRenderStart(float const Elapsed)
 	LightPosition = SceneManager.getActiveCamera()->getPosition() + SVector3f(0, 0, 0);
 
 	LightObject->setTranslation(LightPosition);
-
-	/*Slider += Elapsed * 0.5f;
-	COxygenLocalizedColorMapper l;
-	l.EmphasisLocation = (sin(Slider) + 1.f) / 2.f;
-	DataParser->createVolumeFromGridValues(& l);*/
 	
 
 	SceneManager.drawAll();

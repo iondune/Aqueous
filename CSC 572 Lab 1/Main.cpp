@@ -28,7 +28,6 @@
 #pragma comment(lib, "sfml-system-s-d.lib")
 #pragma comment(lib, "sfml-window-s-d.lib")
 #pragma comment(lib, "sfml-graphics-s-d.lib")
-//#pragma comment(lib, "sfml-main-s-d.lib")
 #else
 #pragma comment(lib, "sfml-system-s.lib")
 #pragma comment(lib, "sfml-window-s.lib")
