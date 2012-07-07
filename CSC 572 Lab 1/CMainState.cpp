@@ -78,7 +78,7 @@ void CMainState::begin()
 	pButtonZ->SetBounds(1450, 90 + 120 + 10 + 45 + 25 + 35, 40, 25);
 	pButtonZ->SetText("Z");
 
-	EmphasisSlider = new Gwen::Controls::VerticalSlider(pCanvas);
+	Gwen::Controls::VerticalSlider * EmphasisSlider = new Gwen::Controls::VerticalSlider(pCanvas);
 	EmphasisSlider->SetBounds(1350, 50, 40, 160);
 	EmphasisSlider->SetRange(0.f, 1.f);
 

@@ -46,8 +46,6 @@ class CMainState : public CState<CMainState>, public Gwen::Event::Handler
 	Gwen::Color ConsoleMessageColors[ConsoleSize];
 	Gwen::Controls::Label * ConsoleMessages[ConsoleSize];
 
-	Gwen::Controls::VerticalSlider * EmphasisSlider;
-
 	float Slider;
 
 	float Timer;
