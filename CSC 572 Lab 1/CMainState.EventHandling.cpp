@@ -68,16 +68,16 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 		if (! Event.Pressed)
 		{
 			s << "Volume mode: ";
-			ShowVolume ++;
-			if (ShowVolume > 2)
+			if (ShowVolume)
 			{
 				ShowVolume = 0;
-				s << "off.";
+				s << "disabled.";
 				addConsoleMessage(s.str());
 			}
 			else
 			{
-				s << ShowVolume;
+				ShowVolume = 2;
+				s << "enabled.";
 				addConsoleMessage(s.str());
 			}
 		}
@@ -88,21 +88,9 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 
 		if (! Event.Pressed)
 		{
-			s << "Volume mode: ";
-			ShowVolume --;
-			if (ShowVolume < 0)
-				ShowVolume = 2;
-			
-			if (ShowVolume != 0)
-			{
-				s << ShowVolume;
-				addConsoleMessage(s.str());
-			}
-			else
-			{
-				s << "off.";
-				addConsoleMessage(s.str());
-			}
+			if (ShowVolume != 1)
+				addConsoleMessage("Volume mode: legacy.");
+			ShowVolume = 1;
 		}
 
 		break;
