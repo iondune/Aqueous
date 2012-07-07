@@ -235,7 +235,7 @@ void CMainState::OnRenderStart(float const Elapsed)
     Tyra->setScale(Scale);
     Tyra->setRotation(Rotation);
 
-	LightPosition = Camera->getPosition() + SVector3f(0, 0, 0);
+	LightPosition = SceneManager.getActiveCamera()->getPosition() + SVector3f(0, 0, 0);
 
 	LightObject->setTranslation(LightPosition);
 
