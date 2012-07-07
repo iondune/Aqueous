@@ -31,6 +31,8 @@ public:
 	{
 		Gwen::Controls::Slider * Bar = (Gwen::Controls::Slider *) Control;
 		VolumeControl.EmphasisLocation = Bar->GetValue();
+		if (VolumeControl.Mode)
+			CMainState::get().resetVolumeRangeIndicator();
 	}
 
 	void OnIntensitySlider(Gwen::Controls::Base * Control)
@@ -49,6 +51,8 @@ public:
 	{
 		Gwen::Controls::Slider * Bar = (Gwen::Controls::Slider *) Control;
 		VolumeControl.LocalRange = Bar->GetValue();
+		if (VolumeControl.Mode)
+			CMainState::get().resetVolumeRangeIndicator();
 	}
 
 	void OnResetVolume(Gwen::Controls::Base * Control)
@@ -81,13 +85,21 @@ public:
 		Gwen::Controls::ComboBox * Box = (Gwen::Controls::ComboBox *) Control;
 
 		if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Plane Slices"))
+		{
 			VolumeControl.Mode = 1;
+			CMainState::get().resetVolumeRangeIndicator();
+		}
 		else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Isosurface"))
+		{
 			VolumeControl.Mode = 2;
+			CMainState::get().resetVolumeRangeIndicator();
+		}
 		else
+		{
 			VolumeControl.Mode = 0;
+			CMainState::get().clearVolumeRangeIndicator();
+		}
 	}
-
 };
 
 #endif

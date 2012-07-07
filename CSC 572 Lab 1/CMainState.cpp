@@ -60,9 +60,14 @@ void CMainState::begin()
 
 	Gwen::Controls::Label * MediumLabel = new Gwen::Controls::Label(pCanvas);
 	MediumLabel->SetFont(MediumFont);
-	MediumLabel->SetText(Gwen::UnicodeString(L"Shown Values: DO2 (microMol/L)") + Gwen::UnicodeString());
-	MediumLabel->SetBounds(10, 70, 600, 300);
+	MediumLabel->SetText(Gwen::UnicodeString(L"Current Field: DO2 (microMol/L)") + Gwen::UnicodeString());
+	MediumLabel->SetBounds(20, 70, 600, 300);
 	MediumLabel->SetTextColor(Gwen::Color(235, 235, 255, 215));
+
+	VolumeRangeIndicator = new Gwen::Controls::Label(pCanvas);
+	VolumeRangeIndicator->SetFont(MediumFont);
+	VolumeRangeIndicator->SetBounds(20, 110, 600, 300);
+	VolumeRangeIndicator->SetTextColor(Gwen::Color(255, 235, 235, 215));
 
 	
 
@@ -268,6 +273,27 @@ void CMainState::begin()
 	addConsoleMessage("Volume mesh created.", Gwen::Color(0, 255, 0));
 
 	Timer = 0.f;
+}
+
+#include <iomanip>
+
+void CMainState::resetVolumeRangeIndicator()
+{
+	Range ValueRange = DataParser[2]->GridValues.getValueRange("o1", 5.0);
+	std::wstringstream s;
+	s << std::fixed;
+	s << "Value Range: ";
+	s << std::setprecision(1);
+	s << (Volume.EmphasisLocation * (ValueRange.second - ValueRange.first) + ValueRange.first) / 100.f;
+	s << " ± ";
+	s << std::setprecision(2);
+	s << (Volume.LocalRange / 2.f * (ValueRange.second - ValueRange.first)) / 100.f;
+	VolumeRangeIndicator->SetText(s.str());
+}
+
+void CMainState::clearVolumeRangeIndicator()
+{
+	VolumeRangeIndicator->SetText(L"");
 }
 
 void CMainState::OnRenderStart(float const Elapsed)

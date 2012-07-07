@@ -51,7 +51,7 @@ int main()
 	CShaderLoader::ShaderDirectory = "Shaders/";
 
 	CApplication & Application = CApplication::get();
-	Application.init(SPosition2(1600, 900), "Underwater Volume Data Rendering... In Space! Now with GUI!");
+	Application.init(SPosition2(1600, 900), "Underwater Volume Data Rendering");
 
 	Application.getStateManager().setState(& CMainState::get());
 

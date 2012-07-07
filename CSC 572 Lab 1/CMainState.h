@@ -46,6 +46,8 @@ class CMainState : public CState<CMainState>, public Gwen::Event::Handler
 	Gwen::Color ConsoleMessageColors[ConsoleSize];
 	Gwen::Controls::Label * ConsoleMessages[ConsoleSize];
 
+	Gwen::Controls::Label * VolumeRangeIndicator;
+
 	float Slider;
 
 	float Timer;
@@ -69,6 +71,8 @@ public:
 	};
 
 	SVolumeControl Volume;
+	void resetVolumeRangeIndicator();
+	void clearVolumeRangeIndicator();
 	
 	SUniformReference<SVector3f> BindLightPosition;
 
