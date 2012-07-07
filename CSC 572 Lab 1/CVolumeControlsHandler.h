@@ -29,25 +29,25 @@ public:
 
 	void OnEmphasisSlider(Gwen::Controls::Base * Control)
 	{
-		Gwen::Controls::VerticalSlider * Bar = (Gwen::Controls::VerticalSlider *) Control;
+		Gwen::Controls::Slider * Bar = (Gwen::Controls::Slider *) Control;
 		VolumeControl.EmphasisLocation = Bar->GetValue();
 	}
 
 	void OnIntensitySlider(Gwen::Controls::Base * Control)
 	{
-		Gwen::Controls::VerticalSlider * Bar = (Gwen::Controls::VerticalSlider *) Control;
+		Gwen::Controls::Slider * Bar = (Gwen::Controls::Slider *) Control;
 		VolumeControl.AlphaIntensity = Bar->GetValue();
 	}
 
 	void OnMinimumAlphaSlider(Gwen::Controls::Base * Control)
 	{
-		Gwen::Controls::VerticalSlider * Bar = (Gwen::Controls::VerticalSlider *) Control;
+		Gwen::Controls::Slider * Bar = (Gwen::Controls::Slider *) Control;
 		VolumeControl.MinimumAlpha = Bar->GetValue();
 	}
 
 	void OnLocalRangeSlider(Gwen::Controls::Base * Control)
 	{
-		Gwen::Controls::VerticalSlider * Bar = (Gwen::Controls::VerticalSlider *) Control;
+		Gwen::Controls::Slider * Bar = (Gwen::Controls::Slider *) Control;
 		VolumeControl.LocalRange = Bar->GetValue();
 	}
 

@@ -6,6 +6,7 @@
 #include <Gwen/Skins/Simple.h>
 #include <Gwen/Controls.h>
 #include <Gwen/Controls/VerticalSlider.h>
+#include <Gwen/Controls/HorizontalSlider.h>
 #include <Gwen/Controls/ComboBox.h>
 
 #include "CGwenEventForwarder.h"
@@ -78,20 +79,20 @@ void CMainState::begin()
 	pButtonZ->SetBounds(1450, 90 + 120 + 10 + 45 + 25 + 35, 40, 25);
 	pButtonZ->SetText("Z");
 
-	Gwen::Controls::VerticalSlider * EmphasisSlider = new Gwen::Controls::VerticalSlider(pCanvas);
-	EmphasisSlider->SetBounds(1350, 50, 40, 160);
+	Gwen::Controls::HorizontalSlider * EmphasisSlider = new Gwen::Controls::HorizontalSlider(pCanvas);
+	EmphasisSlider->SetBounds(1350, 50, 200, 40);
 	EmphasisSlider->SetRange(0.f, 1.f);
 
-	Gwen::Controls::VerticalSlider * IntensitySlider = new Gwen::Controls::VerticalSlider(pCanvas);
-	IntensitySlider->SetBounds(1400, 50, 40, 160);
+	Gwen::Controls::HorizontalSlider * IntensitySlider = new Gwen::Controls::HorizontalSlider(pCanvas);
+	IntensitySlider->SetBounds(1350, 90, 200, 40);
 	IntensitySlider->SetRange(10.f, 0.5f);
 
-	Gwen::Controls::VerticalSlider * LocalRangeSlider = new Gwen::Controls::VerticalSlider(pCanvas);
-	LocalRangeSlider->SetBounds(1450, 50, 40, 160);
+	Gwen::Controls::HorizontalSlider * LocalRangeSlider = new Gwen::Controls::HorizontalSlider(pCanvas);
+	LocalRangeSlider->SetBounds(1350, 130, 200, 40);
 	LocalRangeSlider->SetRange(0.05f, 0.5f);
 
-	Gwen::Controls::VerticalSlider * MinimumAlphaSlider = new Gwen::Controls::VerticalSlider(pCanvas);
-	MinimumAlphaSlider->SetBounds(1500, 50, 40, 160);
+	Gwen::Controls::HorizontalSlider * MinimumAlphaSlider = new Gwen::Controls::HorizontalSlider(pCanvas);
+	MinimumAlphaSlider->SetBounds(1350, 170, 200, 40);
 	MinimumAlphaSlider->SetRange(0.0f, 0.5f);
 
 	Gwen::Controls::ComboBox * VolumeMode = new Gwen::Controls::ComboBox(pCanvas);
