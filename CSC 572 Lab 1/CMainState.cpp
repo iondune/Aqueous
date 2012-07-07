@@ -54,8 +54,8 @@ void CMainState::begin()
 
 	Gwen::Controls::Label * BigLabel = new Gwen::Controls::Label(pCanvas);
 	BigLabel->SetFont(LargeFont);
-	BigLabel->SetText(Gwen::UnicodeString(L"Dataset: Hopavågen Bay - June 12, 2010 19:48 [Time T1]") + Gwen::UnicodeString());
-	BigLabel->SetBounds(10, 10, 900, 300);
+	BigLabel->SetText(Gwen::UnicodeString(L"Dataset: Hopavågen Bay - June 12, 2010 19:48 [T1]") + Gwen::UnicodeString());
+	BigLabel->SetBounds(10, 10, 1590, 300);
 	BigLabel->SetTextColor(Gwen::Color(235, 255, 235, 215));
 
 	Gwen::Controls::Label * MediumLabel = new Gwen::Controls::Label(pCanvas);
