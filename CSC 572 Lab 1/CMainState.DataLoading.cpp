@@ -8,7 +8,7 @@ void CMainState::loadData()
 	//std::string Field;
 
 	printf("Loading data...\n");
-	switch (1)
+	switch (2)
 	{
 	default:
 	case 0:
@@ -18,11 +18,12 @@ void CMainState::loadData()
 
 			//DataParser->RawValues.setDataScale(Vector3(3, 2, 3));
 
-			CSingleFieldColorMapper sf("o2");
+			CSpectrumColorMapper sf("d1");
+			COxygenColorMapper o("d1");
 			sf.AcceptedRange = Range(-9999999.0, 9999999.0);
 
-			DataParser->createPointCloudObjects(true, VoxelObject, SVector3f(3.f), & sf);
-			DataParser->createGridDataFromRawValues(sf.AcceptedRange, 5.0, "o2");
+			DataParser->createPointCloudObjects(true, VoxelObject, SVector3f(3.f), & o);
+			DataParser->createGridDataFromRawValues(FullRange, 5.0, "d1");
 			DataParser->createPointCloudObjects(false, SoupObject, SVector3f(3.f), & sf);
 			DataParser->createVolumeFromGridValues(& sf);
 		}
@@ -39,9 +40,9 @@ void CMainState::loadData()
 			sf.AcceptedRange = Range(-99999.0, 99999.0);
 
 			DataParser->createPointCloudObjects(true, VoxelObject, SVector3f(3.f), & sf);
-			DataParser->createGridDataFromRawValues(sf.AcceptedRange, 5.0, "salinity");
-			DataParser->createPointCloudObjects(false, SoupObject, SVector3f(3.f), & sf);
-			DataParser->createVolumeFromGridValues(& sf);
+			//DataParser->createGridDataFromRawValues(sf.AcceptedRange, 5.0, "salinity");
+			//DataParser->createPointCloudObjects(false, SoupObject, SVector3f(3.f), & sf);
+			//DataParser->createVolumeFromGridValues(& sf);
 		}
 		break;
 

@@ -33,9 +33,19 @@ void CMainState::begin()
 	skin->SetRender(pRenderer);
 	skin->Init("DefaultSkin.png");
 	skin->SetDefaultFont(L"OpenSans.ttf", 14.f);
+	Gwen::Font * LargeFont = new Gwen::Font();
+	LargeFont->facename = L"OpenSans.ttf";
+	LargeFont->size = 32.f;
 
 	pCanvas = new Gwen::Controls::Canvas(skin);
 	pCanvas->SetSize(Application.getWindowSize().X, Application.getWindowSize().Y);
+
+	Gwen::Controls::Label * BigLabel = new Gwen::Controls::Label(pCanvas);
+	BigLabel->SetFont(LargeFont);
+	BigLabel->SetText(L"This is a large font!\nThis is a new line!");
+	BigLabel->SetBounds(0, 0, 600, 300);
+	BigLabel->SetTextColor(Gwen::Color(255, 220, 120, 215));
+
 
 	Gwen::Controls::Button * pButton = new Gwen::Controls::Button(pCanvas);
 	pButton->SetBounds(1300, 50 + 120 + 10, 200, 25);
@@ -71,7 +81,7 @@ void CMainState::begin()
 
 	Gwen::Controls::VerticalSlider * MinimumAlphaSlider = new Gwen::Controls::VerticalSlider(pCanvas);
 	MinimumAlphaSlider->SetBounds(1450, 10, 40, 160);
-	MinimumAlphaSlider->SetRange(0.01f, 0.5f);
+	MinimumAlphaSlider->SetRange(0.0f, 0.5f);
 
 	Gwen::Controls::ComboBox * VolumeMode = new Gwen::Controls::ComboBox(pCanvas);
 	VolumeMode->SetBounds(1300, 50 + 120 + 45 + 35, 200, 25);

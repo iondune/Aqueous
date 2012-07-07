@@ -15,12 +15,15 @@ class COxygenColorMapper : public IColorMapper
 
 public:
 
-	COxygenColorMapper()
+	std::string Field;
+
+	COxygenColorMapper(std::string const & field = "o1")
+		: Field(field)
 	{}
 
 	virtual SColor const getColor(SciData const & d)
 	{
-		double const v = d.getField("o1");
+		double const v = d.getField(Field);
 
 		float Color[4] = {0.f, 0.f, 0.f, 0.f};
 

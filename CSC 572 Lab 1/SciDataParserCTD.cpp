@@ -113,8 +113,9 @@ void SciDataParserCTD::load(std::string const &data)
 
 
 		double * Data = mxGetPr(DataField);
+		int Skip = 1;
 
-		for (int j = 0; j < Dimensions[0]; j += 50)
+		for (int j = 0; j < Dimensions[0]; j += Skip)
 		{
 			for (int i = 0; i < Dimensions[1]; ++ i)
 			{
