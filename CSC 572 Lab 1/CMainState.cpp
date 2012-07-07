@@ -59,43 +59,43 @@ void CMainState::begin()
 
 
 	Gwen::Controls::Button * pButton = new Gwen::Controls::Button(pCanvas);
-	pButton->SetBounds(1300, 50 + 120 + 10, 200, 25);
+	pButton->SetBounds(1350, 90 + 120 + 10, 200, 25);
 	pButton->SetText("Reset Volume Range");
 
 	Gwen::Controls::Button * pButton2 = new Gwen::Controls::Button(pCanvas);
-	pButton2->SetBounds(1300, 50 + 120 + 10 + 35, 200, 25);
+	pButton2->SetBounds(1350, 90 + 120 + 10 + 35, 200, 25);
 	pButton2->SetText("Reset Alpha Intensity");	
 
 	Gwen::Controls::Button * pButtonX = new Gwen::Controls::Button(pCanvas);
-	pButtonX->SetBounds(1300, 50 + 120 + 10 + 45 + 25 + 35, 40, 25);
+	pButtonX->SetBounds(1350, 90 + 120 + 10 + 45 + 25 + 35, 40, 25);
 	pButtonX->SetText("X");
 
 	Gwen::Controls::Button * pButtonY = new Gwen::Controls::Button(pCanvas);
-	pButtonY->SetBounds(1350, 50 + 120 + 10 + 45 + 25 + 35, 40, 25);
+	pButtonY->SetBounds(1400, 90 + 120 + 10 + 45 + 25 + 35, 40, 25);
 	pButtonY->SetText("Y");
 
 	Gwen::Controls::Button * pButtonZ = new Gwen::Controls::Button(pCanvas);
-	pButtonZ->SetBounds(1400, 50 + 120 + 10 + 45 + 25 + 35, 40, 25);
+	pButtonZ->SetBounds(1450, 90 + 120 + 10 + 45 + 25 + 35, 40, 25);
 	pButtonZ->SetText("Z");
 
 	EmphasisSlider = new Gwen::Controls::VerticalSlider(pCanvas);
-	EmphasisSlider->SetBounds(1300, 10, 40, 160);
+	EmphasisSlider->SetBounds(1350, 50, 40, 160);
 	EmphasisSlider->SetRange(0.f, 1.f);
 
 	Gwen::Controls::VerticalSlider * IntensitySlider = new Gwen::Controls::VerticalSlider(pCanvas);
-	IntensitySlider->SetBounds(1350, 10, 40, 160);
+	IntensitySlider->SetBounds(1400, 50, 40, 160);
 	IntensitySlider->SetRange(10.f, 0.5f);
 
 	Gwen::Controls::VerticalSlider * LocalRangeSlider = new Gwen::Controls::VerticalSlider(pCanvas);
-	LocalRangeSlider->SetBounds(1400, 10, 40, 160);
+	LocalRangeSlider->SetBounds(1450, 50, 40, 160);
 	LocalRangeSlider->SetRange(0.05f, 0.5f);
 
 	Gwen::Controls::VerticalSlider * MinimumAlphaSlider = new Gwen::Controls::VerticalSlider(pCanvas);
-	MinimumAlphaSlider->SetBounds(1450, 10, 40, 160);
+	MinimumAlphaSlider->SetBounds(1500, 50, 40, 160);
 	MinimumAlphaSlider->SetRange(0.0f, 0.5f);
 
 	Gwen::Controls::ComboBox * VolumeMode = new Gwen::Controls::ComboBox(pCanvas);
-	VolumeMode->SetBounds(1300, 50 + 120 + 45 + 35, 200, 25);
+	VolumeMode->SetBounds(1350, 90 + 120 + 45 + 35, 200, 25);
 	VolumeMode->AddItem(L"Full Volume");
 	VolumeMode->AddItem(L"Plane Slices");
 	VolumeMode->AddItem(L"Isosurface");
