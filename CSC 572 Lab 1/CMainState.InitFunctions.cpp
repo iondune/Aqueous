@@ -57,5 +57,5 @@ void CMainState::initScene()
 	Terrain = new CTerrainSceneObject();
 	SceneManager.addSceneObject(Terrain);
 	Terrain->setCullingEnabled(false);
-	//Terrain->setBoundingBox(SBoundingBox3(SVector3f(-10000), SVector3f(10000)));
+	Terrain->setScale(SVector3f(0.5f));
 }

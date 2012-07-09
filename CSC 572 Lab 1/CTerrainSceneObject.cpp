@@ -522,7 +522,7 @@ bool CTerrainSceneObject::draw(IScene const * const Scene, ERenderPass const Pas
 		Layer->Transformation.setTranslation(SVector3f(Translation.X, 0.f, Translation.Y));
 		Layer->Transformation.setScale(SVector3f(1.f * ScaleFactor, 1.f, 1.f * ScaleFactor));
 
-		Context.uniform("uModelMatrix", ModelMatrix = (* it)->Transformation);
+		Context.uniform("uModelMatrix", Transformation.getGLMMat4() * (ModelMatrix = (* it)->Transformation.getGLMMat4()));
 		Context.uniform("uDataOffset", DataOffsetf);
 
 		if (Course)
