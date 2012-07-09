@@ -69,8 +69,10 @@ void CMainState::OnMouseEvent(SMouseEvent const & Event)
 		            glm::vec4 trans(difX*moveSpeed, -difY*moveSpeed, 0, 0);
 		            trans = glm::inverse(ViewMatrix) * trans;
 		            Translation.X += trans.x;
-		            Translation.Y += trans.y;
+		            Translation.Y = Terrain->getTranslation().Y;//trans.y;
 		            Translation.Z += trans.z;
+					Terrain->setTranslation(Translation);
+					
 	            }
 	            else if (Mode == 2)
 	            {

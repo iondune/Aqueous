@@ -57,5 +57,10 @@ void CMainState::initScene()
 	Terrain = new CTerrainSceneObject();
 	SceneManager.addSceneObject(Terrain);
 	Terrain->setCullingEnabled(false);
-	Terrain->setScale(SVector3f(0.5f));
+	Terrain->setScale(SVector3f(0.05f));
+	SVector3f Scale = Terrain->getScale();
+	Scale.X *= -1;
+	Terrain->setScale(Scale);
+	Terrain->setTranslation(SVector3f(-0.3f, -0.5f, -2.1f));
+	Terrain->setRotation(SVector3f(0.f, 10.f, 0.f));
 }
