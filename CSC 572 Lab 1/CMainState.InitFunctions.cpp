@@ -10,9 +10,11 @@ void CMainState::initScene()
 {
 	LightPosition = SVector3f(0.2f, 0.4f, 0.2f);
 
-	SceneManager.setActiveCamera(Camera = new CCameraControl(SVector3f(1.f, 0.3f, 1.5f)));
-	//Camera->setProjection(60.f, 16.f/9.f, 0.01f, 100.f);
+	Camera = new CCameraControl(SVector3f(1.f, 0.3f, 1.5f));
+	Camera->setProjection(60.f, 16.f/9.f, 0.1f, 1000.f);
+	Camera->recalculateViewMatrix();
 	Camera->setVelocity(1.9f);
+	SceneManager.setActiveCamera(Camera);
 
 	OrbitCamera = new CPerspectiveCameraSceneObject();
 
@@ -49,4 +51,11 @@ void CMainState::initScene()
 	SoupObject->setVisible(false);
 	SceneManager.addSceneObject(SoupObject);
 	SoupObject->setCullingEnabled(false);
+
+
+
+	Terrain = new CTerrainSceneObject();
+	SceneManager.addSceneObject(Terrain);
+	Terrain->setCullingEnabled(false);
+	//Terrain->setBoundingBox(SBoundingBox3(SVector3f(-10000), SVector3f(10000)));
 }

@@ -31,6 +31,8 @@ Gwen::Font * LoadFont(Gwen::UnicodeString const & File, float const Size)
 	return Font;
 }
 
+SVector3f LightPosition;
+
 void CMainState::begin()
 {
 	init();
@@ -310,7 +312,7 @@ void CMainState::OnRenderStart(float const Elapsed)
     Tyra->setScale(Scale);
     Tyra->setRotation(Rotation);
 
-	LightPosition = SceneManager.getActiveCamera()->getPosition() + SVector3f(0, 0, 0);
+	::LightPosition = LightPosition = SceneManager.getActiveCamera()->getPosition() + SVector3f(0, 0, 0);
 
 	LightObject->setTranslation(LightPosition);
 	
@@ -486,6 +488,7 @@ void CMainState::OnRenderStart(float const Elapsed)
 	}
 
 	CApplication::get().swapBuffers();
+	Terrain->DoCameraUpdate = false;
 
 	//printOpenGLErrors("post swap");
 	//Sleep(3000);

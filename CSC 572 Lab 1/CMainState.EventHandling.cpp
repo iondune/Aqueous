@@ -7,6 +7,27 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
     switch (Event.Key)
     {
 
+	case EKey::NUM_3:
+
+		if (! Event.Pressed)
+			Camera->setVelocity(200.f);
+
+		break;
+
+	case EKey::NUM_2:
+
+		if (! Event.Pressed)
+			Camera->setVelocity(40.f);
+
+		break;
+
+	case EKey::NUM_1:
+
+		if (! Event.Pressed)
+			Camera->setVelocity(2.5f);
+
+		break;
+
 	case EKey::x:
 
 		if (! Event.Pressed)
@@ -38,13 +59,15 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 	case EKey::c:
 
 		if (! Event.Pressed)
+		{
 			SkyBox->setVisible(! SkyBox->isVisible());
-		s << "Skybox object ";
-		if (SkyBox->isVisible())
-			s << "enabled.";
-		else
-			s << "disabled.";
-		addConsoleMessage(s.str());
+			s << "Skybox object ";
+			if (SkyBox->isVisible())
+				s << "enabled.";
+			else
+				s << "disabled.";
+			addConsoleMessage(s.str());
+		}
 
 		break;
 

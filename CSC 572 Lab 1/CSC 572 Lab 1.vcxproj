@@ -97,6 +97,7 @@
     <ClCompile Include="CMainState.EventHandling.cpp" />
     <ClCompile Include="CMainState.InitFunctions.cpp" />
     <ClCompile Include="CMainState.MouseTracking.cpp" />
+    <ClCompile Include="CTerrainSceneObject.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include=".\SciDataParserSimpleTXT.cpp" />
     <ClCompile Include=".\SciDataParserGrid1.cpp" />
@@ -118,6 +119,7 @@
     <ClInclude Include="CRGBIntensityColorMapper.h" />
     <ClInclude Include=".\CSingleFieldColorMapper.h" />
     <ClInclude Include="CSpectrumColorMapper.h" />
+    <ClInclude Include="CTerrainSceneObject.h" />
     <ClInclude Include="CVolumeControlsHandler.h" />
     <ClInclude Include="IColorMapper.h" />
     <ClInclude Include="ProgressPrinter.h" />

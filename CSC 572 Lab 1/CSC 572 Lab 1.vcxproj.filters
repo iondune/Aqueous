@@ -50,6 +50,9 @@
     <ClCompile Include="SciDataParser.GridValues.cpp">
       <Filter>Data Management</Filter>
     </ClCompile>
+    <ClCompile Include="CTerrainSceneObject.cpp">
+      <Filter>MainState\Terrain</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SciDataParser.h">
@@ -103,6 +106,9 @@
     <ClInclude Include="CSpectrumColorMapper.h">
       <Filter>Data Management\Color Mapping</Filter>
     </ClInclude>
+    <ClInclude Include="CTerrainSceneObject.h">
+      <Filter>MainState\Terrain</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Data Management">
@@ -131,6 +137,9 @@
     </Filter>
     <Filter Include="Utilities">
       <UniqueIdentifier>{c5fafe06-1efa-415a-bd3a-d59efafe3cac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainState\Terrain">
+      <UniqueIdentifier>{a4f68102-11cd-4453-81b7-0a605414752b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

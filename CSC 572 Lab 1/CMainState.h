@@ -13,6 +13,9 @@
 #include <Gwen/Controls/ComboBox.h>
 
 
+#include "CTerrainSceneObject.h"
+
+
 class CMainState : public CState<CMainState>, public Gwen::Event::Handler
 {
 
@@ -51,6 +54,10 @@ class CMainState : public CState<CMainState>, public Gwen::Event::Handler
 	float Slider;
 
 	float Timer;
+
+
+
+	CTerrainSceneObject * Terrain;
 
 public:
 
