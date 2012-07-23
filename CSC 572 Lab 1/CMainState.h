@@ -106,15 +106,10 @@ public:
 
     void OnKeyboardEvent(SKeyboardEvent const & Event);
 
-	void addConsoleMessage(std::string const & Message, Gwen::Color const & Color = Gwen::Color(255, 255, 255, 255))
-	{
-		Console->addMessage(Message, Color);
-	}
+	void addConsoleMessage(std::string const & Message, Gwen::Color const & Color = Gwen::Color(255, 255, 255, 255));
 
 
 	void setupVolumeRender();
-
-	//void OnEmphasisSlider(Gwen::Controls::Base* control);
 
 
 	//////////////////////////////

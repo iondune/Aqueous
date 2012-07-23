@@ -462,3 +462,7 @@ void CMainState::OnRenderStart(float const Elapsed)
 	Terrain->DoCameraUpdate = false;
 }
 
+void CConsoleMessage::addConsoleMessage(std::string const & Message, Gwen::Color const & Color = Gwen::Color(255, 255, 255, 255))
+{
+	Console->addMessage(Message, Color);
+}
