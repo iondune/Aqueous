@@ -18,16 +18,6 @@ void CMainState::initScene()
 
 	OrbitCamera = new CPerspectiveCameraSceneObject();
 
-	// Load dino model and apply texture
-	CMesh * TyraMesh = CMeshLoader::loadObjMesh("Tyra.obj");
-	TyraMesh->centerMeshByExtents(SVector3f());
-	Tyra = SceneManager.addMeshSceneObject(TyraMesh, CShaderLoader::loadShader("NormalMap"), 0, CRenderable::SMaterial());
-	Tyra->setCullingEnabled(false);
-	Tyra->addUniform("uLightPosition", boost::shared_ptr<IUniform const>(& BindLightPosition));
-	CTexture * Texture = CTextureLoader::loadTexture("TyraNormals.bmp");
-	Tyra->setTexture(0, Texture);
-	Tyra->setVisible(false);
-
 	// Add space backdrop
 	Cube = CMeshLoader::createCubeMesh();
 	SkyBox = SceneManager.addMeshSceneObject(Cube, CShaderLoader::loadShader("DiffuseTexture"), 0);
@@ -42,15 +32,15 @@ void CMainState::initScene()
 
 	Shader = CShaderLoader::loadShader("Diffuse");
 
-	VoxelObject = new ISceneObject();
-	VoxelObject->setVisible(false);
-	SceneManager.addSceneObject(VoxelObject);
-	VoxelObject->setCullingEnabled(false);
+	PointCloudObject = new ISceneObject();
+	PointCloudObject->setVisible(false);
+	SceneManager.addSceneObject(PointCloudObject);
+	PointCloudObject->setCullingEnabled(false);
 
-	SoupObject = new ISceneObject();
-	SoupObject->setVisible(false);
-	SceneManager.addSceneObject(SoupObject);
-	SoupObject->setCullingEnabled(false);
+	GridObject = new ISceneObject();
+	GridObject->setVisible(false);
+	SceneManager.addSceneObject(GridObject);
+	GridObject->setCullingEnabled(false);
 
 
 

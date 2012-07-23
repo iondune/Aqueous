@@ -14,40 +14,47 @@
 
 
 #include "CTerrainSceneObject.h"
+#include "CConsole.h"
 
 
 class CMainState : public CState<CMainState>, public Gwen::Event::Handler
 {
 
+	// Cameras
 	CCameraControl * Camera;
 	ICameraSceneObject * OrbitCamera;
-	CMeshSceneObject * Tyra;
 
+	// Lighting
 	CMeshSceneObject * LightObject;
-
-	ISceneObject * SoupObject;
-	ISceneObject * VoxelObject;
-
 	SVector3f LightPosition;
+
+	// Holders for point cloud and grid glyph representations
+	ISceneObject * PointCloudObject;
+	ISceneObject * GridObject;
+
+	// Cube used for volume rendering
 	CMesh * VolumeCube;
 
+	// Framebuffer used for volume rendering
 	CFrameBufferObject * VolumeTarget;
 	CTexture * VolumeBuffer;
 
+	// Skybox object
 	CMeshSceneObject * SkyBox;
 
+	// GUI Canvas
 	Gwen::Controls::Canvas* pCanvas;
 
+	// Settings
 	int ShowVolume;
 	bool ShowGUI;
 
 	SciDataParser * DataParser[3];
 
+	CConsole * Console;
 
-	static int const ConsoleSize = 5;
-	float ConsoleAccumulator;
-	Gwen::Color ConsoleMessageColors[ConsoleSize];
-	Gwen::Controls::Label * ConsoleMessages[ConsoleSize];
+
+	
 
 	Gwen::Controls::Label * VolumeRangeIndicator;
 
@@ -99,7 +106,10 @@ public:
 
     void OnKeyboardEvent(SKeyboardEvent const & Event);
 
-	void addConsoleMessage(std::string const & Message, Gwen::Color const & Color = Gwen::Color(255, 255, 255, 255));
+	void addConsoleMessage(std::string const & Message, Gwen::Color const & Color = Gwen::Color(255, 255, 255, 255))
+	{
+		Console->addMessage(Message, Color);
+	}
 
 
 	void setupVolumeRender();

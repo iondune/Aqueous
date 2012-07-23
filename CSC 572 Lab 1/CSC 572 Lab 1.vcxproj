@@ -112,6 +112,7 @@
     <ClCompile Include="SciDataTree.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CConsole.h" />
     <ClInclude Include="CGwenEventForwarder.h" />
     <ClInclude Include="CMainState.h" />
     <ClInclude Include="ColorMappers.h" />
@@ -122,6 +123,7 @@
     <ClInclude Include="CTerrainSceneObject.h" />
     <ClInclude Include="CVolumeControlsHandler.h" />
     <ClInclude Include="IColorMapper.h" />
+    <ClInclude Include="Libraries.h" />
     <ClInclude Include="ProgressPrinter.h" />
     <ClInclude Include="RFBInterpolator\newmat.h" />
     <ClInclude Include="RFBInterpolator\RBFInterpolator.h" />

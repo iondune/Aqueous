@@ -18,7 +18,7 @@ void CMainState::loadData()
 		COxygenColorMapper o("d1");
 		sf.AcceptedRange = Range(-9999999.0, 9999999.0);
 
-		DataParser[0]->createPointCloudObjects(true, VoxelObject, SVector3f(-3.f, 0.8f, 3.f), & o);
+		DataParser[0]->createPointCloudObjects(true, PointCloudObject, SVector3f(-3.f, 0.8f, 3.f), & o);
 		//DataParser[0]->createGridDataFromRawValues(FullRange, 5.0, "d1");
 		//DataParser[0]->createPointCloudObjects(false, SoupObject, SVector3f(3.f), & sf);
 		//DataParser[0]->createVolumeFromGridValues(& sf);
@@ -51,6 +51,6 @@ void CMainState::loadData()
 		//COxygenLocalizedColorMapper l;
 			
 		DataParser[2]->createVolumeFromGridValues(& o);
-		DataParser[2]->createPointCloudObjects(false, SoupObject, SVector3f(3.f), & o);
+		DataParser[2]->createPointCloudObjects(false, GridObject, SVector3f(3.f), & o);
 	}
 }

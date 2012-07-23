@@ -32,9 +32,9 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 
 		if (! Event.Pressed)
 		{
-			SoupObject->setVisible(! SoupObject->isVisible());
+			GridObject->setVisible(! GridObject->isVisible());
 			s << "Point cloud object ";
-			if (SoupObject->isVisible())
+			if (GridObject->isVisible())
 				s << "enabled.";
 			else
 				s << "disabled.";
@@ -46,9 +46,9 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 
 		if (! Event.Pressed)
 		{
-			VoxelObject->setVisible(! VoxelObject->isVisible());
+			PointCloudObject->setVisible(! PointCloudObject->isVisible());
 			s << "Oct tree object ";
-			if (VoxelObject->isVisible())
+			if (PointCloudObject->isVisible())
 				s << "enabled.";
 			else
 				s << "disabled.";

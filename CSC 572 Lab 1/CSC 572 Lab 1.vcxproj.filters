@@ -109,6 +109,10 @@
     <ClInclude Include="CTerrainSceneObject.h">
       <Filter>MainState\Terrain</Filter>
     </ClInclude>
+    <ClInclude Include="Libraries.h" />
+    <ClInclude Include="CConsole.h">
+      <Filter>MainState\GUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Data Management">

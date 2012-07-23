@@ -16,8 +16,8 @@
 
 
 CMainState::CMainState()
-	: Camera(0), Tyra(0), Scale(1), Mode(0), BindLightPosition(LightPosition),
-	ShowVolume(0), ShowGUI(true), ConsoleAccumulator(0.f), Slider(0.f)
+	: Camera(0), Scale(1), Mode(0), BindLightPosition(LightPosition),
+	ShowVolume(0), ShowGUI(true), Slider(0.f)
 {
 	DataParser[0] = DataParser[1] = DataParser[2] = 0;
 }
@@ -168,14 +168,6 @@ void CMainState::begin()
 	pButtonZ->onPress.Add(Handler, & CVolumeControlsHandler::OnSetZAxis);
 	VolumeMode->onSelection.Add(Handler, & CVolumeControlsHandler::OnVolumeMode);
 
-	for (int i = 0; i < ConsoleSize; ++ i)
-	{
-		ConsoleMessages[i] = new Gwen::Controls::Label(pCanvas);
-		ConsoleMessages[i]->SetPos(20, 900 - 50 - 25 * i);
-		ConsoleMessages[i]->SetSize(1500, 30);
-		ConsoleMessages[i]->SetShouldDrawBackground(true);
-	}
-
 	addConsoleMessage("GUI Initialized.");
 	addConsoleMessage("Starting program...", Gwen::Colors::Red);
 
@@ -307,10 +299,6 @@ void CMainState::OnRenderStart(float const Elapsed)
 	float const Distance = 4.f;
 	OrbitCamera->setPosition(SVector3f(sin(Timer)*Distance, 2.3f, cos(Timer)*Distance));
 	OrbitCamera->setLookAtTarget(SVector3f());
-
-	Tyra->setTranslation(Translation);
-    Tyra->setScale(Scale);
-    Tyra->setRotation(Rotation);
 
 	::LightPosition = LightPosition = SceneManager.getActiveCamera()->getPosition() + SVector3f(0, 0, 0);
 
@@ -462,26 +450,7 @@ void CMainState::OnRenderStart(float const Elapsed)
 
 
 
-		static float const AlphaTick = 0.1f;
-		ConsoleAccumulator += Elapsed;
-
-		while (ConsoleAccumulator > AlphaTick)
-		{
-			for (int i = 0; i < ConsoleSize; ++ i)
-			{
-				static int const Decrement = 3;
-				Gwen::Color & c = ConsoleMessageColors[i];//->GetTextColor();
-
-				if (c.a >= Decrement)
-					c.a -= Decrement;
-				else
-					c.a = 0;
-				
-				ConsoleMessages[i]->SetTextColor(c);
-			}
-
-			ConsoleAccumulator -= AlphaTick;
-		}
+		Console->update(Elapsed);
 
 
 		pCanvas->RenderCanvas();
@@ -489,21 +458,5 @@ void CMainState::OnRenderStart(float const Elapsed)
 
 	CApplication::get().swapBuffers();
 	Terrain->DoCameraUpdate = false;
-
-	//printOpenGLErrors("post swap");
-	//Sleep(3000);
 }
 
-void CMainState::addConsoleMessage(std::string const & Message, Gwen::Color const & Color)
-{
-	for (int i = ConsoleSize - 1; i > 0; -- i)
-	{
-		ConsoleMessages[i]->SetText(ConsoleMessages[i-1]->GetText());
-		ConsoleMessageColors[i] = ConsoleMessageColors[i-1];
-		ConsoleMessages[i]->SetTextColor(ConsoleMessageColors[i]);
-	}
-
-	ConsoleMessages[0]->SetText(Message);
-	ConsoleMessageColors[0] = Color;
-	ConsoleMessages[0]->SetTextColor(Color);
-}
