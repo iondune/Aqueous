@@ -54,6 +54,8 @@ void CMainState::begin()
 	pCanvas = new Gwen::Controls::Canvas(skin);
 	pCanvas->SetSize(Application.getWindowSize().X, Application.getWindowSize().Y);
 
+	Console = new CConsole(pCanvas);
+
 	Gwen::Controls::Label * BigLabel = new Gwen::Controls::Label(pCanvas);
 	BigLabel->SetFont(LargeFont);
 	BigLabel->SetText(Gwen::UnicodeString(L"Dataset: Hopavågen Bay - June 12, 2010 19:48 [T1]") + Gwen::UnicodeString());
