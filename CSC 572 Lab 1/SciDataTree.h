@@ -12,7 +12,7 @@ class ISciTreeNode
 
 public:
 
-	SBoundingBox3 Extents;
+	SBoundingBox3f Extents;
 
 	virtual bool const isLeaf() const =0;
 

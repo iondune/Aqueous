@@ -19,56 +19,56 @@ void SubdivideNode(ISciTreeNode * & Node)
 		switch (i)
 		{
 		case EO_TOP_UPPER_LEFT:
-			NewRoot->Children[i]->Extents = SBoundingBox3(
+			NewRoot->Children[i]->Extents = SBoundingBox3f(
 				SVector3f(Root->Extents.MinCorner.X, Root->Extents.getCenter().Y, Root->Extents.getCenter().Z),
 				SVector3f(Root->Extents.getCenter().X, Root->Extents.MaxCorner.Y, Root->Extents.MaxCorner.Z)
 				);
 			break;
 
 		case EO_TOP_UPPER_RIGHT:
-			NewRoot->Children[i]->Extents = SBoundingBox3(
+			NewRoot->Children[i]->Extents = SBoundingBox3f(
 				SVector3f(Root->Extents.getCenter().X, Root->Extents.getCenter().Y, Root->Extents.getCenter().Z),
 				SVector3f(Root->Extents.MaxCorner.X, Root->Extents.MaxCorner.Y, Root->Extents.MaxCorner.Z)
 				);
 			break;
 
 		case EO_TOP_LOWER_LEFT:
-			NewRoot->Children[i]->Extents = SBoundingBox3(
+			NewRoot->Children[i]->Extents = SBoundingBox3f(
 				SVector3f(Root->Extents.MinCorner.X, Root->Extents.MinCorner.Y, Root->Extents.getCenter().Z),
 				SVector3f(Root->Extents.getCenter().X, Root->Extents.getCenter().Y, Root->Extents.MaxCorner.Z)
 				);
 			break;
 
 		case EO_TOP_LOWER_RIGHT:
-			NewRoot->Children[i]->Extents = SBoundingBox3(
+			NewRoot->Children[i]->Extents = SBoundingBox3f(
 				SVector3f(Root->Extents.getCenter().X, Root->Extents.MinCorner.Y, Root->Extents.getCenter().Z),
 				SVector3f(Root->Extents.MaxCorner.X, Root->Extents.getCenter().Y, Root->Extents.MaxCorner.Z)
 				);
 			break;
 
 		case EO_BOTTOM_UPPER_LEFT:
-			NewRoot->Children[i]->Extents = SBoundingBox3(
+			NewRoot->Children[i]->Extents = SBoundingBox3f(
 				SVector3f(Root->Extents.MinCorner.X, Root->Extents.getCenter().Y, Root->Extents.MinCorner.Z),
 				SVector3f(Root->Extents.getCenter().X, Root->Extents.MaxCorner.Y, Root->Extents.getCenter().Z)
 				);
 			break;
 
 		case EO_BOTTOM_UPPER_RIGHT:
-			NewRoot->Children[i]->Extents = SBoundingBox3(
+			NewRoot->Children[i]->Extents = SBoundingBox3f(
 				SVector3f(Root->Extents.getCenter().X, Root->Extents.getCenter().Y, Root->Extents.MinCorner.Z),
 				SVector3f(Root->Extents.MaxCorner.X, Root->Extents.MaxCorner.Y, Root->Extents.getCenter().Z)
 				);
 			break;
 
 		case EO_BOTTOM_LOWER_LEFT:
-			NewRoot->Children[i]->Extents = SBoundingBox3(
+			NewRoot->Children[i]->Extents = SBoundingBox3f(
 				SVector3f(Root->Extents.MinCorner.X, Root->Extents.MinCorner.Y, Root->Extents.MinCorner.Z),
 				SVector3f(Root->Extents.getCenter().X, Root->Extents.getCenter().Y, Root->Extents.getCenter().Z)
 				);
 			break;
 
 		case EO_BOTTOM_LOWER_RIGHT:
-			NewRoot->Children[i]->Extents = SBoundingBox3(
+			NewRoot->Children[i]->Extents = SBoundingBox3f(
 				SVector3f(Root->Extents.getCenter().X, Root->Extents.MinCorner.Y, Root->Extents.MinCorner.Z),
 				SVector3f(Root->Extents.MaxCorner.X, Root->Extents.getCenter().Y, Root->Extents.getCenter().Z)
 				);

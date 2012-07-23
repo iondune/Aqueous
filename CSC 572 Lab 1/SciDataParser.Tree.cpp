@@ -6,7 +6,7 @@ void SciDataParser::createDataTreeFromRawValues()
 
 	for (auto it = RawValues.Values.begin(); it != RawValues.Values.end(); ++ it)
 		Root->Datums.push_back(* it);
-	Root->Extents = SBoundingBox3(Vector3(0), RawValues.DataScale);
+	Root->Extents = SBoundingBox3f(Vector3(0), RawValues.DataScale);
 		
 	/*
 	auto CreateLeafObjects = []()
