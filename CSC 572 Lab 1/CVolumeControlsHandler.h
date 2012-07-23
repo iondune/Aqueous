@@ -20,10 +20,10 @@ class CVolumeControlsHandler : public Gwen::Event::Handler
 
 public:
 
-	CMainState::SVolumeControl & VolumeControl;
+	CVolumeSceneObject::SControl & VolumeControl;
 
 	CVolumeControlsHandler()
-		: VolumeControl(CMainState::get().Volume)
+		: VolumeControl(CMainState::get().VolumeSceneObject.Control)
 	{}
 
 	void OnEmphasisSlider(Gwen::Controls::Base * Control)

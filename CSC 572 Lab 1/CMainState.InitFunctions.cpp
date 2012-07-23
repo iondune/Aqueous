@@ -53,4 +53,6 @@ void CMainState::initScene()
 	Terrain->setScale(Scale);
 	Terrain->setTranslation(SVector3f(-0.3f, -0.5f, -2.1f));
 	Terrain->setRotation(SVector3f(0.f, 10.f, 0.f));
+
+	SceneManager.addSceneObject(& VolumeSceneObject);
 }

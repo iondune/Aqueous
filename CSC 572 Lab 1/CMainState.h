@@ -14,6 +14,7 @@
 
 
 #include "CTerrainSceneObject.h"
+#include "CVolumeSceneObject.h"
 #include "CConsole.h"
 
 
@@ -32,13 +33,6 @@ class CMainState : public CState<CMainState>, public Gwen::Event::Handler
 	ISceneObject * PointCloudObject;
 	ISceneObject * GridObject;
 
-	// Cube used for volume rendering
-	CMesh * VolumeCube;
-
-	// Framebuffer used for volume rendering
-	CFrameBufferObject * VolumeTarget;
-	CTexture * VolumeBuffer;
-
 	// Skybox object
 	CMeshSceneObject * SkyBox;
 
@@ -46,7 +40,6 @@ class CMainState : public CState<CMainState>, public Gwen::Event::Handler
 	Gwen::Controls::Canvas* pCanvas;
 
 	// Settings
-	int ShowVolume;
 	bool ShowGUI;
 
 	SciDataParser * DataParser[3];
@@ -54,37 +47,17 @@ class CMainState : public CState<CMainState>, public Gwen::Event::Handler
 	CConsole * Console;
 
 
-	
-
 	Gwen::Controls::Label * VolumeRangeIndicator;
-
 	float Slider;
-
 	float Timer;
-
 
 
 	CTerrainSceneObject * Terrain;
 
 public:
 
-	struct SVolumeControl
-	{
-		int Mode;
-		SVector3f SliceAxis;
-		float LocalRange;
-		float MinimumAlpha;
-		float EmphasisLocation;
-		float AlphaIntensity;
-
-		SVolumeControl()
-			: Mode(0), SliceAxis(1.f, 0.f, 0.f),
-			LocalRange(0.1f), MinimumAlpha(0.1f),
-			EmphasisLocation(0.5f), AlphaIntensity(1.f)
-		{}
-	};
-
-	SVolumeControl Volume;
+	
+	CVolumeSceneObject VolumeSceneObject;
 	void resetVolumeRangeIndicator();
 	void clearVolumeRangeIndicator();
 	
@@ -107,9 +80,6 @@ public:
     void OnKeyboardEvent(SKeyboardEvent const & Event);
 
 	void addConsoleMessage(std::string const & Message, Gwen::Color const & Color = Gwen::Color(255, 255, 255, 255));
-
-
-	void setupVolumeRender();
 
 
 	//////////////////////////////

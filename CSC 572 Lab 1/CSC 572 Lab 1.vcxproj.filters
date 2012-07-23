@@ -53,6 +53,9 @@
     <ClCompile Include="CTerrainSceneObject.cpp">
       <Filter>MainState\Terrain</Filter>
     </ClCompile>
+    <ClCompile Include="CVolumeSceneObject.cpp">
+      <Filter>MainState\Volume</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SciDataParser.h">
@@ -94,9 +97,6 @@
     <ClInclude Include="ColorMappers.h">
       <Filter>Data Management\Color Mapping</Filter>
     </ClInclude>
-    <ClInclude Include="CVolumeControlsHandler.h">
-      <Filter>MainState</Filter>
-    </ClInclude>
     <ClInclude Include=".\CSingleFieldColorMapper.h">
       <Filter>Data Management\Color Mapping</Filter>
     </ClInclude>
@@ -112,6 +112,12 @@
     <ClInclude Include="Libraries.h" />
     <ClInclude Include="CConsole.h">
       <Filter>MainState\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="CVolumeControlsHandler.h">
+      <Filter>MainState\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="CVolumeSceneObject.h">
+      <Filter>MainState\Volume</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -144,6 +150,9 @@
     </Filter>
     <Filter Include="MainState\Terrain">
       <UniqueIdentifier>{a4f68102-11cd-4453-81b7-0a605414752b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainState\Volume">
+      <UniqueIdentifier>{33cba1aa-9e33-457c-912a-78dab6c782db}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
