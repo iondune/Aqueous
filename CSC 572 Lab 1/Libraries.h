@@ -9,15 +9,9 @@
 #pragma comment(lib, "glu32.lib")
 
 // ionEngine Libraries
-#ifdef _DEBUG
-#pragma comment(lib, "Debug/ionWindow.lib")
-#pragma comment(lib, "Debug/ionScene.lib")
-#pragma comment(lib, "Debug/ionGUI.lib")
-#else
-#pragma comment(lib, "Release/ionWindow.lib")
-#pragma comment(lib, "Release/ionScene.lib")
-#pragma comment(lib, "Release/ionGUI.lib")
-#endif
+#pragma comment(lib, "ionWindow.lib")
+#pragma comment(lib, "ionScene.lib")
+#pragma comment(lib, "ionGUI.lib")
 
 // SFML Libraries
 #ifdef _DEBUG
