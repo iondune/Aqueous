@@ -65,7 +65,7 @@ public:
 		}
 	}
 
-	void addMessage(std::string const & Message, Gwen::Color const & Color)
+	void addMessage(std::string const & Message, Gwen::Color const & Color = Gwen::Color(255, 255, 255, 255))
 	{
 		for (int i = Size - 1; i > 0; -- i)
 		{

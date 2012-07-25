@@ -92,6 +92,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CGUIManager.cpp" />
     <ClCompile Include="CMainState.cpp" />
     <ClCompile Include="CMainState.DataLoading.cpp" />
     <ClCompile Include="CMainState.EventHandling.cpp" />
@@ -114,6 +115,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CConsole.h" />
+    <ClInclude Include="CGUIManager.h" />
     <ClInclude Include="CGwenEventForwarder.h" />
     <ClInclude Include="CMainState.h" />
     <ClInclude Include="ColorMappers.h" />

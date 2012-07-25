@@ -75,9 +75,9 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 
 		if (! Event.Pressed)
 		{
-			ShowGUI = ! ShowGUI;
+			GUIManager->ShowGUI = ! GUIManager->ShowGUI;
 			s << "GUI ";
-			if (ShowGUI)
+			if (GUIManager->ShowGUI)
 				s << "enabled.";
 			else
 				s << "disabled.";

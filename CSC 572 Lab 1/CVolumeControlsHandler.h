@@ -5,14 +5,17 @@
 #include <ionScene.h>
 #include <ionWindow.h>
 
+#include <Gwen/Controls.h>
+#include <Gwen/Controls/VerticalSlider.h>
+#include <Gwen/Controls/ComboBox.h>
+
 #include "SciDataParser.h"
 #include "SciDataTree.h"
 
 #include "ColorMappers.h"
 
-#include <Gwen/Controls.h>
-#include <Gwen/Controls/VerticalSlider.h>
-#include <Gwen/Controls/ComboBox.h>
+#include "CVolumeSceneObject.h"
+#include "CMainState.h"
 
 
 class CVolumeControlsHandler : public Gwen::Event::Handler
@@ -21,17 +24,23 @@ class CVolumeControlsHandler : public Gwen::Event::Handler
 public:
 
 	CVolumeSceneObject::SControl & VolumeControl;
+	CMainState & MainState;
 
 	CVolumeControlsHandler()
-		: VolumeControl(CMainState::get().VolumeSceneObject.Control)
+		: VolumeControl(CMainState::get().VolumeSceneObject.Control), MainState(CMainState::get())
 	{}
+
+	void resetVolumeRange()
+	{
+		if (VolumeControl.Mode)
+			CMainState::get().getGUIManager().resetVolumeRangeIndicator(MainState.DataParser[2]);
+	}
 
 	void OnEmphasisSlider(Gwen::Controls::Base * Control)
 	{
 		Gwen::Controls::Slider * Bar = (Gwen::Controls::Slider *) Control;
 		VolumeControl.EmphasisLocation = Bar->GetValue();
-		if (VolumeControl.Mode)
-			CMainState::get().resetVolumeRangeIndicator();
+		resetVolumeRange();
 	}
 
 	void OnIntensitySlider(Gwen::Controls::Base * Control)
@@ -50,8 +59,7 @@ public:
 	{
 		Gwen::Controls::Slider * Bar = (Gwen::Controls::Slider *) Control;
 		VolumeControl.LocalRange = Bar->GetValue();
-		if (VolumeControl.Mode)
-			CMainState::get().resetVolumeRangeIndicator();
+		resetVolumeRange();
 	}
 
 	void OnResetVolume(Gwen::Controls::Base * Control)
@@ -86,17 +94,17 @@ public:
 		if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Plane Slices"))
 		{
 			VolumeControl.Mode = 1;
-			CMainState::get().resetVolumeRangeIndicator();
+			resetVolumeRange();
 		}
 		else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Isosurface"))
 		{
 			VolumeControl.Mode = 2;
-			CMainState::get().resetVolumeRangeIndicator();
+			resetVolumeRange();
 		}
 		else
 		{
 			VolumeControl.Mode = 0;
-			CMainState::get().clearVolumeRangeIndicator();
+			CMainState::get().getGUIManager().clearVolumeRangeIndicator();
 		}
 	}
 };

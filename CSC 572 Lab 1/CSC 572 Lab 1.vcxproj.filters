@@ -56,6 +56,9 @@
     <ClCompile Include="CVolumeSceneObject.cpp">
       <Filter>MainState\Volume</Filter>
     </ClCompile>
+    <ClCompile Include="CGUIManager.cpp">
+      <Filter>MainState\GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SciDataParser.h">
@@ -118,6 +121,9 @@
     </ClInclude>
     <ClInclude Include="CVolumeSceneObject.h">
       <Filter>MainState\Volume</Filter>
+    </ClInclude>
+    <ClInclude Include="CGUIManager.h">
+      <Filter>MainState\GUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

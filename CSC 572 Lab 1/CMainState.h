@@ -12,10 +12,11 @@
 #include <Gwen/Controls/VerticalSlider.h>
 #include <Gwen/Controls/ComboBox.h>
 
+#include "CGUIManager.h"
+
 
 #include "CTerrainSceneObject.h"
 #include "CVolumeSceneObject.h"
-#include "CConsole.h"
 
 
 class CMainState : public CState<CMainState>, public Gwen::Event::Handler
@@ -24,6 +25,9 @@ class CMainState : public CState<CMainState>, public Gwen::Event::Handler
 	// Cameras
 	CCameraControl * Camera;
 	ICameraSceneObject * OrbitCamera;
+
+	// Orbit Camera Timer
+	float Timer;
 
 	// Lighting
 	CMeshSceneObject * LightObject;
@@ -35,31 +39,16 @@ class CMainState : public CState<CMainState>, public Gwen::Event::Handler
 
 	// Skybox object
 	CMeshSceneObject * SkyBox;
-
-	// GUI Canvas
-	Gwen::Controls::Canvas* pCanvas;
-
-	// Settings
-	bool ShowGUI;
-
-	SciDataParser * DataParser[3];
-
-	CConsole * Console;
-
-
-	Gwen::Controls::Label * VolumeRangeIndicator;
-	float Slider;
-	float Timer;
-
-
+	
 	CTerrainSceneObject * Terrain;
 
-public:
+	CGUIManager * GUIManager;
 
+public:
 	
 	CVolumeSceneObject VolumeSceneObject;
-	void resetVolumeRangeIndicator();
-	void clearVolumeRangeIndicator();
+
+	SciDataParser * DataParser[3];
 	
 	SUniformReference<SVector3f> BindLightPosition;
 
@@ -81,6 +70,7 @@ public:
 
 	void addConsoleMessage(std::string const & Message, Gwen::Color const & Color = Gwen::Color(255, 255, 255, 255));
 
+	CGUIManager & getGUIManager();
 
 	//////////////////////////////
 	// Mouse Tracking Varaibles //

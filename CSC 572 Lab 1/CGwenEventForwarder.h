@@ -19,9 +19,9 @@ public:
 		if (Event.Key >= EKey::a && Event.Key <= EKey::z)
 		{
 			char key = 'a' + (Event.Key - EKey::a);
-			if (Application->getEventManager().IsKeyDown[EKey::LSHIFT] || 
-				Application->getEventManager().IsKeyDown[EKey::RSHIFT])
-				key += 'A' - 'a';
+			//if (Application->getEventManager().IsKeyDown[EKey::LSHIFT] || 
+			//	Application->getEventManager().IsKeyDown[EKey::RSHIFT])
+			//	key += 'A' - 'a';
 			Canvas->InputCharacter(key);
 		}
 		else
