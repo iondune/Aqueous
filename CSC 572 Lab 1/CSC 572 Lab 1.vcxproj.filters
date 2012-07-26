@@ -59,6 +59,9 @@
     <ClCompile Include="CGUIManager.cpp">
       <Filter>MainState\GUI</Filter>
     </ClCompile>
+    <ClCompile Include="CGwenEventForwarder.cpp">
+      <Filter>MainState\GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SciDataParser.h">

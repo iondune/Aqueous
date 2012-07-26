@@ -93,6 +93,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CGUIManager.cpp" />
+    <ClCompile Include="CGwenEventForwarder.cpp" />
     <ClCompile Include="CMainState.cpp" />
     <ClCompile Include="CMainState.DataLoading.cpp" />
     <ClCompile Include="CMainState.EventHandling.cpp" />

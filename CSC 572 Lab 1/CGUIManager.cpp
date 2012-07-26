@@ -49,6 +49,8 @@ void CGUIManager::init()
 
 	Canvas = new Gwen::Controls::Canvas(skin);
 	Canvas->SetSize(Application.getWindowSize().X, Application.getWindowSize().Y);
+
+	CGwenEventForwarder * Forwarder = new CGwenEventForwarder(getCanvas());
 }
 
 void CGUIManager::setup()
@@ -175,10 +177,6 @@ void CGUIManager::setup()
 
 	Console->addMessage("GUI Initialized.");
 	Console->addMessage("Starting program...", Gwen::Colors::Red);
-
-	CGwenEventForwarder * Forwarder = new CGwenEventForwarder(Canvas);
-
-	Console->addMessage("Volume mesh created.", Gwen::Color(0, 255, 0));
 }
 
 void CGUIManager::resetVolumeRangeIndicator(SciDataParser * DataParser)
