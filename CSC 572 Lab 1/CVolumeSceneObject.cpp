@@ -6,6 +6,8 @@
 CVolumeSceneObject::CVolumeSceneObject()
 	: VolumeCube(0), VolumeBuffer(0), VolumeTarget(0), ShowVolume(0), SceneManager(CApplication::get().getSceneManager())
 {
+	setCullingEnabled(false);
+
 	// Setup volume cube
 	VolumeCube = new CMesh();
     CMesh::SMeshBuffer * Mesh = new CMesh::SMeshBuffer();
