@@ -14,8 +14,8 @@ void main()
     
     
     
-    if (0)
+    if (1)
    		gl_FragColor = vec4(vDiffuse + AmbientColor, 1) /* vColor + 0.001 */* texture2D(uColorMap, vTexCoords);
-	else
+    else
    		gl_FragColor = vec4(vDiffuse + AmbientColor, 1) * vColor + 0.001 * texture2D(uColorMap, vTexCoords);
 }

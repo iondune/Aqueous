@@ -13,7 +13,7 @@ CTerrainSceneObject::SLayer::SLayer(int const i)
 	STextureCreationFlags Flags;
 	Flags.Filter = GL_NEAREST;
 	Flags.MipMaps = false;
-	ColorMap = CTextureLoader::loadTexture("ColorMap2.bmp");//new CTexture(SSize2(HeightmapSize), false, Flags);
+	ColorMap = new CTexture(CImageLoader::loadImage("../simple_color_map2.bmp"));//CTextureLoader::loadTexture("ColorMap2.bmp");//new CTexture(SSize2(HeightmapSize), false, Flags);
 	Flags.PixelInternalFormat = GL_R32F;
 	//Flags.Wrap = GL_CLAMP;
 
@@ -36,7 +36,7 @@ CTerrainSceneObject::SLayer::SLayer(int const i)
 	*/
 
 
-	HeightMap = /*new CTexture(new CImage(Image, Width, Width));*/CTextureLoader::loadTexture("Heightmap2.bmp");//new CTexture(SSize2(HeightmapSize), false, Flags);
+	HeightMap = new CTexture(CImageLoader::loadImage("../terrain_output_smoothed2.bmp"));///*new CTexture(new CImage(Image, Width, Width));*/CTextureLoader::loadTexture("Heightmap2.bmp");//new CTexture(SSize2(HeightmapSize), false, Flags);
 
 	// Determine starting ClipRegion
 	SPosition2 const ClipPos = SPosition2() - SPosition2(Size / 2);

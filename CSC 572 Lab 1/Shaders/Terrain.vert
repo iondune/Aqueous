@@ -123,7 +123,7 @@ void main()
         }
     }
 
-    vPosition.y *= 15.0;
+    vPosition.y *= 45.0;
     
     gl_Position = uProjMatrix * uViewMatrix * uModelMatrix * vPosition;
     
