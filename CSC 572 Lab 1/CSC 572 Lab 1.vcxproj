@@ -125,6 +125,7 @@
     <ClInclude Include=".\CSingleFieldColorMapper.h" />
     <ClInclude Include="CSpectrumColorMapper.h" />
     <ClInclude Include="CTerrainSceneObject.h" />
+    <ClInclude Include="CTitleLabelsComponent.h" />
     <ClInclude Include="CVolumeControlsHandler.h" />
     <ClInclude Include="CVolumeSceneObject.h" />
     <ClInclude Include="IColorMapper.h" />

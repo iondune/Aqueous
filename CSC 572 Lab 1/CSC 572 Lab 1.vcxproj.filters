@@ -128,6 +128,9 @@
     <ClInclude Include="CGUIManager.h">
       <Filter>MainState\GUI</Filter>
     </ClInclude>
+    <ClInclude Include="CTitleLabelsComponent.h">
+      <Filter>MainState\GUI\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Data Management">
@@ -162,6 +165,9 @@
     </Filter>
     <Filter Include="MainState\Volume">
       <UniqueIdentifier>{33cba1aa-9e33-457c-912a-78dab6c782db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainState\GUI\Components">
+      <UniqueIdentifier>{69559bbe-9f50-47e8-809c-55d622e1b426}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
