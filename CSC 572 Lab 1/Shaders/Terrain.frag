@@ -5,6 +5,8 @@ varying vec2 vTexCoords;
 uniform sampler2D uColorMap;
 varying vec4 vColor;
 
+uniform int uDebugHeight;
+
 void main()
 {
     const vec3 AmbientColor = vec3(0.8, 0.8, 0.8);
@@ -14,7 +16,7 @@ void main()
     
     
     
-    if (1)
+    if (! uDebugHeight)
    		gl_FragColor = vec4(vDiffuse + AmbientColor, 1) /* vColor + 0.001 */* texture2D(uColorMap, vTexCoords);
     else
    		gl_FragColor = vec4(vDiffuse + AmbientColor, 1) * vColor + 0.001 * texture2D(uColorMap, vTexCoords);

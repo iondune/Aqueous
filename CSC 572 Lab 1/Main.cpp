@@ -291,7 +291,7 @@ int main()
 
 				if (! equals(Class->Value, 0.f))
 				{
-					for (int i = 0; i < 200;)
+					for (int i = 0; i < 120;)
 					{
 						for (int u = -i - 1; u <= i + 1; ++ u)
 						{
@@ -392,7 +392,7 @@ int main()
 						}
 						else
 						{
-							Value = HigherClass->Value * Ratio + Value * (1.f - Ratio);
+							Value = Value * Ratio + (2 * Value - HigherClass->Value) * (1.f - Ratio);
 							Data[x * 3 + y * Image->getWidth() * 3 + 0] = 255;
 							Data[x * 3 + y * Image->getWidth() * 3 + 1] = 255;
 							Data[x * 3 + y * Image->getWidth() * 3 + 2] = 0;

@@ -11,9 +11,9 @@ CTerrainSceneObject::SLayer::SLayer(int const i)
 
 	// Create Heightmap Texture
 	STextureCreationFlags Flags;
-	Flags.Filter = GL_NEAREST;
+	Flags.Filter = GL_LINEAR;
 	Flags.MipMaps = false;
-	ColorMap = new CTexture(CImageLoader::loadImage("../simple_color_map2.bmp"));//CTextureLoader::loadTexture("ColorMap2.bmp");//new CTexture(SSize2(HeightmapSize), false, Flags);
+	ColorMap = new CTexture(CImageLoader::loadImage("../TerrainColorImageSquare.bmp"));//CTextureLoader::loadTexture("ColorMap2.bmp");//new CTexture(SSize2(HeightmapSize), false, Flags);
 	Flags.PixelInternalFormat = GL_R32F;
 	//Flags.Wrap = GL_CLAMP;
 
@@ -36,7 +36,7 @@ CTerrainSceneObject::SLayer::SLayer(int const i)
 	*/
 
 
-	HeightMap = new CTexture(CImageLoader::loadImage("../terrain_output_smoothed2.bmp"));///*new CTexture(new CImage(Image, Width, Width));*/CTextureLoader::loadTexture("Heightmap2.bmp");//new CTexture(SSize2(HeightmapSize), false, Flags);
+	HeightMap = new CTexture(CImageLoader::loadImage("../TerrainHeightImageSquare.bmp"));///*new CTexture(new CImage(Image, Width, Width));*/CTextureLoader::loadTexture("Heightmap2.bmp");//new CTexture(SSize2(HeightmapSize), false, Flags);
 
 	// Determine starting ClipRegion
 	SPosition2 const ClipPos = SPosition2() - SPosition2(Size / 2);
@@ -175,7 +175,7 @@ int CTerrainSceneObject::SLayer::sendSample(int const x1, int const y1, int cons
 
 
 CTerrainSceneObject::CTerrainSceneObject()
-	: Application(CApplication::get()), SceneManager(CApplication::get().getSceneManager()), DrawLevel(0), DoCameraUpdate(true)
+	: Application(CApplication::get()), SceneManager(CApplication::get().getSceneManager()), DrawLevel(0), DoCameraUpdate(true), DebugHeight(false)
 {
 	setCullingEnabled(false);
 
@@ -228,6 +228,8 @@ bool CTerrainSceneObject::draw(IScene const * const Scene, ERenderPass const Pas
 	Context.uniform("uProjMatrix", SceneManager.getActiveCamera()->getProjectionMatrix());
 	Context.uniform("uLayerWidth", (float) Size);
 	Context.uniform("uLightPosition", LightPosition);
+	int DebugHeightUniform = DebugHeight ? 1 : 0;
+	Context.uniform("uDebugHeight", DebugHeightUniform);
 	Context.bindBufferObject("aPosition", VertexData.getHandle(), 2);
 
 	// Determine camera movement logistics for height culling

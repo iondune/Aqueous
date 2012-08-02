@@ -1,3 +1,4 @@
+#version 130
 #extension GL_EXT_gpu_shader4 : enable
 
 attribute vec2 aPosition;
@@ -123,7 +124,7 @@ void main()
         }
     }
 
-    vPosition.y *= 45.0;
+    vPosition.y *= 75.0;
     
     gl_Position = uProjMatrix * uViewMatrix * uModelMatrix * vPosition;
     
@@ -131,8 +132,8 @@ void main()
     
     vLight = normalize(LightPosition - vec3(uModelMatrix * vPosition));
     
-    vNormal.x = texture2D(uHeightMap, HeightmapCoords + vec2((-1.0 / uLayerWidth), 0.0)).r - texture2D(uHeightMap, HeightmapCoords + vec2((1.0 / uLayerWidth), 0.0)).r;
-    vNormal.z = texture2D(uHeightMap, HeightmapCoords + vec2(0.0, (-1.0 / uLayerWidth))).r - texture2D(uHeightMap, HeightmapCoords + vec2(0.0, (1.0 / uLayerWidth))).r;
+    vNormal.x = /*textureOffset(uHeightMap, HeightmapCoords, ivec2(-1, 0)).r - textureOffset(uHeightMap, HeightmapCoords, ivec2(1, 0)).r;/*/texture2D(uHeightMap, HeightmapCoords + vec2((-1.0 / uLayerWidth), 0.0)).r - texture2D(uHeightMap, HeightmapCoords + vec2((1.0 / uLayerWidth), 0.0)).r;
+    vNormal.z = /*textureOffset(uHeightMap, HeightmapCoords, ivec2(0, -1)).r - textureOffset(uHeightMap, HeightmapCoords, ivec2(0, 1)).r;/*/texture2D(uHeightMap, HeightmapCoords + vec2(0.0, (-1.0 / uLayerWidth))).r - texture2D(uHeightMap, HeightmapCoords + vec2(0.0, (1.0 / uLayerWidth))).r;
     vNormal.y = 2.0 / uLayerWidth + 2.0 / uLayerWidth;
     vNormal = normalize(vNormal);
 }

@@ -54,6 +54,7 @@ public:
 	int DrawLevel;
 
 	bool DoCameraUpdate;
+	bool DebugHeight;
 
 	CTerrainSceneObject();
 
