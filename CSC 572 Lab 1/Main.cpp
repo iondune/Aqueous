@@ -291,7 +291,7 @@ int main()
 
 				if (! equals(Class->Value, 0.f))
 				{
-					for (int i = 0; i < 180;)
+					for (int i = 0; i < 200;)
 					{
 						for (int u = -i - 1; u <= i + 1; ++ u)
 						{
@@ -376,24 +376,38 @@ int main()
 				}
 				else
 				{
-					if (/*HigherClass || */LowerClass)
+					if (HigherClass || LowerClass)
 					{
-						float LowDistance = sqrt((float)((LowerPos.X*LowerPos.X) + (LowerPos.Y*LowerPos.Y)));
-						float HighDistance = sqrt((float)((HigherPos.X*HigherPos.X) + (HigherPos.Y*HigherPos.Y)));
+						float const DefaultDistance = 50.f;
+						float LowDistance = LowerClass ? sqrt((float)((LowerPos.X*LowerPos.X) + (LowerPos.Y*LowerPos.Y))) : DefaultDistance;
+						float HighDistance = HigherClass ? sqrt((float)((HigherPos.X*HigherPos.X) + (HigherPos.Y*HigherPos.Y))) : DefaultDistance;
 
 						float Ratio = LowDistance / (HighDistance + LowDistance);
-						//if (LowerClass)
+						if (LowerClass)
+						{
 							Value = Value * Ratio + LowerClass->Value * (1.f - Ratio);
-						/*else
+							Data[x * 3 + y * Image->getWidth() * 3 + 0] = 0;
+							Data[x * 3 + y * Image->getWidth() * 3 + 1] = 255;
+							Data[x * 3 + y * Image->getWidth() * 3 + 2] = 0;
+						}
+						else
+						{
 							Value = HigherClass->Value * Ratio + Value * (1.f - Ratio);
-					*/}
+							Data[x * 3 + y * Image->getWidth() * 3 + 0] = 255;
+							Data[x * 3 + y * Image->getWidth() * 3 + 1] = 255;
+							Data[x * 3 + y * Image->getWidth() * 3 + 2] = 0;
+						}
+					}
+					else
+					{
+						Data[x * 3 + y * Image->getWidth() * 3 + 0] = 255;
+						Data[x * 3 + y * Image->getWidth() * 3 + 1] = 0;
+						Data[x * 3 + y * Image->getWidth() * 3 + 2] = 0;
+					}
 					
 					DataCopy[x * 3 + y * Image->getWidth() * 3 + 0] = 
 					DataCopy[x * 3 + y * Image->getWidth() * 3 + 1] = 
 					DataCopy[x * 3 + y * Image->getWidth() * 3 + 2] = Value * 255;
-					Data[x * 3 + y * Image->getWidth() * 3 + 0] = 255;
-					Data[x * 3 + y * Image->getWidth() * 3 + 1] = 0;
-					Data[x * 3 + y * Image->getWidth() * 3 + 2] = 0;
 				}
 				
 				
