@@ -131,6 +131,7 @@
     <ClInclude Include="CTitleLabelsComponent.h">
       <Filter>MainState\GUI\Components</Filter>
     </ClInclude>
+    <ClInclude Include="ContourConverter.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Data Management">

@@ -120,6 +120,7 @@
     <ClInclude Include="CGwenEventForwarder.h" />
     <ClInclude Include="CMainState.h" />
     <ClInclude Include="ColorMappers.h" />
+    <ClInclude Include="ContourConverter.h" />
     <ClInclude Include="COxygenColorMapper.h" />
     <ClInclude Include="CRGBIntensityColorMapper.h" />
     <ClInclude Include=".\CSingleFieldColorMapper.h" />
