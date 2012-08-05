@@ -9,6 +9,7 @@
 #pragma comment(lib, "glu32.lib")
 
 // ionEngine Libraries
+#pragma comment(lib, "ionCore.lib")
 #pragma comment(lib, "ionWindow.lib")
 #pragma comment(lib, "ionScene.lib")
 #pragma comment(lib, "ionGUI.lib")
