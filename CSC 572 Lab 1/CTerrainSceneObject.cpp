@@ -464,6 +464,11 @@ bool CTerrainSceneObject::draw(IScene const * const Scene, ERenderPass const Pas
 	///////////////////////////////////////////////
 	// Second Pass - Generate Indices and Render //
 	///////////////////////////////////////////////
+	
+	if (isDebugDataEnabled(EDebugData::Wireframe))
+	{
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	}
 
 	for (auto it = Layers.begin(); it != Layers.end(); ++ it)
 	{
@@ -586,6 +591,11 @@ bool CTerrainSceneObject::draw(IScene const * const Scene, ERenderPass const Pas
 		Context.bindIndexBufferObject((* it)->IndexBuffer.getHandle());
 
 		glDrawElements(GL_TRIANGLES, (* it)->IndexBuffer.getElements().size(), GL_UNSIGNED_INT, 0);
+	}
+	
+	if (isDebugDataEnabled(EDebugData::Wireframe))
+	{
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 
 	return true;

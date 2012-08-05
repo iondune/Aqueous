@@ -33,6 +33,20 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 		Terrain->DebugHeight = Event.Pressed;
 		break;
 
+	case EKey::o:
+
+		if (! Event.Pressed)
+			Terrain->enableDebugData(EDebugData::Wireframe);
+
+		break;
+
+	case EKey::p:
+
+		if (! Event.Pressed)
+			Terrain->disableDebugData(EDebugData::Wireframe);
+
+		break;
+
 	case EKey::x:
 
 		if (! Event.Pressed)

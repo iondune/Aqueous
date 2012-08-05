@@ -26,14 +26,15 @@ uniform vec2 uActiveRegionUR;
 uniform vec3 uLightPosition;
 
 varying vec3 vLight;
-varying vec3 vNormal;
 varying vec2 vTexCoords;
 varying vec4 vColor;
+
+varying vec2 HeightmapCoords;
 
 void main()
 {
     vTexCoords = (aPosition.xy + uDataOffset) / (uLayerWidth + 1.0);
-    vec2 HeightmapCoords = vTexCoords + 
+    HeightmapCoords = vTexCoords + 
         // half pixel adjustment for floating-point issues on some cards
         (1.0 / uLayerWidth / 2.0);
     
@@ -131,9 +132,4 @@ void main()
     vec3 LightPosition = uLightPosition;
     
     vLight = normalize(LightPosition - vec3(uModelMatrix * vPosition));
-    
-    vNormal.x = /*textureOffset(uHeightMap, HeightmapCoords, ivec2(-1, 0)).r - textureOffset(uHeightMap, HeightmapCoords, ivec2(1, 0)).r;/*/texture2D(uHeightMap, HeightmapCoords + vec2((-1.0 / uLayerWidth), 0.0)).r - texture2D(uHeightMap, HeightmapCoords + vec2((1.0 / uLayerWidth), 0.0)).r;
-    vNormal.z = /*textureOffset(uHeightMap, HeightmapCoords, ivec2(0, -1)).r - textureOffset(uHeightMap, HeightmapCoords, ivec2(0, 1)).r;/*/texture2D(uHeightMap, HeightmapCoords + vec2(0.0, (-1.0 / uLayerWidth))).r - texture2D(uHeightMap, HeightmapCoords + vec2(0.0, (1.0 / uLayerWidth))).r;
-    vNormal.y = 2.0 / uLayerWidth + 2.0 / uLayerWidth;
-    vNormal = normalize(vNormal);
 }
