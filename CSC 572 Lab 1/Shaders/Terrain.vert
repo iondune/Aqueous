@@ -38,7 +38,7 @@ void main()
         // half pixel adjustment for floating-point issues on some cards
         (1.0 / uLayerWidth / 2.0);
     
-    vec4 vPosition = vec4(aPosition.x, texture2D(uHeightMap, HeightmapCoords).r, aPosition.y, 1);
+    vec4 vPosition = vec4(aPosition.x, texture(uHeightMap, HeightmapCoords).r, aPosition.y, 1);
     vColor = vec4(vPosition.y, vPosition.y, vPosition.y, 1.0);
     
     if (uUseCourse != 0)
@@ -83,7 +83,7 @@ void main()
                 // half pixel adjustment for floating-point issues on some cards
                 //(1.0 / uLayerWidth / 2.0);
             
-            //vec4 vCourse = uModelMatrix * vec4(aPosition.x, texture2D(uCourseMap, CoursemapCoords).r, aPosition.y, 1);
+            //vec4 vCourse = uModelMatrix * vec4(aPosition.x, texture(uCourseMap, CoursemapCoords).r, aPosition.y, 1);
             
             vec4 vCourse = vec4(0.0, 0.0, 0.0, 0.0);
 
@@ -95,24 +95,24 @@ void main()
             
             if ((int(aPosition.x) % 2) != 0 && (int(aPosition.y) % 2) != 0)
             {
-                vCourse += vec4(aPosition.x, texture2D(uHeightMap, HeightmapCoords + vec2((-1.0 / uLayerWidth), (-1.0 / uLayerWidth))).r, aPosition.y, 1) * 0.25;
-                vCourse += vec4(aPosition.x, texture2D(uHeightMap, HeightmapCoords + vec2((-1.0 / uLayerWidth), ( 1.0 / uLayerWidth))).r, aPosition.y, 1) * 0.25;
-                vCourse += vec4(aPosition.x, texture2D(uHeightMap, HeightmapCoords + vec2(( 1.0 / uLayerWidth), (-1.0 / uLayerWidth))).r, aPosition.y, 1) * 0.25;
-                vCourse += vec4(aPosition.x, texture2D(uHeightMap, HeightmapCoords + vec2(( 1.0 / uLayerWidth), ( 1.0 / uLayerWidth))).r, aPosition.y, 1) * 0.25;
+                vCourse += vec4(aPosition.x, texture(uHeightMap, HeightmapCoords + vec2((-1.0 / uLayerWidth), (-1.0 / uLayerWidth))).r, aPosition.y, 1) * 0.25;
+                vCourse += vec4(aPosition.x, texture(uHeightMap, HeightmapCoords + vec2((-1.0 / uLayerWidth), ( 1.0 / uLayerWidth))).r, aPosition.y, 1) * 0.25;
+                vCourse += vec4(aPosition.x, texture(uHeightMap, HeightmapCoords + vec2(( 1.0 / uLayerWidth), (-1.0 / uLayerWidth))).r, aPosition.y, 1) * 0.25;
+                vCourse += vec4(aPosition.x, texture(uHeightMap, HeightmapCoords + vec2(( 1.0 / uLayerWidth), ( 1.0 / uLayerWidth))).r, aPosition.y, 1) * 0.25;
             }
             else if ((int(aPosition.x) % 2) != 0)
             {
-                vCourse += vec4(aPosition.x, texture2D(uHeightMap, HeightmapCoords + vec2((-1.0 / uLayerWidth), 0)).r, aPosition.y, 1) * 0.5;
-                vCourse += vec4(aPosition.x, texture2D(uHeightMap, HeightmapCoords + vec2(( 1.0 / uLayerWidth), 0)).r, aPosition.y, 1) * 0.5;
+                vCourse += vec4(aPosition.x, texture(uHeightMap, HeightmapCoords + vec2((-1.0 / uLayerWidth), 0)).r, aPosition.y, 1) * 0.5;
+                vCourse += vec4(aPosition.x, texture(uHeightMap, HeightmapCoords + vec2(( 1.0 / uLayerWidth), 0)).r, aPosition.y, 1) * 0.5;
             }
             else if ((int(aPosition.y) % 2) != 0)
             {
-                vCourse += vec4(aPosition.x, texture2D(uHeightMap, HeightmapCoords + vec2(0, (-1.0 / uLayerWidth))).r, aPosition.y, 1) * 0.5;
-                vCourse += vec4(aPosition.x, texture2D(uHeightMap, HeightmapCoords + vec2(0, (1.0 / uLayerWidth))).r, aPosition.y, 1) * 0.5;
+                vCourse += vec4(aPosition.x, texture(uHeightMap, HeightmapCoords + vec2(0, (-1.0 / uLayerWidth))).r, aPosition.y, 1) * 0.5;
+                vCourse += vec4(aPosition.x, texture(uHeightMap, HeightmapCoords + vec2(0, (1.0 / uLayerWidth))).r, aPosition.y, 1) * 0.5;
             }
             else
             {
-                vCourse += vec4(aPosition.x, texture2D(uHeightMap, HeightmapCoords).r, aPosition.y, 1);
+                vCourse += vec4(aPosition.x, texture(uHeightMap, HeightmapCoords).r, aPosition.y, 1);
             }
 
             vCourse *= UseInterp;

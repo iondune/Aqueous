@@ -19,9 +19,9 @@ void main()
     vec3 vNormal;
     float Offset = 2.0 / uLayerWidth;
     vNormal.x = /*textureOffset(uHeightMap, HeightmapCoords, ivec2(-1, 0)).r - textureOffset(uHeightMap, HeightmapCoords, ivec2(1, 0)).r;/*/
-      texture2D(uHeightMap, HeightmapCoords + vec2((-Offset), 0.0)).r - texture2D(uHeightMap, HeightmapCoords + vec2((1.0 / uLayerWidth), 0.0)).r;
+      texture(uHeightMap, HeightmapCoords + vec2((-Offset), 0.0)).r - texture(uHeightMap, HeightmapCoords + vec2((1.0 / uLayerWidth), 0.0)).r;
     vNormal.z = /*textureOffset(uHeightMap, HeightmapCoords, ivec2(0, -1)).r - textureOffset(uHeightMap, HeightmapCoords, ivec2(0, 1)).r;/*/
-      texture2D(uHeightMap, HeightmapCoords + vec2(0.0, (-Offset))).r - texture2D(uHeightMap, HeightmapCoords + vec2(0.0, (Offset))).r;
+      texture(uHeightMap, HeightmapCoords + vec2(0.0, (-Offset))).r - texture(uHeightMap, HeightmapCoords + vec2(0.0, (Offset))).r;
     vNormal.y = 4.0 * Offset;
     vNormal = normalize(vNormal);
     
@@ -30,7 +30,7 @@ void main()
     
     
     if (! uDebugHeight)
-   		gl_FragColor = vec4(vDiffuse + AmbientColor, 1) /* vColor + 0.001 */* texture2D(uColorMap, vTexCoords);
+   		gl_FragColor = vec4(vDiffuse + AmbientColor, 1) /* vColor + 0.001 */* texture(uColorMap, vTexCoords);
     else
-   		gl_FragColor = vec4(vDiffuse + AmbientColor, 1) * vColor + 0.001 * texture2D(uColorMap, vTexCoords);
+   		gl_FragColor = vec4(vDiffuse + AmbientColor, 1) * vColor + 0.001 * texture(uColorMap, vTexCoords);
 }
