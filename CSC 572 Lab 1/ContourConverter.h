@@ -11,7 +11,7 @@
 
 struct SClassification
 {
-	SColor Color;
+	SColorc Color;
 	float Value;
 };
 
@@ -34,60 +34,60 @@ public:
 
 		SClassification Class;
 		Class.Value = 0.f;
-		Class.Color = SColor::SColori(62, 156, 139);
+		Class.Color = SColorc(62, 156, 139);
 		Classifications.push_back(Class);
 		Class.Value += 1.f / 16.f;
-		Class.Color = SColor::SColori(92, 0, 130);
+		Class.Color = SColorc(92, 0, 130);
 		Classifications.push_back(Class);
 		Class.Value += 1.f / 16.f;
-		Class.Color = SColor::SColori(97, 30, 209);
+		Class.Color = SColorc(97, 30, 209);
 		Classifications.push_back(Class);
 		Class.Value += 1.f / 16.f;
-		Class.Color = SColor::SColori(78, 85, 255);
+		Class.Color = SColorc(78, 85, 255);
 		Classifications.push_back(Class);
 		Class.Value += 1.f / 16.f;
-		Class.Color = SColor::SColori(0, 45, 190);
+		Class.Color = SColorc(0, 45, 190);
 		Classifications.push_back(Class);
 		Class.Value += 1.f / 16.f;
-		Class.Color = SColor::SColori(50, 214, 255);
+		Class.Color = SColorc(50, 214, 255);
 		Classifications.push_back(Class);
 		Class.Value += 1.f / 16.f;
-		Class.Color = SColor::SColori(10, 194, 84);
+		Class.Color = SColorc(10, 194, 84);
 		Classifications.push_back(Class);
 		Class.Value += 1.f / 16.f;
-		Class.Color = SColor::SColori(147, 255, 61);
+		Class.Color = SColorc(147, 255, 61);
 		Classifications.push_back(Class);
 		Class.Value += 1.f / 16.f;
-		Class.Color = SColor::SColori(240, 255, 0);
+		Class.Color = SColorc(240, 255, 0);
 		Classifications.push_back(Class);
 		Class.Value += 1.f / 16.f;
-		Class.Color = SColor::SColori(255, 138, 0);
+		Class.Color = SColorc(255, 138, 0);
 		Classifications.push_back(Class);
 		Class.Value += 1.f / 16.f;
-		Class.Color = SColor::SColori(255, 0, 0);
+		Class.Color = SColorc(255, 0, 0);
 		Classifications.push_back(Class);
 		Class.Value += 1.f / 16.f;
-		Class.Color = SColor::SColori(254, 125, 125);
+		Class.Color = SColorc(254, 125, 125);
 		Classifications.push_back(Class);
 		Class.Value += 1.f / 16.f;
-		Class.Color = SColor::SColori(233, 85, 255);
+		Class.Color = SColorc(233, 85, 255);
 		Classifications.push_back(Class);
 		Class.Value += 1.f / 16.f;
-		Class.Color = SColor::SColori(255, 255, 255);
+		Class.Color = SColorc(255, 255, 255);
 		Classifications.push_back(Class);
 		Class.Value += 1.f / 16.f;
-		Class.Color = SColor::SColori(144, 144, 144);
+		Class.Color = SColorc(144, 144, 144);
 		Classifications.push_back(Class);
 		Class.Value += 1.f / 16.f;
-		Class.Color = SColor::SColori(80, 71, 58);
+		Class.Color = SColorc(80, 71, 58);
 		Classifications.push_back(Class);
 		Class.Value += 1.f / 16.f;
-		Class.Color = SColor::SColori(103, 66, 10);
+		Class.Color = SColorc(103, 66, 10);
 		Classifications.push_back(Class);
 
 		SClassification * NullClass = new SClassification();
 		NullClass->Value = -1.f;
-		NullClass->Color = SColor(0, 0, 0);
+		NullClass->Color = SColorc(0, 0, 0);
 
 		printf("Pass 1 -> Posterization\n");
 
@@ -105,7 +105,7 @@ public:
 		{
 			for (int y = 0; y < Image->getHeight(); ++ y)
 			{
-				SColor Color = SColor::SColori(
+				SColorc Color = SColorc(
 					Data[x * 3 + y * Image->getWidth() * 3 + 0], 
 					Data[x * 3 + y * Image->getWidth() * 3 + 1], 
 					Data[x * 3 + y * Image->getWidth() * 3 + 2]);
@@ -127,12 +127,12 @@ public:
 
 				if (! TruthTable[x + y * Image->getWidth()])
 				{
-					auto getColorDistance = [](SColor const & c1, SColor const & c2) -> float
+					auto getColorDistance = [](SColorc const & c1, SColorc const & c2) -> float
 					{
 						return abs(c1.Red - c2.Red) + abs(c1.Green - c2.Green) + abs(c1.Blue - c2.Blue);
 					};
 
-					float MinDistance = getColorDistance(Color, SColor(0, 0, 0)) * 0.5f;
+					float MinDistance = getColorDistance(Color, SColorc(0, 0, 0)) * 0.5f;
 					SClassification * MinClass = 0;
 
 					for (auto it = Classifications.begin(); it != Classifications.end(); ++ it)
@@ -165,7 +165,7 @@ public:
 			{
 				for (int y = 0; y < Image->getHeight(); ++ y)
 				{
-					SColor Color = SColor::SColori(0, 0, 0);
+					SColorc Color = SColorc(0, 0, 0);
 
 					if (! TruthTable[x + y * Image->getWidth()])
 					{
@@ -194,7 +194,7 @@ public:
 		{
 			for (int y = 0; y < Image->getHeight(); ++ y)
 			{
-				SColor Color = SColor::SColori(0, 0, 0);
+				SColorc Color = SColorc(0, 0, 0);
 
 				if (TruthTable[x + y * Image->getWidth()])
 					Color = TruthTable[x + y * Image->getWidth()]->Color;
@@ -256,7 +256,7 @@ public:
 		{
 			for (int y = 0; y < Image->getHeight(); ++ y)
 			{
-				SColor Color = SColor::SColori(0, 0, 0);
+				SColorc Color = SColorc(0, 0, 0);
 
 				if (TruthTable[x + y * Image->getWidth()])
 					Color = TruthTable[x + y * Image->getWidth()]->Color;
@@ -432,7 +432,7 @@ public:
 			p1.update(x * 100 / Image->getWidth());
 			for (int y = 0; y < Image->getHeight(); ++ y)
 			{
-				SColor Color = SColor::SColori(
+				SColor Color = SColorc(
 					Data[x * 3 + y * Image->getWidth() * 3 + 0], 
 					Data[x * 3 + y * Image->getWidth() * 3 + 1], 
 					Data[x * 3 + y * Image->getWidth() * 3 + 2]);
@@ -471,7 +471,7 @@ public:
 			p.update(x * 100 / Image->getWidth());
 			for (int y = 0; y < Image->getHeight(); ++ y)
 			{
-				SColor Color = SColor::SColori(
+				SColor Color = SColorc(
 					Data[x * 3 + y * Image->getWidth() * 3 + 0], 
 					Data[x * 3 + y * Image->getWidth() * 3 + 1], 
 					Data[x * 3 + y * Image->getWidth() * 3 + 2]);

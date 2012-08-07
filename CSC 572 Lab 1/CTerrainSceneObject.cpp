@@ -72,7 +72,7 @@ int CTerrainSceneObject::SLayer::sendSample(int const x1, int const y1, int cons
 		//return 0.1f * (x + y);
 	};
 
-	static const auto color = [](int const x, int const y) -> SColor
+	static const auto color = [](int const x, int const y) -> SColorAf
 	{
 		//real X = (real) x;
 		//real Y = (real) y;
@@ -81,7 +81,7 @@ int CTerrainSceneObject::SLayer::sendSample(int const x1, int const y1, int cons
 		//Y *= Scale;
 		//SColor terrainColor = TerrainGenerator.getColor(X, Y);
 				
-		return SColor();////terrainColor;
+		return SColorAf();////terrainColor;
 	};
 
 	int const Size = (x2 - x1) * (y2 - y1);
@@ -136,7 +136,7 @@ int CTerrainSceneObject::SLayer::sendSample(int const x1, int const y1, int cons
 
 				HostHeightMap[x][y] = Data[Index];
 
-				SColor colorSample = color(DataX * ScaleFactor, DataY * ScaleFactor);
+				SColorf colorSample = color(DataX * ScaleFactor, DataY * ScaleFactor);
 				Color[Index * 3 + 0] = colorSample.Red;
 				Color[Index * 3 + 1] = colorSample.Green;
 				Color[Index * 3 + 2] = colorSample.Blue;

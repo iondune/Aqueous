@@ -17,55 +17,55 @@ CVolumeSceneObject::CVolumeSceneObject()
     Mesh->Vertices[1].Position = SVector3f(-0.5,  0.5, -0.5);
     Mesh->Vertices[2].Position = SVector3f( 0.5,  0.5, -0.5);
     Mesh->Vertices[3].Position = SVector3f( 0.5, -0.5, -0.5);
-	Mesh->Vertices[0].Color = SColor(0, 0, 0);
-	Mesh->Vertices[1].Color = SColor(0, 1, 0);
-	Mesh->Vertices[2].Color = SColor(1, 1, 0);
-	Mesh->Vertices[3].Color = SColor(1, 0, 0);
+	Mesh->Vertices[0].Color = SColorf(0, 0, 0);
+	Mesh->Vertices[1].Color = SColorf(0, 1, 0);
+	Mesh->Vertices[2].Color = SColorf(1, 1, 0);
+	Mesh->Vertices[3].Color = SColorf(1, 0, 0);
 
     Mesh->Vertices[4].Position = SVector3f( 0.5, -0.5, -0.5);
     Mesh->Vertices[5].Position = SVector3f( 0.5,  0.5, -0.5);
     Mesh->Vertices[6].Position = SVector3f( 0.5,  0.5,  0.5);
     Mesh->Vertices[7].Position = SVector3f( 0.5, -0.5,  0.5);
-	Mesh->Vertices[4].Color = SColor(1, 0, 0);
-	Mesh->Vertices[5].Color = SColor(1, 1, 0);
-	Mesh->Vertices[6].Color = SColor(1, 1, 1);
-	Mesh->Vertices[7].Color = SColor(1, 0, 1);
+	Mesh->Vertices[4].Color = SColorf(1, 0, 0);
+	Mesh->Vertices[5].Color = SColorf(1, 1, 0);
+	Mesh->Vertices[6].Color = SColorf(1, 1, 1);
+	Mesh->Vertices[7].Color = SColorf(1, 0, 1);
 
     Mesh->Vertices[8].Position = SVector3f(  0.5, -0.5,  0.5);
     Mesh->Vertices[9].Position = SVector3f(  0.5,  0.5,  0.5);
     Mesh->Vertices[10].Position = SVector3f(-0.5,  0.5,  0.5);
     Mesh->Vertices[11].Position = SVector3f(-0.5, -0.5,  0.5);
-	Mesh->Vertices[8].Color = SColor(1, 0, 1);
-	Mesh->Vertices[9].Color = SColor(1, 1, 1);
-	Mesh->Vertices[10].Color = SColor(0, 1, 1);
-	Mesh->Vertices[11].Color = SColor(0, 0, 1);
+	Mesh->Vertices[8].Color = SColorf(1, 0, 1);
+	Mesh->Vertices[9].Color = SColorf(1, 1, 1);
+	Mesh->Vertices[10].Color = SColorf(0, 1, 1);
+	Mesh->Vertices[11].Color = SColorf(0, 0, 1);
 
     Mesh->Vertices[12].Position = SVector3f(-0.5, -0.5,  0.5);
     Mesh->Vertices[13].Position = SVector3f(-0.5,  0.5,  0.5);
     Mesh->Vertices[14].Position = SVector3f(-0.5,  0.5, -0.5);
     Mesh->Vertices[15].Position = SVector3f(-0.5, -0.5, -0.5);
-	Mesh->Vertices[12].Color = SColor(0, 0, 1);
-	Mesh->Vertices[13].Color = SColor(0, 1, 1);
-	Mesh->Vertices[14].Color = SColor(0, 1, 0);
-	Mesh->Vertices[15].Color = SColor(0, 0, 0);
+	Mesh->Vertices[12].Color = SColorf(0, 0, 1);
+	Mesh->Vertices[13].Color = SColorf(0, 1, 1);
+	Mesh->Vertices[14].Color = SColorf(0, 1, 0);
+	Mesh->Vertices[15].Color = SColorf(0, 0, 0);
 
     Mesh->Vertices[16].Position = SVector3f(-0.5,  0.5, -0.5);
     Mesh->Vertices[17].Position = SVector3f(-0.5,  0.5,  0.5);
     Mesh->Vertices[18].Position = SVector3f( 0.5,  0.5,  0.5);
     Mesh->Vertices[19].Position = SVector3f( 0.5,  0.5, -0.5);
-	Mesh->Vertices[16].Color = SColor(0, 1, 0);
-	Mesh->Vertices[17].Color = SColor(0, 1, 1);
-	Mesh->Vertices[18].Color = SColor(1, 1, 1);
-	Mesh->Vertices[19].Color = SColor(1, 1, 0);
+	Mesh->Vertices[16].Color = SColorf(0, 1, 0);
+	Mesh->Vertices[17].Color = SColorf(0, 1, 1);
+	Mesh->Vertices[18].Color = SColorf(1, 1, 1);
+	Mesh->Vertices[19].Color = SColorf(1, 1, 0);
 
     Mesh->Vertices[20].Position = SVector3f( 0.5, -0.5, -0.5);
     Mesh->Vertices[21].Position = SVector3f( 0.5, -0.5,  0.5);
     Mesh->Vertices[22].Position = SVector3f(-0.5, -0.5,  0.5);
     Mesh->Vertices[23].Position = SVector3f(-0.5, -0.5, -0.5);
-	Mesh->Vertices[20].Color = SColor(1, 0, 0);
-	Mesh->Vertices[21].Color = SColor(1, 0, 1);
-	Mesh->Vertices[22].Color = SColor(0, 0, 1);
-	Mesh->Vertices[23].Color = SColor(0, 0, 0);
+	Mesh->Vertices[20].Color = SColorf(1, 0, 0);
+	Mesh->Vertices[21].Color = SColorf(1, 0, 1);
+	Mesh->Vertices[22].Color = SColorf(0, 0, 1);
+	Mesh->Vertices[23].Color = SColorf(0, 0, 0);
 
     Mesh->Triangles.resize(12);
     for (int i = 0; i < 6; ++ i)

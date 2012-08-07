@@ -21,7 +21,7 @@ public:
 		: Field(field)
 	{}
 
-	virtual SColor const getColor(SciData const & d)
+	virtual SColorAf const getColor(SciData const & d)
 	{
 		double const v = d.getField(Field);
 
@@ -58,7 +58,7 @@ public:
 
 		Color[3] = (float) ((v - 29000.0) / (36000.0 - 29000.0));
 
-		return SColor(Color[0], Color[1], Color[2], Color[3]);
+		return SColorAf(Color[0], Color[1], Color[2], Color[3]);
 	}
 
 	virtual void preProcessValues(SciDataSet & s)

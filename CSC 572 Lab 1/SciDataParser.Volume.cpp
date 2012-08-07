@@ -25,7 +25,7 @@ void SciDataParser::createVolumeFromGridValues(IColorMapper * ColorMapper)
 
 				int ValueIndex = k + j * GridDimensions[0] + i * GridDimensions[1] * GridDimensions[0];
 
-				SColor Color = ColorMapper->getColor(GridValues.Values[ValueIndex]);
+				SColorAf Color = ColorMapper->getColor(GridValues.Values[ValueIndex]);
 
 				for (int t = 0; t < 4; ++ t)
 					volumeData[index * 4 + t] = clamp<unsigned char>((unsigned char) (Color[t] * 255.f), 0, 255);

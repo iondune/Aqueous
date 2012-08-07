@@ -36,7 +36,7 @@ public:
 		Field = inField;
 	}
 
-	virtual SColor const getColor(SciData const & d)
+	virtual SColorAf const getColor(SciData const & d)
 	{
 		float Color[3] = {0.f, 0.f, 0.f};
 
@@ -47,7 +47,7 @@ public:
 		Color[1] = r;
 		
 
-		return SColor(Color[0], Color[1], Color[2], r);
+		return SColorAf(Color[0], Color[1], Color[2], r);
 	}
 
 	virtual void preProcessValues(SciDataSet & s)

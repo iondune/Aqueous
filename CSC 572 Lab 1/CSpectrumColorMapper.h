@@ -35,7 +35,7 @@ public:
 		Field = inField;
 	}
 
-	virtual SColor const getColor(SciData const & d)
+	virtual SColorAf const getColor(SciData const & d)
 	{
 		double const r = d.getField(Field);
 		float const v = (float) ((r - FieldRange.first) / (FieldRange.second - FieldRange.first));
@@ -74,7 +74,7 @@ public:
 
 		Color[3] = (float) v;
 
-		return SColor(Color[0], Color[1], Color[2], Color[3]);
+		return SColorAf(Color[0], Color[1], Color[2], Color[3]);
 	}
 
 	virtual void preProcessValues(SciDataSet & s)

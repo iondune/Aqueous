@@ -12,7 +12,7 @@ class IColorMapper
 
 public:
 
-	virtual SColor const getColor(SciData const & d) = 0;
+	virtual SColorAf const getColor(SciData const & d) = 0;
 	virtual void preProcessValues(SciDataSet & s) = 0;
 
 };

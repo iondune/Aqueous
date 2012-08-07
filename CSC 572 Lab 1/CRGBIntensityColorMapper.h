@@ -46,7 +46,7 @@ public:
 		Fields[2] = BField;
 	}
 
-	virtual SColor const getColor(SciData const & d)
+	virtual SColorAf const getColor(SciData const & d)
 	{
 		float Color[3] = {0.f, 0.f, 0.f};
 
@@ -57,7 +57,7 @@ public:
 			Color[i] = (float) ((v - FieldRanges[i].first) / (FieldRanges[i].second - FieldRanges[i].first));
 		}
 
-		return SColor(Color[0], Color[1], Color[2], clamp((Color[0] + Color[1] + Color[2]) * AlphaIntensity / 3.f, 0.f, 255.f));
+		return SColorAf(Color[0], Color[1], Color[2], clamp((Color[0] + Color[1] + Color[2]) * AlphaIntensity / 3.f, 0.f, 1.f));
 	}
 
 	virtual void preProcessValues(SciDataSet & s)
