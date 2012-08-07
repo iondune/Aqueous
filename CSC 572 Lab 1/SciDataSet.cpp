@@ -23,9 +23,6 @@ void SciDataSet::normalizeField(std::string const & Field, double const Scale)
 	std::for_each(begin(Field), end(Field), [min, max, Scale](double & d) { d = (d - min) / (max - min) * Scale; });
 }
 
-template <typename T>
-static inline T sq(T const v) { return v * v; }
-
 std::pair<double, double> SciDataSet::getValueRange(std::string const & Field, double const OutlierCutoff, Range const & acceptedValues)
 {
 	std::vector<SciData> const & DataCopy = Values;
