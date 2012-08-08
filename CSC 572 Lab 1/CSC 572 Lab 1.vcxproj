@@ -99,6 +99,7 @@
     <ClCompile Include="CMainState.EventHandling.cpp" />
     <ClCompile Include="CMainState.InitFunctions.cpp" />
     <ClCompile Include="CMainState.MouseTracking.cpp" />
+    <ClCompile Include="CProgramContext.cpp" />
     <ClCompile Include="CTerrainSceneObject.cpp" />
     <ClCompile Include="CVolumeSceneObject.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -118,10 +119,12 @@
     <ClInclude Include="CConsole.h" />
     <ClInclude Include="CGUIManager.h" />
     <ClInclude Include="CGwenEventForwarder.h" />
+    <ClInclude Include="CLoadState.h" />
     <ClInclude Include="CMainState.h" />
     <ClInclude Include="ColorMappers.h" />
     <ClInclude Include="ContourConverter.h" />
     <ClInclude Include="COxygenColorMapper.h" />
+    <ClInclude Include="CProgramContext.h" />
     <ClInclude Include="CRGBIntensityColorMapper.h" />
     <ClInclude Include=".\CSingleFieldColorMapper.h" />
     <ClInclude Include="CSpectrumColorMapper.h" />

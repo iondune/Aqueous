@@ -5,6 +5,8 @@
 #include <ionScene.h>
 #include <ionWindow.h>
 
+#include "CProgramContext.h"
+
 #include "SciDataParser.h"
 #include "SciDataTree.h"
 
@@ -19,7 +21,7 @@
 #include "CVolumeSceneObject.h"
 
 
-class CMainState : public CState<CMainState>, public Gwen::Event::Handler
+class CMainState : public CContextState<CMainState, CProgramContext>
 {
 
 	// Cameras
@@ -41,8 +43,6 @@ class CMainState : public CState<CMainState>, public Gwen::Event::Handler
 	CMeshSceneObject * SkyBox;
 	
 	CTerrainSceneObject * Terrain;
-
-	CGUIManager * GUIManager;
 
 public:
 	

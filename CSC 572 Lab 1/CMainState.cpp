@@ -24,8 +24,6 @@ void CMainState::begin()
 
 void CMainState::loadGUIEngine()
 {
-	GUIManager = new CGUIManager();
-	GUIManager->init();
 }
 
 void CMainState::startLoadingContext()

@@ -4,8 +4,9 @@
 #include <ionScene.h>
 #include <ionWindow.h>
 
-#include "CMainState.h"
 #include "ContourConverter.h"
+#include "CProgramContext.h"
+
 
 int main()
 {
@@ -24,24 +25,9 @@ int main()
 	}
 	else
 	{
-		// Create Window
-		CApplication & Application = CApplication::get();
-		Application.init(SPosition2(1600, 900), "Underwater Volume Data Rendering");
-
-		std::cout << "GUI Engine is initializing..." << std::endl;
-
-		CMainState & MainState = CMainState::get();
-		MainState.loadGUIEngine();
-		MainState.startLoadingContext();
-
-		Application.loadEngines();
-		MainState.loadEngineReferences();
-
-		// Load custom state
-		Application.getStateManager().setState(& CMainState::get());
-
-		// Run program!
-		Application.run();
+		CProgramContext & Context = CProgramContext::get();
+		Context.init();
+		Context.run();
 	}
 
 	return 0;

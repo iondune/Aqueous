@@ -3,13 +3,13 @@
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include=".\SciDataParserGrid1.cpp">
-      <Filter>Data Management\Parsers</Filter>
+      <Filter>MainState\Data Management\Parsers</Filter>
     </ClCompile>
     <ClCompile Include=".\SciDataParserCTD.cpp">
-      <Filter>Data Management\Parsers</Filter>
+      <Filter>MainState\Data Management\Parsers</Filter>
     </ClCompile>
     <ClCompile Include=".\SciDataParserSimpleTXT.cpp">
-      <Filter>Data Management\Parsers</Filter>
+      <Filter>MainState\Data Management\Parsers</Filter>
     </ClCompile>
     <ClCompile Include="CMainState.cpp">
       <Filter>MainState</Filter>
@@ -27,28 +27,28 @@
       <Filter>MainState</Filter>
     </ClCompile>
     <ClCompile Include="RFBInterpolator\newmat.cpp">
-      <Filter>RFBInterpolator</Filter>
+      <Filter>MainState\RFBInterpolator</Filter>
     </ClCompile>
     <ClCompile Include="RFBInterpolator\RBFInterpolator.cpp">
-      <Filter>RFBInterpolator</Filter>
+      <Filter>MainState\RFBInterpolator</Filter>
     </ClCompile>
     <ClCompile Include="SciDataSet.cpp">
-      <Filter>Data Management\Base Objects</Filter>
+      <Filter>MainState\Data Management\Base Objects</Filter>
     </ClCompile>
     <ClCompile Include="SciDataTree.cpp">
-      <Filter>Data Management\Base Objects</Filter>
+      <Filter>MainState\Data Management\Base Objects</Filter>
     </ClCompile>
     <ClCompile Include="SciDataParser.Volume.cpp">
-      <Filter>Data Management</Filter>
+      <Filter>MainState\Data Management</Filter>
     </ClCompile>
     <ClCompile Include=".\SciDataParser.Tree.cpp">
-      <Filter>Data Management</Filter>
+      <Filter>MainState\Data Management</Filter>
     </ClCompile>
     <ClCompile Include="SciDataParser.PointCloud.cpp">
-      <Filter>Data Management</Filter>
+      <Filter>MainState\Data Management</Filter>
     </ClCompile>
     <ClCompile Include="SciDataParser.GridValues.cpp">
-      <Filter>Data Management</Filter>
+      <Filter>MainState\Data Management</Filter>
     </ClCompile>
     <ClCompile Include="CTerrainSceneObject.cpp">
       <Filter>MainState\Terrain</Filter>
@@ -57,106 +57,90 @@
       <Filter>MainState\Volume</Filter>
     </ClCompile>
     <ClCompile Include="CGUIManager.cpp">
-      <Filter>MainState\GUI</Filter>
+      <Filter>GUI</Filter>
     </ClCompile>
     <ClCompile Include="CGwenEventForwarder.cpp">
-      <Filter>MainState\GUI</Filter>
+      <Filter>GUI</Filter>
     </ClCompile>
+    <ClCompile Include="CProgramContext.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SciDataParser.h">
-      <Filter>Data Management</Filter>
+      <Filter>MainState\Data Management</Filter>
     </ClInclude>
     <ClInclude Include="CMainState.h">
       <Filter>MainState</Filter>
     </ClInclude>
     <ClInclude Include="CGwenEventForwarder.h">
-      <Filter>MainState\GUI</Filter>
+      <Filter>GUI</Filter>
     </ClInclude>
     <ClInclude Include="RFBInterpolator\newmat.h">
-      <Filter>RFBInterpolator</Filter>
+      <Filter>MainState\RFBInterpolator</Filter>
     </ClInclude>
     <ClInclude Include="RFBInterpolator\RBFInterpolator.h">
-      <Filter>RFBInterpolator</Filter>
+      <Filter>MainState\RFBInterpolator</Filter>
     </ClInclude>
     <ClInclude Include="SciDataSet.h">
-      <Filter>Data Management\Base Objects</Filter>
+      <Filter>MainState\Data Management\Base Objects</Filter>
     </ClInclude>
     <ClInclude Include="SciData.h">
-      <Filter>Data Management\Base Objects</Filter>
+      <Filter>MainState\Data Management\Base Objects</Filter>
     </ClInclude>
     <ClInclude Include="SciDataIterator.h">
-      <Filter>Data Management\Base Objects</Filter>
+      <Filter>MainState\Data Management\Base Objects</Filter>
     </ClInclude>
     <ClInclude Include="SciDataTree.h">
-      <Filter>Data Management\Base Objects</Filter>
+      <Filter>MainState\Data Management\Base Objects</Filter>
     </ClInclude>
     <ClInclude Include="IColorMapper.h">
-      <Filter>Data Management\Color Mapping</Filter>
+      <Filter>MainState\Data Management\Color Mapping</Filter>
     </ClInclude>
     <ClInclude Include="CRGBIntensityColorMapper.h">
-      <Filter>Data Management\Color Mapping</Filter>
+      <Filter>MainState\Data Management\Color Mapping</Filter>
     </ClInclude>
     <ClInclude Include="COxygenColorMapper.h">
-      <Filter>Data Management\Color Mapping\Oxygen</Filter>
+      <Filter>MainState\Data Management\Color Mapping\Oxygen</Filter>
     </ClInclude>
     <ClInclude Include="ColorMappers.h">
-      <Filter>Data Management\Color Mapping</Filter>
+      <Filter>MainState\Data Management\Color Mapping</Filter>
     </ClInclude>
     <ClInclude Include=".\CSingleFieldColorMapper.h">
-      <Filter>Data Management\Color Mapping</Filter>
+      <Filter>MainState\Data Management\Color Mapping</Filter>
     </ClInclude>
     <ClInclude Include="ProgressPrinter.h">
       <Filter>Utilities</Filter>
     </ClInclude>
     <ClInclude Include="CSpectrumColorMapper.h">
-      <Filter>Data Management\Color Mapping</Filter>
+      <Filter>MainState\Data Management\Color Mapping</Filter>
     </ClInclude>
     <ClInclude Include="CTerrainSceneObject.h">
       <Filter>MainState\Terrain</Filter>
     </ClInclude>
     <ClInclude Include="Libraries.h" />
     <ClInclude Include="CConsole.h">
-      <Filter>MainState\GUI</Filter>
+      <Filter>GUI</Filter>
     </ClInclude>
     <ClInclude Include="CVolumeControlsHandler.h">
-      <Filter>MainState\GUI</Filter>
+      <Filter>GUI</Filter>
     </ClInclude>
     <ClInclude Include="CVolumeSceneObject.h">
       <Filter>MainState\Volume</Filter>
     </ClInclude>
     <ClInclude Include="CGUIManager.h">
-      <Filter>MainState\GUI</Filter>
+      <Filter>GUI</Filter>
     </ClInclude>
     <ClInclude Include="CTitleLabelsComponent.h">
-      <Filter>MainState\GUI\Components</Filter>
+      <Filter>GUI\Components</Filter>
     </ClInclude>
     <ClInclude Include="ContourConverter.h" />
+    <ClInclude Include="CProgramContext.h" />
+    <ClInclude Include="CLoadState.h">
+      <Filter>LoadState</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Data Management">
-      <UniqueIdentifier>{015f304c-d126-40d8-8034-ca7d06cd4ff3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Data Management\Parsers">
-      <UniqueIdentifier>{39c602da-763b-40fc-9eeb-1fd7df570632}</UniqueIdentifier>
-    </Filter>
     <Filter Include="MainState">
       <UniqueIdentifier>{06d12b70-0519-4c87-922b-bfa1f96bac06}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MainState\GUI">
-      <UniqueIdentifier>{e2f73951-6082-4d3a-bcd6-3f07b8ec41d4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="RFBInterpolator">
-      <UniqueIdentifier>{b020b00f-9710-43b6-a8a2-ea0d2483664b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Data Management\Base Objects">
-      <UniqueIdentifier>{91f5d56d-29df-4cbf-8e61-de1d3fa7f9df}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Data Management\Color Mapping">
-      <UniqueIdentifier>{85018b9c-10cf-4a50-81b5-fdae04b04d76}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Data Management\Color Mapping\Oxygen">
-      <UniqueIdentifier>{303188e5-c275-4776-b1bf-65a8d73d632b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Utilities">
       <UniqueIdentifier>{c5fafe06-1efa-415a-bd3a-d59efafe3cac}</UniqueIdentifier>
@@ -167,8 +151,32 @@
     <Filter Include="MainState\Volume">
       <UniqueIdentifier>{33cba1aa-9e33-457c-912a-78dab6c782db}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MainState\GUI\Components">
+    <Filter Include="GUI">
+      <UniqueIdentifier>{e2f73951-6082-4d3a-bcd6-3f07b8ec41d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI\Components">
       <UniqueIdentifier>{69559bbe-9f50-47e8-809c-55d622e1b426}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainState\RFBInterpolator">
+      <UniqueIdentifier>{b020b00f-9710-43b6-a8a2-ea0d2483664b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainState\Data Management">
+      <UniqueIdentifier>{015f304c-d126-40d8-8034-ca7d06cd4ff3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainState\Data Management\Parsers">
+      <UniqueIdentifier>{39c602da-763b-40fc-9eeb-1fd7df570632}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainState\Data Management\Base Objects">
+      <UniqueIdentifier>{91f5d56d-29df-4cbf-8e61-de1d3fa7f9df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainState\Data Management\Color Mapping">
+      <UniqueIdentifier>{85018b9c-10cf-4a50-81b5-fdae04b04d76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainState\Data Management\Color Mapping\Oxygen">
+      <UniqueIdentifier>{303188e5-c275-4776-b1bf-65a8d73d632b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LoadState">
+      <UniqueIdentifier>{00619c69-b650-43a9-8d5f-0f1ceedc408e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
