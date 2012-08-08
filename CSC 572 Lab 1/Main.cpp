@@ -9,11 +9,14 @@
 
 int main()
 {
+	std::cout << "System is initializing..." << std::endl;
+
 	// Directory Setup
 	CTextureLoader::ImageDirectory = "Media/";
 	CMeshLoader::MeshDirectory = "Media/";
 	CShaderLoader::ShaderDirectory = "Shaders/";
 
+	// Option to run contour converter
 	if (false)
 	{
 		ContourConverter c;
@@ -24,6 +27,15 @@ int main()
 		// Create Window
 		CApplication & Application = CApplication::get();
 		Application.init(SPosition2(1600, 900), "Underwater Volume Data Rendering");
+
+		std::cout << "GUI Engine is initializing..." << std::endl;
+
+		CMainState & MainState = CMainState::get();
+		MainState.loadGUIEngine();
+		MainState.startLoadingContext();
+
+		Application.loadEngines();
+		MainState.loadEngineReferences();
 
 		// Load custom state
 		Application.getStateManager().setState(& CMainState::get());

@@ -110,15 +110,15 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 		if (! Event.Pressed)
 		{
 			s << "Volume mode: ";
-			if (VolumeSceneObject.ShowVolume)
+			if (VolumeSceneObject->ShowVolume)
 			{
-				VolumeSceneObject.ShowVolume = 0;
+				VolumeSceneObject->ShowVolume = 0;
 				s << "disabled.";
 				addConsoleMessage(s.str());
 			}
 			else
 			{
-				VolumeSceneObject.ShowVolume = 2;
+				VolumeSceneObject->ShowVolume = 2;
 				s << "enabled.";
 				addConsoleMessage(s.str());
 			}
@@ -130,9 +130,9 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 
 		if (! Event.Pressed)
 		{
-			if (VolumeSceneObject.ShowVolume != 1)
+			if (VolumeSceneObject->ShowVolume != 1)
 				addConsoleMessage("Volume mode: legacy.");
-			VolumeSceneObject.ShowVolume = 1;
+			VolumeSceneObject->ShowVolume = 1;
 		}
 
 		break;
@@ -140,14 +140,14 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 	case EKey::m:
 		if (! Event.Pressed)
 		{
-			SceneManager.setActiveCamera(OrbitCamera);
+			SceneManager->setActiveCamera(OrbitCamera);
 		}
 		break;
 		
 	case EKey::n:
 		if (! Event.Pressed)
 		{
-			SceneManager.setActiveCamera(Camera);
+			SceneManager->setActiveCamera(Camera);
 		}
 		break;
 

@@ -14,7 +14,6 @@
 #include <iomanip>
 
 #include "CMainState.h"
-#include "CGwenEventForwarder.h"
 #include "CVolumeControlsHandler.h"
 
 #include "SciDataParser.h"
@@ -49,12 +48,25 @@ void CGUIManager::init()
 
 	Canvas = new Gwen::Controls::Canvas(skin);
 	Canvas->SetSize(Application.getWindowSize().X, Application.getWindowSize().Y);
+}
 
-	CGwenEventForwarder * Forwarder = new CGwenEventForwarder(getCanvas());
+void CGUIManager::startLoadingContext()
+{
+	Canvas->SetBackgroundColor(Gwen::Color(32, 48, 48));
+	Canvas->SetDrawBackground(true);
+
+	Gwen::Controls::Label * BigLabel = new Gwen::Controls::Label(Canvas);
+	BigLabel->SetFont(LargeFont);
+	BigLabel->SetText(Gwen::UnicodeString(L"Loading..."));
+	BigLabel->SetBounds(10, 10, 1590, 300);
+	BigLabel->SetTextColor(Gwen::Color(255, 255, 255, 84));
 }
 
 void CGUIManager::setup()
 {
+	Canvas->RemoveAllChildren();
+	Canvas->SetDrawBackground(false);
+
 	Console = new CConsole(Canvas);
 
 	// Top Label
@@ -186,10 +198,10 @@ void CGUIManager::resetVolumeRangeIndicator(SciDataParser * DataParser)
 	s << std::fixed;
 	s << "Value Range: ";
 	s << std::setprecision(1);
-	s << (MainState.VolumeSceneObject.Control.EmphasisLocation * (ValueRange.second - ValueRange.first) + ValueRange.first) / 100.f;
+	s << (MainState.VolumeSceneObject->Control.EmphasisLocation * (ValueRange.second - ValueRange.first) + ValueRange.first) / 100.f;
 	s << " ± ";
 	s << std::setprecision(2);
-	s << (MainState.VolumeSceneObject.Control.LocalRange / 2.f * (ValueRange.second - ValueRange.first)) / 100.f;
+	s << (MainState.VolumeSceneObject->Control.LocalRange / 2.f * (ValueRange.second - ValueRange.first)) / 100.f;
 	VolumeRangeIndicator->SetText(s.str());
 }
 

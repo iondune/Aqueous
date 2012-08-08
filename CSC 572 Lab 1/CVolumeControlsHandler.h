@@ -27,7 +27,7 @@ public:
 	CMainState & MainState;
 
 	CVolumeControlsHandler()
-		: VolumeControl(CMainState::get().VolumeSceneObject.Control), MainState(CMainState::get())
+		: VolumeControl(CMainState::get().VolumeSceneObject->Control), MainState(CMainState::get())
 	{}
 
 	void resetVolumeRange()

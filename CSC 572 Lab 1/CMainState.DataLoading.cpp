@@ -52,6 +52,6 @@ void CMainState::loadData()
 			
 		DataParser[2]->createVolumeFromGridValues(& o);
 		DataParser[2]->createPointCloudObjects(false, GridObject, SVector3f(3.f), & o);
-		VolumeSceneObject.VolumeHandle = DataParser[2]->VolumeHandle;
+		VolumeSceneObject->VolumeHandle = DataParser[2]->VolumeHandle;
 	}
 }

@@ -46,7 +46,7 @@ class CMainState : public CState<CMainState>, public Gwen::Event::Handler
 
 public:
 	
-	CVolumeSceneObject VolumeSceneObject;
+	CVolumeSceneObject * VolumeSceneObject;
 
 	SciDataParser * DataParser[3];
 	
@@ -57,6 +57,9 @@ public:
 
 
 	CMainState();
+
+	void loadGUIEngine();
+	void startLoadingContext();
 
 	void init();
 	void initScene();

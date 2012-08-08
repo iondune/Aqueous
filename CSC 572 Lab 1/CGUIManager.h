@@ -38,6 +38,7 @@ public:
 
 	void init();
 	void setup();
+	void startLoadingContext();
 
 	void resetVolumeRangeIndicator(SciDataParser * DataParser);
 	void clearVolumeRangeIndicator();
