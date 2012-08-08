@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <RootNamespace>CSC572Lab1</RootNamespace>
+    <RootNamespace>VolumeVisualization</RootNamespace>
     <ProjectGuid>{49493720-8AB7-D8B2-29A9-10F6ABB84016}</ProjectGuid>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />

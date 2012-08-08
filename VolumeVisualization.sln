@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 10
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CSC 572 Lab 1", "CSC 572 Lab 1\CSC 572 Lab 1.vcxproj", "{49493720-8AB7-D8B2-29A9-10F6ABB84016}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VolumeVisualization", "VolumeVisualization\VolumeVisualization.vcxproj", "{49493720-8AB7-D8B2-29A9-10F6ABB84016}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
