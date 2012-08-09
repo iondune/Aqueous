@@ -13,75 +13,28 @@ CTerrainSceneObject::SLayer::SLayer(int const i)
 	STextureCreationFlags Flags;
 	Flags.Filter = GL_LINEAR;
 	Flags.MipMaps = false;
-	ColorMap = new CTexture(CImageLoader::loadImage("../TerrainColorImageSquare.bmp"));//CTextureLoader::loadTexture("ColorMap2.bmp");//new CTexture(SSize2(HeightmapSize), false, Flags);
+	ColorMap = new CTexture(CImageLoader::loadImage("../TerrainColorImageSquare.bmp"));
 	Flags.PixelInternalFormat = GL_R32F;
 	//Flags.Wrap = GL_CLAMP;
 
-
-	/*
-	FILE * File = fopen("N63E009.hgt", "r");
-
-	int Width = 1201;
-	int16_t * Data = new int16_t[Width * Width];
-	fread(Data, sizeof(int16_t), Width * Width, File);
-
-	char * Image = new char[Width * Width * 3];
-	for (int x = 0; x < Width; ++ x)
-	for (int y = 0; y < Width; ++ y)
-	{
-		Image[x * Width * 3 + y * 3 + 0] =
-		Image[x * Width * 3 + y * 3 + 1] = 
-		Image[x * Width * 3 + y * 3 + 2] = (char) (Data[x + y * Width]) * 10;
-	}
-	*/
-
-
-	HeightMap = new CTexture(CImageLoader::loadImage("../TerrainHeightImageSquare.bmp"));///*new CTexture(new CImage(Image, Width, Width));*/CTextureLoader::loadTexture("Heightmap2.bmp");//new CTexture(SSize2(HeightmapSize), false, Flags);
+	HeightMap = new CTexture(CImageLoader::loadImage("../TerrainHeightImageSquare.bmp"));
 
 	// Determine starting ClipRegion
 	SPosition2 const ClipPos = SPosition2() - SPosition2(Size / 2);
 	ClipRegion = SRect2i(ClipPos, SSize2(Size));
-
-	// Default Data Upload
-	//sendSample(0, 0, HeightmapSize, HeightmapSize, ClipPos);
 }
 
 int CTerrainSceneObject::SLayer::sendSample(int const x1, int const y1, int const x2, int const y2, SPosition2 const & NewClipPos)
 {
-	//static CTerrainGenerator TerrainGenerator;
-	//static real const TerrainScale = 800000.0;
-//
-	//TerrainGenerator.Settings.useOverlay = true;
-	//TerrainGenerator.Settings.rivers = true;
-	//TerrainGenerator.Settings.limit = false;
 
 	static const auto noise = [](int const x, int const y) -> float
 	{
-		//real X = (real) x;
-		//real Y = (real) y;
-		//real const Scale = 1.0 / TerrainScale;
-		//X *= Scale;
-		//Y *= Scale;
-		//real terrainHeight = TerrainGenerator.getHeight(X, Y);
-				
-		//printf("%g\n", terrainHeight);
-				
-		//terrainHeight *= 1000.0;
-		//terrainHeight -= 1000.0;
-		return (float) 0.f;//terrainHeight;
-		//return 0.1f * (x + y);
+		return (float) 0.f;
 	};
 
 	static const auto color = [](int const x, int const y) -> SColorAf
-	{
-		//real X = (real) x;
-		//real Y = (real) y;
-		//real const Scale = 1.0 / TerrainScale;
-		//X *= Scale;
-		//Y *= Scale;
-		//SColor terrainColor = TerrainGenerator.getColor(X, Y);
-				
-		return SColorAf();////terrainColor;
+	{				
+		return SColorAf();
 	};
 
 	int const Size = (x2 - x1) * (y2 - y1);
@@ -235,16 +188,6 @@ bool CTerrainSceneObject::draw(IScene const * const Scene, ERenderPass const Pas
 	{
 		for (auto it = Layers.begin(); it != Layers.end(); ++ it)
 			(* it)->Active = true;
-
-		/*SVector3 const CamPos = SceneManager.getActiveCamera()->getPosition();
-		int CameraHeight = (int) fabs(CamPos.Y - getTerrainHeight(SVector2(CamPos.X, CamPos.Z)));
-		int LevelThreshold = 100;
-
-		for (unsigned int i = 0; CameraHeight > LevelThreshold && i < Layers.size(); ++ i)
-		{
-			Layers[i]->Active = false;
-			CameraHeight -= LevelThreshold * Layers[i]->ScaleFactor;
-		}*/
 	}
 		
 	// Determine camera movement logistics for tracking
@@ -571,12 +514,6 @@ bool CTerrainSceneObject::draw(IScene const * const Scene, ERenderPass const Pas
 
 			Context.uniform("uActiveRegionLL", SVector2f(uActiveRegionLL));
 			Context.uniform("uActiveRegionUR", SVector2f(uActiveRegionUR));
-
-			//Context.bindTexture("uCourseMap", Course->HeightMap->getTextureHandle());
-
-			//SPosition2 const CourseOffseti = Course->DataOffset;
-			//SVector2 const CourseOffsetf(CourseOffseti);
-			//Context.uniform("uCourseOffset", CourseOffsetf);
 		}
 		else
 		{
