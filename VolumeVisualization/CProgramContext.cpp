@@ -10,10 +10,8 @@ CProgramContext::SScene::SScene()
 {}
 
 CProgramContext::CProgramContext()
-	: GUIManager(0)
-{
-	DataParser[0] = DataParser[1] = DataParser[2] = 0;
-}
+	: GUIManager(0), DataManager(0)
+{}
 
 void CProgramContext::init()
 {

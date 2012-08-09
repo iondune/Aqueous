@@ -1,8 +1,9 @@
-#include "SciDataParser.h"
+#include "SciDataManager.h"
 
 #include "CProgramContext.h"
 
-void SciDataParser::createPointCloudObjects(bool FromRaw, ISceneObject * RootParent, SVector3f const DataScale, IColorMapper * ColorMapper)
+
+void SciDataManager::createPointCloudObjects(bool FromRaw, ISceneObject * RootParent, SVector3f const DataScale, IColorMapper * ColorMapper)
 {
 	SciDataSet & DataSet = FromRaw ? RawValues : GridValues;
 

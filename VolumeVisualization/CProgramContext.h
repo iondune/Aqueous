@@ -7,7 +7,7 @@
 
 #include "CGUIManager.h"
 
-#include "SciDataParser.h"
+#include "SciDataManager.h"
 #include "SciDataTree.h"
 
 #include "CTerrainSceneObject.h"
@@ -56,7 +56,7 @@ public:
 
 	SScene Scene;
 	CGUIManager * GUIManager;
-	SciDataParser * DataParser[3];
+	SciDataManager * DataManager;
 
 
 	CProgramContext();

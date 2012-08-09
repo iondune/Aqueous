@@ -1,10 +1,11 @@
 #define _CRT_SECURE_NO_WARNINGS
 
-#include "SciDataParser.h"
+#include "SciDataManager.h"
 
 #include "matlib/include/mat.h"
 
 #include <ionScene.h>
+
 
 void SciDataParserGrid1::load(std::string const &data)
 {
@@ -39,9 +40,9 @@ void SciDataParserGrid1::load(std::string const &data)
 	}
 
 	int const * Dimensions = mxGetDimensions(pointO1);
-	GridDimensions = new int[3];
+	Manager->GridDimensions = new int[3];
 	for (int i = 0; i < 3; ++ i)
-		GridDimensions[i] = Dimensions[i];
+		Manager->GridDimensions[i] = Dimensions[i];
 	double * pointO1Data = mxGetPr(pointO1);
 	double * pointO2Data = mxGetPr(pointO2);
 	double * pointO3Data = mxGetPr(pointO3);
@@ -71,7 +72,7 @@ void SciDataParserGrid1::load(std::string const &data)
 				d.ScalarFields["var2"] = var2Data[index];
 				d.ScalarFields["var3"] = var3Data[index];
 				d.ScalarFields["var4"] = var4Data[index];
-				GridValues.Values.push_back(d);
+				Manager->GridValues.Values.push_back(d);
 			}
 		}
 	}

@@ -11,13 +11,13 @@
 #include "IColorMapper.h"
 
 
-class SciDataParser
+class SciDataManager
 {
 
 public:
 
-	SciDataParser()
-		: VolumeHandle(0)
+	SciDataManager()
+		: VolumeHandle(0), GridDimensions(0)
 	{}
 
 	SciDataSet RawValues;
@@ -33,7 +33,21 @@ public:
 	void createGridDataFromRawValues(Range AcceptedValues = FullRange, double Deviations = 5.0, std::string const & Field = "o2");
 	void createPointCloudObjects(bool FromRaw, ISceneObject * RootParent, SVector3f const DataScale, IColorMapper * ColorMapper);
 
-	virtual void load(std::string const & FileName) =0;
+	void writeToFile(std::string const & FileName);
+	void readFromFile(std::string const & FileName);
+
+	friend class SciDataParser;
+
+};
+
+class SciDataParser
+{
+
+public:
+
+	SciDataManager * Manager;
+
+	virtual void load(std::string const & FileName) = 0;
 
 };
 

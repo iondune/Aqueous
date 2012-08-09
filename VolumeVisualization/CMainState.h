@@ -1,18 +1,7 @@
 #ifndef _CMAINSTATE_H_INCLUDED_
 #define _CMAINSTATE_H_INCLUDED_
 
-#include <ionCore.h>
-#include <ionScene.h>
-#include <ionWindow.h>
-
 #include "CProgramContext.h"
-
-#include "SciDataParser.h"
-#include "SciDataTree.h"
-
-#include <Gwen/Controls.h>
-#include <Gwen/Controls/VerticalSlider.h>
-#include <Gwen/Controls/ComboBox.h>
 
 
 class CMainState : public CContextState<CMainState, CProgramContext>

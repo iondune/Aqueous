@@ -16,7 +16,7 @@
 #include "CMainState.h"
 #include "CVolumeControlsHandler.h"
 
-#include "SciDataParser.h"
+#include "SciDataManager.h"
 
 
 Gwen::Font * LoadFont(Gwen::UnicodeString const & File, float const Size)
@@ -205,9 +205,9 @@ void CGUIManager::setup()
 	Console->addMessage("Starting program...", Gwen::Colors::Red);
 }
 
-void CGUIManager::resetVolumeRangeIndicator(SciDataParser * DataParser)
+void CGUIManager::resetVolumeRangeIndicator(SciDataManager * DataManager)
 {
-	Range ValueRange = DataParser->GridValues.getValueRange("o1", 5.0);
+	Range ValueRange = DataManager->GridValues.getValueRange("o1", 5.0);
 	std::wstringstream s;
 	s << std::fixed;
 	s << "Value Range: ";

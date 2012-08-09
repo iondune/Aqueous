@@ -42,7 +42,7 @@ void CLoadContext::run()
 	Canvas->SetBackgroundColor(Gwen::Color(32, 48, 48));
 	Canvas->SetDrawBackground(true);
 
-	// Label 1
+	// Label
 	Gwen::Controls::Label * BigLabel = new Gwen::Controls::Label(Canvas);
 	BigLabel->SetFont(GUIManager->getLargeFont());
 	BigLabel->SetText(Gwen::UnicodeString(L"Loading..."));

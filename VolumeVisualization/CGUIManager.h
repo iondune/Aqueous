@@ -1,14 +1,13 @@
 #ifndef _CGUIMANAGER_H_INCLUDED_
 #define _CGUIMANAGER_H_INCLUDED_
 
-
 #include <Gwen/Controls.h>
 
 #include "CConsole.h"
 
 class CApplication;
 class CMainState;
-class SciDataParser;
+class SciDataManager;
 
 
 class CGUIManager
@@ -41,7 +40,7 @@ public:
 
 	void draw(bool ClearAll = false);
 
-	void resetVolumeRangeIndicator(SciDataParser * DataParser);
+	void resetVolumeRangeIndicator(SciDataManager * DataManager);
 	void clearVolumeRangeIndicator();
 
 	Gwen::Controls::Canvas * getCanvas();

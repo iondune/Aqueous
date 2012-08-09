@@ -1,8 +1,9 @@
 #define _CRT_SECURE_NO_WARNINGS
 
-#include "SciDataParser.h"
+#include "SciDataManager.h"
 
 #include "matlib/include/mat.h"
+
 
 void SciDataParserCTD::load(std::string const &data)
 {
@@ -142,7 +143,7 @@ void SciDataParserCTD::load(std::string const &data)
 
 			SciData d(Lat, Depth, Lon);
 			d.ScalarFields["salinity"] = Salinty;
-			RawValues.Values.push_back(d);
+			Manager->RawValues.Values.push_back(d);
 
 			if (writeCsv)
 				printf("\r%3d%%", (int) (100.f * (float) j / (float) (Dimensions[0] - 1.f)));

@@ -9,8 +9,7 @@
 #include <Gwen/Controls/VerticalSlider.h>
 #include <Gwen/Controls/ComboBox.h>
 
-#include "SciDataParser.h"
-#include "SciDataTree.h"
+#include "SciDataManager.h"
 
 #include "ColorMappers.h"
 
@@ -34,7 +33,7 @@ public:
 	void resetVolumeRange()
 	{
 		if (VolumeControl.Mode)
-			CProgramContext::get().GUIManager->resetVolumeRangeIndicator(CProgramContext::get().DataParser[2]);
+			CProgramContext::get().GUIManager->resetVolumeRangeIndicator(CProgramContext::get().DataManager);
 	}
 
 	void OnEmphasisSlider(Gwen::Controls::Base * Control)

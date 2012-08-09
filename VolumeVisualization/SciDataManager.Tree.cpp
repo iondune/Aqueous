@@ -1,6 +1,7 @@
-#include "SciDataParser.h"
+#include "SciDataManager.h"
 
-void SciDataParser::createDataTreeFromRawValues()
+
+void SciDataManager::createDataTreeFromRawValues()
 {
 	CSciTreeLeaf * Root = (CSciTreeLeaf *) (DataTree = new CSciTreeLeaf());
 

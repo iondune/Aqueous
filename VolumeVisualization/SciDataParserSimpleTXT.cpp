@@ -1,13 +1,14 @@
 #define _CRT_SECURE_NO_WARNINGS
 
-#include "SciDataParser.h"
+#include "SciDataManager.h"
 #include <numeric>
 
-char *textFileRead(char const *fn)
+
+char * textFileRead(char const * fn)
 {	
-	FILE *fp;
-	char *content = NULL;
-	int count=0;
+	FILE * fp;
+	char * content = NULL;
+	int count = 0;
 
 	if (fn != NULL)
 	{
@@ -54,7 +55,7 @@ void SciDataParserSimpleTXT::load(std::string const &data)
 		d.ScalarFields["o2"] = O2;
 		d.ScalarFields["temp"] = temp;
 		d.ScalarFields["d1"] = d1;
-		RawValues.Values.push_back(d);
+		Manager->RawValues.Values.push_back(d);
 
 		// move onto next line
 		tok = strtok(NULL, "\n");

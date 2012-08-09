@@ -32,18 +32,6 @@
     <ClCompile Include="SciDataTree.cpp">
       <Filter>MainState\Data Management\Base Objects</Filter>
     </ClCompile>
-    <ClCompile Include="SciDataParser.Volume.cpp">
-      <Filter>MainState\Data Management</Filter>
-    </ClCompile>
-    <ClCompile Include=".\SciDataParser.Tree.cpp">
-      <Filter>MainState\Data Management</Filter>
-    </ClCompile>
-    <ClCompile Include="SciDataParser.PointCloud.cpp">
-      <Filter>MainState\Data Management</Filter>
-    </ClCompile>
-    <ClCompile Include="SciDataParser.GridValues.cpp">
-      <Filter>MainState\Data Management</Filter>
-    </ClCompile>
     <ClCompile Include="CTerrainSceneObject.cpp">
       <Filter>MainState\Terrain</Filter>
     </ClCompile>
@@ -63,11 +51,20 @@
     <ClCompile Include="CLoadContext.DataLoading.cpp">
       <Filter>LoadContext</Filter>
     </ClCompile>
+    <ClCompile Include="SciDataManager.GridValues.cpp">
+      <Filter>MainState\Data Management</Filter>
+    </ClCompile>
+    <ClCompile Include="SciDataManager.PointCloud.cpp">
+      <Filter>MainState\Data Management</Filter>
+    </ClCompile>
+    <ClCompile Include="SciDataManager.Tree.cpp">
+      <Filter>MainState\Data Management</Filter>
+    </ClCompile>
+    <ClCompile Include="SciDataManager.Volume.cpp">
+      <Filter>MainState\Data Management</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SciDataParser.h">
-      <Filter>MainState\Data Management</Filter>
-    </ClInclude>
     <ClInclude Include="CMainState.h">
       <Filter>MainState</Filter>
     </ClInclude>
@@ -136,6 +133,9 @@
     <ClInclude Include="CProgramContext.h" />
     <ClInclude Include="CLoadContext.h">
       <Filter>LoadContext</Filter>
+    </ClInclude>
+    <ClInclude Include="SciDataManager.h">
+      <Filter>MainState\Data Management</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

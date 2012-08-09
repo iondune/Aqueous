@@ -1,9 +1,9 @@
-#include "SciDataParser.h"
+#include "SciDataManager.h"
 
 #include "RFBInterpolator/RBFInterpolator.h"
 
 
-void SciDataParser::createGridDataFromRawValues(Range AcceptedValues, double Deviations, std::string const & Field)
+void SciDataManager::createGridDataFromRawValues(Range AcceptedValues, double Deviations, std::string const & Field)
 {
 	int const Size = 10;
 	GridDimensions = new int[3];
