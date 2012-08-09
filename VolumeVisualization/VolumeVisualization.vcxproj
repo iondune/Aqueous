@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <RootNamespace>VolumeVisualization</RootNamespace>
+    <ProjectGuid>{49493720-8AB7-D8B2-29A9-10F6ABB84016}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(VisualStudioVersion)'=='11.0'" Label="Configuration">
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <IncludePath>
+      ;$(VisualStudioDir)\SDKs\gwen\include;
+      ;$(VisualStudioDir)\Projects\ionEngine\ionCore;
+      ;$(VisualStudioDir)\Projects\ionEngine\ionScene;
+      ;$(VisualStudioDir)\Projects\ionEngine\ionWindow;
+      ;$(VisualStudioDir)\Projects\ionEngine\ionGUI;
+      ;$(ProjectDir)\matlib\include;
+      ;$(IncludePath);
+    </IncludePath>
+    <LibraryPath>
+      ;$(VisualStudioDir)\SDKs\gwen\lib;
+      ;$(VisualStudioDir)\SDKs\gwen\lib\windows;
+      ;$(LibraryPath);
+    </LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      ;$(VisualStudioDir)\Projects\ionEngine\Debug;
+      ;$(LibraryPath);
+    </LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      ;$(VisualStudioDir)\Projects\ionEngine\Release;
+      ;$(LibraryPath);
+    </LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <IgnoreSpecificDefaultLibraries>msvcrt.lib;libcmt.lib</IgnoreSpecificDefaultLibraries>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <IgnoreAllDefaultLibraries>
+      </IgnoreAllDefaultLibraries>
+      <IgnoreSpecificDefaultLibraries>libcmt.lib</IgnoreSpecificDefaultLibraries>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="CGUIManager.cpp" />
+    <ClCompile Include="CGwenEventForwarder.cpp" />
+    <ClCompile Include="CLoadContext.cpp" />
+    <ClCompile Include="CMainState.cpp" />
+    <ClCompile Include="CLoadContext.DataLoading.cpp" />
+    <ClCompile Include="CMainState.EventHandling.cpp" />
+    <ClCompile Include="CMainState.MouseTracking.cpp" />
+    <ClCompile Include="CProgramContext.cpp" />
+    <ClCompile Include="CTerrainSceneObject.cpp" />
+    <ClCompile Include="CVolumeSceneObject.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include=".\SciDataParserSimpleTXT.cpp" />
+    <ClCompile Include=".\SciDataParserGrid1.cpp" />
+    <ClCompile Include=".\SciDataParserCTD.cpp" />
+    <ClCompile Include="RFBInterpolator\newmat.cpp" />
+    <ClCompile Include="RFBInterpolator\RBFInterpolator.cpp" />
+    <ClCompile Include=".\SciDataParser.Tree.cpp" />
+    <ClCompile Include="SciDataParser.GridValues.cpp" />
+    <ClCompile Include="SciDataParser.PointCloud.cpp" />
+    <ClCompile Include="SciDataParser.Volume.cpp" />
+    <ClCompile Include="SciDataSet.cpp" />
+    <ClCompile Include="SciDataTree.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CConsole.h" />
+    <ClInclude Include="CGUIManager.h" />
+    <ClInclude Include="CGwenEventForwarder.h" />
+    <ClInclude Include="CLoadContext.h" />
+    <ClInclude Include="CMainState.h" />
+    <ClInclude Include="ColorMappers.h" />
+    <ClInclude Include="ContourConverter.h" />
+    <ClInclude Include="COxygenColorMapper.h" />
+    <ClInclude Include="CProgramContext.h" />
+    <ClInclude Include="CRGBIntensityColorMapper.h" />
+    <ClInclude Include=".\CSingleFieldColorMapper.h" />
+    <ClInclude Include="CSpectrumColorMapper.h" />
+    <ClInclude Include="CTerrainSceneObject.h" />
+    <ClInclude Include="CTitleLabelsComponent.h" />
+    <ClInclude Include="CVolumeControlsHandler.h" />
+    <ClInclude Include="CVolumeSceneObject.h" />
+    <ClInclude Include="IColorMapper.h" />
+    <ClInclude Include="Libraries.h" />
+    <ClInclude Include="ProgressPrinter.h" />
+    <ClInclude Include="RFBInterpolator\newmat.h" />
+    <ClInclude Include="RFBInterpolator\RBFInterpolator.h" />
+    <ClInclude Include="SciData.h" />
+    <ClInclude Include="SciDataIterator.h" />
+    <ClInclude Include="SciDataParser.h" />
+    <ClInclude Include="SciDataSet.h" />
+    <ClInclude Include="SciDataTree.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
