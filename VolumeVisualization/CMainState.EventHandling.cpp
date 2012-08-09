@@ -1,5 +1,6 @@
 #include "CMainState.h"
 
+
 void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 {
 	std::stringstream s;

@@ -50,16 +50,27 @@ void CGUIManager::init()
 	Canvas->SetSize(Application.getWindowSize().X, Application.getWindowSize().Y);
 }
 
-void CGUIManager::startLoadingContext()
+void CGUIManager::draw(bool const ClearAll)
 {
-	Canvas->SetBackgroundColor(Gwen::Color(32, 48, 48));
-	Canvas->SetDrawBackground(true);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	if (ClearAll)
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	else
+		glClear(GL_DEPTH_BUFFER_BIT);
 
-	Gwen::Controls::Label * BigLabel = new Gwen::Controls::Label(Canvas);
-	BigLabel->SetFont(LargeFont);
-	BigLabel->SetText(Gwen::UnicodeString(L"Loading..."));
-	BigLabel->SetBounds(10, 10, 1590, 300);
-	BigLabel->SetTextColor(Gwen::Color(255, 255, 255, 84));
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+		int left = 0, top = 0;
+		int right = 1600, bottom = 900;
+		glOrtho( left, right, bottom, top, -1.0, 1.0);
+	glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
+		glViewport(0, 0, right - left, bottom - top);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	Canvas->RenderCanvas();
+
+	CApplication::get().swapBuffers();
 }
 
 void CGUIManager::setup()
@@ -208,4 +219,24 @@ void CGUIManager::resetVolumeRangeIndicator(SciDataParser * DataParser)
 void CGUIManager::clearVolumeRangeIndicator()
 {
 	VolumeRangeIndicator->SetText(L"");
+}
+
+Gwen::Controls::Canvas * CGUIManager::getCanvas()
+{
+	return Canvas;
+}
+	
+Gwen::Font * CGUIManager::getLargeFont()
+{
+	return LargeFont;
+}
+
+Gwen::Font * CGUIManager::getMediumFont()
+{
+	return MediumFont;
+}
+
+Gwen::Font * CGUIManager::getRegularFont()
+{
+	return RegularFont;
 }

@@ -14,9 +14,6 @@
     <ClCompile Include="CMainState.cpp">
       <Filter>MainState</Filter>
     </ClCompile>
-    <ClCompile Include="CMainState.DataLoading.cpp">
-      <Filter>MainState</Filter>
-    </ClCompile>
     <ClCompile Include="CMainState.EventHandling.cpp">
       <Filter>MainState</Filter>
     </ClCompile>
@@ -63,6 +60,12 @@
       <Filter>GUI</Filter>
     </ClCompile>
     <ClCompile Include="CProgramContext.cpp" />
+    <ClCompile Include="CLoadContext.cpp">
+      <Filter>LoadContext</Filter>
+    </ClCompile>
+    <ClCompile Include="CLoadContext.DataLoading.cpp">
+      <Filter>LoadContext</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SciDataParser.h">
@@ -134,8 +137,8 @@
     </ClInclude>
     <ClInclude Include="ContourConverter.h" />
     <ClInclude Include="CProgramContext.h" />
-    <ClInclude Include="CLoadState.h">
-      <Filter>LoadState</Filter>
+    <ClInclude Include="CLoadContext.h">
+      <Filter>LoadContext</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -175,7 +178,7 @@
     <Filter Include="MainState\Data Management\Color Mapping\Oxygen">
       <UniqueIdentifier>{303188e5-c275-4776-b1bf-65a8d73d632b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="LoadState">
+    <Filter Include="LoadContext">
       <UniqueIdentifier>{00619c69-b650-43a9-8d5f-0f1ceedc408e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>

@@ -1,16 +1,18 @@
-#include "CMainState.h"
+#include "CLoadContext.h"
 
+#include "CMainState.h"
 #include "ColorMappers.h"
 
-void CMainState::loadData()
+
+void CLoadContext::loadData()
 {
 	// Determine data source
 	//std::string Field;
 
 	printf("Loading data...\n");
 	{
-		DataParser[0] = new SciDataParserSimpleTXT();
-		DataParser[0]->load("ForZoe.txt");
+		Context->DataParser[0] = new SciDataParserSimpleTXT();
+		Context->DataParser[0]->load("ForZoe.txt");
 
 		//DataParser->RawValues.setDataScale(Vector3(3, 2, 3));
 
@@ -18,14 +20,14 @@ void CMainState::loadData()
 		COxygenColorMapper o("d1");
 		sf.AcceptedRange = Range(-9999999.0, 9999999.0);
 
-		DataParser[0]->createPointCloudObjects(true, PointCloudObject, SVector3f(-3.f, 0.8f, 3.f), & o);
+		Context->DataParser[0]->createPointCloudObjects(true, CMainState::get().PointCloudObject, SVector3f(-3.f, 0.8f, 3.f), & o);
 		//DataParser[0]->createGridDataFromRawValues(FullRange, 5.0, "d1");
 		//DataParser[0]->createPointCloudObjects(false, SoupObject, SVector3f(3.f), & sf);
 		//DataParser[0]->createVolumeFromGridValues(& sf);
 	}
 
 	{
-		DataParser[1] = new SciDataParserCTD();
+		Context->DataParser[1] = new SciDataParserCTD();
 		//DataParser[1]->load("data2.mat");
 
 		//DataParser->RawValues.setDataScale(Vector3(3, 2, 3));
@@ -40,8 +42,8 @@ void CMainState::loadData()
 	}
 
 	{
-		DataParser[2] = new SciDataParserGrid1();
-		DataParser[2]->load("oxyMaps.mat");
+		Context->DataParser[2] = new SciDataParserGrid1();
+		Context->DataParser[2]->load("oxyMaps.mat");
 
 		//DataParser->GridValues.setDataScale(Vector3(3, 2, 3));
 		
@@ -50,8 +52,8 @@ void CMainState::loadData()
 		COxygenColorMapper o;
 		//COxygenLocalizedColorMapper l;
 			
-		DataParser[2]->createVolumeFromGridValues(& o);
-		DataParser[2]->createPointCloudObjects(false, GridObject, SVector3f(3.f), & o);
-		VolumeSceneObject->VolumeHandle = DataParser[2]->VolumeHandle;
+		Context->DataParser[2]->createVolumeFromGridValues(& o);
+		Context->DataParser[2]->createPointCloudObjects(false, CMainState::get().GridObject, SVector3f(3.f), & o);
+		CMainState::get().VolumeSceneObject->VolumeHandle = Context->DataParser[2]->VolumeHandle;
 	}
 }

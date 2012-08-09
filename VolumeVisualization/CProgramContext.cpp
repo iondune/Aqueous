@@ -1,12 +1,14 @@
 #include "CProgramContext.h"
 
-#include <ionCore.h>
-#include <ionScene.h>
-#include <ionWindow.h>
-
 #include "CMainState.h"
-#include "CLoadState.h"
+#include "CLoadContext.h"
 
+
+CProgramContext::CProgramContext()
+	: GUIManager(0)
+{
+	DataParser[0] = DataParser[1] = DataParser[2] = 0;
+}
 
 void CProgramContext::init()
 {
@@ -21,10 +23,9 @@ void CProgramContext::init()
 	GUIManager->init();
 
 	// Begin loading
-	MainState.startLoadingContext();
-
-	Application.loadEngines();
-	MainState.loadEngineReferences();
+	CLoadContext LoadContext;
+	LoadContext.init();
+	LoadContext.run();
 }
 
 void CProgramContext::run()

@@ -38,15 +38,17 @@ public:
 
 	void init();
 	void setup();
-	void startLoadingContext();
+
+	void draw(bool ClearAll = false);
 
 	void resetVolumeRangeIndicator(SciDataParser * DataParser);
 	void clearVolumeRangeIndicator();
 
-	Gwen::Controls::Canvas * getCanvas()
-	{
-		return Canvas;
-	}
+	Gwen::Controls::Canvas * getCanvas();
+	
+	Gwen::Font * getLargeFont();
+	Gwen::Font * getMediumFont();
+	Gwen::Font * getRegularFont();
 
 };
 

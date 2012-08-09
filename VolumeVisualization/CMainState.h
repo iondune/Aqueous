@@ -35,20 +35,18 @@ class CMainState : public CContextState<CMainState, CProgramContext>
 	CMeshSceneObject * LightObject;
 	SVector3f LightPosition;
 
-	// Holders for point cloud and grid glyph representations
-	ISceneObject * PointCloudObject;
-	ISceneObject * GridObject;
-
 	// Skybox object
 	CMeshSceneObject * SkyBox;
 	
 	CTerrainSceneObject * Terrain;
 
 public:
+
+	// Holders for point cloud and grid glyph representations
+	ISceneObject * PointCloudObject;
+	ISceneObject * GridObject;
 	
 	CVolumeSceneObject * VolumeSceneObject;
-
-	SciDataParser * DataParser[3];
 	
 	SUniformReference<SVector3f> BindLightPosition;
 
@@ -58,13 +56,10 @@ public:
 
 	CMainState();
 
-	void loadGUIEngine();
 	void startLoadingContext();
 
 	void init();
 	void initScene();
-
-	void loadData();
 
 	void begin();
 	void OnRenderStart(float const Elapsed);
