@@ -79,6 +79,7 @@ void SciDataManager::readFromFile(std::string const & FileName)
 		
 		File.read((char *) & Dims, 4);
 		u32 DataCount = Dims;
+		GridValues.Values.reserve(DataCount);
 		for (u32 i = 0; i < DataCount; ++ i)
 		{
 			SciData d;
@@ -106,6 +107,7 @@ void SciDataManager::readFromFile(std::string const & FileName)
 		
 		File.read((char *) & Dims, 4);
 		DataCount = Dims;
+		RawValues.Values.reserve(DataCount);
 		for (u32 i = 0; i < DataCount; ++ i)
 		{
 			SciData d;
