@@ -63,6 +63,9 @@
     <ClCompile Include="SciDataManager.Volume.cpp">
       <Filter>MainState\Data Management</Filter>
     </ClCompile>
+    <ClCompile Include="SciDataManager.File.cpp">
+      <Filter>MainState\Data Management</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CMainState.h">

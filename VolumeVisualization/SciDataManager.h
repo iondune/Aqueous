@@ -17,7 +17,7 @@ class SciDataManager
 public:
 
 	SciDataManager()
-		: VolumeHandle(0), GridDimensions(0)
+		: VolumeHandle(0), GridDimensions(0), DataTree(0)
 	{}
 
 	SciDataSet RawValues;

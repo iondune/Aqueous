@@ -1,8 +1,11 @@
 #ifndef _SCI_DATA_SET_H_INCLUDED_
 #define _SCI_DATA_SET_H_INCLUDED_
 
+#include <ionTypes.h>
+
 #include "SciData.h"
 #include "SciDataIterator.h"
+
 
 typedef std::pair<double, double> Range;
 static Range const FullRange = Range(-std::numeric_limits<double>::max(), std::numeric_limits<double>::max());
@@ -17,6 +20,7 @@ public:
 	std::vector<SciData> Values;
 	Vector3 DataScale;
 	
+
 	// Clamp x, y, z to volume range [0,v]
 	void setDataScale(Vector3 const & v);
 
@@ -27,6 +31,8 @@ public:
 
 	SciDataIterator begin(std::string const & Field);
 	SciDataIterator end(std::string const & Field);
+
+	u32 const size();
 
 };
 

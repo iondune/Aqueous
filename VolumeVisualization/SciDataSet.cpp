@@ -85,3 +85,8 @@ SciDataIterator SciDataSet::end(std::string const & Field)
 {
 	return SciDataIterator(Values.end(), Field);
 }
+
+u32 const SciDataSet::size()
+{
+	return Values.size();
+}
