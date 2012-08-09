@@ -6,11 +6,9 @@
 
 void CLoadContext::loadData()
 {
-	// Determine data source
-	//std::string Field;
-
-	printf("Loading data...\n");
+	Indent = 60;
 	{
+		addLabel(L"Data Set 1...");
 		Context->DataParser[0] = new SciDataParserSimpleTXT();
 		Context->DataParser[0]->load("ForZoe.txt");
 
@@ -27,6 +25,7 @@ void CLoadContext::loadData()
 	}
 
 	{
+		addLabel(L"Data Set 2...");
 		Context->DataParser[1] = new SciDataParserCTD();
 		//DataParser[1]->load("data2.mat");
 
@@ -42,6 +41,7 @@ void CLoadContext::loadData()
 	}
 
 	{
+		addLabel(L"Data Set 3...");
 		Context->DataParser[2] = new SciDataParserGrid1();
 		Context->DataParser[2]->load("oxyMaps.mat");
 
@@ -56,4 +56,5 @@ void CLoadContext::loadData()
 		Context->DataParser[2]->createPointCloudObjects(false, Context->Scene.GridObject, SVector3f(3.f), & o);
 		Context->Scene.VolumeSceneObject->VolumeHandle = Context->DataParser[2]->VolumeHandle;
 	}
+	Indent = 0;
 }

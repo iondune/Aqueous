@@ -9,7 +9,7 @@ void CLoadContext::addLabel(std::wstring const & Label)
 	Gwen::Controls::Label * MediumLabel = new Gwen::Controls::Label(Canvas);
 	MediumLabel->SetFont(GUIManager->getMediumFont());
 	MediumLabel->SetText(Label);
-	MediumLabel->SetBounds(20, LabelHeight, 600, 300);
+	MediumLabel->SetBounds(20 + Indent, LabelHeight, 600, 300);
 	MediumLabel->SetTextColor(Gwen::Color(255, 255, 255, 84));
 
 	GUIManager->draw(true);
@@ -18,7 +18,7 @@ void CLoadContext::addLabel(std::wstring const & Label)
 }
 
 CLoadContext::CLoadContext()
-	: LabelHeight(0)
+	: LabelHeight(0), Indent(0)
 {}
 
 void CLoadContext::init()
@@ -26,6 +26,7 @@ void CLoadContext::init()
 	loadContext();
 
 	LabelHeight = 70;
+	Indent = 0;
 }
 
 void CLoadContext::run()
@@ -62,6 +63,8 @@ void CLoadContext::run()
 	
 	addLabel(L"Loading Science Data...");
 	loadData();
+	
+	addLabel(L"Application is Starting...");
 }
 
 void CLoadContext::loadScene()

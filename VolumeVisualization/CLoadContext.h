@@ -12,7 +12,7 @@ protected:
 	CGUIManager * GUIManager;
 	Gwen::Controls::Canvas * Canvas;
 
-	s32 LabelHeight;
+	s32 LabelHeight, Indent;
 
 	void addLabel(std::wstring const & Label);
 
