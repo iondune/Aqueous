@@ -14,8 +14,8 @@ void SciDataManager::writeToFile(std::string const & FileName)
 		File.write((char *) & Dims, sizeof(u32));
 		for (u32 i = 0; i < Dims; ++ i)
 		{
-			Dims = GridDimensions[i];
-			File.write((char *) & Dims, sizeof(u32));
+			int Value = GridDimensions[i];
+			File.write((char *) & Value, sizeof(u32));
 		}
 
 		Dims = GridValues.size();
@@ -73,8 +73,9 @@ void SciDataManager::readFromFile(std::string const & FileName)
 			GridDimensions = new int[Dims];
 		for (u32 i = 0; i < Dims; ++ i)
 		{
-			File.read((char *) & Dims, sizeof(u32));
-			GridDimensions[i] = Dims;
+			int Value;
+			File.read((char *) & Value, sizeof(u32));
+			GridDimensions[i] = Value;
 		}
 		
 		File.read((char *) & Dims, sizeof(u32));
