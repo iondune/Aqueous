@@ -4,6 +4,11 @@
 #include "CLoadContext.h"
 
 
+CProgramContext::SScene::SScene()
+	: Camera(0), OrbitCamera(0), Timer(0.f),
+	LightObject(0), SkyBox(0), Terrain(0)
+{}
+
 CProgramContext::CProgramContext()
 	: GUIManager(0)
 {

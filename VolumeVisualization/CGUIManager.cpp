@@ -52,6 +52,9 @@ void CGUIManager::init()
 
 void CGUIManager::draw(bool const ClearAll)
 {
+	if (! ShowGUI)
+		return;
+
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	if (ClearAll)
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -209,10 +212,10 @@ void CGUIManager::resetVolumeRangeIndicator(SciDataParser * DataParser)
 	s << std::fixed;
 	s << "Value Range: ";
 	s << std::setprecision(1);
-	s << (MainState.VolumeSceneObject->Control.EmphasisLocation * (ValueRange.second - ValueRange.first) + ValueRange.first) / 100.f;
+	s << (CProgramContext::get().Scene.VolumeSceneObject->Control.EmphasisLocation * (ValueRange.second - ValueRange.first) + ValueRange.first) / 100.f;
 	s << " ± ";
 	s << std::setprecision(2);
-	s << (MainState.VolumeSceneObject->Control.LocalRange / 2.f * (ValueRange.second - ValueRange.first)) / 100.f;
+	s << (CProgramContext::get().Scene.VolumeSceneObject->Control.LocalRange / 2.f * (ValueRange.second - ValueRange.first)) / 100.f;
 	VolumeRangeIndicator->SetText(s.str());
 }
 

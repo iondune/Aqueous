@@ -11,40 +11,40 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 	case EKey::NUM_3:
 
 		if (! Event.Pressed)
-			Camera->setVelocity(200.f);
+			Context->Scene.Camera->setVelocity(200.f);
 
 		break;
 
 	case EKey::NUM_2:
 
 		if (! Event.Pressed)
-			Camera->setVelocity(40.f);
+			Context->Scene.Camera->setVelocity(40.f);
 
 		break;
 
 	case EKey::NUM_1:
 
 		if (! Event.Pressed)
-			Camera->setVelocity(2.5f);
+			Context->Scene.Camera->setVelocity(2.5f);
 
 		break;
 
 	case EKey::k:
 
-		Terrain->DebugHeight = Event.Pressed;
+		Context->Scene.Terrain->DebugHeight = Event.Pressed;
 		break;
 
 	case EKey::o:
 
 		if (! Event.Pressed)
-			Terrain->enableDebugData(EDebugData::Wireframe);
+			Context->Scene.Terrain->enableDebugData(EDebugData::Wireframe);
 
 		break;
 
 	case EKey::p:
 
 		if (! Event.Pressed)
-			Terrain->disableDebugData(EDebugData::Wireframe);
+			Context->Scene.Terrain->disableDebugData(EDebugData::Wireframe);
 
 		break;
 
@@ -52,9 +52,9 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 
 		if (! Event.Pressed)
 		{
-			GridObject->setVisible(! GridObject->isVisible());
+			Context->Scene.GridObject->setVisible(! Context->Scene.GridObject->isVisible());
 			s << "Point cloud object ";
-			if (GridObject->isVisible())
+			if (Context->Scene.GridObject->isVisible())
 				s << "enabled.";
 			else
 				s << "disabled.";
@@ -66,9 +66,9 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 
 		if (! Event.Pressed)
 		{
-			PointCloudObject->setVisible(! PointCloudObject->isVisible());
+			Context->Scene.PointCloudObject->setVisible(! Context->Scene.PointCloudObject->isVisible());
 			s << "Oct tree object ";
-			if (PointCloudObject->isVisible())
+			if (Context->Scene.PointCloudObject->isVisible())
 				s << "enabled.";
 			else
 				s << "disabled.";
@@ -80,9 +80,9 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 
 		if (! Event.Pressed)
 		{
-			SkyBox->setVisible(! SkyBox->isVisible());
+			Context->Scene.SkyBox->setVisible(! Context->Scene.SkyBox->isVisible());
 			s << "Skybox object ";
-			if (SkyBox->isVisible())
+			if (Context->Scene.SkyBox->isVisible())
 				s << "enabled.";
 			else
 				s << "disabled.";
@@ -95,9 +95,9 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 
 		if (! Event.Pressed)
 		{
-			GUIManager->ShowGUI = ! GUIManager->ShowGUI;
+			Context->GUIManager->ShowGUI = ! Context->GUIManager->ShowGUI;
 			s << "GUI ";
-			if (GUIManager->ShowGUI)
+			if (Context->GUIManager->ShowGUI)
 				s << "enabled.";
 			else
 				s << "disabled.";
@@ -111,15 +111,15 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 		if (! Event.Pressed)
 		{
 			s << "Volume mode: ";
-			if (VolumeSceneObject->ShowVolume)
+			if (Context->Scene.VolumeSceneObject->ShowVolume)
 			{
-				VolumeSceneObject->ShowVolume = 0;
+				Context->Scene.VolumeSceneObject->ShowVolume = 0;
 				s << "disabled.";
 				addConsoleMessage(s.str());
 			}
 			else
 			{
-				VolumeSceneObject->ShowVolume = 2;
+				Context->Scene.VolumeSceneObject->ShowVolume = 2;
 				s << "enabled.";
 				addConsoleMessage(s.str());
 			}
@@ -131,9 +131,9 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 
 		if (! Event.Pressed)
 		{
-			if (VolumeSceneObject->ShowVolume != 1)
+			if (Context->Scene.VolumeSceneObject->ShowVolume != 1)
 				addConsoleMessage("Volume mode: legacy.");
-			VolumeSceneObject->ShowVolume = 1;
+			Context->Scene.VolumeSceneObject->ShowVolume = 1;
 		}
 
 		break;
@@ -141,14 +141,14 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 	case EKey::m:
 		if (! Event.Pressed)
 		{
-			SceneManager->setActiveCamera(OrbitCamera);
+			SceneManager->setActiveCamera(Context->Scene.OrbitCamera);
 		}
 		break;
 		
 	case EKey::n:
 		if (! Event.Pressed)
 		{
-			SceneManager->setActiveCamera(Camera);
+			SceneManager->setActiveCamera(Context->Scene.Camera);
 		}
 		break;
 

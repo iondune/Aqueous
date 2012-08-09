@@ -1,40 +1,34 @@
 #include "CMainState.h"
 
 
-
 CMainState::CMainState()
-	: Camera(0), Scale(1), Mode(0), BindLightPosition(LightPosition), VolumeSceneObject(0)
+	: Scale(1), Mode(0)
 {}
-
-SVector3f LightPosition;
 
 void CMainState::begin()
 {
-	init();
-	initScene();
-
-	loadData();
-
 	Context->GUIManager->setup();
 
-	Timer = 0.f;
+	Context->Scene.Timer = 0.f;
 }
 
 #include <iomanip>
 
 void CMainState::OnRenderStart(float const Elapsed)
 {
-	Camera->update(Elapsed);
+	CProgramContext::SScene & Scene = Context->Scene;
 
-	Timer += Elapsed * 0.16f;
+	Scene.Camera->update(Elapsed);
+
+	Scene.Timer += Elapsed * 0.16f;
 
 	float const Distance = 4.f;
-	OrbitCamera->setPosition(SVector3f(sin(Timer)*Distance, 2.3f, cos(Timer)*Distance));
-	OrbitCamera->setLookAtTarget(SVector3f());
+	Scene.OrbitCamera->setPosition(SVector3f(sin(Scene.Timer)*Distance, 2.3f, cos(Scene.Timer)*Distance));
+	Scene.OrbitCamera->setLookAtTarget(SVector3f());
 
-	::LightPosition = LightPosition = SceneManager->getActiveCamera()->getPosition() + SVector3f(0, 0, 0);
+	Scene.LightPosition = SceneManager->getActiveCamera()->getPosition() + SVector3f(0, 0, 0);
 
-	LightObject->setTranslation(LightPosition);
+	Scene.LightObject->setTranslation(Scene.LightPosition);
 	
 
 	SceneManager->drawAll();
@@ -64,17 +58,17 @@ void CMainState::OnRenderStart(float const Elapsed)
 
 
 
-		GUIManager->Console->update(Elapsed);
+		Context->GUIManager->Console->update(Elapsed);
 
 
-		GUIManager->getCanvas()->RenderCanvas();
+		Context->GUIManager->getCanvas()->RenderCanvas();
 	}
 
 	CApplication::get().swapBuffers();
-	Terrain->DoCameraUpdate = false;
+	Scene.Terrain->DoCameraUpdate = false;
 }
 
 void CMainState::addConsoleMessage(std::string const & Message, Gwen::Color const & Color)
 {
-	GUIManager->Console->addMessage(Message, Color);
+	Context->GUIManager->Console->addMessage(Message, Color);
 }

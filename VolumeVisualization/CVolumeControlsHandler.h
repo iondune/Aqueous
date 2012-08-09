@@ -16,6 +16,7 @@
 
 #include "CVolumeSceneObject.h"
 #include "CMainState.h"
+#include "CProgramContext.h"
 
 
 class CVolumeControlsHandler : public Gwen::Event::Handler
@@ -27,13 +28,13 @@ public:
 	CMainState & MainState;
 
 	CVolumeControlsHandler()
-		: VolumeControl(CMainState::get().VolumeSceneObject->Control), MainState(CMainState::get())
+		: VolumeControl(CProgramContext::get().Scene.VolumeSceneObject->Control), MainState(CMainState::get())
 	{}
 
 	void resetVolumeRange()
 	{
 		if (VolumeControl.Mode)
-			CMainState::get().getGUIManager().resetVolumeRangeIndicator(MainState.DataParser[2]);
+			CProgramContext::get().GUIManager->resetVolumeRangeIndicator(CProgramContext::get().DataParser[2]);
 	}
 
 	void OnEmphasisSlider(Gwen::Controls::Base * Control)
@@ -104,7 +105,7 @@ public:
 		else
 		{
 			VolumeControl.Mode = 0;
-			CMainState::get().getGUIManager().clearVolumeRangeIndicator();
+			CProgramContext::get().GUIManager->clearVolumeRangeIndicator();
 		}
 	}
 };

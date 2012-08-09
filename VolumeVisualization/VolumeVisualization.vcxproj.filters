@@ -17,9 +17,6 @@
     <ClCompile Include="CMainState.EventHandling.cpp">
       <Filter>MainState</Filter>
     </ClCompile>
-    <ClCompile Include="CMainState.InitFunctions.cpp">
-      <Filter>MainState</Filter>
-    </ClCompile>
     <ClCompile Include="CMainState.MouseTracking.cpp">
       <Filter>MainState</Filter>
     </ClCompile>

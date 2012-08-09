@@ -17,6 +17,7 @@ protected:
 	void addLabel(std::wstring const & Label);
 
 	void loadData();
+	void loadScene();
 
 public:
 

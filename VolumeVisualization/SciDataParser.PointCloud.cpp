@@ -1,6 +1,6 @@
 #include "SciDataParser.h"
 
-#include "CMainState.h"
+#include "CProgramContext.h"
 
 void SciDataParser::createPointCloudObjects(bool FromRaw, ISceneObject * RootParent, SVector3f const DataScale, IColorMapper * ColorMapper)
 {
@@ -15,7 +15,7 @@ void SciDataParser::createPointCloudObjects(bool FromRaw, ISceneObject * RootPar
 	for (auto it = DataSet.Values.begin(); it != DataSet.Values.end(); ++ it)
 	{
 		CMeshSceneObject * Object = new CMeshSceneObject();
-		Object->setMesh(CMainState::get().Cube);
+		Object->setMesh(CProgramContext::get().Scene.Cube);
 		Object->setParent(RootParent);
 		Object->setScale(SVector3f(1.f) / 32.f);
 
@@ -29,8 +29,8 @@ void SciDataParser::createPointCloudObjects(bool FromRaw, ISceneObject * RootPar
 		mat.DiffuseColor = ColorMapper->getColor(* it);
 		Object->setMaterial(mat);
 
-		Object->addUniform("uLightPosition", boost::shared_ptr<IUniform const>(& CMainState::get().BindLightPosition));
-		Object->setShader(ERenderPass::Default, CMainState::get().Shader);
+		Object->addUniform("uLightPosition", BindUniform(CProgramContext::get().Scene.LightPosition));
+		Object->setShader(ERenderPass::Default, CProgramContext::get().Scene.Shader);
 		Object->setCullingEnabled(false);
 	}
 }

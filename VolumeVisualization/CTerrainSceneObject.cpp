@@ -1,6 +1,6 @@
 #include "CTerrainSceneObject.h"
 
-#include <CApplication.h>
+#include "CProgramContext.h"
 
 
 CTerrainSceneObject::SLayer::SLayer(int const i)
@@ -215,8 +215,6 @@ float const CTerrainSceneObject::getTerrainHeight(SVector2f const & Position)
 	return 0.f;
 }
 
-extern SVector3f LightPosition;
-
 bool CTerrainSceneObject::draw(IScene const * const Scene, ERenderPass const Pass, bool const CullingEnabled)
 {
 	if (! ISceneObject::draw(Scene, Pass, CullingEnabled))
@@ -227,7 +225,7 @@ bool CTerrainSceneObject::draw(IScene const * const Scene, ERenderPass const Pas
 	Context.uniform("uViewMatrix", SceneManager.getActiveCamera()->getViewMatrix());
 	Context.uniform("uProjMatrix", SceneManager.getActiveCamera()->getProjectionMatrix());
 	Context.uniform("uLayerWidth", (float) Size);
-	Context.uniform("uLightPosition", LightPosition);
+	Context.uniform("uLightPosition", CProgramContext::get().Scene.LightPosition);
 	int DebugHeightUniform = DebugHeight ? 1 : 0;
 	Context.uniform("uDebugHeight", DebugHeightUniform);
 	Context.bindBufferObject("aPosition", VertexData.getHandle(), 2);

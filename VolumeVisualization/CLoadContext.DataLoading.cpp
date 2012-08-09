@@ -20,7 +20,7 @@ void CLoadContext::loadData()
 		COxygenColorMapper o("d1");
 		sf.AcceptedRange = Range(-9999999.0, 9999999.0);
 
-		Context->DataParser[0]->createPointCloudObjects(true, CMainState::get().PointCloudObject, SVector3f(-3.f, 0.8f, 3.f), & o);
+		Context->DataParser[0]->createPointCloudObjects(true, Context->Scene.PointCloudObject, SVector3f(-3.f, 0.8f, 3.f), & o);
 		//DataParser[0]->createGridDataFromRawValues(FullRange, 5.0, "d1");
 		//DataParser[0]->createPointCloudObjects(false, SoupObject, SVector3f(3.f), & sf);
 		//DataParser[0]->createVolumeFromGridValues(& sf);
@@ -53,7 +53,7 @@ void CLoadContext::loadData()
 		//COxygenLocalizedColorMapper l;
 			
 		Context->DataParser[2]->createVolumeFromGridValues(& o);
-		Context->DataParser[2]->createPointCloudObjects(false, CMainState::get().GridObject, SVector3f(3.f), & o);
-		CMainState::get().VolumeSceneObject->VolumeHandle = Context->DataParser[2]->VolumeHandle;
+		Context->DataParser[2]->createPointCloudObjects(false, Context->Scene.GridObject, SVector3f(3.f), & o);
+		Context->Scene.VolumeSceneObject->VolumeHandle = Context->DataParser[2]->VolumeHandle;
 	}
 }

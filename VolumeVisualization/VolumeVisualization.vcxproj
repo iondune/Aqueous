@@ -98,7 +98,6 @@
     <ClCompile Include="CMainState.cpp" />
     <ClCompile Include="CLoadContext.DataLoading.cpp" />
     <ClCompile Include="CMainState.EventHandling.cpp" />
-    <ClCompile Include="CMainState.InitFunctions.cpp" />
     <ClCompile Include="CMainState.MouseTracking.cpp" />
     <ClCompile Include="CProgramContext.cpp" />
     <ClCompile Include="CTerrainSceneObject.cpp" />

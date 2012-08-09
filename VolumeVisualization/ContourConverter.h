@@ -129,7 +129,7 @@ public:
 				{
 					auto getColorDistance = [](SColorc const & c1, SColorc const & c2) -> float
 					{
-						return abs(c1.Red - c2.Red) + abs(c1.Green - c2.Green) + abs(c1.Blue - c2.Blue);
+						return (float) abs(c1.Red - c2.Red) + abs(c1.Green - c2.Green) + abs(c1.Blue - c2.Blue);
 					};
 
 					float MinDistance = getColorDistance(Color, SColorc(0, 0, 0)) * 0.5f;
@@ -359,7 +359,7 @@ public:
 					DataCopy[x * 3 + y * Image->getWidth() * 3 + 2] = 
 					Data[x * 3 + y * Image->getWidth() * 3 + 0] = 
 					Data[x * 3 + y * Image->getWidth() * 3 + 1] = 
-					Data[x * 3 + y * Image->getWidth() * 3 + 2] = Value * 255;
+					Data[x * 3 + y * Image->getWidth() * 3 + 2] = (unsigned char) (Value * 255);
 				}
 				else if (equals(Class->Value, 0.f))
 				{
@@ -403,7 +403,7 @@ public:
 					
 					DataCopy[x * 3 + y * Image->getWidth() * 3 + 0] = 
 					DataCopy[x * 3 + y * Image->getWidth() * 3 + 1] = 
-					DataCopy[x * 3 + y * Image->getWidth() * 3 + 2] = Value * 255;
+					DataCopy[x * 3 + y * Image->getWidth() * 3 + 2] = (unsigned char) (Value * 255);
 				}
 				
 				
