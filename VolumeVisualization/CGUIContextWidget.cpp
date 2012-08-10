@@ -4,6 +4,7 @@
 
 
 CGUIContextWidget::CGUIContextWidget()
-	: CGUIWidget(CProgramContext::get().GUIContext)
+	: GUIContext(0), CGUIWidget(CProgramContext::get().GUIContext)
 {
+	GUIContext = CProgramContext::get().GUIContext;
 }

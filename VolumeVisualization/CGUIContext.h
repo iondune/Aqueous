@@ -5,6 +5,7 @@
 
 #include "CGUIConsoleWidget.h"
 #include "CGUITitleLabelsWidget.h"
+#include "CGUIVolumeControlWidget.h"
 
 
 class CMainState;
@@ -18,6 +19,7 @@ protected:
 	
 	CGUIConsoleWidget * Console;
 	CGUITitleLabelsWidget * TitleLabels;
+	CGUIVolumeControlWidget * VolumeControl;
 
 public:
 
@@ -27,6 +29,7 @@ public:
 	
 	CGUIConsoleWidget * getConsole();
 	CGUITitleLabelsWidget * getTitleLabels();
+	CGUIVolumeControlWidget * getVolumeControl();
 
 };
 

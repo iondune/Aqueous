@@ -96,6 +96,7 @@
     <ClCompile Include="CGUIContext.cpp" />
     <ClCompile Include="CGUIContextWidget.cpp" />
     <ClCompile Include="CGUIManager.cpp" />
+    <ClCompile Include="CGUIVolumeControlWidget.cpp" />
     <ClCompile Include="CGUIWidget.cpp" />
     <ClCompile Include="CGwenEventForwarder.cpp" />
     <ClCompile Include="CLoadContext.cpp" />
@@ -126,6 +127,7 @@
     <ClInclude Include="CGUIContext.h" />
     <ClInclude Include="CGUIContextWidget.h" />
     <ClInclude Include="CGUIManager.h" />
+    <ClInclude Include="CGUIVolumeControlWidget.h" />
     <ClInclude Include="CGUIWidget.h" />
     <ClInclude Include="CGwenEventForwarder.h" />
     <ClInclude Include="CLoadContext.h" />
@@ -139,7 +141,6 @@
     <ClInclude Include="CSpectrumColorMapper.h" />
     <ClInclude Include="CTerrainSceneObject.h" />
     <ClInclude Include="CGUITitleLabelsWidget.h" />
-    <ClInclude Include="CVolumeControlsHandler.h" />
     <ClInclude Include="CVolumeSceneObject.h" />
     <ClInclude Include="IColorMapper.h" />
     <ClInclude Include="Libraries.h" />

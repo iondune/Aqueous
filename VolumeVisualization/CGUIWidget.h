@@ -9,7 +9,7 @@
 
 class CGUIManager;
 
-class CGUIWidget
+class CGUIWidget : public Gwen::Event::Handler
 {
 
 protected:
@@ -20,7 +20,7 @@ public:
 
 	CGUIWidget(CGUIManager * Manager);
 
-	virtual void update(float const Elapsed);
+	virtual void update(f32 const Elapsed);
 
 };
 

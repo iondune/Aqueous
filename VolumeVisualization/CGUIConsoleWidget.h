@@ -21,7 +21,7 @@ public:
 
 	void setSize(int const size);
 
-	void update(float const Elapsed);
+	virtual void update(f32 const Elapsed);
 
 	void addMessage(std::string const & Message, Gwen::Color const & Color = Gwen::Color(255, 255, 255, 255));
 

@@ -81,6 +81,9 @@
     <ClCompile Include="CGUITitleLabelsWidget.cpp">
       <Filter>GUI\Widgets</Filter>
     </ClCompile>
+    <ClCompile Include="CGUIVolumeControlWidget.cpp">
+      <Filter>GUI\Widgets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CMainState.h">
@@ -132,9 +135,6 @@
       <Filter>MainState\Terrain</Filter>
     </ClInclude>
     <ClInclude Include="Libraries.h" />
-    <ClInclude Include="CVolumeControlsHandler.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
     <ClInclude Include="CVolumeSceneObject.h">
       <Filter>MainState\Volume</Filter>
     </ClInclude>
@@ -162,6 +162,9 @@
       <Filter>GUI\Widgets\Base</Filter>
     </ClInclude>
     <ClInclude Include="CGUITitleLabelsWidget.h">
+      <Filter>GUI\Widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="CGUIVolumeControlWidget.h">
       <Filter>GUI\Widgets</Filter>
     </ClInclude>
   </ItemGroup>
