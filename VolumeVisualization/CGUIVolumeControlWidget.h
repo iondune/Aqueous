@@ -2,6 +2,7 @@
 #define _CGUIVOLUMECONTROLWIDGET_H_INCLUDED_
 
 #include "CGUIContextWidget.h"
+#include <Gwen/Controls/WindowControl.h>
 
 #include "CVolumeSceneObject.h"
 
@@ -11,10 +12,13 @@ class CMainState;
 class CGUIVolumeControlWidget : public CGUIContextWidget
 {
 
-public:
-
 	CVolumeSceneObject::SControl & VolumeControl;
 	CMainState & MainState;
+
+	Gwen::Controls::WindowControl * Window;
+	Gwen::Controls::Button * EnableButton;
+
+public:
 
 	CGUIVolumeControlWidget();
 	void resetVolumeRange();
@@ -32,6 +36,9 @@ public:
 	void OnSetZAxis(Gwen::Controls::Base * Control);
 
 	void OnVolumeMode(Gwen::Controls::Base * Control);
+	void OnToggleVolume(Gwen::Controls::Base * Control);
+
+	void enable();
 
 };
 

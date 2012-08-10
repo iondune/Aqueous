@@ -11,14 +11,14 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 	case EKey::NUM_3:
 
 		if (! Event.Pressed)
-			Context->Scene.Camera->setVelocity(200.f);
+			Context->Scene.Camera->setVelocity(50.f);
 
 		break;
 
 	case EKey::NUM_2:
 
 		if (! Event.Pressed)
-			Context->Scene.Camera->setVelocity(40.f);
+			Context->Scene.Camera->setVelocity(10.f);
 
 		break;
 
@@ -32,6 +32,11 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 	case EKey::k:
 
 		Context->Scene.Terrain->DebugHeight = Event.Pressed;
+		break;
+
+	case EKey::v:
+
+		Context->GUIContext->getVolumeControl()->enable();
 		break;
 
 	case EKey::o:
@@ -87,27 +92,6 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 			else
 				s << "disabled.";
 			addConsoleMessage(s.str());
-		}
-
-		break;
-
-	case EKey::v:
-
-		if (! Event.Pressed)
-		{
-			s << "Volume mode: ";
-			if (Context->Scene.VolumeSceneObject->ShowVolume)
-			{
-				Context->Scene.VolumeSceneObject->ShowVolume = 0;
-				s << "disabled.";
-				addConsoleMessage(s.str());
-			}
-			else
-			{
-				Context->Scene.VolumeSceneObject->ShowVolume = 2;
-				s << "enabled.";
-				addConsoleMessage(s.str());
-			}
 		}
 
 		break;
