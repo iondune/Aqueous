@@ -20,6 +20,7 @@ void CGUIContext::setup()
 	addWidget(VolumeControl = new CGUIVolumeControlWidget());
 	new CGUITerrainControlWidget();
 	new CGUIGlyphControlWidget();
+	new CGUIControlPanelWidget();
 	
 	Console->addMessage("GUI Initialized.");
 	Console->addMessage("Starting program...", Gwen::Colors::Red);

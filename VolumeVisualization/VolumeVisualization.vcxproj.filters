@@ -90,6 +90,9 @@
     <ClCompile Include="CGUITerrainControlWidget.cpp">
       <Filter>GUI\Widgets</Filter>
     </ClCompile>
+    <ClCompile Include="CGUIControlPanelWidget.cpp">
+      <Filter>GUI\Widgets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CMainState.h">
@@ -177,6 +180,9 @@
       <Filter>GUI\Widgets</Filter>
     </ClInclude>
     <ClInclude Include="CGUITerrainControlWidget.h">
+      <Filter>GUI\Widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="CGUIControlPanelWidget.h">
       <Filter>GUI\Widgets</Filter>
     </ClInclude>
   </ItemGroup>

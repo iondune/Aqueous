@@ -95,6 +95,7 @@
     <ClCompile Include="CGUIConsoleWidget.cpp" />
     <ClCompile Include="CGUIContext.cpp" />
     <ClCompile Include="CGUIContextWidget.cpp" />
+    <ClCompile Include="CGUIControlPanelWidget.cpp" />
     <ClCompile Include="CGUIGlyphControlWidget.cpp" />
     <ClCompile Include="CGUIManager.cpp" />
     <ClCompile Include="CGUITerrainControlWidget.cpp" />
@@ -128,6 +129,7 @@
     <ClInclude Include="CGUIConsoleWidget.h" />
     <ClInclude Include="CGUIContext.h" />
     <ClInclude Include="CGUIContextWidget.h" />
+    <ClInclude Include="CGUIControlPanelWidget.h" />
     <ClInclude Include="CGUIGlyphControlWidget.h" />
     <ClInclude Include="CGUIManager.h" />
     <ClInclude Include="CGUITerrainControlWidget.h" />

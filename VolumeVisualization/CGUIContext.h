@@ -8,6 +8,7 @@
 #include "CGUIVolumeControlWidget.h"
 #include "CGUITerrainControlWidget.h"
 #include "CGUIGlyphControlWidget.h"
+#include "CGUIControlPanelWidget.h"
 
 
 class CMainState;
