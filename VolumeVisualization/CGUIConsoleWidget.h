@@ -19,11 +19,9 @@ public:
 
 	CGUIConsoleWidget(int const size = 5);
 
-	void setSize(int const size);
-
+	virtual void setSize(int const size);
 	virtual void update(f32 const Elapsed);
-
-	void addMessage(std::string const & Message, Gwen::Color const & Color = Gwen::Color(255, 255, 255, 255));
+	virtual void addMessage(std::string const & Message, Gwen::Color const & Color = Gwen::Color(255, 255, 255, 255));
 
 };
 
