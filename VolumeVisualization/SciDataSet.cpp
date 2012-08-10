@@ -38,7 +38,7 @@ std::pair<double, double> SciDataSet::getValueRange(std::string const & Field, d
 			Mean += it->getField(Field);
 	}
 	Mean /= (double) (Count);
-	printf("Data mean is %e with %d exclusions ", Mean, DataCopy.size() - Count);
+	//printf("Data mean is %e with %d exclusions ", Mean, DataCopy.size() - Count);
 
 	double StdDeviation = 0;
 	for (auto it = DataCopy.begin(); it != DataCopy.end(); ++ it)
@@ -49,7 +49,7 @@ std::pair<double, double> SciDataSet::getValueRange(std::string const & Field, d
 	}
 	StdDeviation /= (double) (Count - 1);
 	//StdDeviation = sqrt(StdDeviation);
-	printf("- stdev is %e\n", StdDeviation);
+	//printf("- stdev is %e\n", StdDeviation);
 
 	double Min = std::numeric_limits<double>::max(), Max = -std::numeric_limits<double>::max();
 

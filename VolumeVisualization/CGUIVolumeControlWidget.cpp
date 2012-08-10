@@ -4,9 +4,7 @@
 #include "CMainState.h"
 
 #include <Gwen/Controls.h>
-#include <Gwen/Controls/HorizontalSlider.h>
 #include <Gwen/Controls/ComboBox.h>
-#include <Gwen/Controls/WindowControl.h>
 
 
 CGUIVolumeControlWidget::CGUIVolumeControlWidget()
@@ -33,6 +31,7 @@ CGUIVolumeControlWidget::CGUIVolumeControlWidget()
 		Gwen::Controls::HorizontalSlider * EmphasisSlider = new Gwen::Controls::HorizontalSlider(Window);
 		EmphasisSlider->SetBounds(10, 30 + 45, 300, 40);
 		EmphasisSlider->SetRange(0.f, 1.f);
+		EmphasisSlider->SetValue(0.5f);
 
 		SliderLabel = new Gwen::Controls::Label(Window);
 		SliderLabel->SetFont(GUIManager->getRegularFont());
@@ -40,9 +39,10 @@ CGUIVolumeControlWidget::CGUIVolumeControlWidget()
 		SliderLabel->SetBounds(10, 70 + 45, 300, 40);
 		SliderLabel->SetTextColor(Gwen::Color(50, 20, 20, 215));
 
-		Gwen::Controls::HorizontalSlider * IntensitySlider = new Gwen::Controls::HorizontalSlider(Window);
+		IntensitySlider = new Gwen::Controls::HorizontalSlider(Window);
 		IntensitySlider->SetBounds(10, 90 + 45, 300, 40);
-		IntensitySlider->SetRange(10.f, 0.5f);
+		IntensitySlider->SetRange(0.5f, 10.f);
+		IntensitySlider->SetValue(1.f);
 
 		SliderLabel = new Gwen::Controls::Label(Window);
 		SliderLabel->SetFont(GUIManager->getRegularFont());
@@ -53,6 +53,7 @@ CGUIVolumeControlWidget::CGUIVolumeControlWidget()
 		Gwen::Controls::HorizontalSlider * LocalRangeSlider = new Gwen::Controls::HorizontalSlider(Window);
 		LocalRangeSlider->SetBounds(10, 150 + 45, 300, 40);
 		LocalRangeSlider->SetRange(0.05f, 0.5f);
+		LocalRangeSlider->SetValue(0.1f);
 
 		SliderLabel = new Gwen::Controls::Label(Window);
 		SliderLabel->SetFont(GUIManager->getRegularFont());
@@ -63,6 +64,7 @@ CGUIVolumeControlWidget::CGUIVolumeControlWidget()
 		Gwen::Controls::HorizontalSlider * MinimumAlphaSlider = new Gwen::Controls::HorizontalSlider(Window);
 		MinimumAlphaSlider->SetBounds(10, 210 + 45, 300, 40);
 		MinimumAlphaSlider->SetRange(0.0f, 0.5f);
+		MinimumAlphaSlider->SetValue(0.1f);
 
 		// Wire Up Events
 		EmphasisSlider->onValueChanged.Add(		this,	& CGUIVolumeControlWidget::OnEmphasisSlider);
@@ -82,7 +84,7 @@ CGUIVolumeControlWidget::CGUIVolumeControlWidget()
 
 		Gwen::Controls::Button * pButton2 = new Gwen::Controls::Button(Window);
 		pButton2->SetBounds(80, 120 + 120 + 10 + 35 + 45, 200, 25);
-		pButton2->SetText("Reset Alpha Intensity");
+		pButton2->SetText("Reset Volume Opacity");
 
 		Gwen::Controls::ComboBox * VolumeMode = new Gwen::Controls::ComboBox(Window);
 		VolumeMode->SetBounds(80, 120 + 120 + 45 + 35 + 45, 200, 25);
@@ -156,6 +158,7 @@ void CGUIVolumeControlWidget::OnResetVolume(Gwen::Controls::Base * Control)
 
 void CGUIVolumeControlWidget::OnResetAlpha(Gwen::Controls::Base * Control)
 {
+	IntensitySlider->SetValue(1.f);
 	VolumeControl.AlphaIntensity = 1.f;
 }
 

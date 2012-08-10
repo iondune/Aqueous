@@ -21,6 +21,7 @@ public:
 
 	struct SControl
 	{
+		// ToDo: Provide actual ranges and use for volume control widget
 		int Mode;
 		SVector3f SliceAxis;
 		float LocalRange;

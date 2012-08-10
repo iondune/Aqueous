@@ -3,6 +3,7 @@
 
 #include "CGUIContextWidget.h"
 #include <Gwen/Controls/WindowControl.h>
+#include <Gwen/Controls/HorizontalSlider.h>
 
 #include "CVolumeSceneObject.h"
 
@@ -17,6 +18,7 @@ class CGUIVolumeControlWidget : public CGUIContextWidget
 
 	Gwen::Controls::WindowControl * Window;
 	Gwen::Controls::Button * EnableButton;
+	Gwen::Controls::HorizontalSlider * IntensitySlider;
 
 public:
 
