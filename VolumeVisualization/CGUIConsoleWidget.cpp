@@ -3,11 +3,10 @@
 #include "CProgramContext.h"
 
 
-CGUIConsoleWidget::CGUIConsoleWidget(Gwen::Controls::Canvas * canvas, int const size)
-	: Canvas(canvas), Size(0), Accumulator(0.f),
-	CGUIWidget(CProgramContext::get().GUIContext)
+CGUIConsoleWidget::CGUIConsoleWidget(int const size)
+	: Size(0), Accumulator(0.f)
 {
-	setSize(5);
+	setSize(size);
 }
 
 void CGUIConsoleWidget::setSize(int const size)
@@ -22,7 +21,7 @@ void CGUIConsoleWidget::setSize(int const size)
 		if (Messages[i])
 			continue;
 
-		Messages[i] = new Gwen::Controls::Label(Canvas);
+		Messages[i] = new Gwen::Controls::Label(GUIManager->getCanvas());
 		Messages[i]->SetPos(20, 900 - 50 - 25 * i);
 		Messages[i]->SetSize(1500, 30);
 	}

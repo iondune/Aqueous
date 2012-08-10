@@ -14,40 +14,18 @@
 #include <Gwen/Controls/HorizontalSlider.h>
 #include <Gwen/Controls/ComboBox.h>
 
-#include <iomanip>
-
 
 CGUIContext::CGUIContext()
 	: MainState(CMainState::get())
-{
-}
+{}
 
 void CGUIContext::setup()
 {
 	Canvas->RemoveAllChildren();
 	Canvas->SetDrawBackground(false);
 
-	Console = new CGUIConsoleWidget(Canvas);
-
-	// Top Label
-	Gwen::Controls::Label * BigLabel = new Gwen::Controls::Label(Canvas);
-	BigLabel->SetFont(LargeFont);
-	BigLabel->SetText(Gwen::UnicodeString(L"Dataset: Hopavågen Bay - June 12, 2010 19:48 [T1]") + Gwen::UnicodeString());
-	BigLabel->SetBounds(10, 10, 1590, 300);
-	BigLabel->SetTextColor(Gwen::Color(235, 255, 235, 215));
-
-	// Second Label
-	Gwen::Controls::Label * MediumLabel = new Gwen::Controls::Label(Canvas);
-	MediumLabel->SetFont(MediumFont);
-	MediumLabel->SetText(Gwen::UnicodeString(L"Current Field: DO2 (microMol/L)") + Gwen::UnicodeString());
-	MediumLabel->SetBounds(20, 70, 600, 300);
-	MediumLabel->SetTextColor(Gwen::Color(235, 235, 255, 215));
-
-	// Volume Range Label
-	VolumeRangeIndicator = new Gwen::Controls::Label(Canvas);
-	VolumeRangeIndicator->SetFont(MediumFont);
-	VolumeRangeIndicator->SetBounds(20, 110, 600, 300);
-	VolumeRangeIndicator->SetTextColor(Gwen::Color(255, 235, 235, 215));
+	Console = new CGUIConsoleWidget();
+	TitleLabels = new CGUITitleLabelsWidget();
 
 	// Event Handler
 	CVolumeControlsHandler * Handler = new CVolumeControlsHandler();
@@ -151,26 +129,12 @@ void CGUIContext::setup()
 	Console->addMessage("Starting program...", Gwen::Colors::Red);
 }
 
-void CGUIContext::resetVolumeRangeIndicator(SciDataManager * DataManager)
-{
-	Range ValueRange = DataManager->GridValues.getValueRange("o1", 5.0);
-	std::wstringstream s;
-	s << std::fixed;
-	s << "Value Range: ";
-	s << std::setprecision(1);
-	s << (CProgramContext::get().Scene.VolumeSceneObject->Control.EmphasisLocation * (ValueRange.second - ValueRange.first) + ValueRange.first) / 100.f;
-	s << " ± ";
-	s << std::setprecision(2);
-	s << (CProgramContext::get().Scene.VolumeSceneObject->Control.LocalRange / 2.f * (ValueRange.second - ValueRange.first)) / 100.f;
-	VolumeRangeIndicator->SetText(s.str());
-}
-
-void CGUIContext::clearVolumeRangeIndicator()
-{
-	VolumeRangeIndicator->SetText(L"");
-}
-
 CGUIConsoleWidget * CGUIContext::getConsole()
 {
 	return Console;
+}
+
+CGUITitleLabelsWidget * CGUIContext::getTitleLabels()
+{
+	return TitleLabels;
 }

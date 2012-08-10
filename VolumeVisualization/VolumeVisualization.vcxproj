@@ -94,6 +94,7 @@
   <ItemGroup>
     <ClCompile Include="CGUIConsoleWidget.cpp" />
     <ClCompile Include="CGUIContext.cpp" />
+    <ClCompile Include="CGUIContextWidget.cpp" />
     <ClCompile Include="CGUIManager.cpp" />
     <ClCompile Include="CGUIWidget.cpp" />
     <ClCompile Include="CGwenEventForwarder.cpp" />
@@ -104,6 +105,7 @@
     <ClCompile Include="CMainState.MouseTracking.cpp" />
     <ClCompile Include="CProgramContext.cpp" />
     <ClCompile Include="CTerrainSceneObject.cpp" />
+    <ClCompile Include="CGUITitleLabelsWidget.cpp" />
     <ClCompile Include="CVolumeSceneObject.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include=".\SciDataParserSimpleTXT.cpp" />
@@ -122,6 +124,7 @@
   <ItemGroup>
     <ClInclude Include="CGUIConsoleWidget.h" />
     <ClInclude Include="CGUIContext.h" />
+    <ClInclude Include="CGUIContextWidget.h" />
     <ClInclude Include="CGUIManager.h" />
     <ClInclude Include="CGUIWidget.h" />
     <ClInclude Include="CGwenEventForwarder.h" />
@@ -135,7 +138,7 @@
     <ClInclude Include=".\CSingleFieldColorMapper.h" />
     <ClInclude Include="CSpectrumColorMapper.h" />
     <ClInclude Include="CTerrainSceneObject.h" />
-    <ClInclude Include="CTitleLabelsComponent.h" />
+    <ClInclude Include="CGUITitleLabelsWidget.h" />
     <ClInclude Include="CVolumeControlsHandler.h" />
     <ClInclude Include="CVolumeSceneObject.h" />
     <ClInclude Include="IColorMapper.h" />

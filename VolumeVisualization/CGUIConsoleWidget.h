@@ -4,21 +4,20 @@
 #include <Gwen/Gwen.h>
 #include <Gwen/Controls.h>
 
-#include "CGUIWidget.h"
+#include "CGUIContextWidget.h"
 
 
-class CGUIConsoleWidget : public CGUIWidget
+class CGUIConsoleWidget : public CGUIContextWidget
 {
 
 	int Size;
 	float Accumulator;
 	std::vector<Gwen::Color> MessageColors;
 	std::vector<Gwen::Controls::Label *> Messages;
-	Gwen::Controls::Canvas * Canvas;
 
 public:
 
-	CGUIConsoleWidget(Gwen::Controls::Canvas * canvas, int const size = 5);
+	CGUIConsoleWidget(int const size = 5);
 
 	void setSize(int const size);
 

@@ -74,28 +74,26 @@ void CLoadContext::run()
 	GUIManager->draw(true);
 	CApplication::get().swapBuffers();
 	
+	setProgress(0.2f);
 	addLabel(L"Initializing System...");
 	Application.loadEngines();
 	MainState.load();
 	CGwenEventForwarder * Forwarder = new CGwenEventForwarder(GUIManager->getCanvas());
-	setProgress(0.2f);
-
+	
+	setProgress(0.4f);
 	addLabel(L"Loading Scene Shaders...");
 	Application.getSceneManager().init();
-	setProgress(0.4f);
-
+	
+	setProgress(0.6f);
 	addLabel(L"Loading Scene Objects...");
 	loadScene();
-	setProgress(0.6f);
-
+	
+	setProgress(0.8f);
 	addLabel(L"Loading Science Data...");
 	loadData();
-	setProgress(0.8f);
-
-	std::cout << "Loading complete.. " << std::flush;
-	addLabel(L"Application is Starting...");
-	std::cout << "launching application." << std::endl;
+	
 	setProgress(1.f);
+	addLabel(L"Application is Starting...");
 }
 
 void CLoadContext::loadScene()

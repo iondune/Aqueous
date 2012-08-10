@@ -2,10 +2,11 @@
 #define _CGUICONTEXT_H_INCLUDED_
 
 #include "CGUIManager.h"
+
 #include "CGUIConsoleWidget.h"
+#include "CGUITitleLabelsWidget.h"
 
 
-class SciDataManager;
 class CMainState;
 
 class CGUIContext : public CGUIManager
@@ -14,21 +15,18 @@ class CGUIContext : public CGUIManager
 protected:
 
 	CMainState & MainState;
-
-	Gwen::Controls::Label * VolumeRangeIndicator;
 	
 	CGUIConsoleWidget * Console;
+	CGUITitleLabelsWidget * TitleLabels;
 
 public:
 
 	CGUIContext();
 
 	void setup();
-
-	void resetVolumeRangeIndicator(SciDataManager * DataManager);
-	void clearVolumeRangeIndicator();
 	
 	CGUIConsoleWidget * getConsole();
+	CGUITitleLabelsWidget * getTitleLabels();
 
 };
 

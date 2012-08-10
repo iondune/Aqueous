@@ -69,11 +69,17 @@
     <ClCompile Include="CGUIContext.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
-    <ClCompile Include="CGUIWidget.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
     <ClCompile Include="CGUIConsoleWidget.cpp">
-      <Filter>GUI</Filter>
+      <Filter>GUI\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="CGUIWidget.cpp">
+      <Filter>GUI\Widgets\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="CGUIContextWidget.cpp">
+      <Filter>GUI\Widgets\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="CGUITitleLabelsWidget.cpp">
+      <Filter>GUI\Widgets</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -135,9 +141,6 @@
     <ClInclude Include="CGUIManager.h">
       <Filter>GUI</Filter>
     </ClInclude>
-    <ClInclude Include="CTitleLabelsComponent.h">
-      <Filter>GUI\Components</Filter>
-    </ClInclude>
     <ClInclude Include="ContourConverter.h" />
     <ClInclude Include="CProgramContext.h" />
     <ClInclude Include="CLoadContext.h">
@@ -149,11 +152,17 @@
     <ClInclude Include="CGUIContext.h">
       <Filter>GUI</Filter>
     </ClInclude>
-    <ClInclude Include="CGUIWidget.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
     <ClInclude Include="CGUIConsoleWidget.h">
-      <Filter>GUI</Filter>
+      <Filter>GUI\Widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="CGUIWidget.h">
+      <Filter>GUI\Widgets\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="CGUIContextWidget.h">
+      <Filter>GUI\Widgets\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="CGUITitleLabelsWidget.h">
+      <Filter>GUI\Widgets</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -171,9 +180,6 @@
     </Filter>
     <Filter Include="GUI">
       <UniqueIdentifier>{e2f73951-6082-4d3a-bcd6-3f07b8ec41d4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GUI\Components">
-      <UniqueIdentifier>{69559bbe-9f50-47e8-809c-55d622e1b426}</UniqueIdentifier>
     </Filter>
     <Filter Include="MainState\RFBInterpolator">
       <UniqueIdentifier>{b020b00f-9710-43b6-a8a2-ea0d2483664b}</UniqueIdentifier>
@@ -195,6 +201,12 @@
     </Filter>
     <Filter Include="LoadContext">
       <UniqueIdentifier>{00619c69-b650-43a9-8d5f-0f1ceedc408e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI\Widgets">
+      <UniqueIdentifier>{69559bbe-9f50-47e8-809c-55d622e1b426}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI\Widgets\Base">
+      <UniqueIdentifier>{319dbfd4-c269-4bfe-8df0-1977bf4ca203}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -12,6 +12,8 @@ class CGUIManager;
 class CGUIWidget
 {
 
+protected:
+
 	CGUIManager * GUIManager;
 
 public:
