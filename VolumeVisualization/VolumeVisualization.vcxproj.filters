@@ -84,6 +84,12 @@
     <ClCompile Include="CGUIVolumeControlWidget.cpp">
       <Filter>GUI\Widgets</Filter>
     </ClCompile>
+    <ClCompile Include="CGUIGlyphControlWidget.cpp">
+      <Filter>GUI\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="CGUITerrainControlWidget.cpp">
+      <Filter>GUI\Widgets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CMainState.h">
@@ -165,6 +171,12 @@
       <Filter>GUI\Widgets</Filter>
     </ClInclude>
     <ClInclude Include="CGUIVolumeControlWidget.h">
+      <Filter>GUI\Widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="CGUIGlyphControlWidget.h">
+      <Filter>GUI\Widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="CGUITerrainControlWidget.h">
       <Filter>GUI\Widgets</Filter>
     </ClInclude>
   </ItemGroup>

@@ -50,7 +50,7 @@ void CGwenEventForwarder::OnMouseEvent(SMouseEvent const & Event)
 	case SMouseEvent::EType::Move:
 
 		Canvas->InputMouseMoved(Event.Location.X, Event.Location.Y, Event.Movement.X, Event.Movement.Y);
-
+		// TODO: OnUncaughtMouseEvent...
 		break;
 			
 	case SMouseEvent::EType::Click:

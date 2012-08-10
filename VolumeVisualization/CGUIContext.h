@@ -6,6 +6,8 @@
 #include "CGUIConsoleWidget.h"
 #include "CGUITitleLabelsWidget.h"
 #include "CGUIVolumeControlWidget.h"
+#include "CGUITerrainControlWidget.h"
+#include "CGUIGlyphControlWidget.h"
 
 
 class CMainState;
