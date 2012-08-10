@@ -92,7 +92,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CGUIConsoleWidget.cpp" />
+    <ClCompile Include="CGUIContext.cpp" />
     <ClCompile Include="CGUIManager.cpp" />
+    <ClCompile Include="CGUIWidget.cpp" />
     <ClCompile Include="CGwenEventForwarder.cpp" />
     <ClCompile Include="CLoadContext.cpp" />
     <ClCompile Include="CMainState.cpp" />
@@ -117,8 +120,10 @@
     <ClCompile Include="SciDataTree.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CConsole.h" />
+    <ClInclude Include="CGUIConsoleWidget.h" />
+    <ClInclude Include="CGUIContext.h" />
     <ClInclude Include="CGUIManager.h" />
+    <ClInclude Include="CGUIWidget.h" />
     <ClInclude Include="CGwenEventForwarder.h" />
     <ClInclude Include="CLoadContext.h" />
     <ClInclude Include="CMainState.h" />

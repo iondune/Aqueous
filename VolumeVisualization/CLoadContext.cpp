@@ -19,8 +19,14 @@ void CLoadContext::addLabel(std::wstring const & Label)
 	//std::cout << "6" << std::endl;
 
 	GUIManager->draw(true);
+	CApplication::get().swapBuffers();
 
 	LabelHeight += 40;
+}
+
+void CLoadContext::setProgress(f32 const progress)
+{
+	Progress->SetValue(progress);
 }
 
 CLoadContext::CLoadContext()
@@ -41,7 +47,7 @@ void CLoadContext::run()
 	CApplication & Application = CApplication::get();
 	CMainState & MainState = CMainState::get();
 
-	GUIManager = Context->GUIManager;
+	GUIManager = Context->GUIContext;
 	Canvas = GUIManager->getCanvas();
 	
 	// Init Canvas
@@ -54,25 +60,42 @@ void CLoadContext::run()
 	BigLabel->SetText(Gwen::UnicodeString(L"Loading..."));
 	BigLabel->SetBounds(10, 10, 1590, 300);
 	BigLabel->SetTextColor(Gwen::Color(255, 255, 255, 84));
-	GUIManager->draw(true);
+	
+	Gwen::Controls::Label * MediumLabel = new Gwen::Controls::Label(Canvas);
+	MediumLabel->SetFont(GUIManager->getMediumFont());
+	MediumLabel->SetText(Gwen::UnicodeString(L"Progress:"));
+	MediumLabel->SetBounds(500, 100, 500, 300);
+	MediumLabel->SetTextColor(Gwen::Color(255, 255, 255, 84));
 
+	Progress = new Gwen::Controls::ProgressBar(Canvas);
+	Progress->SetBounds(500, 150, 500, 50);
+	setProgress(0.1f);
+
+	GUIManager->draw(true);
+	CApplication::get().swapBuffers();
+	
 	addLabel(L"Initializing System...");
 	Application.loadEngines();
 	MainState.load();
 	CGwenEventForwarder * Forwarder = new CGwenEventForwarder(GUIManager->getCanvas());
+	setProgress(0.2f);
 
 	addLabel(L"Loading Scene Shaders...");
 	Application.getSceneManager().init();
+	setProgress(0.4f);
 
 	addLabel(L"Loading Scene Objects...");
 	loadScene();
-	
+	setProgress(0.6f);
+
 	addLabel(L"Loading Science Data...");
 	loadData();
-	
+	setProgress(0.8f);
+
 	std::cout << "Loading complete.. " << std::flush;
 	addLabel(L"Application is Starting...");
 	std::cout << "launching application." << std::endl;
+	setProgress(1.f);
 }
 
 void CLoadContext::loadScene()

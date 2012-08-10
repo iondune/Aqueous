@@ -5,7 +5,7 @@
 #include <ionScene.h>
 #include <ionWindow.h>
 
-#include "CGUIManager.h"
+#include "CGUIContext.h"
 
 #include "SciDataManager.h"
 #include "SciDataTree.h"
@@ -55,7 +55,7 @@ public:
 	};
 
 	SScene Scene;
-	CGUIManager * GUIManager;
+	CGUIContext * GUIContext;
 	SciDataManager * DataManager;
 
 

@@ -91,21 +91,6 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 
 		break;
 
-	case EKey::g:
-
-		if (! Event.Pressed)
-		{
-			Context->GUIManager->ShowGUI = ! Context->GUIManager->ShowGUI;
-			s << "GUI ";
-			if (Context->GUIManager->ShowGUI)
-				s << "enabled.";
-			else
-				s << "disabled.";
-			addConsoleMessage(s.str());
-		}
-
-		break;
-
 	case EKey::v:
 
 		if (! Event.Pressed)

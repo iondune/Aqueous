@@ -33,7 +33,7 @@ public:
 	void resetVolumeRange()
 	{
 		if (VolumeControl.Mode)
-			CProgramContext::get().GUIManager->resetVolumeRangeIndicator(CProgramContext::get().DataManager);
+			CProgramContext::get().GUIContext->resetVolumeRangeIndicator(CProgramContext::get().DataManager);
 	}
 
 	void OnEmphasisSlider(Gwen::Controls::Base * Control)
@@ -104,7 +104,7 @@ public:
 		else
 		{
 			VolumeControl.Mode = 0;
-			CProgramContext::get().GUIManager->clearVolumeRangeIndicator();
+			CProgramContext::get().GUIContext->clearVolumeRangeIndicator();
 		}
 	}
 };

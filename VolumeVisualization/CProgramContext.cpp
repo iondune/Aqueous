@@ -10,7 +10,7 @@ CProgramContext::SScene::SScene()
 {}
 
 CProgramContext::CProgramContext()
-	: GUIManager(0), DataManager(0)
+	: GUIContext(0), DataManager(0)
 {}
 
 void CProgramContext::init()
@@ -22,8 +22,8 @@ void CProgramContext::init()
 
 	// Create GUI Engine
 	std::cout << "GUI Engine is initializing..." << std::endl;
-	GUIManager = new CGUIManager();
-	GUIManager->init();
+	GUIContext = new CGUIContext();
+	GUIContext->init();
 
 	// Begin loading
 	CLoadContext LoadContext;

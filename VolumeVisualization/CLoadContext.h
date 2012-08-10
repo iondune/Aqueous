@@ -3,6 +3,8 @@
 
 #include "CProgramContext.h"
 
+#include <Gwen/Controls/ProgressBar.h>
+
 
 class CLoadContext : public CContextObject<CProgramContext>
 {
@@ -11,10 +13,12 @@ protected:
 
 	CGUIManager * GUIManager;
 	Gwen::Controls::Canvas * Canvas;
+	Gwen::Controls::ProgressBar * Progress;
 
 	s32 LabelHeight, Indent;
 
 	void addLabel(std::wstring const & Label);
+	void setProgress(f32 const Progress);
 
 	void loadData();
 	void loadScene();

@@ -66,6 +66,15 @@
     <ClCompile Include="SciDataManager.File.cpp">
       <Filter>MainState\Data Management</Filter>
     </ClCompile>
+    <ClCompile Include="CGUIContext.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CGUIWidget.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CGUIConsoleWidget.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CMainState.h">
@@ -117,9 +126,6 @@
       <Filter>MainState\Terrain</Filter>
     </ClInclude>
     <ClInclude Include="Libraries.h" />
-    <ClInclude Include="CConsole.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
     <ClInclude Include="CVolumeControlsHandler.h">
       <Filter>GUI</Filter>
     </ClInclude>
@@ -139,6 +145,15 @@
     </ClInclude>
     <ClInclude Include="SciDataManager.h">
       <Filter>MainState\Data Management</Filter>
+    </ClInclude>
+    <ClInclude Include="CGUIContext.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="CGUIWidget.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="CGUIConsoleWidget.h">
+      <Filter>GUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

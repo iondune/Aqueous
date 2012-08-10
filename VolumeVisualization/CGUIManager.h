@@ -1,53 +1,49 @@
 #ifndef _CGUIMANAGER_H_INCLUDED_
 #define _CGUIMANAGER_H_INCLUDED_
 
+#include <ionTypes.h>
+#include <ionWindow.h>
+
 #include <Gwen/Controls.h>
 
-#include "CConsole.h"
+#include "CGUIWidget.h"
+
 
 class CApplication;
-class CMainState;
-class SciDataManager;
-
 
 class CGUIManager
 {
 
+protected:
+
 	CApplication & Application;
-	CMainState & MainState;
 
-	// GUI Canvas
 	Gwen::Controls::Canvas * Canvas;
-
-	Gwen::Controls::Label * VolumeRangeIndicator;
 	
 	Gwen::Font * LargeFont;
 	Gwen::Font * MediumFont;
 	Gwen::Font * RegularFont;
 
+	std::vector<CGUIWidget *> Widgets;
+
 public:
-
-	// Settings
-	bool ShowGUI;
-	
-	CConsole * Console;
-
 
 	CGUIManager();
 
 	void init();
-	void setup();
 
-	void draw(bool ClearAll = false);
-
-	void resetVolumeRangeIndicator(SciDataManager * DataManager);
-	void clearVolumeRangeIndicator();
+	void draw(f32 const Elapsed, bool ClearAll = false);
 
 	Gwen::Controls::Canvas * getCanvas();
 	
 	Gwen::Font * getLargeFont();
 	Gwen::Font * getMediumFont();
 	Gwen::Font * getRegularFont();
+
+	
+	void addWidget(CGUIWidget * Widget);
+	void removeWidget(CGUIWidget * Widget);
+	void removeAllWidgets();
 
 };
 
