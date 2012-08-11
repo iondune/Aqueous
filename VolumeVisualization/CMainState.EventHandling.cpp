@@ -39,6 +39,11 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 		Context->GUIContext->getVolumeControl()->enable();
 		break;
 
+	case EKey::g:
+
+		Context->GUIContext->getGlyphControl()->enable();
+		break;
+
 	case EKey::o:
 
 		if (! Event.Pressed)
@@ -51,34 +56,6 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 		if (! Event.Pressed)
 			Context->Scene.Terrain->disableDebugData(EDebugData::Wireframe);
 
-		break;
-
-	case EKey::x:
-
-		if (! Event.Pressed)
-		{
-			Context->Scene.GridObject->setVisible(! Context->Scene.GridObject->isVisible());
-			s << "Point cloud object ";
-			if (Context->Scene.GridObject->isVisible())
-				s << "enabled.";
-			else
-				s << "disabled.";
-			addConsoleMessage(s.str());
-		}
-		break;
-
-	case EKey::z:
-
-		if (! Event.Pressed)
-		{
-			Context->Scene.PointCloudObject->setVisible(! Context->Scene.PointCloudObject->isVisible());
-			s << "Oct tree object ";
-			if (Context->Scene.PointCloudObject->isVisible())
-				s << "enabled.";
-			else
-				s << "disabled.";
-			addConsoleMessage(s.str());
-		}
 		break;
 
 	case EKey::c:
