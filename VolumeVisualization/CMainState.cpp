@@ -35,7 +35,8 @@ void CMainState::OnRenderStart(float const Elapsed)
 	Context->GUIContext->draw(Elapsed, false);
 
 	CApplication::get().swapBuffers();
-	Scene.Terrain->DoCameraUpdate = false;
+	if (Scene.Terrain->isVisible())
+		Scene.Terrain->DoCameraUpdate = false;
 }
 
 void CMainState::addConsoleMessage(std::string const & Message, Gwen::Color const & Color)

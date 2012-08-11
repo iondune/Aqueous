@@ -17,7 +17,7 @@ CGUIVolumeControlWidget::CGUIVolumeControlWidget()
 
 	EnableButton = new Gwen::Controls::Button(Window);
 	EnableButton->SetBounds(15, 10, 290, 25);
-	EnableButton->SetText("Enable Volume View");
+	EnableButton->SetText("Disable Volume View");
 	EnableButton->onPress.Add(this, & CGUIVolumeControlWidget::OnToggleVolume);
 
 	// Slider Panel

@@ -123,7 +123,7 @@ void CLoadContext::loadScene()
 	Scene.LightPosition = SVector3f(0.2f, 0.4f, 0.2f);
 
 	// Cameras
-	Scene.Camera = new CCameraControl(SVector3f(1.f, 0.3f, 1.5f));
+	Scene.Camera = new CCameraControl(SVector3f(1.f, 0.3f, 4.5f));
 	Scene.Camera->setProjection(60.f, 16.f/9.f, 0.1f, 1000.f);
 	Scene.Camera->recalculateViewMatrix();
 	Scene.Camera->setVelocity(1.9f);
@@ -140,6 +140,7 @@ void CLoadContext::loadScene()
 	Scene.SkyBox->setScale(SVector3f(28.f));
 	Scene.SkyBox->setTexture(0, "Space.bmp");
 	Scene.SkyBox->setCullingEnabled(false);
+	Scene.SkyBox->setVisible(false);
 
 	// Light Tracker
 	//Scene.LightObject = SceneManager->addMeshSceneObject(Scene.Cube, CShaderLoader::loadShader("Simple"), 0);
@@ -166,8 +167,10 @@ void CLoadContext::loadScene()
 	Scene.Terrain->setScale(Scale);
 	Scene.Terrain->setTranslation(SVector3f(2.026057f, -0.5f, -4.140311f));
 	Scene.Terrain->setRotation(SVector3f(0.f, 10.f, 0.f));
+	Scene.Terrain->setVisible(false);
 
 	// Volume
 	Scene.VolumeSceneObject = new CVolumeSceneObject();
 	SceneManager->addSceneObject(Scene.VolumeSceneObject);
+	Scene.VolumeSceneObject->ShowVolume = 2;
 }
