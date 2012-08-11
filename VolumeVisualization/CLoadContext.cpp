@@ -124,7 +124,7 @@ void CLoadContext::loadScene()
 
 	// Cameras
 	Scene.Camera = new CCameraControl(SVector3f(1.f, 0.3f, 4.5f));
-	Scene.Camera->setProjection(60.f, 16.f/9.f, 0.1f, 1000.f);
+	Scene.Camera->setProjection(60.f, CApplication::get().getAspectRatio(), 0.1f, 1000.f);
 	Scene.Camera->recalculateViewMatrix();
 	Scene.Camera->setVelocity(1.9f);
 	SceneManager->setActiveCamera(Scene.Camera);

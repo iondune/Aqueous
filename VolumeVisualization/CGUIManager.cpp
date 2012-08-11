@@ -28,7 +28,7 @@ void CGUIManager::init()
 	skin->SetRender(pRenderer);
 	skin->Init("DefaultSkin.png");
 	skin->SetDefaultFont(L"OpenSans.ttf", 14.f);
-	LargeFont = LoadFont(L"OpenSans.ttf", 48.f);
+	LargeFont = LoadFont(L"OpenSans.ttf", 40.f);
 	MediumFont = LoadFont(L"OpenSans.ttf", 32.f);
 	RegularFont = LoadFont(L"OpenSans.ttf", 14.f);
 

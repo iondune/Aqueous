@@ -22,7 +22,7 @@ void CGUIConsoleWidget::setSize(int const size)
 			continue;
 
 		Messages[i] = new Gwen::Controls::Label(GUIManager->getCanvas());
-		Messages[i]->SetPos(20, 900 - 50 - 25 * i);
+		Messages[i]->SetPos(20, CApplication::get().getWindowSize().Y - 50 - 25 * i);
 		Messages[i]->SetSize(1500, 30);
 	}
 }
