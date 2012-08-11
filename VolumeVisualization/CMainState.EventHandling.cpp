@@ -64,7 +64,7 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 		// Terrain Wireframe //
 		///////////////////////
 
-	case EKey::o:
+	/*case EKey::o:
 
 		if (! Event.Pressed)
 			Context->Scene.Terrain->enableDebugData(EDebugData::Wireframe);
@@ -76,7 +76,7 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 		if (! Event.Pressed)
 			Context->Scene.Terrain->disableDebugData(EDebugData::Wireframe);
 
-		break;
+		break;*/
 
 		
 		////////////
