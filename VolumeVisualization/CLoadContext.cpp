@@ -149,7 +149,7 @@ void CLoadContext::loadScene()
 	Scene.Terrain = new CTerrainSceneObject();
 	SceneManager->addSceneObject(Scene.Terrain);
 	Scene.Terrain->setCullingEnabled(false);
-	Scene.Terrain->setScale(SVector3f(0.0186f));
+	Scene.Terrain->setScale(SVector3f(0.0186f) * 2.f);
 	SVector3f Scale = Scene.Terrain->getScale();
 	Scale.X *= -1;
 	Scene.Terrain->setScale(Scale);

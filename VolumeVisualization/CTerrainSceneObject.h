@@ -8,7 +8,7 @@
 class CTerrainSceneObject : public ISceneObject
 {
 
-	static int const Size = 1024;
+	static int const Size = 512;
 	static int const HeightmapSize = Size + 1;
 	static int const LayerCount = 1;
 
