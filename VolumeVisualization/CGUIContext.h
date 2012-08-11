@@ -23,6 +23,9 @@ protected:
 	CGUIConsoleWidget * Console;
 	CGUITitleLabelsWidget * TitleLabels;
 	CGUIVolumeControlWidget * VolumeControl;
+	CGUITerrainControlWidget * TerrainControl;
+	CGUIGlyphControlWidget * GlyphControl;
+	CGUIControlPanelWidget * ControlPanel;
 
 public:
 
@@ -33,6 +36,9 @@ public:
 	CGUIConsoleWidget * getConsole();
 	CGUITitleLabelsWidget * getTitleLabels();
 	CGUIVolumeControlWidget * getVolumeControl();
+	CGUITerrainControlWidget * getTerrainControl();
+	CGUIGlyphControlWidget * getGlyphControl();
+	CGUIControlPanelWidget * getControlPanel();
 
 };
 

@@ -18,9 +18,9 @@ void CGUIContext::setup()
 	addWidget(Console = new CGUIConsoleWidget());
 	addWidget(TitleLabels = new CGUITitleLabelsWidget());
 	addWidget(VolumeControl = new CGUIVolumeControlWidget());
-	new CGUITerrainControlWidget();
-	new CGUIGlyphControlWidget();
-	new CGUIControlPanelWidget();
+	addWidget(TerrainControl = new CGUITerrainControlWidget());
+	addWidget(GlyphControl = new CGUIGlyphControlWidget());
+	addWidget(ControlPanel = new CGUIControlPanelWidget());
 	
 	Console->addMessage("GUI Initialized.");
 	Console->addMessage("Starting program...", Gwen::Colors::Red);
@@ -39,4 +39,19 @@ CGUITitleLabelsWidget * CGUIContext::getTitleLabels()
 CGUIVolumeControlWidget * CGUIContext::getVolumeControl()
 {
 	return VolumeControl;
+}
+
+CGUITerrainControlWidget * CGUIContext::getTerrainControl()
+{
+	return TerrainControl;
+}
+
+CGUIGlyphControlWidget * CGUIContext::getGlyphControl()
+{
+	return GlyphControl;
+}
+
+CGUIControlPanelWidget * CGUIContext::getControlPanel()
+{
+	return ControlPanel;
 }

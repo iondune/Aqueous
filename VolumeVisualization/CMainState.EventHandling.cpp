@@ -29,9 +29,9 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 
 		break;
 
-	case EKey::k:
-
-		Context->Scene.Terrain->DebugHeight = Event.Pressed;
+	case EKey::t:
+		
+		Context->GUIContext->getTerrainControl()->enable();
 		break;
 
 	case EKey::v:
@@ -129,7 +129,7 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 		}
         break;
 
-    case EKey::t:
+    case EKey::k:
         if (! Event.Pressed)
 		{
 			Mode = 1;
