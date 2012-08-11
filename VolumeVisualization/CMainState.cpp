@@ -28,7 +28,7 @@ void CMainState::OnRenderStart(float const Elapsed)
 
 	Scene.LightPosition = SceneManager->getActiveCamera()->getPosition() + SVector3f(0, 0, 0);
 
-	Scene.LightObject->setTranslation(Scene.LightPosition);
+	//Scene.LightObject->setTranslation(Scene.LightPosition);
 	
 
 	SceneManager->drawAll();

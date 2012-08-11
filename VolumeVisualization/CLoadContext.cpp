@@ -131,8 +131,8 @@ void CLoadContext::loadScene()
 	Scene.SkyBox->setCullingEnabled(false);
 
 	// Light Tracker
-	Scene.LightObject = SceneManager->addMeshSceneObject(Scene.Cube, CShaderLoader::loadShader("Simple"), 0);
-	Scene.LightObject->setScale(SVector3f(0.09f));
+	//Scene.LightObject = SceneManager->addMeshSceneObject(Scene.Cube, CShaderLoader::loadShader("Simple"), 0);
+	//Scene.LightObject->setScale(SVector3f(0.09f));
 
 	// Container Objects
 	Scene.PointCloudObject = new ISceneObject();
