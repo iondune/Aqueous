@@ -19,7 +19,7 @@ CGUITerrainControlWidget::CGUITerrainControlWidget()
 	EnableButton = new Gwen::Controls::Button(Window);
 	EnableButton->SetBounds(15, 10, 290, 25);
 	EnableButton->SetText("Disable Terrain");
-	//EnableButton->onPress.Add(this, & CGUIVolumeControlWidget::OnToggleVolume);
+	EnableButton->onPress.Add(this, & CGUITerrainControlWidget::OnToggleTerrain);
 
 	// Slider Panel
 	{
@@ -29,13 +29,15 @@ CGUITerrainControlWidget::CGUITerrainControlWidget()
 		SliderLabel->SetBounds(10, 10 + 45, 300, 40);
 		SliderLabel->SetTextColor(Gwen::Color(50, 20, 20, 215));
 
-		Gwen::Controls::Button * pButtonX = new Gwen::Controls::Button(Window);
-		pButtonX->SetBounds(15, 10 + 45 + 25, 140, 25);
-		pButtonX->SetText("Elevation (Greyscale)");
+		Gwen::Controls::Button * ElevationButton = new Gwen::Controls::Button(Window);
+		ElevationButton->SetBounds(15, 10 + 45 + 25, 140, 25);
+		ElevationButton->SetText("Elevation (Greyscale)");
+		ElevationButton->onPress.Add(this, & CGUITerrainControlWidget::OnSelectElevation);
 
-		Gwen::Controls::Button * pButtonY = new Gwen::Controls::Button(Window);
-		pButtonY->SetBounds(140 + 15 + 10, 10 + 45 + 25, 140, 25);
-		pButtonY->SetText("GoogleMaps (Color)");
+		Gwen::Controls::Button * ColorButton = new Gwen::Controls::Button(Window);
+		ColorButton->SetBounds(140 + 15 + 10, 10 + 45 + 25, 140, 25);
+		ColorButton->SetText("GoogleMaps (Color)");
+		ColorButton->onPress.Add(this, & CGUITerrainControlWidget::OnSelectColor);
 
 		// Wire Up Events
 		//EmphasisSlider->onValueChanged.Add(		this,	& CGUIVolumeControlWidget::OnEmphasisSlider);
@@ -43,6 +45,36 @@ CGUITerrainControlWidget::CGUITerrainControlWidget()
 		//MinimumAlphaSlider->onValueChanged.Add(	this,	& CGUIVolumeControlWidget::OnMinimumAlphaSlider);
 		//LocalRangeSlider->onValueChanged.Add(	this,	& CGUIVolumeControlWidget::OnLocalRangeSlider);
 	}
+}
+
+void CGUITerrainControlWidget::OnToggleTerrain(Gwen::Controls::Base * Control)
+{
+	CProgramContext * Context = & CProgramContext::get();
+
+	if (Context->Scene.Terrain->isVisible())
+	{
+		Context->Scene.Terrain->setVisible(false);
+		GUIContext->getConsole()->addMessage("Terrain View Disabled");
+		EnableButton->SetText("Enable Terrain");
+	}
+	else
+	{
+		Context->Scene.Terrain->setVisible(true);
+		GUIContext->getConsole()->addMessage("Terrain View Enabled");
+		EnableButton->SetText("Disable Terrain");
+	}
+}
+
+void CGUITerrainControlWidget::OnSelectElevation(Gwen::Controls::Base * Control)
+{
+	CProgramContext * Context = & CProgramContext::get();
+	Context->Scene.Terrain->DebugHeight = true;
+}
+
+void CGUITerrainControlWidget::OnSelectColor(Gwen::Controls::Base * Control)
+{
+	CProgramContext * Context = & CProgramContext::get();
+	Context->Scene.Terrain->DebugHeight = false;
 }
 
 void CGUITerrainControlWidget::enable()

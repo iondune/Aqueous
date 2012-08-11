@@ -198,11 +198,6 @@ void CGUIVolumeControlWidget::OnVolumeMode(Gwen::Controls::Base * Control)
 	}
 }
 
-void CGUIVolumeControlWidget::enable()
-{
-	Window->SetHidden(false);
-}
-
 void CGUIVolumeControlWidget::OnToggleVolume(Gwen::Controls::Base * Control)
 {
 	CProgramContext * Context = & CProgramContext::get();
@@ -219,4 +214,9 @@ void CGUIVolumeControlWidget::OnToggleVolume(Gwen::Controls::Base * Control)
 		GUIContext->getConsole()->addMessage("Volume View Enabled");
 		EnableButton->SetText("Disable Volume View");
 	}
+}
+
+void CGUIVolumeControlWidget::enable()
+{
+	Window->SetHidden(false);
 }

@@ -22,6 +22,10 @@ public:
 
 	CGUITerrainControlWidget();
 
+	void OnToggleTerrain(Gwen::Controls::Base * Control);
+	void OnSelectElevation(Gwen::Controls::Base * Control);
+	void OnSelectColor(Gwen::Controls::Base * Control);
+
 	void enable();
 
 };
