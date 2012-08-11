@@ -16,21 +16,18 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 
 		if (! Event.Pressed)
 			Context->Scene.Camera->setVelocity(50.f);
-
 		break;
 
 	case EKey::NUM_2:
 
 		if (! Event.Pressed)
 			Context->Scene.Camera->setVelocity(10.f);
-
 		break;
 
 	case EKey::NUM_1:
 
 		if (! Event.Pressed)
 			Context->Scene.Camera->setVelocity(2.5f);
-
 		break;
 
 
@@ -40,17 +37,20 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 
 	case EKey::t:
 		
-		Context->GUIContext->getTerrainControl()->toggle();
+		if (! Event.Pressed)
+			Context->GUIContext->getTerrainControl()->toggle();
 		break;
 
 	case EKey::v:
 
-		Context->GUIContext->getVolumeControl()->toggle();
+		if (! Event.Pressed)
+			Context->GUIContext->getVolumeControl()->toggle();
 		break;
 
 	case EKey::g:
 
-		Context->GUIContext->getGlyphControl()->toggle();
+		if (! Event.Pressed)
+			Context->GUIContext->getGlyphControl()->toggle();
 		break;
 		
 
@@ -92,7 +92,7 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 
 		break;
 
-	case EKey::b:
+	/*case EKey::b:
 
 		if (! Event.Pressed)
 		{
@@ -101,9 +101,10 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 			Context->Scene.VolumeSceneObject->ShowVolume = 1;
 		}
 
-		break;
+		break;*/
 
-	case EKey::m:
+		// To Do : Camera control buttons
+	/*case EKey::m:
 		if (! Event.Pressed)
 		{
 			SceneManager->setActiveCamera(Context->Scene.OrbitCamera);
@@ -115,9 +116,10 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 		{
 			SceneManager->setActiveCamera(Context->Scene.Camera);
 		}
-		break;
+		break;*/
 
-    case EKey::r:
+		// To Do : Toolbox for scene repositioning
+    /*case EKey::r:
 		if (! Event.Pressed)
 		{
 			Mode = 0;
@@ -147,7 +149,7 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 			Mode = 3;
 			addConsoleMessage("Light translation mode enabled.");
 		}
-		break;
+		break;*/
 
     }
 }

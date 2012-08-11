@@ -40,7 +40,7 @@ void CMainState::OnMouseEvent(SMouseEvent const & Event)
 
 			if (CApplication::get().getEventManager().IsMouseDown[Event.Button.Left])
 			{
-				if (Mode == 0)
+				if (Mode == 0) // Rotation (axis vector)
 				{
 					glm::vec3 cross = glm::cross(LastVec, NewVec);
 					glm::vec4 axis(cross.x, cross.y, cross.z, 0);
@@ -64,7 +64,7 @@ void CMainState::OnMouseEvent(SMouseEvent const & Event)
 						}
 					}
 				}
-				else if (Mode == 1)
+				else if (Mode == 1) // Translate (terrain)
 				{
 					float const moveSpeed = 0.01f;
 					glm::vec4 trans(difX*moveSpeed, -difY*moveSpeed, 0, 0);
@@ -73,14 +73,18 @@ void CMainState::OnMouseEvent(SMouseEvent const & Event)
 					Translation.Y = Context->Scene.Terrain->getTranslation().Y;//trans.y;
 					Translation.Z += trans.z;
 					Context->Scene.Terrain->setTranslation(Translation);
+					printf("Translation: %f %f %f\n", Translation.X, Translation.Y, Translation.Z);
 
 				}
-				else if (Mode == 2)
+				else if (Mode == 2) // Scale (terrain)
 				{
-					float const scaleSpeed = 0.01f;
-					Scale = SVector3f(std::max(std::min(Scale.X + difX*scaleSpeed, 2.f), 0.1f));
+					float const scaleSpeed = 0.0001f;
+					Scale = SVector3f(std::max(std::min(Scale.X + difX*scaleSpeed, 0.05f), 0.001f));
+					//Scale.Y = 1.f;
+					Context->Scene.Terrain->setScale(Scale * vec3(-1, 1, 1));
+					printf("Scale: %f %f %f\n", Scale.X, Scale.Y, Scale.Z);
 				}
-				else if (Mode == 3)
+				else if (Mode == 3) // Translate (light)
 				{
 					float const moveSpeed = 0.01f;
 					glm::vec4 trans(difX*moveSpeed, -difY*moveSpeed, 0, 0);

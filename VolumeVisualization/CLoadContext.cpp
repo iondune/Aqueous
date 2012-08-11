@@ -126,7 +126,7 @@ void CLoadContext::loadScene()
 
 	// Backdrop/SkyCube
 	Scene.SkyBox = SceneManager->addMeshSceneObject(Scene.Cube, CShaderLoader::loadShader("DiffuseTexture"), 0);
-	Scene.SkyBox->setScale(SVector3f(20.f));
+	Scene.SkyBox->setScale(SVector3f(28.f));
 	Scene.SkyBox->setTexture(0, "Space.bmp");
 	Scene.SkyBox->setCullingEnabled(false);
 
@@ -149,11 +149,11 @@ void CLoadContext::loadScene()
 	Scene.Terrain = new CTerrainSceneObject();
 	SceneManager->addSceneObject(Scene.Terrain);
 	Scene.Terrain->setCullingEnabled(false);
-	Scene.Terrain->setScale(SVector3f(0.05f));
+	Scene.Terrain->setScale(SVector3f(0.0186f));
 	SVector3f Scale = Scene.Terrain->getScale();
 	Scale.X *= -1;
 	Scene.Terrain->setScale(Scale);
-	Scene.Terrain->setTranslation(SVector3f(-0.3f, -0.5f, -2.1f));
+	Scene.Terrain->setTranslation(SVector3f(2.026057f, -0.5f, -4.140311f));
 	Scene.Terrain->setRotation(SVector3f(0.f, 10.f, 0.f));
 
 	// Volume
