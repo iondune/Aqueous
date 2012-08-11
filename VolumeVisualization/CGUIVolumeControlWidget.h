@@ -40,7 +40,7 @@ public:
 	void OnVolumeMode(Gwen::Controls::Base * Control);
 	void OnToggleVolume(Gwen::Controls::Base * Control);
 
-	void enable();
+	void toggle();
 
 };
 

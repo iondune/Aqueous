@@ -77,7 +77,7 @@ void CGUITerrainControlWidget::OnSelectColor(Gwen::Controls::Base * Control)
 	Context->Scene.Terrain->DebugHeight = false;
 }
 
-void CGUITerrainControlWidget::enable()
+void CGUITerrainControlWidget::toggle()
 {
-	Window->SetHidden(false);
+	Window->SetHidden(Window->Visible());
 }

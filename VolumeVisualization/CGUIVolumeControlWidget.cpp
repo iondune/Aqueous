@@ -216,7 +216,7 @@ void CGUIVolumeControlWidget::OnToggleVolume(Gwen::Controls::Base * Control)
 	}
 }
 
-void CGUIVolumeControlWidget::enable()
+void CGUIVolumeControlWidget::toggle()
 {
-	Window->SetHidden(false);
+	Window->SetHidden(Window->Visible());
 }

@@ -26,7 +26,7 @@ public:
 	void OnSelectElevation(Gwen::Controls::Base * Control);
 	void OnSelectColor(Gwen::Controls::Base * Control);
 
-	void enable();
+	void toggle();
 
 };
 

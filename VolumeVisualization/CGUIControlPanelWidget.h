@@ -10,13 +10,14 @@ class CGUIControlPanelWidget : public CGUIContextWidget
 {
 
 	Gwen::Controls::WindowControl * Window;
-	Gwen::Controls::Button * EnableButton;
 
 public:
 
 	CGUIControlPanelWidget();
 
-	void enable();
+	void OnToggleTerrain(Gwen::Controls::Base * Control);
+	void OnToggleVolume(Gwen::Controls::Base * Control);
+	void OnToggleGlyph(Gwen::Controls::Base * Control);
 
 };
 

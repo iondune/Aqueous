@@ -81,7 +81,7 @@ void CGUIGlyphControlWidget::OnSelectGrid(Gwen::Controls::Base * Control)
 	EnableButton->SetText("Disable Glyph Visual");
 }
 
-void CGUIGlyphControlWidget::enable()
+void CGUIGlyphControlWidget::toggle()
 {
-	Window->SetHidden(false);
+	Window->SetHidden(Window->Visible());
 }

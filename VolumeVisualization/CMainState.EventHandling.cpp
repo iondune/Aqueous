@@ -8,6 +8,10 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
     switch (Event.Key)
     {
 
+		//////////////////
+		// Camera Speed //
+		//////////////////
+
 	case EKey::NUM_3:
 
 		if (! Event.Pressed)
@@ -29,20 +33,30 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 
 		break;
 
+
+		////////////////////
+		// Widget Control //
+		////////////////////
+
 	case EKey::t:
 		
-		Context->GUIContext->getTerrainControl()->enable();
+		Context->GUIContext->getTerrainControl()->toggle();
 		break;
 
 	case EKey::v:
 
-		Context->GUIContext->getVolumeControl()->enable();
+		Context->GUIContext->getVolumeControl()->toggle();
 		break;
 
 	case EKey::g:
 
-		Context->GUIContext->getGlyphControl()->enable();
+		Context->GUIContext->getGlyphControl()->toggle();
 		break;
+		
+
+		///////////////////////
+		// Terrain Wireframe //
+		///////////////////////
 
 	case EKey::o:
 
@@ -57,6 +71,11 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 			Context->Scene.Terrain->disableDebugData(EDebugData::Wireframe);
 
 		break;
+
+		
+		////////////
+		// Skybox //
+		////////////
 
 	case EKey::c:
 

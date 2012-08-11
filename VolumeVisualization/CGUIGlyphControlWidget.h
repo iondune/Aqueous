@@ -20,7 +20,7 @@ public:
 	void OnSelectPoint(Gwen::Controls::Base * Control);
 	void OnSelectGrid(Gwen::Controls::Base * Control);
 
-	void enable();
+	void toggle();
 
 };
 

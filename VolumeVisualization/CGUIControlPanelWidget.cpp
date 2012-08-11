@@ -16,44 +16,36 @@ CGUIControlPanelWidget::CGUIControlPanelWidget()
 	Window->SetTitle("Control Panel");
 	Window->SetClosable(false);
 
-	EnableButton = new Gwen::Controls::Button(Window);
+	Gwen::Controls::Button * EnableButton = new Gwen::Controls::Button(Window);
 	EnableButton->SetBounds(15, 10, 150, 35);
 	EnableButton->SetText("Volume Controls");
+	EnableButton->onPress.Add(this, & CGUIControlPanelWidget::OnToggleVolume);
 
 	EnableButton = new Gwen::Controls::Button(Window);
 	EnableButton->SetBounds(180, 10, 150, 35);
 	EnableButton->SetText("Terrain Controls");
+	EnableButton->onPress.Add(this, & CGUIControlPanelWidget::OnToggleTerrain);
 
 	EnableButton = new Gwen::Controls::Button(Window);
 	EnableButton->SetBounds(345, 10, 150, 35);
 	EnableButton->SetText("Glyph Controls");
-	//EnableButton->onPress.Add(this, & CGUIVolumeControlWidget::OnToggleVolume);
-
-	// Slider Panel
-	{
-		Gwen::Controls::Label * SliderLabel = new Gwen::Controls::Label(Window);
-		SliderLabel->SetFont(GUIManager->getRegularFont());
-		SliderLabel->SetText(L"Mode:");
-		SliderLabel->SetBounds(10, 10 + 45, 300, 40);
-		SliderLabel->SetTextColor(Gwen::Color(50, 20, 20, 215));
-
-		Gwen::Controls::Button * pButtonX = new Gwen::Controls::Button(Window);
-		pButtonX->SetBounds(15, 10 + 45 + 25, 140, 25);
-		pButtonX->SetText("Source Points");
-
-		Gwen::Controls::Button * pButtonY = new Gwen::Controls::Button(Window);
-		pButtonY->SetBounds(140 + 15 + 10, 10 + 45 + 25, 140, 25);
-		pButtonY->SetText("Grid Samples");
-
-		// Wire Up Events
-		//EmphasisSlider->onValueChanged.Add(		this,	& CGUIVolumeControlWidget::OnEmphasisSlider);
-		//IntensitySlider->onValueChanged.Add(	this,	& CGUIVolumeControlWidget::OnIntensitySlider);
-		//MinimumAlphaSlider->onValueChanged.Add(	this,	& CGUIVolumeControlWidget::OnMinimumAlphaSlider);
-		//LocalRangeSlider->onValueChanged.Add(	this,	& CGUIVolumeControlWidget::OnLocalRangeSlider);
-	}
+	EnableButton->onPress.Add(this, & CGUIControlPanelWidget::OnToggleGlyph);
 }
 
-void CGUIControlPanelWidget::enable()
+void CGUIControlPanelWidget::OnToggleTerrain(Gwen::Controls::Base * Control)
 {
-	Window->SetHidden(false);
+	CProgramContext * Context = & CProgramContext::get();
+	Context->GUIContext->getTerrainControl()->toggle();
+}
+
+void CGUIControlPanelWidget::OnToggleVolume(Gwen::Controls::Base * Control)
+{
+	CProgramContext * Context = & CProgramContext::get();
+	Context->GUIContext->getVolumeControl()->toggle();
+}
+
+void CGUIControlPanelWidget::OnToggleGlyph(Gwen::Controls::Base * Control)
+{
+	CProgramContext * Context = & CProgramContext::get();
+	Context->GUIContext->getGlyphControl()->toggle();
 }
