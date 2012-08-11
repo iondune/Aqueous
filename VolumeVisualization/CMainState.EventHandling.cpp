@@ -8,6 +8,12 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
     switch (Event.Key)
     {
 
+	case EKey::ESCAPE:
+
+		if (! Event.Pressed)
+			Application->close();
+		break;
+
 		//////////////////
 		// Camera Speed //
 		//////////////////
