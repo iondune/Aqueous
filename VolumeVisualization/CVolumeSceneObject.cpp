@@ -179,6 +179,7 @@ bool CVolumeSceneObject::draw(IScene const * const Scene, ERenderPass const Pass
 	else if (ShowVolume == 2)
 	{
 		glEnable(GL_CULL_FACE);
+		glDisable(GL_DEPTH_TEST);
 
 		glCullFace(GL_FRONT);
 		{
@@ -222,6 +223,7 @@ bool CVolumeSceneObject::draw(IScene const * const Scene, ERenderPass const Pass
 		}
 
 		glDisable(GL_CULL_FACE);
+		glEnable(GL_DEPTH_TEST);
 	}
 
 	return true;
