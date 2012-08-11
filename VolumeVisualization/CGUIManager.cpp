@@ -52,16 +52,17 @@ void CGUIManager::draw(f32 const Elapsed, bool const ClearAll)
 			glClear(GL_DEPTH_BUFFER_BIT);
 
 		glMatrixMode(GL_PROJECTION);
-
-		glLoadIdentity();
+			glLoadIdentity();
 			int left = 0, top = 0;
-			int right = 1600, bottom = 900;
-			glOrtho( left, right, bottom, top, -1.0, 1.0);
+			int right = Application.getWindowSize().X, bottom = Application.getWindowSize().Y;
+			glOrtho(left, right, bottom, top, -1.0, 1.0);
 
 		glMatrixMode(GL_MODELVIEW);
 			glLoadIdentity();
 			glViewport(0, 0, right - left, bottom - top);
-
+			
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, 0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 

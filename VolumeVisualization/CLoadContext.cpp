@@ -82,7 +82,7 @@ void CLoadContext::run()
 	
 	setProgress(0.4f);
 	addLabel(L"Loading Scene Shaders...");
-	Application.getSceneManager().init();
+	Application.getSceneManager().init(false, false);
 	
 	setProgress(0.6f);
 	addLabel(L"Loading Scene Objects...");

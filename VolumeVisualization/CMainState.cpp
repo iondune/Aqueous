@@ -32,12 +32,7 @@ void CMainState::OnRenderStart(float const Elapsed)
 	
 
 	SceneManager->drawAll();
-	SceneManager->endDraw();
-
-
-	
-	glBindTexture(GL_TEXTURE_2D, 0);
-	
+	SceneManager->endDraw();	
 
 	Context->GUIContext->draw(Elapsed, false);
 
