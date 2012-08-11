@@ -159,3 +159,10 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 
     }
 }
+
+void CMainState::OnWindowResized(SWindowResizedEvent const & Event)
+{
+	Context->GUIContext->getCanvas()->SetSize(Event.Size.X, Event.Size.Y);
+	Context->GUIContext->getCanvas()->Invalidate();
+	Context->GUIContext->getCanvas()->InvalidateChildren(true);
+}

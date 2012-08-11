@@ -15,6 +15,7 @@ public:
 	void OnRenderStart(float const Elapsed);
 
     void OnKeyboardEvent(SKeyboardEvent const & Event);
+	void OnWindowResized(SWindowResizedEvent const & Event);
 
 	void addConsoleMessage(std::string const & Message, Gwen::Color const & Color = Gwen::Color(255, 255, 255, 255));
 

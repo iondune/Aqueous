@@ -14,6 +14,7 @@ CGUIGlyphControlWidget::CGUIGlyphControlWidget()
 	Window->SetDeleteOnClose(false);
 	Window->SetBounds(1200, 670, 330, 160);
 	Window->SetTitle("Glyph Controls");
+	Window->SetHidden(true);
 
 	EnableButton = new Gwen::Controls::Button(Window);
 	EnableButton->SetBounds(15, 10, 290, 25);

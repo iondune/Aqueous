@@ -15,6 +15,7 @@ CGUITerrainControlWidget::CGUITerrainControlWidget()
 	Window->SetDeleteOnClose(false);
 	Window->SetBounds(1200, 500, 330, 160);
 	Window->SetTitle("Terrain Controls");
+	Window->SetHidden(true);
 
 	EnableButton = new Gwen::Controls::Button(Window);
 	EnableButton->SetBounds(15, 10, 290, 25);
