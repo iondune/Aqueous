@@ -29,7 +29,7 @@ void main()
     
     
     
-    if (! uDebugHeight)
+    if (uDebugHeight == 0)
    		gl_FragColor = vec4(vDiffuse + AmbientColor, 1) /* vColor + 0.001 */* texture(uColorMap, vTexCoords);
     else
    		gl_FragColor = vec4(vDiffuse + AmbientColor, 1) * vColor + 0.001 * texture(uColorMap, vTexCoords);

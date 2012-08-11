@@ -1,3 +1,5 @@
+#version 140
+
 varying vec3 vColor;
 varying vec4 vPosition;
 
@@ -157,7 +159,7 @@ void main()
 		CameraPosition.z <=  0.5)
 	{
 		FrontPosition = CameraPosition.xyz;
-		if (Debug)
+		if (Debug != 0)
 		{
 			gl_FragColor = vec4(1, 0, 0, 1);
 			return;
@@ -166,7 +168,7 @@ void main()
 	else if (rayAABBIntersect(CameraPosition.xyz, (BackPosition - vec3(0.5)) - CameraPosition.xyz, vec3(-0.5), vec3(0.5)))
 	{
 		FrontPosition = penter;
-		if (Debug)
+		if (Debug != 0)
 		{
 			gl_FragColor = vec4(0, 1, 0, 1);
 			return;
@@ -175,7 +177,7 @@ void main()
 	else
 	{
 		FrontPosition = CameraPosition.xyz;
-		if (Debug)
+		if (Debug != 0)
 		{
 			gl_FragColor = vec4(0, 0, 1, 1);
 			return;
