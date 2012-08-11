@@ -2,9 +2,11 @@
 
 #include <ionWindow.h>
 
+#include "CProgramContext.h"
+
 
 CVolumeSceneObject::CVolumeSceneObject()
-	: VolumeCube(0), VolumeBuffer(0), VolumeTarget(0), ShowVolume(0), SceneManager(CApplication::get().getSceneManager())
+	: VolumeCube(0), VolumeBuffer(0), VolumeTarget(0), ShowVolume(0), SceneManager(CApplication::get().getSceneManager()), Shader(0)
 {
 	setCullingEnabled(false);
 
@@ -98,6 +100,8 @@ CVolumeSceneObject::CVolumeSceneObject()
 	Flags.Wrap = GL_MIRRORED_REPEAT;
 	VolumeBuffer = new CTexture(SceneManager.getScreenSize(), true, Flags);
 	VolumeTarget->attach(VolumeBuffer, GL_COLOR_ATTACHMENT0);
+
+	Shader = CProgramContext::get().Shaders.Volume;
 }
 	
 bool CVolumeSceneObject::draw(IScene const * const Scene, ERenderPass const Pass, bool const CullingEnabled)
@@ -183,8 +187,6 @@ bool CVolumeSceneObject::draw(IScene const * const Scene, ERenderPass const Pass
 
 		glCullFace(GL_FRONT);
 		{
-			CShader * Shader = CShaderLoader::loadShader("Volume2");
-
 			if (Shader)
 			{
 				CShaderContext Context(* Shader);

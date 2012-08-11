@@ -4,19 +4,13 @@
 #include "CGwenEventForwarder.h"
 
 
-void CLoadContext::addLabel(std::wstring const & Label)
+void CLoadContext::addLabel(std::wstring const & Label, Gwen::Color const & Color)
 {
-	//std::cout << "1" << std::flush;
 	Gwen::Controls::Label * MediumLabel = new Gwen::Controls::Label(Canvas);
-	//std::cout << "2" << std::flush;
 	MediumLabel->SetFont(GUIManager->getMediumFont());
-	//std::cout << "3" << std::flush;
 	MediumLabel->SetText(Label);
-	//std::cout << "4" << std::flush;
-	MediumLabel->SetBounds(20 + Indent, LabelHeight, 600, 300);
-	//std::cout << "5" << std::flush;
-	MediumLabel->SetTextColor(Gwen::Color(255, 255, 255, 84));
-	//std::cout << "6" << std::endl;
+	MediumLabel->SetBounds(20 + Indent, LabelHeight, 1024, 300);
+	MediumLabel->SetTextColor(Color);
 
 	GUIManager->draw(true);
 	CApplication::get().swapBuffers();
@@ -64,11 +58,11 @@ void CLoadContext::run()
 	Gwen::Controls::Label * MediumLabel = new Gwen::Controls::Label(Canvas);
 	MediumLabel->SetFont(GUIManager->getMediumFont());
 	MediumLabel->SetText(Gwen::UnicodeString(L"Progress:"));
-	MediumLabel->SetBounds(500, 100, 500, 300);
+	MediumLabel->SetBounds(500, 400, 500, 300);
 	MediumLabel->SetTextColor(Gwen::Color(255, 255, 255, 84));
 
 	Progress = new Gwen::Controls::ProgressBar(Canvas);
-	Progress->SetBounds(500, 150, 500, 50);
+	Progress->SetBounds(500, 450, 500, 50);
 	setProgress(0.1f);
 
 	GUIManager->draw(true);
@@ -83,6 +77,7 @@ void CLoadContext::run()
 	setProgress(0.4f);
 	addLabel(L"Loading Scene Shaders...");
 	Application.getSceneManager().init(false, false);
+	loadShaders();
 	
 	setProgress(0.6f);
 	addLabel(L"Loading Scene Objects...");
@@ -94,6 +89,22 @@ void CLoadContext::run()
 	
 	setProgress(1.f);
 	addLabel(L"Application is Starting...");
+}
+
+void CLoadContext::loadShaders()
+{
+	Indent = 60;
+
+	if (! (Context->Shaders.Diffuse = CShaderLoader::loadShader("Diffuse")))
+		addLabel(L"Failed to load Diffuse Shader - Glyphs will not draw.", Gwen::Color(255, 32, 32, 192));
+	if (! (Context->Shaders.DiffuseTexture = CShaderLoader::loadShader("DiffuseTexture")))
+		addLabel(L"Failed to load Diffuse/Texture Shader - Backdrop will not draw.", Gwen::Color(255, 64, 64, 192));
+	if (! (Context->Shaders.Volume = CShaderLoader::loadShader("Volume2")))
+		addLabel(L"Failed to load Volume Shader - Volume will not draw.", Gwen::Color(255, 64, 64, 192));
+	if (! (Context->Shaders.Terrain = CShaderLoader::loadShader("Terrain")))
+		addLabel(L"Failed to load Terrain Shader - Terrain will not draw.", Gwen::Color(255, 64, 64, 192));
+
+	Indent = 0;
 }
 
 void CLoadContext::loadScene()
@@ -122,10 +133,10 @@ void CLoadContext::loadScene()
 
 	// Basic Shader/Mesh
 	Scene.Cube = CMeshLoader::createCubeMesh();
-	Scene.Shader = CShaderLoader::loadShader("Diffuse");
+	Scene.Shader = Context->Shaders.Diffuse;
 
 	// Backdrop/SkyCube
-	Scene.SkyBox = SceneManager->addMeshSceneObject(Scene.Cube, CShaderLoader::loadShader("DiffuseTexture"), 0);
+	Scene.SkyBox = SceneManager->addMeshSceneObject(Scene.Cube, Context->Shaders.DiffuseTexture, 0);
 	Scene.SkyBox->setScale(SVector3f(28.f));
 	Scene.SkyBox->setTexture(0, "Space.bmp");
 	Scene.SkyBox->setCullingEnabled(false);

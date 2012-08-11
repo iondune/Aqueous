@@ -12,8 +12,6 @@ void CMainState::begin()
 	Context->Scene.Timer = 0.f;
 }
 
-#include <iomanip>
-
 void CMainState::OnRenderStart(float const Elapsed)
 {
 	CProgramContext::SScene & Scene = Context->Scene;

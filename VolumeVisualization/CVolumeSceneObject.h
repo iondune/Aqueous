@@ -17,6 +17,8 @@ class CVolumeSceneObject : public ISceneObject
 
 	CSceneManager & SceneManager;
 
+	CShader * Shader;
+
 public:
 
 	struct SControl

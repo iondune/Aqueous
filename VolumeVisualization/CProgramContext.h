@@ -21,7 +21,6 @@ public:
 
 	struct SScene
 	{
-
 		// Cameras
 		CCameraControl * Camera;
 		ICameraSceneObject * OrbitCamera;
@@ -58,6 +57,17 @@ public:
 	CGUIContext * GUIContext;
 	SciDataManager * DataManager;
 
+	struct SShaders
+	{
+		CShader * Diffuse;
+		CShader * DiffuseTexture;
+		CShader * Terrain;
+		CShader * Volume;
+
+		SShaders();
+	};
+
+	SShaders Shaders;
 
 	CProgramContext();
 

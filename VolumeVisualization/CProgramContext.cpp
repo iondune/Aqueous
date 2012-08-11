@@ -9,6 +9,10 @@ CProgramContext::SScene::SScene()
 	LightObject(0), SkyBox(0), Terrain(0)
 {}
 
+CProgramContext::SShaders::SShaders()
+	: Diffuse(0), DiffuseTexture(0), Volume(0), Terrain(0)
+{}
+
 CProgramContext::CProgramContext()
 	: GUIContext(0), DataManager(0)
 {}

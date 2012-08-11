@@ -132,7 +132,7 @@ CTerrainSceneObject::CTerrainSceneObject()
 {
 	setCullingEnabled(false);
 
-	Shader = CShaderLoader::loadShader("Terrain");
+	Shader = CProgramContext::get().Shaders.Terrain;
 
 		
 	for (int y = 0; y < HeightmapSize; ++ y)

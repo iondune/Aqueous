@@ -24,8 +24,6 @@ void CLoadContext::loadData()
 			Context->DataManager->createVolumeFromGridValues(& o);
 			Context->DataManager->createPointCloudObjects(false, Context->Scene.GridObject, SVector3f(3.f), & o);
 			Context->Scene.VolumeSceneObject->VolumeHandle = Context->DataManager->VolumeHandle;
-
-			std::cout << "Succesfully created visual objects from data." << std::endl;
 		}
 	}
 	else
