@@ -35,6 +35,7 @@ public:
 
     glm::vec3 makeSphereVec(int x, int y);
     void OnMouseEvent(SMouseEvent const & Event);
+    void OnUncaughtMouseEvent(SMouseEvent const & Event);
 
 };
 

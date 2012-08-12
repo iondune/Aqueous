@@ -1,5 +1,8 @@
 #include "CGwenEventForwarder.h"
 
+#include "CMainState.h"
+
+
 CGwenEventForwarder::CGwenEventForwarder(Gwen::Controls::Canvas * pCanvas)
 	: Canvas(pCanvas)
 {}
@@ -49,8 +52,8 @@ void CGwenEventForwarder::OnMouseEvent(SMouseEvent const & Event)
 	{
 	case SMouseEvent::EType::Move:
 
-		Canvas->InputMouseMoved(Event.Location.X, Event.Location.Y, Event.Movement.X, Event.Movement.Y);
-		// TODO: OnUncaughtMouseEvent...
+		if (! Canvas->InputMouseMoved(Event.Location.X, Event.Location.Y, Event.Movement.X, Event.Movement.Y))
+			CMainState::get().OnUncaughtMouseEvent(Event);
 		break;
 			
 	case SMouseEvent::EType::Click:
@@ -71,7 +74,8 @@ void CGwenEventForwarder::OnMouseEvent(SMouseEvent const & Event)
 				break;
 			}
 
-			Canvas->InputMouseButton(Button, Event.Pressed);
+			if (! Canvas->InputMouseButton(Button, Event.Pressed))
+				CMainState::get().OnUncaughtMouseEvent(Event);
 		}
 		break;
 	}
