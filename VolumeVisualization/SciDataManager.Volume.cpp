@@ -100,7 +100,25 @@ f64 const SciDataManager::getGridVolume(std::string const & Field, f64 const Val
 					TotalSum += 1.0;
 				else
 				{
-					// Well, shit.
+					int BitCount = 0;
+					for (int t = 0; t < 8; ++ t)
+						if (TruthTable & 1 << t)
+							BitCount ++;
+					if (BitCount == 0 || BitCount == 8)
+					{
+						// Unexpected...
+						std::cerr << "Unexpected but recoverable state: unknown truth table value in grid volume calculation." << std::endl;
+						TotalSum += BitCount ? 1.0 : 0.0;
+					}
+					else if (BitCount == 1)
+					{
+						// Single corner case
+
+					}
+					else if (BitCount == 7)
+					{
+						// All but single corner
+					}
 				}
 
 				for (int a = 0; a < 2; ++ a)
