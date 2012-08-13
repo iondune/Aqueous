@@ -51,3 +51,73 @@ void SciDataManager::createVolumeFromGridValues(IColorMapper * ColorMapper)
 
 	delete []volumeData;
 }
+
+f64 const SciDataManager::getGridVolume(std::string const & Field, f64 const Value, f64 const Range) const
+{
+	unsigned int const size = GridDimensions[0] * GridDimensions[1] * GridDimensions[2] * 4;
+
+	if (GridValues.Values.size() != size / 4)
+	{
+		printf("Unexpected size of grid data.\n");
+		return 0.0;
+	}
+
+	f64 TotalSum = 0;
+
+	for (int i = 0; i < GridDimensions[2] - 1; ++ i)
+	{
+		for (int j = 0; j < GridDimensions[1] - 1; ++ j)
+		{
+			for (int k = 0; k < GridDimensions[0] - 1; ++ k)
+			{
+				SciData const **** LocalGrid = new SciData const ***[2];
+				double *** IsoValues = new double **[2];
+				u8 TruthTable = 0;
+
+				for (int a = 0; a < 2; ++ a)
+				{
+					LocalGrid[a] = new SciData const **[2];
+					IsoValues[a] = new double *[2];
+					for (int b = 0; b < 2; ++ b)
+					{
+						LocalGrid[a][b] = new SciData const *[2];
+						IsoValues[a][b] = new double[2];
+						for (int c = 0; c < 2; ++ c)
+						{
+							int ValueIndex = (k + c) + (j + b) * GridDimensions[0] + (i + a) * GridDimensions[1] * GridDimensions[0];
+							int FieldIndex = 4 * c + 2 * b + a;
+							LocalGrid[a][b][c] = & GridValues.Values[ValueIndex];
+							IsoValues[a][b][c] = Range - abs(LocalGrid[a][b][c]->getField(Field) - Value);
+							if (IsoValues[a][b][c] >= 0.0)
+								TruthTable |= 1 << FieldIndex;
+						}
+					}
+				}
+
+				if (TruthTable == 0x00)
+					TotalSum += 0.0;
+				else if (TruthTable == 0xFF)
+					TotalSum += 1.0;
+				else
+				{
+					// Well, shit.
+				}
+
+				for (int a = 0; a < 2; ++ a)
+				{
+					for (int b = 0; b < 2; ++ b)
+					{
+						delete [] LocalGrid[a][b];
+						delete [] IsoValues[a][b];
+					}
+					delete [] LocalGrid[a];
+					delete [] IsoValues[a];
+				}
+				delete [] LocalGrid;
+				delete [] IsoValues;
+			}
+		}
+	}
+
+	return TotalSum;
+}

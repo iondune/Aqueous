@@ -25,13 +25,13 @@ CGUITitleLabelsWidget::CGUITitleLabelsWidget()
 	// Volume Range Label
 	VolumeRangeIndicator = new Gwen::Controls::Label(GUIManager->getCanvas());
 	VolumeRangeIndicator->SetFont(GUIManager->getMediumFont());
-	VolumeRangeIndicator->SetBounds(20, 110, 600, 300);
+	VolumeRangeIndicator->SetBounds(20, 110, 900, 300);
 	VolumeRangeIndicator->SetTextColor(Gwen::Color(255, 235, 235, 215));
 }
 
 void CGUITitleLabelsWidget::resetVolumeRangeIndicator(SciDataManager * DataManager)
 {
-	Range ValueRange = DataManager->GridValues.getValueRange("o1", 5.0);
+	static Range ValueRange = DataManager->GridValues.getValueRange("o1", 5.0);
 	std::wstringstream s;
 	s << std::fixed;
 	s << "Value Range: ";
@@ -40,6 +40,11 @@ void CGUITitleLabelsWidget::resetVolumeRangeIndicator(SciDataManager * DataManag
 	s << " ± ";
 	s << std::setprecision(2);
 	s << (CProgramContext::get().Scene.VolumeSceneObject->Control.LocalRange / 2.f * (ValueRange.second - ValueRange.first)) / 100.f;
+	s << " (Volume: ";
+	s << std::setprecision(3);
+	s << DataManager->getGridVolume("o1", CProgramContext::get().Scene.VolumeSceneObject->Control.EmphasisLocation * (ValueRange.second - ValueRange.first) + ValueRange.first,
+		CProgramContext::get().Scene.VolumeSceneObject->Control.LocalRange / 2.f * (ValueRange.second - ValueRange.first));
+	s << " m^3)";
 	VolumeRangeIndicator->SetText(s.str());
 }
 

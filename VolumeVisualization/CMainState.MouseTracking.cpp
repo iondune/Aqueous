@@ -18,8 +18,6 @@ glm::vec3 CMainState::makeSphereVec(int x, int y)
 	}
 }
 
-
-
 void CMainState::OnMouseEvent(SMouseEvent const & Event)
 {
 }
