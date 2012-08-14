@@ -165,4 +165,6 @@ void CMainState::OnWindowResized(SWindowResizedEvent const & Event)
 	Context->GUIContext->getCanvas()->SetSize(Event.Size.X, Event.Size.Y);
 	Context->GUIContext->getCanvas()->Invalidate();
 	Context->GUIContext->getCanvas()->InvalidateChildren(true);
+
+	Context->Scene.Camera->setProjection(60.f, CApplication::get().getAspectRatio(), 0.01f, 100.f);
 }
