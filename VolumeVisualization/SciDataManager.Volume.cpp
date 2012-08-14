@@ -207,3 +207,119 @@ f64 const SciDataManager::getGridVolume(std::string const & Field, f64 const Val
 
 	return TotalSum ;//* 20 * 20;
 }
+
+SColorf const ratioToSpectrum(float Ratio)
+{
+	if (Ratio >= 1.f)
+		Ratio = 0.99999f;
+	else if (Ratio < 0.f)
+		Ratio = 0.f;
+	Ratio *= 100.f;
+	Ratio /= (100.f / 6.f);
+	int i = (int) Ratio;
+
+	float v = 1.f;
+	float s = 1.f;
+	float ff = Ratio - i;
+	float p = v * (1.f - s);
+    float q = v * (1.f - (s * ff));
+    float t = v * (1.f - (s * (1.f - ff)));
+
+	SColorf out;
+
+	switch(i)
+	{
+	case 0:
+		out.Red = v;
+		out.Green = t;
+		out.Blue = p;
+		break;
+	case 1:
+		out.Red = q;
+		out.Green = v;
+		out.Blue = p;
+		break;
+	case 2:
+		out.Red = p;
+		out.Green = v;
+		out.Blue = t;
+		break;
+	case 3:
+		out.Red = p;
+		out.Green = q;
+		out.Blue = v;
+		break;
+	case 4:
+		out.Red = t;
+		out.Green = p;
+		out.Blue = v;
+		break;
+	case 5:
+	default:
+		out.Red = v;
+		out.Green = 1.f - q;
+		out.Blue = 1.f;
+		break;
+    }
+
+	return out;
+}
+
+#include "CProgramContext.h"
+#include "CVolumeSceneObject.h"
+#include "ProgressPrinter.h"
+
+void SciDataManager::produceVolumeMaps()
+{
+	ProgressPrinter p;
+	p.begin();
+
+	Range ValueRange = GridValues.getValueRange("o1", 5.0);
+	CVolumeSceneObject const * const VolumeObject = CProgramContext::get().Scene.VolumeSceneObject;
+	CVolumeSceneObject::SControl const & VolumeControl = VolumeObject->Control;
+
+	for (int i = 0; i < 2; ++ i)
+	{
+		u32 const ImageSize = 512;
+		u8 * const ImageData = new u8[ImageSize * ImageSize * 3];
+
+		for (u32 y = 0; y < ImageSize; ++ y)
+		{
+			for (u32 x = 0; x < ImageSize; ++ x)
+			{
+				float const yR = (float) y / (float) (ImageSize - 1);
+				float const xR = (float) x / (float) (ImageSize - 1);
+				u32 const Index = x * 3 + y * ImageSize * 3;
+
+				float const EmphasisLocation = xR;
+				float const LocalRange = yR;
+
+				f64 const GridVolume = 0.0;/*getGridVolume("o1", 
+					EmphasisLocation * (ValueRange.second - ValueRange.first) + ValueRange.first, 
+					LocalRange / 2.f * (ValueRange.second - ValueRange.first), 
+					i);*/
+
+				f32 const VolumeRatio = (f32) GridVolume / (28.f * 23.f * 14.f);
+				//u32 const Color = (u32) (VolumeRatio * 255);
+
+				SColori Color = ratioToSpectrum(xR);//(f32) VolumeRatio);
+				
+				ImageData[Index + 0] = Color.Red;
+				ImageData[Index + 1] = Color.Green;
+				ImageData[Index + 2] = Color.Blue;
+			}
+			
+			p.update(y * 50 / ImageSize + (i ? 50 : 0));
+		}
+
+		CImage * Image = new CImage(ImageData, ImageSize, ImageSize, false);
+		std::stringstream s;
+		s << "VolumeMapMode" << i << ".bmp";
+		Image->write(s.str());
+
+		delete Image;
+	}
+
+	p.end();
+	std::cout << ("Volume maps written!") << std::endl;
+}
