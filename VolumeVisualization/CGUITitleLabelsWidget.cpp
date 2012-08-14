@@ -40,10 +40,13 @@ void CGUITitleLabelsWidget::resetVolumeRangeIndicator(SciDataManager * DataManag
 	s << " ± ";
 	s << std::setprecision(2);
 	s << (CProgramContext::get().Scene.VolumeSceneObject->Control.LocalRange / 2.f * (ValueRange.second - ValueRange.first)) / 100.f;
-	s << " (Volume: ";
-	s << std::setprecision(3);
+	s << " (Volume: " << std::endl;
+	s << std::setprecision(1);
 	s << DataManager->getGridVolume("o1", CProgramContext::get().Scene.VolumeSceneObject->Control.EmphasisLocation * (ValueRange.second - ValueRange.first) + ValueRange.first,
-		CProgramContext::get().Scene.VolumeSceneObject->Control.LocalRange / 2.f * (ValueRange.second - ValueRange.first));
+		CProgramContext::get().Scene.VolumeSceneObject->Control.LocalRange / 2.f * (ValueRange.second - ValueRange.first), 0);
+	s << " or " << std::endl;
+	s << DataManager->getGridVolume("o1", CProgramContext::get().Scene.VolumeSceneObject->Control.EmphasisLocation * (ValueRange.second - ValueRange.first) + ValueRange.first,
+		CProgramContext::get().Scene.VolumeSceneObject->Control.LocalRange / 2.f * (ValueRange.second - ValueRange.first), 1);
 	s << " m^3)";
 	VolumeRangeIndicator->SetText(s.str());
 }
