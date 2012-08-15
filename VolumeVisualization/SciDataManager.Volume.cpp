@@ -64,7 +64,7 @@ f64 const SciDataManager::getGridVolume(std::string const & Field, f64 const Val
 
 	f64 TotalSum = 0;
 
-	if (Mode == 0)
+	if (Mode == 0 || Mode == 2)
 	{
 		SciData const **** LocalGrid = new SciData const ***[2];
 		double *** IsoValues = new double **[2];
@@ -104,27 +104,64 @@ f64 const SciDataManager::getGridVolume(std::string const & Field, f64 const Val
 						}
 					}
 
+					
 					if (TruthTable == 0x00)
 						TotalSum += 0.0;
 					else if (TruthTable == 0xFF)
 						TotalSum += 1.0;
 					else
 					{
-						int BitCount = 0;
-						for (int t = 0; t < 8; ++ t)
-							if (TruthTable & 1 << t)
-								BitCount ++;
-						if (BitCount == 0 || BitCount == 8)
+						if (Mode == 0)
 						{
-							// Unexpected...
-							std::cerr << "Unexpected but recoverable state: unknown truth table value in grid volume calculation." << std::endl;
-							TotalSum += BitCount ? 1.0 : 0.0;
+							int BitCount = 0;
+							for (int t = 0; t < 8; ++ t)
+								if (TruthTable & 1 << t)
+									BitCount ++;
+							if (BitCount == 0 || BitCount == 8)
+							{
+								// Unexpected...
+								std::cerr << "Unexpected but recoverable state: unknown truth table value in grid volume calculation." << std::endl;
+								TotalSum += BitCount ? 1.0 : 0.0;
+							}
+							else
+							{
+								TotalSum += (1.0 / 8.0) * BitCount;
+							}
 						}
-						else
+						else if (Mode == 2)
 						{
-							TotalSum += 1.0 / 8.0;
-						}
-					}
+							for (int a = 0; a < 2; ++ a)
+							{
+								for (int b = 0; b < 2; ++ b)
+								{
+									for (int c = 0; c < 2; ++ c)
+									{
+										double IsoValue = IsoValues[a][b][c];
+										if (IsoValue < 0.0)
+											continue;
+										
+										vec3i Current(a, b, c);
+										vec3d Scale;
+										for (int i = 0; i < 3; ++ i)
+										{
+											vec3i Adjacent = Current;
+											Adjacent[i] = Adjacent[i] ? 0 : 1;
+
+											f64 const OtherIsoValue = IsoValues[Adjacent.X][Adjacent.Y][Adjacent.Z];
+											if (OtherIsoValue >= 0.0)
+												Scale[i] = 0.5;
+											else
+											{
+												double ratio = IsoValue / abs(OtherIsoValue - IsoValue);
+												Scale[i] = ratio;
+											}
+										}
+										TotalSum += Scale.X * Scale.Y * Scale.Z;
+									} // for c
+								} // for b
+							} // for a
+						} // else if (Mode == 2)
+					} // else
 				}
 			}
 		}
@@ -165,13 +202,6 @@ f64 const SciDataManager::getGridVolume(std::string const & Field, f64 const Val
 						{
 							for (int c = -1; c <= 1; ++ c)
 							{
-								if ((k + a) < 0 || (k + a) >= GridDimensions[0])
-									continue;
-								if ((j + b) < 0 || (j + b) >= GridDimensions[1])
-									continue;
-								if ((i + c) < 0 || (i + c) >= GridDimensions[2])
-									continue;
-
 								int ZeroCount = 0;
 								int AxisIndex = -1;
 								ZeroCount += a ? (AxisIndex = 0, 0) : 1;
@@ -180,6 +210,15 @@ f64 const SciDataManager::getGridVolume(std::string const & Field, f64 const Val
 
 								if (ZeroCount == 2)
 								{
+									
+									if ((k + a) < 0 || (k + a) >= GridDimensions[0] ||
+										(j + b) < 0 || (j + b) >= GridDimensions[1] ||
+										(i + c) < 0 || (i + c) >= GridDimensions[2])
+									{
+										Scale[AxisIndex] += 0.5;
+										continue;
+									}
+
 									int ValueIndex = (k + a) + (j + b) * GridDimensions[0] + (i + c) * GridDimensions[1] * GridDimensions[0];
 									SciData const * OtherData = & GridValues.Values[ValueIndex];
 									f64 const OtherIsoValue = Range - abs(OtherData->getField(Field) - Value);
@@ -278,9 +317,9 @@ void SciDataManager::produceVolumeMaps()
 	CVolumeSceneObject const * const VolumeObject = CProgramContext::get().Scene.VolumeSceneObject;
 	CVolumeSceneObject::SControl const & VolumeControl = VolumeObject->Control;
 
-	for (int i = 0; i < 2; ++ i)
+	for (int i = 2; i < 3; ++ i)
 	{
-		u32 const ImageSize = 512;
+		u32 const ImageSize = 256;
 		u8 * const ImageData = new u8[ImageSize * ImageSize * 3];
 
 		for (u32 y = 0; y < ImageSize; ++ y)
@@ -294,22 +333,21 @@ void SciDataManager::produceVolumeMaps()
 				float const EmphasisLocation = xR;
 				float const LocalRange = yR;
 
-				f64 const GridVolume = 0.0;/*getGridVolume("o1", 
+				f64 const GridVolume = getGridVolume("o1", 
 					EmphasisLocation * (ValueRange.second - ValueRange.first) + ValueRange.first, 
 					LocalRange / 2.f * (ValueRange.second - ValueRange.first), 
-					i);*/
+					i);
 
 				f32 const VolumeRatio = (f32) GridVolume / (28.f * 23.f * 14.f);
-				//u32 const Color = (u32) (VolumeRatio * 255);
 
-				SColori Color = ratioToSpectrum(xR);//(f32) VolumeRatio);
+				SColori Color = ratioToSpectrum((f32) VolumeRatio);
 				
 				ImageData[Index + 0] = Color.Red;
 				ImageData[Index + 1] = Color.Green;
 				ImageData[Index + 2] = Color.Blue;
 			}
 			
-			p.update(y * 50 / ImageSize + (i ? 50 : 0));
+			p.update(y * 33 / ImageSize + (i ? (i == 2 ? 66 : 33) : 0));
 		}
 
 		CImage * Image = new CImage(ImageData, ImageSize, ImageSize, false);
