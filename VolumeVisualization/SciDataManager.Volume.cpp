@@ -52,6 +52,42 @@ void SciDataManager::createVolumeFromGridValues(IColorMapper * ColorMapper)
 	delete []volumeData;
 }
 
+f64 const InterpolateValues(f64 const * const IsoValues, int i, int j, int k)
+{
+	int EdgeCount = 0;
+				
+	EdgeCount += ((i == 1) ? 0 : 1);
+	EdgeCount += ((j == 1) ? 0 : 1);
+	EdgeCount += ((k == 1) ? 0 : 1);
+
+	if (EdgeCount == 0)
+	{
+		f64 Sum = 0.0;
+		for (int t = 0; t < 8; ++ t)
+			Sum += IsoValues[t];
+		return Sum / 8.0;
+	}
+	else if (EdgeCount == 1)
+	{
+		return (
+			IsoValues[4 * (k == 1 ? 0 : 1) + 2 * (j == 1 ? 0 : 1) + (i == 1 ? 0 : 1)] + 
+			IsoValues[4 * (k == 1 ? 0 : 1) + 2 * (j == 1 ? 2 : 1) + (i == 1 ? 2 : 1)] + 
+			IsoValues[4 * (k == 1 ? 2 : 1) + 2 * (j == 1 ? 0 : 1) + (i == 1 ? 2 : 1)] + 
+			IsoValues[4 * (k == 1 ? 2 : 1) + 2 * (j == 1 ? 2 : 1) + (i == 1 ? 0 : 1)]
+			) / 4.0;
+	}
+	else if (EdgeCount == 2)
+	{
+		return (
+			IsoValues[4 * (k == 1 ? 0 : 1) + 2 * (j == 1 ? 0 : 1) + (i == 1 ? 0 : 1)] + 
+			IsoValues[4 * (k == 1 ? 2 : 1) + 2 * (j == 1 ? 2 : 1) + (i == 1 ? 2 : 1)]
+			) / 2.0;
+	}
+
+	std::cout << "Unexpected circumstance!" << std::endl;
+	return 0.0;
+};
+
 f64 const SciDataManager::getGridVolume(std::string const & Field, f64 const Value, f64 const Range, int const Mode) const
 {
 	unsigned int const size = GridDimensions[0] * GridDimensions[1] * GridDimensions[2] * 4;
@@ -64,11 +100,11 @@ f64 const SciDataManager::getGridVolume(std::string const & Field, f64 const Val
 
 	f64 TotalSum = 0;
 
-	if (Mode == 0 || Mode == 2)
+	if (Mode == 0 || Mode == 2 || Mode == 3 || Mode == 4)
 	{
-		double * IsoValues = new double[8];
+		f64 * const IsoValues = new f64[8];
 
-		auto const SolveCube = [& TotalSum, Mode](f64 const * const IsoValues, f64 const ScaleFactor)
+		auto const SolveCube = [& TotalSum, Mode](f64 const * const IsoValues, f64 const ScaleFactor) -> void
 		{
 			int InsideCount = 0;
 
@@ -89,14 +125,14 @@ f64 const SciDataManager::getGridVolume(std::string const & Field, f64 const Val
 			if (InsideCount == 0)
 				TotalSum += 0.0;
 			else if (InsideCount == 8)
-				TotalSum += ScaleFactor;
+				TotalSum += 1.0 * ScaleFactor;
 			else
 			{
-				if (Mode == 0)
+				if (Mode == 0 || Mode == 3)
 				{
-					TotalSum += (1.0 / 8.0) * InsideCount;
+					TotalSum += (1.0 / 8.0) * InsideCount * ScaleFactor;
 				}
-				else if (Mode == 2)
+				else if (Mode == 2 || Mode == 4)
 				{
 					for (int a = 0; a < 2; ++ a)
 					{
@@ -108,7 +144,7 @@ f64 const SciDataManager::getGridVolume(std::string const & Field, f64 const Val
 								double IsoValue = IsoValues[FieldIndex];
 								if (IsoValue < 0.0)
 									continue;
-										
+								
 								vec3i Current(a, b, c);
 								vec3d Scale;
 								for (int i = 0; i < 3; ++ i)
@@ -134,6 +170,48 @@ f64 const SciDataManager::getGridVolume(std::string const & Field, f64 const Val
 			} // else
 		};
 
+		std::function<void(f64 const * const, f64 const, int const)> RecurseCube;
+		RecurseCube = [& RecurseCube, & SolveCube](f64 const * const IsoValues, f64 const ScaleFactor, int const Level) -> void
+		{
+			if (Level <= 0)
+				return SolveCube(IsoValues, ScaleFactor);
+
+			double * NewIsoValues = new double[8];
+
+			for (int a = 0; a < 2; ++ a)
+			{
+				for (int b = 0; b < 2; ++ b)
+				{
+					for (int c = 0; c < 2; ++ c)
+					{
+						int FieldIndex = 4 * c + 2 * b + a;
+
+						for (int d = 0; d < 2; ++ d)
+						{
+							for (int e = 0; e < 2; ++ e)
+							{
+								for (int f = 0; f < 2; ++ f)
+								{
+									int InnerFieldIndex = 4 * f + 2 * e + d;
+									NewIsoValues[InnerFieldIndex] = 
+										FieldIndex == InnerFieldIndex ? 
+										IsoValues[FieldIndex] : 
+										InterpolateValues(IsoValues, 
+											a + d, 
+											b + e, 
+											c + f);
+								}
+							}
+						}
+
+						RecurseCube(NewIsoValues, ScaleFactor / 8.0, Level - 1);
+					}
+				}
+			}
+
+			delete NewIsoValues;
+		};
+
 		for (int i = 0; i < GridDimensions[2] - 1; ++ i)
 		{
 			for (int j = 0; j < GridDimensions[1] - 1; ++ j)
@@ -153,7 +231,10 @@ f64 const SciDataManager::getGridVolume(std::string const & Field, f64 const Val
 						}
 					}
 
-					SolveCube(IsoValues, 1.0);
+					if (Mode == 0 || Mode == 2)
+						SolveCube(IsoValues, 1.0);
+					else
+						RecurseCube(IsoValues, 1.0, 1);
 				}
 			}
 		}
@@ -298,9 +379,9 @@ void SciDataManager::produceVolumeMaps()
 	CVolumeSceneObject const * const VolumeObject = CProgramContext::get().Scene.VolumeSceneObject;
 	CVolumeSceneObject::SControl const & VolumeControl = VolumeObject->Control;
 
-	for (int i = 0; i < 3; ++ i)
+	for (int i = 3; i < 5; ++ i)
 	{
-		u32 const ImageSize = 64;
+		u32 const ImageSize = 32;
 		u8 * const ImageData = new u8[ImageSize * ImageSize * 3];
 
 		for (u32 y = 0; y < ImageSize; ++ y)
@@ -328,7 +409,7 @@ void SciDataManager::produceVolumeMaps()
 				ImageData[Index + 2] = Color.Blue;
 			}
 			
-			p.update(y * 33 / ImageSize + (i ? (i == 2 ? 66 : 33) : 0));
+			p.update(y * 20 / ImageSize + i * 20);
 		}
 
 		CImage * Image = new CImage(ImageData, ImageSize, ImageSize, false);
