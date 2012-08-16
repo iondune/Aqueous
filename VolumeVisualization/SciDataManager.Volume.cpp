@@ -66,8 +66,73 @@ f64 const SciDataManager::getGridVolume(std::string const & Field, f64 const Val
 
 	if (Mode == 0 || Mode == 2)
 	{
-		//SciData const ** LocalGrid = new SciData const *[2];
 		double * IsoValues = new double[8];
+
+		auto const SolveCube = [& TotalSum, Mode](f64 const * const IsoValues, f64 const ScaleFactor)
+		{
+			int InsideCount = 0;
+
+			for (int a = 0; a < 2; ++ a)
+			{
+				for (int b = 0; b < 2; ++ b)
+				{
+					for (int c = 0; c < 2; ++ c)
+					{
+						int FieldIndex = 4 * c + 2 * b + a;
+						if (IsoValues[FieldIndex] >= 0.0)
+							InsideCount ++;
+					}
+				}
+			}
+
+					
+			if (InsideCount == 0)
+				TotalSum += 0.0;
+			else if (InsideCount == 8)
+				TotalSum += ScaleFactor;
+			else
+			{
+				if (Mode == 0)
+				{
+					TotalSum += (1.0 / 8.0) * InsideCount;
+				}
+				else if (Mode == 2)
+				{
+					for (int a = 0; a < 2; ++ a)
+					{
+						for (int b = 0; b < 2; ++ b)
+						{
+							for (int c = 0; c < 2; ++ c)
+							{
+								int FieldIndex = 4 * c + 2 * b + a;
+								double IsoValue = IsoValues[FieldIndex];
+								if (IsoValue < 0.0)
+									continue;
+										
+								vec3i Current(a, b, c);
+								vec3d Scale;
+								for (int i = 0; i < 3; ++ i)
+								{
+									vec3i Adjacent = Current;
+									Adjacent[i] = Adjacent[i] ? 0 : 1;
+									int OtherFieldIndex = 4 * Adjacent.X + 2 * Adjacent.Y + Adjacent.Z;
+
+									f64 const OtherIsoValue = IsoValues[OtherFieldIndex];
+									if (OtherIsoValue >= 0.0)
+										Scale[i] = 0.5;
+									else
+									{
+										double ratio = IsoValue / abs(OtherIsoValue - IsoValue);
+										Scale[i] = ratio;
+									}
+								}
+								TotalSum += Scale.X * Scale.Y * Scale.Z * ScaleFactor;
+							} // for c
+						} // for b
+					} // for a
+				} // else if (Mode == 2)
+			} // else
+		};
 
 		for (int i = 0; i < GridDimensions[2] - 1; ++ i)
 		{
@@ -75,8 +140,6 @@ f64 const SciDataManager::getGridVolume(std::string const & Field, f64 const Val
 			{
 				for (int k = 0; k < GridDimensions[0] - 1; ++ k)
 				{
-					u8 InsideCount = 0;
-
 					for (int a = 0; a < 2; ++ a)
 					{
 						for (int b = 0; b < 2; ++ b)
@@ -85,66 +148,16 @@ f64 const SciDataManager::getGridVolume(std::string const & Field, f64 const Val
 							{
 								int ValueIndex = (k + c) + (j + b) * GridDimensions[0] + (i + a) * GridDimensions[1] * GridDimensions[0];
 								int FieldIndex = 4 * c + 2 * b + a;
-								//LocalGrid[FieldIndex] = & GridValues.Values[ValueIndex];
 								IsoValues[FieldIndex] = Range - abs(GridValues.Values[ValueIndex].getField(Field) - Value);
-								if (IsoValues[FieldIndex] >= 0.0)
-									InsideCount ++;
 							}
 						}
 					}
 
-					
-					if (InsideCount == 0)
-						TotalSum += 0.0;
-					else if (InsideCount == 8)
-						TotalSum += 1.0;
-					else
-					{
-						if (Mode == 0)
-						{
-							TotalSum += (1.0 / 8.0) * InsideCount;
-						}
-						else if (Mode == 2)
-						{
-							for (int a = 0; a < 2; ++ a)
-							{
-								for (int b = 0; b < 2; ++ b)
-								{
-									for (int c = 0; c < 2; ++ c)
-									{
-										int FieldIndex = 4 * c + 2 * b + a;
-										double IsoValue = IsoValues[FieldIndex];
-										if (IsoValue < 0.0)
-											continue;
-										
-										vec3i Current(a, b, c);
-										vec3d Scale;
-										for (int i = 0; i < 3; ++ i)
-										{
-											vec3i Adjacent = Current;
-											Adjacent[i] = Adjacent[i] ? 0 : 1;
-											int OtherFieldIndex = 4 * Adjacent.X + 2 * Adjacent.Y + Adjacent.Z;
-
-											f64 const OtherIsoValue = IsoValues[OtherFieldIndex];
-											if (OtherIsoValue >= 0.0)
-												Scale[i] = 0.5;
-											else
-											{
-												double ratio = IsoValue / abs(OtherIsoValue - IsoValue);
-												Scale[i] = ratio;
-											}
-										}
-										TotalSum += Scale.X * Scale.Y * Scale.Z;
-									} // for c
-								} // for b
-							} // for a
-						} // else if (Mode == 2)
-					} // else
+					SolveCube(IsoValues, 1.0);
 				}
 			}
 		}
 
-		//delete [] LocalGrid;
 		delete [] IsoValues;
 	}
 	else if (Mode == 1)
