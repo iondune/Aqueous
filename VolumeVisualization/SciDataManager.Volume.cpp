@@ -66,19 +66,8 @@ f64 const SciDataManager::getGridVolume(std::string const & Field, f64 const Val
 
 	if (Mode == 0 || Mode == 2)
 	{
-		SciData const **** LocalGrid = new SciData const ***[2];
-		double *** IsoValues = new double **[2];
-
-		for (int a = 0; a < 2; ++ a)
-		{
-			LocalGrid[a] = new SciData const **[2];
-			IsoValues[a] = new double *[2];
-			for (int b = 0; b < 2; ++ b)
-			{
-				LocalGrid[a][b] = new SciData const *[2];
-				IsoValues[a][b] = new double[2];
-			}
-		}
+		//SciData const ** LocalGrid = new SciData const *[2];
+		double * IsoValues = new double[8];
 
 		for (int i = 0; i < GridDimensions[2] - 1; ++ i)
 		{
@@ -86,7 +75,7 @@ f64 const SciDataManager::getGridVolume(std::string const & Field, f64 const Val
 			{
 				for (int k = 0; k < GridDimensions[0] - 1; ++ k)
 				{
-					u8 TruthTable = 0;
+					u8 InsideCount = 0;
 
 					for (int a = 0; a < 2; ++ a)
 					{
@@ -96,37 +85,24 @@ f64 const SciDataManager::getGridVolume(std::string const & Field, f64 const Val
 							{
 								int ValueIndex = (k + c) + (j + b) * GridDimensions[0] + (i + a) * GridDimensions[1] * GridDimensions[0];
 								int FieldIndex = 4 * c + 2 * b + a;
-								LocalGrid[a][b][c] = & GridValues.Values[ValueIndex];
-								IsoValues[a][b][c] = Range - abs(LocalGrid[a][b][c]->getField(Field) - Value);
-								if (IsoValues[a][b][c] >= 0.0)
-									TruthTable |= 1 << FieldIndex;
+								//LocalGrid[FieldIndex] = & GridValues.Values[ValueIndex];
+								IsoValues[FieldIndex] = Range - abs(GridValues.Values[ValueIndex].getField(Field) - Value);
+								if (IsoValues[FieldIndex] >= 0.0)
+									InsideCount ++;
 							}
 						}
 					}
 
 					
-					if (TruthTable == 0x00)
+					if (InsideCount == 0)
 						TotalSum += 0.0;
-					else if (TruthTable == 0xFF)
+					else if (InsideCount == 8)
 						TotalSum += 1.0;
 					else
 					{
 						if (Mode == 0)
 						{
-							int BitCount = 0;
-							for (int t = 0; t < 8; ++ t)
-								if (TruthTable & 1 << t)
-									BitCount ++;
-							if (BitCount == 0 || BitCount == 8)
-							{
-								// Unexpected...
-								std::cerr << "Unexpected but recoverable state: unknown truth table value in grid volume calculation." << std::endl;
-								TotalSum += BitCount ? 1.0 : 0.0;
-							}
-							else
-							{
-								TotalSum += (1.0 / 8.0) * BitCount;
-							}
+							TotalSum += (1.0 / 8.0) * InsideCount;
 						}
 						else if (Mode == 2)
 						{
@@ -136,7 +112,8 @@ f64 const SciDataManager::getGridVolume(std::string const & Field, f64 const Val
 								{
 									for (int c = 0; c < 2; ++ c)
 									{
-										double IsoValue = IsoValues[a][b][c];
+										int FieldIndex = 4 * c + 2 * b + a;
+										double IsoValue = IsoValues[FieldIndex];
 										if (IsoValue < 0.0)
 											continue;
 										
@@ -146,8 +123,9 @@ f64 const SciDataManager::getGridVolume(std::string const & Field, f64 const Val
 										{
 											vec3i Adjacent = Current;
 											Adjacent[i] = Adjacent[i] ? 0 : 1;
+											int OtherFieldIndex = 4 * Adjacent.X + 2 * Adjacent.Y + Adjacent.Z;
 
-											f64 const OtherIsoValue = IsoValues[Adjacent.X][Adjacent.Y][Adjacent.Z];
+											f64 const OtherIsoValue = IsoValues[OtherFieldIndex];
 											if (OtherIsoValue >= 0.0)
 												Scale[i] = 0.5;
 											else
@@ -166,17 +144,7 @@ f64 const SciDataManager::getGridVolume(std::string const & Field, f64 const Val
 			}
 		}
 
-		for (int a = 0; a < 2; ++ a)
-		{
-			for (int b = 0; b < 2; ++ b)
-			{
-				delete [] LocalGrid[a][b];
-				delete [] IsoValues[a][b];
-			}
-			delete [] LocalGrid[a];
-			delete [] IsoValues[a];
-		}
-		delete [] LocalGrid;
+		//delete [] LocalGrid;
 		delete [] IsoValues;
 	}
 	else if (Mode == 1)
@@ -317,9 +285,9 @@ void SciDataManager::produceVolumeMaps()
 	CVolumeSceneObject const * const VolumeObject = CProgramContext::get().Scene.VolumeSceneObject;
 	CVolumeSceneObject::SControl const & VolumeControl = VolumeObject->Control;
 
-	for (int i = 2; i < 3; ++ i)
+	for (int i = 0; i < 3; ++ i)
 	{
-		u32 const ImageSize = 256;
+		u32 const ImageSize = 64;
 		u8 * const ImageData = new u8[ImageSize * ImageSize * 3];
 
 		for (u32 y = 0; y < ImageSize; ++ y)
