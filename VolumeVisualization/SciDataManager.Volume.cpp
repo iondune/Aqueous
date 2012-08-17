@@ -70,17 +70,17 @@ f64 const InterpolateValues(f64 const * const IsoValues, int i, int j, int k)
 	else if (EdgeCount == 1)
 	{
 		return (
-			IsoValues[4 * (k == 1 ? 0 : 1) + 2 * (j == 1 ? 0 : 1) + (i == 1 ? 0 : 1)] + 
-			IsoValues[4 * (k == 1 ? 0 : 1) + 2 * (j == 1 ? 2 : 1) + (i == 1 ? 2 : 1)] + 
-			IsoValues[4 * (k == 1 ? 2 : 1) + 2 * (j == 1 ? 0 : 1) + (i == 1 ? 2 : 1)] + 
-			IsoValues[4 * (k == 1 ? 2 : 1) + 2 * (j == 1 ? 2 : 1) + (i == 1 ? 0 : 1)]
+			IsoValues[4 * (k == 1 ? 0 : k / 2) + 2 * (j == 1 ? 0 : j / 2) + (i == 1 ? 0 : i / 2)] + 
+			IsoValues[4 * (k == 1 ? 0 : k / 2) + 2 * (j == 1 ? 1 : j / 2) + (i == 1 ? 1 : i / 2)] + 
+			IsoValues[4 * (k == 1 ? 1 : k / 2) + 2 * (j == 1 ? 0 : j / 2) + (i == 1 ? 1 : i / 2)] + 
+			IsoValues[4 * (k == 1 ? 1 : k / 2) + 2 * (j == 1 ? 1 : j / 2) + (i == 1 ? 0 : i / 2)]
 			) / 4.0;
 	}
 	else if (EdgeCount == 2)
 	{
 		return (
-			IsoValues[4 * (k == 1 ? 0 : 1) + 2 * (j == 1 ? 0 : 1) + (i == 1 ? 0 : 1)] + 
-			IsoValues[4 * (k == 1 ? 2 : 1) + 2 * (j == 1 ? 2 : 1) + (i == 1 ? 2 : 1)]
+			IsoValues[4 * (k == 1 ? 0 : k / 2) + 2 * (j == 1 ? 0 : j / 2) + (i == 1 ? 0 : i / 2)] + 
+			IsoValues[4 * (k == 1 ? 1 : k / 2) + 2 * (j == 1 ? 1 : j / 2) + (i == 1 ? 1 : i / 2)]
 			) / 2.0;
 	}
 
@@ -151,7 +151,7 @@ f64 const SciDataManager::getGridVolume(std::string const & Field, f64 const Val
 								{
 									vec3i Adjacent = Current;
 									Adjacent[i] = Adjacent[i] ? 0 : 1;
-									int OtherFieldIndex = 4 * Adjacent.X + 2 * Adjacent.Y + Adjacent.Z;
+									int OtherFieldIndex = 4 * Adjacent.Z + 2 * Adjacent.Y + Adjacent.X;
 
 									f64 const OtherIsoValue = IsoValues[OtherFieldIndex];
 									if (OtherIsoValue >= 0.0)
@@ -171,10 +171,36 @@ f64 const SciDataManager::getGridVolume(std::string const & Field, f64 const Val
 		};
 
 		std::function<void(f64 const * const, f64 const, int const)> RecurseCube;
-		RecurseCube = [& RecurseCube, & SolveCube](f64 const * const IsoValues, f64 const ScaleFactor, int const Level) -> void
+		RecurseCube = [& RecurseCube, & SolveCube, & TotalSum](f64 const * const IsoValues, f64 const ScaleFactor, int const Level) -> void
 		{
 			if (Level <= 0)
 				return SolveCube(IsoValues, ScaleFactor);
+
+			int InsideCount = 0;
+
+			for (int a = 0; a < 2; ++ a)
+			{
+				for (int b = 0; b < 2; ++ b)
+				{
+					for (int c = 0; c < 2; ++ c)
+					{
+						int FieldIndex = 4 * c + 2 * b + a;
+						if (IsoValues[FieldIndex] >= 0.0)
+							InsideCount ++;
+					}
+				}
+			}
+					
+			if (InsideCount == 0)
+			{
+				TotalSum += 0.0;
+				return;
+			}
+			else if (InsideCount == 8)
+			{
+				TotalSum += 1.0 * ScaleFactor;
+				return;
+			}
 
 			double * NewIsoValues = new double[8];
 
@@ -379,9 +405,9 @@ void SciDataManager::produceVolumeMaps()
 	CVolumeSceneObject const * const VolumeObject = CProgramContext::get().Scene.VolumeSceneObject;
 	CVolumeSceneObject::SControl const & VolumeControl = VolumeObject->Control;
 
-	for (int i = 3; i < 5; ++ i)
+	for (int i = 4; i < 5; ++ i)
 	{
-		u32 const ImageSize = 32;
+		u32 const ImageSize = 256;
 		u8 * const ImageData = new u8[ImageSize * ImageSize * 3];
 
 		for (u32 y = 0; y < ImageSize; ++ y)
