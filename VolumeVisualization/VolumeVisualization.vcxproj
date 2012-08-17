@@ -39,30 +39,6 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup>
-    <IncludePath>
-      ;$(VisualStudioDir)\SDKs\gwen\include;
-      ;$(VisualStudioDir)\Projects\ionEngine\ionCore;
-      ;$(VisualStudioDir)\Projects\ionEngine\ionScene;
-      ;$(VisualStudioDir)\Projects\ionEngine\ionWindow;
-      ;$(VisualStudioDir)\Projects\ionEngine\ionGUI;
-      ;$(ProjectDir)\matlib\include;
-      ;$(IncludePath);
-    </IncludePath>
-    <LibraryPath>
-      ;$(VisualStudioDir)\SDKs\gwen\lib;
-      ;$(VisualStudioDir)\SDKs\gwen\lib\windows;
-      ;$(LibraryPath);
-    </LibraryPath>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-      ;$(VisualStudioDir)\Projects\ionEngine\Debug;
-      ;$(LibraryPath);
-    </LibraryPath>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      ;$(VisualStudioDir)\Projects\ionEngine\Release;
-      ;$(LibraryPath);
-    </LibraryPath>
-  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>

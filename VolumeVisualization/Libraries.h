@@ -12,7 +12,7 @@
 #pragma comment(lib, "ionCore.lib")
 #pragma comment(lib, "ionWindow.lib")
 #pragma comment(lib, "ionScene.lib")
-#pragma comment(lib, "ionGUI.lib")
+//#pragma comment(lib, "ionGUI.lib")
 
 // SFML Libraries
 #ifdef _DEBUG
