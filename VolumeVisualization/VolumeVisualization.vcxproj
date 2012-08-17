@@ -91,8 +91,8 @@
     <ClCompile Include=".\SciDataParserSimpleTXT.cpp" />
     <ClCompile Include=".\SciDataParserGrid1.cpp" />
     <ClCompile Include=".\SciDataParserCTD.cpp" />
-    <ClCompile Include="RFBInterpolator\newmat.cpp" />
-    <ClCompile Include="RFBInterpolator\RBFInterpolator.cpp" />
+    <ClCompile Include="RBFInterpolator\newmat.cpp" />
+    <ClCompile Include="RBFInterpolator\RBFInterpolator.cpp" />
     <ClCompile Include="SciDataManager.Tree.cpp" />
     <ClCompile Include="SciDataManager.GridValues.cpp" />
     <ClCompile Include="SciDataManager.PointCloud.cpp" />
@@ -127,8 +127,8 @@
     <ClInclude Include="IColorMapper.h" />
     <ClInclude Include="Libraries.h" />
     <ClInclude Include="ProgressPrinter.h" />
-    <ClInclude Include="RFBInterpolator\newmat.h" />
-    <ClInclude Include="RFBInterpolator\RBFInterpolator.h" />
+    <ClInclude Include="RBFInterpolator\newmat.h" />
+    <ClInclude Include="RBFInterpolator\RBFInterpolator.h" />
     <ClInclude Include="SciData.h" />
     <ClInclude Include="SciDataIterator.h" />
     <ClInclude Include="SciDataManager.h" />
