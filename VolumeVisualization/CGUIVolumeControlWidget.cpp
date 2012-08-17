@@ -184,7 +184,7 @@ void CGUIVolumeControlWidget::OnVolumeMode(Gwen::Controls::Base * Control)
 	if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Plane Slices"))
 	{
 		VolumeControl.Mode = 1;
-		resetVolumeRange();
+		CProgramContext::get().GUIContext->getTitleLabels()->clearVolumeRangeIndicator();
 	}
 	else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Isosurface"))
 	{
