@@ -27,28 +27,40 @@ CGUITitleLabelsWidget::CGUITitleLabelsWidget()
 	VolumeRangeIndicator->SetFont(GUIManager->getMediumFont());
 	VolumeRangeIndicator->SetBounds(20, 110, 900, 300);
 	VolumeRangeIndicator->SetTextColor(Gwen::Color(255, 235, 235, 215));
+
+	// Volume Range Label
+	VolumeCalculationIndicator = new Gwen::Controls::Label(GUIManager->getCanvas());
+	VolumeCalculationIndicator->SetFont(GUIManager->getMediumFont());
+	VolumeCalculationIndicator->SetBounds(20, 150, 900, 300);
+	VolumeCalculationIndicator->SetTextColor(Gwen::Color(255, 235, 235, 215));
 }
 
 void CGUITitleLabelsWidget::resetVolumeRangeIndicator(SciDataManager * DataManager)
 {
 	static Range ValueRange = DataManager->GridValues.getValueRange("o1", 5.0);
-	std::wstringstream s;
-	s << std::fixed;
-	s << "Value Range: ";
-	s << std::setprecision(1);
-	s << (CProgramContext::get().Scene.VolumeSceneObject->Control.EmphasisLocation * (ValueRange.second - ValueRange.first) + ValueRange.first) / 100.f;
-	s << " ± ";
-	s << std::setprecision(2);
-	s << (CProgramContext::get().Scene.VolumeSceneObject->Control.LocalRange / 2.f * (ValueRange.second - ValueRange.first)) / 100.f;
-	s << " (Volume: " << std::endl;
-	s << std::setprecision(1);
-	s << DataManager->getGridVolume("o1", CProgramContext::get().Scene.VolumeSceneObject->Control.EmphasisLocation * (ValueRange.second - ValueRange.first) + ValueRange.first,
-		CProgramContext::get().Scene.VolumeSceneObject->Control.LocalRange / 2.f * (ValueRange.second - ValueRange.first), 0);
-	s << " or " << std::endl;
-	s << DataManager->getGridVolume("o1", CProgramContext::get().Scene.VolumeSceneObject->Control.EmphasisLocation * (ValueRange.second - ValueRange.first) + ValueRange.first,
-		CProgramContext::get().Scene.VolumeSceneObject->Control.LocalRange / 2.f * (ValueRange.second - ValueRange.first), 1);
-	s << " m^3)";
-	VolumeRangeIndicator->SetText(s.str());
+
+	{
+		std::wstringstream s;
+		s << std::fixed;
+		s << "Value Range: ";
+		s << std::setprecision(1);
+		s << (CProgramContext::get().Scene.VolumeSceneObject->Control.EmphasisLocation * (ValueRange.second - ValueRange.first) + ValueRange.first) / 100.f;
+		s << " ± ";
+		s << std::setprecision(2);
+		s << (CProgramContext::get().Scene.VolumeSceneObject->Control.LocalRange / 2.f * (ValueRange.second - ValueRange.first)) / 100.f;
+		VolumeRangeIndicator->SetText(s.str());
+	}
+	
+	{
+		std::wstringstream s;
+		s << "Volume: ";
+		s << std::setprecision(3);
+		s << std::scientific;
+		s << DataManager->getGridVolume("o1", CProgramContext::get().Scene.VolumeSceneObject->Control.EmphasisLocation * (ValueRange.second - ValueRange.first) + ValueRange.first,
+			CProgramContext::get().Scene.VolumeSceneObject->Control.LocalRange / 2.f * (ValueRange.second - ValueRange.first), 2) * 20.0 * 20.0;
+		s << " m^3";
+		VolumeCalculationIndicator->SetText(s.str());
+	}
 }
 
 void CGUITitleLabelsWidget::clearVolumeRangeIndicator()
