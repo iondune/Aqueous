@@ -1,6 +1,6 @@
 #include "SciDataManager.h"
 
-#include "RFBInterpolator/RBFInterpolator.h"
+#include "RBFInterpolator/RBFInterpolator.h"
 
 
 void SciDataManager::createGridDataFromRawValues(Range AcceptedValues, double Deviations, std::string const & Field)
