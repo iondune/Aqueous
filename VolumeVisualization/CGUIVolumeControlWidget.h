@@ -29,6 +29,7 @@ public:
 	void OnIntensitySlider(Gwen::Controls::Base * Control);
 	void OnMinimumAlphaSlider(Gwen::Controls::Base * Control);
 	void OnLocalRangeSlider(Gwen::Controls::Base * Control);
+	void OnStepSizeSlider(Gwen::Controls::Base * Control);
 
 	void OnResetVolume(Gwen::Controls::Base * Control);
 	void OnResetAlpha(Gwen::Controls::Base * Control);

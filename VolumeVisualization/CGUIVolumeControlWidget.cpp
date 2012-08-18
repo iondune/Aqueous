@@ -12,7 +12,7 @@ CGUIVolumeControlWidget::CGUIVolumeControlWidget()
 {
 	Window = new Gwen::Controls::WindowControl(GUIManager->getCanvas());
 	Window->SetDeleteOnClose(false);
-	Window->SetBounds(1200, 10, 330, 480);
+	Window->SetBounds(1200, 10, 330, 480 + 90);
 	Window->SetTitle("Volume Controls");
 
 	EnableButton = new Gwen::Controls::Button(Window);
@@ -110,12 +110,24 @@ CGUIVolumeControlWidget::CGUIVolumeControlWidget()
 		pButtonZ->SetBounds(180, 120 + 120 + 10 + 45 + 25 + 35 + 45, 40, 25);
 		pButtonZ->SetText("Z");
 
+		Gwen::Controls::Label * SliderLabel = new Gwen::Controls::Label(Window);
+		SliderLabel->SetFont(GUIManager->getRegularFont());
+		SliderLabel->SetText(L"Volume Detail:");
+		SliderLabel->SetBounds(10, 465, 300, 40);
+		SliderLabel->SetTextColor(Gwen::Color(50, 20, 20, 215));
+
+		Gwen::Controls::HorizontalSlider * StepSizeSlider = new Gwen::Controls::HorizontalSlider(Window);
+		StepSizeSlider->SetBounds(10, 485, 300, 40);
+		StepSizeSlider->SetRange(10.f, 300.f);
+		StepSizeSlider->SetValue(VolumeControl.StepSize);
+
 		// Wire Up Events
 		pButton2->onPress.Add(			this,	& CGUIVolumeControlWidget::OnResetAlpha);
 		pButtonX->onPress.Add(			this,	& CGUIVolumeControlWidget::OnSetXAxis);
 		pButtonY->onPress.Add(			this,	& CGUIVolumeControlWidget::OnSetYAxis);
 		pButtonZ->onPress.Add(			this,	& CGUIVolumeControlWidget::OnSetZAxis);
 		VolumeMode->onSelection.Add(	this,	& CGUIVolumeControlWidget::OnVolumeMode);
+		StepSizeSlider->onValueChanged.Add(	this,	& CGUIVolumeControlWidget::OnStepSizeSlider);
 	}
 }
 
@@ -149,6 +161,12 @@ void CGUIVolumeControlWidget::OnLocalRangeSlider(Gwen::Controls::Base * Control)
 	Gwen::Controls::Slider * Bar = (Gwen::Controls::Slider *) Control;
 	VolumeControl.LocalRange = Bar->GetValue();
 	resetVolumeRange();
+}
+
+void CGUIVolumeControlWidget::OnStepSizeSlider(Gwen::Controls::Base * Control)
+{
+	Gwen::Controls::Slider * Bar = (Gwen::Controls::Slider *) Control;
+	VolumeControl.StepSize = Bar->GetValue();
 }
 
 void CGUIVolumeControlWidget::OnResetVolume(Gwen::Controls::Base * Control)

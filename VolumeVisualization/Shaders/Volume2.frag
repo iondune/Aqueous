@@ -12,6 +12,8 @@ uniform vec3 uCameraPosition;
 
 uniform float uAlphaIntensity;
 
+uniform float stepsize;
+
 float enter;
 float Exit;
 
@@ -185,8 +187,6 @@ void main()
 	}
 
 	FrontPosition += vec3(0.5);
-
-	float stepsize = 1.0 / 150.0;
 
 	vec3 start = FrontPosition;
 	vec3 dir = BackPosition - FrontPosition;
