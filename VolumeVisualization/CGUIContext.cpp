@@ -5,7 +5,8 @@
 
 
 CGUIContext::CGUIContext()
-	: MainState(CMainState::get())
+	: MainState(CMainState::get()), Console(0), TitleLabels(0), VolumeControl(0),
+	TerrainControl(0), GlyphControl(0), SceneControl(0), ControlPanel(0)
 {}
 
 void CGUIContext::setup()
@@ -20,6 +21,7 @@ void CGUIContext::setup()
 	addWidget(VolumeControl = new CGUIVolumeControlWidget());
 	addWidget(TerrainControl = new CGUITerrainControlWidget());
 	addWidget(GlyphControl = new CGUIGlyphControlWidget());
+	addWidget(SceneControl = new CGUISceneControlWidget());
 	addWidget(ControlPanel = new CGUIControlPanelWidget());
 	
 	Console->addMessage("GUI Initialized.");
@@ -49,6 +51,11 @@ CGUITerrainControlWidget * CGUIContext::getTerrainControl()
 CGUIGlyphControlWidget * CGUIContext::getGlyphControl()
 {
 	return GlyphControl;
+}
+
+CGUISceneControlWidget * CGUIContext::getSceneControl()
+{
+	return SceneControl;
 }
 
 CGUIControlPanelWidget * CGUIContext::getControlPanel()

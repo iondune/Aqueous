@@ -18,6 +18,7 @@ public:
 	void OnToggleTerrain(Gwen::Controls::Base * Control);
 	void OnToggleVolume(Gwen::Controls::Base * Control);
 	void OnToggleGlyph(Gwen::Controls::Base * Control);
+	void OnToggleScene(Gwen::Controls::Base * Control);
 
 };
 

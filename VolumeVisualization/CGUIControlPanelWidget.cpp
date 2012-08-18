@@ -12,7 +12,7 @@ CGUIControlPanelWidget::CGUIControlPanelWidget()
 {
 	Window = new Gwen::Controls::WindowControl(GUIManager->getCanvas());
 	Window->SetDeleteOnClose(false);
-	Window->SetBounds(30, 600, 495 + 30, 85);
+	Window->SetBounds(30, 600, 660 + 30, 85);
 	Window->SetTitle("Control Panel");
 	Window->SetClosable(false);
 
@@ -30,6 +30,11 @@ CGUIControlPanelWidget::CGUIControlPanelWidget()
 	EnableButton->SetBounds(345, 10, 150, 35);
 	EnableButton->SetText("Glyph Controls");
 	EnableButton->onPress.Add(this, & CGUIControlPanelWidget::OnToggleGlyph);
+
+	EnableButton = new Gwen::Controls::Button(Window);
+	EnableButton->SetBounds(510, 10, 150, 35);
+	EnableButton->SetText("Scene Controls");
+	EnableButton->onPress.Add(this, & CGUIControlPanelWidget::OnToggleScene);
 }
 
 void CGUIControlPanelWidget::OnToggleTerrain(Gwen::Controls::Base * Control)
@@ -48,4 +53,10 @@ void CGUIControlPanelWidget::OnToggleGlyph(Gwen::Controls::Base * Control)
 {
 	CProgramContext * Context = & CProgramContext::get();
 	Context->GUIContext->getGlyphControl()->toggle();
+}
+
+void CGUIControlPanelWidget::OnToggleScene(Gwen::Controls::Base * Control)
+{
+	CProgramContext * Context = & CProgramContext::get();
+	Context->GUIContext->getSceneControl()->toggle();
 }

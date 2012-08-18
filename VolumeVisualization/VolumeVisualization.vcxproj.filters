@@ -93,6 +93,9 @@
     <ClCompile Include="RBFInterpolator\RBFInterpolator.cpp">
       <Filter>MainState\RBFInterpolator</Filter>
     </ClCompile>
+    <ClCompile Include="CGUISceneControlWidget.cpp">
+      <Filter>GUI\Widgets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CMainState.h">
@@ -184,6 +187,9 @@
     </ClInclude>
     <ClInclude Include="RBFInterpolator\RBFInterpolator.h">
       <Filter>MainState\RBFInterpolator</Filter>
+    </ClInclude>
+    <ClInclude Include="CGUISceneControlWidget.h">
+      <Filter>GUI\Widgets</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

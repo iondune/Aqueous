@@ -8,6 +8,7 @@
 #include "CGUIVolumeControlWidget.h"
 #include "CGUITerrainControlWidget.h"
 #include "CGUIGlyphControlWidget.h"
+#include "CGUISceneControlWidget.h"
 #include "CGUIControlPanelWidget.h"
 
 
@@ -25,6 +26,7 @@ protected:
 	CGUIVolumeControlWidget * VolumeControl;
 	CGUITerrainControlWidget * TerrainControl;
 	CGUIGlyphControlWidget * GlyphControl;
+	CGUISceneControlWidget * SceneControl;
 	CGUIControlPanelWidget * ControlPanel;
 
 public:
@@ -38,6 +40,7 @@ public:
 	CGUIVolumeControlWidget * getVolumeControl();
 	CGUITerrainControlWidget * getTerrainControl();
 	CGUIGlyphControlWidget * getGlyphControl();
+	CGUISceneControlWidget * getSceneControl();
 	CGUIControlPanelWidget * getControlPanel();
 
 };
