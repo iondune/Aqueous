@@ -58,25 +58,6 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 		if (! Event.Pressed)
 			Context->GUIContext->getGlyphControl()->toggle();
 		break;
-		
-
-		///////////////////////
-		// Terrain Wireframe //
-		///////////////////////
-
-	/*case EKey::o:
-
-		if (! Event.Pressed)
-			Context->Scene.Terrain->enableDebugData(EDebugData::Wireframe);
-
-		break;
-
-	case EKey::p:
-
-		if (! Event.Pressed)
-			Context->Scene.Terrain->disableDebugData(EDebugData::Wireframe);
-
-		break;*/
 
 		
 		////////////

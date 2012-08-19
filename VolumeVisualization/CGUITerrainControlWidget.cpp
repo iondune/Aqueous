@@ -13,7 +13,7 @@ CGUITerrainControlWidget::CGUITerrainControlWidget()
 {
 	Window = new Gwen::Controls::WindowControl(GUIManager->getCanvas());
 	Window->SetDeleteOnClose(false);
-	Window->SetBounds(1200, 500, 330, 160);
+	Window->SetBounds(1200, 500, 330, 235);
 	Window->SetTitle("Terrain Controls");
 	Window->SetHidden(true);
 
@@ -40,11 +40,22 @@ CGUITerrainControlWidget::CGUITerrainControlWidget()
 		ColorButton->SetText("GoogleMaps (Color)");
 		ColorButton->onPress.Add(this, & CGUITerrainControlWidget::OnSelectColor);
 
-		// Wire Up Events
-		//EmphasisSlider->onValueChanged.Add(		this,	& CGUIVolumeControlWidget::OnEmphasisSlider);
-		//IntensitySlider->onValueChanged.Add(	this,	& CGUIVolumeControlWidget::OnIntensitySlider);
-		//MinimumAlphaSlider->onValueChanged.Add(	this,	& CGUIVolumeControlWidget::OnMinimumAlphaSlider);
-		//LocalRangeSlider->onValueChanged.Add(	this,	& CGUIVolumeControlWidget::OnLocalRangeSlider);
+
+		Gwen::Controls::Label * ModeLabel = new Gwen::Controls::Label(Window);
+		ModeLabel->SetFont(GUIManager->getRegularFont());
+		ModeLabel->SetText(L"Mode:");
+		ModeLabel->SetBounds(10, 10 + 45 + 75, 300, 40);
+		ModeLabel->SetTextColor(Gwen::Color(50, 20, 20, 215));
+
+		Gwen::Controls::Button * SolidButton = new Gwen::Controls::Button(Window);
+		SolidButton->SetBounds(15, 10 + 45 + 25 + 75, 140, 25);
+		SolidButton->SetText("Solid");
+		SolidButton->onPress.Add(this, & CGUITerrainControlWidget::OnSelectSolid);
+
+		Gwen::Controls::Button * WireframeButton = new Gwen::Controls::Button(Window);
+		WireframeButton->SetBounds(140 + 15 + 10, 10 + 45 + 25 + 75, 140, 25);
+		WireframeButton->SetText("Wireframe");
+		WireframeButton->onPress.Add(this, & CGUITerrainControlWidget::OnSelectWireframe);
 	}
 }
 
@@ -76,6 +87,18 @@ void CGUITerrainControlWidget::OnSelectColor(Gwen::Controls::Base * Control)
 {
 	CProgramContext * Context = & CProgramContext::get();
 	Context->Scene.Terrain->DebugHeight = false;
+}
+
+void CGUITerrainControlWidget::OnSelectSolid(Gwen::Controls::Base * Control)
+{
+	CProgramContext * Context = & CProgramContext::get();
+	Context->Scene.Terrain->disableDebugData(EDebugData::Wireframe);
+}
+
+void CGUITerrainControlWidget::OnSelectWireframe(Gwen::Controls::Base * Control)
+{
+	CProgramContext * Context = & CProgramContext::get();
+	Context->Scene.Terrain->enableDebugData(EDebugData::Wireframe);
 }
 
 void CGUITerrainControlWidget::toggle()
