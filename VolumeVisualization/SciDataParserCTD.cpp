@@ -142,8 +142,8 @@ void SciDataParserCTD::load(std::string const &data)
 			double Salinty = Data[j + 95 * Dimensions[0]];
 
 			SciData d(Lat, Depth, Lon);
-			d.ScalarFields["salinity"] = Salinty;
-			Manager->RawValues.Values.push_back(d);
+			Manager->RawValues.addData(d);
+			d.addField("salinity") = Salinty;
 
 			if (writeCsv)
 				printf("\r%3d%%", (int) (100.f * (float) j / (float) (Dimensions[0] - 1.f)));

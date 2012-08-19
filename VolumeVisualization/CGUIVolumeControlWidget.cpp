@@ -122,11 +122,11 @@ CGUIVolumeControlWidget::CGUIVolumeControlWidget()
 		StepSizeSlider->SetValue(VolumeControl.StepSize);
 
 		// Wire Up Events
-		pButton2->onPress.Add(			this,	& CGUIVolumeControlWidget::OnResetAlpha);
-		pButtonX->onPress.Add(			this,	& CGUIVolumeControlWidget::OnSetXAxis);
-		pButtonY->onPress.Add(			this,	& CGUIVolumeControlWidget::OnSetYAxis);
-		pButtonZ->onPress.Add(			this,	& CGUIVolumeControlWidget::OnSetZAxis);
-		VolumeMode->onSelection.Add(	this,	& CGUIVolumeControlWidget::OnVolumeMode);
+		pButton2->onPress.Add(				this,	& CGUIVolumeControlWidget::OnResetAlpha);
+		pButtonX->onPress.Add(				this,	& CGUIVolumeControlWidget::OnSetXAxis);
+		pButtonY->onPress.Add(				this,	& CGUIVolumeControlWidget::OnSetYAxis);
+		pButtonZ->onPress.Add(				this,	& CGUIVolumeControlWidget::OnSetZAxis);
+		VolumeMode->onSelection.Add(		this,	& CGUIVolumeControlWidget::OnVolumeMode);
 		StepSizeSlider->onValueChanged.Add(	this,	& CGUIVolumeControlWidget::OnStepSizeSlider);
 	}
 }

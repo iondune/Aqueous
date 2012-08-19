@@ -29,7 +29,7 @@ public:
 	int * GridDimensions;
 
 	void createVolumeFromGridValues(IColorMapper * ColorMapper);
-	void createDataTreeFromRawValues();
+	//void createDataTreeFromRawValues();
 	void createGridDataFromRawValues(Range AcceptedValues = FullRange, double Deviations = 5.0, std::string const & Field = "o2");
 	void createPointCloudObjects(bool FromRaw, ISceneObject * RootParent, SVector3f const DataScale, IColorMapper * ColorMapper);
 

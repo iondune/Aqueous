@@ -5,7 +5,7 @@ void SciDataManager::createVolumeFromGridValues(IColorMapper * ColorMapper)
 {
 	unsigned int const size = GridDimensions[0] * GridDimensions[1] * GridDimensions[2] * 4;
 
-	if (GridValues.Values.size() != size / 4)
+	if (GridValues.size() != size / 4)
 	{
 		printf("Unexpected size of grid data.\n");
 		return;
@@ -25,7 +25,7 @@ void SciDataManager::createVolumeFromGridValues(IColorMapper * ColorMapper)
 
 				int ValueIndex = k + j * GridDimensions[0] + i * GridDimensions[1] * GridDimensions[0];
 
-				SColorAf Color = ColorMapper->getColor(GridValues.Values[ValueIndex]);
+				SColorAf Color = ColorMapper->getColor(GridValues.getValues()[ValueIndex]);
 
 				for (int t = 0; t < 4; ++ t)
 					volumeData[index * 4 + t] = clamp<unsigned char>((unsigned char) (Color[t] * 255.f), 0, 255);
@@ -92,7 +92,7 @@ f64 const SciDataManager::getGridVolume(std::string const & Field, f64 const Val
 {
 	unsigned int const size = GridDimensions[0] * GridDimensions[1] * GridDimensions[2] * 4;
 
-	if (GridValues.Values.size() != size / 4)
+	if (GridValues.size() != size / 4)
 	{
 		printf("Unexpected size of grid data.\n");
 		return 0.0;
@@ -252,7 +252,7 @@ f64 const SciDataManager::getGridVolume(std::string const & Field, f64 const Val
 							{
 								int ValueIndex = (k + c) + (j + b) * GridDimensions[0] + (i + a) * GridDimensions[1] * GridDimensions[0];
 								int FieldIndex = 4 * c + 2 * b + a;
-								IsoValues[FieldIndex] = Range - abs(GridValues.Values[ValueIndex].getField(Field) - Value);
+								IsoValues[FieldIndex] = Range - abs(GridValues.getValues()[ValueIndex].getField(Field) - Value);
 							}
 						}
 					}
@@ -276,7 +276,7 @@ f64 const SciDataManager::getGridVolume(std::string const & Field, f64 const Val
 				for (int k = 0; k < GridDimensions[0]; ++ k)
 				{
 					int ValueIndex = (k + 0) + (j + 0) * GridDimensions[0] + (i + 0) * GridDimensions[1] * GridDimensions[0];
-					SciData const * Data = & GridValues.Values[ValueIndex];
+					SciData const * Data = & GridValues.getValues()[ValueIndex];
 					f64 const IsoValue = Range - abs(Data->getField(Field) - Value);
 
 					if (IsoValue < 0.0)
@@ -308,7 +308,7 @@ f64 const SciDataManager::getGridVolume(std::string const & Field, f64 const Val
 									}
 
 									int ValueIndex = (k + a) + (j + b) * GridDimensions[0] + (i + c) * GridDimensions[1] * GridDimensions[0];
-									SciData const * OtherData = & GridValues.Values[ValueIndex];
+									SciData const * OtherData = & GridValues.getValues()[ValueIndex];
 									f64 const OtherIsoValue = Range - abs(OtherData->getField(Field) - Value);
 
 									if (OtherIsoValue >= 0.0)

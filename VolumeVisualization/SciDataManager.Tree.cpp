@@ -1,3 +1,5 @@
+#if 0
+
 #include "SciDataManager.h"
 
 
@@ -8,7 +10,7 @@ void SciDataManager::createDataTreeFromRawValues()
 	for (auto it = RawValues.Values.begin(); it != RawValues.Values.end(); ++ it)
 		Root->Datums.push_back(* it);
 	Root->Extents = SBoundingBox3f(Vector3(0), RawValues.DataScale);
-		
+	
 	/*
 	auto CreateLeafObjects = []()
 	{
@@ -66,3 +68,5 @@ void SciDataManager::createDataTreeFromRawValues()
 #endif
 
 }
+
+#endif

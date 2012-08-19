@@ -6,66 +6,35 @@
 #include <map>
 #include <vector>
 
+#include <ionTypes.h>
 #include <SVector3.h>
 typedef SVector3d Vector3;
 
 
+class SciDataSet;
+
 class SciData
 {
 
+private:
+
+	friend class SciDataSet;
+
+	s32 InternalIndex;
+	SciDataSet * ContainingSet;
+
 public:
 
-	SciData()
-	{}
-
-	SciData(double x, double y, double z)
-		: Location(x, y, z)
-	{}
-
-	~SciData()
-	{}
+	SciData();
+	SciData(double x, double y, double z);
+	~SciData();
 
 	Vector3 Location;
-	std::map<std::string, double> ScalarFields;
 
-	Vector3 const & getLocation() const
-	{
-		return Location;
-	}
-
-	double const getField(std::string const & Field) const
-	{
-		if (Field == "x")
-			return Location.X;
-		if (Field == "y")
-			return Location.Y;
-		if (Field == "z")
-			return Location.Z;
-
-		std::map<std::string, double>::const_iterator it;
-		if ((it = ScalarFields.find(Field)) == ScalarFields.end())
-			return 0;
-		else
-			return it->second;
-	}
-
-	double & getField(std::string const & Field)
-	{
-		static double dummy = 0;
-
-		if (Field == "x")
-			return Location.X;
-		if (Field == "y")
-			return Location.Y;
-		if (Field == "z")
-			return Location.Z;
-
-		std::map<std::string, double>::iterator it;
-		if ((it = ScalarFields.find(Field)) == ScalarFields.end())
-			return dummy;
-		else
-			return it->second;
-	}
+	Vector3 const & getLocation() const;
+	double const getField(std::string const & Field) const;
+	double & getField(std::string const & Field);
+	double & addField(std::string const & Field);
 
 };
 

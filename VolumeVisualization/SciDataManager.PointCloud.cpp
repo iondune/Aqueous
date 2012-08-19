@@ -13,7 +13,7 @@ void SciDataManager::createPointCloudObjects(bool FromRaw, ISceneObject * RootPa
 	Range	YRange = DataSet.getValueRange("y", 5.0);
 	Range	ZRange = DataSet.getValueRange("z", 5.0);
 
-	for (auto it = DataSet.Values.begin(); it != DataSet.Values.end(); ++ it)
+	for (auto it = DataSet.getValues().begin(); it != DataSet.getValues().end(); ++ it)
 	{
 		CMeshSceneObject * Object = new CMeshSceneObject();
 		Object->setMesh(CProgramContext::get().Scene.Cube);

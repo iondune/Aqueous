@@ -15,11 +15,20 @@ bool const inRange(double const v, Range const & r);
 class SciDataSet
 {
 
+private:
+
+	friend class SciData;
+	std::vector<SciData> Values;
+	std::map<std::string, std::vector<double> > Fields;
+	u32 DataCounter;
+
 public:
 
-	std::vector<SciData> Values;
-	Vector3 DataScale;
-	
+	SciDataSet()
+		: DataCounter(0)
+	{}
+
+	void addData(SciData & Data);
 
 	// Clamp x, y, z to volume range [0,v]
 	void setDataScale(Vector3 const & v);
@@ -32,7 +41,14 @@ public:
 	SciDataIterator begin(std::string const & Field);
 	SciDataIterator end(std::string const & Field);
 
-	u32 const size();
+	std::vector<SciData> const & getValues() const;
+
+	u32 const size() const;
+	void clear();
+	void writeToFile(std::ofstream & File);
+	void readFromFile(std::ifstream & File);
+
+	Vector3 DataScale;
 
 };
 

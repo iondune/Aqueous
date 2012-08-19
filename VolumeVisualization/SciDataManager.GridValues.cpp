@@ -11,7 +11,7 @@ void SciDataManager::createGridDataFromRawValues(Range AcceptedValues, double De
 	GridDimensions[1] = Size;
 	GridDimensions[2] = Size;
 
-	GridValues.Values.clear();
+	GridValues.clear();
 
 	std::vector<float> X, Y, Z, F;
 
@@ -20,7 +20,7 @@ void SciDataManager::createGridDataFromRawValues(Range AcceptedValues, double De
 	Range ZRange = RawValues.getValueRange("z", Deviations, AcceptedValues);
 	Range FRange = RawValues.getValueRange(Field, Deviations, AcceptedValues);
 
-	for (auto it = RawValues.Values.begin(); it != RawValues.Values.end(); ++ it)
+	for (auto it = RawValues.getValues().begin(); it != RawValues.getValues().end(); ++ it)
 	{
 		float x = (float) ((it->getField("x") - XRange.first) / (XRange.second - XRange.first));
 		float y = (float) ((it->getField("y") - YRange.first) / (YRange.second - YRange.first));
@@ -52,8 +52,7 @@ void SciDataManager::createGridDataFromRawValues(Range AcceptedValues, double De
 	for (int i = 0; i < Size; ++ i)
 	{
 		SciData d(i / (float) Size, j / (float) Size, k / (float) Size);
-		d.ScalarFields[Field] = rbfi.interpolate(i / (float) Size, j / (float) Size, k / (float) Size);
-
-		GridValues.Values.push_back(d);
+		GridValues.addData(d);
+		d.addField(Field) = rbfi.interpolate(i / (float) Size, j / (float) Size, k / (float) Size);
 	}
 }

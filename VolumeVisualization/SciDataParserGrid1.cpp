@@ -64,15 +64,15 @@ void SciDataParserGrid1::load(std::string const &data)
 				int index = k + j * Dimensions[0] + i * Dimensions[1] * Dimensions[0];
 
 				SciData d(pointXData[index], -pointZData[index], pointYData[index]);
-				d.ScalarFields["o1"] = pointO1Data[index];
-				d.ScalarFields["o2"] = pointO2Data[index];
-				d.ScalarFields["o3"] = pointO3Data[index];
-				d.ScalarFields["o4"] = pointO4Data[index];
-				d.ScalarFields["var1"] = var1Data[index];
-				d.ScalarFields["var2"] = var2Data[index];
-				d.ScalarFields["var3"] = var3Data[index];
-				d.ScalarFields["var4"] = var4Data[index];
-				Manager->GridValues.Values.push_back(d);
+				Manager->GridValues.addData(d);
+				d.addField("o1") = pointO1Data[index];
+				d.addField("o2") = pointO2Data[index];
+				d.addField("o3") = pointO3Data[index];
+				d.addField("o4") = pointO4Data[index];
+				d.addField("var1") = var1Data[index];
+				d.addField("var2") = var2Data[index];
+				d.addField("var3") = var3Data[index];
+				d.addField("var4") = var4Data[index];
 			}
 		}
 	}

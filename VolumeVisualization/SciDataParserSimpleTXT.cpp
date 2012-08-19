@@ -52,10 +52,10 @@ void SciDataParserSimpleTXT::load(std::string const &data)
 
 		// push scidata into list
 		SciData d(x, -y, z);
-		d.ScalarFields["o2"] = O2;
-		d.ScalarFields["temp"] = temp;
-		d.ScalarFields["d1"] = d1;
-		Manager->RawValues.Values.push_back(d);
+		Manager->RawValues.addData(d);
+		d.addField("o2") = O2;
+		d.addField("temp") = temp;
+		d.addField("d1") = d1;
 
 		// move onto next line
 		tok = strtok(NULL, "\n");

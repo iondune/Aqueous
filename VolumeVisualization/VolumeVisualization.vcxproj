@@ -94,6 +94,7 @@
     <ClCompile Include=".\SciDataParserCTD.cpp" />
     <ClCompile Include="RBFInterpolator\newmat.cpp" />
     <ClCompile Include="RBFInterpolator\RBFInterpolator.cpp" />
+    <ClCompile Include="SciData.cpp" />
     <ClCompile Include="SciDataManager.Tree.cpp" />
     <ClCompile Include="SciDataManager.GridValues.cpp" />
     <ClCompile Include="SciDataManager.PointCloud.cpp" />

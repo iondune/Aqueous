@@ -96,6 +96,9 @@
     <ClCompile Include="CGUISceneControlWidget.cpp">
       <Filter>GUI\Widgets</Filter>
     </ClCompile>
+    <ClCompile Include="SciData.cpp">
+      <Filter>MainState\Data Management\Base Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CMainState.h">
