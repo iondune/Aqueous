@@ -12,6 +12,8 @@ public:
 	CMainState();
 
 	void begin();
+	void end();
+
 	void OnRenderStart(float const Elapsed);
 
     void OnKeyboardEvent(SKeyboardEvent const & Event);

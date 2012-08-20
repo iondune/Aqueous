@@ -66,12 +66,6 @@
     <ClCompile Include="CGUIConsoleWidget.cpp">
       <Filter>GUI\Widgets</Filter>
     </ClCompile>
-    <ClCompile Include="CGUIWidget.cpp">
-      <Filter>GUI\Widgets\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="CGUIContextWidget.cpp">
-      <Filter>GUI\Widgets\Base</Filter>
-    </ClCompile>
     <ClCompile Include="CGUITitleLabelsWidget.cpp">
       <Filter>GUI\Widgets</Filter>
     </ClCompile>
@@ -98,6 +92,18 @@
     </ClCompile>
     <ClCompile Include="SciData.cpp">
       <Filter>MainState\Data Management\Base Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="CGUIContextWidget.cpp">
+      <Filter>GUI\Widgets\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="CGUIWidget.cpp">
+      <Filter>GUI\Widgets\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="CMainMenuState.cpp">
+      <Filter>MainMenuState</Filter>
+    </ClCompile>
+    <ClCompile Include="CGUIMainMenuWidget.cpp">
+      <Filter>GUI\Widgets</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -164,12 +170,6 @@
     <ClInclude Include="CGUIConsoleWidget.h">
       <Filter>GUI\Widgets</Filter>
     </ClInclude>
-    <ClInclude Include="CGUIWidget.h">
-      <Filter>GUI\Widgets\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="CGUIContextWidget.h">
-      <Filter>GUI\Widgets\Base</Filter>
-    </ClInclude>
     <ClInclude Include="CGUITitleLabelsWidget.h">
       <Filter>GUI\Widgets</Filter>
     </ClInclude>
@@ -192,6 +192,18 @@
       <Filter>MainState\RBFInterpolator</Filter>
     </ClInclude>
     <ClInclude Include="CGUISceneControlWidget.h">
+      <Filter>GUI\Widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="CGUIWidget.h">
+      <Filter>GUI\Widgets\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="CGUIContextWidget.h">
+      <Filter>GUI\Widgets\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="CMainMenuState.h">
+      <Filter>MainMenuState</Filter>
+    </ClInclude>
+    <ClInclude Include="CGUIMainMenuWidget.h">
       <Filter>GUI\Widgets</Filter>
     </ClInclude>
   </ItemGroup>
@@ -229,14 +241,17 @@
     <Filter Include="LoadContext">
       <UniqueIdentifier>{00619c69-b650-43a9-8d5f-0f1ceedc408e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainState\RBFInterpolator">
+      <UniqueIdentifier>{b020b00f-9710-43b6-a8a2-ea0d2483664b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainMenuState">
+      <UniqueIdentifier>{ab5d3775-8246-4053-8366-bb5e9bb50420}</UniqueIdentifier>
+    </Filter>
     <Filter Include="GUI\Widgets">
       <UniqueIdentifier>{69559bbe-9f50-47e8-809c-55d622e1b426}</UniqueIdentifier>
     </Filter>
     <Filter Include="GUI\Widgets\Base">
-      <UniqueIdentifier>{319dbfd4-c269-4bfe-8df0-1977bf4ca203}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MainState\RBFInterpolator">
-      <UniqueIdentifier>{b020b00f-9710-43b6-a8a2-ea0d2483664b}</UniqueIdentifier>
+      <UniqueIdentifier>{e6e9fb75-ed02-4c48-a34c-0a27f63cd1a7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

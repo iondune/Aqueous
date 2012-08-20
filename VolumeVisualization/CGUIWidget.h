@@ -19,6 +19,7 @@ protected:
 public:
 
 	CGUIWidget(CGUIManager * Manager);
+	virtual ~CGUIWidget();
 
 	virtual void update(f32 const Elapsed);
 

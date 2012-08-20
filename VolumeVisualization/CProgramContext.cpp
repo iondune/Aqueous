@@ -1,6 +1,7 @@
 #include "CProgramContext.h"
 
 #include "CMainState.h"
+#include "CMainMenuState.h"
 #include "CLoadContext.h"
 
 
@@ -22,7 +23,6 @@ void CProgramContext::init()
 	// Create Window
 	CApplication & Application = CApplication::get();
 	Application.init(SPosition2(1024, 768), "Underwater Volume Data Rendering");
-	CMainState & MainState = CMainState::get();
 
 	// Create GUI Engine
 	std::cout << "GUI Engine is initializing..." << std::endl;
@@ -40,7 +40,7 @@ void CProgramContext::run()
 	CApplication & Application = CApplication::get();
 
 	// Load initial state
-	Application.getStateManager().setState(& CMainState::get());
+	Application.getStateManager().setState(& CMainMenuState::get());
 
 	// Run program!
 	Application.run();

@@ -3,6 +3,7 @@
 
 #include "CGUIManager.h"
 
+// Main State
 #include "CGUIConsoleWidget.h"
 #include "CGUITitleLabelsWidget.h"
 #include "CGUIVolumeControlWidget.h"
@@ -11,6 +12,8 @@
 #include "CGUISceneControlWidget.h"
 #include "CGUIControlPanelWidget.h"
 
+// Menu State
+#include "CGUIMainMenuWidget.h"
 
 class CMainState;
 
@@ -28,12 +31,15 @@ protected:
 	CGUIGlyphControlWidget * GlyphControl;
 	CGUISceneControlWidget * SceneControl;
 	CGUIControlPanelWidget * ControlPanel;
+	CGUIMainMenuWidget * MainMenu;
 
 public:
 
 	CGUIContext();
 
-	void setup();
+	void setupMainState();
+	void setupMenuState();
+	void clear();
 	
 	CGUIConsoleWidget * getConsole();
 	CGUITitleLabelsWidget * getTitleLabels();

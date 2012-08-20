@@ -6,13 +6,11 @@
 
 CGUIContext::CGUIContext()
 	: MainState(CMainState::get()), Console(0), TitleLabels(0), VolumeControl(0),
-	TerrainControl(0), GlyphControl(0), SceneControl(0), ControlPanel(0)
+	TerrainControl(0), GlyphControl(0), SceneControl(0), ControlPanel(0), MainMenu(0)
 {}
 
-void CGUIContext::setup()
+void CGUIContext::setupMainState()
 {
-	// Cleanup
-	Canvas->RemoveAllChildren();
 	Canvas->SetDrawBackground(false);
 
 	// Widgets
@@ -26,6 +24,29 @@ void CGUIContext::setup()
 	
 	Console->addMessage("GUI Initialized.");
 	Console->addMessage("Starting program...", Gwen::Colors::Red);
+}
+
+void CGUIContext::setupMenuState()
+{
+	Canvas->SetDrawBackground(true);
+
+	// Widgets
+	addWidget(MainMenu = new CGUIMainMenuWidget());
+}
+
+void CGUIContext::clear()
+{
+	Console = 0;
+	TitleLabels = 0;
+	VolumeControl = 0;
+	TerrainControl = 0;
+	GlyphControl = 0;
+	SceneControl = 0;
+	ControlPanel = 0;
+
+	MainMenu = 0;
+
+	removeAllWidgets();
 }
 
 CGUIConsoleWidget * CGUIContext::getConsole()

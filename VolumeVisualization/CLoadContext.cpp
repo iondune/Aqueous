@@ -1,6 +1,7 @@
 #include "CLoadContext.h"
 
 #include "CMainState.h"
+#include "CMainMenuState.h"
 #include "CGwenEventForwarder.h"
 
 
@@ -40,6 +41,7 @@ void CLoadContext::run()
 	// Load References
 	CApplication & Application = CApplication::get();
 	CMainState & MainState = CMainState::get();
+	CMainMenuState & MenuState = CMainMenuState::get();
 
 	GUIManager = Context->GUIContext;
 	Canvas = GUIManager->getCanvas();
@@ -72,6 +74,7 @@ void CLoadContext::run()
 	addLabel(L"Initializing System...");
 	Application.loadEngines();
 	MainState.load();
+	MenuState.load();
 	CGwenEventForwarder * Forwarder = new CGwenEventForwarder(GUIManager->getCanvas());
 	
 	setProgress(0.4f);
@@ -89,6 +92,9 @@ void CLoadContext::run()
 	
 	setProgress(1.f);
 	addLabel(L"Application is Starting...");
+
+	// Cleanup GUI
+	Canvas->RemoveAllChildren();
 }
 
 void CLoadContext::loadShaders()

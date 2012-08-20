@@ -7,9 +7,16 @@ CMainState::CMainState()
 
 void CMainState::begin()
 {
-	Context->GUIContext->setup();
+	Context->GUIContext->setupMainState();
+
+	Context->Scene.Camera->setProjection(60.f, CApplication::get().getAspectRatio(), 0.01f, 100.f);
 
 	Context->Scene.Timer = 0.f;
+}
+
+void CMainState::end()
+{
+	Context->GUIContext->clear();
 }
 
 void CMainState::OnRenderStart(float const Elapsed)

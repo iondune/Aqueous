@@ -39,9 +39,7 @@ void CGUIManager::init()
 void CGUIManager::draw(f32 const Elapsed, bool const ClearAll)
 {
 	for (auto it = Widgets.begin(); it != Widgets.end(); ++ it)
-	{
 		(* it)->update(Elapsed);
-	}
 
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -96,6 +94,8 @@ void CGUIManager::addWidget(CGUIWidget * Widget)
 
 void CGUIManager::removeWidget(CGUIWidget * Widget)
 {
+	for (auto it = Widgets.begin(); it != Widgets.end(); ++ it)
+		delete (* it);
 	Widgets.erase(std::remove(Widgets.begin(), Widgets.end(), Widget), Widgets.end());
 }
 
