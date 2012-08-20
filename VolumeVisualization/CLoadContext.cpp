@@ -53,13 +53,13 @@ void CLoadContext::run()
 	// Label
 	Gwen::Controls::Label * BigLabel = new Gwen::Controls::Label(Canvas);
 	BigLabel->SetFont(GUIManager->getLargeFont());
-	BigLabel->SetText(Gwen::UnicodeString(L"Loading..."));
+	BigLabel->SetText(L"Loading...");
 	BigLabel->SetBounds(10, 10, 1590, 300);
 	BigLabel->SetTextColor(Gwen::Color(255, 255, 255, 84));
 	
 	Gwen::Controls::Label * MediumLabel = new Gwen::Controls::Label(Canvas);
 	MediumLabel->SetFont(GUIManager->getMediumFont());
-	MediumLabel->SetText(Gwen::UnicodeString(L"Progress:"));
+	MediumLabel->SetText(L"Progress:");
 	MediumLabel->SetBounds(500, 400, 500, 300);
 	MediumLabel->SetTextColor(Gwen::Color(255, 255, 255, 84));
 
@@ -70,28 +70,24 @@ void CLoadContext::run()
 	GUIManager->draw(true);
 	CApplication::get().swapBuffers();
 	
-	setProgress(0.2f);
+	setProgress(0.3f);
 	addLabel(L"Initializing System...");
 	Application.loadEngines();
 	MainState.load();
 	MenuState.load();
 	CGwenEventForwarder * Forwarder = new CGwenEventForwarder(GUIManager->getCanvas());
 	
-	setProgress(0.4f);
+	setProgress(0.5f);
 	addLabel(L"Loading Scene Shaders...");
 	Application.getSceneManager().init(false, false);
 	loadShaders();
 	
-	setProgress(0.6f);
+	setProgress(0.8f);
 	addLabel(L"Loading Scene Objects...");
 	loadScene();
 	
-	setProgress(0.8f);
-	addLabel(L"Loading Science Data...");
-	loadData();
-	
 	setProgress(1.f);
-	addLabel(L"Application is Starting...");
+	addLabel(L"Menu is Starting...");
 
 	// Cleanup GUI
 	Canvas->RemoveAllChildren();

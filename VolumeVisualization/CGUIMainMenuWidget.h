@@ -13,6 +13,8 @@ public:
 
 	CGUIMainMenuWidget();
 
+	void OnSelectDataSet(Gwen::Controls::Base * Control);
+
 };
 
 #endif

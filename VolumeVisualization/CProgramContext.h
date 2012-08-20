@@ -14,6 +14,8 @@
 #include "CVolumeSceneObject.h"
 
 
+class CLoadContext;
+
 class CProgramContext : public Singleton<CProgramContext>
 {
 
@@ -55,6 +57,7 @@ public:
 
 	SScene Scene;
 	CGUIContext * GUIContext;
+	CLoadContext * LoadContext;
 	SciDataManager * DataManager;
 
 	struct SShaders

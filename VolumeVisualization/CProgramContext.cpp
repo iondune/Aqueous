@@ -15,7 +15,7 @@ CProgramContext::SShaders::SShaders()
 {}
 
 CProgramContext::CProgramContext()
-	: GUIContext(0), DataManager(0)
+	: GUIContext(0), DataManager(0), LoadContext(0)
 {}
 
 void CProgramContext::init()
@@ -30,9 +30,9 @@ void CProgramContext::init()
 	GUIContext->init();
 
 	// Begin loading
-	CLoadContext LoadContext;
-	LoadContext.init();
-	LoadContext.run();
+	LoadContext = new CLoadContext();
+	LoadContext->init();
+	LoadContext->run();
 }
 
 void CProgramContext::run()

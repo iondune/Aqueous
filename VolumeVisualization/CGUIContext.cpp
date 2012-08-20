@@ -47,6 +47,7 @@ void CGUIContext::clear()
 	MainMenu = 0;
 
 	removeAllWidgets();
+	Canvas->RemoveAllChildren();
 }
 
 CGUIConsoleWidget * CGUIContext::getConsole()
