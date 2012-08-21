@@ -2,9 +2,41 @@
 
 #include "CMainState.h"
 #include "ColorMappers.h"
+#include "CGUILoadingWidget.h"
 
+
+class DataLoadThread : public sf::Thread
+{
+
+private:
+	
+	virtual void Run()
+	{
+		std::cout << "Running!" << std::endl;
+		Context->DataManager->readFromFile(FileName);
+		LoadingWidget->setProgress(0.5f);
+
+		COxygenColorMapper o("d1");
+		Context->DataManager->createPointCloudObjects(true, Context->Scene.PointCloudObject, SVector3f(-3.f, 0.8f, 3.f), & o);
+		LoadingWidget->setProgress(0.75f);
+
+		o.Field = "o1";
+		Context->DataManager->createPointCloudObjects(false, Context->Scene.GridObject, SVector3f(3.f), & o);
+		LoadingWidget->setProgress(1.f);
+		* Finished = true;
+	}
+
+public:
+
+	CProgramContext * Context;
+	std::string FileName;
+	CGUILoadingWidget * LoadingWidget;
+	bool * Finished;
+
+};
 
 CMainMenuState::CMainMenuState()
+	: FinishedLoading(false), Thread(0)
 {}
 
 void CMainMenuState::begin()
@@ -15,12 +47,24 @@ void CMainMenuState::begin()
 void CMainMenuState::end()
 {
 	Context->GUIContext->clear();
+	if (Thread)
+		delete Thread;
 }
 
 void CMainMenuState::OnRenderStart(float const Elapsed)
 {
+	sf::Sleep(0.05f);
+
 	Context->GUIContext->draw(Elapsed, true);
 	CApplication::get().swapBuffers();
+
+	if (FinishedLoading)
+	{
+		COxygenColorMapper o("o1");		
+		Context->DataManager->createVolumeFromGridValues(& o);
+		Context->Scene.VolumeSceneObject->VolumeHandle = Context->DataManager->VolumeHandle;
+		CApplication::get().getStateManager().setState(& CMainState::get());
+	}
 }
 
 void CMainMenuState::OnWindowResized(SWindowResizedEvent const & Event)
@@ -35,17 +79,14 @@ void CMainMenuState::loadData(std::string const & FileName)
 	std::stringstream s;
 	s << "Datasets/";
 	s << FileName;
-	Context->DataManager->readFromFile(s.str());
 
-	COxygenColorMapper o("d1");
-	Context->DataManager->createPointCloudObjects(true, Context->Scene.PointCloudObject, SVector3f(-3.f, 0.8f, 3.f), & o);
+	Thread = new DataLoadThread();
+	Thread->FileName = s.str();
+	Thread->Finished = & FinishedLoading;
+	Thread->Context = Context;
+	Context->GUIContext->addWidget(Thread->LoadingWidget = new CGUILoadingWidget("Loading data and initializing scene elements"));
 
-	o.Field = "o1";
-	Context->DataManager->createVolumeFromGridValues(& o);
-	Context->DataManager->createPointCloudObjects(false, Context->Scene.GridObject, SVector3f(3.f), & o);
-	Context->Scene.VolumeSceneObject->VolumeHandle = Context->DataManager->VolumeHandle;
-
-	CApplication::get().getStateManager().setState(& CMainState::get());
+	Thread->Launch();
 }
 
 void CMainMenuState::createDataSet()

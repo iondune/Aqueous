@@ -73,6 +73,7 @@
     <ClCompile Include="CGUIContextWidget.cpp" />
     <ClCompile Include="CGUIControlPanelWidget.cpp" />
     <ClCompile Include="CGUIGlyphControlWidget.cpp" />
+    <ClCompile Include="CGUILoadingWidget.cpp" />
     <ClCompile Include="CGUIMainMenuWidget.cpp" />
     <ClCompile Include="CGUIManager.cpp" />
     <ClCompile Include="CGUISceneControlWidget.cpp" />
@@ -110,6 +111,7 @@
     <ClInclude Include="CGUIContextWidget.h" />
     <ClInclude Include="CGUIControlPanelWidget.h" />
     <ClInclude Include="CGUIGlyphControlWidget.h" />
+    <ClInclude Include="CGUILoadingWidget.h" />
     <ClInclude Include="CGUIMainMenuWidget.h" />
     <ClInclude Include="CGUIManager.h" />
     <ClInclude Include="CGUISceneControlWidget.h" />

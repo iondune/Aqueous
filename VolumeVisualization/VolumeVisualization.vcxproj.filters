@@ -56,32 +56,11 @@
     <ClCompile Include="SciDataManager.File.cpp">
       <Filter>MainState\Data Management</Filter>
     </ClCompile>
-    <ClCompile Include="CGUIConsoleWidget.cpp">
-      <Filter>Program Context\Widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="CGUITitleLabelsWidget.cpp">
-      <Filter>Program Context\Widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="CGUIVolumeControlWidget.cpp">
-      <Filter>Program Context\Widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="CGUIGlyphControlWidget.cpp">
-      <Filter>Program Context\Widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="CGUITerrainControlWidget.cpp">
-      <Filter>Program Context\Widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="CGUIControlPanelWidget.cpp">
-      <Filter>Program Context\Widgets</Filter>
-    </ClCompile>
     <ClCompile Include="RBFInterpolator\newmat.cpp">
       <Filter>MainState\RBFInterpolator</Filter>
     </ClCompile>
     <ClCompile Include="RBFInterpolator\RBFInterpolator.cpp">
       <Filter>MainState\RBFInterpolator</Filter>
-    </ClCompile>
-    <ClCompile Include="CGUISceneControlWidget.cpp">
-      <Filter>Program Context\Widgets</Filter>
     </ClCompile>
     <ClCompile Include="SciData.cpp">
       <Filter>MainState\Data Management\Base Objects</Filter>
@@ -95,14 +74,38 @@
     <ClCompile Include="CMainMenuState.cpp">
       <Filter>MainMenuState</Filter>
     </ClCompile>
-    <ClCompile Include="CGUIMainMenuWidget.cpp">
-      <Filter>Program Context\Widgets</Filter>
-    </ClCompile>
     <ClCompile Include="CProgramContext.cpp">
       <Filter>Program Context</Filter>
     </ClCompile>
     <ClCompile Include="CGUIContext.cpp">
       <Filter>Program Context</Filter>
+    </ClCompile>
+    <ClCompile Include="CGUIMainMenuWidget.cpp">
+      <Filter>Program Context\Widgets\Main Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="CGUIControlPanelWidget.cpp">
+      <Filter>Program Context\Widgets\Main State</Filter>
+    </ClCompile>
+    <ClCompile Include="CGUIGlyphControlWidget.cpp">
+      <Filter>Program Context\Widgets\Main State</Filter>
+    </ClCompile>
+    <ClCompile Include="CGUISceneControlWidget.cpp">
+      <Filter>Program Context\Widgets\Main State</Filter>
+    </ClCompile>
+    <ClCompile Include="CGUITerrainControlWidget.cpp">
+      <Filter>Program Context\Widgets\Main State</Filter>
+    </ClCompile>
+    <ClCompile Include="CGUITitleLabelsWidget.cpp">
+      <Filter>Program Context\Widgets\Main State</Filter>
+    </ClCompile>
+    <ClCompile Include="CGUIVolumeControlWidget.cpp">
+      <Filter>Program Context\Widgets\Main State</Filter>
+    </ClCompile>
+    <ClCompile Include="CGUIConsoleWidget.cpp">
+      <Filter>Program Context\Widgets\General</Filter>
+    </ClCompile>
+    <ClCompile Include="CGUILoadingWidget.cpp">
+      <Filter>Program Context\Widgets\General</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -161,32 +164,11 @@
     <ClInclude Include="SciDataManager.h">
       <Filter>MainState\Data Management</Filter>
     </ClInclude>
-    <ClInclude Include="CGUIConsoleWidget.h">
-      <Filter>Program Context\Widgets</Filter>
-    </ClInclude>
-    <ClInclude Include="CGUITitleLabelsWidget.h">
-      <Filter>Program Context\Widgets</Filter>
-    </ClInclude>
-    <ClInclude Include="CGUIVolumeControlWidget.h">
-      <Filter>Program Context\Widgets</Filter>
-    </ClInclude>
-    <ClInclude Include="CGUIGlyphControlWidget.h">
-      <Filter>Program Context\Widgets</Filter>
-    </ClInclude>
-    <ClInclude Include="CGUITerrainControlWidget.h">
-      <Filter>Program Context\Widgets</Filter>
-    </ClInclude>
-    <ClInclude Include="CGUIControlPanelWidget.h">
-      <Filter>Program Context\Widgets</Filter>
-    </ClInclude>
     <ClInclude Include="RBFInterpolator\newmat.h">
       <Filter>MainState\RBFInterpolator</Filter>
     </ClInclude>
     <ClInclude Include="RBFInterpolator\RBFInterpolator.h">
       <Filter>MainState\RBFInterpolator</Filter>
-    </ClInclude>
-    <ClInclude Include="CGUISceneControlWidget.h">
-      <Filter>Program Context\Widgets</Filter>
     </ClInclude>
     <ClInclude Include="CGUIWidget.h">
       <Filter>Utilities\GUI\Widgets</Filter>
@@ -197,9 +179,6 @@
     <ClInclude Include="CMainMenuState.h">
       <Filter>MainMenuState</Filter>
     </ClInclude>
-    <ClInclude Include="CGUIMainMenuWidget.h">
-      <Filter>Program Context\Widgets</Filter>
-    </ClInclude>
     <ClInclude Include="CProgramContext.h">
       <Filter>Program Context</Filter>
     </ClInclude>
@@ -208,6 +187,33 @@
     </ClInclude>
     <ClInclude Include="CGUIContext.h">
       <Filter>Program Context</Filter>
+    </ClInclude>
+    <ClInclude Include="CGUIMainMenuWidget.h">
+      <Filter>Program Context\Widgets\Main Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="CGUIVolumeControlWidget.h">
+      <Filter>Program Context\Widgets\Main State</Filter>
+    </ClInclude>
+    <ClInclude Include="CGUIControlPanelWidget.h">
+      <Filter>Program Context\Widgets\Main State</Filter>
+    </ClInclude>
+    <ClInclude Include="CGUIGlyphControlWidget.h">
+      <Filter>Program Context\Widgets\Main State</Filter>
+    </ClInclude>
+    <ClInclude Include="CGUISceneControlWidget.h">
+      <Filter>Program Context\Widgets\Main State</Filter>
+    </ClInclude>
+    <ClInclude Include="CGUITerrainControlWidget.h">
+      <Filter>Program Context\Widgets\Main State</Filter>
+    </ClInclude>
+    <ClInclude Include="CGUITitleLabelsWidget.h">
+      <Filter>Program Context\Widgets\Main State</Filter>
+    </ClInclude>
+    <ClInclude Include="CGUIConsoleWidget.h">
+      <Filter>Program Context\Widgets\General</Filter>
+    </ClInclude>
+    <ClInclude Include="CGUILoadingWidget.h">
+      <Filter>Program Context\Widgets\General</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -261,6 +267,15 @@
     </Filter>
     <Filter Include="Utilities\GUI\Widgets">
       <UniqueIdentifier>{e6e9fb75-ed02-4c48-a34c-0a27f63cd1a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program Context\Widgets\Main Menu">
+      <UniqueIdentifier>{7ed6a85c-9651-4d88-99fd-87f8f6d6947c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program Context\Widgets\Main State">
+      <UniqueIdentifier>{1a142d81-4987-4603-9bb6-3734c174c09e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program Context\Widgets\General">
+      <UniqueIdentifier>{1c6e5b8c-9a45-4dcd-86e0-2488a8c1db8e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

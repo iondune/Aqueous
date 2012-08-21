@@ -4,8 +4,14 @@
 #include "CProgramContext.h"
 
 
+class DataLoadThread;
+
+
 class CMainMenuState : public CContextState<CMainMenuState, CProgramContext>
 {
+
+	bool FinishedLoading;
+	DataLoadThread * Thread;
 
 public:
 
