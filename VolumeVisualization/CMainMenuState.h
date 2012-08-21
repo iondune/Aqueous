@@ -15,8 +15,10 @@ public:
 	void end();
 
 	void OnRenderStart(float const Elapsed);
-
 	void OnWindowResized(SWindowResizedEvent const & Event);
+
+	void loadData(std::string const & FileName);
+	void createDataSet();
 
 };
 

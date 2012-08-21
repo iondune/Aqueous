@@ -17,18 +17,13 @@ int main()
 	CMeshLoader::MeshDirectory = "Media/";
 	CShaderLoader::ShaderDirectory = "Shaders/";
 
-	// Option to run contour converter
-	if (false)
-	{
-		ContourConverter c;
-		c.convert();
-	}
-	else
-	{
-		CProgramContext & Context = CProgramContext::get();
-		Context.init();
-		Context.run();
-	}
+		//ContourConverter c;
+		//c.convert();
+		//waitForUser();
+
+	CProgramContext & Context = CProgramContext::get();
+	Context.init();
+	Context.run();
 
 	return 0;
 }

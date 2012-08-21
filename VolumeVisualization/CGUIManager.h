@@ -31,7 +31,6 @@ public:
 	CGUIManager();
 
 	void init();
-
 	void draw(f32 const Elapsed, bool ClearAll = false);
 
 	Gwen::Controls::Canvas * getCanvas();
@@ -39,7 +38,6 @@ public:
 	Gwen::Font * getLargeFont();
 	Gwen::Font * getMediumFont();
 	Gwen::Font * getRegularFont();
-
 	
 	void addWidget(CGUIWidget * Widget);
 	void removeWidget(CGUIWidget * Widget);

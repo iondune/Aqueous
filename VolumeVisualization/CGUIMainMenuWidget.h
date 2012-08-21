@@ -9,6 +9,12 @@ class SciDataManager;
 class CGUIMainMenuWidget : public CGUIContextWidget
 {
 
+	Gwen::Controls::Button * NewDataSetButton;
+
+	std::vector<Gwen::Controls::Button *> DataSetButtons;
+
+	void createDataSetButtons();
+
 public:
 
 	CGUIMainMenuWidget();

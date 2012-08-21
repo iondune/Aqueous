@@ -83,7 +83,6 @@
     <ClCompile Include="CLoadContext.cpp" />
     <ClCompile Include="CMainMenuState.cpp" />
     <ClCompile Include="CMainState.cpp" />
-    <ClCompile Include="CLoadContext.DataLoading.cpp" />
     <ClCompile Include="CMainState.EventHandling.cpp" />
     <ClCompile Include="CMainState.MouseTracking.cpp" />
     <ClCompile Include="CProgramContext.cpp" />

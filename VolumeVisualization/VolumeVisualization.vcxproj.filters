@@ -33,17 +33,13 @@
       <Filter>MainState\Volume</Filter>
     </ClCompile>
     <ClCompile Include="CGUIManager.cpp">
-      <Filter>GUI</Filter>
+      <Filter>Utilities\GUI</Filter>
     </ClCompile>
     <ClCompile Include="CGwenEventForwarder.cpp">
-      <Filter>GUI</Filter>
+      <Filter>Utilities\GUI</Filter>
     </ClCompile>
-    <ClCompile Include="CProgramContext.cpp" />
     <ClCompile Include="CLoadContext.cpp">
-      <Filter>LoadContext</Filter>
-    </ClCompile>
-    <ClCompile Include="CLoadContext.DataLoading.cpp">
-      <Filter>LoadContext</Filter>
+      <Filter>Program Context\LoadContext</Filter>
     </ClCompile>
     <ClCompile Include="SciDataManager.GridValues.cpp">
       <Filter>MainState\Data Management</Filter>
@@ -60,26 +56,23 @@
     <ClCompile Include="SciDataManager.File.cpp">
       <Filter>MainState\Data Management</Filter>
     </ClCompile>
-    <ClCompile Include="CGUIContext.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
     <ClCompile Include="CGUIConsoleWidget.cpp">
-      <Filter>GUI\Widgets</Filter>
+      <Filter>Program Context\Widgets</Filter>
     </ClCompile>
     <ClCompile Include="CGUITitleLabelsWidget.cpp">
-      <Filter>GUI\Widgets</Filter>
+      <Filter>Program Context\Widgets</Filter>
     </ClCompile>
     <ClCompile Include="CGUIVolumeControlWidget.cpp">
-      <Filter>GUI\Widgets</Filter>
+      <Filter>Program Context\Widgets</Filter>
     </ClCompile>
     <ClCompile Include="CGUIGlyphControlWidget.cpp">
-      <Filter>GUI\Widgets</Filter>
+      <Filter>Program Context\Widgets</Filter>
     </ClCompile>
     <ClCompile Include="CGUITerrainControlWidget.cpp">
-      <Filter>GUI\Widgets</Filter>
+      <Filter>Program Context\Widgets</Filter>
     </ClCompile>
     <ClCompile Include="CGUIControlPanelWidget.cpp">
-      <Filter>GUI\Widgets</Filter>
+      <Filter>Program Context\Widgets</Filter>
     </ClCompile>
     <ClCompile Include="RBFInterpolator\newmat.cpp">
       <Filter>MainState\RBFInterpolator</Filter>
@@ -88,22 +81,28 @@
       <Filter>MainState\RBFInterpolator</Filter>
     </ClCompile>
     <ClCompile Include="CGUISceneControlWidget.cpp">
-      <Filter>GUI\Widgets</Filter>
+      <Filter>Program Context\Widgets</Filter>
     </ClCompile>
     <ClCompile Include="SciData.cpp">
       <Filter>MainState\Data Management\Base Objects</Filter>
     </ClCompile>
     <ClCompile Include="CGUIContextWidget.cpp">
-      <Filter>GUI\Widgets\Base</Filter>
+      <Filter>Utilities\GUI\Widgets</Filter>
     </ClCompile>
     <ClCompile Include="CGUIWidget.cpp">
-      <Filter>GUI\Widgets\Base</Filter>
+      <Filter>Utilities\GUI\Widgets</Filter>
     </ClCompile>
     <ClCompile Include="CMainMenuState.cpp">
       <Filter>MainMenuState</Filter>
     </ClCompile>
     <ClCompile Include="CGUIMainMenuWidget.cpp">
-      <Filter>GUI\Widgets</Filter>
+      <Filter>Program Context\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="CProgramContext.cpp">
+      <Filter>Program Context</Filter>
+    </ClCompile>
+    <ClCompile Include="CGUIContext.cpp">
+      <Filter>Program Context</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -111,7 +110,7 @@
       <Filter>MainState</Filter>
     </ClInclude>
     <ClInclude Include="CGwenEventForwarder.h">
-      <Filter>GUI</Filter>
+      <Filter>Utilities\GUI</Filter>
     </ClInclude>
     <ClInclude Include="SciDataSet.h">
       <Filter>MainState\Data Management\Base Objects</Filter>
@@ -154,36 +153,31 @@
       <Filter>MainState\Volume</Filter>
     </ClInclude>
     <ClInclude Include="CGUIManager.h">
-      <Filter>GUI</Filter>
+      <Filter>Utilities\GUI</Filter>
     </ClInclude>
-    <ClInclude Include="ContourConverter.h" />
-    <ClInclude Include="CProgramContext.h" />
     <ClInclude Include="CLoadContext.h">
-      <Filter>LoadContext</Filter>
+      <Filter>Program Context\LoadContext</Filter>
     </ClInclude>
     <ClInclude Include="SciDataManager.h">
       <Filter>MainState\Data Management</Filter>
     </ClInclude>
-    <ClInclude Include="CGUIContext.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
     <ClInclude Include="CGUIConsoleWidget.h">
-      <Filter>GUI\Widgets</Filter>
+      <Filter>Program Context\Widgets</Filter>
     </ClInclude>
     <ClInclude Include="CGUITitleLabelsWidget.h">
-      <Filter>GUI\Widgets</Filter>
+      <Filter>Program Context\Widgets</Filter>
     </ClInclude>
     <ClInclude Include="CGUIVolumeControlWidget.h">
-      <Filter>GUI\Widgets</Filter>
+      <Filter>Program Context\Widgets</Filter>
     </ClInclude>
     <ClInclude Include="CGUIGlyphControlWidget.h">
-      <Filter>GUI\Widgets</Filter>
+      <Filter>Program Context\Widgets</Filter>
     </ClInclude>
     <ClInclude Include="CGUITerrainControlWidget.h">
-      <Filter>GUI\Widgets</Filter>
+      <Filter>Program Context\Widgets</Filter>
     </ClInclude>
     <ClInclude Include="CGUIControlPanelWidget.h">
-      <Filter>GUI\Widgets</Filter>
+      <Filter>Program Context\Widgets</Filter>
     </ClInclude>
     <ClInclude Include="RBFInterpolator\newmat.h">
       <Filter>MainState\RBFInterpolator</Filter>
@@ -192,19 +186,28 @@
       <Filter>MainState\RBFInterpolator</Filter>
     </ClInclude>
     <ClInclude Include="CGUISceneControlWidget.h">
-      <Filter>GUI\Widgets</Filter>
+      <Filter>Program Context\Widgets</Filter>
     </ClInclude>
     <ClInclude Include="CGUIWidget.h">
-      <Filter>GUI\Widgets\Base</Filter>
+      <Filter>Utilities\GUI\Widgets</Filter>
     </ClInclude>
     <ClInclude Include="CGUIContextWidget.h">
-      <Filter>GUI\Widgets\Base</Filter>
+      <Filter>Utilities\GUI\Widgets</Filter>
     </ClInclude>
     <ClInclude Include="CMainMenuState.h">
       <Filter>MainMenuState</Filter>
     </ClInclude>
     <ClInclude Include="CGUIMainMenuWidget.h">
-      <Filter>GUI\Widgets</Filter>
+      <Filter>Program Context\Widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="CProgramContext.h">
+      <Filter>Program Context</Filter>
+    </ClInclude>
+    <ClInclude Include="ContourConverter.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="CGUIContext.h">
+      <Filter>Program Context</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -219,9 +222,6 @@
     </Filter>
     <Filter Include="MainState\Volume">
       <UniqueIdentifier>{33cba1aa-9e33-457c-912a-78dab6c782db}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GUI">
-      <UniqueIdentifier>{e2f73951-6082-4d3a-bcd6-3f07b8ec41d4}</UniqueIdentifier>
     </Filter>
     <Filter Include="MainState\Data Management">
       <UniqueIdentifier>{015f304c-d126-40d8-8034-ca7d06cd4ff3}</UniqueIdentifier>
@@ -238,19 +238,28 @@
     <Filter Include="MainState\Data Management\Color Mapping\Oxygen">
       <UniqueIdentifier>{303188e5-c275-4776-b1bf-65a8d73d632b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="LoadContext">
-      <UniqueIdentifier>{00619c69-b650-43a9-8d5f-0f1ceedc408e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="MainState\RBFInterpolator">
       <UniqueIdentifier>{b020b00f-9710-43b6-a8a2-ea0d2483664b}</UniqueIdentifier>
     </Filter>
     <Filter Include="MainMenuState">
       <UniqueIdentifier>{ab5d3775-8246-4053-8366-bb5e9bb50420}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GUI\Widgets">
+    <Filter Include="Program Context">
+      <UniqueIdentifier>{621c01a1-e404-419c-9931-35d3cd1bc3fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program Context\LoadContext">
+      <UniqueIdentifier>{00619c69-b650-43a9-8d5f-0f1ceedc408e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States">
+      <UniqueIdentifier>{b8842830-fbf8-4b90-9023-fab075c53866}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utilities\GUI">
+      <UniqueIdentifier>{e2f73951-6082-4d3a-bcd6-3f07b8ec41d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program Context\Widgets">
       <UniqueIdentifier>{69559bbe-9f50-47e8-809c-55d622e1b426}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GUI\Widgets\Base">
+    <Filter Include="Utilities\GUI\Widgets">
       <UniqueIdentifier>{e6e9fb75-ed02-4c48-a34c-0a27f63cd1a7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
