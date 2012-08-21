@@ -13,11 +13,8 @@ protected:
 
 	CGUIManager * GUIManager;
 	Gwen::Controls::Canvas * Canvas;
-	Gwen::Controls::ProgressBar * Progress;
 
 	s32 LabelHeight, Indent;
-
-	void setProgress(f32 const Progress);
 	
 	void loadShaders();
 	void loadScene();

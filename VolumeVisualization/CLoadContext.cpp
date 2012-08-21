@@ -19,11 +19,6 @@ void CLoadContext::addLabel(std::wstring const & Label, Gwen::Color const & Colo
 	LabelHeight += 40;
 }
 
-void CLoadContext::setProgress(f32 const progress)
-{
-	Progress->SetValue(progress);
-}
-
 CLoadContext::CLoadContext()
 	: LabelHeight(0), Indent(0)
 {}
@@ -56,38 +51,23 @@ void CLoadContext::run()
 	BigLabel->SetText(L"Loading...");
 	BigLabel->SetBounds(10, 10, 1590, 300);
 	BigLabel->SetTextColor(Gwen::Color(255, 255, 255, 84));
-	
-	// Progress Bar Label
-	Gwen::Controls::Label * MediumLabel = new Gwen::Controls::Label(Canvas);
-	MediumLabel->SetFont(GUIManager->getMediumFont());
-	MediumLabel->SetText(L"Progress:");
-	MediumLabel->SetBounds(500, 400, 500, 300);
-	MediumLabel->SetTextColor(Gwen::Color(255, 255, 255, 84));
-
-	Progress = new Gwen::Controls::ProgressBar(Canvas);
-	Progress->SetBounds(500, 450, 500, 50);
-	setProgress(0.1f);
 
 	GUIManager->draw(true);
 	CApplication::get().swapBuffers();
 	
-	setProgress(0.2f);
 	addLabel(L"Initializing System...");
 	Application.loadEngines();
 	MainState.load();
 	MenuState.load();
 	CGwenEventForwarder * Forwarder = new CGwenEventForwarder(GUIManager->getCanvas());
 	
-	setProgress(0.3f);
 	addLabel(L"Loading Scene Shaders...");
 	Application.getSceneManager().init(false, false);
 	loadShaders();
 	
-	setProgress(0.75f);
 	addLabel(L"Loading Scene Objects...");
 	loadScene();
 	
-	setProgress(1.f);
 	Context->DataManager = new SciDataManager();
 	addLabel(L"Menu is Starting...");
 
@@ -98,15 +78,19 @@ void CLoadContext::run()
 void CLoadContext::loadShaders()
 {
 	Indent = 60;
+	bool Failed = false;
 
 	if (! (Context->Shaders.Diffuse = CShaderLoader::loadShader("Diffuse")))
-		addLabel(L"Failed to load Diffuse Shader - Glyphs will not draw.", Gwen::Color(255, 32, 32, 192));
+		addLabel(L"Failed to load Diffuse Shader - Glyphs will not draw.", Gwen::Color(255, 32, 32, 192)), Failed = true;
 	if (! (Context->Shaders.DiffuseTexture = CShaderLoader::loadShader("DiffuseTexture")))
-		addLabel(L"Failed to load Diffuse/Texture Shader - Backdrop will not draw.", Gwen::Color(255, 64, 64, 192));
+		addLabel(L"Failed to load Diffuse/Texture Shader - Backdrop will not draw.", Gwen::Color(255, 64, 64, 192)), Failed = true;
 	if (! (Context->Shaders.Volume = CShaderLoader::loadShader("Volume2")))
-		addLabel(L"Failed to load Volume Shader - Volume will not draw.", Gwen::Color(255, 64, 64, 192));
+		addLabel(L"Failed to load Volume Shader - Volume will not draw.", Gwen::Color(255, 64, 64, 192)), Failed = true;
 	if (! (Context->Shaders.Terrain = CShaderLoader::loadShader("Terrain")))
-		addLabel(L"Failed to load Terrain Shader - Terrain will not draw.", Gwen::Color(255, 64, 64, 192));
+		addLabel(L"Failed to load Terrain Shader - Terrain will not draw.", Gwen::Color(255, 64, 64, 192)), Failed = true;
+
+	if (! Failed)
+		addLabel(L"All shaders compiled successfully.", Gwen::Color(64, 255, 64, 192));
 
 	Indent = 0;
 }
