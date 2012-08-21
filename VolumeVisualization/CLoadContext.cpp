@@ -91,6 +91,8 @@ void CLoadContext::loadShaders()
 
 	if (! Failed)
 		addLabel(L"All shaders compiled successfully.", Gwen::Color(64, 255, 64, 192));
+	else
+		sf::Sleep(1.5f);
 
 	Indent = 0;
 }
