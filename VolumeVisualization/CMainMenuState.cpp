@@ -12,7 +12,7 @@ private:
 	
 	virtual void Run()
 	{
-		std::cout << "Running!" << std::endl;
+		LoadingWidget->setProgress(0.25f);
 		Context->DataManager->readFromFile(FileName);
 		LoadingWidget->setProgress(0.5f);
 
