@@ -160,6 +160,6 @@ void CLoadContext::loadScene()
 
 	// Volume
 	Scene.VolumeSceneObject = new CVolumeSceneObject();
-	SceneManager->addSceneObject(Scene.VolumeSceneObject);
+	//SceneManager->addSceneObject(Scene.VolumeSceneObject);
 	Scene.VolumeSceneObject->ShowVolume = 2;
 }

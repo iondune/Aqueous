@@ -7,12 +7,15 @@ uniform sampler2D uBackPosition;
 uniform sampler3D uVolumeData;
 
 uniform mat4 uModelMatrix;
+uniform mat4 uProjMatrix;
+uniform mat4 uViewMatrix;
 
 uniform vec3 uCameraPosition;
 
 uniform float uAlphaIntensity;
 
 uniform float stepsize;
+uniform sampler2D uDepthTexture;
 
 float enter;
 float Exit;
@@ -201,9 +204,22 @@ void main()
 	float alpha_acc = 0;
 	float length_acc = 0;
 
+	float CurrentDepth = texture2D(uDepthTexture, texc).r;
+
 	for(int i = 0; i < 1000; i ++)
 	{
 		//vec4 color_sample = vec4(vec, 0.5);
+		vec4 ScreenCoords = vec4(vec, 1.0);
+		ScreenCoords -= vec4(0.5, 0.5, 0.5, 0.0);
+		ScreenCoords = uProjMatrix * uViewMatrix * uModelMatrix * ScreenCoords;
+		float Depth = ScreenCoords.z / ScreenCoords.w;
+		Depth += 1.0;
+		Depth /= 2.0;
+
+		if (Depth > CurrentDepth)
+			break;
+
+
 		vec4 color_sample = getColorSample(vec);
 		float alpha_sample = color_sample.a * stepsize * uAlphaIntensity;
 		col_acc   += (1.0 - alpha_acc) * color_sample * alpha_sample * 3;

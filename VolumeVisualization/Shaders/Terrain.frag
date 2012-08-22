@@ -10,6 +10,7 @@ uniform float uLayerWidth;
 
 varying vec2 HeightmapCoords;
 uniform sampler2D uHeightMap;
+varying vec4 vScreenPosition;
 
 void main()
 {
@@ -30,7 +31,8 @@ void main()
     
     
     if (uDebugHeight == 0)
-   		gl_FragColor = vec4(vDiffuse + AmbientColor, 1) /* vColor + 0.001 */* texture(uColorMap, vTexCoords);
+   		gl_FragData[0] = vec4(vDiffuse + AmbientColor, 1) /* vColor + 0.001 */* texture(uColorMap, vTexCoords);
     else
-   		gl_FragColor = vec4(vDiffuse + AmbientColor, 1) * vColor + 0.001 * texture(uColorMap, vTexCoords);
+   		gl_FragData[0] = vec4(vDiffuse + AmbientColor, 1) * vColor + 0.001 * texture(uColorMap, vTexCoords);
+    gl_FragData[1] = vec4((vScreenPosition.z / vScreenPosition.w + 1.0) / 2.0, 0.0, 0.0, 1.0);
 }

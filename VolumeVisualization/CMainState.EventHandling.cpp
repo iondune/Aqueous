@@ -97,6 +97,12 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 
 		break;
 
+	case EKey::m:
+
+		ShowDepth = Event.Pressed;
+
+		break;
+
 	/*case EKey::b:
 
 		if (! Event.Pressed)

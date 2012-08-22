@@ -11,13 +11,15 @@ uniform vec3 uLightPosition;
 varying vec4 vColor;
 varying vec3 vLight;
 varying vec3 vNormal;
+varying vec4 vScreenPosition;
 
 void main()
 {
     vec4 vPosition;
 
     vPosition = uModelMatrix * vec4(aPosition, 1);
-    gl_Position = uProjMatrix * uViewMatrix * vPosition;
+    vScreenPosition = uProjMatrix * uViewMatrix * vPosition;
+    gl_Position = vScreenPosition;
 
     vLight = (uLightPosition - vec3(vPosition));
     vNormal = normalize(vec3(uNormalMatrix * vec4(aNormal, 1)));

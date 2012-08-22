@@ -11,6 +11,7 @@ varying vec4 vColor;
 varying vec3 vLight;
 varying vec3 vNormal;
 varying vec2 vTexCoord;
+varying vec4 vScreenPosition;
 
 void main()
 {
@@ -20,7 +21,8 @@ void main()
 
     vPosition = uModelMatrix * vec4(aPosition, 1);
     vLight = normalize(LightPosition - vec3(vPosition));
-    gl_Position = uProjMatrix * uViewMatrix * vPosition;
+    vScreenPosition = uProjMatrix * uViewMatrix * vPosition;
+    gl_Position = vScreenPosition;
 
     vTexCoord = vec2(aTexCoord.x, aTexCoord.y);
 

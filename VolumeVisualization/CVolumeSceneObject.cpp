@@ -200,6 +200,14 @@ bool CVolumeSceneObject::draw(IScene const * const Scene, ERenderPass const Pass
 				glEnable(GL_TEXTURE_3D);
 				glActiveTexture(GL_TEXTURE0 + 0); // Select Active Texture Slot
 				glBindTexture(GL_TEXTURE_3D, VolumeHandle); // Bind Texture Handle
+				glEnable(GL_TEXTURE_2D);
+				glActiveTexture(GL_TEXTURE0 + 1); // Select Active Texture Slot
+				glBindTexture(GL_TEXTURE_2D, CApplication::get().getSceneManager().getSceneDepthTexture()->getTextureHandle()); // Bind Texture Handle
+
+
+
+
+				Context.uniform("uDepthTexture", 1);
 				Context.uniform("uVolumeData", 0);
 
 				Context.uniform("uAlphaIntensity", Control.AlphaIntensity);
@@ -219,9 +227,13 @@ bool CVolumeSceneObject::draw(IScene const * const Scene, ERenderPass const Pass
 				glDrawElements(GL_TRIANGLES, VolumeCube->MeshBuffers[0]->IndexBuffer.getElements().size(), GL_UNSIGNED_SHORT, 0);
 
 			
+				glActiveTexture(GL_TEXTURE1);
+				glBindTexture(GL_TEXTURE_2D, 0);
+				glActiveTexture(GL_TEXTURE0);
 				glBindTexture(GL_TEXTURE_3D, 0);
 				glDisable(GL_BLEND);
 				glDisable(GL_TEXTURE_3D);
+				glDisable(GL_TEXTURE_2D);
 			}
 		}
 

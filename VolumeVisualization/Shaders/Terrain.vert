@@ -30,6 +30,7 @@ varying vec2 vTexCoords;
 varying vec4 vColor;
 
 varying vec2 HeightmapCoords;
+varying vec4 vScreenPosition;
 
 void main()
 {
@@ -127,7 +128,8 @@ void main()
 
     vPosition.y *= 75.0;
     
-    gl_Position = uProjMatrix * uViewMatrix * uModelMatrix * vPosition;
+    vScreenPosition = uProjMatrix * uViewMatrix * uModelMatrix * vPosition;
+    gl_Position = vScreenPosition;
     
     vec3 LightPosition = uLightPosition;
     
