@@ -62,7 +62,7 @@ void CLoadContext::run()
 	CGwenEventForwarder * Forwarder = new CGwenEventForwarder(GUIManager->getCanvas());
 	
 	addLabel(L"Loading Scene Shaders...");
-	Application.getSceneManager().init(false, false);
+	Application.getSceneManager().init(true, true);
 	loadShaders();
 	
 	addLabel(L"Loading Scene Objects...");

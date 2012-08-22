@@ -88,6 +88,15 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 
 		break;
 
+	case EKey::b:
+
+		if (! Event.Pressed)
+		{
+			SceneManager->getEffectManager()->setEffectEnabled(ESE_BLOOM, ! SceneManager->getEffectManager()->isEffectEnabled(ESE_BLOOM));
+		}
+
+		break;
+
 	/*case EKey::b:
 
 		if (! Event.Pressed)
