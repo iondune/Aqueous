@@ -16,9 +16,9 @@ private:
 		Context->DataManager->readFromFile(FileName);
 		LoadingWidget->setProgress(0.5f);
 
-		COxygenColorMapper o("O2Concentration(uM)");
-		Context->DataManager->createPointCloudObjects(true, Context->Scene.PointCloudObject, SVector3f(-3.f, 0.8f, 3.f), & o,
-			"Latitude", "DFS Depth", "Longitude");
+		COxygenColorMapper o("d1");
+		Context->DataManager->createPointCloudObjects(true, Context->Scene.PointCloudObject, SVector3f(-1.f, 1.f, 1.f), & o);
+			//"Latitude", "DFS Depth", "Longitude");
 		LoadingWidget->setProgress(0.75f);
 
 		o.Field = "o1";

@@ -118,10 +118,6 @@ bool CVolumeSceneObject::draw(IScene const * const Scene, ERenderPass const Pass
 
 	if (VolumeCube->MeshBuffers[0]->IndexBuffer.isDirty())
 		VolumeCube->MeshBuffers[0]->IndexBuffer.syncData();
-
-
-	STransformation3 Transform;
-	Transform.setScale(SVector3f(3.f));
 	
 	if (ShowVolume == 1)
 	{
@@ -133,7 +129,7 @@ bool CVolumeSceneObject::draw(IScene const * const Scene, ERenderPass const Pass
 			Context.bindBufferObject("aColor", VolumeCube->MeshBuffers[0]->ColorBuffer.getHandle(), 3);
 			Context.bindBufferObject("aPosition", VolumeCube->MeshBuffers[0]->PositionBuffer.getHandle(), 3);
 
-			Context.uniform("uModelMatrix", Transform.getGLMMat4());
+			Context.uniform("uModelMatrix", Transformation.getGLMMat4());
 			Context.uniform("uProjMatrix", SceneManager.getActiveCamera()->getProjectionMatrix());
 			Context.uniform("uViewMatrix", SceneManager.getActiveCamera()->getViewMatrix());
 			Context.bindIndexBufferObject(VolumeCube->MeshBuffers[0]->IndexBuffer.getHandle());
@@ -150,7 +146,7 @@ bool CVolumeSceneObject::draw(IScene const * const Scene, ERenderPass const Pass
 			Context.bindBufferObject("aColor", VolumeCube->MeshBuffers[0]->ColorBuffer.getHandle(), 3);
 			Context.bindBufferObject("aPosition", VolumeCube->MeshBuffers[0]->PositionBuffer.getHandle(), 3);
 
-			Context.uniform("uModelMatrix", Transform.getGLMMat4());
+			Context.uniform("uModelMatrix", Transformation.getGLMMat4());
 			Context.uniform("uProjMatrix", SceneManager.getActiveCamera()->getProjectionMatrix());
 			Context.uniform("uViewMatrix", SceneManager.getActiveCamera()->getViewMatrix());
 			Context.uniform("uAlphaIntensity", Control.AlphaIntensity);
@@ -193,7 +189,7 @@ bool CVolumeSceneObject::draw(IScene const * const Scene, ERenderPass const Pass
 				Context.bindBufferObject("aColor", VolumeCube->MeshBuffers[0]->ColorBuffer.getHandle(), 3);
 				Context.bindBufferObject("aPosition", VolumeCube->MeshBuffers[0]->PositionBuffer.getHandle(), 3);
 
-				Context.uniform("uModelMatrix", Transform.getGLMMat4());
+				Context.uniform("uModelMatrix", Transformation.getGLMMat4());
 				Context.uniform("uProjMatrix", SceneManager.getActiveCamera()->getProjectionMatrix());
 				Context.uniform("uViewMatrix", SceneManager.getActiveCamera()->getViewMatrix());
 

@@ -197,6 +197,7 @@ bool CTerrainSceneObject::draw(IScene const * const Scene, ERenderPass const Pas
 		CameraPos = SPosition2(
 		(int) std::floor(SceneManager.getActiveCamera()->getPosition().X), 
 		(int) std::floor(SceneManager.getActiveCamera()->getPosition().Z));
+	CameraPos = vec2i();
 
 
 	static const auto even = [](int const i) -> int

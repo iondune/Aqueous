@@ -19,7 +19,7 @@ void SciDataManager::createPointCloudObjects(bool FromRaw, ISceneObject * RootPa
 		CMeshSceneObject * Object = new CMeshSceneObject();
 		Object->setMesh(CProgramContext::get().Scene.Cube);
 		Object->setParent(RootParent);
-		Object->setScale(SVector3f(1.f) / 32.f);
+		Object->setScale(SVector3f(1.f) / 32.f * (vec3f(1.f) / RootParent->getScale()));
 
 		float X = (float) ((it->getField(xField) - XRange.first) / (XRange.second - XRange.first));
 		float Y = (float) ((it->getField(yField) - YRange.first) / (YRange.second - YRange.first));
