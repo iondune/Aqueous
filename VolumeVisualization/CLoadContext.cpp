@@ -181,13 +181,27 @@ void CLoadContext::loadScene()
 			RelativeTranslate[i] = (1.f - TranslationAdjust[i]);
 		}
 	}
-	RelativeTranslate *= ScaleAdjust;
+
+	f32 MaxAdjust;
+	vec3f Adjuster(1.f);
+	if (ScaleAdjust.X > ScaleAdjust.Y)
+	{
+		Adjuster.Z = ScaleAdjust.X / ScaleAdjust.Y;
+		MaxAdjust = ScaleAdjust.X;
+	}
+	else
+	{
+		Adjuster.X = ScaleAdjust.Y / ScaleAdjust.X;
+		MaxAdjust = ScaleAdjust.Y;
+	}
+
+	RelativeTranslate *= MaxAdjust;//ScaleAdjust;
 	
-	Scale.X *= ScaleAdjust.X;
-	Scale.Z *= ScaleAdjust.Y;
+	Scale.X *= MaxAdjust;//ScaleAdjust.X;
+	Scale.Z *= MaxAdjust;//ScaleAdjust.Y;
 	Scale.Y *= (ScaleAdjust.X + ScaleAdjust.Y) / 2.f;
 
-	Scale.Y *= 0.25f;
+	Scale.Y *= 0.5f;
 	Scene.Terrain->setScale(Scale);
 	Scene.Terrain->setTranslation(vec3f(-RelativeTranslate.X, 0.f, RelativeTranslate.Y));
 	printf("Relative Translate: %f %f\n", RelativeTranslate.X, RelativeTranslate.Y);
@@ -199,7 +213,7 @@ void CLoadContext::loadScene()
 	Scene.VolumeSceneObject = new CVolumeSceneObject();
 	//SceneManager->addSceneObject(Scene.VolumeSceneObject);
 	Scene.VolumeSceneObject->ShowVolume = 2;
-	Scene.VolumeSceneObject->setScale(3.f);
+	Scene.VolumeSceneObject->setScale(Adjuster * 3.f * vec3f(1.f, 0.8f / 3.f, 1.f));
 
-	Scene.PointCloudObject->setScale(vec3f(3.f, 0.8f, 3.f));
+	Scene.PointCloudObject->setScale(Adjuster * vec3f(3.f, 0.8f, 3.f));
 }
