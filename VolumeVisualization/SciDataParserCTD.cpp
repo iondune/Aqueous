@@ -156,3 +156,36 @@ void SciDataParserCTD::load(std::string const &data)
 		}
 	}
 }
+
+void SciDataParserCTD::examine(std::string const & FileName)
+{
+	char const * const Indent = "+---";
+	MATFile * File = matOpen(FileName.c_str(), "r");
+
+	mxArray * Variable;
+	do
+	{
+		char const * Name;
+		Variable = matGetNextVariable(File, & Name);
+		if (Variable)
+		{
+			std::cout << Name << std::endl;
+
+			int const NumberOfDimensions = mxGetNumberOfDimensions(Variable);
+			std::cout << Indent << NumberOfDimensions << " dimensions." << std::endl;
+
+			int const * Dimensions = mxGetDimensions(Variable);
+			for (int i = 0; i < NumberOfDimensions; ++ i)
+				std::cout << Indent << "Dimension[" << i << "] is " << Dimensions[i] << std::endl;
+
+			double * Data = mxGetPr(Variable);
+
+			if (NumberOfDimensions == 2 && Dimensions[0] == 1)
+			{
+				for (int i = 0; i < Dimensions[1]; ++ i)
+					std::cout << Indent << Indent << ' ' << Data[i] << std::endl;
+				std::cout << std::endl;
+			}
+		}
+	} while (Variable);
+}

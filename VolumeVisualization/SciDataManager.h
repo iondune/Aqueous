@@ -31,7 +31,8 @@ public:
 	void createVolumeFromGridValues(IColorMapper * ColorMapper);
 	//void createDataTreeFromRawValues();
 	void createGridDataFromRawValues(Range AcceptedValues = FullRange, double Deviations = 5.0, std::string const & Field = "o2");
-	void createPointCloudObjects(bool FromRaw, ISceneObject * RootParent, SVector3f const DataScale, IColorMapper * ColorMapper);
+	void createPointCloudObjects(bool FromRaw, ISceneObject * RootParent, SVector3f const DataScale, IColorMapper * ColorMapper, 
+		std::string const & xField = "x", std::string const & yField = "y", std::string const & zField = "z");
 
 	void writeToFile(std::string const & FileName);
 	void readFromFile(std::string const & FileName);
@@ -60,6 +61,7 @@ class SciDataParserCTD : public SciDataParser
 public:
 
 	void load(std::string const & FileName);
+	void examine(std::string const & FileName);
 
 };
 
@@ -69,6 +71,24 @@ class SciDataParserSimpleTXT : public SciDataParser
 public:
 
 	void load(std::string const & FileName);
+
+};
+
+class SciDataParserCSV : public SciDataParser
+{
+
+public:
+
+	char FieldDelim;
+	char ValueDelim;
+	bool FieldNames;
+
+	void load(std::string const & FileName);
+	void mergedLoad(std::string const & FileName, std::string const & FileName2, std::string const & MatchField);
+
+	SciDataParserCSV()
+		: FieldDelim(','), ValueDelim(','), FieldNames(true)
+	{}
 
 };
 

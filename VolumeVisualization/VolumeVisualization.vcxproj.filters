@@ -107,6 +107,9 @@
     <ClCompile Include="CGUILoadingWidget.cpp">
       <Filter>Program Context\Widgets\General</Filter>
     </ClCompile>
+    <ClCompile Include="SciDataParserCSV.cpp">
+      <Filter>MainState\Data Management\Parsers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CMainState.h">

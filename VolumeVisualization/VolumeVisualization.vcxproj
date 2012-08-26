@@ -102,6 +102,7 @@
     <ClCompile Include="SciDataManager.PointCloud.cpp" />
     <ClCompile Include="SciDataManager.Volume.cpp" />
     <ClCompile Include="SciDataManager.File.cpp" />
+    <ClCompile Include="SciDataParserCSV.cpp" />
     <ClCompile Include="SciDataSet.cpp" />
     <ClCompile Include="SciDataTree.cpp" />
   </ItemGroup>

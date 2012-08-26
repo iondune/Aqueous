@@ -3,15 +3,16 @@
 #include "CProgramContext.h"
 
 
-void SciDataManager::createPointCloudObjects(bool FromRaw, ISceneObject * RootParent, SVector3f const DataScale, IColorMapper * ColorMapper)
+void SciDataManager::createPointCloudObjects(bool FromRaw, ISceneObject * RootParent, SVector3f const DataScale, IColorMapper * ColorMapper, 
+		std::string const & xField, std::string const & yField, std::string const & zField)
 {
 	SciDataSet & DataSet = FromRaw ? RawValues : GridValues;
 
 	ColorMapper->preProcessValues(DataSet);
 
-	Range	XRange = DataSet.getValueRange("x", 5.0);
-	Range	YRange = DataSet.getValueRange("y", 5.0);
-	Range	ZRange = DataSet.getValueRange("z", 5.0);
+	Range	XRange = DataSet.getValueRange(xField, 5.0);
+	Range	YRange = DataSet.getValueRange(yField, 5.0);
+	Range	ZRange = DataSet.getValueRange(zField, 5.0);
 
 	for (auto it = DataSet.getValues().begin(); it != DataSet.getValues().end(); ++ it)
 	{
@@ -20,9 +21,9 @@ void SciDataManager::createPointCloudObjects(bool FromRaw, ISceneObject * RootPa
 		Object->setParent(RootParent);
 		Object->setScale(SVector3f(1.f) / 32.f);
 
-		float X = (float) ((it->getField("x") - XRange.first) / (XRange.second - XRange.first));
-		float Y = (float) ((it->getField("y") - YRange.first) / (YRange.second - YRange.first));
-		float Z = (float) ((it->getField("z") - ZRange.first) / (ZRange.second - ZRange.first));
+		float X = (float) ((it->getField(xField) - XRange.first) / (XRange.second - XRange.first));
+		float Y = (float) ((it->getField(yField) - YRange.first) / (YRange.second - YRange.first));
+		float Z = (float) ((it->getField(zField) - ZRange.first) / (ZRange.second - ZRange.first));
 
 		Object->setTranslation((SVector3f(X, Y, Z) - SVector3f(0.5f)) * DataScale);
 

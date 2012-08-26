@@ -16,8 +16,9 @@ private:
 		Context->DataManager->readFromFile(FileName);
 		LoadingWidget->setProgress(0.5f);
 
-		COxygenColorMapper o("d1");
-		Context->DataManager->createPointCloudObjects(true, Context->Scene.PointCloudObject, SVector3f(-3.f, 0.8f, 3.f), & o);
+		COxygenColorMapper o("O2Concentration(uM)");
+		Context->DataManager->createPointCloudObjects(true, Context->Scene.PointCloudObject, SVector3f(-3.f, 0.8f, 3.f), & o,
+			"Latitude", "DFS Depth", "Longitude");
 		LoadingWidget->setProgress(0.75f);
 
 		o.Field = "o1";
@@ -91,6 +92,7 @@ void CMainMenuState::loadData(std::string const & FileName)
 
 void CMainMenuState::createDataSet()
 {
+	if (false)
 	{
 		SciDataParser * Parser = new SciDataParserSimpleTXT();
 		Parser->Manager = Context->DataManager;
@@ -108,10 +110,11 @@ void CMainMenuState::createDataSet()
 		//DataParser[0]->createVolumeFromGridValues(& sf);
 	}
 
+	if (false)
 	{
-		//addLabel(L"Data Set 2...");
-		//Context->DataParser[1] = new SciDataParserCTD();
-		//DataParser[1]->load("data2.mat");
+		SciDataParserCTD * Parser = new SciDataParserCTD();
+		Parser->Manager = Context->DataManager;
+		Parser->examine("oxygenDataSet1.mat");
 
 		//DataParser->RawValues.setDataScale(Vector3(3, 2, 3));
 
@@ -124,6 +127,7 @@ void CMainMenuState::createDataSet()
 		//DataParser->createVolumeFromGridValues(& sf);
 	}
 
+	if (true)
 	{
 		SciDataParser * Parser = new SciDataParserGrid1();
 		Parser->Manager = Context->DataManager;
@@ -136,9 +140,20 @@ void CMainMenuState::createDataSet()
 		COxygenColorMapper o;
 		//COxygenLocalizedColorMapper l;
 			
-		Context->DataManager->createVolumeFromGridValues(& o);
+		/*Context->DataManager->createVolumeFromGridValues(& o);
 		Context->DataManager->createPointCloudObjects(false, Context->Scene.GridObject, SVector3f(3.f), & o);
-		Context->Scene.VolumeSceneObject->VolumeHandle = Context->DataManager->VolumeHandle;
+		Context->Scene.VolumeSceneObject->VolumeHandle = Context->DataManager->VolumeHandle;*/
+	}
+
+	if (true)
+	{
+		SciDataParserCSV * Parser1 = new SciDataParserCSV();
+		Parser1->Manager = Context->DataManager;
+		Parser1->mergedLoad("OxyData.csv", "LogData.csv", "Time");
+		/*
+		COxygenColorMapper o("AirSaturation(%)");
+
+		Context->DataManager->createPointCloudObjects(true, Context->Scene.PointCloudObject, SVector3f(1.f/*-3.f, 0.8f, 3.f*), & o);*/
 	}
 	
 	Context->DataManager->writeToFile("Datasets/HopavagenBayDataSet [2].dat");
