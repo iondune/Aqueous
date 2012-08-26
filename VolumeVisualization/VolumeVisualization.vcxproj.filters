@@ -136,9 +136,6 @@
     <ClInclude Include="CRGBIntensityColorMapper.h">
       <Filter>MainState\Data Management\Color Mapping</Filter>
     </ClInclude>
-    <ClInclude Include="COxygenColorMapper.h">
-      <Filter>MainState\Data Management\Color Mapping\Oxygen</Filter>
-    </ClInclude>
     <ClInclude Include="ColorMappers.h">
       <Filter>MainState\Data Management\Color Mapping</Filter>
     </ClInclude>
@@ -218,6 +215,9 @@
     <ClInclude Include="CGUILoadingWidget.h">
       <Filter>Program Context\Widgets\General</Filter>
     </ClInclude>
+    <ClInclude Include="COxygenColorMapper.h">
+      <Filter>MainState\Data Management\Color Mapping</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="MainState">
@@ -243,9 +243,6 @@
     </Filter>
     <Filter Include="MainState\Data Management\Color Mapping">
       <UniqueIdentifier>{85018b9c-10cf-4a50-81b5-fdae04b04d76}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MainState\Data Management\Color Mapping\Oxygen">
-      <UniqueIdentifier>{303188e5-c275-4776-b1bf-65a8d73d632b}</UniqueIdentifier>
     </Filter>
     <Filter Include="MainState\RBFInterpolator">
       <UniqueIdentifier>{b020b00f-9710-43b6-a8a2-ea0d2483664b}</UniqueIdentifier>
