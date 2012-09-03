@@ -32,7 +32,7 @@ void SciDataManager::createPointCloudObjects(bool FromRaw, ISceneObject * RootPa
 		Object->setMaterial(mat);
 
 		Object->addUniform("uLightPosition", BindUniform(CProgramContext::get().Scene.LightPosition));
-		Object->setShader(ERenderPass::Default, CProgramContext::get().Scene.Shader);
+		Object->setShader(CApplication::get().getSceneManager().getDefaultColorRenderPass(), CProgramContext::get().Scene.Shader);
 		Object->setCullingEnabled(false);
 	}
 }

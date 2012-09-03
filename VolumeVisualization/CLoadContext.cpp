@@ -125,7 +125,10 @@ void CLoadContext::loadScene()
 	Scene.Shader = Context->Shaders.Diffuse;
 
 	// Backdrop/SkyCube
-	Scene.SkyBox = SceneManager->addMeshSceneObject(Scene.Cube, Context->Shaders.DiffuseTexture, 0);
+	
+	Scene.SkyBox = new CMeshSceneObject();
+	Scene.SkyBox->setMesh(Scene.Cube);
+	Scene.SkyBox->setShader(SceneManager->getDefaultColorRenderPass(), Context->Shaders.DiffuseTexture);
 	Scene.SkyBox->setScale(SVector3f(28.f));
 	Scene.SkyBox->setTexture(0, "Space.bmp");
 	Scene.SkyBox->setCullingEnabled(false);

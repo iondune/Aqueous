@@ -38,9 +38,9 @@ void CMainState::OnRenderStart(float const Elapsed)
 
 	SceneManager->drawAll();
 	
-	//SceneManager->endDraw();
+	SceneManager->endDraw();
 	// Draw to screen
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	/*glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glDisable(GL_DEPTH_TEST);
 
@@ -60,7 +60,7 @@ void CMainState::OnRenderStart(float const Elapsed)
 	if (! ShowDepth)
 		Context->Scene.VolumeSceneObject->draw(SceneManager, ERenderPass::Default, false);
 
-	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_DEPTH_TEST);*/
 
 	Context->GUIContext->draw(Elapsed, false);
 

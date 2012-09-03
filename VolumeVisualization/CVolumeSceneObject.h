@@ -48,7 +48,7 @@ public:
 
 	CVolumeSceneObject();
 	
-	bool draw(IScene const * const scene, ERenderPass const Pass, bool const CullingEnabled);
+	bool draw(IScene const * const scene, smartPtr<IRenderPass> Pass, bool const CullingEnabled);
 
 };
 

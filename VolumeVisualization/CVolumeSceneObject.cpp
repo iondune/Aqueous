@@ -104,7 +104,7 @@ CVolumeSceneObject::CVolumeSceneObject()
 	Shader = CProgramContext::get().Shaders.Volume;
 }
 	
-bool CVolumeSceneObject::draw(IScene const * const Scene, ERenderPass const Pass, bool const CullingEnabled)
+bool CVolumeSceneObject::draw(IScene const * const Scene, smartPtr<IRenderPass> Pass, bool const CullingEnabled)
 {
 	if (! ISceneObject::draw(Scene, Pass, CullingEnabled))
 		return false;

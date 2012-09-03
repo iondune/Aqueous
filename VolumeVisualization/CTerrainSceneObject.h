@@ -3,6 +3,7 @@
 
 #include <ionCore.h>
 #include <ionScene.h>
+#include <ionWindow.h>
 
 
 class CTerrainSceneObject : public ISceneObject
@@ -60,7 +61,7 @@ public:
 
 	float const getTerrainHeight(SVector2f const & Position);
 
-	bool draw(IScene const * const scene, ERenderPass const Pass, bool const CullingEnabled);
+	bool draw(IScene const * const scene, smartPtr<IRenderPass> Pass, bool const CullingEnabled);
 
 };
 

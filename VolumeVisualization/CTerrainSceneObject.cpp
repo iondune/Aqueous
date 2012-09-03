@@ -168,7 +168,7 @@ float const CTerrainSceneObject::getTerrainHeight(SVector2f const & Position)
 	return 0.f;
 }
 
-bool CTerrainSceneObject::draw(IScene const * const Scene, ERenderPass const Pass, bool const CullingEnabled)
+bool CTerrainSceneObject::draw(IScene const * const Scene, smartPtr<IRenderPass> Pass, bool const CullingEnabled)
 {
 	if (! ISceneObject::draw(Scene, Pass, CullingEnabled))
 		return false;
