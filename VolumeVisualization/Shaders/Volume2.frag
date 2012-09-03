@@ -1,7 +1,9 @@
-#version 140
+#version 150
 
-varying vec3 vColor;
-varying vec4 vPosition;
+in vec3 vColor;
+in vec4 vPosition;
+
+out vec4 gl_FragColor;
 
 uniform sampler2D uBackPosition;
 uniform sampler3D uVolumeData;
@@ -50,13 +52,13 @@ bool rayAABBIntersect1D(float start, float dir, float Min, float Max)
     return true;
 }
 
-vec3 penter;
+vec3 penter = vec3(0.0);
 vec3 pexit;
 
 bool rayAABBIntersect(vec3 start, vec3 dir, vec3 Min, vec3 Max)
 {
-    enter = 0.0f;
-    Exit = 1.0f;
+    enter = 0.0;
+    Exit = 1.0;
 
     if(!rayAABBIntersect1D(start.x, dir.x, Min.x, Max.x))
         return false;
@@ -80,7 +82,7 @@ uniform float uEmphasisLocation;
 
 vec4 getColorSample(vec3 coords)
 {
-	vec4 sample = texture3D(uVolumeData, coords);
+	vec4 sample = texture(uVolumeData, coords);
 
 	switch (uHighlightMode)
 	{
@@ -96,7 +98,7 @@ vec4 getColorSample(vec3 coords)
 		vec3 LocalVector = coords - 0.5;
 		vec3 PlanarVector = normalize(uSliceAxis);
 
-		float Expansion;
+		float Expansion = 1.0;
 		vec3 MVec = abs(PlanarVector);
 		if (MVec.x > MVec.y && MVec.x > MVec.z)
 		{

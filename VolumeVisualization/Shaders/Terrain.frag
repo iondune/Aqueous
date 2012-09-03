@@ -1,16 +1,20 @@
-varying vec3 vLight;
-varying vec2 vTexCoords;
+#version 130
+
+in vec3 vLight;
+in vec2 vTexCoords;
 
 uniform sampler2D uColorMap;
-varying vec4 vColor;
+in vec4 vColor;
 
 uniform int uDebugHeight;
 
 uniform float uLayerWidth;
 
-varying vec2 HeightmapCoords;
+in vec2 HeightmapCoords;
 uniform sampler2D uHeightMap;
-varying vec4 vScreenPosition;
+in vec4 vScreenPosition;
+
+out vec4 gl_FragData[2];
 
 void main()
 {

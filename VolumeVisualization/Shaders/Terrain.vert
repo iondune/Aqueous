@@ -1,8 +1,8 @@
 #version 130
 #extension GL_EXT_gpu_shader4 : enable
 
-attribute vec2 aPosition;
-attribute vec3 aNormal;
+in vec2 aPosition;
+in vec3 aNormal;
 
 uniform mat4 uModelMatrix;
 uniform mat4 uProjMatrix;
@@ -25,12 +25,12 @@ uniform vec2 uActiveRegionUR;
 
 uniform vec3 uLightPosition;
 
-varying vec3 vLight;
-varying vec2 vTexCoords;
-varying vec4 vColor;
+out vec3 vLight;
+out vec2 vTexCoords;
+out vec4 vColor;
 
-varying vec2 HeightmapCoords;
-varying vec4 vScreenPosition;
+out vec2 HeightmapCoords;
+out vec4 vScreenPosition;
 
 void main()
 {
