@@ -7,6 +7,8 @@
 class CMainState : public CContextState<CMainState, CProgramContext>
 {
 
+	bool ShowDepth;
+
 public:
 
 	CMainState();

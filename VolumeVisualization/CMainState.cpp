@@ -2,7 +2,7 @@
 
 
 CMainState::CMainState()
-	: Scale(1), Mode(0)
+	: Scale(1), Mode(0), ShowDepth(false)
 {}
 
 void CMainState::begin()
@@ -61,6 +61,23 @@ void CMainState::OnRenderStart(float const Elapsed)
 		Context->Scene.VolumeSceneObject->draw(SceneManager, ERenderPass::Default, false);
 
 	glEnable(GL_DEPTH_TEST);*/
+
+	if (ShowDepth)
+	{
+		CFrameBufferObject::bindDeviceBackBuffer();
+		glDisable(GL_DEPTH_TEST);
+		{
+			CShaderContext Context(* CShaderLoader::loadShader("FBO/QuadCopy"));
+
+			Context.bindTexture("uTexColor", SceneManager->getSceneDepthTexture());
+			Context.bindBufferObject("aPosition", CSceneManager::getQuadHandle(), 2);
+
+			glDrawArrays(GL_QUADS, 0, 4);
+		}
+		glEnable(GL_DEPTH_TEST);
+	}
+	else
+		Context->Scene.VolumeSceneObject->draw(SceneManager, SceneManager->getDefaultColorRenderPass(), false);
 
 	Context->GUIContext->draw(Elapsed, false);
 

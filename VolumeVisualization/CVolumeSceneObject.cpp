@@ -99,7 +99,7 @@ CVolumeSceneObject::CVolumeSceneObject()
 	Flags.MipMaps = false;
 	Flags.Wrap = GL_MIRRORED_REPEAT;
 	VolumeBuffer = new CTexture(SceneManager.getScreenSize(), true, Flags);
-	VolumeTarget->attach(VolumeBuffer, GL_COLOR_ATTACHMENT0);
+	VolumeTarget->attachColorTexture(VolumeBuffer, 0);
 
 	Shader = CProgramContext::get().Shaders.Volume;
 }
