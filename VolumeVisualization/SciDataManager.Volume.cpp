@@ -3,6 +3,9 @@
 
 void SciDataManager::createVolumeFromGridValues(IColorMapper * ColorMapper)
 {
+	if (! GridDimensions)
+		return;
+
 	unsigned int const size = GridDimensions[0] * GridDimensions[1] * GridDimensions[2] * 4;
 
 	if (GridValues.size() != size / 4)

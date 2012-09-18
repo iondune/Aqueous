@@ -25,7 +25,7 @@ public:
 	void initialValues()
 	{
 		ValueCutoff = 5.0;
-		AcceptedRange = Range();
+		AcceptedRange = FullRange;
 		AlphaIntensity = 1.f;
 	}
 

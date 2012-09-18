@@ -47,8 +47,7 @@ public:
 		// Volume
 		CVolumeSceneObject * VolumeSceneObject;
 
-		// Default drawing shaders and mesh
-		CShader * Shader;
+		// Default cube mesh
 		CMesh * Cube;
 
 
@@ -66,6 +65,7 @@ public:
 		CShader * DiffuseTexture;
 		CShader * Terrain;
 		CShader * Volume;
+		CShader * Glyph;
 
 		SShaders();
 	};

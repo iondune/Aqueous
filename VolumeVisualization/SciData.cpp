@@ -21,13 +21,6 @@ Vector3 const & SciData::getLocation() const
 
 double const SciData::getField(std::string const & Field) const
 {
-	if (Field == "x")
-		return Location.X;
-	if (Field == "y")
-		return Location.Y;
-	if (Field == "z")
-		return Location.Z;
-
 	std::map<std::string, std::vector<double> >::const_iterator it;
 	if ((it = ContainingSet->Fields.find(Field)) == ContainingSet->Fields.end())
 		return 0;
@@ -39,13 +32,6 @@ double & SciData::getField(std::string const & Field)
 {
 	static double Dummy = 0;
 
-	if (Field == "x")
-		return Location.X;
-	if (Field == "y")
-		return Location.Y;
-	if (Field == "z")
-		return Location.Z;
-
 	std::map<std::string, std::vector<double> >::iterator it;
 	if ((it = ContainingSet->Fields.find(Field)) == ContainingSet->Fields.end())
 		return Dummy;
@@ -55,13 +41,6 @@ double & SciData::getField(std::string const & Field)
 
 double & SciData::addField(std::string const & Field)
 {
-	if (Field == "x")
-		return Location.X;
-	if (Field == "y")
-		return Location.Y;
-	if (Field == "z")
-		return Location.Z;
-
 	std::map<std::string, std::vector<double> >::iterator it;
 	if ((it = ContainingSet->Fields.find(Field)) == ContainingSet->Fields.end())
 	{

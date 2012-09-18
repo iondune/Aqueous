@@ -17,8 +17,9 @@ private:
 		LoadingWidget->setProgress(0.5f);
 
 		COxygenColorMapper o("d1");
-		Context->DataManager->createPointCloudObjects(true, Context->Scene.PointCloudObject, SVector3f(-1.f, 1.f, 1.f), & o);
-			//"Latitude", "DFS Depth", "Longitude");
+		CSpectrumColorMapper spec("\"Avg Oxy\"");
+		Context->DataManager->createPointCloudObjects(true, Context->Scene.PointCloudObject, SVector3f(-1.f, 1.f, 1.f), & spec,
+			"x", "\"DFS Depth (m)\"", "y");
 		LoadingWidget->setProgress(0.75f);
 
 		o.Field = "o1";
@@ -127,7 +128,7 @@ void CMainMenuState::createDataSet()
 		//DataParser->createVolumeFromGridValues(& sf);
 	}
 
-	if (true)
+	if (false)
 	{
 		SciDataParser * Parser = new SciDataParserGrid1();
 		Parser->Manager = Context->DataManager;
@@ -149,12 +150,17 @@ void CMainMenuState::createDataSet()
 	{
 		SciDataParserCSV * Parser1 = new SciDataParserCSV();
 		Parser1->Manager = Context->DataManager;
-		Parser1->mergedLoad("OxyData.csv", "LogData.csv", "Time");
+		Parser1->FieldDelim = ';';
+		Parser1->ValueDelim = ' ';
+		Parser1->load("mission1.csv");
+
+
+		Context->DataManager->createGridDataFromRawValues(FullRange, 5.0, "\"Avg Oxy\"");
 		/*
 		COxygenColorMapper o("AirSaturation(%)");
 
 		Context->DataManager->createPointCloudObjects(true, Context->Scene.PointCloudObject, SVector3f(1.f/*-3.f, 0.8f, 3.f*), & o);*/
 	}
 	
-	Context->DataManager->writeToFile("Datasets/HopavagenBayDataSet [2].dat");
+	Context->DataManager->writeToFile("Datasets/DenmarkMission1.dat");
 }

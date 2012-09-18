@@ -11,7 +11,7 @@ CProgramContext::SScene::SScene()
 {}
 
 CProgramContext::SShaders::SShaders()
-	: Diffuse(0), DiffuseTexture(0), Volume(0), Terrain(0)
+	: Diffuse(0), DiffuseTexture(0), Volume(0), Terrain(0), Glyph(0)
 {}
 
 CProgramContext::CProgramContext()

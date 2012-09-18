@@ -16,15 +16,23 @@ void SciDataManager::createGridDataFromRawValues(Range AcceptedValues, double De
 	std::vector<float> X, Y, Z, F;
 
 	Range XRange = RawValues.getValueRange("x", Deviations, AcceptedValues);
-	Range YRange = RawValues.getValueRange("y", Deviations, AcceptedValues);
-	Range ZRange = RawValues.getValueRange("z", Deviations, AcceptedValues);
+	Range YRange = RawValues.getValueRange("\"DFS Depth (m)\"", Deviations, AcceptedValues);
+	Range ZRange = RawValues.getValueRange("y", Deviations, AcceptedValues);
 	Range FRange = RawValues.getValueRange(Field, Deviations, AcceptedValues);
+
+	int counter = 0;
 
 	for (auto it = RawValues.getValues().begin(); it != RawValues.getValues().end(); ++ it)
 	{
+		counter++;
+
+		if (counter > 10)
+			break;
+		
+
 		float x = (float) ((it->getField("x") - XRange.first) / (XRange.second - XRange.first));
-		float y = (float) ((it->getField("y") - YRange.first) / (YRange.second - YRange.first));
-		float z = (float) ((it->getField("z") - ZRange.first) / (ZRange.second - ZRange.first));
+		float y = (float) ((it->getField("\"DFS Depth (m)\"") - YRange.first) / (YRange.second - YRange.first));
+		float z = (float) ((it->getField("y") - ZRange.first) / (ZRange.second - ZRange.first));
 		float f = (float) ((it->getField(Field) - FRange.first) / (FRange.second - FRange.first));
 
 		//if (! inRange(f, FRan

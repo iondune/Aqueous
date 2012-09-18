@@ -4,6 +4,14 @@
 #include <sstream>
 
 
+f64 const string_to_double(std::string const & s)
+{
+	std::istringstream iss(s);
+	f64 t;
+	iss >> t;
+	return t;
+}
+
 void SciDataParserCSV::load(std::string const & FileName)
 {
 	std::ifstream File;
@@ -24,10 +32,8 @@ void SciDataParserCSV::load(std::string const & FileName)
 			while (Stream.good())
 			{
 				std::string Label;
-				Stream >> Label;
+				std::getline(Stream, Label, FieldDelim);
 				Fields.push_back(Label);
-
-				Stream.ignore(1, FieldDelim);
 			}
 			FirstLine = false;
 		}
@@ -36,15 +42,13 @@ void SciDataParserCSV::load(std::string const & FileName)
 			std::vector<f64> Row;
 			while (Stream.good())
 			{
-				f64 Label;
-				Stream >> Label;
-				Row.push_back(Label);
-
-				Stream.ignore(1, ValueDelim);
+				std::string Label;
+				std::getline(Stream, Label, ValueDelim);
+				Row.push_back(string_to_double(Label));
 			}
 
 			if (Row.size() != Fields.size())
-				std::cerr << "Mismatched row size at row " << Manager->RawValues.size() << std::endl;
+				std::cerr << "Mismatched row size at row " << Manager->RawValues.size() << ", found " << Row.size() << " but expected " << Fields.size() << std::endl;
 			u32 Length = std::min(Row.size(), Fields.size());
 
 			SciData d;
@@ -68,14 +72,6 @@ u32 const timeToSeconds(std::string const & Field)
 	s >> In;
 	Out += In;
 	return Out;
-}
-
-f64 const string_to_double(std::string const & s)
-{
-	std::istringstream iss(s);
-	f64 t;
-	iss >> t;
-	return t;
 }
 
 void SciDataParserCSV::mergedLoad(std::string const & FileName1, std::string const & FileName2, std::string const & MatchField)
