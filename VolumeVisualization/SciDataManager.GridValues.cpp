@@ -47,7 +47,7 @@ void SciDataManager::createGridDataFromRawValues(Range AcceptedValues, double De
 
 	RBFInterpolator rbfi(X, Y, Z, F);
 	
-	for (int j = Size - 1; j >= 0; -- j)
+	for (int j = 0; j < Size; ++ j)//Size - 1; j >= 0; -- j)
 	for (int k = 0; k < Size; ++ k)
 	for (int i = 0; i < Size; ++ i)
 	{
