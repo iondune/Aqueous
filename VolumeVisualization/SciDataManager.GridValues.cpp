@@ -5,7 +5,7 @@
 
 void SciDataManager::createGridDataFromRawValues(Range AcceptedValues, double Deviations, std::string const & Field)
 {
-	int const Size = 10;
+	int const Size = 64;
 	GridDimensions = new int[3];
 	GridDimensions[0] = Size;
 	GridDimensions[1] = Size;
@@ -20,16 +20,8 @@ void SciDataManager::createGridDataFromRawValues(Range AcceptedValues, double De
 	Range ZRange = RawValues.getValueRange("y", Deviations, AcceptedValues);
 	Range FRange = RawValues.getValueRange(Field, Deviations, AcceptedValues);
 
-	int counter = 0;
-
-	for (auto it = RawValues.getValues().begin(); it != RawValues.getValues().end(); ++ it)
+	for (auto it = ++ RawValues.getValues().begin(); it != RawValues.getValues().end(); ++ it)
 	{
-		counter++;
-
-		if (counter > 10)
-			break;
-		
-
 		float x = (float) ((it->getField("x") - XRange.first) / (XRange.second - XRange.first));
 		float y = (float) ((it->getField("\"DFS Depth (m)\"") - YRange.first) / (YRange.second - YRange.first));
 		float z = (float) ((it->getField("y") - ZRange.first) / (ZRange.second - ZRange.first));
