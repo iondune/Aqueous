@@ -33,7 +33,7 @@ void CMainMenuState::OnRenderStart(float const Elapsed)
 	if (FinishedLoading)
 	{
 		COxygenColorMapper o("o1");		
-		CSpectrumColorMapper spec("\"Avg Oxy\"");
+		CSpectrumColorMapper spec("Avg Oxy");
 		Context->DataManager->createVolumeFromGridValues(& spec);
 		Context->Scene.VolumeSceneObject->VolumeHandle = Context->DataManager->VolumeHandle;
 		CApplication::get().getStateManager().setState(& CMainState::get());
@@ -121,12 +121,12 @@ void CMainMenuState::createDataSet()
 	{
 		SciDataParserCSV * Parser1 = new SciDataParserCSV();
 		Parser1->Manager = Context->DataManager;
-		Parser1->FieldDelim = ';';
-		Parser1->ValueDelim = ' ';
+		Parser1->FieldDelim = ',';
+		Parser1->ValueDelim = ',';
 		Parser1->load("mission1.csv");
 
 
-		Context->DataManager->createGridDataFromRawValues(FullRange, 5.0, "\"Avg Oxy\"");
+		Context->DataManager->createGridDataFromRawValues(FullRange, 5.0, "Avg Oxy");
 		/*
 		COxygenColorMapper o("AirSaturation(%)");
 

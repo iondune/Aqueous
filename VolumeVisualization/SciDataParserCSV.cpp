@@ -25,6 +25,9 @@ void SciDataParserCSV::load(std::string const & FileName)
 		std::string Line;
 		std::getline(File, Line);
 
+		if (Line == "")
+			continue;
+
 		std::istringstream Stream(Line);
 
 		if (FirstLine)
