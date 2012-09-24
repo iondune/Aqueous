@@ -9,14 +9,14 @@
 
 CGUITitleLabelsWidget::CGUITitleLabelsWidget(SciDataManager * DataManager)
 {
-	static Range ValueRange = DataManager->GridValues.getValueRange("Avg Oxy", 5.0);
+	static Range ValueRange = DataManager->RawValues.getValueRange("Avg Oxy", 5.0);
 
 	std::wstringstream s;
 	s << std::fixed;
 	s << "Range (";
 	s << std::setprecision(3);
 	s << ValueRange.first;
-	s << " - ";
+	s << ", ";
 	s << ValueRange.second;
 	s << ")";
 
@@ -31,25 +31,25 @@ CGUITitleLabelsWidget::CGUITitleLabelsWidget(SciDataManager * DataManager)
 	Gwen::Controls::Label * MediumLabel = new Gwen::Controls::Label(GUIManager->getCanvas());
 	MediumLabel->SetFont(GUIManager->getMediumFont());
 	MediumLabel->SetText(Gwen::UnicodeString(L"Current Field: Avg Oxy - ") + Gwen::UnicodeString(s.str()));
-	MediumLabel->SetBounds(20, 70, 600, 300);
+	MediumLabel->SetBounds(20, 70, 1000, 300);
 	MediumLabel->SetTextColor(Gwen::Color(235, 235, 255, 215));
 
 	// Volume Range Label
 	VolumeRangeIndicator = new Gwen::Controls::Label(GUIManager->getCanvas());
 	VolumeRangeIndicator->SetFont(GUIManager->getMediumFont());
-	VolumeRangeIndicator->SetBounds(20, 110, 900, 300);
+	VolumeRangeIndicator->SetBounds(20, 110, 1000, 300);
 	VolumeRangeIndicator->SetTextColor(Gwen::Color(255, 235, 235, 215));
 
 	// Volume Range Label
 	VolumeCalculationIndicator = new Gwen::Controls::Label(GUIManager->getCanvas());
 	VolumeCalculationIndicator->SetFont(GUIManager->getMediumFont());
-	VolumeCalculationIndicator->SetBounds(20, 150, 900, 300);
+	VolumeCalculationIndicator->SetBounds(20, 150, 1000, 300);
 	VolumeCalculationIndicator->SetTextColor(Gwen::Color(255, 235, 235, 215));
 }
 
 void CGUITitleLabelsWidget::resetVolumeRangeIndicator(SciDataManager * DataManager)
 {
-	static Range ValueRange = DataManager->GridValues.getValueRange("Avg Oxy", 5.0);
+	static Range ValueRange = DataManager->RawValues.getValueRange("Avg Oxy", 5.0);
 
 	{
 		std::wstringstream s;
@@ -64,12 +64,26 @@ void CGUITitleLabelsWidget::resetVolumeRangeIndicator(SciDataManager * DataManag
 	}
 	
 	{
+		static Range ValueRange = DataManager->GridValues.getValueRange("Avg Oxy", 5.0);
+		static Range XValueRange = DataManager->RawValues.getValueRange("x", 5.0);
+		static Range YValueRange = DataManager->RawValues.getValueRange("DFS Depth (m)", 5.0);
+		YValueRange.first = 0.0;
+		static Range ZValueRange = DataManager->RawValues.getValueRange("y", 5.0);
+
+		double EntireVolume = 1.0;
+		EntireVolume *= XValueRange.second - XValueRange.first;
+		EntireVolume *= YValueRange.second - YValueRange.first;
+		EntireVolume *= ZValueRange.second - ZValueRange.first;
+
+		double UnitVolume = EntireVolume / 24.0 / 24.0 / 24.0;
+		//printf("Entire Volume: %f UnitVolume %f\n", EntireVolume, UnitVolume);
+
 		std::wstringstream s;
 		s << "Volume: ";
 		s << std::setprecision(3);
 		s << std::scientific;
-		s << DataManager->getGridVolume("\"Avg Oxy\"", CProgramContext::get().Scene.VolumeSceneObject->Control.EmphasisLocation * (ValueRange.second - ValueRange.first) + ValueRange.first,
-			CProgramContext::get().Scene.VolumeSceneObject->Control.LocalRange / 2.f * (ValueRange.second - ValueRange.first), 2) * 20.0 * 20.0;
+		s << DataManager->getGridVolume("Avg Oxy", CProgramContext::get().Scene.VolumeSceneObject->Control.EmphasisLocation * (ValueRange.second - ValueRange.first) + ValueRange.first,
+			CProgramContext::get().Scene.VolumeSceneObject->Control.LocalRange / 2.f * (ValueRange.second - ValueRange.first), 2) * UnitVolume;
 		s << " m^3";
 		VolumeCalculationIndicator->SetText(s.str());
 	}
@@ -78,4 +92,5 @@ void CGUITitleLabelsWidget::resetVolumeRangeIndicator(SciDataManager * DataManag
 void CGUITitleLabelsWidget::clearVolumeRangeIndicator()
 {
 	VolumeRangeIndicator->SetText(L"");
+	VolumeCalculationIndicator->SetText(L"");
 }
