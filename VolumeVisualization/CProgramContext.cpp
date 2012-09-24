@@ -2,7 +2,7 @@
 
 #include "CMainState.h"
 #include "CMainMenuState.h"
-#include "CLoadContext.h"
+#include "CLoadState.h"
 
 
 CProgramContext::SScene::SScene()
@@ -15,10 +15,10 @@ CProgramContext::SShaders::SShaders()
 {}
 
 CProgramContext::CProgramContext()
-	: GUIContext(0), DataManager(0), LoadContext(0)
+	: GUIContext(0), DataManager(0)
 {}
 
-void CProgramContext::init()
+void CProgramContext::run()
 {
 	// Create Window
 	CApplication & Application = CApplication::get();
@@ -29,19 +29,10 @@ void CProgramContext::init()
 	GUIContext = new CGUIContext();
 	GUIContext->init();
 
+	Application.loadEngines();
+
 	// Begin loading
-	LoadContext = new CLoadContext();
-	LoadContext->init();
-	LoadContext->run();
-}
-
-void CProgramContext::run()
-{
-	CApplication & Application = CApplication::get();
-
-	// Load initial state
-	Application.getStateManager().setState(& CMainMenuState::get());
-
-	// Run program!
+	CLoadState & LoadState = CLoadState::get();
+	Application.getStateManager().setState(& LoadState);
 	Application.run();
 }

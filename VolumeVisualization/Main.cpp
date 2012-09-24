@@ -23,7 +23,6 @@ int main()
 		//waitForUser();
 
 	CProgramContext & Context = CProgramContext::get();
-	Context.init();
 	Context.run();
 
 	return 0;

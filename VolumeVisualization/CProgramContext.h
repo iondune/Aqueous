@@ -12,7 +12,6 @@ class CTerrainSceneObject;
 class CVolumeSceneObject;
 
 class SciDataManager;
-class CLoadContext;
 
 
 class CProgramContext : public Singleton<CProgramContext>
@@ -55,7 +54,6 @@ public:
 
 	SScene Scene;
 	CGUIContext * GUIContext;
-	CLoadContext * LoadContext;
 	SciDataManager * DataManager;
 
 	struct SShaders
@@ -72,8 +70,6 @@ public:
 	SShaders Shaders;
 
 	CProgramContext();
-
-	void init();
 	void run();
 
 };

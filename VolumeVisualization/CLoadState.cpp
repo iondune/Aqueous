@@ -1,4 +1,4 @@
-#include "CLoadContext.h"
+#include "CLoadState.h"
 
 #include "CMainState.h"
 #include "CMainMenuState.h"
@@ -9,7 +9,13 @@
 #include "CVolumeSceneObject.h"
 
 
-void CLoadContext::addLabel(std::wstring const & Label, Gwen::Color const & Color)
+void CLoadStateEventHandler::OnFinish(Gwen::Controls::Base * Control)
+{
+	CLoadState::get().OnFinish();
+}
+
+
+void CLoadState::addLabel(std::wstring const & Label, Gwen::Color const & Color)
 {
 	Gwen::Controls::Label * MediumLabel = new Gwen::Controls::Label(Canvas);
 	MediumLabel->SetFont(GUIManager->getMediumFont());
@@ -23,19 +29,16 @@ void CLoadContext::addLabel(std::wstring const & Label, Gwen::Color const & Colo
 	LabelHeight += 40;
 }
 
-CLoadContext::CLoadContext()
-	: LabelHeight(0), Indent(0)
-{}
-
-void CLoadContext::init()
+CLoadState::CLoadState()
+	: LabelHeight(0), Indent(0), GetConfirmation(false)
 {
-	loadContext();
+	load();
 
 	LabelHeight = 70;
 	Indent = 0;
 }
 
-void CLoadContext::run()
+void CLoadState::begin()
 {
 	// Load References
 	CApplication & Application = CApplication::get();
@@ -60,7 +63,6 @@ void CLoadContext::run()
 	CApplication::get().swapBuffers();
 	
 	addLabel(L"Initializing System...");
-	Application.loadEngines();
 	MainState.load();
 	MenuState.load();
 	CGwenEventForwarder * Forwarder = new CGwenEventForwarder(GUIManager->getCanvas());
@@ -75,17 +77,28 @@ void CLoadContext::run()
 	Context->DataManager = new SciDataManager();
 	addLabel(L"Menu is Starting...");
 
-	// Cleanup GUI
-	Canvas->RemoveAllChildren();
+	if (GetConfirmation)
+	{
+		Gwen::Controls::Button * Button = new Gwen::Controls::Button(GUIManager->getCanvas());
+		Button->SetBounds(250, 650, 250, 35);
+		Button->SetText(L"Continue");
+		Button->onPress.Add(& Handler, & CLoadStateEventHandler::OnFinish);
+	}
+	else
+		OnFinish();
 }
 
-void CLoadContext::loadShaders()
+void CLoadState::OnRenderStart(float const Elapsed)
+{
+	Context->GUIContext->draw(Elapsed, true);
+	CApplication::get().swapBuffers();
+}
+
+void CLoadState::loadShaders()
 {
 	Indent = 60;
 	bool Failed = false;
 
-	//if (! (Context->Shaders.Diffuse = CShaderLoader::loadShader("Diffuse")))
-	//	addLabel(L"Failed to load Diffuse Shader - Glyphs will not draw.", Gwen::Color(255, 32, 32, 192)), Failed = true;
 	if (! (Context->Shaders.Glyph = CShaderLoader::loadShader("Glyph")))
 		addLabel(L"Failed to load Glyph Shader - Glyphs will not draw.", Gwen::Color(255, 32, 32, 192)), Failed = true;
 	if (! (Context->Shaders.DiffuseTexture = CShaderLoader::loadShader("DiffuseTexture")))
@@ -98,12 +111,12 @@ void CLoadContext::loadShaders()
 	if (! Failed)
 		addLabel(L"All shaders compiled successfully.", Gwen::Color(64, 255, 64, 192));
 	else
-		sf::Sleep(1.5f);
+		GetConfirmation = true;
 
 	Indent = 0;
 }
 
-void CLoadContext::loadScene()
+void CLoadState::loadScene()
 {
 	// References
 	CProgramContext::SScene & Scene = Context->Scene;
@@ -226,4 +239,12 @@ void CLoadContext::loadScene()
 	//Scene.PointCloudObject->setScale(Adjuster * vec3f(3.f, 0.8f, 3.f));
 	Scene.PointCloudObject->setScale(vec3f(3.f, 1.5f, 3.f));
 	Scene.VolumeSceneObject->setScale(vec3f(3.f, 1.5f, 3.f));
+}
+
+void CLoadState::OnFinish()
+{
+	// Cleanup GUI
+	Canvas->RemoveAllChildren();
+
+	Application->getStateManager().setState(& CMainMenuState::get());
 }

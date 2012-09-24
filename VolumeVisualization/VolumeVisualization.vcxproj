@@ -82,7 +82,7 @@
     <ClCompile Include="CGUIVolumeControlWidget.cpp" />
     <ClCompile Include="CGUIWidget.cpp" />
     <ClCompile Include="CGwenEventForwarder.cpp" />
-    <ClCompile Include="CLoadContext.cpp" />
+    <ClCompile Include="CLoadState.cpp" />
     <ClCompile Include="CMainMenuState.cpp" />
     <ClCompile Include="CMainState.cpp" />
     <ClCompile Include="CMainState.EventHandling.cpp" />
@@ -122,7 +122,7 @@
     <ClInclude Include="CGUIVolumeControlWidget.h" />
     <ClInclude Include="CGUIWidget.h" />
     <ClInclude Include="CGwenEventForwarder.h" />
-    <ClInclude Include="CLoadContext.h" />
+    <ClInclude Include="CLoadState.h" />
     <ClInclude Include="CMainMenuState.h" />
     <ClInclude Include="CMainState.h" />
     <ClInclude Include="ColorMappers.h" />

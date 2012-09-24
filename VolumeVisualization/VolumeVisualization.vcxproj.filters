@@ -38,9 +38,6 @@
     <ClCompile Include="CGwenEventForwarder.cpp">
       <Filter>Utilities\GUI</Filter>
     </ClCompile>
-    <ClCompile Include="CLoadContext.cpp">
-      <Filter>Program Context\LoadContext</Filter>
-    </ClCompile>
     <ClCompile Include="SciDataManager.GridValues.cpp">
       <Filter>MainState\Data Management</Filter>
     </ClCompile>
@@ -113,6 +110,9 @@
     <ClCompile Include="CDataLoadingThread.cpp">
       <Filter>MainMenuState</Filter>
     </ClCompile>
+    <ClCompile Include="CLoadState.cpp">
+      <Filter>Program Context\LoadContext</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CMainState.h">
@@ -160,9 +160,6 @@
     </ClInclude>
     <ClInclude Include="CGUIManager.h">
       <Filter>Utilities\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="CLoadContext.h">
-      <Filter>Program Context\LoadContext</Filter>
     </ClInclude>
     <ClInclude Include="SciDataManager.h">
       <Filter>MainState\Data Management</Filter>
@@ -223,6 +220,9 @@
     </ClInclude>
     <ClInclude Include="CDataLoadingThread.h">
       <Filter>MainMenuState</Filter>
+    </ClInclude>
+    <ClInclude Include="CLoadState.h">
+      <Filter>Program Context\LoadContext</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
