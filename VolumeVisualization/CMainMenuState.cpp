@@ -123,7 +123,7 @@ void CMainMenuState::createDataSet()
 		Parser1->Manager = Context->DataManager;
 		Parser1->FieldDelim = ',';
 		Parser1->ValueDelim = ',';
-		Parser1->load("mission1.csv");
+		Parser1->load("mission7.csv");
 
 
 		Context->DataManager->createGridDataFromRawValues(FullRange, 5.0, "Avg Oxy");
@@ -133,5 +133,5 @@ void CMainMenuState::createDataSet()
 		Context->DataManager->createPointCloudObjects(true, Context->Scene.PointCloudObject, SVector3f(1.f/*-3.f, 0.8f, 3.f*), & o);*/
 	}
 	
-	Context->DataManager->writeToFile("Datasets/DenmarkMission1.dat");
+	Context->DataManager->writeToFile("Datasets/DenmarkMission7.dat");
 }
