@@ -36,7 +36,7 @@ void SciDataManager::createPointCloudObjects(bool FromRaw, ISceneObject * RootPa
 		double v = it->getField("\"Total Water Column (m)\"");
 		if (v != 0.f)
 		{
-			printf("%f\n", v);
+			//printf("%f\n", v);
 			CInstanceSceneObject::CInstance * Instance = Container->addInstance();
 			float Depth = (v - 0.f) / (YRange.second - 0.f);
 			Instance->setTranslation((SVector3f(X, 1.f - Depth, Z) - SVector3f(0.5f)) * DataScale * RootParent->getScale());

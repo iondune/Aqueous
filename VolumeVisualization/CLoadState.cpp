@@ -187,7 +187,7 @@ void CLoadState::loadScene()
 	vec2f TranslationAdjust = (DataRangeCenter - MapRangeMin) / (MapRangeMax - DataRangeCenter);
 	//TranslationAdjust /= 2.f;
 	//TranslationAdjust -= vec2f(0.5f);
-	printf("Translation Adjust: %f %f\n", TranslationAdjust.X, TranslationAdjust.Y);
+	//printf("Translation Adjust: %f %f\n", TranslationAdjust.X, TranslationAdjust.Y);
 	vec2f RelativeTranslate;
 	for (int i = 0; i < 2; ++ i)
 	{
@@ -225,7 +225,7 @@ void CLoadState::loadScene()
 	Scale.Y *= 0.5f;
 	Scene.Terrain->setScale(Scale);
 	Scene.Terrain->setTranslation(vec3f(-RelativeTranslate.X, 0.f, RelativeTranslate.Y));
-	printf("Relative Translate: %f %f\n", RelativeTranslate.X, RelativeTranslate.Y);
+	//printf("Relative Translate: %f %f\n", RelativeTranslate.X, RelativeTranslate.Y);
 	//Scene.Terrain->setTranslation(SVector3f(2.026057f, -0.5f, -4.140311f));
 	//Scene.Terrain->setRotation(SVector3f(0.f, 10.f, 0.f));
 	Scene.Terrain->setVisible(false);
