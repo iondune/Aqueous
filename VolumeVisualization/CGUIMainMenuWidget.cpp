@@ -26,6 +26,7 @@ void CGUIMainMenuWidget::createDataSetButtons()
 			Button->SetBounds(50, Height, 290, 25);
 			Button->SetText(FileName);
 			Button->onPress.Add(this, & CGUIMainMenuWidget::OnSelectDataSet);
+			Button->Invalidate();
 			DataSetButtons.push_back(Button);
 
 			Height += 35;
@@ -34,10 +35,10 @@ void CGUIMainMenuWidget::createDataSetButtons()
 	}
 
 	Height += 35;
-	NewDataSetButton = new Gwen::Controls::Button(GUIManager->getCanvas());
+	/*NewDataSetButton = new Gwen::Controls::Button(GUIManager->getCanvas());
 	NewDataSetButton->SetBounds(50, Height, 290, 25);
 	NewDataSetButton->SetText("Create New Data Set");
-	NewDataSetButton->onPress.Add(this, & CGUIMainMenuWidget::OnSelectDataSet);
+	NewDataSetButton->onPress.Add(this, & CGUIMainMenuWidget::OnSelectDataSet);*/
 }
 
 CGUIMainMenuWidget::CGUIMainMenuWidget()
@@ -68,14 +69,15 @@ void CGUIMainMenuWidget::OnSelectDataSet(Gwen::Controls::Base * Control)
 		//Window->SetBounds(300, 300, 150, 50);
 		//Window->SetTitle("Please Select Data Set Name");
 		CMainMenuState::get().createDataSet();
+		
+		if (NewDataSetButton)
+			NewDataSetButton->DelayedDelete();
+		NewDataSetButton = 0;
 
 		for (auto it = DataSetButtons.begin(); it != DataSetButtons.end(); ++ it)
 		{
 			(* it)->DelayedDelete();
 		}
-
-		NewDataSetButton->DelayedDelete();
-		NewDataSetButton = 0;
 		DataSetButtons.clear();
 
 		createDataSetButtons();

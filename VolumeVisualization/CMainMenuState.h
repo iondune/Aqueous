@@ -25,6 +25,8 @@ public:
 	void loadData(std::string const & FileName);
 	void createDataSet();
 
+	std::string DataSetName;
+
 };
 
 #endif

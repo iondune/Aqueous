@@ -59,6 +59,8 @@ void CMainMenuState::loadData(std::string const & FileName)
 	Thread->Context = Context;
 	Context->GUIContext->addWidget(Thread->LoadingWidget = new CGUILoadingWidget("Loading data and initializing scene elements"));
 
+	DataSetName = FileName;
+
 	Thread->Launch();
 }
 

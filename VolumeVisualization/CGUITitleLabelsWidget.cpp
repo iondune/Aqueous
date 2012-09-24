@@ -2,23 +2,35 @@
 
 #include "CProgramContext.h"
 #include "SciDataManager.h"
+#include "CMainMenuState.h"
 
 #include <iomanip>
 
 
-CGUITitleLabelsWidget::CGUITitleLabelsWidget()
+CGUITitleLabelsWidget::CGUITitleLabelsWidget(SciDataManager * DataManager)
 {
+	static Range ValueRange = DataManager->GridValues.getValueRange("Avg Oxy", 5.0);
+
+	std::wstringstream s;
+	s << std::fixed;
+	s << "Range (";
+	s << std::setprecision(3);
+	s << ValueRange.first;
+	s << " - ";
+	s << ValueRange.second;
+	s << ")";
+
 	// Top Label
 	Gwen::Controls::Label * BigLabel = new Gwen::Controls::Label(GUIManager->getCanvas());
 	BigLabel->SetFont(GUIManager->getLargeFont());
-	BigLabel->SetText(Gwen::UnicodeString(L"Dataset: Denmark [Mission 1]") + Gwen::UnicodeString());
+	BigLabel->SetText(Gwen::UnicodeString(L"Dataset: ") + Gwen::UnicodeString(CMainMenuState::get().DataSetName.begin(), CMainMenuState::get().DataSetName.end()));
 	BigLabel->SetBounds(10, 10, 1590, 300);
 	BigLabel->SetTextColor(Gwen::Color(235, 255, 235, 215));
 
 	// Second Label
 	Gwen::Controls::Label * MediumLabel = new Gwen::Controls::Label(GUIManager->getCanvas());
 	MediumLabel->SetFont(GUIManager->getMediumFont());
-	MediumLabel->SetText(Gwen::UnicodeString(L"Current Field: Avg Oxy") + Gwen::UnicodeString());
+	MediumLabel->SetText(Gwen::UnicodeString(L"Current Field: Avg Oxy - ") + Gwen::UnicodeString(s.str()));
 	MediumLabel->SetBounds(20, 70, 600, 300);
 	MediumLabel->SetTextColor(Gwen::Color(235, 235, 255, 215));
 
@@ -37,7 +49,7 @@ CGUITitleLabelsWidget::CGUITitleLabelsWidget()
 
 void CGUITitleLabelsWidget::resetVolumeRangeIndicator(SciDataManager * DataManager)
 {
-	static Range ValueRange = DataManager->GridValues.getValueRange("\"Avg Oxy\"", 5.0);
+	static Range ValueRange = DataManager->GridValues.getValueRange("Avg Oxy", 5.0);
 
 	{
 		std::wstringstream s;
@@ -51,7 +63,7 @@ void CGUITitleLabelsWidget::resetVolumeRangeIndicator(SciDataManager * DataManag
 		VolumeRangeIndicator->SetText(s.str());
 	}
 	
-	if (false) {
+	{
 		std::wstringstream s;
 		s << "Volume: ";
 		s << std::setprecision(3);

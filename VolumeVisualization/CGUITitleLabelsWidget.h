@@ -16,7 +16,7 @@ private:
 
 public:
 
-	CGUITitleLabelsWidget();
+	CGUITitleLabelsWidget(SciDataManager * DataManager);
 
 	void resetVolumeRangeIndicator(SciDataManager * DataManager);
 	void clearVolumeRangeIndicator();
