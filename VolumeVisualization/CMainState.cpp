@@ -1,5 +1,7 @@
 #include "CMainState.h"
 
+#include "CTerrainSceneObject.h"
+
 
 CMainState::CMainState()
 	: Scale(1), Mode(0), ShowDepth(false)

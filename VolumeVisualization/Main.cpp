@@ -17,6 +17,7 @@ int main()
 	CMeshLoader::MeshDirectory = "Media/";
 	CShaderLoader::ShaderDirectory = "Shaders/";
 
+	// To Do : Separate application?
 		//ContourConverter c;
 		//c.convert();
 		//waitForUser();

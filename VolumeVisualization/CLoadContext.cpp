@@ -4,6 +4,10 @@
 #include "CMainMenuState.h"
 #include "CGwenEventForwarder.h"
 
+#include "SciDataManager.h"
+#include "CTerrainSceneObject.h"
+#include "CVolumeSceneObject.h"
+
 
 void CLoadContext::addLabel(std::wstring const & Label, Gwen::Color const & Color)
 {

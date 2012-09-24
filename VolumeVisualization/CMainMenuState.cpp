@@ -3,39 +3,9 @@
 #include "CMainState.h"
 #include "ColorMappers.h"
 #include "CGUILoadingWidget.h"
+#include "CDataLoadingThread.h"
+#include "SciDataManager.h"
 
-
-class DataLoadThread : public sf::Thread
-{
-
-private:
-	
-	virtual void Run()
-	{
-		LoadingWidget->setProgress(0.25f);
-		Context->DataManager->readFromFile(FileName);
-		LoadingWidget->setProgress(0.5f);
-
-		COxygenColorMapper o("d1");
-		CSpectrumColorMapper spec("\"Avg Oxy\"");
-		Context->DataManager->createPointCloudObjects(true, Context->Scene.PointCloudObject, SVector3f(-1.f, 1.f, 1.f), & spec,
-			"x", "\"DFS Depth (m)\"", "y");
-		LoadingWidget->setProgress(0.75f);
-
-		o.Field = "o1";
-		Context->DataManager->createPointCloudObjects(false, Context->Scene.GridObject, SVector3f(3.f), & o);
-		LoadingWidget->setProgress(1.f);
-		* Finished = true;
-	}
-
-public:
-
-	CProgramContext * Context;
-	std::string FileName;
-	CGUILoadingWidget * LoadingWidget;
-	bool * Finished;
-
-};
 
 CMainMenuState::CMainMenuState()
 	: FinishedLoading(false), Thread(0)
@@ -83,7 +53,7 @@ void CMainMenuState::loadData(std::string const & FileName)
 	s << "Datasets/";
 	s << FileName;
 
-	Thread = new DataLoadThread();
+	Thread = new CDataLoadingThread();
 	Thread->FileName = s.str();
 	Thread->Finished = & FinishedLoading;
 	Thread->Context = Context;

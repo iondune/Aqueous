@@ -1,5 +1,7 @@
 #include "CMainState.h"
 
+#include "CTerrainSceneObject.h"
+
 
 glm::vec3 CMainState::makeSphereVec(int x, int y)
 {

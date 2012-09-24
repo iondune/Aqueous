@@ -68,6 +68,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CDataLoadingThread.cpp" />
     <ClCompile Include="CGUIConsoleWidget.cpp" />
     <ClCompile Include="CGUIContext.cpp" />
     <ClCompile Include="CGUIContextWidget.cpp" />
@@ -107,6 +108,7 @@
     <ClCompile Include="SciDataTree.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CDataLoadingThread.h" />
     <ClInclude Include="CGUIConsoleWidget.h" />
     <ClInclude Include="CGUIContext.h" />
     <ClInclude Include="CGUIContextWidget.h" />

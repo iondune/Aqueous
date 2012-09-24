@@ -1,5 +1,7 @@
 #include "CMainState.h"
 
+#include "SciDataManager.h"
+
 
 void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 {

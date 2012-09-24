@@ -7,14 +7,13 @@
 
 #include "CGUIContext.h"
 
-#include "SciDataManager.h"
-#include "SciDataTree.h"
 
-#include "CTerrainSceneObject.h"
-#include "CVolumeSceneObject.h"
+class CTerrainSceneObject;
+class CVolumeSceneObject;
 
-
+class SciDataManager;
 class CLoadContext;
+
 
 class CProgramContext : public Singleton<CProgramContext>
 {

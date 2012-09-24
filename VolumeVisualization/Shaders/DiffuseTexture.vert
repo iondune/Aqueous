@@ -3,14 +3,18 @@ attribute vec3 aNormal;
 attribute vec2 aTexCoord;
 
 uniform mat4 uModelMatrix;
-uniform mat4 uProjMatrix;
 uniform mat4 uViewMatrix;
+uniform mat4 uProjMatrix;
 uniform mat4 uNormalMatrix;
 
-varying vec4 vColor;
 varying vec3 vLight;
 varying vec3 vNormal;
 varying vec2 vTexCoord;
+
+
+
+
+
 varying vec4 vScreenPosition;
 
 void main()
@@ -20,12 +24,18 @@ void main()
     vec4 vPosition;
 
     vPosition = uModelMatrix * vec4(aPosition, 1);
+
+
+
     vLight = normalize(LightPosition - vec3(vPosition));
+
+
+
     vScreenPosition = uProjMatrix * uViewMatrix * vPosition;
+
     gl_Position = vScreenPosition;
 
-    vTexCoord = vec2(aTexCoord.x, aTexCoord.y);
+    vTexCoord = aTexCoord;
 
-    vLight = normalize(LightPosition - vec3(vPosition));
     vNormal = normalize(vec3(uNormalMatrix * vec4(aNormal, 1)));
 }

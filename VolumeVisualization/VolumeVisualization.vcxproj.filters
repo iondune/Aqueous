@@ -110,6 +110,9 @@
     <ClCompile Include="SciDataParserCSV.cpp">
       <Filter>MainState\Data Management\Parsers</Filter>
     </ClCompile>
+    <ClCompile Include="CDataLoadingThread.cpp">
+      <Filter>MainMenuState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CMainState.h">
@@ -217,6 +220,9 @@
     </ClInclude>
     <ClInclude Include="COxygenColorMapper.h">
       <Filter>MainState\Data Management\Color Mapping</Filter>
+    </ClInclude>
+    <ClInclude Include="CDataLoadingThread.h">
+      <Filter>MainMenuState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
