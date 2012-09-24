@@ -4,7 +4,7 @@
 #include <CInstanceSceneObject.h>
 
 
-void SciDataManager::createPointCloudObjects(bool FromRaw, ISceneObject * RootParent, SVector3f const DataScale, IColorMapper * ColorMapper, 
+void SciDataManager::createPointCloudObjects(bool FromRaw, ISceneObject * RootParent, ISceneObject * FloorParent, SVector3f const DataScale, IColorMapper * ColorMapper, 
 		std::string const & xField, std::string const & yField, std::string const & zField)
 {
 	SciDataSet & DataSet = FromRaw ? RawValues : GridValues;
@@ -23,6 +23,15 @@ void SciDataManager::createPointCloudObjects(bool FromRaw, ISceneObject * RootPa
 	Container->addUniform("uLightPosition", BindUniform(CProgramContext::get().Scene.LightPosition));
 	Container->setShader(CApplication::get().getSceneManager().getDefaultColorRenderPass(), CProgramContext::get().Shaders.Glyph);
 	Container->setCullingEnabled(false);
+
+	CMeshInstanceSceneObject * FloorContainer = new CMeshInstanceSceneObject();
+	FloorContainer->setParent(FloorParent);
+	FloorContainer->setMesh(CProgramContext::get().Scene.Cube);
+	FloorContainer->setScale(SVector3f(1.f) / 32.f * (vec3f(1.f) / RootParent->getScale()));
+
+	FloorContainer->addUniform("uLightPosition", BindUniform(CProgramContext::get().Scene.LightPosition));
+	FloorContainer->setShader(CApplication::get().getSceneManager().getDefaultColorRenderPass(), CProgramContext::get().Shaders.Glyph);
+	FloorContainer->setCullingEnabled(false);
 	
 
 	for (auto it = DataSet.getValues().begin(); it != DataSet.getValues().end(); ++ it)
@@ -37,7 +46,7 @@ void SciDataManager::createPointCloudObjects(bool FromRaw, ISceneObject * RootPa
 		if (v != 0.f)
 		{
 			//printf("%f\n", v);
-			CInstanceSceneObject::CInstance * Instance = Container->addInstance();
+			CInstanceSceneObject::CInstance * Instance = FloorContainer->addInstance();
 			float Depth = (v - 0.f) / (YRange.second - 0.f);
 			Instance->setTranslation((SVector3f(X, 1.f - Depth, Z) - SVector3f(0.5f)) * DataScale * RootParent->getScale());
 			Instance->setScale(vec3f(1, 0.4f, 1));

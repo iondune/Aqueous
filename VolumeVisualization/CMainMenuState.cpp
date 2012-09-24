@@ -66,7 +66,7 @@ void CMainMenuState::createDataSet()
 {
 	if (false)
 	{
-		SciDataParser * Parser = new SciDataParserSimpleTXT();
+		/*SciDataParser * Parser = new SciDataParserSimpleTXT();
 		Parser->Manager = Context->DataManager;
 		Parser->load("ForZoe.txt");
 
@@ -79,12 +79,12 @@ void CMainMenuState::createDataSet()
 		Context->DataManager->createPointCloudObjects(true, Context->Scene.PointCloudObject, SVector3f(-3.f, 0.8f, 3.f), & o);
 		//DataParser[0]->createGridDataFromRawValues(FullRange, 5.0, "d1");
 		//DataParser[0]->createPointCloudObjects(false, SoupObject, SVector3f(3.f), & sf);
-		//DataParser[0]->createVolumeFromGridValues(& sf);
+		//DataParser[0]->createVolumeFromGridValues(& sf);*/
 	}
 
 	if (false)
 	{
-		SciDataParserCTD * Parser = new SciDataParserCTD();
+		/*SciDataParserCTD * Parser = new SciDataParserCTD();
 		Parser->Manager = Context->DataManager;
 		Parser->examine("oxygenDataSet1.mat");
 
@@ -96,12 +96,12 @@ void CMainMenuState::createDataSet()
 		//DataParser[1]->createPointCloudObjects(true, VoxelObject, SVector3f(3.f), & sf);
 		//DataParser->createGridDataFromRawValues(sf.AcceptedRange, 5.0, "salinity");
 		//DataParser->createPointCloudObjects(false, SoupObject, SVector3f(3.f), & sf);
-		//DataParser->createVolumeFromGridValues(& sf);
+		//DataParser->createVolumeFromGridValues(& sf);*/
 	}
 
 	if (false)
 	{
-		SciDataParser * Parser = new SciDataParserGrid1();
+		/*SciDataParser * Parser = new SciDataParserGrid1();
 		Parser->Manager = Context->DataManager;
 		Parser->load("oxyMaps.mat");
 

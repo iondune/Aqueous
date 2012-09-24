@@ -12,6 +12,8 @@ class CGUIGlyphControlWidget : public CGUIContextWidget
 	Gwen::Controls::WindowControl * Window;
 	Gwen::Controls::Button * EnableButton;
 
+	void SetButtonTitle();
+
 public:
 
 	CGUIGlyphControlWidget();
