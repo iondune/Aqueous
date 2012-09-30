@@ -4,6 +4,7 @@
 #include "CGUILoadingWidget.h"
 #include "SciDataManager.h"
 #include "ColorMappers.h"
+#include "CGlyphSceneObject.h"
 
 
 void CDataLoadingThread::Run()
@@ -14,8 +15,8 @@ void CDataLoadingThread::Run()
 
 	COxygenColorMapper o("d1");
 	CSpectrumColorMapper spec("Avg Oxy");
-	Context->DataManager->createPointCloudObjects(true, Context->Scene.PointCloudObject, Context->Scene.FloorSamplesObject, SVector3f(-1.f, 1.f, 1.f), & spec,
-		"x", "DFS Depth (m)", "y");
+	Context->Scene.GlyphSceneObject->loadGlyphs(Context->DataManager, & spec,
+		"x", "DFS Depth (m)", "y", "Total Water Column (m)");
 	LoadingWidget->setProgress(0.75f);
 
 	//o.Field = "o1";

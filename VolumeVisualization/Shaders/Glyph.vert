@@ -2,6 +2,7 @@ attribute vec3 aPosition;
 attribute vec3 aNormal;
 
 uniform mat4 uModelMatrix;
+uniform mat4 uLocalMatrix;
 uniform mat4 uProjMatrix;
 uniform mat4 uViewMatrix;
 uniform mat4 uNormalMatrix;
@@ -17,10 +18,10 @@ void main()
 {
     vec4 vPosition;
 
-    vPosition = uModelMatrix * vec4(aPosition, 1);
+    vPosition = uLocalMatrix * uModelMatrix * vec4(aPosition, 1.0);
     vScreenPosition = uProjMatrix * uViewMatrix * vPosition;
     gl_Position = vScreenPosition;
 
-    vLight = (uLightPosition - vec3(vPosition));
+    vLight = uLightPosition - vec3(vPosition);
     vNormal = normalize(vec3(uNormalMatrix * vec4(aNormal, 1)));
 }

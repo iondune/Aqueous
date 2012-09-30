@@ -31,8 +31,8 @@ public:
 	void createVolumeFromGridValues(IColorMapper * ColorMapper);
 	//void createDataTreeFromRawValues();
 	void createGridDataFromRawValues(Range AcceptedValues = FullRange, double Deviations = 5.0, std::string const & Field = "o2");
-	void createPointCloudObjects(bool FromRaw, ISceneObject * RootParent, ISceneObject * FloorParent, SVector3f const DataScale, IColorMapper * ColorMapper, 
-		std::string const & xField = "x", std::string const & yField = "y", std::string const & zField = "z");
+	//void createPointCloudObjects(bool FromRaw, ISceneObject * RootParent, ISceneObject * FloorParent, SVector3f const DataScale, IColorMapper * ColorMapper, 
+	//	std::string const & xField = "x", std::string const & yField = "y", std::string const & zField = "z");
 
 	void writeToFile(std::string const & FileName);
 	void readFromFile(std::string const & FileName);

@@ -111,7 +111,10 @@
       <Filter>MainMenuState</Filter>
     </ClCompile>
     <ClCompile Include="CLoadState.cpp">
-      <Filter>Program Context\LoadContext</Filter>
+      <Filter>LoadState</Filter>
+    </ClCompile>
+    <ClCompile Include="CGlyphSceneObject.cpp">
+      <Filter>MainState\Glyphs</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -222,7 +225,10 @@
       <Filter>MainMenuState</Filter>
     </ClInclude>
     <ClInclude Include="CLoadState.h">
-      <Filter>Program Context\LoadContext</Filter>
+      <Filter>LoadState</Filter>
+    </ClInclude>
+    <ClInclude Include="CGlyphSceneObject.h">
+      <Filter>MainState\Glyphs</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -259,9 +265,6 @@
     <Filter Include="Program Context">
       <UniqueIdentifier>{621c01a1-e404-419c-9931-35d3cd1bc3fa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Program Context\LoadContext">
-      <UniqueIdentifier>{00619c69-b650-43a9-8d5f-0f1ceedc408e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="States">
       <UniqueIdentifier>{b8842830-fbf8-4b90-9023-fab075c53866}</UniqueIdentifier>
     </Filter>
@@ -282,6 +285,12 @@
     </Filter>
     <Filter Include="Program Context\Widgets\General">
       <UniqueIdentifier>{1c6e5b8c-9a45-4dcd-86e0-2488a8c1db8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LoadState">
+      <UniqueIdentifier>{00619c69-b650-43a9-8d5f-0f1ceedc408e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainState\Glyphs">
+      <UniqueIdentifier>{4cc29f91-8652-44ca-9c0d-899dda15b4a7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

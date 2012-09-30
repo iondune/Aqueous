@@ -7,6 +7,7 @@
 #include "SciDataManager.h"
 #include "CTerrainSceneObject.h"
 #include "CVolumeSceneObject.h"
+#include "CGlyphSceneObject.h"
 
 
 void CLoadStateEventHandler::OnFinish(Gwen::Controls::Base * Control)
@@ -153,15 +154,8 @@ void CLoadState::loadScene()
 	//Scene.LightObject->setScale(SVector3f(0.09f));
 
 	// Container Objects
-	Scene.PointCloudObject = new ISceneObject();
-	Scene.PointCloudObject->setVisible(false);
-	Scene.PointCloudObject->setCullingEnabled(false);
-	SceneManager->addSceneObject(Scene.PointCloudObject);
-
-	Scene.FloorSamplesObject = new ISceneObject();
-	Scene.FloorSamplesObject->setVisible(false);
-	Scene.FloorSamplesObject->setCullingEnabled(false);
-	SceneManager->addSceneObject(Scene.FloorSamplesObject);
+	Scene.GlyphSceneObject = new CGlyphSceneObject();
+	SceneManager->addSceneObject(Scene.GlyphSceneObject);
 
 	// Terrain
 	Scene.Terrain = new CTerrainSceneObject();
@@ -233,7 +227,7 @@ void CLoadState::loadScene()
 	//Scene.VolumeSceneObject->setScale(Adjuster * 3.f * vec3f(1.f, 0.8f / 3.f, 1.f));
 
 	//Scene.PointCloudObject->setScale(Adjuster * vec3f(3.f, 0.8f, 3.f));
-	Scene.PointCloudObject->setScale(vec3f(3.f, 1.5f, 3.f));
+	Scene.GlyphSceneObject->setScale(vec3f(3.f, 1.5f, 3.f));
 	Scene.VolumeSceneObject->setScale(vec3f(3.f, 1.5f, 3.f));
 }
 

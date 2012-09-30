@@ -7,8 +7,8 @@
 
 CProgramContext::SScene::SScene()
 	: Camera(0), OrbitCamera(0), Timer(0.f),
-	LightObject(0), SkyBox(0), Terrain(0), PointCloudObject(0), 
-	FloorSamplesObject(0), VolumeSceneObject(0), Cube(0)
+	LightObject(0), SkyBox(0), Terrain(0), GlyphSceneObject(0), 
+	VolumeSceneObject(0), Cube(0)
 {}
 
 CProgramContext::SShaders::SShaders()

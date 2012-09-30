@@ -1,3 +1,5 @@
+#if 0
+
 #include "SciDataManager.h"
 
 #include "CProgramContext.h"
@@ -60,3 +62,5 @@ void SciDataManager::createPointCloudObjects(bool FromRaw, ISceneObject * RootPa
 		//Instance->setMaterial(mat);
 	}
 }
+
+#endif

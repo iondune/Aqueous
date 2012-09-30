@@ -10,6 +10,7 @@
 
 class CTerrainSceneObject;
 class CVolumeSceneObject;
+class CGlyphSceneObject;
 
 class SciDataManager;
 
@@ -39,9 +40,8 @@ public:
 		// Terrain
 		CTerrainSceneObject * Terrain;
 		
-		// Holders for point cloud and grid glyph representations
-		ISceneObject * PointCloudObject;
-		ISceneObject * FloorSamplesObject;
+		// Glyph representation
+		CGlyphSceneObject * GlyphSceneObject;
 	
 		// Volume
 		CVolumeSceneObject * VolumeSceneObject;

@@ -3,6 +3,7 @@
 #include "CProgramContext.h"
 #include "CMainState.h"
 #include "CTerrainSceneObject.h"
+#include "CGlyphSceneObject.h"
 
 #include <Gwen/Controls.h>
 #include <Gwen/Controls/ComboBox.h>
@@ -51,7 +52,7 @@ void CGUIGlyphControlWidget::SetButtonTitle()
 {
 	CProgramContext * Context = & CProgramContext::get();
 	
-	if (Context->Scene.FloorSamplesObject->isVisible() || Context->Scene.PointCloudObject->isVisible())
+	if (Context->Scene.GlyphSceneObject->isVisible())
 		EnableButton->SetText("Disable Glyph Visual");
 	else
 		EnableButton->SetText("Enable Glyph Visual");
@@ -61,17 +62,15 @@ void CGUIGlyphControlWidget::OnToggleGlyphs(Gwen::Controls::Base * Control)
 {
 	CProgramContext * Context = & CProgramContext::get();
 
-	if (! Context->Scene.PointCloudObject->isVisible() && ! Context->Scene.FloorSamplesObject->isVisible())
+	if (! Context->Scene.GlyphSceneObject->isVisible())
 	{
-		Context->Scene.PointCloudObject->setVisible(true);
-		Context->Scene.FloorSamplesObject->setVisible(true);
+		Context->Scene.GlyphSceneObject->setVisible(true);
 		GUIContext->getConsole()->addMessage("Glyph View Enabled");
 		SetButtonTitle();
 	}
 	else
 	{
-		Context->Scene.PointCloudObject->setVisible(false);
-		Context->Scene.FloorSamplesObject->setVisible(false);
+		Context->Scene.GlyphSceneObject->setVisible(false);
 		GUIContext->getConsole()->addMessage("Glyph View Disabled");
 		SetButtonTitle();
 	}
@@ -80,14 +79,14 @@ void CGUIGlyphControlWidget::OnToggleGlyphs(Gwen::Controls::Base * Control)
 void CGUIGlyphControlWidget::OnSelectPoint(Gwen::Controls::Base * Control)
 {
 	CProgramContext * Context = & CProgramContext::get();
-	Context->Scene.PointCloudObject->setVisible(! Context->Scene.PointCloudObject->isVisible());
+	Context->Scene.GlyphSceneObject->setVisible(! Context->Scene.GlyphSceneObject->isVisible());
 	SetButtonTitle();
 }
 
 void CGUIGlyphControlWidget::OnSelectGrid(Gwen::Controls::Base * Control)
 {
 	CProgramContext * Context = & CProgramContext::get();
-	Context->Scene.FloorSamplesObject->setVisible(! Context->Scene.FloorSamplesObject->isVisible());
+	Context->Scene.GlyphSceneObject->setVisible(! Context->Scene.GlyphSceneObject->isVisible());
 	SetButtonTitle();
 }
 
