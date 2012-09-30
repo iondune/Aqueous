@@ -19,6 +19,7 @@ class CProgramContext : public Singleton<CProgramContext>
 
 public:
 
+	//! Hold scene parameters
 	struct SScene
 	{
 		// Cameras
@@ -40,7 +41,7 @@ public:
 		
 		// Holders for point cloud and grid glyph representations
 		ISceneObject * PointCloudObject;
-		ISceneObject * GridObject;
+		ISceneObject * FloorSamplesObject;
 	
 		// Volume
 		CVolumeSceneObject * VolumeSceneObject;
@@ -52,10 +53,7 @@ public:
 		SScene();
 	};
 
-	SScene Scene;
-	CGUIContext * GUIContext;
-	SciDataManager * DataManager;
-
+	//! Holds shaders
 	struct SShaders
 	{
 		CShader * Diffuse;
@@ -68,6 +66,10 @@ public:
 	};
 
 	SShaders Shaders;
+	SScene Scene;
+
+	CGUIContext * GUIContext;
+	SciDataManager * DataManager;
 
 	CProgramContext();
 	void run();

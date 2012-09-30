@@ -51,7 +51,7 @@ void CGUIGlyphControlWidget::SetButtonTitle()
 {
 	CProgramContext * Context = & CProgramContext::get();
 	
-	if (Context->Scene.GridObject->isVisible() || Context->Scene.PointCloudObject->isVisible())
+	if (Context->Scene.FloorSamplesObject->isVisible() || Context->Scene.PointCloudObject->isVisible())
 		EnableButton->SetText("Disable Glyph Visual");
 	else
 		EnableButton->SetText("Enable Glyph Visual");
@@ -61,17 +61,17 @@ void CGUIGlyphControlWidget::OnToggleGlyphs(Gwen::Controls::Base * Control)
 {
 	CProgramContext * Context = & CProgramContext::get();
 
-	if (! Context->Scene.PointCloudObject->isVisible() && ! Context->Scene.GridObject->isVisible())
+	if (! Context->Scene.PointCloudObject->isVisible() && ! Context->Scene.FloorSamplesObject->isVisible())
 	{
 		Context->Scene.PointCloudObject->setVisible(true);
-		Context->Scene.GridObject->setVisible(true);
+		Context->Scene.FloorSamplesObject->setVisible(true);
 		GUIContext->getConsole()->addMessage("Glyph View Enabled");
 		SetButtonTitle();
 	}
 	else
 	{
 		Context->Scene.PointCloudObject->setVisible(false);
-		Context->Scene.GridObject->setVisible(false);
+		Context->Scene.FloorSamplesObject->setVisible(false);
 		GUIContext->getConsole()->addMessage("Glyph View Disabled");
 		SetButtonTitle();
 	}
@@ -87,7 +87,7 @@ void CGUIGlyphControlWidget::OnSelectPoint(Gwen::Controls::Base * Control)
 void CGUIGlyphControlWidget::OnSelectGrid(Gwen::Controls::Base * Control)
 {
 	CProgramContext * Context = & CProgramContext::get();
-	Context->Scene.GridObject->setVisible(! Context->Scene.GridObject->isVisible());
+	Context->Scene.FloorSamplesObject->setVisible(! Context->Scene.FloorSamplesObject->isVisible());
 	SetButtonTitle();
 }
 

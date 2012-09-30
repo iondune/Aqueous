@@ -159,13 +159,13 @@ void CLoadState::loadScene()
 	// Container Objects
 	Scene.PointCloudObject = new ISceneObject();
 	Scene.PointCloudObject->setVisible(false);
-	SceneManager->addSceneObject(Scene.PointCloudObject);
 	Scene.PointCloudObject->setCullingEnabled(false);
+	SceneManager->addSceneObject(Scene.PointCloudObject);
 
-	Scene.GridObject = new ISceneObject();
-	Scene.GridObject->setVisible(false);
-	SceneManager->addSceneObject(Scene.GridObject);
-	Scene.GridObject->setCullingEnabled(false);
+	Scene.FloorSamplesObject = new ISceneObject();
+	Scene.FloorSamplesObject->setVisible(false);
+	Scene.FloorSamplesObject->setCullingEnabled(false);
+	SceneManager->addSceneObject(Scene.FloorSamplesObject);
 
 	// Terrain
 	Scene.Terrain = new CTerrainSceneObject();

@@ -4,7 +4,6 @@
 #include <ionScene.h>
 #include <ionWindow.h>
 
-#include "ContourConverter.h"
 #include "CProgramContext.h"
 
 
@@ -16,11 +15,6 @@ int main()
 	CTextureLoader::ImageDirectory = "Media/";
 	CMeshLoader::MeshDirectory = "Media/";
 	CShaderLoader::ShaderDirectory = "Shaders/";
-
-	// To Do : Separate application?
-		//ContourConverter c;
-		//c.convert();
-		//waitForUser();
 
 	CProgramContext & Context = CProgramContext::get();
 	Context.run();

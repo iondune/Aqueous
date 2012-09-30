@@ -14,7 +14,7 @@ void CDataLoadingThread::Run()
 
 	COxygenColorMapper o("d1");
 	CSpectrumColorMapper spec("Avg Oxy");
-	Context->DataManager->createPointCloudObjects(true, Context->Scene.PointCloudObject, Context->Scene.GridObject, SVector3f(-1.f, 1.f, 1.f), & spec,
+	Context->DataManager->createPointCloudObjects(true, Context->Scene.PointCloudObject, Context->Scene.FloorSamplesObject, SVector3f(-1.f, 1.f, 1.f), & spec,
 		"x", "DFS Depth (m)", "y");
 	LoadingWidget->setProgress(0.75f);
 

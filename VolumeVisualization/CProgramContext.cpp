@@ -7,7 +7,8 @@
 
 CProgramContext::SScene::SScene()
 	: Camera(0), OrbitCamera(0), Timer(0.f),
-	LightObject(0), SkyBox(0), Terrain(0)
+	LightObject(0), SkyBox(0), Terrain(0), PointCloudObject(0), 
+	FloorSamplesObject(0), VolumeSceneObject(0), Cube(0)
 {}
 
 CProgramContext::SShaders::SShaders()
@@ -24,15 +25,17 @@ void CProgramContext::run()
 	CApplication & Application = CApplication::get();
 	Application.init(SPosition2(1024, 768), "Underwater Volume Data Rendering");
 
+	Application.loadEngines();
+
 	// Create GUI Engine
 	std::cout << "GUI Engine is initializing..." << std::endl;
 	GUIContext = new CGUIContext();
 	GUIContext->init();
 
-	Application.loadEngines();
-
 	// Begin loading
 	CLoadState & LoadState = CLoadState::get();
 	Application.getStateManager().setState(& LoadState);
+
+	// Run program
 	Application.run();
 }
