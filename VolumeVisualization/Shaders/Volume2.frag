@@ -186,8 +186,8 @@ void main()
 		FrontPosition = CameraPosition.xyz;
 		if (Debug != 0)
 		{
-			gl_FragColor = vec4(0, 0, 1, 1);
-			return;
+			//gl_FragColor = vec4(0, 0, 1, 1);
+			//return;
 		}
 	}
 
@@ -222,9 +222,9 @@ void main()
 
 		if (Depth > CurrentDepth)
 		{
-			if (Debug != 0)
+			if (Debug == 1)
 			{
-				gl_FragColor = vec4(0, 1, 1, 1);
+				gl_FragColor = vec4(0, 0, 0, 1);
 				return;
 			}
 			break;
@@ -239,19 +239,19 @@ void main()
 		length_acc += delta_dir_len;
 		if (length_acc >= len || alpha_acc > 1.0)
 		{
-			if (Debug != 0)
+			if (Debug == 1)
 			{
-				gl_FragColor = vec4(1, 1, 0, 1);
+				gl_FragColor = vec4(1, 1, 1, 1);
 				return;
 			}
 			break; // terminate if opacity > 1 or the ray is outside the volume
 		}
 
-		if (i == 50 && Debug != 0)
+		/*if (i == 50 && Debug != 0)
 		{
 			gl_FragColor = vec4(1, 0, 1, 1);
 			return;
-		}
+		}*/
 	}
 
 
