@@ -168,8 +168,8 @@ void main()
 		FrontPosition = CameraPosition.xyz;
 		if (Debug != 0)
 		{
-			//gl_FragColor = vec4(1, 0, 0, 1);
-			//return;
+			gl_FragColor = vec4(1, 0, 0, 1);
+			return;
 		}
 	}
 	else if (rayAABBIntersect(CameraPosition.xyz, (BackPosition - vec3(0.5)) - CameraPosition.xyz, vec3(-0.5), vec3(0.5)))
@@ -177,8 +177,8 @@ void main()
 		FrontPosition = penter;
 		if (Debug != 0)
 		{
-			//gl_FragColor = vec4(0, 1, 0, 1);
-			//return;
+			gl_FragColor = vec4(0, 1, 0, 1);
+			return;
 		}
 	}
 	else
@@ -186,8 +186,8 @@ void main()
 		FrontPosition = CameraPosition.xyz;
 		if (Debug != 0)
 		{
-			//gl_FragColor = vec4(0, 0, 1, 1);
-			//return;
+			gl_FragColor = vec4(0, 0, 1, 1);
+			return;
 		}
 	}
 
@@ -213,22 +213,7 @@ void main()
 	for(int i = 0; i < 1000; i ++)
 	{
 		//vec4 color_sample = vec4(vec, 0.5);
-		vec4 ScreenCoords = vec4(vec, 1.0);
-		ScreenCoords -= vec4(0.5, 0.5, 0.5, 0.0);
-		ScreenCoords = uProjMatrix * uViewMatrix * uModelMatrix * ScreenCoords;
-		float Depth = ScreenCoords.z / ScreenCoords.w;
-		Depth += 1.0;
-		Depth /= 2.0;
-
-		if (Depth > CurrentDepth)
-		{
-			if (Debug == 1)
-			{
-				gl_FragColor = vec4(0, 0, 0, 1);
-				return;
-			}
-			break;
-		}
+		
 
 		vec4 color_sample = getColorSample(vec);
 		float alpha_sample = color_sample.a * stepsize * uAlphaIntensity;
@@ -237,12 +222,30 @@ void main()
 		alpha_acc += alpha_sample;
 		vec += delta_dir;
 		length_acc += delta_dir_len;
+
+
+		vec4 ScreenCoords = vec4(vec, 1.0);
+		ScreenCoords -= vec4(0.5, 0.5, 0.5, 0.0);
+		ScreenCoords = uProjMatrix * uViewMatrix * uModelMatrix * ScreenCoords;
+
+		float Depth = ScreenCoords.z / ScreenCoords.w;
+		Depth += 1.0;
+		Depth /= 2.0;
+
+		if (Depth > CurrentDepth)
+		{
+			//if (Debug == 1)
+			{
+				//gl_FragColor = vec4(0, 0, 0, 1);
+			}
+			break;
+		}
+
 		if (length_acc >= len || alpha_acc > 1.0)
 		{
-			if (Debug == 1)
+			//if (Debug == 1)
 			{
-				gl_FragColor = vec4(1, 1, 1, 1);
-				return;
+				//gl_FragColor = vec4(1, 1, 1, 1);
 			}
 			break; // terminate if opacity > 1 or the ray is outside the volume
 		}
