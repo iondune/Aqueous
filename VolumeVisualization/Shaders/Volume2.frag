@@ -3,7 +3,7 @@
 in vec3 vColor;
 in vec4 vPosition;
 
-out vec4 gl_FragColor;
+//out vec4 gl_FragColor;
 
 uniform sampler2D uBackPosition;
 uniform sampler3D uVolumeData;
@@ -18,6 +18,9 @@ uniform float uAlphaIntensity;
 
 uniform float stepsize;
 uniform sampler2D uDepthTexture;
+
+
+uniform int Debug;
 
 float enter;
 float Exit;
@@ -154,9 +157,6 @@ void main()
 
 	vec4 CameraPosition = inverse(uModelMatrix) * vec4(uCameraPosition, 1.0);
 
-
-	int Debug = 0;
-
 	// Calculate surface point
 	if (CameraPosition.x >= -0.5 && 
 		CameraPosition.y >= -0.5 && 
@@ -168,8 +168,8 @@ void main()
 		FrontPosition = CameraPosition.xyz;
 		if (Debug != 0)
 		{
-			gl_FragColor = vec4(1, 0, 0, 1);
-			return;
+			//gl_FragColor = vec4(1, 0, 0, 1);
+			//return;
 		}
 	}
 	else if (rayAABBIntersect(CameraPosition.xyz, (BackPosition - vec3(0.5)) - CameraPosition.xyz, vec3(-0.5), vec3(0.5)))
@@ -177,8 +177,8 @@ void main()
 		FrontPosition = penter;
 		if (Debug != 0)
 		{
-			gl_FragColor = vec4(0, 1, 0, 1);
-			return;
+			//gl_FragColor = vec4(0, 1, 0, 1);
+			//return;
 		}
 	}
 	else
@@ -208,6 +208,8 @@ void main()
 
 	float CurrentDepth = texture2D(uDepthTexture, texc).r;
 
+	
+
 	for(int i = 0; i < 1000; i ++)
 	{
 		//vec4 color_sample = vec4(vec, 0.5);
@@ -219,8 +221,14 @@ void main()
 		Depth /= 2.0;
 
 		if (Depth > CurrentDepth)
+		{
+			if (Debug != 0)
+			{
+				gl_FragColor = vec4(0, 1, 1, 1);
+				return;
+			}
 			break;
-
+		}
 
 		vec4 color_sample = getColorSample(vec);
 		float alpha_sample = color_sample.a * stepsize * uAlphaIntensity;
@@ -230,8 +238,22 @@ void main()
 		vec += delta_dir;
 		length_acc += delta_dir_len;
 		if (length_acc >= len || alpha_acc > 1.0)
+		{
+			if (Debug != 0)
+			{
+				gl_FragColor = vec4(1, 1, 0, 1);
+				return;
+			}
 			break; // terminate if opacity > 1 or the ray is outside the volume
+		}
+
+		if (i == 50 && Debug != 0)
+		{
+			gl_FragColor = vec4(1, 0, 1, 1);
+			return;
+		}
 	}
+
 
     gl_FragColor = col_acc;
 }

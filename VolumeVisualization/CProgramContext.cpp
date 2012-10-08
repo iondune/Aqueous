@@ -23,7 +23,7 @@ void CProgramContext::run()
 {
 	// Create Window
 	CApplication & Application = CApplication::get();
-	Application.init(SPosition2(1024, 768), "Underwater Volume Data Rendering");
+	Application.init(SPosition2(1600, 900), "Underwater Volume Data Rendering");
 
 	Application.loadEngines();
 

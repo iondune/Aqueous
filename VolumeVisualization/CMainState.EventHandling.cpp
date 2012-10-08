@@ -105,6 +105,12 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 
 		break;
 
+	case EKey::p:
+
+		if (! Event.Pressed)
+			Context->Scene.VolumeSceneObject->Control.Debug = ! Context->Scene.VolumeSceneObject->Control.Debug;
+		break;
+
 	/*case EKey::b:
 
 		if (! Event.Pressed)

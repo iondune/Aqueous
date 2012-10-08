@@ -213,6 +213,7 @@ bool CVolumeSceneObject::draw(IScene const * const Scene, smartPtr<IRenderPass> 
 				Context.uniform("uMinimumAlpha", Control.MinimumAlpha);
 				Context.uniform("uEmphasisLocation", Control.EmphasisLocation);
 				Context.uniform("stepsize", 1.f / Control.StepSize);
+				Context.uniform<s32>("Debug", Control.Debug ? 1 : 0);
 
 				Context.uniform("uCameraPosition", SceneManager.getActiveCamera()->getPosition());
 
