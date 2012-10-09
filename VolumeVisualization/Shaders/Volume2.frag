@@ -3,10 +3,10 @@
 in vec3 vColor;
 in vec4 vPosition;
 
-//out vec4 gl_FragColor;
+out vec4 outFragColor;
 
-uniform sampler2D uBackPosition;
 uniform sampler3D uVolumeData;
+uniform sampler2D uDepthTexture;
 
 uniform mat4 uModelMatrix;
 uniform mat4 uProjMatrix;
@@ -15,12 +15,14 @@ uniform mat4 uViewMatrix;
 uniform vec3 uCameraPosition;
 
 uniform float uAlphaIntensity;
+uniform float uStepSize;
+uniform int   uHighlightMode;
+uniform vec3  uSliceAxis;
+uniform float uLocalRange;
+uniform float uMinimumAlpha;
+uniform float uEmphasisLocation;
 
-uniform float stepsize;
-uniform sampler2D uDepthTexture;
-
-
-uniform int Debug;
+uniform int uDebugLevel;
 
 float enter;
 float Exit;
@@ -76,12 +78,6 @@ bool rayAABBIntersect(vec3 start, vec3 dir, vec3 Min, vec3 Max)
     pexit  = start + dir * Exit;
     return true;
 }
-
-uniform int uHighlightMode;
-uniform vec3 uSliceAxis;
-uniform float uLocalRange;
-uniform float uMinimumAlpha;
-uniform float uEmphasisLocation;
 
 vec4 getColorSample(vec3 coords)
 {
@@ -149,13 +145,11 @@ vec4 getColorSample(vec3 coords)
 
 void main()
 {
-	vec2 texc = ((vPosition.xy / vPosition.w) + 1.0) / 2.0;
-
 	vec3 BackPosition = vColor;
 
 	vec3 FrontPosition;
 
-	vec4 CameraPosition = inverse(uModelMatrix) * vec4(uCameraPosition, 1.0);
+	vec3 CameraPosition = (inverse(uModelMatrix) * vec4(uCameraPosition, 1.0)).xyz;
 
 	// Calculate surface point
 	if (CameraPosition.x >= -0.5 && 
@@ -165,40 +159,57 @@ void main()
 		CameraPosition.y <=  0.5 && 
 		CameraPosition.z <=  0.5)
 	{
-		FrontPosition = CameraPosition.xyz;
-		if (Debug != 0)
+		FrontPosition = CameraPosition + vec3(0.5);
+		/*if (uDebugLevel != 0)
 		{
-			gl_FragColor = vec4(1, 0, 0, 1);
+			outFragColor = vec4(1, 0, 0, 1);
 			return;
-		}
-	}
-	else if (rayAABBIntersect(CameraPosition.xyz, (BackPosition - vec3(0.5)) - CameraPosition.xyz, vec3(-0.5), vec3(0.5)))
-	{
-		FrontPosition = penter;
-		if (Debug != 0)
-		{
-			gl_FragColor = vec4(0, 1, 0, 1);
-			return;
-		}
+		}*/
 	}
 	else
 	{
-		FrontPosition = CameraPosition.xyz;
-		if (Debug != 0)
+		//FrontPosition.x = BackPosition.x + 1.0 / (CameraPosition.y - BackPosition.y) * (CameraPosition.x - BackPosition.x);
+		//FrontPosition.y = BackPosition.y + 1.0 / (CameraPosition.z - BackPosition.z) * (CameraPosition.y - BackPosition.y);
+		//FrontPosition.z = BackPosition.z + 1.0 / (CameraPosition.x - BackPosition.x) * (CameraPosition.z - BackPosition.z);
+		if (uDebugLevel == 0)
 		{
-			gl_FragColor = vec4(0, 0, 1, 1);
-			return;
+			FrontPosition = CameraPosition + vec3(0.5);
+			vec3 InternalVector = FrontPosition - BackPosition;
+			float MaxLength = max(max(abs(InternalVector.x), abs(InternalVector.y)), abs(InternalVector.z));
+			InternalVector /= MaxLength;
+			FrontPosition = InternalVector + BackPosition;
+		}
+		else
+		{
+			if (rayAABBIntersect(CameraPosition.xyz, (BackPosition - vec3(0.5)) - CameraPosition.xyz, vec3(-0.5), vec3(0.5)))
+			{
+				FrontPosition = penter;
+				/*if (uDebugLevel != 0)
+				{
+					outFragColor = vec4(0, 1, 0, 1);
+					return;
+				}*/
+			}
+			else
+			{
+				FrontPosition = CameraPosition.xyz;
+				/*if (uDebugLevel != 0)
+				{
+					outFragColor = vec4(0, 0, 1, 1);
+					return;
+				}*/
+			}
+			FrontPosition += vec3(0.5);
 		}
 	}
 
-	FrontPosition += vec3(0.5);
 
 	vec3 start = FrontPosition;
 	vec3 dir = BackPosition - FrontPosition;
 
 	float len = length(dir.xyz); // the length from front to back is calculated and used to terminate the ray
 	vec3 norm_dir = normalize(dir);
-	float delta = stepsize;
+	float delta = uStepSize;
 	vec3 delta_dir = norm_dir * delta;
 	float delta_dir_len = length(delta_dir);
 	vec3 vec = start;
@@ -206,9 +217,7 @@ void main()
 	float alpha_acc = 0;
 	float length_acc = 0;
 
-	float CurrentDepth = texture2D(uDepthTexture, texc).r;
-
-	
+	float CurrentDepth = texture2D(uDepthTexture, ((vPosition.xy / vPosition.w) + 1.0) / 2.0).r;
 
 	for(int i = 0; i < 1000; i ++)
 	{
@@ -216,7 +225,7 @@ void main()
 		
 
 		vec4 color_sample = getColorSample(vec);
-		float alpha_sample = color_sample.a * stepsize * uAlphaIntensity;
+		float alpha_sample = color_sample.a * uStepSize * uAlphaIntensity;
 		col_acc   += (1.0 - alpha_acc) * color_sample * alpha_sample * 3;
 		//col_acc   += color_sample;
 		alpha_acc += alpha_sample;
@@ -258,5 +267,5 @@ void main()
 	}
 
 
-    gl_FragColor = col_acc;
+    outFragColor = vec4(FrontPosition, 1.0) + 0.0001* col_acc;
 }
