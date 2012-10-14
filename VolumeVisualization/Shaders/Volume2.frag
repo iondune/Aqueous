@@ -24,61 +24,6 @@ uniform float uEmphasisLocation;
 
 uniform int uDebugLevel;
 
-float enter;
-float Exit;
-
-
-bool rayAABBIntersect1D(float start, float dir, float Min, float Max)
-{
-    // ray parallel to direction
-    if(abs(dir) < 1.0E-6) 
-        return (start >= Min && start <= Max);
-
-    // intersection params
-    float t0, t1;
-    t0 = (Min - start) / dir;
-    t1 = (Max - start) / dir;
-
-    // sort intersections
-    if(t0 > t1)
-    {
-    	float temp = t0;
-    	t0 = t1;
-    	t1 = temp;
-    }
-
-    // check if intervals are disjoint
-    if(t0 > Exit || t1 < enter) 
-        return false;
-
-    // reduce interval
-    if(t0 > enter) enter = t0;
-    if(t1 < Exit) Exit = t1;
-    return true;
-}
-
-vec3 penter = vec3(0.0);
-vec3 pexit;
-
-bool rayAABBIntersect(vec3 start, vec3 dir, vec3 Min, vec3 Max)
-{
-    enter = 0.0;
-    Exit = 1.0;
-
-    if(!rayAABBIntersect1D(start.x, dir.x, Min.x, Max.x))
-        return false;
-
-    if(!rayAABBIntersect1D(start.y, dir.y, Min.y, Max.y))
-        return false;
-    
-    if(!rayAABBIntersect1D(start.z, dir.z, Min.z, Max.z))
-        return false;
-
-    penter = start + dir * enter;
-    pexit  = start + dir * Exit;
-    return true;
-}
-
 vec4 getColorSample(vec3 coords)
 {
 	vec4 sample = texture(uVolumeData, coords);
@@ -88,9 +33,6 @@ vec4 getColorSample(vec3 coords)
 	default:
 	case 0:
 		sample.a = 0.8;
-		break;
-
-	case 3:
 		break;
 
 	case 1:
@@ -138,6 +80,9 @@ vec4 getColorSample(vec3 coords)
 			sample.a = uMinimumAlpha;
 		}
 		break;
+
+	case 3:
+		break;
 	}
 
 	return sample;
@@ -147,11 +92,10 @@ void main()
 {
 	vec3 BackPosition = vColor;
 
-	vec3 FrontPosition;
-
-	vec3 CameraPosition = (inverse(uModelMatrix) * vec4(uCameraPosition, 1.0)).xyz;
-
 	// Calculate surface point
+	vec3 FrontPosition;
+	vec3 CameraPosition = (inverse(uModelMatrix) * vec4(uCameraPosition, 1.0)).xyz;
+	
 	if (CameraPosition.x >= -0.5 && 
 		CameraPosition.y >= -0.5 && 
 		CameraPosition.z >= -0.5 && 
@@ -160,75 +104,26 @@ void main()
 		CameraPosition.z <=  0.5)
 	{
 		FrontPosition = CameraPosition + vec3(0.5);
-		/*if (uDebugLevel != 0)
-		{
-			outFragColor = vec4(1, 0, 0, 1);
-			return;
-		}*/
 	}
 	else
 	{
-		//FrontPosition.x = BackPosition.x + 1.0 / (CameraPosition.y - BackPosition.y) * (CameraPosition.x - BackPosition.x);
-		//FrontPosition.y = BackPosition.y + 1.0 / (CameraPosition.z - BackPosition.z) * (CameraPosition.y - BackPosition.y);
-		//FrontPosition.z = BackPosition.z + 1.0 / (CameraPosition.x - BackPosition.x) * (CameraPosition.z - BackPosition.z);
-		if (uDebugLevel == 0)
+		FrontPosition = CameraPosition + vec3(0.5);
+		vec3 InternalVector = FrontPosition - BackPosition;
+		for (int i = 0; i < 3; ++ i)
 		{
-			FrontPosition = CameraPosition + vec3(0.5);
-			vec3 InternalVector = FrontPosition - BackPosition;
-			if (FrontPosition.x > 1.0 || FrontPosition.x < 0.0)
+			if (FrontPosition[i] > 1.0 || FrontPosition[i] < 0.0)
 			{
-				if (InternalVector[0] > 0.0)
-					InternalVector *= (1 - BackPosition.x) / InternalVector.x;  //(InternalVector.x + BackPosition.x);
+				if (InternalVector[i] > 0.0)
+					InternalVector *= (1 - BackPosition[i]) / InternalVector[i];
 				else
-					InternalVector *= BackPosition.x / -InternalVector.x;
+					InternalVector *= BackPosition[i] / -InternalVector[i];
 				FrontPosition = BackPosition + InternalVector;
 			}
-			if (FrontPosition.y > 1.0 || FrontPosition.y < 0.0)
-			{
-				if (InternalVector.y > 0.0)
-					InternalVector *= (1 - BackPosition.y) / InternalVector.y;  //InternalVector /= (InternalVector.y + BackPosition.y);
-				else
-					InternalVector *= BackPosition.y / -InternalVector.y;
-				FrontPosition = BackPosition + InternalVector;
-			}
-			if (FrontPosition.z > 1.0 || FrontPosition.z < 0.0)
-			{
-				if (InternalVector.z > 0.0)
-					InternalVector *= (1 - BackPosition.z) / InternalVector.z; //InternalVector /= (InternalVector.z + BackPosition.z);
-				else
-					InternalVector *= BackPosition.z / -InternalVector.z;
-				FrontPosition = BackPosition + InternalVector;
-			}
-			//float MaxLength = max(max(abs(InternalVector.x), abs(InternalVector.y)), abs(InternalVector.z));
-			//InternalVector /= MaxLength;
-			FrontPosition = InternalVector + BackPosition;
-		}
-		else
-		{
-			if (rayAABBIntersect(CameraPosition.xyz, (BackPosition - vec3(0.5)) - CameraPosition.xyz, vec3(-0.5), vec3(0.5)))
-			{
-				FrontPosition = penter;
-				/*if (uDebugLevel != 0)
-				{
-					outFragColor = vec4(0, 1, 0, 1);
-					return;
-				}*/
-			}
-			else
-			{
-				FrontPosition = CameraPosition.xyz;
-				/*if (uDebugLevel != 0)
-				{
-					outFragColor = vec4(0, 0, 1, 1);
-					return;
-				}*/
-			}
-			FrontPosition += vec3(0.5);
 		}
 	}
 
 
-	vec3 start = FrontPosition;
+	vec3 Start = FrontPosition;
 	vec3 dir = BackPosition - FrontPosition;
 
 	float len = length(dir.xyz); // the length from front to back is calculated and used to terminate the ray
@@ -236,7 +131,7 @@ void main()
 	float delta = uStepSize;
 	vec3 delta_dir = norm_dir * delta;
 	float delta_dir_len = length(delta_dir);
-	vec3 vec = start;
+	vec3 vec = Start;
 	vec4 col_acc = vec4(0,0,0,0);
 	float alpha_acc = 0;
 	float length_acc = 0;
@@ -290,6 +185,8 @@ void main()
 		}*/
 	}
 
-
-    outFragColor = vec4(FrontPosition, 1.0) + 0.0001* col_acc;
+	if (uDebugLevel == 1)
+		outFragColor = vec4(FrontPosition, 1.0);
+	else
+		outFragColor = col_acc;
 }
