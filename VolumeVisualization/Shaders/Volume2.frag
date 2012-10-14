@@ -175,17 +175,29 @@ void main()
 		{
 			FrontPosition = CameraPosition + vec3(0.5);
 			vec3 InternalVector = FrontPosition - BackPosition;
-			if ((InternalVector.x + BackPosition.x) > 1.0)
+			if (FrontPosition.x > 1.0 || FrontPosition.x < 0.0)
 			{
-				InternalVector *= (1 - BackPosition.x) / InternalVector.x;  //(InternalVector.x + BackPosition.x);
+				if (InternalVector[0] > 0.0)
+					InternalVector *= (1 - BackPosition.x) / InternalVector.x;  //(InternalVector.x + BackPosition.x);
+				else
+					InternalVector *= BackPosition.x / -InternalVector.x;
+				FrontPosition = BackPosition + InternalVector;
 			}
-			if ((InternalVector.y + BackPosition.y) > 1.0)
+			if (FrontPosition.y > 1.0 || FrontPosition.y < 0.0)
 			{
-				InternalVector *= (1 - BackPosition.y) / InternalVector.y;  //InternalVector /= (InternalVector.y + BackPosition.y);
+				if (InternalVector.y > 0.0)
+					InternalVector *= (1 - BackPosition.y) / InternalVector.y;  //InternalVector /= (InternalVector.y + BackPosition.y);
+				else
+					InternalVector *= BackPosition.y / -InternalVector.y;
+				FrontPosition = BackPosition + InternalVector;
 			}
-			if ((InternalVector.z + BackPosition.z) > 1.0)
+			if (FrontPosition.z > 1.0 || FrontPosition.z < 0.0)
 			{
-				InternalVector *= (1 - BackPosition.z) / InternalVector.z; //InternalVector /= (InternalVector.z + BackPosition.z);
+				if (InternalVector.z > 0.0)
+					InternalVector *= (1 - BackPosition.z) / InternalVector.z; //InternalVector /= (InternalVector.z + BackPosition.z);
+				else
+					InternalVector *= BackPosition.z / -InternalVector.z;
+				FrontPosition = BackPosition + InternalVector;
 			}
 			//float MaxLength = max(max(abs(InternalVector.x), abs(InternalVector.y)), abs(InternalVector.z));
 			//InternalVector /= MaxLength;
