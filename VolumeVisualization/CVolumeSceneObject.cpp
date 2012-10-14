@@ -119,64 +119,7 @@ bool CVolumeSceneObject::draw(IScene const * const Scene, smartPtr<IRenderPass> 
 	if (VolumeCube->MeshBuffers[0]->IndexBuffer.isDirty())
 		VolumeCube->MeshBuffers[0]->IndexBuffer.syncData();
 	
-	if (ShowVolume == 1)
-	{
-		glEnable(GL_CULL_FACE);
-
-		glCullFace(GL_FRONT);
-		{
-			CShaderContext Context(* CShaderLoader::loadShader("Simple"));
-			Context.bindBufferObject("aColor", VolumeCube->MeshBuffers[0]->ColorBuffer.getHandle(), 3);
-			Context.bindBufferObject("aPosition", VolumeCube->MeshBuffers[0]->PositionBuffer.getHandle(), 3);
-
-			Context.uniform("uModelMatrix", Transformation.getGLMMat4());
-			Context.uniform("uProjMatrix", SceneManager.getActiveCamera()->getProjectionMatrix());
-			Context.uniform("uViewMatrix", SceneManager.getActiveCamera()->getViewMatrix());
-			Context.bindIndexBufferObject(VolumeCube->MeshBuffers[0]->IndexBuffer.getHandle());
-
-			VolumeTarget->bind();
-			glDrawElements(GL_TRIANGLES, VolumeCube->MeshBuffers[0]->IndexBuffer.getElements().size(), GL_UNSIGNED_SHORT, 0);
-			glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		}
-
-
-		glCullFace(GL_BACK);
-		{
-			CShaderContext Context(* CShaderLoader::loadShader("Volume"));
-			Context.bindBufferObject("aColor", VolumeCube->MeshBuffers[0]->ColorBuffer.getHandle(), 3);
-			Context.bindBufferObject("aPosition", VolumeCube->MeshBuffers[0]->PositionBuffer.getHandle(), 3);
-
-			Context.uniform("uModelMatrix", Transformation.getGLMMat4());
-			Context.uniform("uProjMatrix", SceneManager.getActiveCamera()->getProjectionMatrix());
-			Context.uniform("uViewMatrix", SceneManager.getActiveCamera()->getViewMatrix());
-			Context.uniform("uAlphaIntensity", Control.AlphaIntensity);
-
-			Context.bindTexture("uBackPosition", VolumeBuffer->getTextureHandle());
-			glEnable(GL_TEXTURE_3D);
-			glActiveTexture(GL_TEXTURE0 + 1); // Select Active Texture Slot
-			glBindTexture(GL_TEXTURE_3D, VolumeHandle); // Bind Texture Handle
-			Context.uniform("uVolumeData", 1);
-
-			Context.bindIndexBufferObject(VolumeCube->MeshBuffers[0]->IndexBuffer.getHandle());
-
-			glEnable(GL_BLEND);
-			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-			glDrawElements(GL_TRIANGLES, VolumeCube->MeshBuffers[0]->IndexBuffer.getElements().size(), GL_UNSIGNED_SHORT, 0);
-
-			
-			glActiveTexture(GL_TEXTURE0 + 0);
-			glBindTexture(GL_TEXTURE_2D, 0);
-			
-			glActiveTexture(GL_TEXTURE0 + 1);
-			glBindTexture(GL_TEXTURE_3D, 0);
-
-			glDisable(GL_BLEND);
-			glDisable(GL_TEXTURE_3D);
-		}
-
-		glDisable(GL_CULL_FACE);
-	}
-	else if (ShowVolume == 2)
+	if (ShowVolume == 2)
 	{
 		glEnable(GL_CULL_FACE);
 		glDisable(GL_DEPTH_TEST);
@@ -186,26 +129,31 @@ bool CVolumeSceneObject::draw(IScene const * const Scene, smartPtr<IRenderPass> 
 			if (Shader)
 			{
 				CShaderContext Context(* Shader);
+
+				// Attributes
 				Context.bindBufferObject("aColor", VolumeCube->MeshBuffers[0]->ColorBuffer.getHandle(), 3);
 				Context.bindBufferObject("aPosition", VolumeCube->MeshBuffers[0]->PositionBuffer.getHandle(), 3);
+				Context.bindIndexBufferObject(VolumeCube->MeshBuffers[0]->IndexBuffer.getHandle());
 
+				// Matrices
 				Context.uniform("uModelMatrix", Transformation.getGLMMat4());
+				Context.uniform("uInvModelMatrix", glm::inverse(Transformation.getGLMMat4()));
 				Context.uniform("uProjMatrix", SceneManager.getActiveCamera()->getProjectionMatrix());
 				Context.uniform("uViewMatrix", SceneManager.getActiveCamera()->getViewMatrix());
 
+				// Volume texture
 				glEnable(GL_TEXTURE_3D);
 				glActiveTexture(GL_TEXTURE0 + 0); // Select Active Texture Slot
 				glBindTexture(GL_TEXTURE_3D, VolumeHandle); // Bind Texture Handle
+				Context.uniform("uVolumeData", 0);
+
+				// Scene depth
 				glEnable(GL_TEXTURE_2D);
 				glActiveTexture(GL_TEXTURE0 + 1); // Select Active Texture Slot
 				glBindTexture(GL_TEXTURE_2D, CApplication::get().getSceneManager().getSceneDepthTexture()->getTextureHandle()); // Bind Texture Handle
-
-
-
-
 				Context.uniform("uDepthTexture", 1);
-				Context.uniform("uVolumeData", 0);
 
+				// Control parameters
 				Context.uniform("uAlphaIntensity", Control.AlphaIntensity);
 				Context.uniform("uHighlightMode", Control.Mode);
 				Context.uniform("uSliceAxis", Control.SliceAxis);
@@ -215,25 +163,28 @@ bool CVolumeSceneObject::draw(IScene const * const Scene, smartPtr<IRenderPass> 
 				Context.uniform("uStepSize", 1.f / Control.StepSize);
 				Context.uniform<s32>("uDebugLevel", Control.Debug ? 1 : 0);
 
+				// Camera position for determining front face
 				Context.uniform("uCameraPosition", SceneManager.getActiveCamera()->getPosition());
-
-				Context.bindIndexBufferObject(VolumeCube->MeshBuffers[0]->IndexBuffer.getHandle());
 			
+				// Transparency
 				glEnable(GL_BLEND);
 				glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+				// Draw
 				glDrawElements(GL_TRIANGLES, VolumeCube->MeshBuffers[0]->IndexBuffer.getElements().size(), GL_UNSIGNED_SHORT, 0);
 
-			
+				// Unbind textures
 				glActiveTexture(GL_TEXTURE1);
 				glBindTexture(GL_TEXTURE_2D, 0);
 				glActiveTexture(GL_TEXTURE0);
 				glBindTexture(GL_TEXTURE_3D, 0);
+
+				// OpenGL state
 				glDisable(GL_BLEND);
 				glDisable(GL_TEXTURE_3D);
 				glDisable(GL_TEXTURE_2D);
 			}
 		}
-
 		glDisable(GL_CULL_FACE);
 		glEnable(GL_DEPTH_TEST);
 	}

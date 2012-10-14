@@ -9,6 +9,7 @@ uniform sampler3D uVolumeData;
 uniform sampler2D uDepthTexture;
 
 uniform mat4 uModelMatrix;
+uniform mat4 uInvModelMatrix;
 uniform mat4 uProjMatrix;
 uniform mat4 uViewMatrix;
 
@@ -94,7 +95,7 @@ void main()
 
 	// Calculate surface point
 	vec3 FrontPosition;
-	vec3 CameraPosition = (inverse(uModelMatrix) * vec4(uCameraPosition, 1.0)).xyz;
+	vec3 CameraPosition = (uInvModelMatrix * vec4(uCameraPosition, 1.0)).xyz;
 	
 	if (CameraPosition.x >= -0.5 && 
 		CameraPosition.y >= -0.5 && 
@@ -122,71 +123,68 @@ void main()
 		}
 	}
 
-
-	vec3 Start = FrontPosition;
-	vec3 dir = BackPosition - FrontPosition;
-
-	float len = length(dir.xyz); // the length from front to back is calculated and used to terminate the ray
-	vec3 norm_dir = normalize(dir);
-	float delta = uStepSize;
-	vec3 delta_dir = norm_dir * delta;
-	float delta_dir_len = length(delta_dir);
-	vec3 vec = Start;
-	vec4 col_acc = vec4(0,0,0,0);
-	float alpha_acc = 0;
-	float length_acc = 0;
+	vec3 Direction = BackPosition - FrontPosition;
+	float Length = length(Direction);
+	
+	Direction = normalize(Direction);
+	vec3 DirectionStep = Direction * uStepSize;
+	
+	vec3 Iterator = FrontPosition;
+	
+	vec4 ColorAccumulator = vec4(0.0);
+	float AlphaAccumulator = 0.0;
+	float LengthAccumulator = 0.0;
 
 	float CurrentDepth = texture2D(uDepthTexture, ((vPosition.xy / vPosition.w) + 1.0) / 2.0).r;
 
 	for(int i = 0; i < 1000; i ++)
 	{
-		//vec4 color_sample = vec4(vec, 0.5);
+		// Generate samples
+		vec4 ColorSample = getColorSample(Iterator);
+		float AlphaSample = ColorSample.a * uStepSize * uAlphaIntensity;
 		
-
-		vec4 color_sample = getColorSample(vec);
-		float alpha_sample = color_sample.a * uStepSize * uAlphaIntensity;
-		col_acc   += (1.0 - alpha_acc) * color_sample * alpha_sample * 3;
-		//col_acc   += color_sample;
-		alpha_acc += alpha_sample;
-		vec += delta_dir;
-		length_acc += delta_dir_len;
-
-
-		vec4 ScreenCoords = vec4(vec, 1.0);
-		ScreenCoords -= vec4(0.5, 0.5, 0.5, 0.0);
+		// Accumulate
+		ColorAccumulator += (1.0 - AlphaAccumulator) * ColorSample * AlphaSample * 3;
+		AlphaAccumulator += AlphaSample;
+		LengthAccumulator += length(DirectionStep);
+		
+		// Advance iterator
+		Iterator += DirectionStep;
+		
+		// Calculate depth
+		vec4 ScreenCoords = vec4(Iterator, 1.0);
+		ScreenCoords -= vec4(vec3(0.5), 0.0);
 		ScreenCoords = uProjMatrix * uViewMatrix * uModelMatrix * ScreenCoords;
 
 		float Depth = ScreenCoords.z / ScreenCoords.w;
 		Depth += 1.0;
 		Depth /= 2.0;
 
+		// Depth test
 		if (Depth > CurrentDepth)
 		{
-			//if (Debug == 1)
+			if (uDebugLevel == 2)
 			{
-				//gl_FragColor = vec4(0, 0, 0, 1);
+				outFragColor = vec4(0, 0, 0, 1);
+				return;
 			}
 			break;
 		}
 
-		if (length_acc >= len || alpha_acc > 1.0)
+		// Accumulation test
+		if (LengthAccumulator >= Length || AlphaAccumulator > 1.0)
 		{
-			//if (Debug == 1)
+			if (uDebugLevel == 2)
 			{
-				//gl_FragColor = vec4(1, 1, 1, 1);
+				outFragColor = vec4(1, 1, 1, 1);
+				return;
 			}
-			break; // terminate if opacity > 1 or the ray is outside the volume
+			break;
 		}
-
-		/*if (i == 50 && Debug != 0)
-		{
-			gl_FragColor = vec4(1, 0, 1, 1);
-			return;
-		}*/
 	}
 
 	if (uDebugLevel == 1)
 		outFragColor = vec4(FrontPosition, 1.0);
 	else
-		outFragColor = col_acc;
+		outFragColor = ColorAccumulator;
 }
