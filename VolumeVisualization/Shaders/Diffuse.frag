@@ -21,6 +21,6 @@ void main()
     float Radius = 30.0;
     vec3 vDiffuse = Distance > Radius ? vec3(0) : uMaterial.DiffuseColor * clamp(dot(normalize(vNormal), normalize(vLight)), 0.0, 1.0) * (1.0 - Distance / Radius);
 
-    gl_FragData[0] = vec4(vDiffuse + uMaterial.AmbientColor, 1);
-    gl_FragData[1] = vec4((vScreenPosition.z / vScreenPosition.w + 1.0) / 2.0, 0.0, 0.0, 1.0);
+    gl_FragColor = vec4(vDiffuse + uMaterial.AmbientColor, 1);
+    //gl_FragData[1] = vec4((vScreenPosition.z / vScreenPosition.w + 1.0) / 2.0, 0.0, 0.0, 1.0);
 }
