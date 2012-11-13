@@ -4,15 +4,12 @@
 #ifdef _WIN32
 
 // OpenGL Libraries
-#pragma comment(lib, "glew32.lib")
 #pragma comment(lib, "OpenGL32.lib")
 #pragma comment(lib, "glu32.lib")
 
 // ionEngine Libraries
-//#pragma comment(lib, "ionCore.lib")
 #pragma comment(lib, "ionWindow.lib")
 #pragma comment(lib, "ionScene.lib")
-//#pragma comment(lib, "ionGUI.lib")
 
 // SFML Libraries
 #ifdef _DEBUG
@@ -26,7 +23,6 @@
 #endif
 
 // GWEN Libraries
-#pragma comment(lib, "FreeImage.lib")
 #ifdef _DEBUG
 #pragma comment(lib, "GWENd-Renderer-SFML.lib")
 #pragma comment(lib, "gwend_static.lib")

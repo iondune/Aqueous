@@ -2,6 +2,7 @@
 
 #include <Gwen/Renderers/SFML.h>
 #include <Gwen/Skins/TexturedBase.h>
+#include <Gwen/Skins/Simple.h>
 #include <Gwen/Controls.h>
 
 
@@ -28,6 +29,11 @@ void CGUIManager::init()
 	skin->SetRender(pRenderer);
 	skin->Init("DefaultSkin.png");
 	skin->SetDefaultFont(L"OpenSans.ttf", 14.f);
+
+	Gwen::Skin::Simple * simpleSkin = new Gwen::Skin::Simple();
+	simpleSkin->SetRender(pRenderer);
+	simpleSkin->SetDefaultFont(L"OpenSans.ttf", 14.f);
+
 	LargeFont = LoadFont(L"OpenSans.ttf", 40.f);
 	MediumFont = LoadFont(L"OpenSans.ttf", 32.f);
 	RegularFont = LoadFont(L"OpenSans.ttf", 14.f);

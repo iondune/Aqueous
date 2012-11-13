@@ -7,16 +7,13 @@ class CProgramContext;
 class CGUILoadingWidget;
 
 
-class CDataLoadingThread : public sf::Thread
+class CDataLoadingThread
 {
-
-private:
-	
-	virtual void Run();
 
 public:
 
 	CDataLoadingThread();
+	void Run();
 
 	CProgramContext * Context;
 	std::string FileName;

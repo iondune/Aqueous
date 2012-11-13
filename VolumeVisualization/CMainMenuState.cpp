@@ -25,7 +25,7 @@ void CMainMenuState::end()
 
 void CMainMenuState::OnRenderStart(float const Elapsed)
 {
-	sf::Sleep(0.05f);
+	sf::sleep(sf::seconds(0.05f));
 
 	Context->GUIContext->draw(Elapsed, true);
 	CApplication::get().swapBuffers();
@@ -61,7 +61,8 @@ void CMainMenuState::loadData(std::string const & FileName)
 
 	DataSetName = FileName;
 
-	Thread->Launch();
+	sf::Thread * sThread = new sf::Thread(& CDataLoadingThread::Run, Thread);
+	sThread->launch();
 }
 
 void CMainMenuState::createDataSet()
