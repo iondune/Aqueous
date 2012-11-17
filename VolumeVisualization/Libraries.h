@@ -24,8 +24,8 @@
 
 // GWEN Libraries
 #ifdef _DEBUG
-#pragma comment(lib, "GWENd-Renderer-SFML.lib")
-#pragma comment(lib, "gwend_static.lib")
+#pragma comment(lib, "GWENd-Renderer-SFMLd.lib")
+#pragma comment(lib, "gwen_staticd.lib")
 #else
 #pragma comment(lib, "GWEN-Renderer-SFML.lib")
 #pragma comment(lib, "gwen_static.lib")

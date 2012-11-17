@@ -84,7 +84,7 @@ void CGUIMainMenuWidget::OnSelectDataSet(Gwen::Controls::Base * Control)
 	}
 	else
 	{
-		std::wstring const & FileName = ((Gwen::Controls::Button *) Control)->GetText();
+		std::string const & FileName = ((Gwen::Controls::Button *) Control)->GetText().Get();
 		CMainMenuState::get().loadData(std::string(FileName.begin(), FileName.end()));
 	}
 }

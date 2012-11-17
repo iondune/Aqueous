@@ -31,7 +31,7 @@ CGUIVolumeControlWidget::CGUIVolumeControlWidget()
 		Gwen::Controls::HorizontalSlider * EmphasisSlider = new Gwen::Controls::HorizontalSlider(Window);
 		EmphasisSlider->SetBounds(10, 30 + 45, 300, 40);
 		EmphasisSlider->SetRange(0.f, 1.f);
-		EmphasisSlider->SetValue(0.5f);
+		EmphasisSlider->SetFloatValue(0.5f);
 
 		SliderLabel = new Gwen::Controls::Label(Window);
 		SliderLabel->SetFont(GUIManager->getRegularFont());
@@ -42,7 +42,7 @@ CGUIVolumeControlWidget::CGUIVolumeControlWidget()
 		IntensitySlider = new Gwen::Controls::HorizontalSlider(Window);
 		IntensitySlider->SetBounds(10, 90 + 45, 300, 40);
 		IntensitySlider->SetRange(0.5f, 10.f);
-		IntensitySlider->SetValue(1.f);
+		IntensitySlider->SetFloatValue(1.f);
 
 		SliderLabel = new Gwen::Controls::Label(Window);
 		SliderLabel->SetFont(GUIManager->getRegularFont());
@@ -53,7 +53,7 @@ CGUIVolumeControlWidget::CGUIVolumeControlWidget()
 		Gwen::Controls::HorizontalSlider * LocalRangeSlider = new Gwen::Controls::HorizontalSlider(Window);
 		LocalRangeSlider->SetBounds(10, 150 + 45, 300, 40);
 		LocalRangeSlider->SetRange(0.05f, 0.5f);
-		LocalRangeSlider->SetValue(0.1f);
+		LocalRangeSlider->SetFloatValue(0.1f);
 
 		SliderLabel = new Gwen::Controls::Label(Window);
 		SliderLabel->SetFont(GUIManager->getRegularFont());
@@ -64,7 +64,7 @@ CGUIVolumeControlWidget::CGUIVolumeControlWidget()
 		Gwen::Controls::HorizontalSlider * MinimumAlphaSlider = new Gwen::Controls::HorizontalSlider(Window);
 		MinimumAlphaSlider->SetBounds(10, 210 + 45, 300, 40);
 		MinimumAlphaSlider->SetRange(0.0f, 0.5f);
-		MinimumAlphaSlider->SetValue(0.1f);
+		MinimumAlphaSlider->SetFloatValue(0.1f);
 
 		// Wire Up Events
 		EmphasisSlider->onValueChanged.Add(		this,	& CGUIVolumeControlWidget::OnEmphasisSlider);
@@ -119,7 +119,7 @@ CGUIVolumeControlWidget::CGUIVolumeControlWidget()
 		Gwen::Controls::HorizontalSlider * StepSizeSlider = new Gwen::Controls::HorizontalSlider(Window);
 		StepSizeSlider->SetBounds(10, 485, 300, 40);
 		StepSizeSlider->SetRange(10.f, 300.f);
-		StepSizeSlider->SetValue(VolumeControl.StepSize);
+		StepSizeSlider->SetFloatValue(VolumeControl.StepSize);
 
 		// Wire Up Events
 		pButton2->onPress.Add(				this,	& CGUIVolumeControlWidget::OnResetAlpha);
@@ -140,33 +140,33 @@ void CGUIVolumeControlWidget::resetVolumeRange()
 void CGUIVolumeControlWidget::OnEmphasisSlider(Gwen::Controls::Base * Control)
 {
 	Gwen::Controls::Slider * Bar = (Gwen::Controls::Slider *) Control;
-	VolumeControl.EmphasisLocation = Bar->GetValue();
+	VolumeControl.EmphasisLocation = Bar->GetFloatValue();
 	resetVolumeRange();
 }
 
 void CGUIVolumeControlWidget::OnIntensitySlider(Gwen::Controls::Base * Control)
 {
 	Gwen::Controls::Slider * Bar = (Gwen::Controls::Slider *) Control;
-	VolumeControl.AlphaIntensity = Bar->GetValue();
+	VolumeControl.AlphaIntensity = Bar->GetFloatValue();
 }
 
 void CGUIVolumeControlWidget::OnMinimumAlphaSlider(Gwen::Controls::Base * Control)
 {
 	Gwen::Controls::Slider * Bar = (Gwen::Controls::Slider *) Control;
-	VolumeControl.MinimumAlpha = Bar->GetValue();
+	VolumeControl.MinimumAlpha = Bar->GetFloatValue();
 }
 
 void CGUIVolumeControlWidget::OnLocalRangeSlider(Gwen::Controls::Base * Control)
 {
 	Gwen::Controls::Slider * Bar = (Gwen::Controls::Slider *) Control;
-	VolumeControl.LocalRange = Bar->GetValue();
+	VolumeControl.LocalRange = Bar->GetFloatValue();
 	resetVolumeRange();
 }
 
 void CGUIVolumeControlWidget::OnStepSizeSlider(Gwen::Controls::Base * Control)
 {
 	Gwen::Controls::Slider * Bar = (Gwen::Controls::Slider *) Control;
-	VolumeControl.StepSize = Bar->GetValue();
+	VolumeControl.StepSize = Bar->GetFloatValue();
 }
 
 void CGUIVolumeControlWidget::OnResetVolume(Gwen::Controls::Base * Control)
@@ -176,7 +176,7 @@ void CGUIVolumeControlWidget::OnResetVolume(Gwen::Controls::Base * Control)
 
 void CGUIVolumeControlWidget::OnResetAlpha(Gwen::Controls::Base * Control)
 {
-	IntensitySlider->SetValue(1.f);
+	IntensitySlider->SetFloatValue(1.f);
 	VolumeControl.AlphaIntensity = 1.f;
 }
 

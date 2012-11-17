@@ -25,13 +25,11 @@ void CGUIManager::init()
 {
 	Gwen::Renderer::SFML * pRenderer = new Gwen::Renderer::SFML(* Application.App);
 
-	Gwen::Skin::TexturedBase * skin = new Gwen::Skin::TexturedBase();
-	skin->SetRender(pRenderer);
+	Gwen::Skin::TexturedBase * skin = new Gwen::Skin::TexturedBase(pRenderer);
 	skin->Init("DefaultSkin.png");
 	skin->SetDefaultFont(L"OpenSans.ttf", 14.f);
 
-	Gwen::Skin::Simple * simpleSkin = new Gwen::Skin::Simple();
-	simpleSkin->SetRender(pRenderer);
+	Gwen::Skin::Simple * simpleSkin = new Gwen::Skin::Simple(pRenderer);
 	simpleSkin->SetDefaultFont(L"OpenSans.ttf", 14.f);
 
 	LargeFont = LoadFont(L"OpenSans.ttf", 40.f);
