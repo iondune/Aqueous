@@ -6,6 +6,7 @@
 // OpenGL Libraries
 #pragma comment(lib, "OpenGL32.lib")
 #pragma comment(lib, "glu32.lib")
+#pragma comment(lib, "glew.lib")
 
 // ionEngine Libraries
 #pragma comment(lib, "ionWindow.lib")
@@ -13,13 +14,13 @@
 
 // SFML Libraries
 #ifdef _DEBUG
-#pragma comment(lib, "sfml-system-s-d.lib")
-#pragma comment(lib, "sfml-window-s-d.lib")
-#pragma comment(lib, "sfml-graphics-s-d.lib")
+#pragma comment(lib, "sfml-system-d.lib")
+#pragma comment(lib, "sfml-window-d.lib")
+#pragma comment(lib, "sfml-graphics-d.lib")
 #else
-#pragma comment(lib, "sfml-system-s.lib")
-#pragma comment(lib, "sfml-window-s.lib")
-#pragma comment(lib, "sfml-graphics-s.lib")
+#pragma comment(lib, "sfml-system.lib")
+#pragma comment(lib, "sfml-window.lib")
+#pragma comment(lib, "sfml-graphics.lib")
 #endif
 
 // GWEN Libraries

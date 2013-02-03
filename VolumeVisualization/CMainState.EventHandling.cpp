@@ -123,7 +123,7 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 		break;*/
 
 		// To Do : Camera control buttons
-	/*case EKey::m:
+	case EKey::h:
 		if (! Event.Pressed)
 		{
 			SceneManager->setActiveCamera(Context->Scene.OrbitCamera);
@@ -135,7 +135,7 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 		{
 			SceneManager->setActiveCamera(Context->Scene.Camera);
 		}
-		break;*/
+		break;
 
 		// To Do : Toolbox for scene repositioning
     /*case EKey::r:
