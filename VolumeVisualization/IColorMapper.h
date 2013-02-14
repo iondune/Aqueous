@@ -4,7 +4,7 @@
 #include <ionScene.h>
 #include <ionCore.h>
 
-#include "SciDataSet.h"
+#include "SciDataCollection.h"
 #include "SciDataTree.h"
 
 class IColorMapper
@@ -13,7 +13,7 @@ class IColorMapper
 public:
 
 	virtual SColorAf const getColor(SciData const & d) = 0;
-	virtual void preProcessValues(SciDataSet & s) = 0;
+	virtual void preProcessValues(SciDataCollection & s) = 0;
 
 };
 

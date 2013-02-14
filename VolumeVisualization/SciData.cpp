@@ -1,23 +1,15 @@
 #include "SciData.h"
 
-#include "SciDataSet.h"
+#include "SciDataCollection.h"
 
 
 SciData::SciData()
 	: InternalIndex(-1), ContainingSet(0)
 {}
 
-SciData::SciData(double x, double y, double z)
-	: Location(x, y, z), InternalIndex(-1), ContainingSet(0)
-{}
-
 SciData::~SciData()
 {}
 
-Vector3 const & SciData::getLocation() const
-{
-	return Location;
-}
 
 double const SciData::getField(std::string const & Field) const
 {

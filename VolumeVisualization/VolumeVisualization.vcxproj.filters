@@ -20,9 +20,6 @@
     <ClCompile Include="CMainState.MouseTracking.cpp">
       <Filter>MainState</Filter>
     </ClCompile>
-    <ClCompile Include="SciDataSet.cpp">
-      <Filter>MainState\Data Management\Base Objects</Filter>
-    </ClCompile>
     <ClCompile Include="SciDataTree.cpp">
       <Filter>MainState\Data Management\Base Objects</Filter>
     </ClCompile>
@@ -116,6 +113,12 @@
     <ClCompile Include="CGlyphSceneObject.cpp">
       <Filter>MainState\Glyphs</Filter>
     </ClCompile>
+    <ClCompile Include="Range.cpp">
+      <Filter>MainState\Data Management\Base Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="SciDataCollection.cpp">
+      <Filter>MainState\Data Management\Base Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CMainState.h">
@@ -123,9 +126,6 @@
     </ClInclude>
     <ClInclude Include="CGwenEventForwarder.h">
       <Filter>Utilities\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="SciDataSet.h">
-      <Filter>MainState\Data Management\Base Objects</Filter>
     </ClInclude>
     <ClInclude Include="SciData.h">
       <Filter>MainState\Data Management\Base Objects</Filter>
@@ -229,6 +229,12 @@
     </ClInclude>
     <ClInclude Include="CGlyphSceneObject.h">
       <Filter>MainState\Glyphs</Filter>
+    </ClInclude>
+    <ClInclude Include="Range.h">
+      <Filter>MainState\Data Management\Base Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="SciDataCollection.h">
+      <Filter>MainState\Data Management\Base Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -104,6 +104,7 @@
     <ClCompile Include=".\SciDataParserSimpleTXT.cpp" />
     <ClCompile Include=".\SciDataParserGrid1.cpp" />
     <ClCompile Include=".\SciDataParserCTD.cpp" />
+    <ClCompile Include="Range.cpp" />
     <ClCompile Include="RBFInterpolator\newmat.cpp" />
     <ClCompile Include="RBFInterpolator\RBFInterpolator.cpp" />
     <ClCompile Include="SciData.cpp" />
@@ -113,7 +114,7 @@
     <ClCompile Include="SciDataManager.Volume.cpp" />
     <ClCompile Include="SciDataManager.File.cpp" />
     <ClCompile Include="SciDataParserCSV.cpp" />
-    <ClCompile Include="SciDataSet.cpp" />
+    <ClCompile Include="SciDataCollection.cpp" />
     <ClCompile Include="SciDataTree.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -148,12 +149,13 @@
     <ClInclude Include="IColorMapper.h" />
     <ClInclude Include="Libraries.h" />
     <ClInclude Include="ProgressPrinter.h" />
+    <ClInclude Include="Range.h" />
     <ClInclude Include="RBFInterpolator\newmat.h" />
     <ClInclude Include="RBFInterpolator\RBFInterpolator.h" />
     <ClInclude Include="SciData.h" />
     <ClInclude Include="SciDataIterator.h" />
     <ClInclude Include="SciDataManager.h" />
-    <ClInclude Include="SciDataSet.h" />
+    <ClInclude Include="SciDataCollection.h" />
     <ClInclude Include="SciDataTree.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

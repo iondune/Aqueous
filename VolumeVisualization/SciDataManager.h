@@ -5,7 +5,7 @@
 #include <ionScene.h>
 #include <ionCore.h>
 
-#include "SciDataSet.h"
+#include "SciDataCollection.h"
 #include "SciDataTree.h"
 
 #include "IColorMapper.h"
@@ -20,8 +20,8 @@ public:
 		: VolumeHandle(0), GridDimensions(0), DataTree(0)
 	{}
 
-	SciDataSet RawValues;
-	SciDataSet GridValues;
+	SciDataCollection RawValues;
+	SciDataCollection GridValues;
 
 	unsigned int VolumeHandle;
 	ISciTreeNode * DataTree;

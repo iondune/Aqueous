@@ -9,7 +9,7 @@
 void SciDataManager::createPointCloudObjects(bool FromRaw, ISceneObject * RootParent, ISceneObject * FloorParent, SVector3f const DataScale, IColorMapper * ColorMapper, 
 		std::string const & xField, std::string const & yField, std::string const & zField)
 {
-	SciDataSet & DataSet = FromRaw ? RawValues : GridValues;
+	SciDataCollection & DataSet = FromRaw ? RawValues : GridValues;
 
 	ColorMapper->preProcessValues(DataSet);
 

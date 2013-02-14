@@ -4,7 +4,7 @@
 #include <ionScene.h>
 #include <ionCore.h>
 
-#include "SciDataSet.h"
+#include "SciDataCollection.h"
 #include "SciDataTree.h"
 
 #include "IColorMapper.h"
@@ -61,7 +61,7 @@ public:
 		return SColorAf(Color[0], Color[1], Color[2], Color[3]);
 	}
 
-	virtual void preProcessValues(SciDataSet & s)
+	virtual void preProcessValues(SciDataCollection & s)
 	{
 	}
 
