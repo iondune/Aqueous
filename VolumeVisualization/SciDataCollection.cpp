@@ -137,9 +137,9 @@ void SciDataCollection::writeToFile(std::ofstream & File)
 
 	for (auto it = Values.begin(); it != Values.end(); ++ it)
 	{
-		File.write((char *) & it->Location.X, sizeof(f64));
-		File.write((char *) & it->Location.Y, sizeof(f64));
-		File.write((char *) & it->Location.Z, sizeof(f64));
+		File.write((char *) & it->getPosition().X, sizeof(f64));
+		File.write((char *) & it->getPosition().Y, sizeof(f64));
+		File.write((char *) & it->getPosition().Z, sizeof(f64));
 		File.write((char *) & it->InternalIndex, sizeof(u32));
 	}
 }
@@ -178,11 +178,11 @@ void SciDataCollection::readFromFile(std::ifstream & File)
 
 	for (u32 i = 0; i < ValueCount; ++ i)
 	{
-		SciData d;
-		d.ContainingSet = this;
-		File.read((char *) & d.Location.X, sizeof(f64));
-		File.read((char *) & d.Location.Y, sizeof(f64));
-		File.read((char *) & d.Location.Z, sizeof(f64));
+		SciData d(*this);
+		double dummy;
+		File.read((char *) & dummy, sizeof(f64));
+		File.read((char *) & dummy, sizeof(f64));
+		File.read((char *) & dummy, sizeof(f64));
 		File.read((char *) & d.InternalIndex, sizeof(u32));
 		Values.push_back(d);
 	}

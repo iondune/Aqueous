@@ -21,12 +21,14 @@ private:
 
 public:
 
-	SciData();
+	SciData(SciDataCollection & containingSet);
 	~SciData();
 
 	double const getField(std::string const & Field) const;
 	double & getField(std::string const & Field);
 	double & addField(std::string const & Field);
+
+	vec3d const getPosition() const;
 
 };
 

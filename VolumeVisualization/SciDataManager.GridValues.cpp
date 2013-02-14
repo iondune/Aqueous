@@ -51,8 +51,10 @@ void SciDataManager::createGridDataFromRawValues(Range AcceptedValues, double De
 	for (int k = 0; k < Size; ++ k)
 	for (int i = 0; i < Size; ++ i)
 	{
-		SciData d(i / (float) Size, j / (float) Size, k / (float) Size);
-		GridValues.addData(d);
+		SciData d(GridValues);
 		d.addField(Field) = rbfi.interpolate(i / (float) Size, j / (float) Size, k / (float) Size);
+		d.addField("x") = i / (float) Size;
+		d.addField("y") = j / (float) Size;
+		d.addField("z") = k / (float) Size;
 	}
 }

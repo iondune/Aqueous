@@ -54,8 +54,7 @@ void SciDataParserCSV::load(std::string const & FileName)
 				std::cerr << "Mismatched row size at row " << Manager->RawValues.size() << ", found " << Row.size() << " but expected " << Fields.size() << std::endl;
 			u32 Length = std::min(Row.size(), Fields.size());
 
-			SciData d;
-			Manager->RawValues.addData(d);
+			SciData d(Manager->RawValues);
 			for (u32 i = 0; i < Length; ++ i)
 				d.addField(Fields[i]) = Row[i];
 		}
@@ -171,8 +170,7 @@ void SciDataParserCSV::mergedLoad(std::string const & FileName1, std::string con
 
 				if (std::abs((int) (Field1 - Field2)) <= 2)
 				{
-					SciData d;
-					Manager->RawValues.addData(d);
+					SciData d(Manager->RawValues);
 					for (s32 i = 0; i < Length1; ++ i)
 						d.addField(Fields1[i]) = string_to_double(Row1[i]);
 					for (s32 i = 0; i < Length2; ++ i)

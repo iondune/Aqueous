@@ -51,11 +51,13 @@ void SciDataParserSimpleTXT::load(std::string const &data)
 		}
 
 		// push scidata into list
-		SciData d(x, -y, z);
-		Manager->RawValues.addData(d);
+		SciData d(Manager->RawValues);
 		d.addField("o2") = O2;
 		d.addField("temp") = temp;
 		d.addField("d1") = d1;
+		d.addField("x") = x;
+		d.addField("y") = -y; // Flip y from depth to coordinate
+		d.addField("z") = z;
 
 		// move onto next line
 		tok = strtok(NULL, "\n");

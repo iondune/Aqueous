@@ -3,9 +3,11 @@
 #include "SciDataCollection.h"
 
 
-SciData::SciData()
-	: InternalIndex(-1), ContainingSet(0)
-{}
+SciData::SciData(SciDataCollection & containingSet)
+	: InternalIndex(-1), ContainingSet(&containingSet)
+{
+	ContainingSet->addData(*this);
+}
 
 SciData::~SciData()
 {}
@@ -41,4 +43,12 @@ double & SciData::addField(std::string const & Field)
 	}
 	
 	return it->second[InternalIndex];
+}
+
+vec3d const SciData::getPosition() const
+{
+	return vec3d(
+		getField(ContainingSet->Traits.PositionXField),
+		getField(ContainingSet->Traits.PositionYField),
+		getField(ContainingSet->Traits.PositionZField));
 }

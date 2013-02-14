@@ -63,8 +63,7 @@ void SciDataParserGrid1::load(std::string const &data)
 			{
 				int index = k + j * Dimensions[0] + i * Dimensions[1] * Dimensions[0];
 
-				SciData d(pointXData[index], -pointZData[index], pointYData[index]);
-				Manager->GridValues.addData(d);
+				SciData d(Manager->GridValues);
 				d.addField("o1") = pointO1Data[index];
 				d.addField("o2") = pointO2Data[index];
 				d.addField("o3") = pointO3Data[index];
@@ -73,6 +72,9 @@ void SciDataParserGrid1::load(std::string const &data)
 				d.addField("var2") = var2Data[index];
 				d.addField("var3") = var3Data[index];
 				d.addField("var4") = var4Data[index];
+				d.addField("x") = pointXData[index];
+				d.addField("y") = -pointZData[index]; // Flip depth
+				d.addField("z") = pointYData[index];
 			}
 		}
 	}

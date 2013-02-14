@@ -80,7 +80,7 @@ void SubdivideNode(ISciTreeNode * & Node)
 	{
 		for (int i = 0; i < EO_COUNT; ++ i)
 		{
-			if (NewRoot->Children[i]->Extents.isPointInside(it->getLocation()))
+			if (NewRoot->Children[i]->Extents.isPointInside(it->getPosition()))
 				((CSciTreeLeaf *)NewRoot->Children[i])->Datums.push_back(* it);
 		}
 	}
