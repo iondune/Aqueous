@@ -179,11 +179,14 @@ void SciDataCollection::readFromFile(std::ifstream & File)
 	for (u32 i = 0; i < ValueCount; ++ i)
 	{
 		SciData d(*this);
-		double dummy;
-		File.read((char *) & dummy, sizeof(f64));
-		File.read((char *) & dummy, sizeof(f64));
-		File.read((char *) & dummy, sizeof(f64));
+		double X, Y, Z;
+		File.read((char *) & X, sizeof(f64));
+		File.read((char *) & Y, sizeof(f64));
+		File.read((char *) & Z, sizeof(f64));
 		File.read((char *) & d.InternalIndex, sizeof(u32));
+		d.addField("x") = X;
+		d.addField("y") = Y;
+		d.addField("z") = Z;
 		Values.push_back(d);
 	}
 }
