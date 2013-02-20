@@ -9,6 +9,12 @@ SciData::SciData(SciDataCollection & containingSet)
 	ContainingSet->addData(*this);
 }
 
+SciData::SciData(SciDataCollection & containingSet, s32 const internalIndex)
+	: InternalIndex(internalIndex), ContainingSet(&containingSet)
+{
+	ContainingSet->addData(*this, InternalIndex);
+}
+
 SciData::~SciData()
 {}
 

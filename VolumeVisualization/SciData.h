@@ -20,8 +20,9 @@ private:
 	SciDataCollection * ContainingSet;
 
 public:
-
+	
 	SciData(SciDataCollection & containingSet);
+	SciData(SciDataCollection & containingSet, s32 const internalIndex);
 	~SciData();
 
 	double const getField(std::string const & Field) const;

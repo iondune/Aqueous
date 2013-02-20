@@ -10,7 +10,18 @@ void SciDataCollection::addData(SciData & Data)
 	Values.push_back(Data);
 
 	for (auto it = Fields.begin(); it != Fields.end(); ++ it)
-		it->second.resize(DataCounter, 0);
+		it->second.resize(max(DataCounter, it->second.size()), 0);
+}
+
+void SciDataCollection::addData(SciData & Data, s32 const internalIndex)
+{
+	Data.InternalIndex = internalIndex;
+	DataCounter = max<u32>(internalIndex+1, DataCounter);
+	Data.ContainingSet = this;
+	Values.push_back(Data);
+
+	for (auto it = Fields.begin(); it != Fields.end(); ++ it)
+		it->second.resize(max(DataCounter, it->second.size()), 0);
 }
 
 void SciDataCollection::rescaleData(vec3d const & v)
@@ -178,15 +189,18 @@ void SciDataCollection::readFromFile(std::ifstream & File)
 
 	for (u32 i = 0; i < ValueCount; ++ i)
 	{
-		SciData d(*this);
+		s32 InternalIndex;
 		double X, Y, Z;
+
 		File.read((char *) & X, sizeof(f64));
 		File.read((char *) & Y, sizeof(f64));
 		File.read((char *) & Z, sizeof(f64));
-		File.read((char *) & d.InternalIndex, sizeof(u32));
-		d.addField("x") = X;
-		d.addField("y") = Y;
-		d.addField("z") = Z;
-		Values.push_back(d);
+		File.read((char *) & InternalIndex, sizeof(s32));
+
+		SciData d(*this, InternalIndex);
+		//d.addField("x") = X;
+		//d.addField("y") = Y;
+		//d.addField("z") = Z;
+		//Values.push_back(d);
 	}
 }

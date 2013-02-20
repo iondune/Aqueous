@@ -23,8 +23,11 @@ public:
 	SciDataCollection()
 		: DataCounter(0)
 	{}
-
+	
 	void addData(SciData & Data);
+
+	//! Assumes internalIndex is valid, used for file IO
+	void addData(SciData & Data, s32 const internalIndex);
 
 	//! Clamp x, y, z to volume range [0,v]
 	void rescaleData(vec3d const & v);
