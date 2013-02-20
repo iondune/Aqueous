@@ -40,9 +40,9 @@ void SciDataParserGrid1::load(std::string const &data)
 	}
 
 	int const * Dimensions = mxGetDimensions(pointO1);
-	Manager->GridDimensions = new int[3];
-	for (int i = 0; i < 3; ++ i)
-		Manager->GridDimensions[i] = Dimensions[i];
+	vec3i Dims;
+	Dims.set(Dimensions);
+	Manager->setGridDimensions(Dims);
 	double * pointO1Data = mxGetPr(pointO1);
 	double * pointO2Data = mxGetPr(pointO2);
 	double * pointO3Data = mxGetPr(pointO3);
@@ -63,7 +63,7 @@ void SciDataParserGrid1::load(std::string const &data)
 			{
 				int index = k + j * Dimensions[0] + i * Dimensions[1] * Dimensions[0];
 
-				SciData d(Manager->GridValues);
+				SciData d(Manager->getGridValues());
 				d.addField("o1") = pointO1Data[index];
 				d.addField("o2") = pointO2Data[index];
 				d.addField("o3") = pointO3Data[index];

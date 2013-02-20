@@ -51,7 +51,7 @@ void SciDataParserSimpleTXT::load(std::string const &data)
 		}
 
 		// push scidata into list
-		SciData d(Manager->RawValues);
+		SciData d(Manager->getRawValues());
 		d.addField("o2") = O2;
 		d.addField("temp") = temp;
 		d.addField("d1") = d1;

@@ -34,7 +34,7 @@ public:
 
 	vec3d const getDataScale();
 
-	//! Clamp field to range
+	//! Clamp field values to [0,scale]
 	void normalizeField(std::string const & Field, double const Scale = 1);
 
 	//! \param OutlierCutoff Values outside of this many standard deviations are excluded

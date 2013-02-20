@@ -30,7 +30,7 @@ void CGlyphSceneObject::loadGlyphs(SciDataManager * DataManager, IColorMapper * 
 {
 	Glyphs.clear();
 
-	SciDataCollection & DataSet = DataManager->RawValues;
+	SciDataCollection & DataSet = DataManager->getRawValues();
 	ColorMapper->preProcessValues(DataSet);
 
 	Range XRange = DataSet.getValueRange(xField, 5.0);

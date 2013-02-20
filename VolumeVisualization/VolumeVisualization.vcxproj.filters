@@ -20,9 +20,6 @@
     <ClCompile Include="CMainState.MouseTracking.cpp">
       <Filter>MainState</Filter>
     </ClCompile>
-    <ClCompile Include="SciDataTree.cpp">
-      <Filter>MainState\Data Management\Base Objects</Filter>
-    </ClCompile>
     <ClCompile Include="CTerrainSceneObject.cpp">
       <Filter>MainState\Terrain</Filter>
     </ClCompile>
@@ -36,12 +33,6 @@
       <Filter>Utilities\GUI</Filter>
     </ClCompile>
     <ClCompile Include="SciDataManager.GridValues.cpp">
-      <Filter>MainState\Data Management</Filter>
-    </ClCompile>
-    <ClCompile Include="SciDataManager.PointCloud.cpp">
-      <Filter>MainState\Data Management</Filter>
-    </ClCompile>
-    <ClCompile Include="SciDataManager.Tree.cpp">
       <Filter>MainState\Data Management</Filter>
     </ClCompile>
     <ClCompile Include="SciDataManager.Volume.cpp">
@@ -119,6 +110,9 @@
     <ClCompile Include="SciDataCollection.cpp">
       <Filter>MainState\Data Management\Base Objects</Filter>
     </ClCompile>
+    <ClCompile Include="SciDataManager.cpp">
+      <Filter>MainState\Data Management</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CMainState.h">
@@ -131,9 +125,6 @@
       <Filter>MainState\Data Management\Base Objects</Filter>
     </ClInclude>
     <ClInclude Include="SciDataIterator.h">
-      <Filter>MainState\Data Management\Base Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="SciDataTree.h">
       <Filter>MainState\Data Management\Base Objects</Filter>
     </ClInclude>
     <ClInclude Include="IColorMapper.h">

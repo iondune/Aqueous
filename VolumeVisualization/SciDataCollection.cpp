@@ -10,7 +10,7 @@ void SciDataCollection::addData(SciData & Data)
 	Values.push_back(Data);
 
 	for (auto it = Fields.begin(); it != Fields.end(); ++ it)
-		it->second.resize(max(DataCounter, it->second.size()), 0);
+		it->second.resize(max(DataCounter, it->second.size()), 0); // Make sure field has enough space to accomodate data
 }
 
 void SciDataCollection::addData(SciData & Data, s32 const internalIndex)
@@ -21,7 +21,7 @@ void SciDataCollection::addData(SciData & Data, s32 const internalIndex)
 	Values.push_back(Data);
 
 	for (auto it = Fields.begin(); it != Fields.end(); ++ it)
-		it->second.resize(max(DataCounter, it->second.size()), 0);
+		it->second.resize(max(DataCounter, it->second.size()), 0); // Make sure field has enough space to accomodate data
 }
 
 void SciDataCollection::rescaleData(vec3d const & v)
@@ -55,6 +55,7 @@ Range SciDataCollection::getValueRange(std::string const & Field, double const O
 {
 	std::vector<SciData> const & DataCopy = Values;
 
+	// Calculate mean
 	double Mean = 0;
 	unsigned int Count = DataCopy.size();
 	for (auto it = DataCopy.begin(); it != DataCopy.end(); ++ it)
@@ -67,17 +68,18 @@ Range SciDataCollection::getValueRange(std::string const & Field, double const O
 	}
 	Mean /= (double) (Count);
 
+	// Calculate standard absolute value deviation
 	double StdDeviation = 0;
 	for (auto it = DataCopy.begin(); it != DataCopy.end(); ++ it)
 	{
 		double const v = it->getField(Field);
 		if (inRange(v, acceptedValues) && v == v)
-			StdDeviation += /*sq*/abs(v - Mean);
+			StdDeviation += abs(v - Mean);
 	}
 	StdDeviation /= (double) (Count - 1);
 
+	// Find min/max
 	double Min = std::numeric_limits<double>::max(), Max = -std::numeric_limits<double>::max();
-
 	for (auto it = DataCopy.begin(); it != DataCopy.end(); ++ it)
 	{
 		double const v = it->getField(Field);
@@ -192,15 +194,12 @@ void SciDataCollection::readFromFile(std::ifstream & File)
 		s32 InternalIndex;
 		double X, Y, Z;
 
+		// Need to read these for backwards compatibility
 		File.read((char *) & X, sizeof(f64));
 		File.read((char *) & Y, sizeof(f64));
 		File.read((char *) & Z, sizeof(f64));
 		File.read((char *) & InternalIndex, sizeof(s32));
 
 		SciData d(*this, InternalIndex);
-		//d.addField("x") = X;
-		//d.addField("y") = Y;
-		//d.addField("z") = Z;
-		//Values.push_back(d);
 	}
 }

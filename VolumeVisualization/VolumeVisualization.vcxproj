@@ -108,14 +108,12 @@
     <ClCompile Include="RBFInterpolator\newmat.cpp" />
     <ClCompile Include="RBFInterpolator\RBFInterpolator.cpp" />
     <ClCompile Include="SciData.cpp" />
-    <ClCompile Include="SciDataManager.Tree.cpp" />
+    <ClCompile Include="SciDataManager.cpp" />
     <ClCompile Include="SciDataManager.GridValues.cpp" />
-    <ClCompile Include="SciDataManager.PointCloud.cpp" />
     <ClCompile Include="SciDataManager.Volume.cpp" />
     <ClCompile Include="SciDataManager.File.cpp" />
     <ClCompile Include="SciDataParserCSV.cpp" />
     <ClCompile Include="SciDataCollection.cpp" />
-    <ClCompile Include="SciDataTree.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CDataLoadingThread.h" />
@@ -156,7 +154,6 @@
     <ClInclude Include="SciDataIterator.h" />
     <ClInclude Include="SciDataManager.h" />
     <ClInclude Include="SciDataCollection.h" />
-    <ClInclude Include="SciDataTree.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

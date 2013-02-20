@@ -6,41 +6,53 @@
 #include <ionCore.h>
 
 #include "SciDataCollection.h"
-#include "SciDataTree.h"
-
 #include "IColorMapper.h"
 
 
 class SciDataManager
 {
 
-public:
-
-	SciDataManager()
-		: VolumeHandle(0), GridDimensions(0), DataTree(0)
-	{}
+	friend class SciDataParser;
 
 	SciDataCollection RawValues;
 	SciDataCollection GridValues;
 
 	unsigned int VolumeHandle;
-	ISciTreeNode * DataTree;
 
-	int * GridDimensions;
+	SVector3u GridDimensions;
 
+public:
+
+	SciDataManager()
+		: VolumeHandle(0), GridDimensions(0)
+	{}
+
+	//! Created OpenGL 3d texture using GridValues data collection
 	void createVolumeFromGridValues(IColorMapper * ColorMapper);
-	//void createDataTreeFromRawValues();
+
+	//! Interpolate grid data using RBFI
 	void createGridDataFromRawValues(Range AcceptedValues = FullRange, double Deviations = 5.0, std::string const & Field = "o2");
-	//void createPointCloudObjects(bool FromRaw, ISceneObject * RootParent, ISceneObject * FloorParent, SVector3f const DataScale, IColorMapper * ColorMapper, 
-	//	std::string const & xField = "x", std::string const & yField = "y", std::string const & zField = "z");
 
 	void writeToFile(std::string const & FileName);
 	void readFromFile(std::string const & FileName);
 
+	//! Calculate volume of water at a given field value
 	f64 const getGridVolume(std::string const & Field, f64 const Value, f64 const Range, int const Mode = 0) const;
+
+	//! Write volume map images (meta-analysis of getGridVolume)
 	void produceVolumeMaps();
 
-	friend class SciDataParser;
+	
+	SciDataCollection & getRawValues();
+	SciDataCollection & getGridValues();
+
+	SciDataCollection const & getRawValues() const;
+	SciDataCollection const & getGridValues() const;
+
+	unsigned int const getVolumeHandle() const;
+	
+	SVector3u const & getGridDimensions() const;
+	void setGridDimensions(SVector3u const & gridDimensions);
 
 };
 

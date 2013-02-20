@@ -141,7 +141,7 @@ void SciDataParserCTD::load(std::string const &data)
 			double Depth = Data[j + 86 * Dimensions[0]];
 			double Salinty = Data[j + 95 * Dimensions[0]];
 
-			SciData d(Manager->RawValues);
+			SciData d(Manager->getRawValues());
 			d.addField("salinity") = Salinty;
 			d.addField("x") = Lat;
 			d.addField("y") = Depth;

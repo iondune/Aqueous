@@ -6,7 +6,6 @@
 void SciDataManager::createGridDataFromRawValues(Range AcceptedValues, double Deviations, std::string const & Field)
 {
 	int const Size = 20;
-	GridDimensions = new int[3];
 	GridDimensions[0] = Size;
 	GridDimensions[1] = Size;
 	GridDimensions[2] = Size;

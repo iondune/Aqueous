@@ -5,7 +5,7 @@
 #include <ionCore.h>
 
 #include "SciDataCollection.h"
-#include "SciDataTree.h"
+
 
 class IColorMapper
 {

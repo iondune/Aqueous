@@ -5,8 +5,6 @@
 #include <ionCore.h>
 
 #include "SciDataCollection.h"
-#include "SciDataTree.h"
-
 #include "IColorMapper.h"
 
 

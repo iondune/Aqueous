@@ -3,9 +3,6 @@
 
 void SciDataManager::createVolumeFromGridValues(IColorMapper * ColorMapper)
 {
-	if (! GridDimensions)
-		return;
-
 	unsigned int const size = GridDimensions[0] * GridDimensions[1] * GridDimensions[2] * 4;
 
 	if (GridValues.size() != size / 4)
@@ -18,20 +15,20 @@ void SciDataManager::createVolumeFromGridValues(IColorMapper * ColorMapper)
 
 	GLubyte * volumeData = new GLubyte[size];
 
-	for (int i = 0; i < GridDimensions[2]; ++ i)
+	for (u32 i = 0; i < GridDimensions[2]; ++ i)
 	{
-		for (int j = 0; j < GridDimensions[1]; ++ j)
+		for (u32 j = 0; j < GridDimensions[1]; ++ j)
 		{
-			for (int k = 0; k < GridDimensions[0]; ++ k)
+			for (u32 k = 0; k < GridDimensions[0]; ++ k)
 			{
-				int index = k + (GridDimensions[2] - i - 1) * GridDimensions[0] + j * GridDimensions[2] * GridDimensions[0];
+				u32 index = k + (GridDimensions[2] - i - 1) * GridDimensions[0] + j * GridDimensions[2] * GridDimensions[0];
 
-				int ValueIndex = k + j * GridDimensions[0] + i * GridDimensions[1] * GridDimensions[0];
+				u32 ValueIndex = k + j * GridDimensions[0] + i * GridDimensions[1] * GridDimensions[0];
 
 				SColorAf Color = ColorMapper->getColor(GridValues.getValues()[ValueIndex]);
 
-				for (int t = 0; t < 4; ++ t)
-					volumeData[index * 4 + t] = clamp<unsigned char>((unsigned char) (Color[t] * 255.f), 0, 255);
+				for (u32 t = 0; t < 4; ++ t)
+					volumeData[index * 4 + t] = clamp<u8>((u8) (Color[t] * 255.f), 0, 255);
 			}
 		}
 	}
@@ -241,20 +238,20 @@ f64 const SciDataManager::getGridVolume(std::string const & Field, f64 const Val
 			delete NewIsoValues;
 		};
 
-		for (int i = 0; i < GridDimensions[2] - 1; ++ i)
+		for (u32 i = 0; i < GridDimensions[2] - 1; ++ i)
 		{
-			for (int j = 0; j < GridDimensions[1] - 1; ++ j)
+			for (u32 j = 0; j < GridDimensions[1] - 1; ++ j)
 			{
-				for (int k = 0; k < GridDimensions[0] - 1; ++ k)
+				for (u32 k = 0; k < GridDimensions[0] - 1; ++ k)
 				{
-					for (int a = 0; a < 2; ++ a)
+					for (u32 a = 0; a < 2; ++ a)
 					{
-						for (int b = 0; b < 2; ++ b)
+						for (u32 b = 0; b < 2; ++ b)
 						{
-							for (int c = 0; c < 2; ++ c)
+							for (u32 c = 0; c < 2; ++ c)
 							{
-								int ValueIndex = (k + c) + (j + b) * GridDimensions[0] + (i + a) * GridDimensions[1] * GridDimensions[0];
-								int FieldIndex = 4 * c + 2 * b + a;
+								u32 ValueIndex = (k + c) + (j + b) * GridDimensions[0] + (i + a) * GridDimensions[1] * GridDimensions[0];
+								u32 FieldIndex = 4 * c + 2 * b + a;
 								IsoValues[FieldIndex] = Range - abs(GridValues.getValues()[ValueIndex].getField(Field) - Value);
 							}
 						}
@@ -272,13 +269,13 @@ f64 const SciDataManager::getGridVolume(std::string const & Field, f64 const Val
 	}
 	else if (Mode == 1)
 	{
-		for (int i = 0; i < GridDimensions[2]; ++ i)
+		for (u32 i = 0; i < GridDimensions[2]; ++ i)
 		{
-			for (int j = 0; j < GridDimensions[1]; ++ j)
+			for (u32 j = 0; j < GridDimensions[1]; ++ j)
 			{
-				for (int k = 0; k < GridDimensions[0]; ++ k)
+				for (u32 k = 0; k < GridDimensions[0]; ++ k)
 				{
-					int ValueIndex = (k + 0) + (j + 0) * GridDimensions[0] + (i + 0) * GridDimensions[1] * GridDimensions[0];
+					u32 ValueIndex = (k + 0) + (j + 0) * GridDimensions[0] + (i + 0) * GridDimensions[1] * GridDimensions[0];
 					SciData const * Data = & GridValues.getValues()[ValueIndex];
 					f64 const IsoValue = Range - abs(Data->getField(Field) - Value);
 

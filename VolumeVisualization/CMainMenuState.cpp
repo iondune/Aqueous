@@ -36,7 +36,7 @@ void CMainMenuState::OnRenderStart(float const Elapsed)
 		COxygenColorMapper o("o1");		
 		CSpectrumColorMapper spec("Avg Oxy");
 		Context->DataManager->createVolumeFromGridValues(& spec);
-		Context->Scene.VolumeSceneObject->VolumeHandle = Context->DataManager->VolumeHandle;
+		Context->Scene.VolumeSceneObject->VolumeHandle = Context->DataManager->getVolumeHandle();
 		CApplication::get().getStateManager().setState(& CMainState::get());
 	}
 }
