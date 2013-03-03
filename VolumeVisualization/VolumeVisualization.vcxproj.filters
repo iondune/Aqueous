@@ -227,6 +227,9 @@
     <ClInclude Include="SciDataCollection.h">
       <Filter>MainState\Data Management\Base Objects</Filter>
     </ClInclude>
+    <ClInclude Include="SciDataParser.h">
+      <Filter>MainState\Data Management\Parsers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="MainState">

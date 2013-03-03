@@ -1,6 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 
-#include "SciDataManager.h"
+#include "SciDataParser.h"
 
 #include "matlib/include/mat.h"
 
