@@ -1,4 +1,6 @@
 #include "SciDataParser.h"
+#include "SciData.h"
+#include "SciDataManager.h"
 
 #include <fstream>
 #include <sstream>
@@ -17,8 +19,6 @@ void SciDataParserCSV::load(std::string const & FileName)
 	std::ifstream File;
 	File.open(FileName);
 	bool FirstLine = FieldNames;
-
-	std::vector<std::string> Fields;
 
 	while (File.is_open() && File.good())
 	{

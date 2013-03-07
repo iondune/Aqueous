@@ -14,9 +14,9 @@ void CDataLoadingThread::Run()
 	LoadingWidget->setProgress(0.5f);
 
 	COxygenColorMapper o("d1");
-	CSpectrumColorMapper spec("Avg Oxy");
+	CSpectrumColorMapper spec("Node Count");
 	Context->Scene.GlyphSceneObject->loadGlyphs(Context->DataManager, & spec,
-		"x", "DFS Depth (m)", "y", "Total Water Column (m)");
+		"x", "y", "z", "Total Water Column (m)");
 	LoadingWidget->setProgress(0.75f);
 
 	//o.Field = "o1";

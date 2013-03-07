@@ -1,6 +1,8 @@
 #define _CRT_SECURE_NO_WARNINGS
 
 #include "SciDataParser.h"
+#include "SciData.h"
+#include "SciDataManager.h"
 #include <numeric>
 
 

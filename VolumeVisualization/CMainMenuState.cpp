@@ -72,9 +72,18 @@ void CMainMenuState::createDataSet()
 	Parser1->Manager = Context->DataManager;
 	Parser1->FieldDelim = ',';
 	Parser1->ValueDelim = ',';
-	Parser1->load("mission7.csv");
+	/*Parser1->FieldNames = false;
+	std::vector<std::string> Fields;
+	Fields.push_back("GPGGA Base Position");
+	Fields.push_back("x");
+	Fields.push_back("y");
+	Fields.push_back("n");
+	Fields.push_back("z");
+	Fields.push_back("e");
+	Parser1->Fields = Fields;*/
+	Parser1->load("smarttether2.csv");
 
-	Context->DataManager->createGridDataFromRawValues(FullRange, 5.0, "Avg Oxy");
+	//Context->DataManager->createGridDataFromRawValues(FullRange, 5.0, "Avg Oxy");
 
-	Context->DataManager->writeToFile("Datasets/DenmarkMission7.dat");
+	Context->DataManager->writeToFile("Datasets/GozoTheClown2.dat");
 }

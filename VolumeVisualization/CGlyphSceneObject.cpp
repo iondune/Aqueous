@@ -42,7 +42,7 @@ void CGlyphSceneObject::loadGlyphs(SciDataManager * DataManager, IColorMapper * 
 		SGlyph g;
 
 		float X = (float) ((it->getField(xField) - XRange.first) / (XRange.second - XRange.first));
-		float Y = (float) 1.f - (it->getField(yField) / YRange.second);
+		float Y = (float) ((it->getField(yField) - YRange.first) / (YRange.second - YRange.first));//1.f - (it->getField(yField) / YRange.second);
 		float Z = (float) ((it->getField(zField) - ZRange.first) / (ZRange.second - ZRange.first));
 
 		double v = it->getField(FloorLabel);

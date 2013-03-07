@@ -35,10 +35,10 @@ void CGUIMainMenuWidget::createDataSetButtons()
 	}
 
 	Height += 35;
-	/*NewDataSetButton = new Gwen::Controls::Button(GUIManager->getCanvas());
+	NewDataSetButton = new Gwen::Controls::Button(GUIManager->getCanvas());
 	NewDataSetButton->SetBounds(50, Height, 290, 25);
 	NewDataSetButton->SetText("Create New Data Set");
-	NewDataSetButton->onPress.Add(this, & CGUIMainMenuWidget::OnSelectDataSet);*/
+	NewDataSetButton->onPress.Add(this, & CGUIMainMenuWidget::OnSelectDataSet);
 }
 
 CGUIMainMenuWidget::CGUIMainMenuWidget()

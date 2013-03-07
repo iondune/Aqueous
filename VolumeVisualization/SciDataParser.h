@@ -46,6 +46,7 @@ public:
 	char FieldDelim;
 	char ValueDelim;
 	bool FieldNames;
+	std::vector<std::string> Fields;
 
 	void load(std::string const & FileName);
 	void mergedLoad(std::string const & FileName, std::string const & FileName2, std::string const & MatchField);
