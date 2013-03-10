@@ -265,9 +265,6 @@
     <Filter Include="Program Context">
       <UniqueIdentifier>{621c01a1-e404-419c-9931-35d3cd1bc3fa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="States">
-      <UniqueIdentifier>{b8842830-fbf8-4b90-9023-fab075c53866}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Utilities\GUI">
       <UniqueIdentifier>{e2f73951-6082-4d3a-bcd6-3f07b8ec41d4}</UniqueIdentifier>
     </Filter>

@@ -68,7 +68,7 @@ void CMainMenuState::loadData(std::string const & FileName)
 
 void CMainMenuState::createDataSet()
 {
-	SciDataParserCSV * Parser1 = new SciDataParserCSV();
+	SciDataParserCSV * Parser1 = new SciDataParserSmartTether();
 	Parser1->Manager = Context->DataManager;
 	Parser1->FieldDelim = ',';
 	Parser1->ValueDelim = ',';
@@ -82,6 +82,10 @@ void CMainMenuState::createDataSet()
 	Fields.push_back("e");
 	Parser1->Fields = Fields;*/
 	Parser1->load("smarttether2.csv");
+
+	int counter = 0;
+	for (auto Value : Context->DataManager->getRawValues().getValues())
+		Value.addField("timeStamp") = counter++;
 
 	//Context->DataManager->createGridDataFromRawValues(FullRange, 5.0, "Avg Oxy");
 

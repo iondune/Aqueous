@@ -61,6 +61,59 @@ void SciDataParserCSV::load(std::string const & FileName)
 	}
 }
 
+void SciDataParserSmartTether::load(std::string const & FileName)
+{
+	std::ifstream File;
+	File.open(FileName);
+	bool FirstLine = FieldNames;
+
+	while (File.is_open() && File.good())
+	{
+		std::string Line;
+		std::getline(File, Line);
+
+		if (Line == "")
+			continue;
+
+		std::istringstream Stream(Line);
+
+		if (FirstLine)
+		{
+			while (Stream.good())
+			{
+				std::string Label;
+				std::getline(Stream, Label, FieldDelim);
+				Fields.push_back(Label);
+			}
+			Fields[16] = "y";
+			Fields[17] = "z";
+			Fields[18] = "z_cardinal";
+			Fields[19] = "x";
+			Fields[20] = "x_cardinal";
+			Fields.resize(38);
+			FirstLine = false;
+		}
+		else
+		{
+			std::vector<f64> Row;
+			while (Stream.good())
+			{
+				std::string Label;
+				std::getline(Stream, Label, ValueDelim);
+				Row.push_back(string_to_double(Label));
+			}
+
+			if (Row.size() != Fields.size())
+				std::cerr << "Mismatched row size at row " << Manager->getRawValues().size() << ", found " << Row.size() << " but expected " << Fields.size() << std::endl;
+			u32 Length = std::min(Row.size(), Fields.size());
+
+			SciData d(Manager->getRawValues());
+			for (u32 i = 0; i < Length; ++ i)
+				d.addField(Fields[i]) = Row[i];
+		}
+	}
+}
+
 u32 const timeToSeconds(std::string const & Field)
 {
 	u32 In, Out = 0;

@@ -37,13 +37,15 @@ void CGlyphSceneObject::loadGlyphs(SciDataManager * DataManager, IColorMapper * 
 	Range YRange = DataSet.getValueRange(yField, 5.0);
 	Range ZRange = DataSet.getValueRange(zField, 5.0);
 
+	float MaxSize = max(XRange.second - XRange.first, ZRange.second - ZRange.first);
+
 	for (auto it = DataSet.getValues().begin(); it != DataSet.getValues().end(); ++ it)
 	{
 		SGlyph g;
 
-		float X = (float) ((it->getField(xField) - XRange.first) / (XRange.second - XRange.first));
-		float Y = (float) ((it->getField(yField) - YRange.first) / (YRange.second - YRange.first));//1.f - (it->getField(yField) / YRange.second);
-		float Z = (float) ((it->getField(zField) - ZRange.first) / (ZRange.second - ZRange.first));
+		float X = (float) ((it->getField(xField) - XRange.first) / MaxSize);//(XRange.second - XRange.first));
+		float Y = 1.f - (float) ((it->getField(yField) - YRange.first) / (YRange.second - YRange.first));//1.f - (it->getField(yField) / YRange.second);
+		float Z = (float) ((it->getField(zField) - ZRange.first) / MaxSize);//(ZRange.second - ZRange.first));
 
 		double v = it->getField(FloorLabel);
 		if (v != 0.f)

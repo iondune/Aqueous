@@ -14,7 +14,7 @@ void CDataLoadingThread::Run()
 	LoadingWidget->setProgress(0.5f);
 
 	COxygenColorMapper o("d1");
-	CSpectrumColorMapper spec("Node Count");
+	CSpectrumColorMapper spec("timeStamp");
 	Context->Scene.GlyphSceneObject->loadGlyphs(Context->DataManager, & spec,
 		"x", "y", "z", "Total Water Column (m)");
 	LoadingWidget->setProgress(0.75f);
