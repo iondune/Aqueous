@@ -2,12 +2,15 @@
 #define _CGUIMAINMENUSWIDGET_H_INCLUDED_
 
 #include "CGUIContextWidget.h"
+#include <Gwen/Controls/WindowControl.h>
 
 
 class SciDataManager;
 
 class CGUIMainMenuWidget : public CGUIContextWidget
 {
+
+	Gwen::Controls::WindowControl * Window;
 
 	Gwen::Controls::Button * NewDataSetButton;
 

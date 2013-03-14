@@ -12,7 +12,7 @@ CProgramContext::SScene::SScene()
 {}
 
 CProgramContext::SShaders::SShaders()
-	: Diffuse(0), DiffuseTexture(0), Volume(0), Terrain(0), Glyph(0)
+	: Diffuse(0), DiffuseTexture(0), Volume(0), Terrain(0), Glyph(0), GlyphLines(0)
 {}
 
 CProgramContext::CProgramContext()
@@ -21,6 +21,11 @@ CProgramContext::CProgramContext()
 
 void CProgramContext::run()
 {
+	// Directory Setup
+	CTextureLoader::ImageDirectory = "Media/";
+	CMeshLoader::MeshDirectory = "Media/";
+	CShaderLoader::ShaderDirectory = "Shaders/";
+
 	// Create Window
 	CApplication & Application = CApplication::get();
 	Application.init(SPosition2(1600, 900), "Underwater Volume Data Rendering");

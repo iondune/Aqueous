@@ -23,6 +23,8 @@ void CMainMenuState::end()
 		delete Thread;
 }
 
+#include "CGlyphSceneObject.h"
+
 void CMainMenuState::OnRenderStart(float const Elapsed)
 {
 	// Let loading thread run
@@ -38,6 +40,9 @@ void CMainMenuState::OnRenderStart(float const Elapsed)
 		Context->DataManager->createVolumeFromGridValues(& spec);
 		Context->Scene.VolumeSceneObject->VolumeHandle = Context->DataManager->getVolumeHandle();
 		CApplication::get().getStateManager().setState(& CMainState::get());
+		
+		Context->Scene.GlyphSceneObject->setScale(vec3f(3.f, 1.5f, 3.f));
+		Context->Scene.GlyphSceneObject->buildLines();
 	}
 }
 
@@ -81,7 +86,7 @@ void CMainMenuState::createDataSet()
 	Fields.push_back("z");
 	Fields.push_back("e");
 	Parser1->Fields = Fields;*/
-	Parser1->load("smarttether2.csv");
+	Parser1->load("smarttether8.csv");
 
 	int counter = 0;
 	for (auto Value : Context->DataManager->getRawValues().getValues())
@@ -89,5 +94,5 @@ void CMainMenuState::createDataSet()
 
 	//Context->DataManager->createGridDataFromRawValues(FullRange, 5.0, "Avg Oxy");
 
-	Context->DataManager->writeToFile("Datasets/GozoTheClown2.dat");
+	Context->DataManager->writeToFile("Datasets/FartManoel1.dat");
 }

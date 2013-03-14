@@ -22,7 +22,7 @@ void CGUIMainMenuWidget::createDataSetButtons()
 			if (FileName == "." || FileName == "..")
 				continue;
 
-			Gwen::Controls::Button * Button = new Gwen::Controls::Button(GUIManager->getCanvas());
+			Gwen::Controls::Button * Button = new Gwen::Controls::Button(Window);
 			Button->SetBounds(50, Height, 290, 25);
 			Button->SetText(FileName);
 			Button->onPress.Add(this, & CGUIMainMenuWidget::OnSelectDataSet);
@@ -35,7 +35,7 @@ void CGUIMainMenuWidget::createDataSetButtons()
 	}
 
 	Height += 35;
-	NewDataSetButton = new Gwen::Controls::Button(GUIManager->getCanvas());
+	NewDataSetButton = new Gwen::Controls::Button(Window);
 	NewDataSetButton->SetBounds(50, Height, 290, 25);
 	NewDataSetButton->SetText("Create New Data Set");
 	NewDataSetButton->onPress.Add(this, & CGUIMainMenuWidget::OnSelectDataSet);
@@ -44,15 +44,21 @@ void CGUIMainMenuWidget::createDataSetButtons()
 CGUIMainMenuWidget::CGUIMainMenuWidget()
 	: NewDataSetButton(0)
 {
+	Window = new Gwen::Controls::WindowControl(GUIManager->getCanvas());
+	Window->SetTitle("Data Sets");
+	Window->SetBounds(30, 600, 660 + 30, 850);
+	Window->SetDeleteOnClose(false);
+	Window->SetClosable(false);
+
 	// Top Label
-	Gwen::Controls::Label * BigLabel = new Gwen::Controls::Label(GUIManager->getCanvas());
+	Gwen::Controls::Label * BigLabel = new Gwen::Controls::Label(Window);
 	BigLabel->SetFont(GUIManager->getLargeFont());
 	BigLabel->SetText(L"Main Menu");
 	BigLabel->SetBounds(10, 10, 1590, 300);
 	BigLabel->SetTextColor(Gwen::Color(235, 255, 235, 215));
 
 	// Second Label
-	Gwen::Controls::Label * MediumLabel = new Gwen::Controls::Label(GUIManager->getCanvas());
+	Gwen::Controls::Label * MediumLabel = new Gwen::Controls::Label(Window);
 	MediumLabel->SetFont(GUIManager->getMediumFont());
 	MediumLabel->SetText(L"Available Data Sets:");
 	MediumLabel->SetBounds(20, 70, 600, 300);

@@ -95,9 +95,11 @@ void CLoadState::loadShaders()
 {
 	Indent = 60;
 	bool Failed = false;
-
+	
 	if (! (Context->Shaders.Glyph = CShaderLoader::loadShader("Glyph")))
 		addLabel(L"Failed to load Glyph Shader - Glyphs will not draw.", Gwen::Color(255, 32, 32, 192)), Failed = true;
+	if (! (Context->Shaders.GlyphLines = CShaderLoader::loadShader("GlyphLines")))
+		addLabel(L"Failed to load Glyph Line Shader - Glyphs Lines will not draw.", Gwen::Color(255, 32, 32, 192)), Failed = true;
 	if (! (Context->Shaders.DiffuseTexture = CShaderLoader::loadShader("DiffuseTexture")))
 		addLabel(L"Failed to load Diffuse/Texture Shader - Backdrop will not draw.", Gwen::Color(255, 64, 64, 192)), Failed = true;
 	if (! (Context->Shaders.Volume = CShaderLoader::loadShader("Volume2")))

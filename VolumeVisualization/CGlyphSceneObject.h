@@ -15,8 +15,11 @@ class CGlyphSceneObject : public ISceneObject, public CApplicationContextObject<
 	// Cube used for rendering each glyph
 	CMesh * Cube;
 
+	CBufferObject<f32> Lines, LineColors;
+
 	// Shader for rendering each cube
 	CShader * Shader;
+	CShader * LineShader;
 
 	struct SGlyph
 	{
@@ -35,7 +38,6 @@ class CGlyphSceneObject : public ISceneObject, public CApplicationContextObject<
 
 public:
 
-
 	CGlyphSceneObject();
 	
 	void loadGlyphs(SciDataManager * DataManager, IColorMapper * ColorMapper, 
@@ -49,6 +51,8 @@ public:
 	
 	bool const getShowFloors();
 	bool const getShowPoints();
+
+	void buildLines();
 
 };
 

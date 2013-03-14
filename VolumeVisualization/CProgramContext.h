@@ -61,6 +61,7 @@ public:
 		CShader * Terrain;
 		CShader * Volume;
 		CShader * Glyph;
+		CShader * GlyphLines;
 
 		SShaders();
 	};

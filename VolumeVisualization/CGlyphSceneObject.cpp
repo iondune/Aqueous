@@ -22,6 +22,7 @@ CGlyphSceneObject::CGlyphSceneObject()
 
 	// Copy shader
 	Shader = CProgramContext::get().Shaders.Glyph;
+	LineShader = CProgramContext::get().Shaders.GlyphLines;
 }
 
 void CGlyphSceneObject::loadGlyphs(SciDataManager * DataManager, IColorMapper * ColorMapper, 
@@ -81,7 +82,7 @@ bool CGlyphSceneObject::draw(IScene const * const Scene, smartPtr<IRenderPass> P
 		Context.bindIndexBufferObject(Cube->MeshBuffers[0]->IndexBuffer.getHandle());
 		
 		STransformation3 Local;
-		Local.setScale(vec3f(1.f/32.f) / Scale);
+		Local.setScale(vec3f(1.f/64.f) / Scale);
 		for (auto it = Glyphs.begin(); it != Glyphs.end(); ++ it)
 		{
 			Local.setTranslation((it->Position-vec3f(0.5))*Scale);
@@ -105,6 +106,20 @@ bool CGlyphSceneObject::draw(IScene const * const Scene, smartPtr<IRenderPass> P
 		}
 	}
 
+	if (LineShader)
+	{
+		STransformation3 Local;
+		Local.setScale(vec3f(1.f/64.f) / Scale);
+		CShaderContext Context(* LineShader);
+		Context.uniform("uModelMatrix", Transformation.getGLMMat4());
+		Context.uniform("uProjMatrix", SceneManager->getActiveCamera()->getProjectionMatrix());
+		Context.uniform("uViewMatrix", SceneManager->getActiveCamera()->getViewMatrix());
+		
+		Context.bindBufferObject("aPosition", Lines.getHandle(), 3);
+		Context.bindBufferObject("aColor", LineColors.getHandle(), 3);
+		glDrawArrays(GL_LINES, 0, Lines.size() / 3);
+	}
+
 	return true;
 }
 
@@ -126,4 +141,27 @@ bool const CGlyphSceneObject::getShowFloors()
 bool const CGlyphSceneObject::getShowPoints()
 {
 	return ShowPoints;
+}
+
+void CGlyphSceneObject::buildLines()
+{
+	for (u32 i = 1; i < Glyphs.size(); ++ i)
+	{
+		Lines.push_back(Glyphs[i-1].Position.X - 0.1667*Scale.X);
+		Lines.push_back(Glyphs[i-1].Position.Y - 0.33*Scale.Y);
+		Lines.push_back(Glyphs[i-1].Position.Z - 0.1667*Scale.Z);
+		Lines.push_back(Glyphs[i].Position.X - 0.1667*Scale.X);
+		Lines.push_back(Glyphs[i].Position.Y - 0.33*Scale.Y);
+		Lines.push_back(Glyphs[i].Position.Z - 0.1667*Scale.Z);
+		
+		LineColors.push_back(Glyphs[i-1].Color.Red);
+		LineColors.push_back(Glyphs[i-1].Color.Green);
+		LineColors.push_back(Glyphs[i-1].Color.Blue);
+		LineColors.push_back(Glyphs[i].Color.Red);
+		LineColors.push_back(Glyphs[i].Color.Green);
+		LineColors.push_back(Glyphs[i].Color.Blue);
+	}
+	
+	Lines.syncData();
+	LineColors.syncData();
 }

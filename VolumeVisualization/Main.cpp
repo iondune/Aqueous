@@ -11,11 +11,6 @@ int main()
 {
 	std::cout << "System is initializing..." << std::endl;
 
-	// Directory Setup
-	CTextureLoader::ImageDirectory = "Media/";
-	CMeshLoader::MeshDirectory = "Media/";
-	CShaderLoader::ShaderDirectory = "Shaders/";
-
 	CProgramContext & Context = CProgramContext::get();
 	Context.run();
 
