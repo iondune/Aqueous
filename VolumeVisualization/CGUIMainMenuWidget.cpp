@@ -55,14 +55,14 @@ CGUIMainMenuWidget::CGUIMainMenuWidget()
 	BigLabel->SetFont(GUIManager->getLargeFont());
 	BigLabel->SetText(L"Main Menu");
 	BigLabel->SetBounds(10, 10, 1590, 300);
-	BigLabel->SetTextColor(Gwen::Color(235, 255, 235, 215));
+	BigLabel->SetTextColor(Gwen::Color(35, 55, 35, 215));
 
 	// Second Label
 	Gwen::Controls::Label * MediumLabel = new Gwen::Controls::Label(Window);
 	MediumLabel->SetFont(GUIManager->getMediumFont());
 	MediumLabel->SetText(L"Available Data Sets:");
 	MediumLabel->SetBounds(20, 70, 600, 300);
-	MediumLabel->SetTextColor(Gwen::Color(235, 235, 255, 215));
+	MediumLabel->SetTextColor(Gwen::Color(35, 35, 55, 215));
 
 	createDataSetButtons();
 }

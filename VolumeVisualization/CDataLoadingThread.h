@@ -10,15 +10,19 @@ class CGUILoadingWidget;
 class CDataLoadingThread
 {
 
+	void Execute();
+	void Sync();
+
 public:
 
 	CDataLoadingThread();
 	void Run();
 
 	CProgramContext * Context;
-	std::string FileName;
 	CGUILoadingWidget * LoadingWidget;
-	bool * Finished;
+
+	std::string FileName;
+	bool Finished;
 
 };
 

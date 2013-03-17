@@ -5,6 +5,7 @@
 #include "SciDataManager.h"
 #include "ColorMappers.h"
 #include "CGlyphSceneObject.h"
+#include "CMainState.h"
 
 
 static double const pi = 3.14159;
@@ -29,7 +30,7 @@ double distFrom(double lat1, double lng1, double lat2, double lng2)
 	return (dist * meterConversion);
 }
 
-void CDataLoadingThread::Run()
+void CDataLoadingThread::Execute()
 {
 	LoadingWidget->setProgress(0.25f);
 	Context->DataManager->readFromFile(FileName);
@@ -53,7 +54,18 @@ void CDataLoadingThread::Run()
 	//o.Field = "o1";
 	//Context->DataManager->createPointCloudObjects(false, Context->Scene.GridObject, SVector3f(3.f), & o);
 	//LoadingWidget->setProgress(1.f);
-	* Finished = true;
+	Finished = true;
+}
+
+void CDataLoadingThread::Sync()
+{
+	COxygenColorMapper o("o1");		
+	CSpectrumColorMapper spec("Avg Oxy");
+	Context->DataManager->createVolumeFromGridValues(& spec);
+	Context->Scene.VolumeSceneObject->VolumeHandle = Context->DataManager->getVolumeHandle();
+	CApplication::get().getStateManager().setState(& CMainState::get());
+		
+	Context->Scene.GlyphSceneObject->setScale(vec3f(3.f, 1.5f, 3.f));
 }
 
 CDataLoadingThread::CDataLoadingThread()

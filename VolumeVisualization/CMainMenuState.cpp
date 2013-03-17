@@ -35,14 +35,6 @@ void CMainMenuState::OnRenderStart(float const Elapsed)
 
 	if (FinishedLoading)
 	{
-		COxygenColorMapper o("o1");		
-		CSpectrumColorMapper spec("Avg Oxy");
-		Context->DataManager->createVolumeFromGridValues(& spec);
-		Context->Scene.VolumeSceneObject->VolumeHandle = Context->DataManager->getVolumeHandle();
-		CApplication::get().getStateManager().setState(& CMainState::get());
-		
-		Context->Scene.GlyphSceneObject->setScale(vec3f(3.f, 1.5f, 3.f));
-		FinishedLoading = false;
 	}
 }
 
