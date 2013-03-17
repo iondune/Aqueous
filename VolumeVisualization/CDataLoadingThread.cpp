@@ -7,11 +7,42 @@
 #include "CGlyphSceneObject.h"
 
 
+static double const pi = 3.14159;
+static double const toRadians(double const deg)
+{
+	return deg * pi / 180;
+}
+
+double distFrom(double lat1, double lng1, double lat2, double lng2)
+{
+	double earthRadius = 3958.75;
+	double dLat = toRadians(lat2-lat1);
+	double dLng = toRadians(lng2-lng1);
+	double a = sin(dLat/2) * sin(dLat/2) +
+		cos(toRadians(lat1)) * cos(toRadians(lat2)) *
+		sin(dLng/2) * sin(dLng/2);
+	double c = 2 * atan2(sqrt(a), sqrt(1-a));
+	double dist = earthRadius * c;
+
+	int meterConversion = 1609;
+
+	return (dist * meterConversion);
+}
+
 void CDataLoadingThread::Run()
 {
 	LoadingWidget->setProgress(0.25f);
 	Context->DataManager->readFromFile(FileName);
 	LoadingWidget->setProgress(0.5f);
+
+	for (auto Data : Context->DataManager->getRawValues().getValues())
+	{
+		double X = distFrom(Data.getField("Base Latitude"), Data.getField("Base Longitude"), Data.getField("Base Latitude"), Data.getField("End Longitude"));
+		double Y = distFrom(Data.getField("Base Latitude"), Data.getField("Base Longitude"), Data.getField("End Latitude"), Data.getField("Base Longitude"));
+
+		Data.getField("End Longitude") = (Data.getField("Base Longitude") > Data.getField("End Longitude") ? 1 : -1) * X;
+		Data.getField("End Latitude") = (Data.getField("Base Latitude") > Data.getField("End Latitude") ? 1 : -1) * Y;
+	}
 
 	COxygenColorMapper o("d1");
 	CSpectrumColorMapper spec("Node Count");

@@ -42,7 +42,7 @@ void CMainMenuState::OnRenderStart(float const Elapsed)
 		CApplication::get().getStateManager().setState(& CMainState::get());
 		
 		Context->Scene.GlyphSceneObject->setScale(vec3f(3.f, 1.5f, 3.f));
-		Context->Scene.GlyphSceneObject->buildLines();
+		FinishedLoading = false;
 	}
 }
 
@@ -86,7 +86,7 @@ void CMainMenuState::createDataSet()
 	Fields.push_back("z");
 	Fields.push_back("e");
 	Parser1->Fields = Fields;*/
-	Parser1->load("smarttether8.csv");
+	Parser1->load("smarttether10.csv");
 
 	int counter = 0;
 	for (auto Value : Context->DataManager->getRawValues().getValues())
@@ -94,5 +94,5 @@ void CMainMenuState::createDataSet()
 
 	//Context->DataManager->createGridDataFromRawValues(FullRange, 5.0, "Avg Oxy");
 
-	Context->DataManager->writeToFile("Datasets/FartManoel1.dat");
+	Context->DataManager->writeToFile("Datasets/VallettaMCC1.dat");
 }

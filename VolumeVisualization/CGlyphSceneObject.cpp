@@ -117,7 +117,9 @@ bool CGlyphSceneObject::draw(IScene const * const Scene, smartPtr<IRenderPass> P
 		
 		Context.bindBufferObject("aPosition", Lines.getHandle(), 3);
 		Context.bindBufferObject("aColor", LineColors.getHandle(), 3);
-		glDrawArrays(GL_LINES, 0, Lines.size() / 3);
+		//glDrawArrays(GL_LINES, 0, Lines.size() / 3);
+		Context.bindIndexBufferObject(LineIndices.getHandle());
+		glDrawElements(GL_LINES, LineIndices.size(), GL_UNSIGNED_SHORT, 0);
 	}
 
 	return true;
@@ -145,8 +147,15 @@ bool const CGlyphSceneObject::getShowPoints()
 
 void CGlyphSceneObject::buildLines()
 {
+	LineIndices.setIsIndexBuffer(true);
+
+	u32 VertexCount = 0;
+
 	for (u32 i = 1; i < Glyphs.size(); ++ i)
 	{
+		LineIndices.push_back(VertexCount++);
+		LineIndices.push_back(VertexCount++);
+
 		Lines.push_back(Glyphs[i-1].Position.X - 0.1667*Scale.X);
 		Lines.push_back(Glyphs[i-1].Position.Y - 0.33*Scale.Y);
 		Lines.push_back(Glyphs[i-1].Position.Z - 0.1667*Scale.Z);
@@ -164,4 +173,5 @@ void CGlyphSceneObject::buildLines()
 	
 	Lines.syncData();
 	LineColors.syncData();
+	LineIndices.syncData();
 }
