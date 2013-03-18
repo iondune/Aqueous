@@ -11,3 +11,4 @@ syntax: glob
 *.v11.suo
 *.exe
 */ShaderCompileLog.txt
+*.unsuccessfulbuild
