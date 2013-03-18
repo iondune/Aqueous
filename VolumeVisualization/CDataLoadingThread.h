@@ -11,18 +11,23 @@ class CDataLoadingThread
 {
 
 	void Execute();
-	void Sync();
+	void End();
+
+	bool Executing;
+	bool Running;
+
+	sf::Thread * Thread;
+
+	std::string FileName;
 
 public:
 
 	CDataLoadingThread();
-	void Run();
+	void Run(std::string const & fileName);
+	void Sync();
 
 	CProgramContext * Context;
 	CGUILoadingWidget * LoadingWidget;
-
-	std::string FileName;
-	bool Finished;
 
 };
 

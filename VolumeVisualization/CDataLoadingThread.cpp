@@ -54,10 +54,10 @@ void CDataLoadingThread::Execute()
 	//o.Field = "o1";
 	//Context->DataManager->createPointCloudObjects(false, Context->Scene.GridObject, SVector3f(3.f), & o);
 	//LoadingWidget->setProgress(1.f);
-	Finished = true;
+	Executing = true;
 }
 
-void CDataLoadingThread::Sync()
+void CDataLoadingThread::End()
 {
 	COxygenColorMapper o("o1");		
 	CSpectrumColorMapper spec("Avg Oxy");
@@ -69,5 +69,26 @@ void CDataLoadingThread::Sync()
 }
 
 CDataLoadingThread::CDataLoadingThread()
-	: Context(0), LoadingWidget(0), Finished(0)
+	: Context(0), LoadingWidget(0), Executing(false), Running(false)
 {}
+
+void CDataLoadingThread::Run(std::string const & fileName)
+{
+	if (! Running)
+	{
+		Thread = new sf::Thread(& CDataLoadingThread::Run, Thread);
+		Executing = Running = true;
+		FileName = fileName;
+
+		Thread->launch();
+	}
+}
+
+void CDataLoadingThread::Sync()
+{
+	if (! Executing && Running)
+	{
+		End();
+		Running = false;
+	}
+}

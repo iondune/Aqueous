@@ -2,6 +2,7 @@
 #define _CMAINMENUSTATE_H_INCLUDED_
 
 #include "CProgramContext.h"
+#include "CDataLoadingThread.h"
 
 
 class CDataLoadingThread;
@@ -10,7 +11,7 @@ class CMainMenuState : public CContextState<CMainMenuState, CProgramContext>
 {
 
 	bool FinishedLoading;
-	CDataLoadingThread * Thread;
+	CDataLoadingThread Thread;
 
 public:
 

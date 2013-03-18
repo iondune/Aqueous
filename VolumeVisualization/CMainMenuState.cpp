@@ -32,10 +32,6 @@ void CMainMenuState::OnRenderStart(float const Elapsed)
 
 	Context->GUIContext->draw(Elapsed, true);
 	CApplication::get().swapBuffers();
-
-	if (FinishedLoading)
-	{
-	}
 }
 
 void CMainMenuState::OnWindowResized(SWindowResizedEvent const & Event)
@@ -58,9 +54,6 @@ void CMainMenuState::loadData(std::string const & FileName)
 	Context->GUIContext->addWidget(Thread->LoadingWidget = new CGUILoadingWidget("Loading data and initializing scene elements"));
 
 	DataSetName = FileName;
-
-	sf::Thread * sThread = new sf::Thread(& CDataLoadingThread::Run, Thread);
-	sThread->launch();
 }
 
 void CMainMenuState::createDataSet()
