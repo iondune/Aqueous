@@ -67,7 +67,7 @@ void CMainMenuState::createDataSet()
 	Fields.push_back("z");
 	Fields.push_back("e");
 	Parser1->Fields = Fields;*/
-	Parser1->load("smarttether10.csv");
+	Parser1->load("2013_03_20_01_20_04.csv");
 
 	int counter = 0;
 	for (auto Value : Context->DataManager->getRawValues().getValues())
@@ -75,5 +75,5 @@ void CMainMenuState::createDataSet()
 
 	//Context->DataManager->createGridDataFromRawValues(FullRange, 5.0, "Avg Oxy");
 
-	Context->DataManager->writeToFile("Datasets/VallettaMCC1.dat");
+	Context->DataManager->writeToFile("Datasets/TomiaDeiCappuccini.dat");
 }
