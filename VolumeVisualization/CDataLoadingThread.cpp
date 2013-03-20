@@ -32,12 +32,17 @@ double distFrom(double lat1, double lng1, double lat2, double lng2)
 
 void CDataLoadingThread::Execute()
 {
-	LoadingWidget->setProgress(0.25f);
+	LoadingWidget->setProgress(0.05f);
 	Context->DataManager->readFromFile(FileName);
-	LoadingWidget->setProgress(0.5f);
+	LoadingWidget->setProgress(0.1f);
+
+	int Counter = 0;
 
 	for (auto Data : Context->DataManager->getRawValues().getValues())
 	{
+		float Progress = Counter++ / (float) Context->DataManager->getRawValues().getValues().size();
+		LoadingWidget->setProgress(0.1f + 0.65f * Progress);
+
 		double X = distFrom(Data.getField("Base Latitude"), Data.getField("Base Longitude"), Data.getField("Base Latitude"), Data.getField("End Longitude"));
 		double Y = distFrom(Data.getField("Base Latitude"), Data.getField("Base Longitude"), Data.getField("End Latitude"), Data.getField("Base Longitude"));
 
@@ -48,13 +53,13 @@ void CDataLoadingThread::Execute()
 	COxygenColorMapper o("d1");
 	CSpectrumColorMapper spec("Node Count");
 	Context->Scene.GlyphSceneObject->loadGlyphs(Context->DataManager, & spec,
-		"End Latitude", "000", "End Longitude", "Total Water Column (m)");
+		"End Latitude", "y", "End Longitude", "Total Water Column (m)");
 	LoadingWidget->setProgress(0.75f);
 
 	//o.Field = "o1";
 	//Context->DataManager->createPointCloudObjects(false, Context->Scene.GridObject, SVector3f(3.f), & o);
 	//LoadingWidget->setProgress(1.f);
-	Executing = true;
+	Executing = false;
 }
 
 void CDataLoadingThread::End()
@@ -76,7 +81,7 @@ void CDataLoadingThread::Run(std::string const & fileName)
 {
 	if (! Running)
 	{
-		Thread = new sf::Thread(& CDataLoadingThread::Run, Thread);
+		Thread = new sf::Thread(& CDataLoadingThread::Execute, this);
 		Executing = Running = true;
 		FileName = fileName;
 

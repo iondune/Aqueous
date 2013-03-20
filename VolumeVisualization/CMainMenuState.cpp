@@ -8,7 +8,6 @@
 
 
 CMainMenuState::CMainMenuState()
-	: FinishedLoading(false), Thread(0)
 {}
 
 void CMainMenuState::begin()
@@ -19,8 +18,6 @@ void CMainMenuState::begin()
 void CMainMenuState::end()
 {
 	Context->GUIContext->clear();
-	if (Thread)
-		delete Thread;
 }
 
 #include "CGlyphSceneObject.h"
@@ -29,6 +26,7 @@ void CMainMenuState::OnRenderStart(float const Elapsed)
 {
 	// Let loading thread run
 	sf::sleep(sf::seconds(0.05f));
+	Thread.Sync();
 
 	Context->GUIContext->draw(Elapsed, true);
 	CApplication::get().swapBuffers();
@@ -43,17 +41,15 @@ void CMainMenuState::OnWindowResized(SWindowResizedEvent const & Event)
 
 void CMainMenuState::loadData(std::string const & FileName)
 {
+	DataSetName = FileName;
+
 	std::stringstream s;
 	s << "Datasets/";
 	s << FileName;
 
-	Thread = new CDataLoadingThread();
-	Thread->FileName = s.str();
-	Thread->Finished = & FinishedLoading;
-	Thread->Context = Context;
-	Context->GUIContext->addWidget(Thread->LoadingWidget = new CGUILoadingWidget("Loading data and initializing scene elements"));
-
-	DataSetName = FileName;
+	Thread.Context = Context;
+	Context->GUIContext->addWidget(Thread.LoadingWidget = new CGUILoadingWidget("Loading data and initializing scene elements"));
+	Thread.Run(s.str());
 }
 
 void CMainMenuState::createDataSet()

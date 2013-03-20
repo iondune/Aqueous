@@ -10,7 +10,6 @@ class CDataLoadingThread;
 class CMainMenuState : public CContextState<CMainMenuState, CProgramContext>
 {
 
-	bool FinishedLoading;
 	CDataLoadingThread Thread;
 
 public:
