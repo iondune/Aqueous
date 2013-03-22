@@ -38,9 +38,12 @@ public:
 		double const r = d.getField(Field);
 		float const v = (float) ((r - FieldRange.first) / (FieldRange.second - FieldRange.first));
 
-		float Color[4] = {0.f, 0.f, 0.f, 0.f};
+		float Color[4] = {0.f, 0.f, 0.f, 1.f};
 
-		if (v <= 0.1)
+		if (v <= 0.0)
+		{
+		}
+		else if (v <= 0.1)
 		{
 			Color[2] = (float) ((v - 0.0) / (0.1 - 0.0));
 		}
@@ -64,10 +67,14 @@ public:
 			Color[0] = 1.f;
 			Color[1] = 1.f - (float) ((v - 0.6) / (0.8 - 0.6));
 		}
-		else if (v >= 0.8)
+		else if (v <= 1.0)
 		{
 			Color[0] = 1.f;
 			Color[1] = Color[2] = (float) ((v - 0.8) / (1.0 - 0.8));
+		}
+		else
+		{
+			Color[0] = Color[1] = Color[2] = 1.f;
 		}
 
 		Color[3] = (float) v;
