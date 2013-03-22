@@ -12,7 +12,7 @@ varying vec4 vScreenPosition;
 void main()
 {
     vec4 vPosition;
-
+    
     vPosition = uModelMatrix * vec4(aPosition, 1.0);
     vScreenPosition = uProjMatrix * uViewMatrix * vPosition;
     gl_Position = vScreenPosition;
