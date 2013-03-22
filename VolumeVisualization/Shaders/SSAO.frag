@@ -8,7 +8,7 @@ const float strength = 0.7;
 const float offset = 18.0;
 const float falloff = 0.0002;
 const float rad = 0.00006;
-#define SAMPLES 10 // 10 is good
+#define SAMPLES 10
 const float invSamples = -1.38/10.0;
 void main(void)
 {
@@ -35,7 +35,8 @@ vec3 pSphere[10] = vec3[](vec3(-0.010735935, 0.01647018, 0.0062425877),vec3(-0.0
    float occluderDepth, depthDifference;
    vec4 occluderFragment;
    vec3 ray;
-   for(int i=0; i<SAMPLES;++i)
+   int i;
+   for(i=0; i<SAMPLES;++i)
    {
       // get a vector (randomized inside of a sphere with radius 1.0) from a texture and reflect it
       ray = radD*reflect(pSphere[i],fres);
