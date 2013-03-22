@@ -3,6 +3,7 @@
 
 #include "CGUIContextWidget.h"
 #include <Gwen/Controls/WindowControl.h>
+#include <Gwen/Controls/MenuStrip.h>
 
 
 class SciDataManager;
@@ -11,6 +12,7 @@ class CGUIMainMenuWidget : public CGUIContextWidget
 {
 
 	Gwen::Controls::WindowControl * Window;
+	Gwen::Controls::MenuStrip * Menu;
 
 	Gwen::Controls::Button * NewDataSetButton;
 

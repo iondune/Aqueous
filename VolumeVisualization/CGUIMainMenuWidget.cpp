@@ -5,6 +5,8 @@
 
 #include <sstream>
 
+#include <Gwen/Controls/Menu.h>
+
 
 void CGUIMainMenuWidget::createDataSetButtons()
 {
@@ -41,9 +43,35 @@ void CGUIMainMenuWidget::createDataSetButtons()
 	NewDataSetButton->onPress.Add(this, & CGUIMainMenuWidget::OnSelectDataSet);
 }
 
+class MenuDropDown : public Gwen::Event::Handler
+{
+
+	Gwen::Controls::MenuItem * MenuItem;
+
+public:
+
+	MenuDropDown(Gwen::Controls::MenuItem * menuItem)
+		: MenuItem(menuItem)
+	{}
+
+	void OnPress()
+	{
+		Gwen::Controls::Menu * Menu = new Gwen::Controls::Menu(MenuItem->GetCanvas());
+		Menu->MoveTo(MenuItem->GetPos().x, MenuItem->GetPos().y + 22);
+		Menu->AddItem("Open");//->onPress.Add(new ActionItem());
+		Menu->AddItem("Close");
+		Menu->AddItem("Quit");
+	}
+
+};
+
 CGUIMainMenuWidget::CGUIMainMenuWidget()
 	: NewDataSetButton(0)
 {
+	Menu = new Gwen::Controls::MenuStrip(GUIManager->getCanvas());
+	Gwen::Controls::MenuItem * File = Menu->AddItem("File");
+	File->onPress.Add(new MenuDropDown(File), & MenuDropDown::OnPress);
+
 	Window = new Gwen::Controls::WindowControl(GUIManager->getCanvas());
 	Window->SetTitle("Data Sets");
 	Window->SetBounds(30, 600, 660 + 30, 850);
