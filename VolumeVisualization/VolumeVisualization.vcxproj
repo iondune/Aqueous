@@ -96,6 +96,7 @@
     <ClCompile Include="CMainState.cpp" />
     <ClCompile Include="CMainState.EventHandling.cpp" />
     <ClCompile Include="CMainState.MouseTracking.cpp" />
+    <ClCompile Include="CPlaneGridSceneObject.cpp" />
     <ClCompile Include="CProgramContext.cpp" />
     <ClCompile Include="CTerrainSceneObject.cpp" />
     <ClCompile Include="CGUITitleLabelsWidget.cpp" />
@@ -137,6 +138,7 @@
     <ClInclude Include="ColorMappers.h" />
     <ClInclude Include="ContourConverter.h" />
     <ClInclude Include="COxygenColorMapper.h" />
+    <ClInclude Include="CPlaneGridSceneObject.h" />
     <ClInclude Include="CProgramContext.h" />
     <ClInclude Include="CRGBIntensityColorMapper.h" />
     <ClInclude Include=".\CSingleFieldColorMapper.h" />

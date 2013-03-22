@@ -113,6 +113,9 @@
     <ClCompile Include="SciDataManager.cpp">
       <Filter>MainState\Data Management</Filter>
     </ClCompile>
+    <ClCompile Include="CPlaneGridSceneObject.cpp">
+      <Filter>MainState\Misc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CMainState.h">
@@ -230,6 +233,9 @@
     <ClInclude Include="SciDataParser.h">
       <Filter>MainState\Data Management\Parsers</Filter>
     </ClInclude>
+    <ClInclude Include="CPlaneGridSceneObject.h">
+      <Filter>MainState\Misc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="MainState">
@@ -288,6 +294,9 @@
     </Filter>
     <Filter Include="MainState\Glyphs">
       <UniqueIdentifier>{4cc29f91-8652-44ca-9c0d-899dda15b4a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainState\Misc">
+      <UniqueIdentifier>{1b24f862-be43-46c5-b48e-88de64b4c1c5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
