@@ -8,6 +8,7 @@
 #include "CTerrainSceneObject.h"
 #include "CVolumeSceneObject.h"
 #include "CGlyphSceneObject.h"
+#include "CPlaneGridSceneObject.h"
 
 
 void CLoadStateEventHandler::OnFinish(Gwen::Controls::Base * Control)
@@ -150,6 +151,11 @@ void CLoadState::loadScene()
 	Scene.SkyBox->setTexture(0, "Space.bmp");
 	Scene.SkyBox->setCullingEnabled(false);
 	Scene.SkyBox->setVisible(false);
+	SceneManager->addSceneObject(Scene.SkyBox);
+
+	CPlaneGridSceneObject * Plane = new CPlaneGridSceneObject(10);
+	Plane->setShader(SceneManager->getDefaultColorRenderPass(), Context->Shaders.GlyphLines);
+	SceneManager->addSceneObject(Plane);
 
 	// Light Tracker
 	//Scene.LightObject = SceneManager->addMeshSceneObject(Scene.Cube, CShaderLoader::loadShader("Simple"), 0);
