@@ -136,7 +136,7 @@ bool CGlyphSceneObject::draw(IScene const * const Scene, smartPtr<IRenderPass> P
 			Context.bindIndexBufferObject(LineIndices.getHandle());
 			printf("Drawing elements ... ");
 			fflush(stdout);
-			glDrawElements(GL_TRIANGLES, LineIndices.size(), GL_UNSIGNED_SHORT, 0);
+			glDrawElements(GL_LINES, LineIndices.size(), GL_UNSIGNED_SHORT, 0);
 			printf("Done!\n");
 		}
 		catch (...)

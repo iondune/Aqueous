@@ -34,8 +34,8 @@ void CProgramContext::run()
 
 	// Create GUI Engine
 	std::cout << "GUI Engine is initializing..." << std::endl;
-	GUIContext = new CGUIContext();
-	GUIContext->init();
+	//GUIContext = new CGUIContext();
+	//GUIContext->init();
 
 	// Begin loading
 	std::cout << "Loading beginning..." << std::endl;

@@ -10,7 +10,7 @@ CMainState::CMainState()
 
 void CMainState::begin()
 {
-	Context->GUIContext->setupMainState();
+	//Context->GUIContext->setupMainState();
 
 	Context->Scene.Camera->setProjection(60.f, CApplication::get().getAspectRatio(), 0.01f, 100.f);
 
@@ -20,7 +20,7 @@ void CMainState::begin()
 
 void CMainState::end()
 {
-	Context->GUIContext->clear();
+	//Context->GUIContext->clear();
 }
 
 void CMainState::OnRenderStart(float const Elapsed)
@@ -80,10 +80,10 @@ void CMainState::OnRenderStart(float const Elapsed)
 		}
 		glEnable(GL_DEPTH_TEST);
 	}
-	//else
-	//	Context->Scene.VolumeSceneObject->draw(SceneManager, SceneManager->getDefaultColorRenderPass(), false);
+	else
+		Context->Scene.VolumeSceneObject->draw(SceneManager, SceneManager->getDefaultColorRenderPass(), false);
 
-	Context->GUIContext->draw(Elapsed, false);
+	//Context->GUIContext->draw(Elapsed, false);
 
 	CApplication::get().swapBuffers();
 	if (Scene.Terrain->isVisible())

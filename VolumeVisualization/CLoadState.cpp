@@ -19,7 +19,7 @@ void CLoadStateEventHandler::OnFinish(Gwen::Controls::Base * Control)
 
 void CLoadState::addLabel(std::wstring const & Label, Gwen::Color const & Color)
 {
-	Gwen::Controls::Label * MediumLabel = new Gwen::Controls::Label(Canvas);
+	/*Gwen::Controls::Label * MediumLabel = new Gwen::Controls::Label(Canvas);
 	MediumLabel->SetFont(GUIManager->getMediumFont());
 	MediumLabel->SetText(Label);
 	MediumLabel->SetBounds(20 + Indent, LabelHeight, 1024, 300);
@@ -28,7 +28,7 @@ void CLoadState::addLabel(std::wstring const & Label, Gwen::Color const & Color)
 	GUIManager->draw(true);
 	CApplication::get().swapBuffers();
 
-	LabelHeight += 40;
+	LabelHeight += 40;*/
 }
 
 CLoadState::CLoadState()
@@ -45,7 +45,7 @@ void CLoadState::begin()
 	CMainState & MainState = CMainState::get();
 	CMainMenuState & MenuState = CMainMenuState::get();
 
-	GUIManager = Context->GUIContext;
+	/*GUIManager = Context->GUIContext;
 	Canvas = GUIManager->getCanvas();
 	
 	// Init Canvas
@@ -60,10 +60,10 @@ void CLoadState::begin()
 	BigLabel->SetTextColor(Gwen::Color(255, 255, 255, 84));
 
 	GUIManager->draw(true);
-	CApplication::get().swapBuffers();
+	CApplication::get().swapBuffers();*/
 	
 	addLabel(L"Initializing System...");
-	CGwenEventForwarder * Forwarder = new CGwenEventForwarder(GUIManager->getCanvas());
+	//CGwenEventForwarder * Forwarder = new CGwenEventForwarder(GUIManager->getCanvas());
 	
 	addLabel(L"Loading Scene Shaders...");
 	Application.getSceneManager().init(true, true);
@@ -75,14 +75,14 @@ void CLoadState::begin()
 	Context->DataManager = new SciDataManager();
 	addLabel(L"Menu is Starting...");
 
-	if (GetConfirmation)
+	/*if (GetConfirmation)
 	{
 		Gwen::Controls::Button * Button = new Gwen::Controls::Button(GUIManager->getCanvas());
 		Button->SetBounds(250, 650, 250, 35);
 		Button->SetText(L"Continue");
 		Button->onPress.Add(& Handler, & CLoadStateEventHandler::OnFinish);
 	}
-	else
+	else*/
 		OnFinish();
 
 	std::cout << "Loading finished." << std::endl;
@@ -90,7 +90,7 @@ void CLoadState::begin()
 
 void CLoadState::OnRenderStart(float const Elapsed)
 {
-	Context->GUIContext->draw(Elapsed, true);
+	//Context->GUIContext->draw(Elapsed, true);
 	CApplication::get().swapBuffers();
 }
 
@@ -157,7 +157,7 @@ void CLoadState::loadScene()
 
 	CPlaneGridSceneObject * Plane = new CPlaneGridSceneObject(10);
 	Plane->setShader(SceneManager->getDefaultColorRenderPass(), Context->Shaders.GlyphLines);
-	//SceneManager->addSceneObject(Plane);
+	SceneManager->addSceneObject(Plane);
 
 	// Light Tracker
 	//Scene.LightObject = SceneManager->addMeshSceneObject(Scene.Cube, CShaderLoader::loadShader("Simple"), 0);
@@ -244,7 +244,7 @@ void CLoadState::loadScene()
 void CLoadState::OnFinish()
 {
 	// Cleanup GUI
-	Canvas->RemoveAllChildren();
+	//Canvas->RemoveAllChildren();
 
 	Application->getStateManager().setState(& CMainMenuState::get());
 }
