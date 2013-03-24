@@ -84,6 +84,8 @@ void CLoadState::begin()
 	}
 	else
 		OnFinish();
+
+	std::cout << "Loading finished." << std::endl;
 }
 
 void CLoadState::OnRenderStart(float const Elapsed)
@@ -155,7 +157,7 @@ void CLoadState::loadScene()
 
 	CPlaneGridSceneObject * Plane = new CPlaneGridSceneObject(10);
 	Plane->setShader(SceneManager->getDefaultColorRenderPass(), Context->Shaders.GlyphLines);
-	SceneManager->addSceneObject(Plane);
+	//SceneManager->addSceneObject(Plane);
 
 	// Light Tracker
 	//Scene.LightObject = SceneManager->addMeshSceneObject(Scene.Cube, CShaderLoader::loadShader("Simple"), 0);

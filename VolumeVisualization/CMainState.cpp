@@ -15,7 +15,7 @@ void CMainState::begin()
 	Context->Scene.Camera->setProjection(60.f, CApplication::get().getAspectRatio(), 0.01f, 100.f);
 
 	Context->Scene.Timer = 0.f;
-	Context->Scene.GlyphSceneObject->buildLines();
+	//Context->Scene.GlyphSceneObject->buildLines();
 }
 
 void CMainState::end()
@@ -80,8 +80,8 @@ void CMainState::OnRenderStart(float const Elapsed)
 		}
 		glEnable(GL_DEPTH_TEST);
 	}
-	else
-		Context->Scene.VolumeSceneObject->draw(SceneManager, SceneManager->getDefaultColorRenderPass(), false);
+	//else
+	//	Context->Scene.VolumeSceneObject->draw(SceneManager, SceneManager->getDefaultColorRenderPass(), false);
 
 	Context->GUIContext->draw(Elapsed, false);
 

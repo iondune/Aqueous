@@ -28,7 +28,7 @@ void CProgramContext::run()
 
 	// Create Window
 	CApplication & Application = CApplication::get();
-	Application.init(SPosition2(1024, 600), "Underwater Volume Data Rendering");
+	Application.init(SPosition2(1200, 800), "Underwater Volume Data Rendering");
 
 	Application.loadEngines();
 
@@ -38,6 +38,7 @@ void CProgramContext::run()
 	GUIContext->init();
 
 	// Begin loading
+	std::cout << "Loading beginning..." << std::endl;
 	CLoadState & LoadState = CLoadState::get();
 	Application.getStateManager().setState(& LoadState);
 
