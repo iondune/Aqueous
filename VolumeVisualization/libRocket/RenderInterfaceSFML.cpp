@@ -223,7 +223,7 @@ void RocketSFMLRenderer::RenderCompiledGeometry(Rocket::Core::CompiledGeometryHa
 	sf::Image *image = (sf::Image *)RealGeometry->Texture;
 	sf::Texture *sftexture = new sf::Texture;
 
-	if(image)
+	if(image && image->getPixelsPtr())
 	{
 		sftexture->loadFromImage(*image);
 		sftexture->bind(sftexture);
@@ -236,6 +236,7 @@ void RocketSFMLRenderer::RenderCompiledGeometry(Rocket::Core::CompiledGeometryHa
 	glEnable(GL_VERTEX_ARRAY);
 	glEnable(GL_TEXTURE_COORD_ARRAY);
 	glEnable(GL_COLOR_ARRAY);
+	glEnable(GL_TEXTURE_2D);
 
 	#define BUFFER_OFFSET(x) ((char*)0 + x)
 
@@ -252,6 +253,7 @@ void RocketSFMLRenderer::RenderCompiledGeometry(Rocket::Core::CompiledGeometryHa
 	glDisable(GL_COLOR_ARRAY);
 	glDisable(GL_TEXTURE_COORD_ARRAY);
 	glDisable(GL_VERTEX_ARRAY);
+	glDisable(GL_TEXTURE_2D);
 
 	glColor4f(1, 1, 1, 1);
 
