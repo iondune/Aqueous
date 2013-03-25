@@ -138,10 +138,10 @@ void RocketSFMLRenderer::RenderGeometry(Rocket::Core::Vertex* vertices, int num_
 
 	sf::Image *image = (sf::Image *)texture;
 	sf::Texture * sftexture = new sf::Texture;
-	sftexture->loadFromImage(*image);
 
-	if(image)
+	if(image && image->getPixelsPtr())
 	{
+		sftexture->loadFromImage(*image);
 		sftexture->bind(sftexture);
 	}
 	else
@@ -342,7 +342,8 @@ bool RocketSFMLRenderer::GenerateTexture(Rocket::Core::TextureHandle& texture_ha
 	sftexture->update(source);
 	*image = sftexture->copyToImage();
 
-	texture_handle = (Rocket::Core::TextureHandle)sftexture;
+	texture_handle = (Rocket::Core::TextureHandle)image;
+	delete sftexture;
 
 	return true;
 }

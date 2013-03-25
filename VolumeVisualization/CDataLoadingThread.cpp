@@ -69,8 +69,8 @@ void CDataLoadingThread::End()
 
 	COxygenColorMapper o("o1");
 	CSpectrumColorMapper spec("Avg Oxy");
-	//Context->DataManager->createVolumeFromGridValues(& spec);
-	//Context->Scene.VolumeSceneObject->VolumeHandle = Context->DataManager->getVolumeHandle();
+	Context->DataManager->createVolumeFromGridValues(& spec);
+	Context->Scene.VolumeSceneObject->VolumeHandle = Context->DataManager->getVolumeHandle();
 	
 	CApplication::get().getStateManager().setState(& CMainState::get());
 }
@@ -83,13 +83,11 @@ void CDataLoadingThread::Run(std::string const & fileName)
 {
 	if (! Running)
 	{
-		//Thread = new sf::Thread(& CDataLoadingThread::Execute, this);
+		Thread = new sf::Thread(& CDataLoadingThread::Execute, this);
 		Executing = Running = true;
 		FileName = fileName;
 		
-		std::cout << "Load thread launching." << std::endl;
-		//Thread->launch();
-		Execute();
+		Thread->launch();
 	}
 }
 
@@ -97,9 +95,7 @@ void CDataLoadingThread::Sync()
 {
 	if (! Executing && Running)
 	{
-		std::cout << "Load thread join." << std::endl;
 		End();
-		std::cout << "Load thread end." << std::endl;
 		Running = false;
 	}
 }

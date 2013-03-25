@@ -79,30 +79,7 @@ void CMainState::OnRenderStart(float const Elapsed)
 	
 
 	SceneManager->drawAll();
-	
 	SceneManager->endDraw();
-	// Draw to screen
-	/*glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glDisable(GL_DEPTH_TEST);
-
-	// THE FINAL RENDER
-	{
-		CShaderContext Context(* CShaderLoader::loadShader("FBO/QuadCopy"));
-
-		if (ShowDepth)
-			Context.bindTexture("uTexColor", SceneManager->getSceneDepthTexture());
-		else
-			Context.bindTexture("uTexColor", SceneManager->getSceneFrameTexture());
-		Context.bindBufferObject("aPosition", CSceneManager::getQuadHandle(), 2);
-
-		glDrawArrays(GL_QUADS, 0, 4);
-	}
-
-	if (! ShowDepth)
-		Context->Scene.VolumeSceneObject->draw(SceneManager, ERenderPass::Default, false);
-
-	glEnable(GL_DEPTH_TEST);*/
 
 	if (ShowDepth)
 	{

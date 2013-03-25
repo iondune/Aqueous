@@ -84,8 +84,6 @@ void CLoadState::begin()
 	}
 	else*/
 		OnFinish();
-
-	std::cout << "Loading finished." << std::endl;
 }
 
 void CLoadState::OnRenderStart(float const Elapsed)

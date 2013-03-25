@@ -24,3 +24,27 @@ div
 {
 	display: block;
 }
+
+div#title-bar
+{
+	position: absolute;
+	top: -40px;
+}
+
+div#title-bar span
+{
+	padding-left: 85px;
+	padding-right: 25px;
+	padding-top: 17px;
+	padding-bottom: 48px;
+
+	font-size: 22;
+	font-weight: bold;
+
+	text-shadow: 2px 2px black;
+
+	background-decorator: tiled-horizontal;
+	background-left-image: assets/invader.tga 147px 0px 229px 85px;
+	background-center-image: assets/invader.tga stretch 229px 0px 230px 85px;
+	background-right-image: assets/invader.tga 231px 0px 246px 85px;
+}

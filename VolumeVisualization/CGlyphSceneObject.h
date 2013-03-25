@@ -16,7 +16,6 @@ class CGlyphSceneObject : public ISceneObject, public CApplicationContextObject<
 	CMesh * Cube;
 
 	CBufferObject<f32> Lines, LineColors;
-	CBufferObject<u16> LineIndices;
 
 	// Shader for rendering each cube
 	CShader * Shader;

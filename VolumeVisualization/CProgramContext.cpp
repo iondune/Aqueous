@@ -38,7 +38,6 @@ void CProgramContext::run()
 	//GUIContext->init();
 
 	// Begin loading
-	std::cout << "Loading beginning..." << std::endl;
 	CLoadState & LoadState = CLoadState::get();
 	Application.getStateManager().setState(& LoadState);
 
