@@ -28,16 +28,17 @@ void CProgramContext::run()
 
 	// Create Window
 	CApplication & Application = CApplication::get();
-	Application.init(SPosition2(1024, 600), "Underwater Volume Data Rendering");
+	Application.init(SPosition2(1200, 800), "Underwater Volume Data Rendering");
 
 	Application.loadEngines();
 
 	// Create GUI Engine
 	std::cout << "GUI Engine is initializing..." << std::endl;
-	GUIContext = new CGUIContext();
-	GUIContext->init();
+	//GUIContext = new CGUIContext();
+	//GUIContext->init();
 
 	// Begin loading
+	std::cout << "Loading beginning..." << std::endl;
 	CLoadState & LoadState = CLoadState::get();
 	Application.getStateManager().setState(& LoadState);
 

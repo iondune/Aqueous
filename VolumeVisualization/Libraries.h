@@ -32,6 +32,9 @@
 #pragma comment(lib, "gwen_static.lib")
 #endif
 
+#pragma comment(lib, "RocketCore.lib")
+#pragma comment(lib, "RocketDebugger.lib")
+
 // MatLAB Libraries
 #pragma comment(lib, "matlib/libmat.lib")
 #pragma comment(lib, "matlib/libmx.lib")

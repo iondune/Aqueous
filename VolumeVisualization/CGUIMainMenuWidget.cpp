@@ -74,7 +74,7 @@ CGUIMainMenuWidget::CGUIMainMenuWidget()
 
 	Window = new Gwen::Controls::WindowControl(GUIManager->getCanvas());
 	Window->SetTitle("Data Sets");
-	Window->SetBounds(30, 600, 660 + 30, 850);
+	Window->SetBounds(30, 600, 660 + 30, 900);
 	Window->SetDeleteOnClose(false);
 	Window->SetClosable(false);
 

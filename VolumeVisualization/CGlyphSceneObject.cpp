@@ -108,6 +108,11 @@ bool CGlyphSceneObject::draw(IScene const * const Scene, smartPtr<IRenderPass> P
 
 	if (LineShader)
 	{
+		static bool loaded = false;
+		static int frame = 1;
+
+		//if (!loaded)
+		//	buildLines();
 		STransformation3 Local;
 		Local.setScale(vec3f(1.f/64.f) / Scale);
 		CShaderContext Context(* LineShader);
@@ -115,11 +120,30 @@ bool CGlyphSceneObject::draw(IScene const * const Scene, smartPtr<IRenderPass> P
 		Context.uniform("uProjMatrix", SceneManager->getActiveCamera()->getProjectionMatrix());
 		Context.uniform("uViewMatrix", SceneManager->getActiveCamera()->getViewMatrix());
 		
-		Context.bindBufferObject("aPosition", Lines.getHandle(), 3);
-		Context.bindBufferObject("aColor", LineColors.getHandle(), 3);
-		//glDrawArrays(GL_LINES, 0, Lines.size() / 3);
-		Context.bindIndexBufferObject(LineIndices.getHandle());
-		glDrawElements(GL_LINES, LineIndices.size(), GL_UNSIGNED_SHORT, 0);
+		Context.bindBufferObject("aPosition", Lines.getHandle(), 3);//Cube->MeshBuffers[0]->PositionBuffer.getHandle(), 3);
+		Context.bindBufferObject("aColor", LineColors.getHandle(), 3);//Cube->MeshBuffers[0]->NormalBuffer.getHandle(), 3);
+		u32 const ElementCount = Lines.size() / 3 / 16;
+		if (!loaded)
+			printf("Drawing %d elements\n", ElementCount);
+
+		printf("Drawing frame %d ... ", frame++);
+		fflush(stdout);
+		try
+		{
+			//glDrawArrays(GL_LINES, 0, ElementCount);
+			printf("Index buffer bound ... ");
+			fflush(stdout);
+			Context.bindIndexBufferObject(LineIndices.getHandle());
+			printf("Drawing elements ... ");
+			fflush(stdout);
+			glDrawElements(GL_LINES, LineIndices.size(), GL_UNSIGNED_SHORT, 0);
+			printf("Done!\n");
+		}
+		catch (...)
+		{
+			printf("Caught exception!\n");
+		}
+		loaded = true;
 	}
 
 	return true;
@@ -147,6 +171,10 @@ bool const CGlyphSceneObject::getShowPoints()
 
 void CGlyphSceneObject::buildLines()
 {
+	printf("Lines are building\n");
+	LineIndices.clear();
+	Lines.clear();
+	LineColors.clear();
 	LineIndices.setIsIndexBuffer(true);
 
 	u32 VertexCount = 0;
@@ -155,10 +183,14 @@ void CGlyphSceneObject::buildLines()
 	{
 		LineIndices.push_back(VertexCount++);
 		LineIndices.push_back(VertexCount++);
+		//LineIndices.push_back(VertexCount++);
 
 		Lines.push_back(Glyphs[i-1].Position.X - 0.1667*Scale.X);
 		Lines.push_back(Glyphs[i-1].Position.Y - 0.33*Scale.Y);
 		Lines.push_back(Glyphs[i-1].Position.Z - 0.1667*Scale.Z);
+		//Lines.push_back(Glyphs[i-2].Position.X - 0.1667*Scale.X);
+		//Lines.push_back(Glyphs[i-2].Position.Y - 0.33*Scale.Y);
+		//Lines.push_back(Glyphs[i-2].Position.Z - 0.1667*Scale.Z);
 		Lines.push_back(Glyphs[i].Position.X - 0.1667*Scale.X);
 		Lines.push_back(Glyphs[i].Position.Y - 0.33*Scale.Y);
 		Lines.push_back(Glyphs[i].Position.Z - 0.1667*Scale.Z);
@@ -166,9 +198,29 @@ void CGlyphSceneObject::buildLines()
 		LineColors.push_back(Glyphs[i-1].Color.Red);
 		LineColors.push_back(Glyphs[i-1].Color.Green);
 		LineColors.push_back(Glyphs[i-1].Color.Blue);
+		//LineColors.push_back(Glyphs[i-2].Color.Red);
+		//LineColors.push_back(Glyphs[i-2].Color.Green);
+		//LineColors.push_back(Glyphs[i-2].Color.Blue);
 		LineColors.push_back(Glyphs[i].Color.Red);
 		LineColors.push_back(Glyphs[i].Color.Green);
 		LineColors.push_back(Glyphs[i].Color.Blue);
+	}
+
+	for (u32 i = 0; i < Glyphs.size() * 16; ++ i)
+	{
+		Lines.push_back(0);
+		Lines.push_back(0);
+		Lines.push_back(0);
+		Lines.push_back(0);
+		Lines.push_back(0);
+		Lines.push_back(0);
+		
+		LineColors.push_back(0);
+		LineColors.push_back(0);
+		LineColors.push_back(0);
+		LineColors.push_back(0);
+		LineColors.push_back(0);
+		LineColors.push_back(0);
 	}
 	
 	Lines.syncData();
