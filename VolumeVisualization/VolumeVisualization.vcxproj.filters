@@ -125,6 +125,9 @@
     <ClCompile Include="libRocket\ShellFileInterface.cpp">
       <Filter>libRocket</Filter>
     </ClCompile>
+    <ClCompile Include="SciDataParserPieSlices.cpp">
+      <Filter>MainState\Data Management\Parsers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CMainState.h">

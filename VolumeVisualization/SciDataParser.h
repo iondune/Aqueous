@@ -75,4 +75,13 @@ public:
 
 };
 
+class SciDataParserPieSlices : public SciDataParser
+{
+
+public:
+
+	void load(std::string const & FileName);
+
+};
+
 #endif

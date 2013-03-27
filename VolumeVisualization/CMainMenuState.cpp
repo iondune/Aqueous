@@ -37,8 +37,8 @@ void CMainMenuState::OnRenderStart(float const Elapsed)
 	
 	if (! counter--)
 	{
-		//createDataSet();
-		loadData("StGeorge'sBayCave-Day1-Deplyoment4.dat");
+		createDataSet();
+		loadData("StGeorge'sBayCave-Day1-Pie.dat");
 	}
 
 	//loaded = true;
@@ -66,6 +66,7 @@ void CMainMenuState::loadData(std::string const & FileName)
 
 void CMainMenuState::createDataSet()
 {
+#if 0
 	SciDataParserCSV * Parser1 = new SciDataParserSmartTether();
 	Parser1->Manager = Context->DataManager;
 	Parser1->FieldDelim = ',';
@@ -80,6 +81,10 @@ void CMainMenuState::createDataSet()
 	Fields.push_back("e");
 	Parser1->Fields = Fields;*/
 	Parser1->load("2013_03_26_02_48_27.csv");
+#else
+	SciDataParserPieSlices * Parser = new SciDataParserPieSlices;
+	Parser->load("");
+#endif
 
 	int counter = 0;
 	for (auto Value : Context->DataManager->getRawValues().getValues())
@@ -87,5 +92,5 @@ void CMainMenuState::createDataSet()
 
 	//Context->DataManager->createGridDataFromRawValues(FullRange, 5.0, "Avg Oxy");
 
-	Context->DataManager->writeToFile("Datasets/StGeorge'sBayCave-Day1-Deplyoment4.dat");
+	Context->DataManager->writeToFile("Datasets/StGeorge'sBayCave-Day1-Pie.dat");
 }

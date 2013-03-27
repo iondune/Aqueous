@@ -118,6 +118,7 @@
     <ClCompile Include="SciDataManager.File.cpp" />
     <ClCompile Include="SciDataParserCSV.cpp" />
     <ClCompile Include="SciDataCollection.cpp" />
+    <ClCompile Include="SciDataParserPieSlices.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CDataLoadingThread.h" />

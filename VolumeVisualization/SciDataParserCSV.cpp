@@ -6,7 +6,7 @@
 #include <sstream>
 
 
-f64 const string_to_double(std::string const & s)
+static f64 const string_to_double(std::string const & s)
 {
 	std::istringstream iss(s);
 	f64 t;
