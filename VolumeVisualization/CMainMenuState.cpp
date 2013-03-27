@@ -36,7 +36,10 @@ void CMainMenuState::OnRenderStart(float const Elapsed)
 	static int counter = 0;
 	
 	if (! counter--)
-		loadData("FortManoel1.dat");
+	{
+		//createDataSet();
+		loadData("StGeorge'sBayCave-Day1-Deplyoment4.dat");
+	}
 
 	//loaded = true;
 }
@@ -76,7 +79,7 @@ void CMainMenuState::createDataSet()
 	Fields.push_back("z");
 	Fields.push_back("e");
 	Parser1->Fields = Fields;*/
-	Parser1->load("2013_03_22_11_51_35.csv");
+	Parser1->load("2013_03_26_02_48_27.csv");
 
 	int counter = 0;
 	for (auto Value : Context->DataManager->getRawValues().getValues())
@@ -84,5 +87,5 @@ void CMainMenuState::createDataSet()
 
 	//Context->DataManager->createGridDataFromRawValues(FullRange, 5.0, "Avg Oxy");
 
-	Context->DataManager->writeToFile("Datasets/VallettaMCC-Day2-Deployment3.dat");
+	Context->DataManager->writeToFile("Datasets/StGeorge'sBayCave-Day1-Deplyoment4.dat");
 }

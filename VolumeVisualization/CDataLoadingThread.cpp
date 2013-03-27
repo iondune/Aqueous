@@ -53,7 +53,7 @@ void CDataLoadingThread::Execute()
 	COxygenColorMapper o("d1");
 	CSpectrumColorMapper spec("Node Count");
 	Context->Scene.GlyphSceneObject->loadGlyphs(Context->DataManager, & spec,
-		"End Latitude", "y", "End Longitude", "Total Water Column (m)");
+		"y", "000", "time", "Total Water Column (m)");
 	//LoadingWidget->setProgress(0.75f);
 
 	//o.Field = "o1";

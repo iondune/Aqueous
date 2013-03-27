@@ -85,11 +85,12 @@ void SciDataParserSmartTether::load(std::string const & FileName)
 				std::getline(Stream, Label, FieldDelim);
 				Fields.push_back(Label);
 			}
-			Fields[16] = "y";
+			Fields[16] = "time";
 			Fields[17] = "z";
 			Fields[18] = "z_cardinal";
 			Fields[19] = "x";
 			Fields[20] = "x_cardinal";
+			Fields[24] = "y";
 			Fields.resize(38);
 			FirstLine = false;
 		}
