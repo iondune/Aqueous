@@ -24,6 +24,7 @@
  * THE SOFTWARE.
  *
  */
+
 #include <Rocket/Core.h>
 #include "SystemInterfaceSFML.h"
 

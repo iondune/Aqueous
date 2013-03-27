@@ -18,6 +18,8 @@ body.window
 	background-bottom-image: assets/invader.tga stretch 11px 140px 12px 151px;
 	background-left-image: assets/invader.tga stretch 0px 139px 10px 140px;
 	background-center-image: assets/invader.tga stretch 11px 139px 12px 140px;
+
+	padding: 10px 15px;
 }
 
 div
@@ -47,4 +49,18 @@ div#title-bar span
 	background-left-image: assets/invader.tga 147px 0px 229px 85px;
 	background-center-image: assets/invader.tga stretch 229px 0px 230px 85px;
 	background-right-image: assets/invader.tga 231px 0px 246px 85px;
+}
+
+div#content
+{
+	height: 100%;
+	overflow: hidden;
+	
+	z-index: 1;
+}
+
+#checkbox-1
+{
+	icon-decorator: image;
+	icon-image: assets/invader.tga 407px 60px 437px 90px;
 }

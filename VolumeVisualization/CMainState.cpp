@@ -51,6 +51,23 @@ void CMainState::begin()
 	Rocket::Core::ElementDocument* document = RocketContext->LoadDocument("libRocket/tutorial.rml");
 	if (document != NULL)
 	{
+		class EventListener : public Rocket::Core::EventListener
+		{
+
+		public:
+
+			virtual void ProcessEvent(Rocket::Core::Event & event)
+			{
+				std::cout << "Change event!" << std::endl;
+			}
+
+		};
+
+		EventListener * eL = new EventListener;
+
+		Rocket::Core::Element * checkbox1 = document->GetElementById("checkbox-1");
+		if (checkbox1)
+			checkbox1->AddEventListener("change", eL);
 		document->Show();
 		document->RemoveReference();
 	}
