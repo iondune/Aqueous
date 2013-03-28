@@ -118,7 +118,7 @@ void CMainState::OnRenderStart(float const Elapsed)
 	//Context->GUIContext->draw(Elapsed, false);
 
 	RocketContext->Update();
-	RocketContext->Render();
+	//RocketContext->Render();
 	CApplication::get().swapBuffers();
 	if (Scene.Terrain->isVisible())
 		Scene.Terrain->DoCameraUpdate = false;

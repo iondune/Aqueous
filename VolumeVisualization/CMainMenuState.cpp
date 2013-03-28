@@ -83,12 +83,15 @@ void CMainMenuState::createDataSet()
 	Parser1->load("2013_03_26_02_48_27.csv");
 #else
 	SciDataParserPieSlices * Parser = new SciDataParserPieSlices;
+	Parser->Manager = Context->DataManager;
 	Parser->load("");
 #endif
 
 	int counter = 0;
 	for (auto Value : Context->DataManager->getRawValues().getValues())
 		Value.addField("timeStamp") = counter++;
+
+	Context->DataManager->createGridDataFromRawValues(FullRange, 5.0, "temp");
 
 	//Context->DataManager->createGridDataFromRawValues(FullRange, 5.0, "Avg Oxy");
 

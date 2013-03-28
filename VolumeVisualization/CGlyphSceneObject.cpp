@@ -121,7 +121,7 @@ bool CGlyphSceneObject::draw(IScene const * const Scene, smartPtr<IRenderPass> P
 		Context.bindBufferObject("aPosition", Lines.getHandle(), 3);
 		Context.bindBufferObject("aColor", LineColors.getHandle(), 3);
 
-		glDrawArrays(GL_LINES, 0, Lines.size() / 3);
+		//glDrawArrays(GL_LINES, 0, Lines.size() / 3);
 	}
 
 	return true;
