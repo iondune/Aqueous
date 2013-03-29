@@ -27,7 +27,7 @@ void CMainState::begin()
 
 	
 	
-	Renderer = new RocketSFMLRenderer;
+	/*Renderer = new RocketSFMLRenderer;
 	Renderer->SetWindow(CApplication::get().App);
 	SystemInterface = new RocketSFMLSystemInterface;
 	FileInterface = new ShellFileInterface("libRocket/assets/");
@@ -70,7 +70,7 @@ void CMainState::begin()
 			checkbox1->AddEventListener("change", eL);
 		document->Show();
 		document->RemoveReference();
-	}
+	}*/
 }
 
 void CMainState::end()
@@ -112,12 +112,12 @@ void CMainState::OnRenderStart(float const Elapsed)
 		}
 		glEnable(GL_DEPTH_TEST);
 	}
-	else
-		Context->Scene.VolumeSceneObject->draw(SceneManager, SceneManager->getDefaultColorRenderPass(), false);
+	//else
+	//	Context->Scene.VolumeSceneObject->draw(SceneManager, SceneManager->getDefaultColorRenderPass(), false);
 
 	//Context->GUIContext->draw(Elapsed, false);
 
-	RocketContext->Update();
+	//RocketContext->Update();
 	//RocketContext->Render();
 	CApplication::get().swapBuffers();
 	if (Scene.Terrain->isVisible())
@@ -126,7 +126,7 @@ void CMainState::OnRenderStart(float const Elapsed)
 
 void CMainState::OnSFMLEvent(sf::Event const & event)
 {
-	switch(event.type)
+	/*switch(event.type)
 	{
 	case sf::Event::Resized:
 		Renderer->Resize();
@@ -166,7 +166,7 @@ void CMainState::OnSFMLEvent(sf::Event const & event)
 		break;
 	case sf::Event::Closed:
 		break;
-	};
+	};*/
 }
 
 void CMainState::addConsoleMessage(std::string const & Message, Gwen::Color const & Color)

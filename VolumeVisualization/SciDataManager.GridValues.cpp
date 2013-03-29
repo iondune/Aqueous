@@ -19,7 +19,7 @@ void SciDataManager::createGridDataFromRawValues(Range AcceptedValues, double De
 	Range ZRange = RawValues.getValueRange("z", Deviations, AcceptedValues);
 	Range FRange = RawValues.getValueRange(Field, Deviations, AcceptedValues);
 
-	for (auto it = ++ RawValues.getValues().begin(); it != RawValues.getValues().end(); ++ it)
+	for (auto it = RawValues.getValues().begin(); it != RawValues.getValues().end(); ++ it)
 	{
 		float x = (float) ((it->getField("x") - XRange.first) / (XRange.second - XRange.first));
 		float y = (float) ((it->getField("y") - YRange.first) / (YRange.second - YRange.first));
@@ -38,7 +38,14 @@ void SciDataManager::createGridDataFromRawValues(Range AcceptedValues, double De
 			! inRange(z, Range(0, 1)))
 			continue;
 
-		if (!X.size() || (x != X.back() || y != Y.back() || z != Z.back() || f != F.back()))
+		bool alreadyIn = false;
+		for (u32 i = 0; i < X.size(); ++ i)
+		{
+			if (equals(x, X[i]) || equals(y, Y[i]) || equals(z, Z[i]) || equals(f, F[i]))
+				alreadyIn = true;
+		}
+
+		if (! alreadyIn)
 		{
 			X.push_back(x);
 			Y.push_back(y);
@@ -46,6 +53,8 @@ void SciDataManager::createGridDataFromRawValues(Range AcceptedValues, double De
 			F.push_back(f);
 		}
 	}
+
+	std::cout << "Interpolating " << X.size() << " values into volume." << std::endl;
 
 	RBFInterpolator rbfi(X, Y, Z, F);
 	

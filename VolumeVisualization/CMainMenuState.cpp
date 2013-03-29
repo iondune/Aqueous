@@ -38,7 +38,8 @@ void CMainMenuState::OnRenderStart(float const Elapsed)
 	if (! counter--)
 	{
 		createDataSet();
-		loadData("StGeorge'sBayCave-Day1-Pie.dat");
+		loadData(//"DenmarkMission1.dat");
+			"StGeorge'sBayCave-Day1-Pie.dat");
 	}
 
 	//loaded = true;
@@ -84,7 +85,8 @@ void CMainMenuState::createDataSet()
 #else
 	SciDataParserPieSlices * Parser = new SciDataParserPieSlices;
 	Parser->Manager = Context->DataManager;
-	Parser->load("");
+	Parser->load("PieSlices.csv", "StGeorgesBayCaveDay1Deployment2.csv", "2013_03_26_02_48_27.csv");
+	Parser->load("PieSlices2.csv", "StGeorgesBayCave-Day2-Deployment3.csv", "2013_03_27_10_28_28.csv");
 #endif
 
 	int counter = 0;

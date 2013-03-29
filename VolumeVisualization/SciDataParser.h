@@ -15,8 +15,6 @@ public:
 
 	SciDataManager * Manager;
 
-	virtual void load(std::string const & FileName) = 0;
-
 };
 
 class SciDataParserCTD : public SciDataParser
@@ -80,7 +78,7 @@ class SciDataParserPieSlices : public SciDataParser
 
 public:
 
-	void load(std::string const & FileName);
+	void load(std::string const & PieFile, std::string const & HoboFile, std::string const & SmartFile);
 
 };
 

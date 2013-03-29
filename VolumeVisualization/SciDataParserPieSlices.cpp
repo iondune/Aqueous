@@ -122,7 +122,7 @@ enum class ETimes
 	SmartTether = 2
 };
 
-void SciDataParserPieSlices::load(std::string const & FileName)
+void SciDataParserPieSlices::load(std::string const & PieFile, std::string const & HoboFile, std::string const & SmartFile)
 {
 	std::vector<std::vector<f64>> PieSlices, HoboData, SmartTetherData;
 	
@@ -130,9 +130,9 @@ void SciDataParserPieSlices::load(std::string const & FileName)
 	auto SaveHoboValues = [&HoboData](std::vector<f64> const & v) {HoboData.push_back(v);};
 	auto SaveSmartTether = [&SmartTetherData](std::vector<f64> const & v) {SmartTetherData.push_back(v);};
 
-	LoadCSVFile("PieSlices.csv", SavePieValues);
-	LoadCSVFile("StGeorgesBayCaveDay1Deployment2.csv", SaveHoboValues);
-	LoadCSVFile("2013_03_26_02_48_27.csv", SaveSmartTether);
+	LoadCSVFile(PieFile, SavePieValues);
+	LoadCSVFile(HoboFile, SaveHoboValues);
+	LoadCSVFile(SmartFile, SaveSmartTether);
 
 	int timeOffsets[] = {0, -15, -15};
 
