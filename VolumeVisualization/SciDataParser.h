@@ -73,12 +73,37 @@ public:
 
 };
 
+enum class ETimes
+{
+	Pie = 0,
+	Hobo = 1,
+	SmartTether = 2
+};
+
+struct STimeOffsets
+{
+	int * timeOffsets;
+
+	STimeOffsets(int pieOffset, int hoboOffset, int tetherOffset)
+	{
+		timeOffsets = new int[3];
+		timeOffsets[0] = pieOffset;
+		timeOffsets[1] = hoboOffset;
+		timeOffsets[2] = tetherOffset;
+	}
+
+	int const operator[] (ETimes const index) const
+	{
+		return timeOffsets[(int) index];
+	}
+};
+
 class SciDataParserPieSlices : public SciDataParser
 {
 
 public:
 
-	void load(std::string const & PieFile, std::string const & HoboFile, std::string const & SmartFile);
+	void load(std::string const & PieFile, std::string const & HoboFile, std::string const & SmartFile, STimeOffsets const & timeOffsets);
 
 };
 

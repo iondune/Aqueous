@@ -34,9 +34,9 @@ void CGlyphSceneObject::loadGlyphs(SciDataManager * DataManager, IColorMapper * 
 	SciDataCollection & DataSet = DataManager->getRawValues();
 	ColorMapper->preProcessValues(DataSet);
 
-	Range XRange = DataSet.getValueRange(xField, 5.0);
-	Range YRange = DataSet.getValueRange(yField, 5.0);
-	Range ZRange = DataSet.getValueRange(zField, 5.0);
+	Range XRange = DataSet.getValueRange(xField, 15.0);
+	Range YRange = DataSet.getValueRange(yField, 15.0);
+	Range ZRange = DataSet.getValueRange(zField, 15.0);
 
 	float MaxSize = 1.f;//max(XRange.second - XRange.first, ZRange.second - ZRange.first);
 

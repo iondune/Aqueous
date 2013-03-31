@@ -115,14 +115,7 @@ void LoadCSVFile(std::string const & fileName, T & operation)
 	}
 }
 
-enum class ETimes
-{
-	Pie = 0,
-	Hobo = 1,
-	SmartTether = 2
-};
-
-void SciDataParserPieSlices::load(std::string const & PieFile, std::string const & HoboFile, std::string const & SmartFile)
+void SciDataParserPieSlices::load(std::string const & PieFile, std::string const & HoboFile, std::string const & SmartFile, STimeOffsets const & timeOffsets)
 {
 	std::vector<std::vector<f64>> PieSlices, HoboData, SmartTetherData;
 	
@@ -134,18 +127,16 @@ void SciDataParserPieSlices::load(std::string const & PieFile, std::string const
 	LoadCSVFile(HoboFile, SaveHoboValues);
 	LoadCSVFile(SmartFile, SaveSmartTether);
 
-	int timeOffsets[] = {0, -15, -15};
-
 	for (auto Slice : PieSlices)
 	{
 		std::cout << "Slice at angle " << Slice[0] << " has ";
 
-		f64 const PieStart = Slice[1] + timeOffsets[(int) ETimes::Pie], PieEnd = Slice[2] + timeOffsets[(int) ETimes::Pie];
+		f64 const PieStart = Slice[1] - timeOffsets[ETimes::Pie], PieEnd = Slice[2] - timeOffsets[ETimes::Pie];
 
 		int count = 0;
 		for (auto Hobo : HoboData)
 		{
-			f64 const HoboTime = Hobo[1] + timeOffsets[(int) ETimes::Hobo];
+			f64 const HoboTime = Hobo[1] - timeOffsets[ETimes::Hobo];
 			if (HoboTime >= PieStart && HoboTime < PieEnd)
 			{
 				count ++;
@@ -156,14 +147,13 @@ void SciDataParserPieSlices::load(std::string const & PieFile, std::string const
 					f64 Depth;
 					f64 Time;
 				};
-
 				std::vector<SSmartData> SmartData;
 
 				f64 MaxDepth = -std::numeric_limits<f64>::max(), MinDepth = std::numeric_limits<f64>::max();
 
 				for (auto Smart : SmartTetherData)
 				{
-					f64 const SmartTime = Smart[37] + timeOffsets[(int) ETimes::SmartTether];
+					f64 const SmartTime = Smart[37] - timeOffsets[ETimes::SmartTether];
 
 					if (SmartTime >= PieStart && SmartTime < PieEnd)
 					{
@@ -216,7 +206,7 @@ void SciDataParserPieSlices::load(std::string const & PieFile, std::string const
 		count = 0;
 		for (auto Hobo : HoboData)
 		{
-			if (Hobo[1] >= Slice[3] + timeOffsets[(int) ETimes::Pie] && Hobo[1] < Slice[4] + timeOffsets[(int) ETimes::Pie])
+			if (Hobo[1] >= Slice[3] - timeOffsets[ETimes::Pie] && Hobo[1] < Slice[4] - timeOffsets[ETimes::Pie])
 				count ++;
 		}
 		std::cout << count << " hobo points [ascent]." << std::endl;
@@ -224,7 +214,7 @@ void SciDataParserPieSlices::load(std::string const & PieFile, std::string const
 		count = 0;
 		for (auto SmartTether : SmartTetherData)
 		{
-			if (SmartTether[37] >= Slice[1] + timeOffsets[(int) ETimes::SmartTether] && SmartTether[37] < Slice[2] + timeOffsets[(int) ETimes::SmartTether])
+			if (SmartTether[37] >= Slice[1] - timeOffsets[ETimes::SmartTether] && SmartTether[37] < Slice[2] - timeOffsets[ETimes::SmartTether])
 				count ++;
 		}
 		std::cout << count << " smart tether points [descent] and ";
@@ -232,7 +222,7 @@ void SciDataParserPieSlices::load(std::string const & PieFile, std::string const
 
 		for (auto SmartTether : SmartTetherData)
 		{
-			if (SmartTether[37] >= Slice[3] + timeOffsets[(int) ETimes::SmartTether] && SmartTether[37] < Slice[4] + timeOffsets[(int) ETimes::SmartTether])
+			if (SmartTether[37] >= Slice[3] - timeOffsets[ETimes::SmartTether] && SmartTether[37] < Slice[4] - timeOffsets[ETimes::SmartTether])
 				count ++;
 		}
 		std::cout << count << " smart tether points [ascent]." << std::endl << std::endl;
