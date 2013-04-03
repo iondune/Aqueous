@@ -164,7 +164,7 @@ void SciDataParserPieSlices::load(std::string const & PieFile, std::string const
 					{
 						SSmartData sd;
 						sd.Depth = Smart[24];
-						sd.Time = SmartTime;
+						sd.Time = SmartTime - timeOffsets[ETimes::SmartTether];
 						SmartData.push_back(sd);
 
 						if (sd.Depth > MaxDepth)
