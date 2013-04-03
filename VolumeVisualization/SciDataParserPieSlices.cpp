@@ -48,7 +48,7 @@ static f64 const datetime_to_double(std::string const & s)
 	if (7 != sscanf(s.c_str(), "%d/%d/%d %d:%d:%d %cM", &day, &month, &year, &hours, &minutes, &seconds, &ampm))
 		std::cerr << "SHIT!" << std::endl;
 
-	return (f64) ((hours + (ampm == 'P' ? 12 : 0)) * 60 * 60 + minutes * 60 + seconds);
+	return (f64) ((hours + (ampm == 'P' && hours != 12 ? 12 : 0)) * 60 * 60 + minutes * 60 + seconds);
 }
 
 template <typename T>
@@ -63,6 +63,11 @@ void LoadCSVFile(std::string const & fileName, T & operation)
 	std::vector<std::string> Fields;
 
 	int row = 0;
+
+	if (! File.is_open())
+	{
+		std::cerr << "Failed to open csv file '" << fileName << "'." << std::endl;
+	}
 
 	while (File.is_open() && File.good())
 	{
@@ -201,7 +206,7 @@ void SciDataParserPieSlices::load(std::string const & PieFile, std::string const
 					std::cout << "Failed to find smart tether point." << std::endl;
 			}
 		}
-		std::cout << count << " hobo points [descent] and ";
+		std::cout << count << " hobo points [descent] and "/*;
 		
 		count = 0;
 		for (auto Hobo : HoboData)
@@ -225,7 +230,7 @@ void SciDataParserPieSlices::load(std::string const & PieFile, std::string const
 			if (SmartTether[37] >= Slice[3] - timeOffsets[ETimes::SmartTether] && SmartTether[37] < Slice[4] - timeOffsets[ETimes::SmartTether])
 				count ++;
 		}
-		std::cout << count << " smart tether points [ascent]." << std::endl << std::endl;
+		std::cout << count << " smart tether points [ascent]."*/ << std::endl << std::endl;
 	}
 
 	std::cout << std::endl << std::endl;

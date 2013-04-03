@@ -85,8 +85,8 @@ void CMainMenuState::createDataSet()
 #else
 	SciDataParserPieSlices * Parser = new SciDataParserPieSlices;
 	Parser->Manager = Context->DataManager;
-	Parser->load("PieSlices.csv", "StGeorgesBayCaveDay1Deployment2.csv", "2013_03_26_02_48_27.csv", STimeOffsets(0, 15, 15));
-	Parser->load("PieSlices2.csv", "StGeorgesBayCave-Day2-Deployment3.csv", "2013_03_27_10_28_28.csv", STimeOffsets(0, 15, 3597));
+	//Parser->load("PieSlices.csv", "StGeorgesBayCaveDay1Deployment2.csv", "2013_03_26_02_48_27.csv", STimeOffsets(0, 15, 15));
+	Parser->load("PieSlices2.csv", "StGeorgesBayCave-Day2-Deployment3.csv", "2013_03_27_10_28_28.csv", STimeOffsets(0, 15, -3597));
 #endif
 
 	int counter = 0;

@@ -1,5 +1,4 @@
-﻿"Plot Title: 10274764"
-"#","Date Time, GMT+01:00","Low Range, μS/cm (LGR S/N: 10274764, SEN S/N: 10274764)","High Range, μS/cm (LGR S/N: 10274764, SEN S/N: 10274764)","Temp, °C (LGR S/N: 10274764, SEN S/N: 10274764)","Batt, V (LGR S/N: 10274764, SEN S/N: 10274764)","Coupler Detached (LGR S/N: 10274764)","Coupler Attached (LGR S/N: 10274764)","Host Connected (LGR S/N: 10274764)","Stopped (LGR S/N: 10274764)","End Of File (LGR S/N: 10274764)"
+﻿"#","Date Time GMT+01:00","Low Range μS/cm (LGR S/N: 10274764 SEN S/N: 10274764)","High Range μS/cm (LGR S/N: 10274764 SEN S/N: 10274764)","Temp °C (LGR S/N: 10274764 SEN S/N: 10274764)","Batt V (LGR S/N: 10274764 SEN S/N: 10274764)","Coupler Detached (LGR S/N: 10274764)","Coupler Attached (LGR S/N: 10274764)","Host Connected (LGR S/N: 10274764)","Stopped (LGR S/N: 10274764)","End Of File (LGR S/N: 10274764)"
 1,03/27/13 11:15:16 AM,0.0,0.0,29.51,3.58,,,,,
 2,03/27/13 11:15:18 AM,0.0,0.0,29.49,3.60,,,,,
 3,03/27/13 11:15:20 AM,0.0,0.0,29.49,3.60,,,,,
