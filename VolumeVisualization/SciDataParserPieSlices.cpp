@@ -127,24 +127,32 @@ void SciDataParserPieSlices::load(std::string const & PieFile, std::string const
 	auto SavePieValues = [&PieSlices](std::vector<f64> const & v) {PieSlices.push_back(v);};
 	auto SaveHoboValues = [&HoboData](std::vector<f64> const & v) {HoboData.push_back(v);};
 	auto SaveSmartTether = [&SmartTetherData](std::vector<f64> const & v) {SmartTetherData.push_back(v);};
-
+	
+	std::cout << std::endl << std::endl;
+	
 	LoadCSVFile(PieFile, SavePieValues);
 	LoadCSVFile(HoboFile, SaveHoboValues);
 	LoadCSVFile(SmartFile, SaveSmartTether);
 
 	for (auto Slice : PieSlices)
 	{
-		std::cout << "Slice at angle " << Slice[0] << " has ";
+		std::cout << "Slice at angle " << Slice[0] << std::endl;
 
 		f64 const PieStart = Slice[1] - timeOffsets[ETimes::Pie], PieEnd = Slice[2] - timeOffsets[ETimes::Pie];
+		std::cout << "Start time: " << PieStart << "   End time: " << PieEnd << std::endl;
 
-		int count = 0;
+		int HoboSamples = 0, TetherSamples = 0, PointsCreated = 0;
+		f64 MinHoboTime = std::numeric_limits<f64>::max(), MaxHoboTime = -std::numeric_limits<f64>::max();
+
 		for (auto Hobo : HoboData)
 		{
 			f64 const HoboTime = Hobo[1] - timeOffsets[ETimes::Hobo];
+			MinHoboTime = std::min(HoboTime, MinHoboTime);
+			MaxHoboTime = std::max(HoboTime, MaxHoboTime);
+
 			if (HoboTime >= PieStart && HoboTime < PieEnd)
 			{
-				count ++;
+				HoboSamples ++;
 				bool found = false;
 
 				struct SSmartData
@@ -164,7 +172,7 @@ void SciDataParserPieSlices::load(std::string const & PieFile, std::string const
 					{
 						SSmartData sd;
 						sd.Depth = Smart[24];
-						sd.Time = SmartTime - timeOffsets[ETimes::SmartTether];
+						sd.Time = SmartTime;
 						SmartData.push_back(sd);
 
 						if (sd.Depth > MaxDepth)
@@ -174,8 +182,9 @@ void SciDataParserPieSlices::load(std::string const & PieFile, std::string const
 					}
 				}
 
-				for (auto Smart : SmartData)
+				for (u32 i = 0; i < SmartData.size(); ++ i)
 				{
+					SSmartData & Smart = SmartData[i];
 					f64 const SmartTime = Smart.Time;
 
 					if (SmartTime > HoboTime)
@@ -184,53 +193,43 @@ void SciDataParserPieSlices::load(std::string const & PieFile, std::string const
 
 						f64 const pi = 3.14159;
 
-						f64 const angle = Slice[0] * pi / 180.0;
-						f64 const ratio = (Smart.Depth - MinDepth) / (MaxDepth - MinDepth);
-						f64 const distance = sqrt(sq(Slice[6]) - sq(Smart.Depth));
-						f64 const radial = (Slice[5]*(ratio) + distance*(1.0 - ratio));
+						if (i == 0)
+						{
+							std::cout << "Error: Localization point at 0 index." << std::endl;
+						}
+						else
+						{
+							SSmartData & Previous = SmartData[i-1];
 
-						SciData d(Manager->getRawValues());
-						d.addField("time") = HoboTime;
-						d.addField("x") = cos(angle)*radial;
-						d.addField("z") = sin(angle)*radial;
-						d.addField("y") = -Smart.Depth;
-						d.addField("low") = Hobo[2];
-						d.addField("high") = Hobo[3];
-						d.addField("temp") = Hobo[4];
+							f64 const angle = Slice[0] * pi / 180.0;
+							f64 const ratio = 1.0 - (Smart.Time - PieStart) / (PieEnd - PieStart);
+							f64 const distance = sqrt(sq(Slice[6]) - sq(Smart.Depth));
+							f64 const radial = (Slice[5]*(ratio) + distance*(1.0 - ratio));
+
+							f64 const DepthRatio = (HoboTime - Previous.Time) / (Smart.Time - Previous.Time);
+
+							SciData d(Manager->getRawValues());
+							d.addField("time") = HoboTime;
+							d.addField("x") = cos(angle)*radial;
+							d.addField("z") = sin(angle)*radial;
+							d.addField("y") = -Previous.Depth * (1 - DepthRatio) + -Smart.Depth * (DepthRatio);
+							d.addField("low") = Hobo[2];
+							d.addField("high") = Hobo[3];
+							d.addField("temp") = Hobo[4];
+							PointsCreated ++;
+						}
 
 						break;
 					}
 				}
 
 				if (! found)
-					std::cout << "Failed to find smart tether point." << std::endl;
+					std::cout << "Failed to find smart tether point for hobo sample " << HoboSamples << "." << std::endl;
 			}
 		}
-		std::cout << count << " hobo points [descent] and "/*;
-		
-		count = 0;
-		for (auto Hobo : HoboData)
-		{
-			if (Hobo[1] >= Slice[3] - timeOffsets[ETimes::Pie] && Hobo[1] < Slice[4] - timeOffsets[ETimes::Pie])
-				count ++;
-		}
-		std::cout << count << " hobo points [ascent]." << std::endl;
-		
-		count = 0;
-		for (auto SmartTether : SmartTetherData)
-		{
-			if (SmartTether[37] >= Slice[1] - timeOffsets[ETimes::SmartTether] && SmartTether[37] < Slice[2] - timeOffsets[ETimes::SmartTether])
-				count ++;
-		}
-		std::cout << count << " smart tether points [descent] and ";
-		count = 0;
-
-		for (auto SmartTether : SmartTetherData)
-		{
-			if (SmartTether[37] >= Slice[3] - timeOffsets[ETimes::SmartTether] && SmartTether[37] < Slice[4] - timeOffsets[ETimes::SmartTether])
-				count ++;
-		}
-		std::cout << count << " smart tether points [ascent]."*/ << std::endl << std::endl;
+		std::cout << "Hobo times (" << HoboSamples << ") ranged from " << MinHoboTime << " to " << MaxHoboTime << std::endl;
+		std::cout << PointsCreated << " points created for slice." << std::endl;
+		std::cout << std::endl;
 	}
 
 	std::cout << std::endl << std::endl;
