@@ -84,8 +84,9 @@ Range SciDataCollection::getValueRange(std::string const & Field, double const O
 	{
 		double const v = it->getField(Field);
 
-		if (v == 0.0)
-			continue;
+		// TO DO : Check if not a valid field
+		//if (v == 0.0)
+		//	continue;
 
 		if (v < Mean + OutlierCutoff * StdDeviation && v > Mean - OutlierCutoff * StdDeviation)
 		{
