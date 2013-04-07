@@ -201,18 +201,20 @@ void SciDataParserPieSlices::load(std::string const & PieFile, std::string const
 						{
 							SSmartData & Previous = SmartData[i-1];
 
-							f64 const angle = Slice[0] * pi / 180.0;
-							f64 const ratio = 1.0 - (Smart.Time - PieStart) / (PieEnd - PieStart);
-							f64 const distance = sqrt(sq(Slice[6]) - sq(Smart.Depth));
-							f64 const radial = (Slice[5]*(ratio) + distance*(1.0 - ratio));
-
 							f64 const DepthRatio = (HoboTime - Previous.Time) / (Smart.Time - Previous.Time);
+							f64 const Depth = -Previous.Depth * (1 - DepthRatio) + -Smart.Depth * (DepthRatio);
+
+							f64 const angle = Slice[0] * pi / 180.0;
+							f64 const ratio = (HoboTime - PieStart) / (PieEnd - PieStart);
+							f64 const distance = sqrt(sq(Slice[6]) - sq(Depth));
+							f64 const radial = (Slice[5]*(1.0 - ratio) + distance*(ratio));
+
 
 							SciData d(Manager->getRawValues());
 							d.addField("time") = HoboTime;
 							d.addField("x") = cos(angle)*radial;
 							d.addField("z") = sin(angle)*radial;
-							d.addField("y") = -Previous.Depth * (1 - DepthRatio) + -Smart.Depth * (DepthRatio);
+							d.addField("y") = Depth;
 							d.addField("low") = Hobo[2];
 							d.addField("high") = Hobo[3];
 							d.addField("temp") = Hobo[4];

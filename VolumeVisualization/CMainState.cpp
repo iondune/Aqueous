@@ -112,8 +112,8 @@ void CMainState::OnRenderStart(float const Elapsed)
 		}
 		glEnable(GL_DEPTH_TEST);
 	}
-	//else
-		//Context->Scene.VolumeSceneObject->draw(SceneManager, SceneManager->getDefaultColorRenderPass(), false);
+	else
+		Context->Scene.VolumeSceneObject->draw(SceneManager, SceneManager->getDefaultColorRenderPass(), false);
 
 	//Context->GUIContext->draw(Elapsed, false);
 
