@@ -58,9 +58,3 @@ div#content
 	
 	z-index: 1;
 }
-
-#checkbox-1
-{
-	icon-decorator: image;
-	icon-image: assets/invader.tga 407px 60px 437px 90px;
-}

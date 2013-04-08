@@ -34,6 +34,8 @@
 
 #pragma comment(lib, "RocketCore.lib")
 #pragma comment(lib, "RocketDebugger.lib")
+#pragma comment(lib, "RocketControls.lib")
+
 
 // MatLAB Libraries
 #pragma comment(lib, "matlib/libmat.lib")
