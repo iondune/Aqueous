@@ -37,7 +37,7 @@ void CMainMenuState::OnRenderStart(float const Elapsed)
 	
 	if (! counter--)
 	{
-		//createDataSet();
+		createDataSet();
 		loadData(//"DenmarkMission1.dat");
 			"StGeorge'sBayCave-Day1+2-Pie.dat");
 	}

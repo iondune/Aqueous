@@ -160,6 +160,8 @@ void SciDataCollection::writeToFile(std::ofstream & File)
 
 void SciDataCollection::readFromFile(std::ifstream & File)
 {
+	Values.clear();
+
 	u32 FieldCount;
 	File.read((char *) & FieldCount, sizeof(u32));
 

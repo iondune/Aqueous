@@ -81,8 +81,10 @@ void SciDataManager::createGridDataFromRawValues(Range AcceptedValues, double De
 	GridValues.clear();
 
 	static int const AccumulationRange = 5;
-
+	
+	Range XRange = RawValues.getValueRange("x", Deviations, AcceptedValues);
 	Range YRange = RawValues.getValueRange("y", Deviations, AcceptedValues);
+	Range ZRange = RawValues.getValueRange("z", Deviations, AcceptedValues);
 
 	std::vector<SciData> Sorted = RawValues.getValues();
 	std::sort(Sorted.begin(), Sorted.end(), [](SciData const & d1, SciData const & d2) { return d1.getPosition().Y < d2.getPosition().Y; });
@@ -91,7 +93,10 @@ void SciDataManager::createGridDataFromRawValues(Range AcceptedValues, double De
 	for (int k = 0; k < Size; ++ k)
 	for (int i = 0; i < Size; ++ i)
 	{
+		f64 const X = i / (f64) Size;
 		f64 const Y = j / (f64) Size;
+		f64 const Z = k / (f64) Size;
+
 		f64 FieldAccumulator = 0.f;
 		f64 NormalizationAccumulator = 0.f;
 		f64 Normalization = 0.f;
@@ -104,15 +109,19 @@ void SciDataManager::createGridDataFromRawValues(Range AcceptedValues, double De
 			{
 				for (u32 u = 0; u < AccumulationRange && t >= u; ++ u)
 				{
+					f64 const x = (f64) ((Sorted[t-u].getPosition().X - XRange.first) / (XRange.second - XRange.first));
 					f64 const y = (f64) ((Sorted[t-u].getPosition().Y - YRange.first) / (YRange.second - YRange.first));
-					Normalization = 1 / (abs(y - Y) + 1.f);
+					f64 const z = (f64) ((Sorted[t-u].getPosition().Z - ZRange.first) / (ZRange.second - XRange.first));
+					Normalization = 1 / (sqrt(sq(X-x) + sq(Y-y) + sq(Z-z)) + 1.f);
 					FieldAccumulator += Sorted[t-u].getField(Field) * Normalization;
 					NormalizationAccumulator += Normalization;
 				}
 				for (u32 u = 1; u < AccumulationRange && t + u < Sorted.size(); ++ u)
 				{
+					f64 const x = (f64) ((Sorted[t+u].getPosition().X - XRange.first) / (XRange.second - XRange.first));
 					f64 const y = (f64) ((Sorted[t+u].getPosition().Y - YRange.first) / (YRange.second - YRange.first));
-					Normalization = 1 / (abs(y - Y) + 1.f);
+					f64 const z = (f64) ((Sorted[t+u].getPosition().Z - ZRange.first) / (ZRange.second - XRange.first));
+					Normalization = 1 / (sqrt(sq(X-x) + sq(Y-y) + sq(Z-z)) + 1.f);
 					FieldAccumulator += Sorted[t+u].getField(Field) * Normalization;
 					NormalizationAccumulator += Normalization;
 				}
