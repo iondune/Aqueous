@@ -5,6 +5,13 @@
 #include "CProgramContext.h"
 
 
+CVolumeSceneObject::SControl::SControl()
+	: Mode(2), SliceAxis(1.f, 0.f, 0.f),
+	LocalRange(0.2f), MinimumAlpha(0.1f),
+	EmphasisLocation(0.9f), AlphaIntensity(5.f),
+	StepSize(100.f), Debug(false)
+{}
+
 CVolumeSceneObject::CVolumeSceneObject()
 	: VolumeCube(0), VolumeBuffer(0), VolumeTarget(0), ShowVolume(0), SceneManager(CApplication::get().getSceneManager()), Shader(0)
 {

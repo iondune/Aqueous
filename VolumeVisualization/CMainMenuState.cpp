@@ -97,5 +97,5 @@ void CMainMenuState::createDataSet()
 
 	//Context->DataManager->createGridDataFromRawValues(FullRange, 5.0, "Avg Oxy");
 
-	Context->DataManager->writeToFile("Datasets/StGeorge'sBayCave-Day1+2-Pie.dat");
+	Context->DataManager->writeToFile("Datasets/StGeorge'sBayCave-Day1+2-Pie(2).dat");
 }
