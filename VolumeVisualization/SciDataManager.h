@@ -30,7 +30,9 @@ public:
 
 	//! Created OpenGL 3d texture using GridValues data collection
 	void createVolumeFromGridValues(IColorMapper * ColorMapper);
-
+	
+	//! Interpolate grid data using RBFI
+	void createGridDataFromRawValuesRBFI(Range AcceptedValues = FullRange, double Deviations = 5.0, std::string const & Field = "o2");
 	//! Interpolate grid data using RBFI
 	void createGridDataFromRawValues(Range AcceptedValues = FullRange, double Deviations = 5.0, std::string const & Field = "o2");
 

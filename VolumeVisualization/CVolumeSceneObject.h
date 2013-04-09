@@ -23,7 +23,7 @@ public:
 
 	struct SControl
 	{
-		// ToDo: Provide actual ranges and use for volume control widget
+		// To Do : Provide actual ranges and use for volume control widget
 		int Mode;
 		bool Debug;
 		SVector3f SliceAxis;
@@ -38,7 +38,7 @@ public:
 			: Mode(0), SliceAxis(1.f, 0.f, 0.f),
 			LocalRange(0.1f), MinimumAlpha(0.1f),
 			EmphasisLocation(0.5f), AlphaIntensity(1.f),
-			StepSize(25.f), Debug(false)
+			StepSize(100.f), Debug(false)
 		{}
 	};
 

@@ -3,7 +3,7 @@
 #include "RBFInterpolator/RBFInterpolator.h"
 
 
-void SciDataManager::createGridDataFromRawValues(Range AcceptedValues, double Deviations, std::string const & Field)
+void SciDataManager::createGridDataFromRawValuesRBFI(Range AcceptedValues, double Deviations, std::string const & Field)
 {
 	int const Size = 20;
 	GridDimensions[0] = Size;
@@ -67,6 +67,63 @@ void SciDataManager::createGridDataFromRawValues(Range AcceptedValues, double De
 		d.addField(Field) = rbfi.interpolate(i / (float) Size, j / (float) Size, k / (float) Size);
 		d.addField("x") = i / (float) Size;
 		d.addField("y") = j / (float) Size;
+		d.addField("z") = k / (float) Size;
+	}
+}
+
+void SciDataManager::createGridDataFromRawValues(Range AcceptedValues, double Deviations, std::string const & Field)
+{
+	int const Size = 128;
+	GridDimensions[0] = Size;
+	GridDimensions[1] = Size;
+	GridDimensions[2] = Size;
+
+	GridValues.clear();
+
+	static int const AccumulationRange = 5;
+
+	Range YRange = RawValues.getValueRange("y", Deviations, AcceptedValues);
+
+	std::vector<SciData> Sorted = RawValues.getValues();
+	std::sort(Sorted.begin(), Sorted.end(), [](SciData const & d1, SciData const & d2) { return d1.getPosition().Y < d2.getPosition().Y; });
+	
+	for (int j = 0; j < Size; ++ j)
+	for (int k = 0; k < Size; ++ k)
+	for (int i = 0; i < Size; ++ i)
+	{
+		f64 const Y = j / (f64) Size;
+		f64 FieldAccumulator = 0.f;
+		f64 NormalizationAccumulator = 0.f;
+		f64 Normalization = 0.f;
+
+		for (u32 t = 0; t < Sorted.size(); ++ t)
+		{
+			f64 const y = (f64) ((Sorted[t].getPosition().Y - YRange.first) / (YRange.second - YRange.first));
+
+			if (y > Y)
+			{
+				for (u32 u = 0; u < AccumulationRange && t >= u; ++ u)
+				{
+					f64 const y = (f64) ((Sorted[t-u].getPosition().Y - YRange.first) / (YRange.second - YRange.first));
+					Normalization = 1 / (abs(y - Y) + 1.f);
+					FieldAccumulator += Sorted[t-u].getField(Field) * Normalization;
+					NormalizationAccumulator += Normalization;
+				}
+				for (u32 u = 1; u < AccumulationRange && t + u < Sorted.size(); ++ u)
+				{
+					f64 const y = (f64) ((Sorted[t+u].getPosition().Y - YRange.first) / (YRange.second - YRange.first));
+					Normalization = 1 / (abs(y - Y) + 1.f);
+					FieldAccumulator += Sorted[t+u].getField(Field) * Normalization;
+					NormalizationAccumulator += Normalization;
+				}
+				break;
+			}
+		}
+		
+		SciData d(GridValues);
+		d.addField(Field) = FieldAccumulator / NormalizationAccumulator;
+		d.addField("x") = i / (float) Size;
+		d.addField("y") = Y;
 		d.addField("z") = k / (float) Size;
 	}
 }
