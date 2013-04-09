@@ -41,7 +41,8 @@ void SciDataManager::createGridDataFromRawValues(Range AcceptedValues, double De
 		bool alreadyIn = false;
 		for (u32 i = 0; i < X.size(); ++ i)
 		{
-			if (equals(x, X[i]) || equals(y, Y[i]) || equals(z, Z[i]) || equals(f, F[i]))
+			//if (equals(x, X[i]) || equals(y, Y[i]) || equals(z, Z[i]) || equals(f, F[i]))
+			if (equals(x, X[i]) && equals(y, Y[i]) && equals(z, Z[i]) && equals(f, F[i]))
 				alreadyIn = true;
 		}
 
