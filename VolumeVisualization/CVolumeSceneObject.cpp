@@ -175,7 +175,7 @@ bool CVolumeSceneObject::draw(IScene const * const Scene, smartPtr<IRenderPass> 
 			
 				// Transparency
 				glEnable(GL_BLEND);
-				glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 				// Draw
 				glDrawElements(GL_TRIANGLES, VolumeCube->MeshBuffers[0]->IndexBuffer.getElements().size(), GL_UNSIGNED_SHORT, 0);
