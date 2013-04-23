@@ -39,7 +39,7 @@ void CMainMenuState::OnRenderStart(float const Elapsed)
 	{
 		createDataSet();
 		loadData(//"DenmarkMission1.dat");
-			"StGeorge'sBayCave-Day1+2-Pie.dat");
+			"SliemaCaveDay3.dat");
 	}
 
 	//loaded = true;
@@ -83,19 +83,26 @@ void CMainMenuState::createDataSet()
 	Parser1->Fields = Fields;*/
 	Parser1->load("2013_03_26_02_48_27.csv");
 #else
-	SciDataParserPieSlices * Parser = new SciDataParserPieSlices;
+	//SciDataParserPieSlices * Parser = new SciDataParserPieSlices;
+	SciDataParserSmartTether * Parser = new SciDataParserSmartTether;
 	Parser->Manager = Context->DataManager;
-	Parser->load("PieSlices.csv", "StGeorgesBayCaveDay1Deployment2.csv", "2013_03_26_02_48_27.csv", STimeOffsets(0, 15, 15));
-	Parser->load("PieSlices2.csv", "StGeorgesBayCave-Day2-Deployment3.csv", "PhonySmartTetherData.csv", STimeOffsets(0, 15, 0));
+	Parser->load("2013_03_28_03_41_29.csv");
+	Parser->load("2013_03_28_03_55_07.csv");
+	Parser->load("2013_03_28_04_05_56.csv");
+	Parser->load("2013_03_28_04_15_33.csv");
+	Parser->load("2013_03_28_04_28_19.csv");
+	
+	//Parser->load("PieSlices.csv", "StGeorgesBayCaveDay1Deployment2.csv", "2013_03_26_02_48_27.csv", STimeOffsets(0, 15, 15));
+	//->load("PieSlices2.csv", "StGeorgesBayCave-Day2-Deployment3.csv", "PhonySmartTetherData.csv", STimeOffsets(0, 15, 0));
 #endif
 
 	int counter = 0;
 	for (auto Value : Context->DataManager->getRawValues().getValues())
 		Value.addField("timeStamp") = counter++;
 
-	Context->DataManager->createGridDataFromRawValues(FullRange, 5.0, "temp");
+	//Context->DataManager->createGridDataFromRawValues(FullRange, 5.0, "temp");
 
 	//Context->DataManager->createGridDataFromRawValues(FullRange, 5.0, "Avg Oxy");
 
-	Context->DataManager->writeToFile("Datasets/StGeorge'sBayCave-Day1+2-Pie(2).dat");
+	Context->DataManager->writeToFile("Datasets/SliemaCaveDay3.dat");
 }
