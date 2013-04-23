@@ -89,9 +89,9 @@ void SciDataManager::createGridDataFromRawValues(Range AcceptedValues, double De
 	std::vector<SciData> Sorted = RawValues.getValues();
 	std::sort(Sorted.begin(), Sorted.end(), [](SciData const & d1, SciData const & d2) { return d1.getPosition().Y < d2.getPosition().Y; });
 	
-	for (int j = 0; j < GridDimensions[0]; ++ j)
-	for (int k = 0; k < GridDimensions[1]; ++ k)
-	for (int i = 0; i < GridDimensions[2]; ++ i)
+	for (u32 j = 0; j < GridDimensions[0]; ++ j)
+	for (u32 k = 0; k < GridDimensions[1]; ++ k)
+	for (u32 i = 0; i < GridDimensions[2]; ++ i)
 	{
 		f64 const X = i / (f64) GridDimensions[0];
 		f64 const Y = j / (f64) GridDimensions[1];
