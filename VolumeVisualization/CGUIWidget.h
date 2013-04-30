@@ -4,12 +4,10 @@
 #include <ionTypes.h>
 #include <ionWindow.h>
 
-#include <Gwen/Controls.h>
-
 
 class CGUIManager;
 
-class CGUIWidget : public Gwen::Event::Handler
+class CGUIWidget// : public Gwen::Event::Handler
 {
 
 protected:

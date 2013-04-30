@@ -2,6 +2,8 @@
 
 #include "SciDataManager.h"
 
+#include <sstream>
+
 
 void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 {
@@ -10,7 +12,7 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
     switch (Event.Key)
     {
 
-	case EKey::ESCAPE:
+	case EKey::Escape:
 
 		if (! Event.Pressed)
 			Application->close();
@@ -20,19 +22,19 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 		// Camera Speed //
 		//////////////////
 
-	case EKey::NUM_3:
+	case EKey::Num3:
 
 		if (! Event.Pressed)
 			Context->Scene.Camera->setVelocity(50.f);
 		break;
 
-	case EKey::NUM_2:
+	case EKey::Num2:
 
 		if (! Event.Pressed)
 			Context->Scene.Camera->setVelocity(10.f);
 		break;
 
-	case EKey::NUM_1:
+	case EKey::Num1:
 
 		if (! Event.Pressed)
 			Context->Scene.Camera->setVelocity(2.5f);
@@ -43,19 +45,19 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 		// Widget Control //
 		////////////////////
 
-	case EKey::t:
+	case EKey::T:
 		
 		if (! Event.Pressed)
 			Context->GUIContext->getTerrainControl()->toggle();
 		break;
 
-	case EKey::v:
+	case EKey::V:
 
 		if (! Event.Pressed)
 			Context->GUIContext->getVolumeControl()->toggle();
 		break;
 
-	case EKey::g:
+	case EKey::G:
 
 		if (! Event.Pressed)
 			Context->GUIContext->getGlyphControl()->toggle();
@@ -66,7 +68,7 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 		// Skybox //
 		////////////
 
-	case EKey::c:
+	case EKey::C:
 
 		if (! Event.Pressed)
 		{
@@ -76,12 +78,12 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 				s << "enabled.";
 			else
 				s << "disabled.";
-			addConsoleMessage(s.str());
+			//addConsoleMessage(s.str());
 		}
 
 		break;
 
-	case EKey::y:
+	case EKey::Y:
 
 		if (! Event.Pressed)
 		{
@@ -90,7 +92,7 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 
 		break;
 
-	case EKey::b:
+	case EKey::B:
 
 		if (! Event.Pressed)
 		{
@@ -99,13 +101,13 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 
 		break;
 
-	case EKey::m:
+	case EKey::M:
 
 		ShowDepth = Event.Pressed;
 
 		break;
 
-	case EKey::p:
+	case EKey::P:
 
 		if (! Event.Pressed)
 			Context->Scene.VolumeSceneObject->Control.Debug = ! Context->Scene.VolumeSceneObject->Control.Debug;
@@ -123,14 +125,14 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 		break;*/
 
 		// To Do : Camera control buttons
-	case EKey::h:
+	case EKey::H:
 		if (! Event.Pressed)
 		{
 			SceneManager->setActiveCamera(Context->Scene.OrbitCamera);
 		}
 		break;
 		
-	case EKey::n:
+	case EKey::N:
 		if (! Event.Pressed)
 		{
 			SceneManager->setActiveCamera(Context->Scene.Camera);
@@ -175,9 +177,9 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 
 void CMainState::OnWindowResized(SWindowResizedEvent const & Event)
 {
-	Context->GUIContext->getCanvas()->SetSize(Event.Size.X, Event.Size.Y);
-	Context->GUIContext->getCanvas()->Invalidate();
-	Context->GUIContext->getCanvas()->InvalidateChildren(true);
+	//Context->GUIContext->getCanvas()->SetSize(Event.Size.X, Event.Size.Y);
+	//Context->GUIContext->getCanvas()->Invalidate();
+	//Context->GUIContext->getCanvas()->InvalidateChildren(true);
 
 	Context->Scene.Camera->setProjection(60.f, CApplication::get().getAspectRatio(), 0.01f, 100.f);
 }

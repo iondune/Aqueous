@@ -6,36 +6,23 @@
 // OpenGL Libraries
 #pragma comment(lib, "OpenGL32.lib")
 #pragma comment(lib, "glu32.lib")
-#pragma comment(lib, "glew.lib")
+#pragma comment(lib, "glfw.lib")
 
 // ionEngine Libraries
 #pragma comment(lib, "ionWindow.lib")
 #pragma comment(lib, "ionScene.lib")
 
-// SFML Libraries
+// GLFW Libraries
 #ifdef _DEBUG
-#pragma comment(lib, "sfml-system-s-d.lib")
-#pragma comment(lib, "sfml-window-s-d.lib")
-#pragma comment(lib, "sfml-graphics-s-d.lib")
+#pragma comment(lib, "glew32sd.lib")
 #else
-#pragma comment(lib, "sfml-system-s.lib")
-#pragma comment(lib, "sfml-window-s.lib")
-#pragma comment(lib, "sfml-graphics-s.lib")
+#pragma comment(lib, "glew32s.lib")
 #endif
 
-// GWEN Libraries
-#ifdef _DEBUG
-#pragma comment(lib, "GWENd-Renderer-SFMLd.lib")
-#pragma comment(lib, "gwen_staticd.lib")
-#else
-#pragma comment(lib, "GWEN-Renderer-SFML.lib")
-#pragma comment(lib, "gwen_static.lib")
-#endif
-
+// Rocket
 #pragma comment(lib, "RocketCore.lib")
 #pragma comment(lib, "RocketDebugger.lib")
 #pragma comment(lib, "RocketControls.lib")
-
 
 // MatLAB Libraries
 #pragma comment(lib, "matlib/libmat.lib")

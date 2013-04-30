@@ -83,11 +83,13 @@ void CDataLoadingThread::Run(std::string const & fileName)
 {
 	if (! Running)
 	{
-		Thread = new sf::Thread(& CDataLoadingThread::Execute, this);
+		//Thread = new sf::Thread(& CDataLoadingThread::Execute, this);
 		Executing = Running = true;
 		FileName = fileName;
 		
-		Thread->launch();
+		//Thread->launch();
+		Execute();
+		Executing = false;
 	}
 }
 

@@ -6,6 +6,8 @@
 #include "CDataLoadingThread.h"
 #include "SciDataManager.h"
 
+#include <sstream>
+
 
 CMainMenuState::CMainMenuState()
 {}
@@ -27,7 +29,7 @@ void CMainMenuState::end()
 void CMainMenuState::OnRenderStart(float const Elapsed)
 {
 	// Let loading thread run
-	sf::sleep(sf::seconds(0.05f));
+	//sf::sleep(sf::seconds(0.05f));
 	Thread.Sync();
 
 	//Context->GUIContext->draw(Elapsed, true);

@@ -2,15 +2,15 @@
 
 #include "CMainState.h"
 
-
+/*
 CGwenEventForwarder::CGwenEventForwarder(Gwen::Controls::Canvas * pCanvas)
 	: Canvas(pCanvas)
 {}
-
+*/
 void CGwenEventForwarder::OnKeyboardEvent(SKeyboardEvent const & Event)
 {
 
-	if (Event.Key >= EKey::a && Event.Key <= EKey::z)
+	/*if (Event.Key >= EKey::a && Event.Key <= EKey::z)
 	{
 		char key = 'a' + (Event.Key - EKey::a);
 		if (Application->getEventManager().IsKeyDown[EKey::LSHIFT] || 
@@ -43,12 +43,13 @@ void CGwenEventForwarder::OnKeyboardEvent(SKeyboardEvent const & Event)
 		case EKey::RALT: gwenkey = Gwen::Key::Alt; break;
 		}
 		Canvas->InputKey(gwenkey, Event.Pressed);
-	}
+	}*/
+
 }
 
 void CGwenEventForwarder::OnMouseEvent(SMouseEvent const & Event)
 {
-	switch (Event.Type.Value)
+	/*switch (Event.Type.Value)
 	{
 	case SMouseEvent::EType::Move:
 
@@ -78,7 +79,7 @@ void CGwenEventForwarder::OnMouseEvent(SMouseEvent const & Event)
 				CMainState::get().OnUncaughtMouseEvent(Event);
 		}
 		break;
-	}
+	}*/
 }
 
 void CGwenEventForwarder::OnGameTickStart(float const Elapsed)

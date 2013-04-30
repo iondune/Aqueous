@@ -16,8 +16,8 @@ class CMainState : public CContextState<CMainState, CProgramContext>
 	bool ShowDepth;
 
 	Rocket::Core::Context* RocketContext;
-	RocketSFMLRenderer * Renderer;
-	RocketSFMLSystemInterface * SystemInterface;
+	//RocketSFMLRenderer * Renderer;
+	//RocketSFMLSystemInterface * SystemInterface;
 	ShellFileInterface * FileInterface;
 
 public:
@@ -32,9 +32,9 @@ public:
     void OnKeyboardEvent(SKeyboardEvent const & Event);
 	void OnWindowResized(SWindowResizedEvent const & Event);
 
-	void OnSFMLEvent(sf::Event const & Event);
+	//void OnSFMLEvent(sf::Event const & Event);
 
-	void addConsoleMessage(std::string const & Message, Gwen::Color const & Color = Gwen::Color(255, 255, 255, 255));
+	//void addConsoleMessage(std::string const & Message, Gwen::Color const & Color = Gwen::Color(255, 255, 255, 255));
 
 	//////////////////////////////
 	// Mouse Tracking Varaibles //

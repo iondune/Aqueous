@@ -1,5 +1,7 @@
 #include "SciDataManager.h"
 
+#include <sstream>
+
 
 void SciDataManager::createVolumeFromGridValues(IColorMapper * ColorMapper)
 {

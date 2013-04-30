@@ -61,7 +61,7 @@ void CMainState::OnUncaughtMouseEvent(SMouseEvent const & Event)
 						glm::vec3 rotAxis(axis.x, axis.y, axis.z);
 						glm::mat4 Transformation = glm::rotate(glm::mat4(1.f), dot, rotAxis);
 						Rotation = Transformation*Rotation;
-						if (! equals(difX, 0.f) && ! equals(difY, 0.f) && Application->getEventManager().IsKeyDown[EKey::q])
+						if (! equals(difX, 0.f) && ! equals(difY, 0.f) && Application->getEventManager().IsKeyDown[EKey::Q])
 						{
 							glm::vec4 v = Transformation * glm::vec4(Context->Scene.VolumeSceneObject->Control.SliceAxis.getGLMVector(), 0.f);
 							Context->Scene.VolumeSceneObject->Control.SliceAxis = SVector3f(v.x, v.y, v.z);

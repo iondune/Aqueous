@@ -13,17 +13,17 @@ void CGUIConsoleWidget::setSize(int const size)
 {
 	Size = size;
 
-	Messages.resize(Size, 0);
-	MessageColors.resize(Size, Gwen::Color(0, 0, 0, 0));
+	//Messages.resize(Size, 0);
+	//MessageColors.resize(Size, Gwen::Color(0, 0, 0, 0));
 
 	for (int i = 0; i < Size; ++ i)
 	{
-		if (Messages[i])
-			continue;
+		//if (Messages[i])
+		//	continue;
 
-		Messages[i] = new Gwen::Controls::Label(GUIManager->getCanvas());
-		Messages[i]->SetPos(20, CApplication::get().getWindowSize().Y - 50 - 25 * i);
-		Messages[i]->SetSize(1500, 30);
+		//Messages[i] = new Gwen::Controls::Label(GUIManager->getCanvas());
+		//Messages[i]->SetPos(20, CApplication::get().getWindowSize().Y - 50 - 25 * i);
+		//Messages[i]->SetSize(1500, 30);
 	}
 }
 
@@ -37,20 +37,21 @@ void CGUIConsoleWidget::update(float const Elapsed)
 		for (int i = 0; i < Size; ++ i)
 		{
 			static int const Decrement = 3;
-			Gwen::Color & c = MessageColors[i];
+			/*Gwen::Color & c = MessageColors[i];
 
 			if (c.a >= Decrement)
 				c.a -= Decrement;
 			else
 				c.a = 0;
 				
-			Messages[i]->SetTextColor(c);
+			Messages[i]->SetTextColor(c);*/
 		}
 
 		Accumulator -= AlphaTick;
 	}
 }
 
+/*
 void CGUIConsoleWidget::addMessage(std::string const & Message, Gwen::Color const & Color)
 {
 	for (int i = Size - 1; i > 0; -- i)
@@ -64,3 +65,4 @@ void CGUIConsoleWidget::addMessage(std::string const & Message, Gwen::Color cons
 	MessageColors[0] = Color;
 	Messages[0]->SetTextColor(Color);
 }
+*/

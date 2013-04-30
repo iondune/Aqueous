@@ -5,7 +5,7 @@
 
 #include <sstream>
 
-#include <Gwen/Controls/Menu.h>
+//#include <Gwen/Controls/Menu.h>
 
 
 void CGUIMainMenuWidget::createDataSetButtons()
@@ -24,12 +24,12 @@ void CGUIMainMenuWidget::createDataSetButtons()
 			if (FileName == "." || FileName == "..")
 				continue;
 
-			Gwen::Controls::Button * Button = new Gwen::Controls::Button(Window);
+			/*Gwen::Controls::Button * Button = new Gwen::Controls::Button(Window);
 			Button->SetBounds(50, Height, 290, 25);
 			Button->SetText(FileName);
 			Button->onPress.Add(this, & CGUIMainMenuWidget::OnSelectDataSet);
 			Button->Invalidate();
-			DataSetButtons.push_back(Button);
+			DataSetButtons.push_back(Button);*/
 
 			Height += 35;
 		}
@@ -37,38 +37,38 @@ void CGUIMainMenuWidget::createDataSetButtons()
 	}
 
 	Height += 35;
-	NewDataSetButton = new Gwen::Controls::Button(Window);
+	/*NewDataSetButton = new Gwen::Controls::Button(Window);
 	NewDataSetButton->SetBounds(50, Height, 290, 25);
 	NewDataSetButton->SetText("Create New Data Set");
-	NewDataSetButton->onPress.Add(this, & CGUIMainMenuWidget::OnSelectDataSet);
+	NewDataSetButton->onPress.Add(this, & CGUIMainMenuWidget::OnSelectDataSet);*/
 }
 
-class MenuDropDown : public Gwen::Event::Handler
+class MenuDropDown// : public Gwen::Event::Handler
 {
 
-	Gwen::Controls::MenuItem * MenuItem;
+	//Gwen::Controls::MenuItem * MenuItem;
 
 public:
 
-	MenuDropDown(Gwen::Controls::MenuItem * menuItem)
+	/*MenuDropDown(Gwen::Controls::MenuItem * menuItem)
 		: MenuItem(menuItem)
-	{}
+	{}*/
 
 	void OnPress()
 	{
-		Gwen::Controls::Menu * Menu = new Gwen::Controls::Menu(MenuItem->GetCanvas());
+		/*Gwen::Controls::Menu * Menu = new Gwen::Controls::Menu(MenuItem->GetCanvas());
 		Menu->MoveTo(MenuItem->GetPos().x, MenuItem->GetPos().y + 22);
 		Menu->AddItem("Open");//->onPress.Add(new ActionItem());
 		Menu->AddItem("Close");
-		Menu->AddItem("Quit");
+		Menu->AddItem("Quit");*/
 	}
 
 };
 
 CGUIMainMenuWidget::CGUIMainMenuWidget()
-	: NewDataSetButton(0)
+//	: NewDataSetButton(0)
 {
-	Menu = new Gwen::Controls::MenuStrip(GUIManager->getCanvas());
+	/*Menu = new Gwen::Controls::MenuStrip(GUIManager->getCanvas());
 	Gwen::Controls::MenuItem * File = Menu->AddItem("File");
 	File->onPress.Add(new MenuDropDown(File), & MenuDropDown::OnPress);
 
@@ -90,11 +90,12 @@ CGUIMainMenuWidget::CGUIMainMenuWidget()
 	MediumLabel->SetFont(GUIManager->getMediumFont());
 	MediumLabel->SetText(L"Available Data Sets:");
 	MediumLabel->SetBounds(20, 70, 600, 300);
-	MediumLabel->SetTextColor(Gwen::Color(35, 35, 55, 215));
+	MediumLabel->SetTextColor(Gwen::Color(35, 35, 55, 215));*/
 
 	createDataSetButtons();
 }
 
+/*
 void CGUIMainMenuWidget::OnSelectDataSet(Gwen::Controls::Base * Control)
 {
 	if (Control == NewDataSetButton)
@@ -122,3 +123,4 @@ void CGUIMainMenuWidget::OnSelectDataSet(Gwen::Controls::Base * Control)
 		CMainMenuState::get().loadData(std::string(FileName.begin(), FileName.end()));
 	}
 }
+*/

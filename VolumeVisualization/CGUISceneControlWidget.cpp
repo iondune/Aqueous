@@ -4,13 +4,13 @@
 #include "CMainState.h"
 #include "CTerrainSceneObject.h"
 
-#include <Gwen/Controls.h>
-#include <Gwen/Controls/ComboBox.h>
+//#include <Gwen/Controls.h>
+//#include <Gwen/Controls/ComboBox.h>
 
 
 CGUISceneControlWidget::CGUISceneControlWidget()
 {
-	Window = new Gwen::Controls::WindowControl(GUIManager->getCanvas());
+	/*Window = new Gwen::Controls::WindowControl(GUIManager->getCanvas());
 	Window->SetDeleteOnClose(false);
 	Window->SetBounds(1200, 670, 330, 160);
 	Window->SetTitle("Scene Controls");
@@ -19,9 +19,9 @@ CGUISceneControlWidget::CGUISceneControlWidget()
 	EnableButton = new Gwen::Controls::Button(Window);
 	EnableButton->SetBounds(15, 10, 290, 25);
 	EnableButton->SetText("Enable Backdrop");
-	EnableButton->onPress.Add(this, & CGUISceneControlWidget::OnToggleBackdrop);
+	EnableButton->onPress.Add(this, & CGUISceneControlWidget::OnToggleBackdrop);*/
 }
-
+/*
 void CGUISceneControlWidget::OnToggleBackdrop(Gwen::Controls::Base * Control)
 {
 	CProgramContext * Context = & CProgramContext::get();
@@ -40,8 +40,8 @@ void CGUISceneControlWidget::OnToggleBackdrop(Gwen::Controls::Base * Control)
 	else
 		((Gwen::Controls::Button *) Control)->SetText("Enable Backdrop");
 }
-
+*/
 void CGUISceneControlWidget::toggle()
 {
-	Window->SetHidden(Window->Visible());
+	//Window->SetHidden(Window->Visible());
 }

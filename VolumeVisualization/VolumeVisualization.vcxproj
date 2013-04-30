@@ -101,9 +101,7 @@
     <ClCompile Include="CTerrainSceneObject.cpp" />
     <ClCompile Include="CGUITitleLabelsWidget.cpp" />
     <ClCompile Include="CVolumeSceneObject.cpp" />
-    <ClCompile Include="libRocket\RenderInterfaceSFML.cpp" />
     <ClCompile Include="libRocket\ShellFileInterface.cpp" />
-    <ClCompile Include="libRocket\SystemInterfaceSFML.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include=".\SciDataParserSimpleTXT.cpp" />
     <ClCompile Include=".\SciDataParserGrid1.cpp" />
@@ -152,9 +150,7 @@
     <ClInclude Include="CVolumeSceneObject.h" />
     <ClInclude Include="IColorMapper.h" />
     <ClInclude Include="Libraries.h" />
-    <ClInclude Include="libRocket\RenderInterfaceSFML.h" />
     <ClInclude Include="libRocket\ShellFileInterface.h" />
-    <ClInclude Include="libRocket\SystemInterfaceSFML.h" />
     <ClInclude Include="ProgressPrinter.h" />
     <ClInclude Include="Range.h" />
     <ClInclude Include="RBFInterpolator\newmat.h" />

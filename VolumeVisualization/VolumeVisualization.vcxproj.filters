@@ -116,12 +116,6 @@
     <ClCompile Include="CPlaneGridSceneObject.cpp">
       <Filter>MainState\Misc</Filter>
     </ClCompile>
-    <ClCompile Include="libRocket\RenderInterfaceSFML.cpp">
-      <Filter>libRocket</Filter>
-    </ClCompile>
-    <ClCompile Include="libRocket\SystemInterfaceSFML.cpp">
-      <Filter>libRocket</Filter>
-    </ClCompile>
     <ClCompile Include="libRocket\ShellFileInterface.cpp">
       <Filter>libRocket</Filter>
     </ClCompile>
@@ -247,12 +241,6 @@
     </ClInclude>
     <ClInclude Include="CPlaneGridSceneObject.h">
       <Filter>MainState\Misc</Filter>
-    </ClInclude>
-    <ClInclude Include="libRocket\RenderInterfaceSFML.h">
-      <Filter>libRocket</Filter>
-    </ClInclude>
-    <ClInclude Include="libRocket\SystemInterfaceSFML.h">
-      <Filter>libRocket</Filter>
     </ClInclude>
     <ClInclude Include="libRocket\ShellFileInterface.h">
       <Filter>libRocket</Filter>

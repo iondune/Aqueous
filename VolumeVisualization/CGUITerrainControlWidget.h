@@ -2,8 +2,8 @@
 #define _CGUITERRAINCONTROLWIDGET_H_INCLUDED_
 
 #include "CGUIContextWidget.h"
-#include <Gwen/Controls/WindowControl.h>
-#include <Gwen/Controls/HorizontalSlider.h>
+//#include <Gwen/Controls/WindowControl.h>
+//#include <Gwen/Controls/HorizontalSlider.h>
 
 
 class CMainState;
@@ -15,18 +15,18 @@ class CGUITerrainControlWidget : public CGUIContextWidget
 	CTerrainSceneObject * Terrain;
 	CMainState & MainState;
 
-	Gwen::Controls::WindowControl * Window;
-	Gwen::Controls::Button * EnableButton;
+	//Gwen::Controls::WindowControl * Window;
+	//Gwen::Controls::Button * EnableButton;
 
 public:
 
 	CGUITerrainControlWidget();
 
-	void OnToggleTerrain(Gwen::Controls::Base * Control);
+	/*void OnToggleTerrain(Gwen::Controls::Base * Control);
 	void OnSelectElevation(Gwen::Controls::Base * Control);
 	void OnSelectColor(Gwen::Controls::Base * Control);
 	void OnSelectWireframe(Gwen::Controls::Base * Control);
-	void OnSelectSolid(Gwen::Controls::Base * Control);
+	void OnSelectSolid(Gwen::Controls::Base * Control);*/
 
 	void toggle();
 

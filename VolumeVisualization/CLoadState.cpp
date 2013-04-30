@@ -11,15 +11,15 @@
 #include "CPlaneGridSceneObject.h"
 
 
-void CLoadStateEventHandler::OnFinish(Gwen::Controls::Base * Control)
+/*void CLoadStateEventHandler::OnFinish(Gwen::Controls::Base * Control)
 {
 	CLoadState::get().OnFinish();
-}
+}*/
 
 
-void CLoadState::addLabel(std::wstring const & Label, Gwen::Color const & Color)
+/*void CLoadState::addLabel(std::wstring const & Label, Gwen::Color const & Color)
 {
-	/*Gwen::Controls::Label * MediumLabel = new Gwen::Controls::Label(Canvas);
+	Gwen::Controls::Label * MediumLabel = new Gwen::Controls::Label(Canvas);
 	MediumLabel->SetFont(GUIManager->getMediumFont());
 	MediumLabel->SetText(Label);
 	MediumLabel->SetBounds(20 + Indent, LabelHeight, 1024, 300);
@@ -28,8 +28,8 @@ void CLoadState::addLabel(std::wstring const & Label, Gwen::Color const & Color)
 	GUIManager->draw(true);
 	CApplication::get().swapBuffers();
 
-	LabelHeight += 40;*/
-}
+	LabelHeight += 40;
+}*/
 
 CLoadState::CLoadState()
 	: LabelHeight(0), Indent(0), GetConfirmation(false)
@@ -62,18 +62,18 @@ void CLoadState::begin()
 	GUIManager->draw(true);
 	CApplication::get().swapBuffers();*/
 	
-	addLabel(L"Initializing System...");
+	//addLabel(L"Initializing System...");
 	//CGwenEventForwarder * Forwarder = new CGwenEventForwarder(GUIManager->getCanvas());
 	
-	addLabel(L"Loading Scene Shaders...");
+	//addLabel(L"Loading Scene Shaders...");
 	Application.getSceneManager().init(true, true);
 	loadShaders();
 	
-	addLabel(L"Loading Scene Objects...");
+	//addLabel(L"Loading Scene Objects...");
 	loadScene();
 	
 	Context->DataManager = new SciDataManager();
-	addLabel(L"Menu is Starting...");
+	//addLabel(L"Menu is Starting...");
 
 	/*if (GetConfirmation)
 	{
@@ -97,21 +97,21 @@ void CLoadState::loadShaders()
 	Indent = 60;
 	bool Failed = false;
 	
-	if (! (Context->Shaders.Glyph = CShaderLoader::loadShader("Glyph")))
-		addLabel(L"Failed to load Glyph Shader - Glyphs will not draw.", Gwen::Color(255, 32, 32, 192)), Failed = true;
-	if (! (Context->Shaders.GlyphLines = CShaderLoader::loadShader("GlyphLines")))
-		addLabel(L"Failed to load Glyph Line Shader - Glyphs Lines will not draw.", Gwen::Color(255, 32, 32, 192)), Failed = true;
-	if (! (Context->Shaders.DiffuseTexture = CShaderLoader::loadShader("DiffuseTexture")))
-		addLabel(L"Failed to load Diffuse/Texture Shader - Backdrop will not draw.", Gwen::Color(255, 64, 64, 192)), Failed = true;
-	if (! (Context->Shaders.Volume = CShaderLoader::loadShader("Volume2")))
-		addLabel(L"Failed to load Volume Shader - Volume will not draw.", Gwen::Color(255, 64, 64, 192)), Failed = true;
-	if (! (Context->Shaders.Terrain = CShaderLoader::loadShader("Terrain")))
-		addLabel(L"Failed to load Terrain Shader - Terrain will not draw.", Gwen::Color(255, 64, 64, 192)), Failed = true;
+	/*if (! */(Context->Shaders.Glyph = CShaderLoader::loadShader("Glyph"));//)
+		//addLabel(L"Failed to load Glyph Shader - Glyphs will not draw.", Gwen::Color(255, 32, 32, 192)), Failed = true;
+	/*if (! */(Context->Shaders.GlyphLines = CShaderLoader::loadShader("GlyphLines"));//)
+		//addLabel(L"Failed to load Glyph Line Shader - Glyphs Lines will not draw.", Gwen::Color(255, 32, 32, 192)), Failed = true;
+	/*if (! */(Context->Shaders.DiffuseTexture = CShaderLoader::loadShader("DiffuseTexture"));//)
+		//addLabel(L"Failed to load Diffuse/Texture Shader - Backdrop will not draw.", Gwen::Color(255, 64, 64, 192)), Failed = true;
+	/*if (! */(Context->Shaders.Volume = CShaderLoader::loadShader("Volume2"));//)
+		//addLabel(L"Failed to load Volume Shader - Volume will not draw.", Gwen::Color(255, 64, 64, 192)), Failed = true;
+	/*if (! */(Context->Shaders.Terrain = CShaderLoader::loadShader("Terrain"));//)
+		//addLabel(L"Failed to load Terrain Shader - Terrain will not draw.", Gwen::Color(255, 64, 64, 192)), Failed = true;
 
-	if (! Failed)
-		addLabel(L"All shaders compiled successfully.", Gwen::Color(64, 255, 64, 192));
-	else
-		GetConfirmation = true;
+	//if (! Failed)
+	//	addLabel(L"All shaders compiled successfully.", Gwen::Color(64, 255, 64, 192));
+	//else
+	//	GetConfirmation = true;
 
 	Indent = 0;
 }

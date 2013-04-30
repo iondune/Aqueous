@@ -6,8 +6,8 @@
 #include <Rocket/Core.h>
 #include <Rocket/Controls.h>
 #include <Rocket/Debugger.h>
-#include "libRocket\SystemInterfaceSFML.h"
-#include "libRocket\RenderInterfaceSFML.h"
+//#include "libRocket\SystemInterfaceSFML.h"
+//#include "libRocket\RenderInterfaceSFML.h"
 #include "libRocket\ShellFileInterface.h"
 
 
@@ -27,15 +27,15 @@ void CMainState::begin()
 
 
 	
-	
-	Renderer = new RocketSFMLRenderer;
-	Renderer->SetWindow(CApplication::get().App);
-	SystemInterface = new RocketSFMLSystemInterface;
+	/*
+	//Renderer = new RocketSFMLRenderer;
+	//Renderer->SetWindow(CApplication::get().App);
+	//SystemInterface = new RocketSFMLSystemInterface;
 	FileInterface = new ShellFileInterface("libRocket/assets/");
 
 	Rocket::Core::SetFileInterface(FileInterface);
-	Rocket::Core::SetRenderInterface(Renderer);
-	Rocket::Core::SetSystemInterface(SystemInterface);
+	//Rocket::Core::SetRenderInterface(Renderer);
+	//Rocket::Core::SetSystemInterface(SystemInterface);
 
 	Rocket::Core::Initialise();
 	Rocket::Controls::Initialise();
@@ -73,6 +73,7 @@ void CMainState::begin()
 		document->Show();
 		document->RemoveReference();
 	}
+	*/
 }
 
 void CMainState::end()
@@ -119,14 +120,14 @@ void CMainState::OnRenderStart(float const Elapsed)
 
 	//Context->GUIContext->draw(Elapsed, false);
 
-	RocketContext->Update();
+	//RocketContext->Update();
 	//RocketContext->Render();
 	CApplication::get().swapBuffers();
 	if (Scene.Terrain->isVisible())
 		Scene.Terrain->DoCameraUpdate = false;
 }
 
-void CMainState::OnSFMLEvent(sf::Event const & event)
+/*void CMainState::OnSFMLEvent(sf::Event const & event)
 {
 	switch(event.type)
 	{
@@ -174,4 +175,4 @@ void CMainState::OnSFMLEvent(sf::Event const & event)
 void CMainState::addConsoleMessage(std::string const & Message, Gwen::Color const & Color)
 {
 	Context->GUIContext->getConsole()->addMessage(Message, Color);
-}
+}*/

@@ -57,7 +57,7 @@ void CGlyphSceneObject::loadGlyphs(SciDataManager * DataManager, IColorMapper * 
 		double v = it->getField(FloorLabel);
 		if (v != 0.f)
 		{
-			float Depth = v / YRange.second;
+			f32 Depth = (f32) v / (f32) YRange.second;
 			g.FloorHeight = 1.f - Depth;
 		}
 
@@ -160,12 +160,12 @@ void CGlyphSceneObject::buildLines()
 
 	for (u32 i = 1; i < Glyphs.size(); ++ i)
 	{
-		Lines.push_back(Glyphs[i-1].Position.X - 0.1667*Scale.X);
-		Lines.push_back(Glyphs[i-1].Position.Y - 0.33*Scale.Y);
-		Lines.push_back(Glyphs[i-1].Position.Z - 0.1667*Scale.Z);
-		Lines.push_back(Glyphs[i].Position.X - 0.1667*Scale.X);
-		Lines.push_back(Glyphs[i].Position.Y - 0.33*Scale.Y);
-		Lines.push_back(Glyphs[i].Position.Z - 0.1667*Scale.Z);
+		Lines.push_back(Glyphs[i-1].Position.X - 0.1667f*Scale.X);
+		Lines.push_back(Glyphs[i-1].Position.Y - 0.3333f*Scale.Y);
+		Lines.push_back(Glyphs[i-1].Position.Z - 0.1667f*Scale.Z);
+		Lines.push_back(Glyphs[i].Position.X - 0.1667f*Scale.X);
+		Lines.push_back(Glyphs[i].Position.Y - 0.3333f*Scale.Y);
+		Lines.push_back(Glyphs[i].Position.Z - 0.1667f*Scale.Z);
 		
 		LineColors.push_back(Glyphs[i-1].Color.Red);
 		LineColors.push_back(Glyphs[i-1].Color.Green);

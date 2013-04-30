@@ -3,7 +3,7 @@
 
 CGUILoadingWidget::CGUILoadingWidget(std::string const & Label)
 {
-	Window = new Gwen::Controls::WindowControl(GUIManager->getCanvas());
+	/*Window = new Gwen::Controls::WindowControl(GUIManager->getCanvas());
 	Window->SetClosable(false);
 	Window->SetBounds(300, 300, 400, 150);
 	Window->SetTitle("Loading...");
@@ -18,25 +18,25 @@ CGUILoadingWidget::CGUILoadingWidget(std::string const & Label)
 
 	ProgressBar = new Gwen::Controls::ProgressBar(Window);
 	ProgressBar->SetBounds(20, 50, 340, 40);
-	ProgressBar->SetValue(0.5f);
+	ProgressBar->SetValue(0.5f);*/
 }
 
 void CGUILoadingWidget::setProgress(f32 const Progress)
 {
-	sf::Lock l(ProgressMutex);
+	/*sf::Lock l(ProgressMutex);
 
 	if (ProgressBar)
-		ProgressBar->SetValue(Progress);
+		ProgressBar->SetValue(Progress);*/
 }
 
 void CGUILoadingWidget::update(f32 const Elapsed)
 {
-	sf::Lock l(ProgressMutex);
+	/*sf::Lock l(ProgressMutex);
 
 	if (ProgressBar->GetValue() >= 1.f)
 	{
 		Window->DelayedDelete();
 		ProgressBar = 0;
 		Window = 0;
-	}
+	}*/
 }

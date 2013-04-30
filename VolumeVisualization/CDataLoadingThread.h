@@ -16,7 +16,7 @@ class CDataLoadingThread
 	bool Executing;
 	bool Running;
 
-	sf::Thread * Thread;
+	//sf::Thread * Thread;
 
 	std::string FileName;
 
