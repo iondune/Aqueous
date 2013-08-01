@@ -42,7 +42,9 @@ void CGlyphSceneObject::loadGlyphs(SciDataManager * DataManager, IColorMapper * 
 	{
 		SGlyph g;
 
-		float X = (float) ((it->getField(xField) - XRange.first) / (XRange.second - XRange.first));
+		f32 MaxField = max((XRange.second - XRange.first), (ZRange.second - ZRange.first));
+
+		float X = (float) ((it->getField(xField) - XRange.first) / MaxField);
 		if (XRange.first > XRange.second)
 			X = 0.f;
 
@@ -50,7 +52,7 @@ void CGlyphSceneObject::loadGlyphs(SciDataManager * DataManager, IColorMapper * 
 		if (YRange.first > YRange.second)
 			Y = 0.f;
 
-		float Z = (float) ((it->getField(zField) - ZRange.first) / (ZRange.second - ZRange.first));
+		float Z = (float) ((it->getField(zField) - ZRange.first) / MaxField);
 		if (ZRange.first > ZRange.second)
 			Z = 0.f;
 
