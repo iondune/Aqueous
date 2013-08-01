@@ -119,6 +119,9 @@
     <ClCompile Include="SciDataParserPieSlices.cpp">
       <Filter>MainState\Data Management\Parsers</Filter>
     </ClCompile>
+    <ClCompile Include="CGwenOpenGLRenderer.cpp">
+      <Filter>Utilities\GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CMainState.h">
@@ -238,6 +241,9 @@
     </ClInclude>
     <ClInclude Include="CPlaneGridSceneObject.h">
       <Filter>MainState\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="CGwenOpenGLRenderer.h">
+      <Filter>Utilities\GUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
