@@ -38,6 +38,9 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(VisualStudioDir)\Projects\ionEngine\ionEngine.props" />
+  </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -101,7 +104,6 @@
     <ClCompile Include="CTerrainSceneObject.cpp" />
     <ClCompile Include="CGUITitleLabelsWidget.cpp" />
     <ClCompile Include="CVolumeSceneObject.cpp" />
-    <ClCompile Include="libRocket\ShellFileInterface.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include=".\SciDataParserSimpleTXT.cpp" />
     <ClCompile Include=".\SciDataParserGrid1.cpp" />
@@ -150,7 +152,6 @@
     <ClInclude Include="CVolumeSceneObject.h" />
     <ClInclude Include="IColorMapper.h" />
     <ClInclude Include="Libraries.h" />
-    <ClInclude Include="libRocket\ShellFileInterface.h" />
     <ClInclude Include="ProgressPrinter.h" />
     <ClInclude Include="Range.h" />
     <ClInclude Include="RBFInterpolator\newmat.h" />
@@ -160,10 +161,6 @@
     <ClInclude Include="SciDataManager.h" />
     <ClInclude Include="SciDataCollection.h" />
     <ClInclude Include="SciDataParser.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="libRocket\tutorial.rcss" />
-    <None Include="libRocket\tutorial.rml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

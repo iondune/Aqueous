@@ -8,21 +8,22 @@
 #pragma comment(lib, "glu32.lib")
 #pragma comment(lib, "glfw.lib")
 
+#pragma comment(lib, "FreeImage.lib")
+
 // ionEngine Libraries
 #pragma comment(lib, "ionWindow.lib")
 #pragma comment(lib, "ionScene.lib")
 
-// GLFW Libraries
+// GWEN + GLEW Libraries
 #ifdef _DEBUG
 #pragma comment(lib, "glew32sd.lib")
+#pragma comment(lib, "GWEND-Renderer-OpenGLd.lib")
+#pragma comment(lib, "gwen_staticd.lib")
 #else
 #pragma comment(lib, "glew32s.lib")
+#pragma comment(lib, "GWEN-Renderer-OpenGL.lib")
+#pragma comment(lib, "gwen_static.lib")
 #endif
-
-// Rocket
-#pragma comment(lib, "RocketCore.lib")
-#pragma comment(lib, "RocketDebugger.lib")
-#pragma comment(lib, "RocketControls.lib")
 
 // MatLAB Libraries
 #pragma comment(lib, "matlib/libmat.lib")

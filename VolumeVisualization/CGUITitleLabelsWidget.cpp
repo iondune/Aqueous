@@ -5,7 +5,6 @@
 #include "CMainMenuState.h"
 
 #include <iomanip>
-#include <sstream>
 
 
 CGUITitleLabelsWidget::CGUITitleLabelsWidget(SciDataManager * DataManager)
@@ -22,7 +21,7 @@ CGUITitleLabelsWidget::CGUITitleLabelsWidget(SciDataManager * DataManager)
 	s << ")";
 
 	// Top Label
-	/*Gwen::Controls::Label * BigLabel = new Gwen::Controls::Label(GUIManager->getCanvas());
+	Gwen::Controls::Label * BigLabel = new Gwen::Controls::Label(GUIManager->getCanvas());
 	BigLabel->SetFont(GUIManager->getLargeFont());
 	BigLabel->SetText(Gwen::UnicodeString(L"Dataset: ") + Gwen::UnicodeString(CMainMenuState::get().DataSetName.begin(), CMainMenuState::get().DataSetName.end()));
 	BigLabel->SetBounds(10, 10, 1590, 300);
@@ -45,7 +44,7 @@ CGUITitleLabelsWidget::CGUITitleLabelsWidget(SciDataManager * DataManager)
 	VolumeCalculationIndicator = new Gwen::Controls::Label(GUIManager->getCanvas());
 	VolumeCalculationIndicator->SetFont(GUIManager->getMediumFont());
 	VolumeCalculationIndicator->SetBounds(20, 150, 1000, 300);
-	VolumeCalculationIndicator->SetTextColor(Gwen::Color(255, 235, 235, 215));*/
+	VolumeCalculationIndicator->SetTextColor(Gwen::Color(255, 235, 235, 215));
 }
 
 void CGUITitleLabelsWidget::resetVolumeRangeIndicator(SciDataManager * DataManager)
@@ -61,7 +60,7 @@ void CGUITitleLabelsWidget::resetVolumeRangeIndicator(SciDataManager * DataManag
 		s << " ± ";
 		s << std::setprecision(4);
 		s << (CProgramContext::get().Scene.VolumeSceneObject->Control.LocalRange / 2.f * (ValueRange.second - ValueRange.first));
-		//VolumeRangeIndicator->SetText(s.str());
+		VolumeRangeIndicator->SetText(s.str());
 	}
 	
 	{
@@ -86,12 +85,12 @@ void CGUITitleLabelsWidget::resetVolumeRangeIndicator(SciDataManager * DataManag
 		s << DataManager->getGridVolume("Avg Oxy", CProgramContext::get().Scene.VolumeSceneObject->Control.EmphasisLocation * (ValueRange.second - ValueRange.first) + ValueRange.first,
 			CProgramContext::get().Scene.VolumeSceneObject->Control.LocalRange / 2.f * (ValueRange.second - ValueRange.first), 2) * UnitVolume;
 		s << " m^3";
-		//VolumeCalculationIndicator->SetText(s.str());
+		VolumeCalculationIndicator->SetText(s.str());
 	}
 }
 
 void CGUITitleLabelsWidget::clearVolumeRangeIndicator()
 {
-	//VolumeRangeIndicator->SetText(L"");
-	//VolumeCalculationIndicator->SetText(L"");
+	VolumeRangeIndicator->SetText(L"");
+	VolumeCalculationIndicator->SetText(L"");
 }

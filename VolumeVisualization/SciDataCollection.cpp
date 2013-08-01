@@ -10,18 +10,18 @@ void SciDataCollection::addData(SciData & Data)
 	Values.push_back(Data);
 
 	for (auto it = Fields.begin(); it != Fields.end(); ++ it)
-		it->second.resize(max(DataCounter, it->second.size()), 0); // Make sure field has enough space to accomodate data
+		it->second.resize(Max(DataCounter, it->second.size()), 0); // Make sure field has enough space to accomodate data
 }
 
 void SciDataCollection::addData(SciData & Data, s32 const internalIndex)
 {
 	Data.InternalIndex = internalIndex;
-	DataCounter = max<u32>(internalIndex+1, DataCounter);
+	DataCounter = Max<u32>(internalIndex+1, DataCounter);
 	Data.ContainingSet = this;
 	Values.push_back(Data);
 
 	for (auto it = Fields.begin(); it != Fields.end(); ++ it)
-		it->second.resize(max(DataCounter, it->second.size()), 0); // Make sure field has enough space to accomodate data
+		it->second.resize(Max(DataCounter, it->second.size()), 0); // Make sure field has enough space to accomodate data
 }
 
 void SciDataCollection::rescaleData(vec3d const & v)

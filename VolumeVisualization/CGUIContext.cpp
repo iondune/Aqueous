@@ -11,7 +11,7 @@ CGUIContext::CGUIContext()
 
 void CGUIContext::setupMainState()
 {
-	//Canvas->SetDrawBackground(false);
+	Canvas->SetDrawBackground(false);
 
 	// Widgets
 	addWidget(Console = new CGUIConsoleWidget());
@@ -22,13 +22,13 @@ void CGUIContext::setupMainState()
 	addWidget(SceneControl = new CGUISceneControlWidget());
 	addWidget(ControlPanel = new CGUIControlPanelWidget());
 	
-	//Console->addMessage("GUI Initialized.");
-	//Console->addMessage("Starting program...", Gwen::Colors::Red);
+	Console->addMessage("GUI Initialized.");
+	Console->addMessage("Starting program...", Gwen::Colors::Red);
 }
 
 void CGUIContext::setupMenuState()
 {
-	//Canvas->SetDrawBackground(true);
+	Canvas->SetDrawBackground(true);
 
 	// Widgets
 	addWidget(MainMenu = new CGUIMainMenuWidget());
@@ -47,7 +47,7 @@ void CGUIContext::clear()
 	MainMenu = 0;
 
 	removeAllWidgets();
-	//Canvas->RemoveAllChildren();
+	Canvas->RemoveAllChildren();
 }
 
 CGUIConsoleWidget * CGUIContext::getConsole()

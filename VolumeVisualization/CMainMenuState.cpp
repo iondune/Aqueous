@@ -6,21 +6,19 @@
 #include "CDataLoadingThread.h"
 #include "SciDataManager.h"
 
-#include <sstream>
-
 
 CMainMenuState::CMainMenuState()
 {}
 
 void CMainMenuState::begin()
 {
-	//Context->GUIContext->setupMenuState();
+	Context->GUIContext->setupMenuState();
 	std::cout << "Menu State begin." << std::endl;
 }
 
 void CMainMenuState::end()
 {
-	//Context->GUIContext->clear();
+	Context->GUIContext->clear();
 	std::cout << "Menu State end." << std::endl;
 }
 
@@ -28,30 +26,35 @@ void CMainMenuState::end()
 
 void CMainMenuState::OnRenderStart(float const Elapsed)
 {
+	printOpenGLErrors();
 	// Let loading thread run
 	//sf::sleep(sf::seconds(0.05f));
+	std::chrono::milliseconds Milliseconds(50);
+	std::this_thread::sleep_for(Milliseconds);
+
 	Thread.Sync();
 
-	//Context->GUIContext->draw(Elapsed, true);
-	//CApplication::get().swapBuffers();
+	Context->GUIContext->draw(Elapsed, true);
+	CApplication::get().swapBuffers();
 
 	static int counter = 0;
 	
-	if (! counter--)
+	/*if (! counter--)
 	{
 		createDataSet();
 		loadData(//"DenmarkMission1.dat");
 			"SliemaCaveDay3.dat");
-	}
+	}*/
+	printf("F\n");
 
 	//loaded = true;
 }
 
 void CMainMenuState::OnWindowResized(SWindowResizedEvent const & Event)
 {
-	//Context->GUIContext->getCanvas()->SetSize(Event.Size.X, Event.Size.Y);
-	//Context->GUIContext->getCanvas()->Invalidate();
-	//Context->GUIContext->getCanvas()->InvalidateChildren(true);
+	Context->GUIContext->getCanvas()->SetSize(Event.Size.X, Event.Size.Y);
+	Context->GUIContext->getCanvas()->Invalidate();
+	Context->GUIContext->getCanvas()->InvalidateChildren(true);
 }
 
 void CMainMenuState::loadData(std::string const & FileName)

@@ -7,6 +7,7 @@
 #include <vector>
 
 #include <ionTypes.h>
+#include <ionMath.h>
 
 
 class SciData

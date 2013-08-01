@@ -1,19 +1,19 @@
 #include "CGUIManager.h"
 
-/*#include <Gwen/Renderers/SFML.h>
+#include <Gwen/Renderers/OpenGL.h>
 #include <Gwen/Skins/TexturedBase.h>
 #include <Gwen/Skins/Simple.h>
-#include <Gwen/Controls.h>*/
+#include <Gwen/Controls.h>
 
 
-/*Gwen::Font * LoadFont(Gwen::UnicodeString const & File, float const Size)
+Gwen::Font * LoadFont(Gwen::UnicodeString const & File, float const Size)
 {
 	Gwen::Font * Font = new Gwen::Font();
 	Font->facename = File;
 	Font->size = Size;
 
 	return Font;
-}*/
+}
 
 
 CGUIManager::CGUIManager()
@@ -23,7 +23,7 @@ CGUIManager::CGUIManager()
 
 void CGUIManager::init()
 {
-	/*Gwen::Renderer::SFML * pRenderer = new Gwen::Renderer::SFML(* Application.App);
+	Gwen::Renderer::OpenGL * pRenderer = new Gwen::Renderer::OpenGL();
 
 	Gwen::Skin::TexturedBase * skin = new Gwen::Skin::TexturedBase(pRenderer);
 	skin->Init("DefaultSkin.png");
@@ -37,7 +37,7 @@ void CGUIManager::init()
 	RegularFont = LoadFont(L"OpenSans.ttf", 14.f);
 
 	Canvas = new Gwen::Controls::Canvas(skin);
-	Canvas->SetSize(Application.getWindowSize().X, Application.getWindowSize().Y);*/
+	Canvas->SetSize(Application.getWindowSize().X, Application.getWindowSize().Y);
 }
 
 void CGUIManager::draw(f32 const Elapsed, bool const ClearAll)
@@ -68,10 +68,9 @@ void CGUIManager::draw(f32 const Elapsed, bool const ClearAll)
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 
-	//Canvas->RenderCanvas();
+	Canvas->RenderCanvas();
 }
 
-/*
 Gwen::Controls::Canvas * CGUIManager::getCanvas()
 {
 	return Canvas;
@@ -91,7 +90,6 @@ Gwen::Font * CGUIManager::getRegularFont()
 {
 	return RegularFont;
 }
-*/
 
 void CGUIManager::addWidget(CGUIWidget * Widget)
 {

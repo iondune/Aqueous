@@ -206,7 +206,7 @@ void SciDataParserPieSlices::load(std::string const & PieFile, std::string const
 
 							f64 const angle = Slice[0] * pi / 180.0;
 							f64 const ratio = (HoboTime - PieStart) / (PieEnd - PieStart);
-							f64 const distance = sqrt(sq(Slice[6]) - sq(Depth));
+							f64 const distance = sqrt(Sq(Slice[6]) - Sq(Depth));
 							f64 const radial = (Slice[5]*(1.0 - ratio) + distance*(ratio));
 
 

@@ -44,7 +44,7 @@ public:
 		std::string const & xField, std::string const & yField, std::string const & zField,
 		std::string const & FloorLabel);
 
-	bool draw(IScene const * const scene, smartPtr<IRenderPass> Pass, bool const CullingEnabled);
+	bool draw(IScene const * const scene, sharedPtr<IRenderPass> Pass, bool const CullingEnabled);
 
 	void setShowFloors(bool const showFloors);
 	void setShowPoints(bool const showPoints);

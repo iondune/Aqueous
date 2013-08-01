@@ -3,18 +3,18 @@
 
 
 #include <ionWindow.h>
-//#include <Gwen/Events.h>
-//#include <Gwen/Controls.h>
+#include <Gwen/Events.h>
+#include <Gwen/Controls.h>
 
 
 class CGwenEventForwarder : public CApplicationEventReceiver
 {
 
-	//Gwen::Controls::Canvas * Canvas;
+	Gwen::Controls::Canvas * Canvas;
 
 public:
 
-	//CGwenEventForwarder(Gwen::Controls::Canvas * pCanvas);
+	CGwenEventForwarder(Gwen::Controls::Canvas * pCanvas);
 
 	virtual void OnKeyboardEvent(SKeyboardEvent const & Event);
 

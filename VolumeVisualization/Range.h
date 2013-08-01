@@ -2,6 +2,7 @@
 #define RANGE_H_INCLUDED_
 
 #include <ionTypes.h>
+#include <algorithm>
 
 
 typedef std::pair<double, double> Range;

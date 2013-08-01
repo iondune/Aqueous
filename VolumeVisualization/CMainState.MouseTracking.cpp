@@ -61,9 +61,9 @@ void CMainState::OnUncaughtMouseEvent(SMouseEvent const & Event)
 						glm::vec3 rotAxis(axis.x, axis.y, axis.z);
 						glm::mat4 Transformation = glm::rotate(glm::mat4(1.f), dot, rotAxis);
 						Rotation = Transformation*Rotation;
-						if (! equals(difX, 0.f) && ! equals(difY, 0.f) && Application->getEventManager().IsKeyDown[EKey::Q])
+						if (! Equals(difX, 0.f) && ! Equals(difY, 0.f) && Application->getEventManager().IsKeyDown[EKey::Q])
 						{
-							glm::vec4 v = Transformation * glm::vec4(Context->Scene.VolumeSceneObject->Control.SliceAxis.getGLMVector(), 0.f);
+							glm::vec4 v = Transformation * glm::vec4(Context->Scene.VolumeSceneObject->Control.SliceAxis.GetGLMVector(), 0.f);
 							Context->Scene.VolumeSceneObject->Control.SliceAxis = SVector3f(v.x, v.y, v.z);
 
 							//printf("Setting new axis vector! %f %f %f \n", v.x, v.y, v.z);
@@ -87,7 +87,7 @@ void CMainState::OnUncaughtMouseEvent(SMouseEvent const & Event)
 					float const scaleSpeed = 0.0001f;
 					Scale = SVector3f(std::max(std::min(Scale.X + difX*scaleSpeed, 0.05f), 0.001f));
 					//Scale.Y = 1.f;
-					Context->Scene.Terrain->setScale(Scale * vec3(-1, 1, 1));
+					Context->Scene.Terrain->setScale(Scale * vec3f(-1, 1, 1));
 					printf("Scale: %f %f %f\n", Scale.X, Scale.Y, Scale.Z);
 				}
 				else if (Mode == 3) // Translate (light)

@@ -1,7 +1,5 @@
 #include "SciDataManager.h"
 
-#include <sstream>
-
 
 void SciDataManager::createVolumeFromGridValues(IColorMapper * ColorMapper)
 {
@@ -30,7 +28,7 @@ void SciDataManager::createVolumeFromGridValues(IColorMapper * ColorMapper)
 				SColorAf Color = ColorMapper->getColor(GridValues.getValues()[ValueIndex]);
 
 				for (u32 t = 0; t < 4; ++ t)
-					volumeData[index * 4 + t] = clamp<u8>((u8) (Color[t] * 255.f), 0, 255);
+					volumeData[index * 4 + t] = Clamp<u8>((u8) (Color[t] * 255.f), 0, 255);
 			}
 		}
 	}

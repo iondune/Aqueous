@@ -2,8 +2,6 @@
 
 #include "SciDataManager.h"
 
-#include <sstream>
-
 
 void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 {
@@ -78,7 +76,7 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 				s << "enabled.";
 			else
 				s << "disabled.";
-			//addConsoleMessage(s.str());
+			addConsoleMessage(s.str());
 		}
 
 		break;
@@ -177,9 +175,9 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 
 void CMainState::OnWindowResized(SWindowResizedEvent const & Event)
 {
-	//Context->GUIContext->getCanvas()->SetSize(Event.Size.X, Event.Size.Y);
-	//Context->GUIContext->getCanvas()->Invalidate();
-	//Context->GUIContext->getCanvas()->InvalidateChildren(true);
+	Context->GUIContext->getCanvas()->SetSize(Event.Size.X, Event.Size.Y);
+	Context->GUIContext->getCanvas()->Invalidate();
+	Context->GUIContext->getCanvas()->InvalidateChildren(true);
 
 	Context->Scene.Camera->setProjection(60.f, CApplication::get().getAspectRatio(), 0.01f, 100.f);
 }

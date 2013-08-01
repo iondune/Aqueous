@@ -3,9 +3,11 @@
 
 #include "CProgramContext.h"
 
+#include <thread>
+
+
 class CProgramContext;
 class CGUILoadingWidget;
-
 
 class CDataLoadingThread
 {
@@ -16,8 +18,7 @@ class CDataLoadingThread
 	bool Executing;
 	bool Running;
 
-	//sf::Thread * Thread;
-
+	std::thread * Thread;
 	std::string FileName;
 
 public:

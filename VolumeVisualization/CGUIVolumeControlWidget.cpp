@@ -3,14 +3,14 @@
 #include "CProgramContext.h"
 #include "CMainState.h"
 
-//#include <Gwen/Controls.h>
-//#include <Gwen/Controls/ComboBox.h>
+#include <Gwen/Controls.h>
+#include <Gwen/Controls/ComboBox.h>
 
 
 CGUIVolumeControlWidget::CGUIVolumeControlWidget()
 	: VolumeControl(CProgramContext::get().Scene.VolumeSceneObject->Control), MainState(CMainState::get())
 {
-	/*Window = new Gwen::Controls::WindowControl(GUIManager->getCanvas());
+	Window = new Gwen::Controls::WindowControl(GUIManager->getCanvas());
 	Window->SetDeleteOnClose(false);
 	Window->SetBounds(1200, 10, 330, 480 + 90);
 	Window->SetTitle("Volume Controls");
@@ -128,7 +128,7 @@ CGUIVolumeControlWidget::CGUIVolumeControlWidget()
 		pButtonZ->onPress.Add(				this,	& CGUIVolumeControlWidget::OnSetZAxis);
 		VolumeMode->onSelection.Add(		this,	& CGUIVolumeControlWidget::OnVolumeMode);
 		StepSizeSlider->onValueChanged.Add(	this,	& CGUIVolumeControlWidget::OnStepSizeSlider);
-	}*/
+	}
 }
 
 void CGUIVolumeControlWidget::resetVolumeRange()
@@ -137,7 +137,6 @@ void CGUIVolumeControlWidget::resetVolumeRange()
 		GUIContext->getTitleLabels()->resetVolumeRangeIndicator(CProgramContext::get().DataManager);
 }
 
-/*
 void CGUIVolumeControlWidget::OnEmphasisSlider(Gwen::Controls::Base * Control)
 {
 	Gwen::Controls::Slider * Bar = (Gwen::Controls::Slider *) Control;
@@ -234,8 +233,8 @@ void CGUIVolumeControlWidget::OnToggleVolume(Gwen::Controls::Base * Control)
 		EnableButton->SetText("Disable Volume View");
 	}
 }
-*/
+
 void CGUIVolumeControlWidget::toggle()
 {
-	//Window->SetHidden(Window->Visible());
+	Window->SetHidden(Window->Visible());
 }

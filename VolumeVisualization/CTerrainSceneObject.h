@@ -2,6 +2,7 @@
 #define _CTERRAINSCENEOBJECT_H_INCLUDED_
 
 #include <ionCore.h>
+#include <ionMath.h>
 #include <ionScene.h>
 #include <ionWindow.h>
 
@@ -33,11 +34,11 @@ class CTerrainSceneObject : public ISceneObject
 		bool Active;
 
 		SRect2i ActiveRegion, ClipRegion;
-		SPosition2 DataOffset;
+		SVector2i DataOffset;
 
 		SLayer(int const i);
 
-		int sendSample(int const x1, int const y1, int const x2, int const y2, SPosition2 const & NewClipPos);
+		int sendSample(int const x1, int const y1, int const x2, int const y2, SVector2i const & NewClipPos);
 
 	};
 
@@ -61,7 +62,7 @@ public:
 
 	float const getTerrainHeight(SVector2f const & Position);
 
-	bool draw(IScene const * const scene, smartPtr<IRenderPass> Pass, bool const CullingEnabled);
+	bool draw(IScene const * const scene, sharedPtr<IRenderPass> Pass, bool const CullingEnabled);
 
 };
 

@@ -42,7 +42,7 @@ void SciDataManager::createGridDataFromRawValuesRBFI(Range AcceptedValues, doubl
 		for (u32 i = 0; i < X.size(); ++ i)
 		{
 			//if (equals(x, X[i]) || equals(y, Y[i]) || equals(z, Z[i]) || equals(f, F[i]))
-			if (equals(x, X[i]) && equals(y, Y[i]) && equals(z, Z[i]) && equals(f, F[i]))
+			if (Equals(x, X[i]) && Equals(y, Y[i]) && Equals(z, Z[i]) && Equals(f, F[i]))
 				alreadyIn = true;
 		}
 
@@ -112,7 +112,7 @@ void SciDataManager::createGridDataFromRawValues(Range AcceptedValues, double De
 					f64 const x = (f64) ((Sorted[t-u].getPosition().X - XRange.first) / (XRange.second - XRange.first));
 					f64 const y = (f64) ((Sorted[t-u].getPosition().Y - YRange.first) / (YRange.second - YRange.first));
 					f64 const z = (f64) ((Sorted[t-u].getPosition().Z - ZRange.first) / (ZRange.second - ZRange.first));
-					Normalization = 1 / (sqrt(sq(X-x) + sq(Y-y) + sq(Z-z)) + 0.1f);
+					Normalization = 1 / (sqrt(Sq(X-x) + Sq(Y-y) + Sq(Z-z)) + 0.1f);
 					FieldAccumulator += Sorted[t-u].getField(Field) * Normalization;
 					NormalizationAccumulator += Normalization;
 				}
@@ -121,7 +121,7 @@ void SciDataManager::createGridDataFromRawValues(Range AcceptedValues, double De
 					f64 const x = (f64) ((Sorted[t+u].getPosition().X - XRange.first) / (XRange.second - XRange.first));
 					f64 const y = (f64) ((Sorted[t+u].getPosition().Y - YRange.first) / (YRange.second - YRange.first));
 					f64 const z = (f64) ((Sorted[t+u].getPosition().Z - ZRange.first) / (ZRange.second - ZRange.first));
-					Normalization = 1 / (sqrt(sq(X-x) + sq(Y-y) + sq(Z-z)) + 0.1f);
+					Normalization = 1 / (sqrt(Sq(X-x) + Sq(Y-y) + Sq(Z-z)) + 0.1f);
 					FieldAccumulator += Sorted[t+u].getField(Field) * Normalization;
 					NormalizationAccumulator += Normalization;
 				}

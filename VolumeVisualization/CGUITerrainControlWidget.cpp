@@ -4,14 +4,14 @@
 #include "CMainState.h"
 #include "CTerrainSceneObject.h"
 
-//#include <Gwen/Controls.h>
-//#include <Gwen/Controls/ComboBox.h>
+#include <Gwen/Controls.h>
+#include <Gwen/Controls/ComboBox.h>
 
 
 CGUITerrainControlWidget::CGUITerrainControlWidget()
 	: Terrain(CProgramContext::get().Scene.Terrain), MainState(CMainState::get())
 {
-	/*Window = new Gwen::Controls::WindowControl(GUIManager->getCanvas());
+	Window = new Gwen::Controls::WindowControl(GUIManager->getCanvas());
 	Window->SetDeleteOnClose(false);
 	Window->SetBounds(1200, 500, 330, 235);
 	Window->SetTitle("Terrain Controls");
@@ -56,10 +56,9 @@ CGUITerrainControlWidget::CGUITerrainControlWidget()
 		WireframeButton->SetBounds(140 + 15 + 10, 10 + 45 + 25 + 75, 140, 25);
 		WireframeButton->SetText("Wireframe");
 		WireframeButton->onPress.Add(this, & CGUITerrainControlWidget::OnSelectWireframe);
-	}*/
+	}
 }
 
-/*
 void CGUITerrainControlWidget::OnToggleTerrain(Gwen::Controls::Base * Control)
 {
 	CProgramContext * Context = & CProgramContext::get();
@@ -101,8 +100,8 @@ void CGUITerrainControlWidget::OnSelectWireframe(Gwen::Controls::Base * Control)
 	CProgramContext * Context = & CProgramContext::get();
 	Context->Scene.Terrain->enableDebugData(EDebugData::Wireframe);
 }
-*/
+
 void CGUITerrainControlWidget::toggle()
 {
-	//Window->SetHidden(Window->Visible());
+	Window->SetHidden(Window->Visible());
 }

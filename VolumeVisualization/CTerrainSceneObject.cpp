@@ -20,11 +20,11 @@ CTerrainSceneObject::SLayer::SLayer(int const i)
 	HeightMap = new CTexture(CImageLoader::loadImage("../TerrainHeightImageSquare.bmp"));
 
 	// Determine starting ClipRegion
-	SPosition2 const ClipPos = SPosition2() - SPosition2(Size / 2);
-	ClipRegion = SRect2i(ClipPos, SSize2(Size));
+	SVector2i const ClipPos = SVector2i() - SVector2i(Size / 2);
+	ClipRegion = SRect2i(ClipPos, SVector2i(Size));
 }
 
-int CTerrainSceneObject::SLayer::sendSample(int const x1, int const y1, int const x2, int const y2, SPosition2 const & NewClipPos)
+int CTerrainSceneObject::SLayer::sendSample(int const x1, int const y1, int const x2, int const y2, SVector2i const & NewClipPos)
 {
 
 	static const auto noise = [](int const x, int const y) -> float
@@ -153,7 +153,7 @@ CTerrainSceneObject::CTerrainSceneObject()
 
 float const CTerrainSceneObject::getTerrainHeight(SVector2f const & Position)
 {
-	SPosition2 Pos = SPosition2((int) Position.X, (int) Position.Y);
+	SVector2i Pos = SVector2i((int) Position.X, (int) Position.Y);
 
 	if (Layers[0]->ClipRegion.isPointInside(SVector2<int>(Pos)))
 	{
@@ -168,7 +168,7 @@ float const CTerrainSceneObject::getTerrainHeight(SVector2f const & Position)
 	return 0.f;
 }
 
-bool CTerrainSceneObject::draw(IScene const * const Scene, smartPtr<IRenderPass> Pass, bool const CullingEnabled)
+bool CTerrainSceneObject::draw(IScene const * const Scene, sharedPtr<IRenderPass> Pass, bool const CullingEnabled)
 {
 	if (! ISceneObject::draw(Scene, Pass, CullingEnabled))
 		return false;
@@ -191,10 +191,10 @@ bool CTerrainSceneObject::draw(IScene const * const Scene, smartPtr<IRenderPass>
 	}
 		
 	// Determine camera movement logistics for tracking
-	static SPosition2 CameraPos;
+	static SVector2i CameraPos;
 
 	if (DoCameraUpdate)
-		CameraPos = SPosition2(
+		CameraPos = SVector2i(
 		(int) std::floor(SceneManager.getActiveCamera()->getPosition().X), 
 		(int) std::floor(SceneManager.getActiveCamera()->getPosition().Z));
 	CameraPos = vec2i();
@@ -205,9 +205,9 @@ bool CTerrainSceneObject::draw(IScene const * const Scene, smartPtr<IRenderPass>
 		return i % 2 ? i - 1 : i;
 	};
 
-	static const auto wrap = [](SPosition2 const & p) -> SPosition2
+	static const auto wrap = [](SVector2i const & p) -> SVector2i
 	{
-		return SPosition2(p.X % HeightmapSize, p.Y % HeightmapSize);
+		return SVector2i(p.X % HeightmapSize, p.Y % HeightmapSize);
 	};
 
 	static const auto sq = [](int const i) -> int
@@ -233,17 +233,17 @@ bool CTerrainSceneObject::draw(IScene const * const Scene, smartPtr<IRenderPass>
 		// Calculate new Active Region from Camera Position //
 		//////////////////////////////////////////////////////
 
-		SPosition2 CenterPos = CameraPos / Layer->ScaleFactor;
+		SVector2i CenterPos = CameraPos / Layer->ScaleFactor;
 		// only allow even coordinates so that inner layers occupy the same grid as outer ones
 		CenterPos.X = even(CenterPos.X);
 		CenterPos.Y = even(CenterPos.Y);
 
 		// Set desired active region centered on camera
-		Layer->ActiveRegion = SRect2i(CenterPos - SPosition2(Size / 2), SSize2(Size - 1));
+		Layer->ActiveRegion = SRect2i(CenterPos - SVector2i(Size / 2), SVector2i(Size - 1));
 
 		// Attempt to calculate budgeted offset move
-		SPosition2 const OldClipPos = SPosition2(Layer->ClipRegion.Position.X, Layer->ClipRegion.Position.Y);
-		SPosition2 DataOffsetMove = CenterPos - SPosition2(Size / 2) - OldClipPos;
+		SVector2i const OldClipPos = SVector2i(Layer->ClipRegion.Position.X, Layer->ClipRegion.Position.Y);
+		SVector2i DataOffsetMove = CenterPos - SVector2i(Size / 2) - OldClipPos;
 
 		for (int t = 0; t < 5; ++ t)
 		{
@@ -252,8 +252,8 @@ bool CTerrainSceneObject::draw(IScene const * const Scene, smartPtr<IRenderPass>
 				DataOffsetMove /= 2;
 		}
 
-		SPosition2 const NewClipPos = DataOffsetMove + OldClipPos;
-		Layer->ClipRegion = SRect2i(NewClipPos, SSize2(Size));
+		SVector2i const NewClipPos = DataOffsetMove + OldClipPos;
+		Layer->ClipRegion = SRect2i(NewClipPos, SVector2i(Size));
 		Layer->ActiveRegion.clipTo(Layer->ClipRegion);
 
 		// If no affordable move, continue on
@@ -281,7 +281,7 @@ bool CTerrainSceneObject::draw(IScene const * const Scene, smartPtr<IRenderPass>
 		else
 		{
 			// Reload new data for toroidal access
-			SPosition2 OriginalDataOffset = Layer->DataOffset;
+			SVector2i OriginalDataOffset = Layer->DataOffset;
 			Layer->DataOffset += DataOffsetMove;
 			//std::cout << "to " << Layer->DataOffset.X << ", " << Layer->DataOffset.Y << "." << std::endl;
 
@@ -437,7 +437,7 @@ bool CTerrainSceneObject::draw(IScene const * const Scene, smartPtr<IRenderPass>
 					SRect2i Bound = ((* (it - 1))->ActiveRegion);
 					Bound.Position /= 2;
 					Bound.Size /= 2;
-					if (Bound.isPointInsideOrOn(SPosition2(x, y)) && Bound.Size.X && Bound.Size.Y)
+					if (Bound.isPointInsideOrOn(SVector2i(x, y)) && Bound.Size.X && Bound.Size.Y)
 						continue;
 				}
 
@@ -463,7 +463,7 @@ bool CTerrainSceneObject::draw(IScene const * const Scene, smartPtr<IRenderPass>
 		Layer->IndexBuffer.syncData();
 
 			
-		SPosition2 const DataOffseti = Layer->DataOffset;
+		SVector2i const DataOffseti = Layer->DataOffset;
 		SVector2f const DataOffsetf((float) DataOffseti.X, (float) DataOffseti.Y);
 
 		SVector2f Translation = SVector2f((float) Layer->ClipRegion.Position.X, (float) Layer->ClipRegion.Position.Y) * (float) ScaleFactor;
@@ -478,11 +478,11 @@ bool CTerrainSceneObject::draw(IScene const * const Scene, smartPtr<IRenderPass>
 		{
 			Context.uniform("uUseCourse", 1);
 
-			SPosition2 CenterPos = CameraPos / Layer->ScaleFactor;
+			SVector2i CenterPos = CameraPos / Layer->ScaleFactor;
 			CenterPos.X = even(CenterPos.X);
 			CenterPos.Y = even(CenterPos.Y);
 
-			SPosition2 LowerCorner = CenterPos - SPosition2(Size / 2);
+			SVector2i LowerCorner = CenterPos - SVector2i(Size / 2);
 
 			SVector2<int> uActiveRegionLL = Layer->ActiveRegion.Position - Layer->ClipRegion.Position;
 			SVector2<int> uActiveRegionUR = Layer->ActiveRegion.otherCorner() - Layer->ClipRegion.Position;

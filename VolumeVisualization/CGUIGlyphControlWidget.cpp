@@ -5,13 +5,13 @@
 #include "CTerrainSceneObject.h"
 #include "CGlyphSceneObject.h"
 
-//#include <Gwen/Controls.h>
-//#include <Gwen/Controls/ComboBox.h>
+#include <Gwen/Controls.h>
+#include <Gwen/Controls/ComboBox.h>
 
 
 CGUIGlyphControlWidget::CGUIGlyphControlWidget()
 {
-	/*Window = new Gwen::Controls::WindowControl(GUIManager->getCanvas());
+	Window = new Gwen::Controls::WindowControl(GUIManager->getCanvas());
 	Window->SetDeleteOnClose(false);
 	Window->SetBounds(1200, 670, 330, 160);
 	Window->SetTitle("Glyph Controls");
@@ -45,20 +45,19 @@ CGUIGlyphControlWidget::CGUIGlyphControlWidget()
 		//IntensitySlider->onValueChanged.Add(	this,	& CGUIVolumeControlWidget::OnIntensitySlider);
 		//MinimumAlphaSlider->onValueChanged.Add(	this,	& CGUIVolumeControlWidget::OnMinimumAlphaSlider);
 		//LocalRangeSlider->onValueChanged.Add(	this,	& CGUIVolumeControlWidget::OnLocalRangeSlider);
-	}*/
+	}
 }
 
 void CGUIGlyphControlWidget::SetButtonTitle()
 {
 	CProgramContext * Context = & CProgramContext::get();
 	
-	/*if (Context->Scene.GlyphSceneObject->isVisible())
+	if (Context->Scene.GlyphSceneObject->isVisible())
 		EnableButton->SetText("Disable Glyph Visual");
 	else
-		EnableButton->SetText("Enable Glyph Visual");*/
+		EnableButton->SetText("Enable Glyph Visual");
 }
 
-/*
 void CGUIGlyphControlWidget::OnToggleGlyphs(Gwen::Controls::Base * Control)
 {
 	CProgramContext * Context = & CProgramContext::get();
@@ -90,8 +89,8 @@ void CGUIGlyphControlWidget::OnSelectGrid(Gwen::Controls::Base * Control)
 	Context->Scene.GlyphSceneObject->setVisible(! Context->Scene.GlyphSceneObject->isVisible());
 	SetButtonTitle();
 }
-*/
+
 void CGUIGlyphControlWidget::toggle()
 {
-	//Window->SetHidden(Window->Visible());
+	Window->SetHidden(Window->Visible());
 }

@@ -55,7 +55,7 @@ public:
 			Color[i] = (float) ((v - FieldRanges[i].first) / (FieldRanges[i].second - FieldRanges[i].first));
 		}
 
-		return SColorAf(Color[0], Color[1], Color[2], clamp((Color[0] + Color[1] + Color[2]) * AlphaIntensity / 3.f, 0.f, 1.f));
+		return SColorAf(Color[0], Color[1], Color[2], Clamp((Color[0] + Color[1] + Color[2]) * AlphaIntensity / 3.f, 0.f, 1.f));
 	}
 
 	virtual void preProcessValues(SciDataCollection & s)
