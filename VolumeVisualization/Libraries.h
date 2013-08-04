@@ -13,16 +13,29 @@
 // ionEngine Libraries
 #pragma comment(lib, "ionWindow.lib")
 #pragma comment(lib, "ionScene.lib")
+#pragma comment(lib, "ionGUI.lib")
 
-// GWEN + GLEW Libraries
+// GLEW Libraries
 #ifdef _DEBUG
 #pragma comment(lib, "glew32sd.lib")
+#else
+#pragma comment(lib, "glew32s.lib")
+#endif
+
+// GWEN Libraries
+#ifdef _DEBUG
 #pragma comment(lib, "GWEND-Renderer-OpenGLd.lib")
 #pragma comment(lib, "gwen_staticd.lib")
 #else
-#pragma comment(lib, "glew32s.lib")
 #pragma comment(lib, "GWEN-Renderer-OpenGL.lib")
 #pragma comment(lib, "gwen_static.lib")
+#endif
+
+// freetype
+#ifdef _DEBUG
+#pragma comment(lib, "freetype243_D.lib")
+#else
+#pragma comment(lib, "freetype243ST.lib")
 #endif
 
 // MatLAB Libraries

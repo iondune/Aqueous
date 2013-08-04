@@ -18,6 +18,6 @@ public:
 
 protected:
 
-	void LoadFont();
+	void LoadFont(Gwen::Font * pFont);
 
 };

@@ -32,7 +32,7 @@ void CLoadState::addLabel(std::wstring const & Label, Gwen::Color const & Color)
 }
 
 CLoadState::CLoadState()
-	: LabelHeight(0), Indent(0), GetConfirmation(false)
+	: LabelHeight(0), Indent(0), GetConfirmation(true)
 {
 	LabelHeight = 70;
 	Indent = 0;

@@ -7,126 +7,53 @@
 #include <math.h>
 #include "GL/glew.h"
 
+#include <FreeType.h>
+
 
 CGwenOpenGLRenderer::CGwenOpenGLRenderer()
-{
-	m_fLetterSpacing = 1.0f / 16.0f;
-	m_fFontScale[0] = 1.5f;
-	m_fFontScale[1] = 1.5f;
-	m_pFontTexture = NULL;
-}
+{}
 
 void CGwenOpenGLRenderer::Init()
-{
-	CreateDebugFont();
-}
+{}
 
 CGwenOpenGLRenderer::~CGwenOpenGLRenderer()
+{}
+
+
+void CGwenOpenGLRenderer::LoadFont(Gwen::Font * pFont)
 {
-	DestroyDebugFont();
+	if (pFont->data)
+		return;
+
+	freetype::font_data * font;
+
+	pFont->data = font = new freetype::font_data;
+	font->init(Gwen::Utility::UnicodeToString(pFont->facename).c_str(), pFont->size);
 }
 
-
-void CGwenOpenGLRenderer::CreateDebugFont()
+void CGwenOpenGLRenderer::RenderText(Gwen::Font * pFont, Gwen::Point pos, Gwen::UnicodeString const & text)
 {
-	if ( m_pFontTexture ) { return; }
+	LoadFont(pFont);
+	Translate(pos.x, pos.y);
+	Gwen::String String = Gwen::Utility::UnicodeToString(text);
 
-	m_pFontTexture = new Gwen::Texture();
-	// Create a little texture pointer..
-	GLuint* pglTexture = new GLuint;
-	// Sort out our GWEN texture
-	m_pFontTexture->data = pglTexture;
-	m_pFontTexture->width = 256;
-	m_pFontTexture->height = 256;
-	// Create the opengl texture
-	glGenTextures( 1, pglTexture );
-	glBindTexture( GL_TEXTURE_2D, *pglTexture );
-	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
-	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
-	unsigned char* texdata = new unsigned char[256 * 256 * 4];
-
-	for ( int i = 0; i < 256 * 256; i++ )
-	{
-		texdata[i * 4] = sGwenFontData[i];
-		texdata[i * 4 + 1] = sGwenFontData[i];
-		texdata[i * 4 + 2] = sGwenFontData[i];
-		texdata[i * 4 + 3] = sGwenFontData[i];
-	}
-
-	glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, m_pFontTexture->width, m_pFontTexture->height, 0, GL_RGBA, GL_UNSIGNED_BYTE, ( const GLvoid* ) texdata );
-	delete[]texdata;
+	freetype::print(* (freetype::font_data *) pFont->data, pos.x, pos.y, String.c_str());
 }
 
-void CGwenOpenGLRenderer::DestroyDebugFont()
+Gwen::Point CGwenOpenGLRenderer::MeasureText(Gwen::Font * pFont, Gwen::UnicodeString const & text)
 {
-	if ( !m_pFontTexture ) { return; }
+	LoadFont(pFont);
 
-	GLuint* tex = ( GLuint* ) m_pFontTexture->data;
+	Gwen::String String = Gwen::Utility::UnicodeToString(text);
 
-	if ( !tex ) { return; }
-
-	glDeleteTextures( 1, tex );
-	delete tex;
-	m_pFontTexture->data = NULL;
-	delete m_pFontTexture;
-	m_pFontTexture = NULL;
-}
-
-void CGwenOpenGLRenderer::RenderText( Gwen::Font* pFont, Gwen::Point pos, const Gwen::UnicodeString & text )
-{
-	float fSize = pFont->size * Scale();
-
-	if ( !text.length() )
-	{ return; }
-
-	Gwen::String converted_string = Gwen::Utility::UnicodeToString( text );
-	float yOffset = 0.0f;
-
-	for ( int i = 0; i < text.length(); i++ )
-	{
-		char ch = converted_string[i];
-		float curSpacing = sGwenDebugFontSpacing[ch] * m_fLetterSpacing * fSize * m_fFontScale[0];
-		Gwen::Rect r( pos.x + yOffset, pos.y - fSize * 0.5, ( fSize * m_fFontScale[0] ), fSize * m_fFontScale[1] );
-
-		if ( m_pFontTexture )
-		{
-			float uv_texcoords[8] = {0., 0., 1., 1.};
-
-			if ( ch >= 0 )
-			{
-				float cx = ( ch % 16 ) / 16.0;
-				float cy = ( ch / 16 ) / 16.0;
-				uv_texcoords[0] = cx;
-				uv_texcoords[1] = cy;
-				uv_texcoords[4] = float( cx + 1.0f / 16.0f );
-				uv_texcoords[5] = float( cy + 1.0f / 16.0f );
-			}
-
-			DrawTexturedRect( m_pFontTexture, r, uv_texcoords[0], uv_texcoords[5], uv_texcoords[4], uv_texcoords[1] );
-			yOffset += curSpacing;
-		}
-		else
-		{
-			DrawFilledRect( r );
-			yOffset += curSpacing;
-		}
-	}
-}
-
-Gwen::Point CGwenOpenGLRenderer::MeasureText( Gwen::Font* pFont, const Gwen::UnicodeString & text )
-{
-	Gwen::Point p;
-	float fSize = pFont->size * Scale();
-	Gwen::String converted_string = Gwen::Utility::UnicodeToString( text );
-	float spacing = 0.0f;
-
-	for ( int i = 0; i < text.length(); i++ )
-	{
-		char ch = converted_string[i];
-		spacing += sGwenDebugFontSpacing[ch];
-	}
-
-	p.x = spacing * m_fLetterSpacing * fSize * m_fFontScale[0];
-	p.y = pFont->size * Scale();
-	return p;
+	Gwen::Point pos;
+	freetype::measure(* (freetype::font_data *) pFont->data, & pos.x, & pos.y, String.c_str());
+	//pos.x = pos.y = std::numeric_limits<int>::max();
+	//pos.y *= 1.5f;
+	//pos.x *= 1.5f;
+	//pos.y *= 4;
+	//pos.x *= 2;
+	//pos.y = 100;
+	//pos.x = 1000;
+	return pos;
 }

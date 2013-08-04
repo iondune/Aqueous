@@ -5,6 +5,8 @@
 #include <Gwen/Skins/Simple.h>
 #include <Gwen/Controls.h>
 
+#include "CGwenOpenGLRenderer.h"
+
 
 Gwen::Font * LoadFont(Gwen::UnicodeString const & File, float const Size)
 {
@@ -18,12 +20,11 @@ Gwen::Font * LoadFont(Gwen::UnicodeString const & File, float const Size)
 
 CGUIManager::CGUIManager()
 	: Application(CApplication::get())
-{
-}
+{}
 
 void CGUIManager::init()
 {
-	Gwen::Renderer::OpenGL * pRenderer = new Gwen::Renderer::OpenGL();
+	Gwen::Renderer::OpenGL * pRenderer = new CGwenOpenGLRenderer;
 
 	Gwen::Skin::TexturedBase * skin = new Gwen::Skin::TexturedBase(pRenderer);
 	skin->Init("DefaultSkin.png");

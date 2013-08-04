@@ -45,7 +45,6 @@ void CMainMenuState::OnRenderStart(float const Elapsed)
 		loadData(//"DenmarkMission1.dat");
 			"SliemaCaveDay3.dat");
 	}*/
-	printf("F\n");
 
 	//loaded = true;
 }
