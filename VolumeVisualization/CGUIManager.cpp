@@ -28,14 +28,11 @@ void CGUIManager::init()
 
 	Gwen::Skin::TexturedBase * skin = new Gwen::Skin::TexturedBase(pRenderer);
 	skin->Init("DefaultSkin.png");
-	skin->SetDefaultFont(L"OpenSans.ttf", 14.f);
-
-	Gwen::Skin::Simple * simpleSkin = new Gwen::Skin::Simple(pRenderer);
-	simpleSkin->SetDefaultFont(L"OpenSans.ttf", 14.f);
+	skin->SetDefaultFont(L"OpenSans.ttf", 12.f);
 
 	LargeFont = LoadFont(L"OpenSans.ttf", 40.f);
-	MediumFont = LoadFont(L"OpenSans.ttf", 32.f);
-	RegularFont = LoadFont(L"OpenSans.ttf", 14.f);
+	MediumFont = LoadFont(L"OpenSans.ttf", 24.f);
+	RegularFont = LoadFont(L"OpenSans.ttf", 12.f);
 
 	Canvas = new Gwen::Controls::Canvas(skin);
 	Canvas->SetSize(Application.getWindowSize().X, Application.getWindowSize().Y);

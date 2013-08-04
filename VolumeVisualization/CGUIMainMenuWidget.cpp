@@ -13,7 +13,7 @@ void CGUIMainMenuWidget::createDataSetButtons()
 	DIR * dir;
 	dirent * ent;
 
-	int Height = 150;
+	int Height = 110;
 
 	dir = opendir("Datasets/");
 	if (dir != NULL)
@@ -24,23 +24,27 @@ void CGUIMainMenuWidget::createDataSetButtons()
 			if (FileName == "." || FileName == "..")
 				continue;
 
+			ListBox->AddItem(FileName);
+
+			/*
 			Gwen::Controls::Button * Button = new Gwen::Controls::Button(Window);
-			Button->SetBounds(50, Height, 290, 25);
+			Button->SetBounds(50, Height, 450, 25);
 			Button->SetText(FileName);
 			Button->onPress.Add(this, & CGUIMainMenuWidget::OnSelectDataSet);
 			Button->Invalidate();
 			DataSetButtons.push_back(Button);
 
 			Height += 35;
+			*/
 		}
 		closedir(dir);
 	}
 
-	Height += 35;
-	NewDataSetButton = new Gwen::Controls::Button(Window);
-	NewDataSetButton->SetBounds(50, Height, 290, 25);
-	NewDataSetButton->SetText("Create New Data Set");
-	NewDataSetButton->onPress.Add(this, & CGUIMainMenuWidget::OnSelectDataSet);
+	//Height += 35;
+	//NewDataSetButton = new Gwen::Controls::Button(Window);
+	//NewDataSetButton->SetBounds(50, 100, 290, 25);
+	//NewDataSetButton->SetText("Create New Data Set");
+	//NewDataSetButton->onPress.Add(this, & CGUIMainMenuWidget::OnSelectDataSet);
 }
 
 class MenuDropDown : public Gwen::Event::Handler
@@ -74,23 +78,27 @@ CGUIMainMenuWidget::CGUIMainMenuWidget()
 
 	Window = new Gwen::Controls::WindowControl(GUIManager->getCanvas());
 	Window->SetTitle("Data Sets");
-	Window->SetBounds(30, 600, 660 + 30, 900);
+	Window->SetBounds(30, 600, 650 + 40 + 30, 550);
 	Window->SetDeleteOnClose(false);
 	Window->SetClosable(false);
 
 	// Top Label
-	Gwen::Controls::Label * BigLabel = new Gwen::Controls::Label(Window);
-	BigLabel->SetFont(GUIManager->getLargeFont());
-	BigLabel->SetText(L"Main Menu");
-	BigLabel->SetBounds(10, 10, 1590, 300);
-	BigLabel->SetTextColor(Gwen::Color(35, 55, 35, 215));
-
-	// Second Label
 	Gwen::Controls::Label * MediumLabel = new Gwen::Controls::Label(Window);
 	MediumLabel->SetFont(GUIManager->getMediumFont());
 	MediumLabel->SetText(L"Available Data Sets:");
-	MediumLabel->SetBounds(20, 70, 600, 300);
+	MediumLabel->SetBounds(10, 10, 600, 300);
 	MediumLabel->SetTextColor(Gwen::Color(35, 35, 55, 215));
+
+	ListBox = new Gwen::Controls::ListBox(Window);
+	ListBox->SetBounds(10, 50, 690, 410);
+	
+	Gwen::Controls::Button * OKButton = new Gwen::Controls::Button(Window);
+	OKButton->SetText("OK");
+	OKButton->SetBounds(10+130, 60+400+16, 200, 30);
+
+	Gwen::Controls::Button * CancelButton = new Gwen::Controls::Button(Window);
+	CancelButton->SetText("Cancel");
+	CancelButton->SetBounds(10+130+200+20, 60+400+16, 200, 30);
 
 	createDataSetButtons();
 }

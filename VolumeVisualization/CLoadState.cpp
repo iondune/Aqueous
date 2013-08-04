@@ -32,7 +32,7 @@ void CLoadState::addLabel(std::wstring const & Label, Gwen::Color const & Color)
 }
 
 CLoadState::CLoadState()
-	: LabelHeight(0), Indent(0), GetConfirmation(true)
+	: LabelHeight(0), Indent(0), GetConfirmation(false)
 {
 	LabelHeight = 70;
 	Indent = 0;
@@ -63,7 +63,7 @@ void CLoadState::begin()
 	CApplication::get().swapBuffers();
 	
 	addLabel(L"Initializing System...");
-	//CGwenEventForwarder * Forwarder = new CGwenEventForwarder(GUIManager->getCanvas());
+	CGwenEventForwarder * Forwarder = new CGwenEventForwarder(GUIManager->getCanvas());
 	
 	addLabel(L"Loading Scene Shaders...");
 	Application.getSceneManager().init(true, true);
