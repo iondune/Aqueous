@@ -78,11 +78,10 @@ CGUIMainMenuWidget::CGUIMainMenuWidget()
 
 	Window = new Gwen::Controls::WindowControl(GUIManager->getCanvas());
 	Window->SetTitle("Data Sets");
-	Window->SetBounds(30, 600, 650 + 40 + 30, 550);
+	Window->SetBounds(30, 60, 650 + 40 + 30, 550);
 	Window->SetDeleteOnClose(false);
 	Window->SetClosable(false);
 
-	// Top Label
 	Gwen::Controls::Label * MediumLabel = new Gwen::Controls::Label(Window);
 	MediumLabel->SetFont(GUIManager->getMediumFont());
 	MediumLabel->SetText(L"Available Data Sets:");

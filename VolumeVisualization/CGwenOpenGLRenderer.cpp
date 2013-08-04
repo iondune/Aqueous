@@ -48,12 +48,5 @@ Gwen::Point CGwenOpenGLRenderer::MeasureText(Gwen::Font * pFont, Gwen::UnicodeSt
 
 	Gwen::Point pos;
 	freetype::measure(* (freetype::font_data *) pFont->data, & pos.x, & pos.y, String.c_str());
-	//pos.x = pos.y = std::numeric_limits<int>::max();
-	//pos.y *= 1.5f;
-	//pos.x *= 1.5f;
-	//pos.y *= 4;
-	//pos.x *= 2;
-	//pos.y = 100;
-	//pos.x = 1000;
 	return pos;
 }

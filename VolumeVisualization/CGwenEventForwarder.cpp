@@ -4,7 +4,7 @@
 
 
 CGwenEventForwarder::CGwenEventForwarder(Gwen::Controls::Canvas * pCanvas)
-	: Canvas(pCanvas)
+	: Canvas(pCanvas), LastWheel(0)
 {}
 
 void CGwenEventForwarder::OnKeyboardEvent(SKeyboardEvent const & Event)
@@ -26,6 +26,8 @@ void CGwenEventForwarder::OnKeyboardEvent(SKeyboardEvent const & Event)
 		case EKey::Return: gwenkey = Gwen::Key::Return; break;
 		case EKey::Backspace: gwenkey = Gwen::Key::Backspace; break;
 		case EKey::Delete: gwenkey = Gwen::Key::Delete; break;
+		case EKey::Up: gwenkey = Gwen::Key::Up; break;
+		case EKey::Down: gwenkey = Gwen::Key::Down; break;
 		case EKey::Left: gwenkey = Gwen::Key::Left; break;
 		case EKey::Right: gwenkey = Gwen::Key::Right; break;
 		case EKey::LeftShift: gwenkey = Gwen::Key::Shift; break;
@@ -36,8 +38,6 @@ void CGwenEventForwarder::OnKeyboardEvent(SKeyboardEvent const & Event)
 		case EKey::End: gwenkey = Gwen::Key::End; break;
 		case EKey::LeftControl: gwenkey = Gwen::Key::Control; break;
 		case EKey::RightControl: gwenkey = Gwen::Key::Control; break;
-		case EKey::Up: gwenkey = Gwen::Key::Up; break;
-		case EKey::Down: gwenkey = Gwen::Key::Down; break;
 		case EKey::Escape: gwenkey = Gwen::Key::Escape; break;
 		case EKey::LeftAlt: gwenkey = Gwen::Key::Alt; break;
 		case EKey::RightAlt: gwenkey = Gwen::Key::Alt; break;
@@ -70,13 +70,18 @@ void CGwenEventForwarder::OnMouseEvent(SMouseEvent const & Event)
 				break;
 
 			case SMouseEvent::EButton::Middle:
-
 				break;
 			}
 
 			if (! Canvas->InputMouseButton(Button, Event.Pressed))
 				CMainState::get().OnUncaughtMouseEvent(Event);
 		}
+		break;
+
+	case SMouseEvent::EType::Scroll:
+
+		Canvas->InputMouseWheel((Event.Movement.Y - LastWheel) * 250);
+		LastWheel = Event.Movement.Y;
 		break;
 	}
 }
