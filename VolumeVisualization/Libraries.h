@@ -1,12 +1,9 @@
-#ifndef _LIBRARIES_H_INCLUDED_
-#define _LIBRARIES_H_INCLUDED_
-
-#ifdef _WIN32
+#pragma once
 
 // OpenGL Libraries
 #pragma comment(lib, "OpenGL32.lib")
 #pragma comment(lib, "glu32.lib")
-#pragma comment(lib, "glfw.lib")
+#pragma comment(lib, "glfw3.lib")
 
 #pragma comment(lib, "FreeImage.lib")
 
@@ -33,9 +30,9 @@
 
 // freetype
 #ifdef _DEBUG
-#pragma comment(lib, "freetype243_D.lib")
+#pragma comment(lib, "freetype250_D.lib")
 #else
-#pragma comment(lib, "freetype243ST.lib")
+#pragma comment(lib, "freetype250.lib")
 #endif
 
 // MatLAB Libraries
@@ -45,7 +42,3 @@
 #pragma comment(lib, "matlib/libeng.lib")
 #pragma comment(lib, "matlib/libmwlapack.lib")
 #pragma comment(lib, "matlib/libdflapack.lib")
-
-#endif
-
-#endif
