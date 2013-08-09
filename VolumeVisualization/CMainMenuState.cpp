@@ -71,42 +71,58 @@ void CMainMenuState::loadData(std::string const & FileName)
 
 void CMainMenuState::createDataSet()
 {
-#if 0
-	SciDataParserCSV * Parser1 = new SciDataParserSmartTether();
-	Parser1->Manager = Context->DataManager;
-	Parser1->FieldDelim = ',';
-	Parser1->ValueDelim = ',';
-	/*Parser1->FieldNames = false;
-	std::vector<std::string> Fields;
-	Fields.push_back("GPGGA Base Position");
-	Fields.push_back("x");
-	Fields.push_back("y");
-	Fields.push_back("n");
-	Fields.push_back("z");
-	Fields.push_back("e");
-	Parser1->Fields = Fields;*/
-	Parser1->load("2013_03_26_02_48_27.csv");
-#else
-	//SciDataParserPieSlices * Parser = new SciDataParserPieSlices;
-	SciDataParserSmartTether * Parser = new SciDataParserSmartTether;
-	Parser->Manager = Context->DataManager;
-	Parser->load("2013_03_28_03_41_29.csv");
-	Parser->load("2013_03_28_03_55_07.csv");
-	Parser->load("2013_03_28_04_05_56.csv");
-	Parser->load("2013_03_28_04_15_33.csv");
-	Parser->load("2013_03_28_04_28_19.csv");
-	
-	//Parser->load("PieSlices.csv", "StGeorgesBayCaveDay1Deployment2.csv", "2013_03_26_02_48_27.csv", STimeOffsets(0, 15, 15));
-	//->load("PieSlices2.csv", "StGeorgesBayCave-Day2-Deployment3.csv", "PhonySmartTetherData.csv", STimeOffsets(0, 15, 0));
-#endif
+	if (false)
+	{
+		SciDataParserSimpleTXT * Parser = new SciDataParserSimpleTXT();
+		Parser->Manager = Context->DataManager;
+		Parser->load("ForZoe.txt");
 
-	int counter = 0;
-	for (auto Value : Context->DataManager->getRawValues().getValues())
-		Value.addField("timeStamp") = counter++;
+		//DataParser->RawValues.setDataScale(Vector3(3, 2, 3));
+		
+		CSpectrumColorMapper sf("d1");
+		COxygenColorMapper o("d1");
+		sf.AcceptedRange = Range(-9999999.0, 9999999.0);
 
-	//Context->DataManager->createGridDataFromRawValues(FullRange, 5.0, "temp");
+		//Context->DataManager->createPointCloudObjects(true, Context->Scene.PointCloudObject, SVector3f(-3.f, 0.8f, 3.f), & o);
+		//DataParser[0]->createGridDataFromRawValues(FullRange, 5.0, "d1");
+		//DataParser[0]->createPointCloudObjects(false, SoupObject, SVector3f(3.f), & sf);
+		//DataParser[0]->createVolumeFromGridValues(& sf);
+	}
 
-	//Context->DataManager->createGridDataFromRawValues(FullRange, 5.0, "Avg Oxy");
+	if (true)
+	{
+		SciDataParserCTD * Parser = new SciDataParserCTD();
+		Parser->Manager = Context->DataManager;
+		Parser->load("oxygenDataSet1.mat");
 
-	Context->DataManager->writeToFile("Datasets/SliemaCaveDay3.dat");
+		//DataParser->RawValues.setDataScale(Vector3(3, 2, 3));
+
+		CSpectrumColorMapper sf("salinity");
+		sf.AcceptedRange = Range(-99999.0, 99999.0);
+
+		//DataParser[1]->createPointCloudObjects(true, VoxelObject, SVector3f(3.f), & sf);
+		Parser->Manager->createGridDataFromRawValues(sf.AcceptedRange, 5.0, "salinity");
+		//DataParser->createPointCloudObjects(false, SoupObject, SVector3f(3.f), & sf);
+		//DataParser->createVolumeFromGridValues(& sf);
+	}
+
+	if (false)
+	{
+		SciDataParserGrid1 * Parser = new SciDataParserGrid1();
+		Parser->Manager = Context->DataManager;
+		Parser->load("oxyMaps.mat");
+
+		//DataParser->GridValues.setDataScale(Vector3(3, 2, 3));
+		
+		CRGBIntensityColorMapper r("o1", "o2", "o3");
+		CSingleFieldColorMapper sf("o1");
+		COxygenColorMapper o;
+		//COxygenLocalizedColorMapper l;
+			
+		/*Context->DataManager->createVolumeFromGridValues(& o);
+		Context->DataManager->createPointCloudObjects(false, Context->Scene.GridObject, SVector3f(3.f), & o);
+		Context->Scene.VolumeSceneObject->VolumeHandle = Context->DataManager->VolumeHandle;*/
+	}
+
+	Context->DataManager->writeToFile("Datasets/HopavagenBay1.dat");
 }

@@ -43,6 +43,8 @@ public:
 		Gwen::Controls::Menu * Menu = new Gwen::Controls::Menu(MenuItem->GetCanvas());
 		Menu->MoveTo(MenuItem->GetPos().x, MenuItem->GetPos().y + 22);
 		Menu->AddItem("Open");//->onPress.Add(new ActionItem());
+		Gwen::Controls::MenuItem * New = Menu->AddItem("New");
+		New->onPress.Add(this, & CGUIMainMenuWidget::OnCreateDataSet);
 		Menu->AddItem("Close");
 		Menu->AddItem("Quit");
 	}
@@ -96,17 +98,7 @@ void CGUIMainMenuWidget::OnCreateDataSet(Gwen::Controls::Base * Control)
 	//Window->SetBounds(300, 300, 150, 50);
 	//Window->SetTitle("Please Select Data Set Name");
 	CMainMenuState::get().createDataSet();
-		
-	if (NewDataSetButton)
-		NewDataSetButton->DelayedDelete();
-	NewDataSetButton = 0;
 
-	for (auto it = DataSetButtons.begin(); it != DataSetButtons.end(); ++ it)
-	{
-		(* it)->DelayedDelete();
-	}
-	DataSetButtons.clear();
-
+	ListBox->Clear();
 	createDataSetButtons();
 }
-
