@@ -27,6 +27,7 @@ public:
 	CGUIMainMenuWidget();
 
 	void OnSelectDataSet(Gwen::Controls::Base * Control);
+	void OnCreateDataSet(Gwen::Controls::Base * Control);
 
 };
 

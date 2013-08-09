@@ -10,41 +10,21 @@
 
 void CGUIMainMenuWidget::createDataSetButtons()
 {
-	DIR * dir;
-	dirent * ent;
+	DIR * dir = opendir("Datasets/");
 
-	int Height = 110;
-
-	dir = opendir("Datasets/");
-	if (dir != NULL)
+	if (dir)
 	{
-		while ((ent = readdir (dir)) != NULL)
+		dirent * ent;
+		while (ent = readdir(dir))
 		{
 			std::string const FileName = ent->d_name;
 			if (FileName == "." || FileName == "..")
 				continue;
 
-			ListBox->AddItem(FileName);
-
-			/*
-			Gwen::Controls::Button * Button = new Gwen::Controls::Button(Window);
-			Button->SetBounds(50, Height, 450, 25);
-			Button->SetText(FileName);
-			Button->onPress.Add(this, & CGUIMainMenuWidget::OnSelectDataSet);
-			Button->Invalidate();
-			DataSetButtons.push_back(Button);
-
-			Height += 35;
-			*/
+			ListBox->AddItem(FileName, FileName);
 		}
 		closedir(dir);
 	}
-
-	//Height += 35;
-	//NewDataSetButton = new Gwen::Controls::Button(Window);
-	//NewDataSetButton->SetBounds(50, 100, 290, 25);
-	//NewDataSetButton->SetText("Create New Data Set");
-	//NewDataSetButton->onPress.Add(this, & CGUIMainMenuWidget::OnSelectDataSet);
 }
 
 class MenuDropDown : public Gwen::Event::Handler
@@ -94,6 +74,7 @@ CGUIMainMenuWidget::CGUIMainMenuWidget()
 	Gwen::Controls::Button * OKButton = new Gwen::Controls::Button(Window);
 	OKButton->SetText("OK");
 	OKButton->SetBounds(10+130, 60+400+16, 200, 30);
+	OKButton->onPress.Add(this, & CGUIMainMenuWidget::OnSelectDataSet);
 
 	Gwen::Controls::Button * CancelButton = new Gwen::Controls::Button(Window);
 	CancelButton->SetText("Cancel");
@@ -104,28 +85,28 @@ CGUIMainMenuWidget::CGUIMainMenuWidget()
 
 void CGUIMainMenuWidget::OnSelectDataSet(Gwen::Controls::Base * Control)
 {
-	if (Control == NewDataSetButton)
-	{
-		//Gwen::Controls::WindowControl * Window = new Gwen::Controls::WindowControl(GUIManager->getCanvas());
-		//Window->SetBounds(300, 300, 150, 50);
-		//Window->SetTitle("Please Select Data Set Name");
-		CMainMenuState::get().createDataSet();
-		
-		if (NewDataSetButton)
-			NewDataSetButton->DelayedDelete();
-		NewDataSetButton = 0;
-
-		for (auto it = DataSetButtons.begin(); it != DataSetButtons.end(); ++ it)
-		{
-			(* it)->DelayedDelete();
-		}
-		DataSetButtons.clear();
-
-		createDataSetButtons();
-	}
-	else
-	{
-		std::string const & FileName = ((Gwen::Controls::Button *) Control)->GetText().Get();
-		CMainMenuState::get().loadData(std::string(FileName.begin(), FileName.end()));
-	}
+	std::string const & FileName = ListBox->GetSelectedRowName();
+	std::cout << "Filename selected: " << FileName;
+	CMainMenuState::get().loadData(std::string(FileName.begin(), FileName.end()));
 }
+
+void CGUIMainMenuWidget::OnCreateDataSet(Gwen::Controls::Base * Control)
+{	
+	//Gwen::Controls::WindowControl * Window = new Gwen::Controls::WindowControl(GUIManager->getCanvas());
+	//Window->SetBounds(300, 300, 150, 50);
+	//Window->SetTitle("Please Select Data Set Name");
+	CMainMenuState::get().createDataSet();
+		
+	if (NewDataSetButton)
+		NewDataSetButton->DelayedDelete();
+	NewDataSetButton = 0;
+
+	for (auto it = DataSetButtons.begin(); it != DataSetButtons.end(); ++ it)
+	{
+		(* it)->DelayedDelete();
+	}
+	DataSetButtons.clear();
+
+	createDataSetButtons();
+}
+
