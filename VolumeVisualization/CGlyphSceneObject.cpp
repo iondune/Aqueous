@@ -97,7 +97,7 @@ bool CGlyphSceneObject::draw(IScene const * const Scene, sharedPtr<IRenderPass> 
 
 			Context.uniform("uLocalMatrix", Local.getGLMMat4());
 			Context.uniform("uColor", it->Color);
-			glDrawElements(GL_TRIANGLES, Cube->MeshBuffers[0]->IndexBuffer.getElements().size(), GL_UNSIGNED_SHORT, 0);
+			glDrawElements(GL_TRIANGLES, Cube->MeshBuffers[0]->IndexBuffer.getElements().size(), GL_UNSIGNED_INT, 0);
 		}
 		
 		Local.setScale(vec3f(3.5f, 0.4f, 3.5f) / 32.f / Scale);
@@ -110,7 +110,7 @@ bool CGlyphSceneObject::draw(IScene const * const Scene, sharedPtr<IRenderPass> 
 
 			Context.uniform("uLocalMatrix", Local.getGLMMat4());
 			Context.uniform("uColor", color3f(0.1f, 0.3f, 0.8f));
-			glDrawElements(GL_TRIANGLES, Cube->MeshBuffers[0]->IndexBuffer.getElements().size(), GL_UNSIGNED_SHORT, 0);
+			glDrawElements(GL_TRIANGLES, Cube->MeshBuffers[0]->IndexBuffer.getElements().size(), GL_UNSIGNED_INT, 0);
 		}
 	}
 
