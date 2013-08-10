@@ -119,7 +119,13 @@
     <ClCompile Include="SciDataParserPieSlices.cpp">
       <Filter>MainState\Data Management\Parsers</Filter>
     </ClCompile>
+    <ClCompile Include="CGwenOpenGLRendererFont.cpp">
+      <Filter>Utilities\GUI</Filter>
+    </ClCompile>
     <ClCompile Include="CGwenOpenGLRenderer.cpp">
+      <Filter>Utilities\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CGwenOpenGLRendererNull.cpp">
       <Filter>Utilities\GUI</Filter>
     </ClCompile>
   </ItemGroup>

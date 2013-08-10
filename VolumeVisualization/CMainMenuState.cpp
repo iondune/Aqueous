@@ -39,12 +39,12 @@ void CMainMenuState::OnRenderStart(float const Elapsed)
 
 	static int counter = 0;
 	
-	/*if (! counter--)
+	if (! counter--)
 	{
-		createDataSet();
+		//createDataSet();
 		loadData(//"DenmarkMission1.dat");
-			"SliemaCaveDay3.dat");
-	}*/
+			"HopavagenBay1.dat");
+	}
 
 	//loaded = true;
 }

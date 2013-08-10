@@ -24,7 +24,7 @@ CGUIManager::CGUIManager()
 
 void CGUIManager::init()
 {
-	Gwen::Renderer::OpenGL * pRenderer = new CGwenOpenGLRenderer;
+	CGwenOpenGLRendererNull * pRenderer = new CGwenOpenGLRendererNull;
 
 	Gwen::Skin::TexturedBase * skin = new Gwen::Skin::TexturedBase(pRenderer);
 	skin->Init("DefaultSkin.png");
