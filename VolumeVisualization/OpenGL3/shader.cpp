@@ -78,8 +78,6 @@ namespace Gwen
 			file.read(memblock, size);
 			file.close();
 			text.assign(memblock);
-
-			std::cout << "shader : " << fname << " loaded successfully\n";
 		} else {
 			std::cout << "failed to load shader: " << fname << "\n";
 		}
@@ -109,8 +107,6 @@ namespace Gwen
 		if (!checkShaderCompileStatus(m_vertexShader)) {
 			std::cout << "vertex shader failed to compile properly\n";
 			assert(0);
-		} else {
-			std::cout << "vertex shader compiled!\n";
 		}
 
 		m_fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
@@ -119,8 +115,6 @@ namespace Gwen
 
 		if (!checkShaderCompileStatus(m_fragmentShader)) {
 			std::cout << "fragment shader failed to compile properly\n";
-		} else {
-			std::cout << "fragment shader compiled!\n";
 		}
 
 		m_shaderProgram = glCreateProgram();
@@ -133,9 +127,7 @@ namespace Gwen
 		glLinkProgram(m_shaderProgram);
 
 		if (checkProgramLinkStatus(m_shaderProgram)) {
-			std::cout << "shader program linked!\n";
-		} else {
-			std::cout << "shader program link FAILURE\n";
+			//std::cout << "shader program linked!\n";
 		}
 
 		delete [] vertSource;
@@ -155,7 +147,7 @@ namespace Gwen
 			std::vector<char> log(length);
 			glGetShaderInfoLog(obj, length, &length, &log[0]);
 
-			std::cout << &log[0] << "\n";
+			//std::cout << &log[0] << "\n";
 			return false;
 		}
 		return true;
@@ -175,7 +167,7 @@ namespace Gwen
 
 			glGetProgramInfoLog(obj, length, &length, &log[0]);
 
-			std::cout << &log[0] << "\n";
+			//std::cout << &log[0] << "\n";
 			return false;
 		}
 		return true;
@@ -195,7 +187,7 @@ namespace Gwen
 			infoLog = new GLchar[infoLogLen];
 			glGetShaderInfoLog(shader, infoLogLen, &charsWritten, infoLog);
 
-			std::cout << "Shader info log: " << infoLog << "\n";
+			//std::cout << "Shader info log: " << infoLog << "\n";
 
 			delete [] infoLog;
 		}

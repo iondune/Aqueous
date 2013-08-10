@@ -136,7 +136,8 @@ namespace Gwen
 		void OpenGL3::checkGLError()
 		{
 			GLenum error = glGetError();
-			if (error != GL_NO_ERROR) {
+			if (error != GL_NO_ERROR)
+			{
 				std::cout << gluErrorString(error) << "\n";
 				assert(0);
 			}
@@ -145,12 +146,6 @@ namespace Gwen
 		void OpenGL3::Begin()
 		{
 			m_currentQuadCount = 0;
-			// std::cout << "begin called\n";
-			/*
-			glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-			glAlphaFunc( GL_GREATER, 1.0f );
-			glEnable ( GL_BLEND );
-			*/
 		}
 
 		void OpenGL3::End()
@@ -183,15 +178,7 @@ namespace Gwen
 
 			// OpenGL's coords are from the bottom left
 			// so we need to translate them here.
-			/*
-			{
-			GLint view[4];
-			glGetIntegerv( GL_VIEWPORT, &view[0] );
-			rect.y = view[3] - (rect.y + rect.h);
-			}
-
-			*/
-			rect.y = 900 - (rect.y + rect.h);
+			rect.y = m_screenHeight - (rect.y + rect.h);
 			glScissor( rect.x * Scale(), rect.y * Scale(), rect.w * Scale(), rect.h * Scale() );
 			glEnable( GL_SCISSOR_TEST );
 		};
@@ -429,7 +416,6 @@ namespace Gwen
 
 			m_currentBoundTexture = *pglTexture;
 
-			std::cout << "freeimage loading texture, gluint: " << *pglTexture << "\n";
 #ifdef FREEIMAGE_BIGENDIAN
 			GLenum format = GL_RGBA;
 #else
