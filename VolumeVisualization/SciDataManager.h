@@ -38,6 +38,7 @@ public:
 
 	void writeToFile(std::string const & FileName);
 	void readFromFile(std::string const & FileName);
+	void readFromFileLegacy(std::string const & FileName);
 
 	//! Calculate volume of water at a given field value
 	f64 const getGridVolume(std::string const & Field, f64 const Value, f64 const Range, int const Mode = 0) const;

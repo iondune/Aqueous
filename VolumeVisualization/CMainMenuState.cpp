@@ -71,7 +71,7 @@ void CMainMenuState::loadData(std::string const & FileName)
 
 void CMainMenuState::createDataSet()
 {
-	if (true)
+	if (false)
 	{
 		SciDataParserSimpleTXT * Parser = new SciDataParserSimpleTXT();
 		Parser->Manager = Context->DataManager;
@@ -122,6 +122,17 @@ void CMainMenuState::createDataSet()
 		Context->DataManager->createVolumeFromGridValues(& o);
 		/*Context->DataManager->createPointCloudObjects(false, Context->Scene.GridObject, SVector3f(3.f), & o);
 		Context->Scene.VolumeSceneObject->VolumeHandle = Context->DataManager->VolumeHandle;*/
+	}
+
+	if (true)
+	{
+		SciDataParserCSV * Parser1 = new SciDataParserCSV();
+		Parser1->Manager = Context->DataManager;
+		Parser1->mergedLoad("OxyData.csv", "LogData.csv", "Time");
+		/*
+		COxygenColorMapper o("AirSaturation(%)");
+
+		Context->DataManager->createPointCloudObjects(true, Context->Scene.PointCloudObject, SVector3f(1.f/*-3.f, 0.8f, 3.f*), & o);*/
 	}
 
 	Context->DataManager->writeToFile("Datasets/HopavagenBay1.dat");

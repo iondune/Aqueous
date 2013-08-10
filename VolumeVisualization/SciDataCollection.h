@@ -14,6 +14,7 @@ class SciDataCollection
 private:
 
 	friend class SciData;
+	friend class SciDataManager;
 	std::vector<SciData> Values;
 	std::map<std::string, std::vector<double> > Fields;
 	u32 DataCounter;
