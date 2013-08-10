@@ -71,7 +71,7 @@ void CMainMenuState::loadData(std::string const & FileName)
 
 void CMainMenuState::createDataSet()
 {
-	if (false)
+	if (true)
 	{
 		SciDataParserSimpleTXT * Parser = new SciDataParserSimpleTXT();
 		Parser->Manager = Context->DataManager;
