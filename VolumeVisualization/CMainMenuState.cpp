@@ -89,11 +89,11 @@ void CMainMenuState::createDataSet()
 		//DataParser[0]->createVolumeFromGridValues(& sf);
 	}
 
-	if (true)
+	if (false)
 	{
 		SciDataParserCTD * Parser = new SciDataParserCTD();
 		Parser->Manager = Context->DataManager;
-		Parser->load("oxygenDataSet1.mat");
+		Parser->examine("oxygenDataSet1.mat");
 
 		//DataParser->RawValues.setDataScale(Vector3(3, 2, 3));
 
@@ -106,7 +106,7 @@ void CMainMenuState::createDataSet()
 		//DataParser->createVolumeFromGridValues(& sf);
 	}
 
-	if (false)
+	if (true)
 	{
 		SciDataParserGrid1 * Parser = new SciDataParserGrid1();
 		Parser->Manager = Context->DataManager;
@@ -119,8 +119,8 @@ void CMainMenuState::createDataSet()
 		COxygenColorMapper o;
 		//COxygenLocalizedColorMapper l;
 			
-		/*Context->DataManager->createVolumeFromGridValues(& o);
-		Context->DataManager->createPointCloudObjects(false, Context->Scene.GridObject, SVector3f(3.f), & o);
+		Context->DataManager->createVolumeFromGridValues(& o);
+		/*Context->DataManager->createPointCloudObjects(false, Context->Scene.GridObject, SVector3f(3.f), & o);
 		Context->Scene.VolumeSceneObject->VolumeHandle = Context->DataManager->VolumeHandle;*/
 	}
 

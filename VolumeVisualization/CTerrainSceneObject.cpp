@@ -526,7 +526,26 @@ bool CTerrainSceneObject::draw(IScene const * const Scene, sharedPtr<IRenderPass
 
 		Context.bindIndexBufferObject((* it)->IndexBuffer.getHandle());
 
-		glDrawElements(GL_TRIANGLES, (* it)->IndexBuffer.getElements().size(), GL_UNSIGNED_INT, 0);
+		uint max = 0;
+		uint index = 0;
+		for (auto & Value : (* it)->IndexBuffer.getElements())
+		{
+			max = Max(max, Value);
+			if (Value >= VertexData.size() / 2)
+				printf("OHSHITTTTTTT\n");
+			//if (Value >= VertexData.size() / 4)
+			//	Value = 0;
+			if (index >= 620 && index <= 630)
+				printf("[%u] %u\n", index, Value);
+			index ++;
+		}
+		printf("Max was %u, vertices go up to %u\n", max, VertexData.size());
+
+		//(* it)->IndexBuffer.syncData();
+		printf("Trying to draw...\n");
+		glDrawElements(GL_TRIANGLES, //300, GL_UNSIGNED_INT, 0);
+			(* it)->IndexBuffer.getElements().size(), GL_UNSIGNED_INT, 0);
+		printf("success!\n");
 	}
 	
 	if (isDebugDataEnabled(EDebugData::Wireframe))
