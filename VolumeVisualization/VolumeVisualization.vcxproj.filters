@@ -125,7 +125,7 @@
     <ClCompile Include="OpenGL3\OpenGL3.cpp">
       <Filter>Utilities\GUI\OpenGL3 Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="OpenGL3\shader.cpp">
+    <ClCompile Include="OpenGL3\Shader.cpp">
       <Filter>Utilities\GUI\OpenGL3 Renderer</Filter>
     </ClCompile>
   </ItemGroup>
@@ -251,10 +251,10 @@
     <ClInclude Include="CGwenOpenGLRenderer.h">
       <Filter>Utilities\GUI</Filter>
     </ClInclude>
-    <ClInclude Include="OpenGL3\shader.h">
+    <ClInclude Include="OpenGL3\OpenGL3.h">
       <Filter>Utilities\GUI\OpenGL3 Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="OpenGL3\OpenGL3.h">
+    <ClInclude Include="OpenGL3\Shader.h">
       <Filter>Utilities\GUI\OpenGL3 Renderer</Filter>
     </ClInclude>
   </ItemGroup>

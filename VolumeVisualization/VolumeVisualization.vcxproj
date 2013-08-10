@@ -110,7 +110,7 @@
     <ClCompile Include=".\SciDataParserGrid1.cpp" />
     <ClCompile Include=".\SciDataParserCTD.cpp" />
     <ClCompile Include="OpenGL3\OpenGL3.cpp" />
-    <ClCompile Include="OpenGL3\shader.cpp" />
+    <ClCompile Include="OpenGL3\Shader.cpp" />
     <ClCompile Include="Range.cpp" />
     <ClCompile Include="RBFInterpolator\newmat.cpp" />
     <ClCompile Include="RBFInterpolator\RBFInterpolator.cpp" />
@@ -157,7 +157,7 @@
     <ClInclude Include="IColorMapper.h" />
     <ClInclude Include="Libraries.h" />
     <ClInclude Include="OpenGL3\OpenGL3.h" />
-    <ClInclude Include="OpenGL3\shader.h" />
+    <ClInclude Include="OpenGL3\Shader.h" />
     <ClInclude Include="ProgressPrinter.h" />
     <ClInclude Include="Range.h" />
     <ClInclude Include="RBFInterpolator\newmat.h" />

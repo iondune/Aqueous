@@ -1,10 +1,10 @@
 /*
- *      GWEN
- *      Copyright (c) Shaun Reich <sreich@kde.org>
- *      See license in Gwen.h
- */
+*      GWEN
+*      Copyright (c) Shaun Reich <sreich@kde.org>
+*      See license in Gwen.h
+*/
 
-#include "shader.h"
+#include "Shader.h"
 
 #include <fstream>
 #include <iostream>
@@ -14,192 +14,193 @@
 
 #include <vector>
 
-namespace Gwen {
-
-Shader::Shader(const char* vertexShader, const char* fragmentShader)
-	: m_shaderProgram(0), m_vertexShader(0), m_fragmentShader(0)
+namespace Gwen
 {
-    loadShaders(vertexShader, fragmentShader);
 
-    printShaderInfoLog(m_vertexShader);
-    printShaderInfoLog(m_fragmentShader);
-}
+	Shader::Shader(const char* vertexShader, const char* fragmentShader)
+		: m_shaderProgram(0), m_vertexShader(0), m_fragmentShader(0)
+	{
+		loadShaders(vertexShader, fragmentShader);
 
-Shader::~Shader()
-{
-    glDeleteProgram(m_shaderProgram);
-    glDeleteShader(m_vertexShader);
-    glDeleteShader(m_fragmentShader);
-}
+		printShaderInfoLog(m_vertexShader);
+		printShaderInfoLog(m_fragmentShader);
+	}
 
-void Shader::bindProgram() const
-{
-    glUseProgram(m_shaderProgram);
-}
+	Shader::~Shader()
+	{
+		glDeleteProgram(m_shaderProgram);
+		glDeleteShader(m_vertexShader);
+		glDeleteShader(m_fragmentShader);
+	}
 
-void Shader::unbindProgram() const
-{
-    glUseProgram(0);
-}
+	void Shader::bindProgram() const
+	{
+		glUseProgram(m_shaderProgram);
+	}
 
-GLuint Shader::shaderProgram() const
-{
-    return m_shaderProgram;
-}
+	void Shader::unbindProgram() const
+	{
+		glUseProgram(0);
+	}
 
-GLuint Shader::vertexShader() const
-{
-    return m_vertexShader;
-}
+	GLuint Shader::shaderProgram() const
+	{
+		return m_shaderProgram;
+	}
 
-GLuint Shader::fragmentShader() const
-{
-    return m_fragmentShader;
-}
+	GLuint Shader::vertexShader() const
+	{
+		return m_vertexShader;
+	}
 
-// loadFile - loads text file into char* fname
-// allocates memory - so need to delete after use
-// size of file returned in fSize
-char* Shader::loadFile(const char* fname, GLint* fSize)
-{
-    std::ifstream::pos_type size;
-    char * memblock = 0;
-    std::string text;
+	GLuint Shader::fragmentShader() const
+	{
+		return m_fragmentShader;
+	}
 
-    // file read based on example in cplusplus.com tutorial
-    std::ifstream file(fname, std::ios::in | std::ios::binary | std::ios::ate);
-    if (file.is_open()) {
-        size = file.tellg();
-        *fSize = (GLuint) size;
+	// loadFile - loads text file into char* fname
+	// allocates memory - so need to delete after use
+	// size of file returned in fSize
+	char* Shader::loadFile(const char* fname, GLint* fSize)
+	{
+		std::ifstream::pos_type size;
+		char * memblock = 0;
+		std::string text;
 
-        memblock = new char [(size_t) size];
-        file.seekg(0, std::ios::beg);
-        file.read(memblock, size);
-        file.close();
-        text.assign(memblock);
+		// file read based on example in cplusplus.com tutorial
+		std::ifstream file(fname, std::ios::in | std::ios::binary | std::ios::ate);
+		if (file.is_open()) {
+			size = file.tellg();
+			*fSize = (GLuint) size;
 
-        std::cout << "shader : " << fname << " loaded successfully\n";
-    } else {
-        std::cout << "failed to load shader: " << fname << "\n";
-    }
+			memblock = new char [(size_t) size];
+			file.seekg(0, std::ios::beg);
+			file.read(memblock, size);
+			file.close();
+			text.assign(memblock);
 
-    return memblock;
-}
+			std::cout << "shader : " << fname << " loaded successfully\n";
+		} else {
+			std::cout << "failed to load shader: " << fname << "\n";
+		}
 
-void Shader::loadShaders(const char* vertexShader, const char* fragmentShader)
-{
-    m_vertexShader = glCreateShader(GL_VERTEX_SHADER);
+		return memblock;
+	}
 
-    GLint vertLength;
-    GLint fragLength;
+	void Shader::loadShaders(const char* vertexShader, const char* fragmentShader)
+	{
+		m_vertexShader = glCreateShader(GL_VERTEX_SHADER);
 
-    char* vertSource;
-    char* fragSource;
+		GLint vertLength;
+		GLint fragLength;
 
-    vertSource = loadFile(vertexShader, &vertLength);
-    fragSource = loadFile(fragmentShader, &fragLength);
+		char* vertSource;
+		char* fragSource;
 
-    const char* vertSourceConst = vertSource;
-    const char* fragSourceConst = fragSource;
+		vertSource = loadFile(vertexShader, &vertLength);
+		fragSource = loadFile(fragmentShader, &fragLength);
 
-    glShaderSource(m_vertexShader, 1, &vertSourceConst, &vertLength);
-    glCompileShader(m_vertexShader);
+		const char* vertSourceConst = vertSource;
+		const char* fragSourceConst = fragSource;
 
-    if (!checkShaderCompileStatus(m_vertexShader)) {
-        std::cout << "vertex shader failed to compile properly\n";
-        assert(0);
-    } else {
-        std::cout << "vertex shader compiled!\n";
-    }
+		glShaderSource(m_vertexShader, 1, &vertSourceConst, &vertLength);
+		glCompileShader(m_vertexShader);
 
-    m_fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(m_fragmentShader, 1, &fragSourceConst, &fragLength);
-    glCompileShader(m_fragmentShader);
+		if (!checkShaderCompileStatus(m_vertexShader)) {
+			std::cout << "vertex shader failed to compile properly\n";
+			assert(0);
+		} else {
+			std::cout << "vertex shader compiled!\n";
+		}
 
-    if (!checkShaderCompileStatus(m_fragmentShader)) {
-        std::cout << "fragment shader failed to compile properly\n";
-    } else {
-        std::cout << "fragment shader compiled!\n";
-    }
+		m_fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+		glShaderSource(m_fragmentShader, 1, &fragSourceConst, &fragLength);
+		glCompileShader(m_fragmentShader);
 
-    m_shaderProgram = glCreateProgram();
+		if (!checkShaderCompileStatus(m_fragmentShader)) {
+			std::cout << "fragment shader failed to compile properly\n";
+		} else {
+			std::cout << "fragment shader compiled!\n";
+		}
 
-    // attach shaders
-    glAttachShader(m_shaderProgram, m_vertexShader);
-    glAttachShader(m_shaderProgram, m_fragmentShader);
+		m_shaderProgram = glCreateProgram();
 
-    // link the program and check for errors
-    glLinkProgram(m_shaderProgram);
+		// attach shaders
+		glAttachShader(m_shaderProgram, m_vertexShader);
+		glAttachShader(m_shaderProgram, m_fragmentShader);
 
-    if (checkProgramLinkStatus(m_shaderProgram)) {
-        std::cout << "shader program linked!\n";
-    } else {
-        std::cout << "shader program link FAILURE\n";
-    }
+		// link the program and check for errors
+		glLinkProgram(m_shaderProgram);
 
-    delete [] vertSource;
-    delete [] fragSource;
-}
+		if (checkProgramLinkStatus(m_shaderProgram)) {
+			std::cout << "shader program linked!\n";
+		} else {
+			std::cout << "shader program link FAILURE\n";
+		}
 
-bool Shader::checkShaderCompileStatus(GLuint obj)
-{
-    GLint status;
-    glGetShaderiv(obj, GL_COMPILE_STATUS, &status);
+		delete [] vertSource;
+		delete [] fragSource;
+	}
 
-    if (status == GL_FALSE) {
-        GLint length;
+	bool Shader::checkShaderCompileStatus(GLuint obj)
+	{
+		GLint status;
+		glGetShaderiv(obj, GL_COMPILE_STATUS, &status);
 
-        glGetShaderiv(obj, GL_INFO_LOG_LENGTH, &length);
+		if (status == GL_FALSE) {
+			GLint length;
 
-        std::vector<char> log(length);
-        glGetShaderInfoLog(obj, length, &length, &log[0]);
+			glGetShaderiv(obj, GL_INFO_LOG_LENGTH, &length);
 
-        std::cout << &log[0] << "\n";
-        return false;
-    }
-    return true;
-}
+			std::vector<char> log(length);
+			glGetShaderInfoLog(obj, length, &length, &log[0]);
 
-bool Shader::checkProgramLinkStatus(GLuint obj)
-{
-    GLint status;
-    glGetProgramiv(obj, GL_LINK_STATUS, &status);
+			std::cout << &log[0] << "\n";
+			return false;
+		}
+		return true;
+	}
 
-    if (status == GL_FALSE) {
-        GLint length;
+	bool Shader::checkProgramLinkStatus(GLuint obj)
+	{
+		GLint status;
+		glGetProgramiv(obj, GL_LINK_STATUS, &status);
 
-        glGetProgramiv(obj, GL_INFO_LOG_LENGTH, &length);
+		if (status == GL_FALSE) {
+			GLint length;
 
-        std::vector<char> log(length);
+			glGetProgramiv(obj, GL_INFO_LOG_LENGTH, &length);
 
-        glGetProgramInfoLog(obj, length, &length, &log[0]);
+			std::vector<char> log(length);
 
-        std::cout << &log[0] << "\n";
-        return false;
-    }
-    return true;
-}
+			glGetProgramInfoLog(obj, length, &length, &log[0]);
 
-void Shader::printShaderInfoLog(GLuint shader)
-{
-    int infoLogLen = 0;
-    int charsWritten = 0;
-    GLchar *infoLog;
+			std::cout << &log[0] << "\n";
+			return false;
+		}
+		return true;
+	}
 
-    glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &infoLogLen);
+	void Shader::printShaderInfoLog(GLuint shader)
+	{
+		int infoLogLen = 0;
+		int charsWritten = 0;
+		GLchar *infoLog;
 
-    // should additionally check for OpenGL errors here
+		glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &infoLogLen);
 
-    if (infoLogLen > 0) {
-        infoLog = new GLchar[infoLogLen];
-        glGetShaderInfoLog(shader, infoLogLen, &charsWritten, infoLog);
+		// should additionally check for OpenGL errors here
 
-        std::cout << "Shader info log: " << infoLog << "\n";
+		if (infoLogLen > 0) {
+			infoLog = new GLchar[infoLogLen];
+			glGetShaderInfoLog(shader, infoLogLen, &charsWritten, infoLog);
 
-        delete [] infoLog;
-    }
+			std::cout << "Shader info log: " << infoLog << "\n";
 
-    // should additionally check for OpenGL errors here
-}
+			delete [] infoLog;
+		}
+
+		// should additionally check for OpenGL errors here
+	}
 
 }

@@ -1,7 +1,7 @@
 /*
-	GWEN
-	Copyright (c) 2011 Facepunch Studios
-	See license in Gwen.h
+GWEN
+Copyright (c) 2011 Facepunch Studios
+See license in Gwen.h
 */
 
 #ifndef GWEN_RENDERERS_OPENGL3_H
@@ -20,99 +20,99 @@ class FontRenderer;
 namespace Gwen
 {
 
-class Shader;
+	class Shader;
 
-namespace Renderer
-{
+	namespace Renderer
+	{
 
-class OpenGL3 : public Gwen::Renderer::Base
-{
-public:
+		class OpenGL3 : public Gwen::Renderer::Base
+		{
+		public:
 
-    /**
-     * Create the renderer with a viewport of the given screen width/height
-     */
-    OpenGL3(int screenWidth, int screenHeight);
-    ~OpenGL3();
+			/**
+			* Create the renderer with a viewport of the given screen width/height
+			*/
+			OpenGL3(int screenWidth, int screenHeight);
+			~OpenGL3();
 
-    virtual void Init();
+			virtual void Init();
 
-    virtual void Begin();
-    virtual void End();
+			virtual void Begin();
+			virtual void End();
 
-    virtual void SetDrawColor( Gwen::Color color );
-    virtual void DrawFilledRect( Gwen::Rect rect );
+			virtual void SetDrawColor( Gwen::Color color );
+			virtual void DrawFilledRect( Gwen::Rect rect );
 
-    void StartClip();
-    void EndClip();
+			void StartClip();
+			void EndClip();
 
-    void DrawTexturedRect( Gwen::Texture* pTexture, Gwen::Rect pTargetRect, float u1=0.0f, float v1=0.0f, float u2=1.0f, float v2=1.0f );
-    void LoadTexture( Gwen::Texture* pTexture );
-    void FreeTexture( Gwen::Texture* pTexture );
-    Gwen::Color PixelColour( Gwen::Texture* pTexture, unsigned int x, unsigned int y, const Gwen::Color& col_default );
+			void DrawTexturedRect( Gwen::Texture* pTexture, Gwen::Rect pTargetRect, float u1=0.0f, float v1=0.0f, float u2=1.0f, float v2=1.0f );
+			void LoadTexture( Gwen::Texture* pTexture );
+			void FreeTexture( Gwen::Texture* pTexture );
+			Gwen::Color PixelColour( Gwen::Texture* pTexture, unsigned int x, unsigned int y, const Gwen::Color& col_default );
 
-protected:
+		protected:
 
-    void AddRect(Gwen::Rect rect, float u = 0.0f , float v = 0.0f );
+			void AddRect(Gwen::Rect rect, float u = 0.0f , float v = 0.0f );
 
-    Gwen::Color			m_Color;
+			Gwen::Color			m_Color;
 
-public:
+		public:
 
-    //
-    // Self Initialization
-    //
+			//
+			// Self Initialization
+			//
 
-    virtual bool InitializeContext( Gwen::WindowProvider* pWindow );
-    virtual bool ShutdownContext( Gwen::WindowProvider* pWindow );
-    virtual bool PresentContext( Gwen::WindowProvider* pWindow );
-    virtual bool ResizedContext( Gwen::WindowProvider* pWindow, int w, int h );
-    virtual bool BeginContext( Gwen::WindowProvider* pWindow );
-    virtual bool EndContext( Gwen::WindowProvider* pWindow );
+			virtual bool InitializeContext( Gwen::WindowProvider* pWindow );
+			virtual bool ShutdownContext( Gwen::WindowProvider* pWindow );
+			virtual bool PresentContext( Gwen::WindowProvider* pWindow );
+			virtual bool ResizedContext( Gwen::WindowProvider* pWindow, int w, int h );
+			virtual bool BeginContext( Gwen::WindowProvider* pWindow );
+			virtual bool EndContext( Gwen::WindowProvider* pWindow );
 
-private:
-    /* Each vertex is:
-     * two floats for the 2d coordinate
-     * four u8s for the color
-     * two f32s for the texcoords
-     * the vbo contains data of the aforementioned elements interleaved.
-     * Each sprite has four vertices.
-     * */
-    struct Vertex {
-        float x, y;
-        unsigned int color; // packed with 4 u8s (unsigned chars) for color
-        float u, v;
-    };
+		private:
+			/* Each vertex is:
+			* two floats for the 2d coordinate
+			* four u8s for the color
+			* two f32s for the texcoords
+			* the vbo contains data of the aforementioned elements interleaved.
+			* Each sprite has four vertices.
+			* */
+			struct Vertex {
+				float x, y;
+				unsigned int color; // packed with 4 u8s (unsigned chars) for color
+				float u, v;
+			};
 
-    typedef unsigned int u32;
-    typedef float f32;
+			typedef unsigned int u32;
+			typedef float f32;
 
-    void addQuad(const Gwen::Rect& rect, const Gwen::Color& color, float u1, float v1, float u2, float v2);
-    void finalizeDraw();
+			void addQuad(const Gwen::Rect& rect, const Gwen::Color& color, float u1, float v1, float u2, float v2);
+			void finalizeDraw();
 
-    int m_currentQuadCount;
+			int m_currentQuadCount;
 
-    int m_maxSpriteCount;
+			int m_maxSpriteCount;
 
-    void initGL();
-    void checkGLError();
+			void initGL();
+			void checkGLError();
 
-    glm::mat4 m_modelMatrix;
-    glm::mat4 m_projectionMatrix;
+			glm::mat4 m_modelMatrix;
+			glm::mat4 m_projectionMatrix;
 
-    Gwen::Shader* m_shader;
+			Gwen::Shader* m_shader;
 
-    GLuint m_whiteTexture;
-    GLuint m_currentBoundTexture;
+			GLuint m_whiteTexture;
+			GLuint m_currentBoundTexture;
 
-    GLuint m_vao; // vertex array object
-    GLuint m_vbo; // vertex buffer object
-    GLuint m_ebo; // element buffer object
+			GLuint m_vao; // vertex array object
+			GLuint m_vbo; // vertex buffer object
+			GLuint m_ebo; // element buffer object
 
-    int m_screenWidth;
-    int m_screenHeight;
-};
+			int m_screenWidth;
+			int m_screenHeight;
+		};
 
-}
+	}
 }
 #endif
