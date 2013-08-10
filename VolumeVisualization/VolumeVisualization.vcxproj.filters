@@ -128,18 +128,6 @@
     <ClCompile Include="OpenGL3\shader.cpp">
       <Filter>Utilities\GUI\OpenGL3 Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="OpenGL3\text.cpp">
-      <Filter>Utilities\GUI\OpenGL3 Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="OpenGL3\freetype-gl\texture-atlas.cpp">
-      <Filter>Utilities\GUI\OpenGL3 Renderer\freetype</Filter>
-    </ClCompile>
-    <ClCompile Include="OpenGL3\freetype-gl\texture-font.cpp">
-      <Filter>Utilities\GUI\OpenGL3 Renderer\freetype</Filter>
-    </ClCompile>
-    <ClCompile Include="OpenGL3\freetype-gl\vector.cpp">
-      <Filter>Utilities\GUI\OpenGL3 Renderer\freetype</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CMainState.h">
@@ -266,32 +254,8 @@
     <ClInclude Include="OpenGL3\shader.h">
       <Filter>Utilities\GUI\OpenGL3 Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="OpenGL3\text.h">
-      <Filter>Utilities\GUI\OpenGL3 Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="OpenGL3\textbox.h">
-      <Filter>Utilities\GUI\OpenGL3 Renderer</Filter>
-    </ClInclude>
     <ClInclude Include="OpenGL3\OpenGL3.h">
       <Filter>Utilities\GUI\OpenGL3 Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="OpenGL3\freetype-gl\freetype-gl.h">
-      <Filter>Utilities\GUI\OpenGL3 Renderer\freetype</Filter>
-    </ClInclude>
-    <ClInclude Include="OpenGL3\freetype-gl\opengl.h">
-      <Filter>Utilities\GUI\OpenGL3 Renderer\freetype</Filter>
-    </ClInclude>
-    <ClInclude Include="OpenGL3\freetype-gl\texture-atlas.h">
-      <Filter>Utilities\GUI\OpenGL3 Renderer\freetype</Filter>
-    </ClInclude>
-    <ClInclude Include="OpenGL3\freetype-gl\texture-font.h">
-      <Filter>Utilities\GUI\OpenGL3 Renderer\freetype</Filter>
-    </ClInclude>
-    <ClInclude Include="OpenGL3\freetype-gl\vec234.h">
-      <Filter>Utilities\GUI\OpenGL3 Renderer\freetype</Filter>
-    </ClInclude>
-    <ClInclude Include="OpenGL3\freetype-gl\vector.h">
-      <Filter>Utilities\GUI\OpenGL3 Renderer\freetype</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -357,9 +321,6 @@
     </Filter>
     <Filter Include="Utilities\GUI\OpenGL3 Renderer">
       <UniqueIdentifier>{bd373e7c-8f59-4ced-bc40-068bf674a2cd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Utilities\GUI\OpenGL3 Renderer\freetype">
-      <UniqueIdentifier>{d6029851-be41-415a-9a0b-11dc09e48b7a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

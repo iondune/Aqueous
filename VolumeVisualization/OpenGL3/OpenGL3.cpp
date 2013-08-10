@@ -6,7 +6,6 @@
 
 #include "GL/glew.h"
 
-#include "text.h"
 #include "shader.h"
 
 #include "OpenGL3.h"
