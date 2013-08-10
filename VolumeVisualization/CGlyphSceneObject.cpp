@@ -93,7 +93,7 @@ bool CGlyphSceneObject::draw(IScene const * const Scene, sharedPtr<IRenderPass> 
 		Local.setScale(vec3f(1.f/64.f) / Scale);
 		for (auto it = Glyphs.begin(); it != Glyphs.end(); ++ it)
 		{
-			Local.setTranslation((it->Position-vec3f(0.5))*Scale);
+			Local.setTranslation((it->Position-vec3f(0.5, 1, 0.5))*Scale);
 
 			Context.uniform("uLocalMatrix", Local.getGLMMat4());
 			Context.uniform("uColor", it->Color);

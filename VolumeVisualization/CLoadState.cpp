@@ -233,8 +233,10 @@ void CLoadState::loadScene()
 	//SceneManager->addSceneObject(Scene.VolumeSceneObject);
 	Scene.VolumeSceneObject->ShowVolume = 2;
 	Scene.VolumeSceneObject->setScale(Adjuster * 3.f * vec3f(1.f, 0.8f / 3.f, 1.f));
-
-	Scene.GlyphSceneObject->setScale(Adjuster * vec3f(3.f, 0.8f, 3.f));
+	
+	Scene.GlyphSceneObject->setScale(Adjuster * vec3f(3.f, 0.8f, 3.f) * vec3f(-1, -1, 1));
+	Scene.GlyphSceneObject->setTranslation(vec3f(0, 0.8f, 0));
+	Scene.VolumeSceneObject->setTranslation(vec3f(0, 0.4f, 0));
 	//Scene.GlyphSceneObject->setScale(vec3f(3.f, 1.5f, 3.f));
 	//Scene.VolumeSceneObject->setScale(vec3f(3.f, 1.5f, 3.f));
 }
