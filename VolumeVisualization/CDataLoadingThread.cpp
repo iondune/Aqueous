@@ -69,7 +69,7 @@ void CDataLoadingThread::End()
 
 	COxygenColorMapper o("o1");
 	CSpectrumColorMapper spec("temp");
-	Context->DataManager->createVolumeFromGridValues(& spec);
+	Context->DataManager->createVolumeFromGridValues(& o);
 	Context->Scene.VolumeSceneObject->VolumeHandle = Context->DataManager->getVolumeHandle();
 	
 	CApplication::get().getStateManager().setState(& CMainState::get());
