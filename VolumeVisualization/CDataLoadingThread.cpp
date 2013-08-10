@@ -66,7 +66,7 @@ void CDataLoadingThread::End()
 {
 	Context->Scene.GlyphSceneObject->buildLines();
 	//Context->Scene.GlyphSceneObject->setScale(vec3f(3.f, 1.5f, 3.f));
-	Context->Scene.GlyphSceneObject->setScale(Context->Scene.GlyphSceneObject->getScale());
+	//Context->Scene.GlyphSceneObject->setScale(Context->Scene.GlyphSceneObject->getScale());
 
 	COxygenColorMapper o("o1");
 	CSpectrumColorMapper spec("temp");

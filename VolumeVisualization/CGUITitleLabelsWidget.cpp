@@ -9,7 +9,7 @@
 
 CGUITitleLabelsWidget::CGUITitleLabelsWidget(SciDataManager * DataManager)
 {
-	static Range ValueRange = DataManager->getRawValues().getValueRange("Avg Oxy", 5.0);
+	static Range ValueRange = DataManager->getRawValues().getValueRange("o1", 5.0);
 
 	std::wstringstream s;
 	s << std::fixed;
@@ -49,26 +49,26 @@ CGUITitleLabelsWidget::CGUITitleLabelsWidget(SciDataManager * DataManager)
 
 void CGUITitleLabelsWidget::resetVolumeRangeIndicator(SciDataManager * DataManager)
 {
-	static Range ValueRange = DataManager->getRawValues().getValueRange("Avg Oxy", 5.0);
+	static Range ValueRange = DataManager->getRawValues().getValueRange("o1", 5.0);
 
 	{
 		std::wstringstream s;
 		s << std::fixed;
 		s << "Value Range: ";
 		s << std::setprecision(3);
-		s << (CProgramContext::get().Scene.VolumeSceneObject->Control.EmphasisLocation * (ValueRange.second - ValueRange.first) + ValueRange.first);
+		s << (CProgramContext::get().Scene.VolumeSceneObject->Control.EmphasisLocation * (ValueRange.second - ValueRange.first) + ValueRange.first) / 100.f;
 		s << " ± ";
 		s << std::setprecision(4);
-		s << (CProgramContext::get().Scene.VolumeSceneObject->Control.LocalRange / 2.f * (ValueRange.second - ValueRange.first));
+		s << (CProgramContext::get().Scene.VolumeSceneObject->Control.LocalRange / 2.f * (ValueRange.second - ValueRange.first)) / 100.f;
 		VolumeRangeIndicator->SetText(s.str());
 	}
 	
 	{
-		static Range ValueRange = DataManager->getGridValues().getValueRange("Avg Oxy", 5.0);
+		static Range ValueRange = DataManager->getGridValues().getValueRange("o1", 5.0);
 		static Range XValueRange = DataManager->getRawValues().getValueRange("x", 5.0);
-		static Range YValueRange = DataManager->getRawValues().getValueRange("DFS Depth (m)", 5.0);
+		static Range YValueRange = DataManager->getRawValues().getValueRange("y", 5.0);
 		YValueRange.first = 0.0;
-		static Range ZValueRange = DataManager->getRawValues().getValueRange("y", 5.0);
+		static Range ZValueRange = DataManager->getRawValues().getValueRange("z", 5.0);
 
 		double EntireVolume = 1.0;
 		EntireVolume *= XValueRange.second - XValueRange.first;

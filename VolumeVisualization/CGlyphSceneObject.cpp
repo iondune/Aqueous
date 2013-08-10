@@ -22,7 +22,7 @@ CGlyphSceneObject::CGlyphSceneObject()
 
 	// Copy shader
 	Shader = CProgramContext::get().Shaders.Glyph;
-	LineShader = CProgramContext::get().Shaders.GlyphLines;
+	LineShader = 0;//CProgramContext::get().Shaders.GlyphLines;
 }
 
 void CGlyphSceneObject::loadGlyphs(SciDataManager * DataManager, IColorMapper * ColorMapper, 
@@ -162,10 +162,10 @@ void CGlyphSceneObject::buildLines()
 
 	for (u32 i = 1; i < Glyphs.size(); ++ i)
 	{
-		Lines.push_back(Glyphs[i-1].Position.X - 0.1667f*Scale.X);
+		Lines.push_back(Glyphs[i-1].Position.X + 0.1f*Scale.X);
 		Lines.push_back(Glyphs[i-1].Position.Y - 0.3333f*Scale.Y);
 		Lines.push_back(Glyphs[i-1].Position.Z - 0.1667f*Scale.Z);
-		Lines.push_back(Glyphs[i].Position.X - 0.1667f*Scale.X);
+		Lines.push_back(Glyphs[i].Position.X + 0.1f*Scale.X);
 		Lines.push_back(Glyphs[i].Position.Y - 0.3333f*Scale.Y);
 		Lines.push_back(Glyphs[i].Position.Z - 0.1667f*Scale.Z);
 		
