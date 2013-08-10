@@ -32,11 +32,14 @@ vec4 getColorSample(vec3 coords)
 	switch (uHighlightMode)
 	{
 	default:
-	case 0:
+	case 0: // Constant-alpha mode
 		sample.a = 0.8;
 		break;
 
-	case 1:
+	case 3: // Sample alpha mode
+		break;
+
+	case 1: // Planar-slice mode
 		vec3 LocalVector = coords - 0.5;
 		vec3 PlanarVector = normalize(uSliceAxis);
 
@@ -68,7 +71,7 @@ vec4 getColorSample(vec3 coords)
 		}
 		break;
 
-	case 2:
+	case 2: // Isosurface mode
 		float Height = sample.a;
 
 		if (abs(Height - uEmphasisLocation) < uLocalRange / 2.0)
@@ -80,9 +83,6 @@ vec4 getColorSample(vec3 coords)
 		{
 			sample.a = uMinimumAlpha;
 		}
-		break;
-
-	case 3:
 		break;
 	}
 
@@ -97,11 +97,11 @@ void main()
 	vec3 FrontPosition;
 	vec3 CameraPosition = (uInvModelMatrix * vec4(uCameraPosition, 1.0)).xyz;
 	
-	if (CameraPosition.x >= -0.5 && 
-		CameraPosition.y >= -0.5 && 
-		CameraPosition.z >= -0.5 && 
-		CameraPosition.x <=  0.5 && 
-		CameraPosition.y <=  0.5 && 
+	if (CameraPosition.x >= -0.5 &&
+		CameraPosition.y >= -0.5 &&
+		CameraPosition.z >= -0.5 &&
+		CameraPosition.x <=  0.5 &&
+		CameraPosition.y <=  0.5 &&
 		CameraPosition.z <=  0.5)
 	{
 		FrontPosition = CameraPosition + vec3(0.5);
@@ -136,26 +136,17 @@ void main()
 	float LengthAccumulator = 0.0;
 
 	float CurrentDepth = texture2D(uDepthTexture, ((vPosition.xy / vPosition.w) + 1.0) / 2.0).r;
+	
+	const int IterationMax = 1000;
 
-	for(int i = 0; i < 1000; i ++)
+	int i;
+	for(i = 0; i < IterationMax; i ++)
 	{
-		// Generate samples
-		vec4 ColorSample = getColorSample(Iterator);
-		float AlphaSample = ColorSample.a * uStepSize * uAlphaIntensity;
-		
-		// Accumulate
-		ColorAccumulator += (1.0 - AlphaAccumulator) * ColorSample * AlphaSample * 3;
-		AlphaAccumulator += AlphaSample;
-		LengthAccumulator += length(DirectionStep);
-		
-		// Advance iterator
-		Iterator += DirectionStep;
-		
 		// Calculate depth
 		vec4 ScreenCoords = vec4(Iterator, 1.0);
 		ScreenCoords -= vec4(vec3(0.5), 0.0);
 		ScreenCoords = uProjMatrix * uViewMatrix * uModelMatrix * ScreenCoords;
-
+		
 		float Depth = ScreenCoords.z / ScreenCoords.w;
 		Depth += 1.0;
 		Depth /= 2.0;
@@ -171,17 +162,57 @@ void main()
 			break;
 		}
 
-		// Accumulation test
-		if (LengthAccumulator >= Length || AlphaAccumulator > 1.0)
+		// Generate samples
+		vec4 ColorSample = getColorSample(Iterator);
+		float AlphaSample = ColorSample.a * uStepSize * uAlphaIntensity;
+		
+		// Accumulate
+		ColorAccumulator += (1.0 - AlphaAccumulator / uAlphaIntensity) * ColorSample * AlphaSample * 3;
+		AlphaAccumulator += AlphaSample;
+		LengthAccumulator += length(DirectionStep);
+		
+		// Advance iterator
+		Iterator += DirectionStep;
+
+		// Length test
+		if (LengthAccumulator >= Length)
 		{
 			if (uDebugLevel == 2)
 			{
-				outFragColor = vec4(1, 1, 1, 1);
+				outFragColor = vec4(0, float(i) / float(IterationMax), 1, 1);
 				return;
 			}
 			break;
 		}
+		
+		// Accumulation test
+		if (AlphaAccumulator > uAlphaIntensity)
+		{
+			if (uDebugLevel == 3)
+			{
+				outFragColor = vec4(1, 0, float(i) / float(IterationMax), 1);
+				return;
+			}
+			break;
+		}
+		
+		if (uDebugLevel == 4 && IterationMax == i + 1)
+		{
+			outFragColor = vec4(0, 0.1, 0.1, 1);
+			return;
+		}
 	}
+	
+	if (uDebugLevel == 4)
+	{
+		outFragColor = vec4(1, 0.5, float(i) / float(IterationMax), 1);
+		return;
+	}
+	
+	ColorAccumulator.r = clamp(ColorAccumulator.r, 0.0, 1.0);
+	ColorAccumulator.g = clamp(ColorAccumulator.g, 0.0, 1.0);
+	ColorAccumulator.b = clamp(ColorAccumulator.b, 0.0, 1.0);
+	ColorAccumulator.a = clamp(ColorAccumulator.a, 0.0, 1.0);
 
 	if (uDebugLevel == 1)
 		outFragColor = vec4(FrontPosition, 1.0);
