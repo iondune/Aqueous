@@ -11,9 +11,6 @@
 
 #include "Gwen/Gwen.h"
 #include "Gwen/BaseRender.h"
-#include "freetype-gl/texture-atlas.h"
-#include "freetype-gl/freetype-gl.h"
-#include "freetype-gl/texture-font.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -45,11 +42,6 @@ public:
 
     virtual void SetDrawColor( Gwen::Color color );
     virtual void DrawFilledRect( Gwen::Rect rect );
-
-    virtual void LoadFont( Gwen::Font* pFont );
-    virtual void FreeFont( Gwen::Font* pFont );
-    virtual void RenderText( Gwen::Font* pFont, Gwen::Point pos, const Gwen::UnicodeString& text );
-    virtual Gwen::Point MeasureText( Gwen::Font* pFont, const Gwen::UnicodeString& text );
 
     void StartClip();
     void EndClip();
@@ -109,15 +101,9 @@ private:
     glm::mat4 m_projectionMatrix;
 
     Gwen::Shader* m_shader;
-    Gwen::Shader* m_fontShader;
 
     GLuint m_whiteTexture;
     GLuint m_currentBoundTexture;
-
-    struct FontWrapper {
-        texture_atlas_t* atlas;
-        texture_font_t* font;
-    };
 
     GLuint m_vao; // vertex array object
     GLuint m_vbo; // vertex buffer object

@@ -90,7 +90,6 @@ void OpenGL3::Init()
     float scale = 1.0f;
     m_modelMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(scale));
     */
-    m_fontShader = new Gwen::Shader("Shaders/GUI/text.vert", "Shaders/GUI/text.frag");
 }
 
 void OpenGL3::initGL()
@@ -175,6 +174,7 @@ void OpenGL3::DrawFilledRect( Gwen::Rect rect )
 
 void OpenGL3::SetDrawColor(Gwen::Color color)
 {
+	glColor4ubv( ( GLubyte* ) &color );
     m_Color = color;
 }
 
@@ -520,141 +520,5 @@ bool OpenGL3::EndContext( Gwen::WindowProvider* pWindow )
     return true;
 }
 
-void OpenGL3::LoadFont( Gwen::Font* font )
-{
-    font->realsize = font->size * Scale();
-
-    const char* fontpath = "OpenSans.ttf";
-    //FIXME: why does it fail on loading that?
-    //FIXME:Utility::UnicodeToString(font->facename).c_str();
-
-    texture_atlas_t* atlas = texture_atlas_new(512, 512, 1);
-    texture_font_t* newFont = texture_font_new(atlas, fontpath, font->realsize);
-
-    texture_font_load_glyphs(newFont, L" !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~");
-
-    FontWrapper* wrapper = new FontWrapper();
-    wrapper->atlas = atlas;
-    wrapper->font = newFont;
-
-    font->data = wrapper;
-
-    checkGLError();
-}
-
-void OpenGL3::FreeFont( Gwen::Font* pFont )
-{
-   if  (!pFont->data) {
-          return;
-     }
-
-    FontWrapper* fontWrapper = static_cast<FontWrapper*>(pFont->data);
-    delete fontWrapper->atlas;
-    delete fontWrapper->font;
-    delete fontWrapper;
-    pFont->data = NULL;
-}
-
-void OpenGL3::RenderText( Gwen::Font* pFont, Gwen::Point pos, const Gwen::UnicodeString& text )
-{
-    Translate( pos.x, pos.y );
-
-    checkGLError();
-    // If the font doesn't exist, or the font size should be changed
-    if (!pFont->data || fabs( pFont->realsize - pFont->size * Scale() ) > 2)
-    {
-        FreeFont( pFont );
-        LoadFont( pFont );
-    }
-
-    FontWrapper* fontWrapper = static_cast<FontWrapper*>(pFont->data);
-
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-    m_fontShader->bindProgram();
-
-    GLuint textScreenScaling = glGetUniformLocation(m_fontShader->shaderProgram(), "screenScaling");
-    GLuint textCoordPos = glGetAttribLocation(m_fontShader->shaderProgram(), "coord");
-    GLuint textPosLoc = glGetUniformLocation(m_fontShader->shaderProgram(), "pos");
-
-    checkGLError();
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, fontWrapper->atlas->id);
-    glEnable(GL_TEXTURE_2D);
-
-    GLfloat screenScalingArray[2];
-    screenScalingArray[0] = 2.0 / static_cast<GLfloat>(m_screenWidth);
-    screenScalingArray[1] = 2.0 / static_cast<GLfloat>(m_screenHeight);
-    glUniform2f(textScreenScaling, screenScalingArray[0], screenScalingArray[1]);
-
-    checkGLError();
-
-    //FIXME (PLEASE): i want to do a couple things with this..first off, as noted in Text, it needs to be changed
-    //to buffersubdata. That only applies when we change the text, currently as you can see, we're just
-    //newing and deleting the text objects. This can be improved. Really there should be a stack of some kind
-    //where we can try to minimize the mallocs and instead set the text. This also means that we're not creating
-    //and deleting GL buffers each time the stuff changes, which is a win win win.
-    Text* textBox = new Text(fontWrapper->font, textCoordPos, textPosLoc);
-    //HACK, offset y properly..
-    textBox->setPos(pos.x, m_screenHeight - pos.y - 10);
-    textBox->setText(const_cast<wchar_t*>(text.c_str()));
-    textBox->render();
-    delete textBox;
-
-    checkGLError();
-}
-
-Gwen::Point OpenGL3::MeasureText( Gwen::Font* pFont, const Gwen::UnicodeString& text )
-{
-    // If the font doesn't exist, or the font size should be changed
-    if ( !pFont->data || fabs( pFont->realsize - pFont->size * Scale() ) > 2 )
-    {
-        FreeFont( pFont );
-        LoadFont( pFont );
-    }
-
-    wchar_t* wText = const_cast<wchar_t*>(text.c_str());
-
-    //FIXME: this code dup is nasty, but it means we don't need to create a new Text
-    FontWrapper* fontWrapper = static_cast<FontWrapper*>(pFont->data);
-
-    float width = 0.0f;
-    int height = 0;
-
-    unsigned int len = wcslen(wText);
-
-    for(unsigned int i = 0; i < len; i++) {
-        texture_glyph_t *glyph = texture_font_get_glyph(fontWrapper->font, wText[i]);
-
-        if(glyph != NULL) {
-
-            int kerning = 0;
-            if(i > 0) {
-                kerning = texture_glyph_get_kerning(glyph, wText[i-1]);
-            }
-
-            width += kerning + glyph->advance_x;
-
-            if (glyph->height > (size_t) height) {
-                height = glyph->height;
-            }
-        }
-    }
-
-    if (height == 0) {
-
-        //FIXME: because font rendering is confusing, and apparently gwen passes us ""
-        // and expects us to return a size. Like wtf? seriously.
-        texture_glyph_t *glyph = texture_font_get_glyph(fontWrapper->font, 'A');
-        height = glyph->height + glyph->offset_y;
-    }
-
-    /*
-     sfStr.setFont( *pSFFont );
-     sfStr.setCharacterSize( pFont->realsize );
-    */
-    return Gwen::Point(width, height);
-}
 }
 }

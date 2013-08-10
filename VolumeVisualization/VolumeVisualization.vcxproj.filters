@@ -122,12 +122,6 @@
     <ClCompile Include="CGwenOpenGLRendererFont.cpp">
       <Filter>Utilities\GUI</Filter>
     </ClCompile>
-    <ClCompile Include="CGwenOpenGLRenderer.cpp">
-      <Filter>Utilities\GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="CGwenOpenGLRendererNull.cpp">
-      <Filter>Utilities\GUI</Filter>
-    </ClCompile>
     <ClCompile Include="OpenGL3\OpenGL3.cpp">
       <Filter>Utilities\GUI\OpenGL3 Renderer</Filter>
     </ClCompile>

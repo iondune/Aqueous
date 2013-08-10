@@ -94,9 +94,7 @@
     <ClCompile Include="CGUIVolumeControlWidget.cpp" />
     <ClCompile Include="CGUIWidget.cpp" />
     <ClCompile Include="CGwenEventForwarder.cpp" />
-    <ClCompile Include="CGwenOpenGLRenderer.cpp" />
     <ClCompile Include="CGwenOpenGLRendererFont.cpp" />
-    <ClCompile Include="CGwenOpenGLRendererNull.cpp" />
     <ClCompile Include="CLoadState.cpp" />
     <ClCompile Include="CMainMenuState.cpp" />
     <ClCompile Include="CMainState.cpp" />
