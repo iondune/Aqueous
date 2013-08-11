@@ -15,9 +15,9 @@ CGUIGlyphControlWidget::CGUIGlyphControlWidget()
 
 	Window = new Gwen::Controls::WindowControl(GUIManager->getCanvas());
 	Window->SetDeleteOnClose(false);
-	Window->SetBounds(1200, 670, 330, 160);
+	Window->SetBounds(1200, 670, 330, 215);
 	Window->SetTitle("Glyph Controls");
-	Window->SetHidden(true);
+	//Window->SetHidden(true);
 
 	EnableButton = new Gwen::Controls::Button(Window);
 	EnableButton->SetBounds(15, 10, 290, 25);
@@ -41,6 +41,20 @@ CGUIGlyphControlWidget::CGUIGlyphControlWidget()
 		GridButton->SetBounds(140 + 15 + 10, 10 + 45 + 25, 140, 25);
 		GridButton->SetText("Floor Samples");
 		GridButton->onPress.Add(this, & CGUIGlyphControlWidget::OnSelectGrid);
+		
+		SliderLabel = new Gwen::Controls::Label(Window);
+		SliderLabel->SetFont(GUIManager->getRegularFont());
+		SliderLabel->SetText(L"Glyph Size:");
+		SliderLabel->SetBounds(10, 10 + 45 + 25 + 45, 300, 40);
+		SliderLabel->SetTextColor(Gwen::Color(50, 20, 20, 215));
+
+		Gwen::Controls::HorizontalSlider * GlyphSizeSlider = new Gwen::Controls::HorizontalSlider(Window);
+		GlyphSizeSlider->SetBounds(10, 10 + 45 + 25 + 15 + 45, 300, 40);
+		GlyphSizeSlider->SetRange(1 / 256.f, 1 / 24.f);
+		GlyphSizeSlider->SetFloatValue(1 / 64.f);
+
+		// Wire Up Events
+		GlyphSizeSlider->onValueChanged.Add(this, & CGUIGlyphControlWidget::OnSizeSlider);
 	}
 }
 
@@ -84,6 +98,13 @@ void CGUIGlyphControlWidget::OnSelectGrid(Gwen::Controls::Base * Control)
 	CProgramContext * Context = & CProgramContext::get();
 	Context->Scene.GlyphSceneObject->setVisible(! Context->Scene.GlyphSceneObject->isVisible());
 	SetButtonTitle();
+}
+
+void CGUIGlyphControlWidget::OnSizeSlider(Gwen::Controls::Base * Control)
+{
+	CProgramContext & Context = CProgramContext::get();
+	Gwen::Controls::Slider * Bar = (Gwen::Controls::Slider *) Control;
+	Context.Scene.GlyphSceneObject->GlyphSize = Bar->GetFloatValue();
 }
 
 void CGUIGlyphControlWidget::toggle()

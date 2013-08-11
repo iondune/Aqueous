@@ -7,7 +7,7 @@
 
 
 CGlyphSceneObject::CGlyphSceneObject()
-	: Cube(0), Shader(0), ShowFloors(true), ShowPoints(true)
+	: Cube(0), Shader(0), ShowFloors(true), ShowPoints(true), GlyphSize(1 / 64.f)
 {
 	// No culling!
 	setCullingEnabled(false);
@@ -87,7 +87,7 @@ bool CGlyphSceneObject::draw(IScene const * const Scene, sharedPtr<IRenderPass> 
 		Context.uniform("uViewMatrix", SceneManager->getActiveCamera()->getViewMatrix());
 		Context.uniform("uLightPosition", SceneManager->getActiveCamera()->getPosition());
 		
-		Context.uniform("uGlyphSize", 1 / 64.f);
+		Context.uniform("uGlyphSize", GlyphSize);
 		Context.uniform("uScale", Scale);
 
 		Context.bindIndexBufferObject(Cube->MeshBuffers[0]->IndexBuffer.getHandle());

@@ -204,7 +204,7 @@ void CLoadState::loadScene()
 	Scale.X *= MaxAdjust;
 	Scale.Z *= MaxAdjust;
 	Scale.Y *= (ScaleAdjust.X + ScaleAdjust.Y) / 2.f;
-	//Scale.Y *= 0.5f;
+	Scale.Y *= 0.75f;
 
 	Scene.Terrain->setScale(Scale);
 	Scene.Terrain->setTranslation(vec3f(-RelativeTranslate.X, 0.f, RelativeTranslate.Y));

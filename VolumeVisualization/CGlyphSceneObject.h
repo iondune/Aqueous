@@ -54,6 +54,8 @@ public:
 
 	void buildLines();
 
+	f32 GlyphSize;
+
 };
 
 #endif

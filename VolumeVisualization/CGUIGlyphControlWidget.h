@@ -21,6 +21,7 @@ public:
 	void OnToggleGlyphs(Gwen::Controls::Base * Control);
 	void OnSelectPoint(Gwen::Controls::Base * Control);
 	void OnSelectGrid(Gwen::Controls::Base * Control);
+	void OnSizeSlider(Gwen::Controls::Base * Control);
 
 	void toggle();
 

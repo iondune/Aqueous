@@ -67,10 +67,10 @@ CGUIVolumeControlWidget::CGUIVolumeControlWidget()
 		MinimumAlphaSlider->SetFloatValue(0.1f);
 
 		// Wire Up Events
-		EmphasisSlider->onValueChanged.Add(		this,	& CGUIVolumeControlWidget::OnEmphasisSlider);
-		IntensitySlider->onValueChanged.Add(	this,	& CGUIVolumeControlWidget::OnIntensitySlider);
-		MinimumAlphaSlider->onValueChanged.Add(	this,	& CGUIVolumeControlWidget::OnMinimumAlphaSlider);
-		LocalRangeSlider->onValueChanged.Add(	this,	& CGUIVolumeControlWidget::OnLocalRangeSlider);
+		EmphasisSlider->onValueChanged.Add(this,		& CGUIVolumeControlWidget::OnEmphasisSlider);
+		IntensitySlider->onValueChanged.Add(this,		& CGUIVolumeControlWidget::OnIntensitySlider);
+		MinimumAlphaSlider->onValueChanged.Add(this,	& CGUIVolumeControlWidget::OnMinimumAlphaSlider);
+		LocalRangeSlider->onValueChanged.Add(this,		& CGUIVolumeControlWidget::OnLocalRangeSlider);
 	}
 
 	
