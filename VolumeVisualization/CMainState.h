@@ -7,8 +7,6 @@
 class CMainState : public CContextState<CMainState, CProgramContext>
 {
 
-	bool ShowDepth;
-
 public:
 
 	CMainState();
@@ -22,6 +20,9 @@ public:
 	void OnWindowResized(SWindowResizedEvent const & Event);
 
 	void addConsoleMessage(std::string const & Message, Gwen::Color const & Color = Gwen::Color(255, 255, 255, 255));
+
+
+	bool ShowDepth;
 
 	//////////////////////////////
 	// Mouse Tracking Varaibles //

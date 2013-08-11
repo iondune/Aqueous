@@ -11,6 +11,8 @@
 
 CGUIGlyphControlWidget::CGUIGlyphControlWidget()
 {
+	CProgramContext & Context = CProgramContext::get();
+
 	Window = new Gwen::Controls::WindowControl(GUIManager->getCanvas());
 	Window->SetDeleteOnClose(false);
 	Window->SetBounds(1200, 670, 330, 160);
@@ -19,7 +21,7 @@ CGUIGlyphControlWidget::CGUIGlyphControlWidget()
 
 	EnableButton = new Gwen::Controls::Button(Window);
 	EnableButton->SetBounds(15, 10, 290, 25);
-	EnableButton->SetText("Enable Glyph Visual");
+	EnableButton->SetText(Context.Scene.GlyphSceneObject->isVisible() ? "Disable Glyph Visual" : "Enable Glyph Visual");
 	EnableButton->onPress.Add(this, & CGUIGlyphControlWidget::OnToggleGlyphs);
 
 	// Slider Panel
@@ -39,12 +41,6 @@ CGUIGlyphControlWidget::CGUIGlyphControlWidget()
 		GridButton->SetBounds(140 + 15 + 10, 10 + 45 + 25, 140, 25);
 		GridButton->SetText("Floor Samples");
 		GridButton->onPress.Add(this, & CGUIGlyphControlWidget::OnSelectGrid);
-
-		// Wire Up Events
-		//EmphasisSlider->onValueChanged.Add(		this,	& CGUIVolumeControlWidget::OnEmphasisSlider);
-		//IntensitySlider->onValueChanged.Add(	this,	& CGUIVolumeControlWidget::OnIntensitySlider);
-		//MinimumAlphaSlider->onValueChanged.Add(	this,	& CGUIVolumeControlWidget::OnMinimumAlphaSlider);
-		//LocalRangeSlider->onValueChanged.Add(	this,	& CGUIVolumeControlWidget::OnLocalRangeSlider);
 	}
 }
 

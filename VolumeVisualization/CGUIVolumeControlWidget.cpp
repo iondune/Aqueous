@@ -82,15 +82,38 @@ CGUIVolumeControlWidget::CGUIVolumeControlWidget()
 		ControlLabel->SetBounds(30, 320 + 45, 90, 40);
 		ControlLabel->SetTextColor(Gwen::Color(50, 50, 20, 215));
 
+		Gwen::Controls::Label * DebugLabel = new Gwen::Controls::Label(Window);
+		DebugLabel->SetFont(GUIManager->getRegularFont());
+		DebugLabel->SetText(L"Debug:");
+		DebugLabel->SetBounds(22, 320 + 45 + 70, 90, 40);
+		DebugLabel->SetTextColor(Gwen::Color(50, 50, 20, 215));
+
 		Gwen::Controls::Button * pButton2 = new Gwen::Controls::Button(Window);
 		pButton2->SetBounds(80, 120 + 120 + 10 + 35 + 45, 200, 25);
 		pButton2->SetText("Reset Volume Opacity");
-
+		
 		Gwen::Controls::ComboBox * VolumeMode = new Gwen::Controls::ComboBox(Window);
 		VolumeMode->SetBounds(80, 120 + 120 + 45 + 35 + 45, 200, 25);
 		VolumeMode->AddItem(L"Full Volume");
 		VolumeMode->AddItem(L"Plane Slices");
 		VolumeMode->AddItem(L"Isosurface");
+
+		Gwen::Controls::ComboBox * DebugMode = new Gwen::Controls::ComboBox(Window);
+		DebugMode->SetBounds(80, 120 + 120 + 45 + 35 + 45 + 70, 100, 25);
+		DebugMode->AddItem(L"Disabled");
+		DebugMode->AddItem(L"Level 1");
+		DebugMode->AddItem(L"Level 2");
+		DebugMode->AddItem(L"Level 3");
+		DebugMode->AddItem(L"Level 4");
+
+		Gwen::Controls::Label * DepthLabel = new Gwen::Controls::Label(Window);
+		DepthLabel->SetFont(GUIManager->getRegularFont());
+		DepthLabel->SetText(L"Depth:");
+		DepthLabel->SetBounds(80 + 100 + 10, 320 + 45 + 70, 90, 40);
+		DepthLabel->SetTextColor(Gwen::Color(50, 50, 20, 215));
+
+		Gwen::Controls::CheckBox * DepthMode = new Gwen::Controls::CheckBox(Window);
+		DepthMode->SetBounds(80 + 100 + 10 + 60, 120 + 120 + 45 + 35 + 45 + 70, 25, 25);
 	
 		ControlLabel = new Gwen::Controls::Label(Window);
 		ControlLabel->SetFont(GUIManager->getRegularFont());
@@ -113,11 +136,11 @@ CGUIVolumeControlWidget::CGUIVolumeControlWidget()
 		Gwen::Controls::Label * SliderLabel = new Gwen::Controls::Label(Window);
 		SliderLabel->SetFont(GUIManager->getRegularFont());
 		SliderLabel->SetText(L"Volume Detail:");
-		SliderLabel->SetBounds(10, 465, 300, 40);
+		SliderLabel->SetBounds(10, 480, 300, 40);
 		SliderLabel->SetTextColor(Gwen::Color(50, 20, 20, 215));
 
 		Gwen::Controls::HorizontalSlider * StepSizeSlider = new Gwen::Controls::HorizontalSlider(Window);
-		StepSizeSlider->SetBounds(10, 485, 300, 40);
+		StepSizeSlider->SetBounds(10, 500, 300, 40);
 		StepSizeSlider->SetRange(10.f, 300.f);
 		StepSizeSlider->SetFloatValue(VolumeControl.StepSize);
 
@@ -127,7 +150,9 @@ CGUIVolumeControlWidget::CGUIVolumeControlWidget()
 		pButtonY->onPress.Add(				this,	& CGUIVolumeControlWidget::OnSetYAxis);
 		pButtonZ->onPress.Add(				this,	& CGUIVolumeControlWidget::OnSetZAxis);
 		VolumeMode->onSelection.Add(		this,	& CGUIVolumeControlWidget::OnVolumeMode);
+		DebugMode->onSelection.Add(			this,	& CGUIVolumeControlWidget::OnDebugMode);
 		StepSizeSlider->onValueChanged.Add(	this,	& CGUIVolumeControlWidget::OnStepSizeSlider);
+		DepthMode->onCheckChanged.Add(		this,	& CGUIVolumeControlWidget::OnDepthMode);
 	}
 }
 
@@ -214,6 +239,29 @@ void CGUIVolumeControlWidget::OnVolumeMode(Gwen::Controls::Base * Control)
 		VolumeControl.Mode = 0;
 		CProgramContext::get().GUIContext->getTitleLabels()->clearVolumeRangeIndicator();
 	}
+}
+
+void CGUIVolumeControlWidget::OnDebugMode(Gwen::Controls::Base * Control)
+{
+	Gwen::Controls::ComboBox * Box = (Gwen::Controls::ComboBox *) Control;
+
+	if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Disabled"))
+		VolumeControl.DebugLevel = 0;
+	else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Level 1"))
+		VolumeControl.DebugLevel = 1;
+	else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Level 2"))
+		VolumeControl.DebugLevel = 2;
+	else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Level 3"))
+		VolumeControl.DebugLevel = 3;
+	else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Level 4"))
+		VolumeControl.DebugLevel = 4;
+}
+
+void CGUIVolumeControlWidget::OnDepthMode(Gwen::Controls::Base * Control)
+{
+	Gwen::Controls::CheckBox * Box = (Gwen::Controls::CheckBox *) Control;
+
+	CMainState::get().ShowDepth = Box->IsChecked();
 }
 
 void CGUIVolumeControlWidget::OnToggleVolume(Gwen::Controls::Base * Control)

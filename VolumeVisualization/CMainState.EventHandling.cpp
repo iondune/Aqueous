@@ -99,12 +99,6 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 
 		break;
 
-	case EKey::M:
-
-		ShowDepth = Event.Pressed;
-
-		break;
-
 		// To Do : Camera control buttons
 	case EKey::H:
 		if (! Event.Pressed)
@@ -119,40 +113,6 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 			SceneManager->setActiveCamera(Context->Scene.Camera);
 		}
 		break;
-
-		// To Do : Toolbox for scene repositioning
-    /*case EKey::r:
-		if (! Event.Pressed)
-		{
-			Mode = 0;
-			addConsoleMessage("Axis rotation mode enabled.");
-		}
-        break;
-
-    case EKey::k:
-        if (! Event.Pressed)
-		{
-			Mode = 1;
-			addConsoleMessage("Translation mode enabled.");
-		}
-        break;
-
-    case EKey::e:
-        if (! Event.Pressed)
-		{
-			Mode = 2;
-			addConsoleMessage("Scale mode enabled.");
-		}
-        break;
-
-	case EKey::y:
-		if (! Event.Pressed)
-		{
-			Mode = 3;
-			addConsoleMessage("Light translation mode enabled.");
-		}
-		break;*/
-
     }
 }
 

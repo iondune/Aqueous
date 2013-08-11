@@ -19,7 +19,7 @@ CGUITerrainControlWidget::CGUITerrainControlWidget()
 
 	EnableButton = new Gwen::Controls::Button(Window);
 	EnableButton->SetBounds(15, 10, 290, 25);
-	EnableButton->SetText("Enable Terrain");
+	EnableButton->SetText(Terrain->isVisible() ? "Disable Terrain" : "Enable Terrain");
 	EnableButton->onPress.Add(this, & CGUITerrainControlWidget::OnToggleTerrain);
 
 	// Slider Panel
