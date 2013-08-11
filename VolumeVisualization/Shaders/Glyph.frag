@@ -1,10 +1,9 @@
+uniform vec3 uColor;
+
 varying vec4 vColor;
 varying vec3 vLight;
 varying vec3 vNormal;
 varying vec4 vScreenPosition;
-
-
-uniform vec3 uColor;
 
 void main()
 {

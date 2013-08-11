@@ -2,10 +2,12 @@ attribute vec3 aPosition;
 attribute vec3 aNormal;
 
 uniform mat4 uModelMatrix;
-uniform mat4 uLocalMatrix;
 uniform mat4 uProjMatrix;
 uniform mat4 uViewMatrix;
 uniform mat4 uNormalMatrix;
+uniform float uGlyphSize;
+uniform vec3 uScale;
+uniform vec3 uPosition;
 
 uniform vec3 uLightPosition;
 
@@ -18,7 +20,7 @@ void main()
 {
     vec4 vPosition;
 
-    vPosition = uLocalMatrix * uModelMatrix * vec4(aPosition, 1.0);
+    vPosition = uModelMatrix * vec4((uPosition - vec3(0.5)) + aPosition * vec3(uGlyphSize) / uScale, 1.0);
     vScreenPosition = uProjMatrix * uViewMatrix * vPosition;
     gl_Position = vScreenPosition;
 

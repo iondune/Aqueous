@@ -22,7 +22,7 @@ CGlyphSceneObject::CGlyphSceneObject()
 
 	// Copy shader
 	Shader = CProgramContext::get().Shaders.Glyph;
-	LineShader = 0;//CProgramContext::get().Shaders.GlyphLines;
+	LineShader = CProgramContext::get().Shaders.GlyphLines;
 }
 
 void CGlyphSceneObject::loadGlyphs(SciDataManager * DataManager, IColorMapper * ColorMapper, 
@@ -86,30 +86,16 @@ bool CGlyphSceneObject::draw(IScene const * const Scene, sharedPtr<IRenderPass> 
 		Context.uniform("uProjMatrix", SceneManager->getActiveCamera()->getProjectionMatrix());
 		Context.uniform("uViewMatrix", SceneManager->getActiveCamera()->getViewMatrix());
 		Context.uniform("uLightPosition", SceneManager->getActiveCamera()->getPosition());
+		
+		Context.uniform("uGlyphSize", 1 / 64.f);
+		Context.uniform("uScale", Scale);
 
 		Context.bindIndexBufferObject(Cube->MeshBuffers[0]->IndexBuffer.getHandle());
 		
-		STransformation3 Local;
-		Local.setScale(vec3f(1.f/64.f) / Scale);
 		for (auto it = Glyphs.begin(); it != Glyphs.end(); ++ it)
 		{
-			Local.setTranslation((it->Position-vec3f(0.5, 1, 0.5))*Scale);
-
-			Context.uniform("uLocalMatrix", Local.getGLMMat4());
+			Context.uniform("uPosition", it->Position);
 			Context.uniform("uColor", it->Color);
-			glDrawElements(GL_TRIANGLES, Cube->MeshBuffers[0]->IndexBuffer.getElements().size(), GL_UNSIGNED_INT, 0);
-		}
-		
-		Local.setScale(vec3f(3.5f, 0.4f, 3.5f) / 32.f / Scale);
-		for (auto it = Glyphs.begin(); it != Glyphs.end(); ++ it)
-		{
-			if (it->FloorHeight > 1.f)
-				continue;
-
-			Local.setTranslation((vec3f(it->Position.X, it->FloorHeight, it->Position.Z)-vec3f(0.5))*Scale);
-
-			Context.uniform("uLocalMatrix", Local.getGLMMat4());
-			Context.uniform("uColor", color3f(0.1f, 0.3f, 0.8f));
 			glDrawElements(GL_TRIANGLES, Cube->MeshBuffers[0]->IndexBuffer.getElements().size(), GL_UNSIGNED_INT, 0);
 		}
 	}
@@ -162,12 +148,12 @@ void CGlyphSceneObject::buildLines()
 
 	for (u32 i = 1; i < Glyphs.size(); ++ i)
 	{
-		Lines.push_back(Glyphs[i-1].Position.X + 0.1f*Scale.X);
-		Lines.push_back(Glyphs[i-1].Position.Y - 0.3333f*Scale.Y);
-		Lines.push_back(Glyphs[i-1].Position.Z - 0.1667f*Scale.Z);
-		Lines.push_back(Glyphs[i].Position.X + 0.1f*Scale.X);
-		Lines.push_back(Glyphs[i].Position.Y - 0.3333f*Scale.Y);
-		Lines.push_back(Glyphs[i].Position.Z - 0.1667f*Scale.Z);
+		Lines.push_back(Glyphs[i-1].Position.X);
+		Lines.push_back(Glyphs[i-1].Position.Y);
+		Lines.push_back(Glyphs[i-1].Position.Z);
+		Lines.push_back(Glyphs[i].Position.X);
+		Lines.push_back(Glyphs[i].Position.Y);
+		Lines.push_back(Glyphs[i].Position.Z);
 		
 		LineColors.push_back(Glyphs[i-1].Color.Red);
 		LineColors.push_back(Glyphs[i-1].Color.Green);
