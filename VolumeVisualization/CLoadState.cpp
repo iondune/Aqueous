@@ -131,7 +131,7 @@ void CLoadState::loadScene()
 	Scene.LightPosition = SVector3f(0.2f, 0.4f, 0.2f);
 
 	// Cameras
-	Scene.Camera = new CCameraControl(SVector3f(1.f, 0.3f, 4.5f));
+	Scene.Camera = new CCameraControl(SVector3f(1.f, 1.3f, 4.5f));
 	Scene.Camera->setProjection(60.f, CApplication::get().getAspectRatio(), 0.01f, 100.f);
 	Scene.Camera->setVelocity(1.9f);
 	SceneManager->setActiveCamera(Scene.Camera);
@@ -204,7 +204,7 @@ void CLoadState::loadScene()
 	Scale.X *= MaxAdjust;
 	Scale.Z *= MaxAdjust;
 	Scale.Y *= (ScaleAdjust.X + ScaleAdjust.Y) / 2.f;
-	Scale.Y *= 0.75f;
+	//Scale.Y *= 0.75f;
 
 	Scene.Terrain->setScale(Scale);
 	Scene.Terrain->setTranslation(vec3f(-RelativeTranslate.X, 0.f, RelativeTranslate.Y));
@@ -213,9 +213,9 @@ void CLoadState::loadScene()
 	// Volume
 	Scene.VolumeSceneObject = new CVolumeSceneObject();
 	//SceneManager->addSceneObject(Scene.VolumeSceneObject);
-	Scene.VolumeSceneObject->setScale(Adjuster * 3.f * vec3f(1.f, 0.8f / 3.f, 1.f));
-	
-	Scene.GlyphSceneObject->setScale(Adjuster * vec3f(3.f, 0.8f, 3.f) * vec3f(-1, -1, 1));
+
+	Scene.VolumeSceneObject->setScale(Adjuster * vec3f(3.f, 1.6f, 3.f));
+	Scene.GlyphSceneObject->setScale(Adjuster  * vec3f(3.f, 1.6f, 3.f) * vec3f(-1, -1, 1));
 
 	Scene.GlyphSceneObject->setTranslation(vec3f(0, 0.4f, 0));
 	Scene.VolumeSceneObject->setTranslation(vec3f(0, 0.4f, 0));
