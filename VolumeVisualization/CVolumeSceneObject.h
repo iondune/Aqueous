@@ -8,15 +8,9 @@
 class CVolumeSceneObject : public ISceneObject
 {
 	
-	// Cube used for volume rendering
-	CMesh * VolumeCube;
-
-	// Framebuffer used for volume rendering
-	CFrameBufferObject * VolumeTarget;
-	CTexture * VolumeBuffer;
-
 	CSceneManager & SceneManager;
 
+	CMesh * Cube;
 	CShader * Shader;
 
 public:
@@ -25,7 +19,7 @@ public:
 	{
 		// To Do : Provide actual ranges and use for volume control widget
 		int Mode;
-		bool Debug;
+		int DebugLevel;
 		SVector3f SliceAxis;
 		float LocalRange;
 		float MinimumAlpha;
@@ -36,14 +30,11 @@ public:
 
 		SControl();
 	};
-
 	SControl Control;
-	int ShowVolume;
+
 	unsigned int VolumeHandle;
 
-
 	CVolumeSceneObject();
-	
 	bool draw(IScene const * const scene, sharedPtr<IRenderPass> Pass, bool const CullingEnabled);
 
 };

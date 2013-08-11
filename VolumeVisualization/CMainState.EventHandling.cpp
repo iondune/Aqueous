@@ -105,23 +105,6 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 
 		break;
 
-	case EKey::P:
-
-		if (! Event.Pressed)
-			Context->Scene.VolumeSceneObject->Control.Debug = ! Context->Scene.VolumeSceneObject->Control.Debug;
-		break;
-
-	/*case EKey::b:
-
-		if (! Event.Pressed)
-		{
-			if (Context->Scene.VolumeSceneObject->ShowVolume != 1)
-				addConsoleMessage("Volume mode: legacy.");
-			Context->Scene.VolumeSceneObject->ShowVolume = 1;
-		}
-
-		break;*/
-
 		// To Do : Camera control buttons
 	case EKey::H:
 		if (! Event.Pressed)

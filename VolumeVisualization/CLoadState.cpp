@@ -231,7 +231,6 @@ void CLoadState::loadScene()
 	// Volume
 	Scene.VolumeSceneObject = new CVolumeSceneObject();
 	//SceneManager->addSceneObject(Scene.VolumeSceneObject);
-	Scene.VolumeSceneObject->ShowVolume = 2;
 	Scene.VolumeSceneObject->setScale(Adjuster * 3.f * vec3f(1.f, 0.8f / 3.f, 1.f));
 	
 	Scene.GlyphSceneObject->setScale(Adjuster * vec3f(3.f, 0.8f, 3.f) * vec3f(-1, -1, 1));

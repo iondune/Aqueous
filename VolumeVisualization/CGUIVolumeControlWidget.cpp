@@ -220,15 +220,15 @@ void CGUIVolumeControlWidget::OnToggleVolume(Gwen::Controls::Base * Control)
 {
 	CProgramContext * Context = & CProgramContext::get();
 
-	if (Context->Scene.VolumeSceneObject->ShowVolume)
+	if (Context->Scene.VolumeSceneObject->isVisible())
 	{
-		Context->Scene.VolumeSceneObject->ShowVolume = 0;
+		Context->Scene.VolumeSceneObject->setVisible(false);
 		GUIContext->getConsole()->addMessage("Volume View Disabled");
 		EnableButton->SetText("Enable Volume View");
 	}
 	else
 	{
-		Context->Scene.VolumeSceneObject->ShowVolume = 2;
+		Context->Scene.VolumeSceneObject->setVisible(true);
 		GUIContext->getConsole()->addMessage("Volume View Enabled");
 		EnableButton->SetText("Disable Volume View");
 	}

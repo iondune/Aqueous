@@ -9,16 +9,16 @@ CVolumeSceneObject::SControl::SControl()
 	: Mode(0), SliceAxis(1.f, 0.f, 0.f),
 	LocalRange(0.2f), MinimumAlpha(0.1f),
 	EmphasisLocation(0.9f), AlphaIntensity(1.f),
-	StepSize(100.f), Debug(false)
+	StepSize(100.f), DebugLevel(0)
 {}
 
 CVolumeSceneObject::CVolumeSceneObject()
-	: VolumeCube(0), VolumeBuffer(0), VolumeTarget(0), ShowVolume(0), SceneManager(CApplication::get().getSceneManager()), Shader(0)
+	: Cube(0), Shader(0), SceneManager(CApplication::get().getSceneManager())
 {
 	setCullingEnabled(false);
 
 	// Setup volume cube
-	VolumeCube = new CMesh();
+	Cube = new CMesh();
     CMesh::SMeshBuffer * Mesh = new CMesh::SMeshBuffer();
 
     Mesh->Vertices.resize(24);
@@ -93,20 +93,9 @@ CVolumeSceneObject::CVolumeSceneObject()
         Mesh->Triangles[2*i+1].Indices[2] = 4*i + 3;
     }
 
-    VolumeCube->MeshBuffers.push_back(Mesh);
-    VolumeCube->calculateNormalsPerFace();
-
-	VolumeCube->updateBuffers();
-
-
-	VolumeTarget = new CFrameBufferObject();
-
-	STextureCreationFlags Flags;
-	Flags.Filter = GL_LINEAR;
-	Flags.MipMaps = false;
-	Flags.Wrap = GL_MIRRORED_REPEAT;
-	VolumeBuffer = new CTexture(SceneManager.getScreenSize(), true, Flags);
-	VolumeTarget->attachColorTexture(VolumeBuffer, 0);
+    Cube->MeshBuffers.push_back(Mesh);
+    Cube->calculateNormalsPerFace();
+	Cube->updateBuffers();
 
 	Shader = CProgramContext::get().Shaders.Volume;
 }
@@ -117,84 +106,81 @@ bool CVolumeSceneObject::draw(IScene const * const Scene, sharedPtr<IRenderPass>
 		return false;
 
 	// Check data syncing
-	if (VolumeCube->MeshBuffers[0]->PositionBuffer.isDirty())
-		VolumeCube->MeshBuffers[0]->PositionBuffer.syncData();
+	if (Cube->MeshBuffers[0]->PositionBuffer.isDirty())
+		Cube->MeshBuffers[0]->PositionBuffer.syncData();
 
-	if (VolumeCube->MeshBuffers[0]->ColorBuffer.isDirty())
-		VolumeCube->MeshBuffers[0]->ColorBuffer.syncData();
+	if (Cube->MeshBuffers[0]->ColorBuffer.isDirty())
+		Cube->MeshBuffers[0]->ColorBuffer.syncData();
 
-	if (VolumeCube->MeshBuffers[0]->IndexBuffer.isDirty())
-		VolumeCube->MeshBuffers[0]->IndexBuffer.syncData();
+	if (Cube->MeshBuffers[0]->IndexBuffer.isDirty())
+		Cube->MeshBuffers[0]->IndexBuffer.syncData();
 	
-	if (ShowVolume == 2)
+	glEnable(GL_CULL_FACE);
+	glDisable(GL_DEPTH_TEST);
+
+	glCullFace(GL_FRONT);
 	{
-		glEnable(GL_CULL_FACE);
-		glDisable(GL_DEPTH_TEST);
-
-		glCullFace(GL_FRONT);
+		if (Shader)
 		{
-			if (Shader)
-			{
-				CShaderContext Context(* Shader);
+			CShaderContext Context(* Shader);
 
-				// Attributes
-				Context.bindBufferObject("aColor", VolumeCube->MeshBuffers[0]->ColorBuffer.getHandle(), 3);
-				Context.bindBufferObject("aPosition", VolumeCube->MeshBuffers[0]->PositionBuffer.getHandle(), 3);
-				Context.bindIndexBufferObject(VolumeCube->MeshBuffers[0]->IndexBuffer.getHandle());
+			// Attributes
+			Context.bindBufferObject("aColor", Cube->MeshBuffers[0]->ColorBuffer.getHandle(), 3);
+			Context.bindBufferObject("aPosition", Cube->MeshBuffers[0]->PositionBuffer.getHandle(), 3);
+			Context.bindIndexBufferObject(Cube->MeshBuffers[0]->IndexBuffer.getHandle());
 
-				// Matrices
-				Context.uniform("uModelMatrix", Transformation.getGLMMat4());
-				Context.uniform("uInvModelMatrix", glm::inverse(Transformation.getGLMMat4()));
-				Context.uniform("uProjMatrix", SceneManager.getActiveCamera()->getProjectionMatrix());
-				Context.uniform("uViewMatrix", SceneManager.getActiveCamera()->getViewMatrix());
+			// Matrices
+			Context.uniform("uModelMatrix", Transformation.getGLMMat4());
+			Context.uniform("uInvModelMatrix", glm::inverse(Transformation.getGLMMat4()));
+			Context.uniform("uProjMatrix", SceneManager.getActiveCamera()->getProjectionMatrix());
+			Context.uniform("uViewMatrix", SceneManager.getActiveCamera()->getViewMatrix());
 
-				// Volume texture
-				glEnable(GL_TEXTURE_3D);
-				glActiveTexture(GL_TEXTURE0 + 0); // Select Active Texture Slot
-				glBindTexture(GL_TEXTURE_3D, VolumeHandle); // Bind Texture Handle
-				Context.uniform("uVolumeData", 0);
+			// Volume texture
+			glEnable(GL_TEXTURE_3D);
+			glActiveTexture(GL_TEXTURE0 + 0);
+			glBindTexture(GL_TEXTURE_3D, VolumeHandle);
+			Context.uniform("uVolumeData", 0);
 
-				// Scene depth
-				glEnable(GL_TEXTURE_2D);
-				glActiveTexture(GL_TEXTURE0 + 1); // Select Active Texture Slot
-				glBindTexture(GL_TEXTURE_2D, CApplication::get().getSceneManager().getSceneDepthTexture()->getTextureHandle()); // Bind Texture Handle
-				Context.uniform("uDepthTexture", 1);
+			// Scene depth
+			glEnable(GL_TEXTURE_2D);
+			glActiveTexture(GL_TEXTURE0 + 1);
+			glBindTexture(GL_TEXTURE_2D, CApplication::get().getSceneManager().getSceneDepthTexture()->getTextureHandle());
+			Context.uniform("uDepthTexture", 1);
 
-				// Control parameters
-				Context.uniform("uAlphaIntensity", Control.AlphaIntensity);
-				Context.uniform("uHighlightMode", Control.Mode);
-				Context.uniform("uSliceAxis", Control.SliceAxis);
-				Context.uniform("uLocalRange", Control.LocalRange);
-				Context.uniform("uMinimumAlpha", Control.MinimumAlpha);
-				Context.uniform("uEmphasisLocation", Control.EmphasisLocation);
-				Context.uniform("uStepSize", 1.f / Control.StepSize);
-				Context.uniform<s32>("uDebugLevel", Control.Debug ? 1 : 0);
+			// Control parameters
+			Context.uniform("uAlphaIntensity", Control.AlphaIntensity);
+			Context.uniform("uHighlightMode", Control.Mode);
+			Context.uniform("uSliceAxis", Control.SliceAxis);
+			Context.uniform("uLocalRange", Control.LocalRange);
+			Context.uniform("uMinimumAlpha", Control.MinimumAlpha);
+			Context.uniform("uEmphasisLocation", Control.EmphasisLocation);
+			Context.uniform("uStepSize", 1.f / Control.StepSize);
+			Context.uniform<s32>("uDebugLevel", Control.DebugLevel);
 
-				// Camera position for determining front face
-				Context.uniform("uCameraPosition", SceneManager.getActiveCamera()->getPosition());
+			// Camera position for determining front face
+			Context.uniform("uCameraPosition", SceneManager.getActiveCamera()->getPosition());
 			
-				// Transparency
-				glEnable(GL_BLEND);
-				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			// Transparency
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-				// Draw
-				glDrawElements(GL_TRIANGLES, VolumeCube->MeshBuffers[0]->IndexBuffer.getElements().size(), GL_UNSIGNED_INT, 0);
+			// Draw
+			glDrawElements(GL_TRIANGLES, Cube->MeshBuffers[0]->IndexBuffer.getElements().size(), GL_UNSIGNED_INT, 0);
 
-				// Unbind textures
-				glActiveTexture(GL_TEXTURE1);
-				glBindTexture(GL_TEXTURE_2D, 0);
-				glActiveTexture(GL_TEXTURE0);
-				glBindTexture(GL_TEXTURE_3D, 0);
+			// Unbind textures
+			glActiveTexture(GL_TEXTURE1);
+			glBindTexture(GL_TEXTURE_2D, 0);
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_3D, 0);
 
-				// OpenGL state
-				glDisable(GL_BLEND);
-				glDisable(GL_TEXTURE_3D);
-				glDisable(GL_TEXTURE_2D);
-			}
+			// OpenGL state
+			glDisable(GL_BLEND);
+			glDisable(GL_TEXTURE_3D);
+			glDisable(GL_TEXTURE_2D);
 		}
-		glDisable(GL_CULL_FACE);
-		glEnable(GL_DEPTH_TEST);
 	}
+	glDisable(GL_CULL_FACE);
+	glEnable(GL_DEPTH_TEST);
 
 	return true;
 }
