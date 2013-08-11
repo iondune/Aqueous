@@ -151,6 +151,12 @@ void main()
 		Depth += 1.0;
 		Depth /= 2.0;
 
+		if (uDebugLevel == 5)
+		{
+			outFragColor = vec4(Depth, 0, 0, 1);
+			return;
+		}
+
 		// Depth test
 		if (Depth > CurrentDepth)
 		{

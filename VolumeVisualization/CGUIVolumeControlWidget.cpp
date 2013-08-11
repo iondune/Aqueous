@@ -105,6 +105,7 @@ CGUIVolumeControlWidget::CGUIVolumeControlWidget()
 		DebugMode->AddItem(L"Level 2");
 		DebugMode->AddItem(L"Level 3");
 		DebugMode->AddItem(L"Level 4");
+		DebugMode->AddItem(L"Level 5");
 
 		Gwen::Controls::Label * DepthLabel = new Gwen::Controls::Label(Window);
 		DepthLabel->SetFont(GUIManager->getRegularFont());
@@ -255,6 +256,8 @@ void CGUIVolumeControlWidget::OnDebugMode(Gwen::Controls::Base * Control)
 		VolumeControl.DebugLevel = 3;
 	else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Level 4"))
 		VolumeControl.DebugLevel = 4;
+	else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Level 5"))
+		VolumeControl.DebugLevel = 5;
 }
 
 void CGUIVolumeControlWidget::OnDepthMode(Gwen::Controls::Base * Control)
