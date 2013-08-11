@@ -143,8 +143,7 @@ void main()
 	for(i = 0; i < IterationMax; i ++)
 	{
 		// Calculate depth
-		vec4 ScreenCoords = vec4(Iterator, 1.0);
-		ScreenCoords -= vec4(vec3(0.5), 0.0);
+		vec4 ScreenCoords = vec4(Iterator - vec3(0.5), 1.0);
 		ScreenCoords = uProjMatrix * uViewMatrix * uModelMatrix * ScreenCoords;
 		
 		float Depth = ScreenCoords.z / ScreenCoords.w;

@@ -79,13 +79,13 @@ CGUIVolumeControlWidget::CGUIVolumeControlWidget()
 		Gwen::Controls::Label * ControlLabel = new Gwen::Controls::Label(Window);
 		ControlLabel->SetFont(GUIManager->getRegularFont());
 		ControlLabel->SetText(L"Mode:");
-		ControlLabel->SetBounds(30, 320 + 45, 90, 40);
+		ControlLabel->SetBounds(30, 320 + 45 + 6, 90, 40);
 		ControlLabel->SetTextColor(Gwen::Color(50, 50, 20, 215));
 
 		Gwen::Controls::Label * DebugLabel = new Gwen::Controls::Label(Window);
 		DebugLabel->SetFont(GUIManager->getRegularFont());
 		DebugLabel->SetText(L"Debug:");
-		DebugLabel->SetBounds(22, 320 + 45 + 70, 90, 40);
+		DebugLabel->SetBounds(22, 320 + 45 + 70 + 6, 90, 40);
 		DebugLabel->SetTextColor(Gwen::Color(50, 50, 20, 215));
 
 		Gwen::Controls::Button * pButton2 = new Gwen::Controls::Button(Window);
@@ -101,25 +101,25 @@ CGUIVolumeControlWidget::CGUIVolumeControlWidget()
 		Gwen::Controls::ComboBox * DebugMode = new Gwen::Controls::ComboBox(Window);
 		DebugMode->SetBounds(80, 120 + 120 + 45 + 35 + 45 + 70, 100, 25);
 		DebugMode->AddItem(L"Disabled");
-		DebugMode->AddItem(L"Level 1");
-		DebugMode->AddItem(L"Level 2");
-		DebugMode->AddItem(L"Level 3");
-		DebugMode->AddItem(L"Level 4");
-		DebugMode->AddItem(L"Level 5");
+		DebugMode->AddItem(L"Front");
+		DebugMode->AddItem(L"Cutoff");
+		DebugMode->AddItem(L"Accumulator");
+		DebugMode->AddItem(L"Iterations");
+		DebugMode->AddItem(L"Box Depth");
 
 		Gwen::Controls::Label * DepthLabel = new Gwen::Controls::Label(Window);
 		DepthLabel->SetFont(GUIManager->getRegularFont());
 		DepthLabel->SetText(L"Depth:");
-		DepthLabel->SetBounds(80 + 100 + 10, 320 + 45 + 70, 90, 40);
+		DepthLabel->SetBounds(80 + 100 + 10, 320 + 45 + 70 + 6, 90, 40);
 		DepthLabel->SetTextColor(Gwen::Color(50, 50, 20, 215));
 
 		Gwen::Controls::CheckBox * DepthMode = new Gwen::Controls::CheckBox(Window);
-		DepthMode->SetBounds(80 + 100 + 10 + 60, 120 + 120 + 45 + 35 + 45 + 70, 25, 25);
+		DepthMode->SetBounds(80 + 100 + 10 + 60, 120 + 120 + 45 + 35 + 45 + 70 + 6, 15, 15);
 	
 		ControlLabel = new Gwen::Controls::Label(Window);
 		ControlLabel->SetFont(GUIManager->getRegularFont());
 		ControlLabel->SetText(L"Axis:");
-		ControlLabel->SetBounds(43, 355 + 45, 90, 40);
+		ControlLabel->SetBounds(43, 355 + 45 + 6, 90, 40);
 		ControlLabel->SetTextColor(Gwen::Color(50, 50, 20, 215));
 
 		Gwen::Controls::Button * pButtonX = new Gwen::Controls::Button(Window);
@@ -248,15 +248,15 @@ void CGUIVolumeControlWidget::OnDebugMode(Gwen::Controls::Base * Control)
 
 	if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Disabled"))
 		VolumeControl.DebugLevel = 0;
-	else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Level 1"))
+	else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Front"))
 		VolumeControl.DebugLevel = 1;
-	else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Level 2"))
+	else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Cutoff"))
 		VolumeControl.DebugLevel = 2;
-	else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Level 3"))
+	else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Accumulator"))
 		VolumeControl.DebugLevel = 3;
-	else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Level 4"))
+	else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Iterations"))
 		VolumeControl.DebugLevel = 4;
-	else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Level 5"))
+	else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Box Depth"))
 		VolumeControl.DebugLevel = 5;
 }
 
