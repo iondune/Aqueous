@@ -146,14 +146,14 @@ CGUIVolumeControlWidget::CGUIVolumeControlWidget()
 		StepSizeSlider->SetFloatValue(VolumeControl.StepSize);
 
 		// Wire Up Events
-		pButton2->onPress.Add(				this,	& CGUIVolumeControlWidget::OnResetAlpha);
-		pButtonX->onPress.Add(				this,	& CGUIVolumeControlWidget::OnSetXAxis);
-		pButtonY->onPress.Add(				this,	& CGUIVolumeControlWidget::OnSetYAxis);
-		pButtonZ->onPress.Add(				this,	& CGUIVolumeControlWidget::OnSetZAxis);
-		VolumeMode->onSelection.Add(		this,	& CGUIVolumeControlWidget::OnVolumeMode);
-		DebugMode->onSelection.Add(			this,	& CGUIVolumeControlWidget::OnDebugMode);
-		StepSizeSlider->onValueChanged.Add(	this,	& CGUIVolumeControlWidget::OnStepSizeSlider);
-		DepthMode->onCheckChanged.Add(		this,	& CGUIVolumeControlWidget::OnDepthMode);
+		pButton2->onPress.Add(this,					& CGUIVolumeControlWidget::OnResetAlpha);
+		pButtonX->onPress.Add(this,					& CGUIVolumeControlWidget::OnSetXAxis);
+		pButtonY->onPress.Add(this,					& CGUIVolumeControlWidget::OnSetYAxis);
+		pButtonZ->onPress.Add(this,					& CGUIVolumeControlWidget::OnSetZAxis);
+		VolumeMode->onSelection.Add(this,			& CGUIVolumeControlWidget::OnVolumeMode);
+		DebugMode->onSelection.Add(this,			& CGUIVolumeControlWidget::OnDebugMode);
+		StepSizeSlider->onValueChanged.Add(this,	& CGUIVolumeControlWidget::OnStepSizeSlider);
+		DepthMode->onCheckChanged.Add(this,			& CGUIVolumeControlWidget::OnDepthMode);
 	}
 }
 

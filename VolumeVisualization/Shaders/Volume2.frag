@@ -89,6 +89,12 @@ vec4 getColorSample(vec3 coords)
 	return sample;
 }
 
+bool Equals(float a, float b)
+{
+	const float epsilon = 0.0001;
+	return (a + epsilon >= b) && (a - epsilon <= b);
+}
+
 void main()
 {
 	vec3 BackPosition = vColor;
@@ -143,12 +149,14 @@ void main()
 	for(i = 0; i < IterationMax; i ++)
 	{
 		// Calculate depth
-		vec4 ScreenCoords = vec4(Iterator - vec3(0.5), 1.0);
-		ScreenCoords = uProjMatrix * uViewMatrix * uModelMatrix * ScreenCoords;
-		
-		float Depth = ScreenCoords.z / ScreenCoords.w;
-		Depth += 1.0;
-		Depth /= 2.0;
+		float Depth = 0;
+		vec4 ScreenCoords = uProjMatrix * uViewMatrix * uModelMatrix * vec4(Iterator - vec3(0.5), 1.0);
+
+		if (! Equals(ScreenCoords.w, 0))
+		{
+			
+			Depth = (ScreenCoords.z / ScreenCoords.w + 1.0) / 2.0;
+		}
 
 		if (uDebugLevel == 5)
 		{
