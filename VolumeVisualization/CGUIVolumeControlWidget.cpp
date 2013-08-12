@@ -12,7 +12,7 @@ CGUIVolumeControlWidget::CGUIVolumeControlWidget()
 {
 	Window = new Gwen::Controls::WindowControl(GUIManager->getCanvas());
 	Window->SetDeleteOnClose(false);
-	Window->SetBounds(1200, 10, 330, 480 + 90);
+	Window->SetBounds(1200, 10, 330, 620);
 	Window->SetTitle("Volume Controls");
 
 	EnableButton = new Gwen::Controls::Button(Window);
@@ -81,12 +81,18 @@ CGUIVolumeControlWidget::CGUIVolumeControlWidget()
 		ControlLabel->SetText(L"Mode:");
 		ControlLabel->SetBounds(30, 320 + 45 + 6, 90, 40);
 		ControlLabel->SetTextColor(Gwen::Color(50, 50, 20, 215));
-
+		
 		Gwen::Controls::Label * DebugLabel = new Gwen::Controls::Label(Window);
 		DebugLabel->SetFont(GUIManager->getRegularFont());
 		DebugLabel->SetText(L"Debug:");
 		DebugLabel->SetBounds(22, 320 + 45 + 70 + 6, 90, 40);
 		DebugLabel->SetTextColor(Gwen::Color(50, 50, 20, 215));
+
+		Gwen::Controls::Label * ShadingLabel = new Gwen::Controls::Label(Window);
+		ShadingLabel->SetFont(GUIManager->getRegularFont());
+		ShadingLabel->SetText(L"Shading:");
+		ShadingLabel->SetBounds(10, 320 + 45 + 70 + 35 + 6, 90, 40);
+		ShadingLabel->SetTextColor(Gwen::Color(50, 50, 20, 215));
 
 		Gwen::Controls::Button * pButton2 = new Gwen::Controls::Button(Window);
 		pButton2->SetBounds(80, 120 + 120 + 10 + 35 + 45, 200, 25);
@@ -106,6 +112,13 @@ CGUIVolumeControlWidget::CGUIVolumeControlWidget()
 		DebugMode->AddItem(L"Accumulator");
 		DebugMode->AddItem(L"Iterations");
 		DebugMode->AddItem(L"Box Depth");
+		DebugMode->AddItem(L"Gradient");
+
+		Gwen::Controls::ComboBox * ShadingMode = new Gwen::Controls::ComboBox(Window);
+		ShadingMode->SetBounds(80, 120 + 120 + 45 + 35 + 45 + 70 + 35, 200, 25);
+		ShadingMode->AddItem(L"No Shading");
+		ShadingMode->AddItem(L"Orbit Camera");
+		ShadingMode->AddItem(L"Fly Camera");
 
 		Gwen::Controls::Label * DepthLabel = new Gwen::Controls::Label(Window);
 		DepthLabel->SetFont(GUIManager->getRegularFont());
@@ -137,11 +150,11 @@ CGUIVolumeControlWidget::CGUIVolumeControlWidget()
 		Gwen::Controls::Label * SliderLabel = new Gwen::Controls::Label(Window);
 		SliderLabel->SetFont(GUIManager->getRegularFont());
 		SliderLabel->SetText(L"Volume Detail:");
-		SliderLabel->SetBounds(10, 480, 300, 40);
+		SliderLabel->SetBounds(10, 530, 300, 40);
 		SliderLabel->SetTextColor(Gwen::Color(50, 20, 20, 215));
 
 		Gwen::Controls::HorizontalSlider * StepSizeSlider = new Gwen::Controls::HorizontalSlider(Window);
-		StepSizeSlider->SetBounds(10, 500, 300, 40);
+		StepSizeSlider->SetBounds(10, 545, 300, 40);
 		StepSizeSlider->SetRange(10.f, 300.f);
 		StepSizeSlider->SetFloatValue(VolumeControl.StepSize);
 
@@ -152,6 +165,7 @@ CGUIVolumeControlWidget::CGUIVolumeControlWidget()
 		pButtonZ->onPress.Add(this,					& CGUIVolumeControlWidget::OnSetZAxis);
 		VolumeMode->onSelection.Add(this,			& CGUIVolumeControlWidget::OnVolumeMode);
 		DebugMode->onSelection.Add(this,			& CGUIVolumeControlWidget::OnDebugMode);
+		ShadingMode->onSelection.Add(this,			& CGUIVolumeControlWidget::OnShadingMode);
 		StepSizeSlider->onValueChanged.Add(this,	& CGUIVolumeControlWidget::OnStepSizeSlider);
 		DepthMode->onCheckChanged.Add(this,			& CGUIVolumeControlWidget::OnDepthMode);
 	}
@@ -242,6 +256,18 @@ void CGUIVolumeControlWidget::OnVolumeMode(Gwen::Controls::Base * Control)
 	}
 }
 
+void CGUIVolumeControlWidget::OnShadingMode(Gwen::Controls::Base * Control)
+{
+	Gwen::Controls::ComboBox * Box = (Gwen::Controls::ComboBox *) Control;
+
+	if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"No Shading"))
+		VolumeControl.UseShading = 0;
+	else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Orbit Camera"))
+		VolumeControl.UseShading = 1;
+	else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Fly Camera"))
+		VolumeControl.UseShading = 2;
+}
+
 void CGUIVolumeControlWidget::OnDebugMode(Gwen::Controls::Base * Control)
 {
 	Gwen::Controls::ComboBox * Box = (Gwen::Controls::ComboBox *) Control;
@@ -258,6 +284,8 @@ void CGUIVolumeControlWidget::OnDebugMode(Gwen::Controls::Base * Control)
 		VolumeControl.DebugLevel = 4;
 	else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Box Depth"))
 		VolumeControl.DebugLevel = 5;
+	else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Gradient"))
+		VolumeControl.DebugLevel = 6;
 }
 
 void CGUIVolumeControlWidget::OnDepthMode(Gwen::Controls::Base * Control)

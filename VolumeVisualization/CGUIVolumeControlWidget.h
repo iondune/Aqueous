@@ -40,6 +40,7 @@ public:
 	
 	void OnVolumeMode(Gwen::Controls::Base * Control);
 	void OnDebugMode(Gwen::Controls::Base * Control);
+	void OnShadingMode(Gwen::Controls::Base * Control);
 	void OnDepthMode(Gwen::Controls::Base * Control);
 	void OnToggleVolume(Gwen::Controls::Base * Control);
 

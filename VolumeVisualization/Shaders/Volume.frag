@@ -14,6 +14,7 @@ uniform mat4 uProjMatrix;
 uniform mat4 uViewMatrix;
 
 uniform vec3 uCameraPosition;
+uniform vec3 uLightPosition;
 
 uniform float uAlphaIntensity;
 uniform float uStepSize;
@@ -24,6 +25,7 @@ uniform float uMinimumAlpha;
 uniform float uEmphasisLocation;
 
 uniform int uDebugLevel;
+uniform int uUseShading;
 
 float GetValue(vec3 Location)
 {
@@ -35,9 +37,9 @@ vec3 GetGradient(vec3 Location)
 {
 	const float Epsilon = 0.02;
 	return normalize(vec3(
-		GetValue(Location + vec3(Epsilon, 0, 0)) - GetValue(Location + vec3(Epsilon, 0, 0)),
-		GetValue(Location + vec3(0, Epsilon, 0)) - GetValue(Location + vec3(0, Epsilon, 0)),
-		GetValue(Location + vec3(0, 0, Epsilon)) - GetValue(Location + vec3(0, 0, Epsilon))));
+		GetValue(Location + vec3(Epsilon, 0, 0)) - GetValue(Location - vec3(Epsilon, 0, 0)),
+		GetValue(Location + vec3(0, Epsilon, 0)) - GetValue(Location - vec3(0, Epsilon, 0)),
+		GetValue(Location + vec3(0, 0, Epsilon)) - GetValue(Location - vec3(0, 0, Epsilon))));
 }
 
 vec4 GetColorSample(vec3 coords)
@@ -165,7 +167,8 @@ void main()
 	{
 		// Calculate depth
 		float Depth = 0;
-		vec4 ScreenCoords = uProjMatrix * uViewMatrix * uModelMatrix * vec4(Iterator - vec3(0.5), 1.0);
+		vec4 WorldCoords = uModelMatrix * vec4(Iterator - vec3(0.5), 1.0);
+		vec4 ScreenCoords = uProjMatrix * uViewMatrix * WorldCoords;
 
 		if (! Equals(ScreenCoords.w, 0))
 		{
@@ -195,7 +198,16 @@ void main()
 		float AlphaSample = ColorSample.a * uStepSize * uAlphaIntensity;
 		
 		// Accumulate
-		ColorAccumulator += (1.0 - AlphaAccumulator / uAlphaIntensity) * ColorSample * AlphaSample * 3;
+		vec3 Normal = GetGradient(Iterator);
+		vec3 Light = normalize(uLightPosition - WorldCoords.xyz);
+
+		if (uDebugLevel == 6)
+			ColorAccumulator += (1.0 - AlphaAccumulator / uAlphaIntensity) * AlphaSample * 3 * vec4(Normal / 2.0 + vec3(0.5), ColorSample.a);
+		else if (uUseShading != 0)
+			ColorAccumulator += (1.0 - AlphaAccumulator / uAlphaIntensity) * AlphaSample * 3 * vec4(ColorSample.rgb * (clamp(dot(Normal, Light), 0.0, 1.0) + 0.5), ColorSample.a);
+		else
+			ColorAccumulator += (1.0 - AlphaAccumulator / uAlphaIntensity) * AlphaSample * 3 * ColorSample;
+
 		AlphaAccumulator += AlphaSample;
 		LengthAccumulator += length(DirectionStep);
 		

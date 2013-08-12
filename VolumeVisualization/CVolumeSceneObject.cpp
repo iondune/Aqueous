@@ -9,7 +9,7 @@ CVolumeSceneObject::SControl::SControl()
 	: Mode(0), SliceAxis(1.f, 0.f, 0.f),
 	LocalRange(0.2f), MinimumAlpha(0.1f),
 	EmphasisLocation(0.5f), AlphaIntensity(1.f),
-	StepSize(100.f), DebugLevel(0)
+	StepSize(100.f), DebugLevel(0), UseShading(0)
 {}
 
 CVolumeSceneObject::CVolumeSceneObject()
@@ -155,10 +155,15 @@ bool CVolumeSceneObject::draw(IScene const * const Scene, sharedPtr<IRenderPass>
 			Context.uniform("uMinimumAlpha", Control.MinimumAlpha);
 			Context.uniform("uEmphasisLocation", Control.EmphasisLocation);
 			Context.uniform("uStepSize", 1.f / Control.StepSize);
-			Context.uniform<s32>("uDebugLevel", Control.DebugLevel);
+			Context.uniform("uDebugLevel", Control.DebugLevel);
+			Context.uniform("uUseShading", Control.UseShading);
 
 			// Camera position for determining front face
 			Context.uniform("uCameraPosition", SceneManager.getActiveCamera()->getPosition());
+			if (Control.UseShading != 1)
+				Context.uniform("uLightPosition", SceneManager.getActiveCamera()->getPosition());
+			else
+				Context.uniform("uLightPosition", CProgramContext::get().Scene.OrbitCamera->getPosition());
 			
 			// Transparency
 			glEnable(GL_BLEND);

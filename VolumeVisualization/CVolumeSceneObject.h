@@ -20,6 +20,7 @@ public:
 		// To Do : Provide actual ranges and use for volume control widget
 		int Mode;
 		int DebugLevel;
+		int UseShading;
 		SVector3f SliceAxis;
 		float LocalRange;
 		float MinimumAlpha;
