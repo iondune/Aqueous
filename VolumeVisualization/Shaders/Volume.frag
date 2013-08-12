@@ -27,21 +27,6 @@ uniform float uEmphasisLocation;
 uniform int uDebugLevel;
 uniform int uUseShading;
 
-float GetValue(vec3 Location)
-{
-	vec3 Color = texture(uVolumeData, Location).rgb;
-	return (Color.r + Color.g + Color.b) / 3.0;
-}
-
-vec3 GetGradient(vec3 Location)
-{
-	const float Epsilon = 0.02;
-	return normalize(vec3(
-		GetValue(Location + vec3(Epsilon, 0, 0)) - GetValue(Location - vec3(Epsilon, 0, 0)),
-		GetValue(Location + vec3(0, Epsilon, 0)) - GetValue(Location - vec3(0, Epsilon, 0)),
-		GetValue(Location + vec3(0, 0, Epsilon)) - GetValue(Location - vec3(0, 0, Epsilon))));
-}
-
 vec4 GetColorSample(vec3 coords)
 {
 	vec4 sample = texture(uVolumeData, coords);
@@ -104,6 +89,22 @@ vec4 GetColorSample(vec3 coords)
 	}
 
 	return sample;
+}
+
+float GetValue(vec3 Location)
+{
+	//vec3 Color = texture(uVolumeData, Location).rgb;
+	//return (Color.r + Color.g + Color.b) / 3.0;
+	return GetColorSample(Location).a;
+}
+
+vec3 GetGradient(vec3 Location)
+{
+	const float Epsilon = 0.02;
+	return normalize(vec3(
+		GetValue(Location + vec3(Epsilon, 0, 0)) - GetValue(Location - vec3(Epsilon, 0, 0)),
+		GetValue(Location + vec3(0, Epsilon, 0)) - GetValue(Location - vec3(0, Epsilon, 0)),
+		GetValue(Location + vec3(0, 0, Epsilon)) - GetValue(Location - vec3(0, 0, Epsilon))));
 }
 
 bool Equals(float a, float b)
