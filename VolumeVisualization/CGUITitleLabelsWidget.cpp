@@ -26,6 +26,7 @@ CGUITitleLabelsWidget::CGUITitleLabelsWidget(SciDataManager * DataManager)
 	BigLabel->SetText(Gwen::UnicodeString(L"Dataset: ") + Gwen::UnicodeString(CMainMenuState::get().DataSetName.begin(), CMainMenuState::get().DataSetName.end()));
 	BigLabel->SetBounds(10, 10, 1590, 300);
 	BigLabel->SetTextColor(Gwen::Color(235, 255, 235, 215));
+	BigLabel->SetHidden(true);
 
 	// Second Label
 	Gwen::Controls::Label * MediumLabel = new Gwen::Controls::Label(GUIManager->getCanvas());
@@ -33,18 +34,21 @@ CGUITitleLabelsWidget::CGUITitleLabelsWidget(SciDataManager * DataManager)
 	MediumLabel->SetText(Gwen::UnicodeString(L"Current Field: Avg Oxy - ") + Gwen::UnicodeString(s.str()));
 	MediumLabel->SetBounds(20, 70, 1000, 300);
 	MediumLabel->SetTextColor(Gwen::Color(235, 235, 255, 215));
+	MediumLabel->SetHidden(true);
 
 	// Volume Range Label
 	VolumeRangeIndicator = new Gwen::Controls::Label(GUIManager->getCanvas());
 	VolumeRangeIndicator->SetFont(GUIManager->getMediumFont());
 	VolumeRangeIndicator->SetBounds(20, 110, 1000, 300);
 	VolumeRangeIndicator->SetTextColor(Gwen::Color(255, 235, 235, 215));
+	VolumeRangeIndicator->SetHidden(true);
 
 	// Volume Range Label
 	VolumeCalculationIndicator = new Gwen::Controls::Label(GUIManager->getCanvas());
 	VolumeCalculationIndicator->SetFont(GUIManager->getMediumFont());
 	VolumeCalculationIndicator->SetBounds(20, 150, 1000, 300);
 	VolumeCalculationIndicator->SetTextColor(Gwen::Color(255, 235, 235, 215));
+	VolumeCalculationIndicator->SetHidden(true);
 }
 
 void CGUITitleLabelsWidget::resetVolumeRangeIndicator(SciDataManager * DataManager)

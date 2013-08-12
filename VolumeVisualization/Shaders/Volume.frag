@@ -1,51 +1,234 @@
-varying vec3 vColor;
-varying vec4 vPosition;
+#version 150
 
-uniform sampler2D uBackPosition;
+in vec3 vColor;
+in vec4 vPosition;
+
+out vec4 outFragColor;
+
 uniform sampler3D uVolumeData;
+uniform sampler2D uDepthTexture;
+
+uniform mat4 uModelMatrix;
+uniform mat4 uInvModelMatrix;
+uniform mat4 uProjMatrix;
+uniform mat4 uViewMatrix;
+
+uniform vec3 uCameraPosition;
 
 uniform float uAlphaIntensity;
+uniform float uStepSize;
+uniform int   uHighlightMode;
+uniform vec3  uSliceAxis;
+uniform float uLocalRange;
+uniform float uMinimumAlpha;
+uniform float uEmphasisLocation;
+
+uniform int uDebugLevel;
+
+vec4 getColorSample(vec3 coords)
+{
+	vec4 sample = texture(uVolumeData, coords);
+
+	switch (uHighlightMode)
+	{
+	default:
+	case 0: // Constant-alpha mode
+		sample.a = 0.8;
+		break;
+
+	case 3: // Sample alpha mode
+		break;
+
+	case 1: // Planar-slice mode
+		vec3 LocalVector = coords - 0.5;
+		vec3 PlanarVector = normalize(uSliceAxis);
+
+		float Expansion = 1.0;
+		vec3 MVec = abs(PlanarVector);
+		if (MVec.x > MVec.y && MVec.x > MVec.z)
+		{
+			Expansion = 1.0 / MVec.x;
+		}
+		else if (MVec.y > MVec.x && MVec.y > MVec.z)
+		{
+			Expansion = 1.0 / MVec.y;
+		}
+		else if (MVec.z > MVec.x && MVec.z > MVec.y)
+		{
+			Expansion = 1.0 / MVec.z;
+		}
+
+		float Distance = abs(dot(LocalVector / Expansion, PlanarVector) + 0.5 - uEmphasisLocation);
+
+		if (Distance < uLocalRange / 2.0)
+		{
+			float Ratio = 1.0 - Distance / (uLocalRange / 2.0);
+			sample.a = Ratio * (1.0 - uMinimumAlpha) + uMinimumAlpha;
+		}
+		else
+		{
+			sample.a = uMinimumAlpha;
+		}
+		break;
+
+	case 2: // Isosurface mode
+		float Height = sample.a;
+
+		if (abs(Height - uEmphasisLocation) < uLocalRange / 2.0)
+		{
+			float Ratio = 1.0 - abs(Height - uEmphasisLocation) / (uLocalRange / 2.0);
+			sample.a = Ratio * (1.0 - uMinimumAlpha) + uMinimumAlpha;
+		}
+		else
+		{
+			sample.a = uMinimumAlpha;
+		}
+		break;
+	}
+
+	return sample;
+}
+
+bool Equals(float a, float b)
+{
+	const float epsilon = 0.0001;
+	return (a + epsilon >= b) && (a - epsilon <= b);
+}
 
 void main()
 {
-	vec2 texc = ((vPosition.xy / vPosition.w) + 1.0) / 2.0;
+	vec3 BackPosition = vColor;
 
-	vec3 BackPosition = texture2D(uBackPosition, texc).xyz;
-	vec3 FrontPosition = vColor;
-
-	float stepsize = 1.0 / 50.0;
-
-	vec3 start = FrontPosition;
-	vec3 dir = BackPosition - FrontPosition;
-
-	float len = length(dir.xyz); // the length from front to back is calculated and used to terminate the ray
-	vec3 norm_dir = normalize(dir);
-	float delta = stepsize;
-	vec3 delta_dir = norm_dir * delta;
-	float delta_dir_len = length(delta_dir);
-	vec3 vec = start;
-	vec4 col_acc = vec4(0,0,0,0);
-	float alpha_acc = 0;
-	float length_acc = 0;
-
-	for(int i = 0; i < 1000; i ++)
+	// Calculate surface point
+	vec3 FrontPosition;
+	vec3 CameraPosition = (uInvModelMatrix * vec4(uCameraPosition, 1.0)).xyz;
+	
+	if (CameraPosition.x >= -0.5 &&
+		CameraPosition.y >= -0.5 &&
+		CameraPosition.z >= -0.5 &&
+		CameraPosition.x <=  0.5 &&
+		CameraPosition.y <=  0.5 &&
+		CameraPosition.z <=  0.5)
 	{
-		//vec4 color_sample = vec4(vec, 0.5);
-		vec4 color_sample = texture3D(uVolumeData, vec);
-		float alpha_sample = color_sample.a * stepsize * uAlphaIntensity;
-		col_acc   += (1.0 - alpha_acc) * color_sample * alpha_sample * 3;
-		//col_acc   += color_sample;
-		alpha_acc += alpha_sample;
-		vec += delta_dir;
-		length_acc += delta_dir_len;
-		if (length_acc >= len || alpha_acc > 1.0)
-			break; // terminate if opacity > 1 or the ray is outside the volume
+		FrontPosition = CameraPosition + vec3(0.5);
+	}
+	else
+	{
+		FrontPosition = CameraPosition + vec3(0.5);
+		vec3 InternalVector = FrontPosition - BackPosition;
+		for (int i = 0; i < 3; ++ i)
+		{
+			if (FrontPosition[i] > 1.0 || FrontPosition[i] < 0.0)
+			{
+				if (InternalVector[i] > 0.0)
+					InternalVector *= (1 - BackPosition[i]) / InternalVector[i];
+				else
+					InternalVector *= BackPosition[i] / -InternalVector[i];
+				FrontPosition = BackPosition + InternalVector;
+			}
+		}
 	}
 
-	//normalize(col_acc);
-    //gl_FragColor = vec4(texture3D(uVolumeData, vec3(0.5, 0.5, 0.5)).rgb, 1.0);
-    //gl_FragColor = vec4(col_acc.rgb, 1.0);
-    gl_FragColor = col_acc;//vec4(col_acc.rg, 1.0, 0.5);
-    //gl_FragColor = vec4(BackPosition, 0.75);
-    //gl_FragColor = vec4(norm_dir * 0.5 + 0.5, 0.75);
+	vec3 Direction = BackPosition - FrontPosition;
+	float Length = length(Direction);
+	
+	Direction = normalize(Direction);
+	vec3 DirectionStep = Direction * uStepSize;
+	
+	vec3 Iterator = FrontPosition;
+	
+	vec4 ColorAccumulator = vec4(0.0);
+	float AlphaAccumulator = 0.0;
+	float LengthAccumulator = 0.0;
+
+	float CurrentDepth = texture2D(uDepthTexture, ((vPosition.xy / vPosition.w) + 1.0) / 2.0).r;
+	
+	const int IterationMax = 1000;
+
+	int i;
+	for(i = 0; i < IterationMax; i ++)
+	{
+		// Calculate depth
+		float Depth = 0;
+		vec4 ScreenCoords = uProjMatrix * uViewMatrix * uModelMatrix * vec4(Iterator - vec3(0.5), 1.0);
+
+		if (! Equals(ScreenCoords.w, 0))
+		{
+			
+			Depth = (ScreenCoords.z / ScreenCoords.w + 1.0) / 2.0;
+		}
+
+		if (uDebugLevel == 5)
+		{
+			outFragColor = vec4(Depth, 0, 0, 1);
+			return;
+		}
+
+		// Depth test
+		if (Depth > CurrentDepth)
+		{
+			if (uDebugLevel == 2)
+			{
+				outFragColor = vec4(0, 0, 0, 1);
+				return;
+			}
+			break;
+		}
+
+		// Generate samples
+		vec4 ColorSample = getColorSample(Iterator);
+		float AlphaSample = ColorSample.a * uStepSize * uAlphaIntensity;
+		
+		// Accumulate
+		ColorAccumulator += (1.0 - AlphaAccumulator / uAlphaIntensity) * ColorSample * AlphaSample * 3;
+		AlphaAccumulator += AlphaSample;
+		LengthAccumulator += length(DirectionStep);
+		
+		// Advance iterator
+		Iterator += DirectionStep;
+
+		// Length test
+		if (LengthAccumulator >= Length)
+		{
+			if (uDebugLevel == 2)
+			{
+				outFragColor = vec4(0, float(i) / float(IterationMax), 1, 1);
+				return;
+			}
+			break;
+		}
+		
+		// Accumulation test
+		if (AlphaAccumulator > uAlphaIntensity)
+		{
+			if (uDebugLevel == 3)
+			{
+				outFragColor = vec4(1, 0, float(i) / float(IterationMax), 1);
+				return;
+			}
+			break;
+		}
+		
+		if (uDebugLevel == 4 && IterationMax == i + 1)
+		{
+			outFragColor = vec4(0, 0.1, 0.1, 1);
+			return;
+		}
+	}
+	
+	if (uDebugLevel == 4)
+	{
+		outFragColor = vec4(1, 0.5, float(i) / float(IterationMax), 1);
+		return;
+	}
+	
+	ColorAccumulator.r = clamp(ColorAccumulator.r, 0.0, 1.0);
+	ColorAccumulator.g = clamp(ColorAccumulator.g, 0.0, 1.0);
+	ColorAccumulator.b = clamp(ColorAccumulator.b, 0.0, 1.0);
+	ColorAccumulator.a = clamp(ColorAccumulator.a, 0.0, 1.0);
+
+	if (uDebugLevel == 1)
+		outFragColor = vec4(FrontPosition, 1.0);
+	else
+		outFragColor = ColorAccumulator;
 }

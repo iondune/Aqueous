@@ -38,13 +38,15 @@ void CGlyphSceneObject::loadGlyphs(SciDataManager * DataManager, IColorMapper * 
 	Range YRange = DataSet.getValueRange(yField, 15.0);
 	Range ZRange = DataSet.getValueRange(zField, 15.0);
 
+	bool MaintainXZScale = false;
+
 	for (auto it = DataSet.getValues().begin(); it != DataSet.getValues().end(); ++ it)
 	{
 		SGlyph g;
 
 		f32 MaxField = Max((XRange.second - XRange.first), (ZRange.second - ZRange.first));
 
-		float X = (float) ((it->getField(xField) - XRange.first) / MaxField);
+		float X = (float) ((it->getField(xField) - XRange.first) / (MaintainXZScale ? MaxField : (XRange.second - XRange.first)));
 		if (XRange.first > XRange.second)
 			X = 0.f;
 
@@ -52,7 +54,7 @@ void CGlyphSceneObject::loadGlyphs(SciDataManager * DataManager, IColorMapper * 
 		if (YRange.first > YRange.second)
 			Y = 0.f;
 
-		float Z = (float) ((it->getField(zField) - ZRange.first) / MaxField);
+		float Z = (float) ((it->getField(zField) - ZRange.first) / (MaintainXZScale ? MaxField : (ZRange.second - ZRange.first)));
 		if (ZRange.first > ZRange.second)
 			Z = 0.f;
 
