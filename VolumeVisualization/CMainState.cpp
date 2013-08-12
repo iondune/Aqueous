@@ -12,8 +12,6 @@ void CMainState::begin()
 {
 	Context->GUIContext->setupMainState();
 
-	Context->Scene.Camera->setProjection(60.f, CApplication::get().getAspectRatio(), 0.01f, 100.f);
-
 	Context->Scene.Timer = 0.f;
 	Context->Scene.GlyphSceneObject->buildLines();
 }
