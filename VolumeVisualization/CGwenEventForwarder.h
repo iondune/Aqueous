@@ -12,8 +12,6 @@ class CGwenEventForwarder : public CApplicationEventReceiver
 
 	Gwen::Controls::Canvas * Canvas;
 
-	int LastWheel;
-
 public:
 
 	CGwenEventForwarder(Gwen::Controls::Canvas * pCanvas);

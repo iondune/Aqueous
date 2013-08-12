@@ -4,7 +4,7 @@
 
 
 CGwenEventForwarder::CGwenEventForwarder(Gwen::Controls::Canvas * pCanvas)
-	: Canvas(pCanvas), LastWheel(0)
+	: Canvas(pCanvas)
 {}
 
 void CGwenEventForwarder::OnKeyboardEvent(SKeyboardEvent const & Event)
@@ -80,8 +80,7 @@ void CGwenEventForwarder::OnMouseEvent(SMouseEvent const & Event)
 
 	case SMouseEvent::EType::Scroll:
 
-		Canvas->InputMouseWheel((Event.Movement.Y - LastWheel) * 250);
-		LastWheel = Event.Movement.Y;
+		Canvas->InputMouseWheel(Event.Movement.Y * 250);
 		break;
 	}
 }
