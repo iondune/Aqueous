@@ -20,22 +20,40 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 		// Camera Speed //
 		//////////////////
 
-	case EKey::Num3:
+	case EKey::Num6:
+
+		if (! Event.Pressed)
+			Context->Scene.Camera->setVelocity(500.f);
+		break;
+
+	case EKey::Num5:
 
 		if (! Event.Pressed)
 			Context->Scene.Camera->setVelocity(50.f);
 		break;
 
-	case EKey::Num2:
+	case EKey::Num4:
 
 		if (! Event.Pressed)
 			Context->Scene.Camera->setVelocity(10.f);
 		break;
 
-	case EKey::Num1:
+	case EKey::Num3:
 
 		if (! Event.Pressed)
 			Context->Scene.Camera->setVelocity(2.5f);
+		break;
+
+	case EKey::Num2:
+
+		if (! Event.Pressed)
+			Context->Scene.Camera->setVelocity(0.75f);
+		break;
+
+	case EKey::Num1:
+
+		if (! Event.Pressed)
+			Context->Scene.Camera->setVelocity(0.1f);
 		break;
 
 
