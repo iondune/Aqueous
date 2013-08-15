@@ -28,7 +28,7 @@ void CProgramContext::run()
 
 	// Create Window
 	CApplication & Application = CApplication::get();
-	Application.init(SVector2i(1600, 900), "Underwater Volume Data Rendering");
+	Application.init(SVector2i(1900, 1000), "Underwater Volume Data Rendering");
 
 	Application.loadEngines();
 
