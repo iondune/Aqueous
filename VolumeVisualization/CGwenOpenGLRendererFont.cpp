@@ -10,9 +10,8 @@
 #include <FreeType.h>
 
 CGwenOpenGLRendererFont::CGwenOpenGLRendererFont(vec2i const & Size)
-	: Gwen::Renderer::OpenGL3(Size.X, Size.Y)
-{
-}
+	: Gwen::Renderer::OpenGL3(Size)
+{}
 
 void CGwenOpenGLRendererFont::LoadFont(Gwen::Font * pFont)
 {

@@ -1,12 +1,3 @@
-/*
-*      GWEN
-*      Copyright (c) Shaun Reich <sreich@kde.org>
-*      See license in Gwen.h
-*/
-
-#include "GL/glew.h"
-
-#include "shader.h"
 
 #include "OpenGL3.h"
 #include "Gwen/Utility.h"
@@ -14,6 +5,8 @@
 #include "Gwen/Texture.h"
 #include "Gwen/WindowProvider.h"
 #include "Gwen/Gwen.h"
+
+#include "shader.h"
 
 #include <math.h>
 
@@ -29,14 +22,12 @@ namespace Gwen
 	namespace Renderer
 	{
 
-		OpenGL3::OpenGL3(int screenWidth, int screenHeight)
+		OpenGL3::OpenGL3(vec2i const & screenSize)
 			: m_shader(0),
 			m_currentQuadCount(0),
-			m_screenWidth(screenWidth),
-			m_screenHeight(screenHeight),
+			ScreenSize(screenSize),
 			m_maxSpriteCount(2)
 		{
-
 			::FreeImage_Initialise();
 
 			Init();
@@ -45,6 +36,7 @@ namespace Gwen
 		OpenGL3::~OpenGL3()
 		{
 			::FreeImage_DeInitialise();
+
 			glDeleteBuffers(1, &m_vbo);
 			glDeleteBuffers(1, &m_ebo);
 
@@ -56,10 +48,9 @@ namespace Gwen
 		void OpenGL3::Init()
 		{
 			m_shader = new Gwen::Shader("Shaders/GUI/sprite.vert", "Shaders/GUI/sprite.frag");
-
 			m_shader->bindProgram();
 
-			m_projectionMatrix = glm::ortho(0.0f, float(m_screenWidth), float(m_screenHeight), 0.0f, -1.0f, 1.0f);
+			m_projectionMatrix = glm::ortho(0.0f, (f32) ScreenSize.X, (f32) ScreenSize.Y, 0.0f, -1.0f, 1.0f);
 			glm::mat4 mvp = m_projectionMatrix;
 
 			int mvpLoc = glGetUniformLocation(m_shader->shaderProgram(), "mvp");
@@ -68,10 +59,8 @@ namespace Gwen
 			initGL();
 			checkGLError();
 
-			//generate the white texture, for DrawFilledRect
-			glGenTextures(1, &m_whiteTexture);
+			glGenTextures(1, & m_whiteTexture);
 			glActiveTexture(GL_TEXTURE0);
-
 			glBindTexture(GL_TEXTURE_2D, m_whiteTexture);
 
 			checkGLError();
@@ -84,51 +73,29 @@ namespace Gwen
 			GLubyte image[] = {255, 255, 255, 255};
 
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, 1, 1, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
-
-			/*
-			float scale = 1.0f;
-			m_modelMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(scale));
-			*/
 		}
 
 		void OpenGL3::initGL()
 		{
-			//////////////////////
-			checkGLError();
-
-			glGenVertexArrays(1, &m_vao);
+			glGenVertexArrays(1, & m_vao);
 			glBindVertexArray(m_vao);
 
-			glGenBuffers(1, &m_vbo);
+			glGenBuffers(1, & m_vbo);
 			glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-			glBufferData(
-				GL_ARRAY_BUFFER,
-				m_maxSpriteCount * 4 * sizeof(Vertex),
-				NULL,
-				GL_DYNAMIC_DRAW);
+			glBufferData(GL_ARRAY_BUFFER, m_maxSpriteCount * 4 * sizeof(Vertex), NULL, GL_DYNAMIC_DRAW);
 
 			checkGLError();
+
 
 			std::vector<u32> indicesv;
-
-			// prepare and upload indices as a one time deal
-			const u32 indices[] = { 0, 1, 2, 0, 2, 3 }; // pattern for a triangle array
-			// for each possible sprite, add the 6 index pattern
-			for (int j = 0; j < m_maxSpriteCount; j++) {
-				for (size_t i = 0; i < sizeof(indices) / sizeof(*indices); i++) {
+			const u32 indices[] = {0, 1, 2, 0, 2, 3};
+			for (int j = 0; j < m_maxSpriteCount; j++)
+				for (size_t i = 0; i < sizeof(indices) / sizeof(*indices); i++)
 					indicesv.push_back(4 * j + indices[i]);
-				}
-			}
 
-			glGenBuffers(1, &m_ebo);
+			glGenBuffers(1, & m_ebo);
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
-			glBufferData(
-				GL_ELEMENT_ARRAY_BUFFER,
-				indicesv.size()*sizeof(u32),
-				indicesv.data(),
-				GL_STATIC_DRAW);
-
-			checkGLError();
+			glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicesv.size() * sizeof(u32), indicesv.data(), GL_STATIC_DRAW);
 
 			checkGLError();
 		}
@@ -153,23 +120,22 @@ namespace Gwen
 			checkGLError();
 		}
 
-		void OpenGL3::DrawFilledRect( Gwen::Rect rect )
+		void OpenGL3::DrawFilledRect(Gwen::Rect rect)
 		{
-			Translate( rect );
+			Translate(rect);
 
-			addQuad(rect, m_Color, 0.0f, 0.0f, 1.0f, 1.0f);
+			addQuad(rect, Color, 0, 0, 1, 1);
 
 			glActiveTexture(GL_TEXTURE0);
-			glBindTexture( GL_TEXTURE_2D, m_whiteTexture );
-			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, m_whiteTexture);
 
 			finalizeDraw();
 		}
 
 		void OpenGL3::SetDrawColor(Gwen::Color color)
 		{
-			glColor4ubv( ( GLubyte* ) &color );
-			m_Color = color;
+			glColor4ubv((GLubyte *) & color);
+			Color = color;
 		}
 
 		void OpenGL3::StartClip()
@@ -178,52 +144,45 @@ namespace Gwen
 
 			// OpenGL's coords are from the bottom left
 			// so we need to translate them here.
-			rect.y = m_screenHeight - (rect.y + rect.h);
-			glScissor( rect.x * Scale(), rect.y * Scale(), rect.w * Scale(), rect.h * Scale() );
-			glEnable( GL_SCISSOR_TEST );
-		};
+			rect.y = ScreenSize.Y - (rect.y + rect.h);
+			glScissor(rect.x * Scale(), rect.y * Scale(), rect.w * Scale(), rect.h * Scale());
+			glEnable(GL_SCISSOR_TEST);
+		}
 
 		void OpenGL3::EndClip()
 		{
-			glDisable( GL_SCISSOR_TEST );
+			glDisable(GL_SCISSOR_TEST);
+		}
 
-		};
-
-		void OpenGL3::DrawTexturedRect( Gwen::Texture* pTexture, Gwen::Rect rect, float u1, float v1, float u2, float v2 )
+		void OpenGL3::DrawTexturedRect(Gwen::Texture* pTexture, Gwen::Rect rect, float u1, float v1, float u2, float v2)
 		{
-			checkGLError();
-			GLuint* tex = (GLuint*)pTexture->data;
+			GLuint * tex = (GLuint *) pTexture->data;
 
-			// Missing image, not loaded properly?
-			if ( !tex )
+			if (! tex)
 			{
-				std::cout << "whoa, image not loaded proper?\n";
-				return DrawMissingImage( rect );
+				std::cerr << "Texture for GWEN draw call is missing." << std::endl;
+				return DrawMissingImage(rect);
 			}
 
 			Translate(rect);
 
-			checkGLError();
 			m_shader->bindProgram();
 
-			if (m_currentBoundTexture != *tex) {
-				m_currentBoundTexture = *tex;
+			if (m_currentBoundTexture != * tex)
+			{
+				m_currentBoundTexture = * tex;
 
 				glActiveTexture(GL_TEXTURE0);
-				glBindTexture( GL_TEXTURE_2D, *tex );
-				glEnable(GL_TEXTURE_2D);
+				glBindTexture(GL_TEXTURE_2D, * tex);
 			}
 
-			checkGLError();
 			addQuad(rect, Gwen::Color(), u1, v1, u2, v2);
 
-			checkGLError();
-
 			glActiveTexture(GL_TEXTURE0);
-			glBindTexture( GL_TEXTURE_2D, *tex );
-			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, * tex);
 
 			finalizeDraw();
+			checkGLError();
 		}
 
 		void OpenGL3::finalizeDraw()
@@ -303,22 +262,23 @@ namespace Gwen
 			// vertices[2] -> bottom right
 			// vertices[3] -> top right
 
-			vertices[0].x = rect.x; // top left X
-			vertices[0].y= rect.y; //top left Y
+			vertices[0].x = rect.x;
+			vertices[0].y = rect.y;
 
-			vertices[1].x = rect.x; // bottom left X
-			vertices[1].y = rect.y + rect.h; // bottom left Y
+			vertices[1].x = rect.x;
+			vertices[1].y = rect.y + rect.h;
 
-			vertices[2].x = rect.x + rect.w; // bottom right X
-			vertices[2].y = rect.y + rect.h; //bottom right Y
+			vertices[2].x = rect.x + rect.w;
+			vertices[2].y = rect.y + rect.h;
 
-			vertices[3].x = rect.x + rect.w; // top right X
-			vertices[3].y = rect.y; // top right Y
+			vertices[3].x = rect.x + rect.w;
+			vertices[3].y = rect.y;
 
 			checkGLError();
 
 			// copy color to the buffer
-			for (size_t i = 0; i < sizeof(vertices) / sizeof(*vertices); i++) {
+			for (size_t i = 0; i < sizeof(vertices) / sizeof(*vertices); ++ i)
+			{
 				int colorPacked = color.r | (color.g << 8) | (color.b << 16) | (color.a << 24);
 				vertices[i].color = colorPacked;
 			}
@@ -342,10 +302,10 @@ namespace Gwen
 
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-			++m_currentQuadCount;
+			++ m_currentQuadCount;
 		}
 
-		void OpenGL3::LoadTexture( Gwen::Texture* pTexture )
+		void OpenGL3::LoadTexture(Gwen::Texture* pTexture)
 		{
 			checkGLError();
 			const wchar_t *wFileName = pTexture->name.GetUnicode().c_str();

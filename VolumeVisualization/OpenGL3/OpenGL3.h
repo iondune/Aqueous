@@ -1,38 +1,30 @@
-/*
-GWEN
-Copyright (c) 2011 Facepunch Studios
-See license in Gwen.h
-*/
 
-#ifndef GWEN_RENDERERS_OPENGL3_H
-#define GWEN_RENDERERS_OPENGL3_H
+#pragma once
 
-#include "GL/glew.h"
+#include <GL/glew.h>
 
 #include "Gwen/Gwen.h"
 #include "Gwen/BaseRender.h"
+
+#include <ionCore.h>
+#include <ionMath.h>
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/swizzle.hpp>
 
-class FontRenderer;
 namespace Gwen
 {
-
 	class Shader;
 
 	namespace Renderer
 	{
-
 		class OpenGL3 : public Gwen::Renderer::Base
 		{
+
 		public:
 
-			/**
-			* Create the renderer with a viewport of the given screen width/height
-			*/
-			OpenGL3(int screenWidth, int screenHeight);
+			OpenGL3(vec2i const & ScreenSize);
 			~OpenGL3();
 
 			virtual void Init();
@@ -40,59 +32,37 @@ namespace Gwen
 			virtual void Begin();
 			virtual void End();
 
-			virtual void SetDrawColor( Gwen::Color color );
-			virtual void DrawFilledRect( Gwen::Rect rect );
+			virtual void SetDrawColor(Gwen::Color color);
+			virtual void DrawFilledRect(Gwen::Rect rect);
 
 			void StartClip();
 			void EndClip();
 
-			void DrawTexturedRect( Gwen::Texture* pTexture, Gwen::Rect pTargetRect, float u1=0.0f, float v1=0.0f, float u2=1.0f, float v2=1.0f );
-			void LoadTexture( Gwen::Texture* pTexture );
-			void FreeTexture( Gwen::Texture* pTexture );
-			Gwen::Color PixelColour( Gwen::Texture* pTexture, unsigned int x, unsigned int y, const Gwen::Color& col_default );
+			void DrawTexturedRect(Gwen::Texture * pTexture, Gwen::Rect pTargetRect, float u1 = 0, float v1 = 0, float u2 = 1, float v2 = 1);
+			void LoadTexture(Gwen::Texture * pTexture);
+			void FreeTexture(Gwen::Texture * pTexture);
+			Gwen::Color PixelColour(Gwen::Texture * pTexture, unsigned int x, unsigned int y, const Gwen::Color& col_default);
+
+			virtual bool InitializeContext(Gwen::WindowProvider * pWindow);
+			virtual bool ShutdownContext(Gwen::WindowProvider * pWindow);
+			virtual bool PresentContext(Gwen::WindowProvider * pWindow);
+			virtual bool ResizedContext(Gwen::WindowProvider * pWindow, int w, int h);
+			virtual bool BeginContext(Gwen::WindowProvider * pWindow);
+			virtual bool EndContext(Gwen::WindowProvider * pWindow);
 
 		protected:
 
-			void AddRect(Gwen::Rect rect, float u = 0.0f , float v = 0.0f );
-
-			Gwen::Color			m_Color;
-
-		public:
-
-			//
-			// Self Initialization
-			//
-
-			virtual bool InitializeContext( Gwen::WindowProvider* pWindow );
-			virtual bool ShutdownContext( Gwen::WindowProvider* pWindow );
-			virtual bool PresentContext( Gwen::WindowProvider* pWindow );
-			virtual bool ResizedContext( Gwen::WindowProvider* pWindow, int w, int h );
-			virtual bool BeginContext( Gwen::WindowProvider* pWindow );
-			virtual bool EndContext( Gwen::WindowProvider* pWindow );
-
-		private:
-			/* Each vertex is:
-			* two floats for the 2d coordinate
-			* four u8s for the color
-			* two f32s for the texcoords
-			* the vbo contains data of the aforementioned elements interleaved.
-			* Each sprite has four vertices.
-			* */
-			struct Vertex {
+			struct Vertex
+			{
 				float x, y;
 				unsigned int color; // packed with 4 u8s (unsigned chars) for color
 				float u, v;
 			};
 
-			typedef unsigned int u32;
-			typedef float f32;
+			void AddRect(Gwen::Rect rect, float u = 0.0f, float v = 0.0f);
 
-			void addQuad(const Gwen::Rect& rect, const Gwen::Color& color, float u1, float v1, float u2, float v2);
+			void addQuad(Gwen::Rect const & rect, Gwen::Color const & color, float u1, float v1, float u2, float v2);
 			void finalizeDraw();
-
-			int m_currentQuadCount;
-
-			int m_maxSpriteCount;
 
 			void initGL();
 			void checkGLError();
@@ -105,14 +75,15 @@ namespace Gwen
 			GLuint m_whiteTexture;
 			GLuint m_currentBoundTexture;
 
-			GLuint m_vao; // vertex array object
-			GLuint m_vbo; // vertex buffer object
-			GLuint m_ebo; // element buffer object
+			GLuint m_vao;
+			GLuint m_vbo;
+			GLuint m_ebo;
+			
+			Gwen::Color Color;
+			int m_currentQuadCount;
+			int m_maxSpriteCount;
+			vec2i ScreenSize;
 
-			int m_screenWidth;
-			int m_screenHeight;
 		};
-
 	}
 }
-#endif
