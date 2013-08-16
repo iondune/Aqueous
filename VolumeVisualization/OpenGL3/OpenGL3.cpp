@@ -6,8 +6,6 @@
 #include "Gwen/WindowProvider.h"
 #include "Gwen/Gwen.h"
 
-#include "shader.h"
-
 #include <math.h>
 
 #include <FreeImage.h>
@@ -23,7 +21,7 @@ namespace Gwen
 	{
 
 		OpenGL3::OpenGL3(vec2i const & screenSize)
-			: m_shader(0),
+			: Shader(0),
 			m_currentQuadCount(0),
 			ScreenSize(screenSize),
 			m_maxSpriteCount(2)
@@ -42,19 +40,18 @@ namespace Gwen
 
 			glDeleteVertexArrays(1, &m_vao);
 
-			delete m_shader;
+			delete Shader;
 		}
 
 		void OpenGL3::Init()
 		{
-			m_shader = new Gwen::Shader("Shaders/GUI/sprite.vert", "Shaders/GUI/sprite.frag");
-			m_shader->bindProgram();
+			Shader = CShaderLoader::loadShader("GUI/Sprite");
 
 			m_projectionMatrix = glm::ortho(0.0f, (f32) ScreenSize.X, (f32) ScreenSize.Y, 0.0f, -1.0f, 1.0f);
 			glm::mat4 mvp = m_projectionMatrix;
 
-			int mvpLoc = glGetUniformLocation(m_shader->shaderProgram(), "mvp");
-			glUniformMatrix4fv(mvpLoc, 1, GL_FALSE, &mvp[0][0]);
+			CShaderContext Context(Shader);
+			Context.uniform("mvp", mvp);
 
 			initGL();
 			checkGLError();
@@ -166,8 +163,6 @@ namespace Gwen
 
 			Translate(rect);
 
-			m_shader->bindProgram();
-
 			if (m_currentBoundTexture != * tex)
 			{
 				m_currentBoundTexture = * tex;
@@ -189,7 +184,6 @@ namespace Gwen
 		{
 			m_currentQuadCount = 2;
 
-			m_shader->bindProgram();
 			glEnable(GL_BLEND);
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -198,8 +192,9 @@ namespace Gwen
 			glBindVertexArray(m_vao);
 
 			size_t buffer_offset = 0;
-
-			GLint pos_attrib = glGetAttribLocation(m_shader->shaderProgram(), "position");
+			
+			CShaderContext Context(Shader);
+			GLint pos_attrib = Shader->getAttributeHandles().find("position")->second.Handle;
 			glEnableVertexAttribArray(pos_attrib);
 			glVertexAttribPointer(
 				pos_attrib,
@@ -210,7 +205,7 @@ namespace Gwen
 				(const GLvoid*)buffer_offset);
 			buffer_offset += sizeof(f32) * 2;
 
-			GLint color_attrib = glGetAttribLocation(m_shader->shaderProgram(), "color");
+			GLint color_attrib = Shader->getAttributeHandles().find("color")->second.Handle;
 
 			checkGLError();
 
@@ -226,7 +221,7 @@ namespace Gwen
 
 			checkGLError();
 
-			GLint texcoord_attrib = glGetAttribLocation(m_shader->shaderProgram(), "texcoord");
+			GLint texcoord_attrib = Shader->getAttributeHandles().find("texcoord")->second.Handle;
 			glEnableVertexAttribArray(texcoord_attrib);
 			glVertexAttribPointer(
 				texcoord_attrib,
@@ -241,8 +236,6 @@ namespace Gwen
 				6 * (m_currentQuadCount), // 6 indices per 2 triangles
 				GL_UNSIGNED_INT,
 				(const GLvoid*)0);
-
-			m_shader->unbindProgram();
 
 			glBindVertexArray(0);
 			glBindBuffer(GL_ARRAY_BUFFER, 0);

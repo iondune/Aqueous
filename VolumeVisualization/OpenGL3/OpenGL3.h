@@ -8,6 +8,7 @@
 
 #include <ionCore.h>
 #include <ionMath.h>
+#include <ionScene.h>
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -15,8 +16,6 @@
 
 namespace Gwen
 {
-	class Shader;
-
 	namespace Renderer
 	{
 		class OpenGL3 : public Gwen::Renderer::Base
@@ -70,7 +69,7 @@ namespace Gwen
 			glm::mat4 m_modelMatrix;
 			glm::mat4 m_projectionMatrix;
 
-			Gwen::Shader* m_shader;
+			CShader * Shader;
 
 			GLuint m_whiteTexture;
 			GLuint m_currentBoundTexture;
