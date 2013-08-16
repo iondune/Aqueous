@@ -63,7 +63,8 @@ void CLoadState::begin()
 	CApplication::get().swapBuffers();
 	
 	addLabel(L"Initializing System...");
-	CGwenEventForwarder * Forwarder = new CGwenEventForwarder(GUIManager->getCanvas());
+	std::function<void (SMouseEvent const &)> OnUncaughtMouseEvent = [&](SMouseEvent const & Event){CMainState::get().OnUncaughtMouseEvent(Event);};
+	CGwenEventForwarder * Forwarder = new CGwenEventForwarder(GUIManager->getCanvas(), OnUncaughtMouseEvent);
 	
 	addLabel(L"Loading Scene Shaders...");
 	Application.getSceneManager().init(true, true);

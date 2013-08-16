@@ -29,9 +29,6 @@
     <ClCompile Include="CGUIManager.cpp">
       <Filter>Utilities\GUI</Filter>
     </ClCompile>
-    <ClCompile Include="CGwenEventForwarder.cpp">
-      <Filter>Utilities\GUI</Filter>
-    </ClCompile>
     <ClCompile Include="SciDataManager.GridValues.cpp">
       <Filter>MainState\Data Management</Filter>
     </ClCompile>
@@ -119,19 +116,10 @@
     <ClCompile Include="SciDataParserPieSlices.cpp">
       <Filter>MainState\Data Management\Parsers</Filter>
     </ClCompile>
-    <ClCompile Include="OpenGL3\OpenGL3.cpp">
-      <Filter>Utilities\GUI\OpenGL3 Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="OpenGL3Font.cpp">
-      <Filter>Utilities\GUI</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CMainState.h">
       <Filter>MainState</Filter>
-    </ClInclude>
-    <ClInclude Include="CGwenEventForwarder.h">
-      <Filter>Utilities\GUI</Filter>
     </ClInclude>
     <ClInclude Include="SciData.h">
       <Filter>MainState\Data Management\Base Objects</Filter>
@@ -245,12 +233,6 @@
     <ClInclude Include="CPlaneGridSceneObject.h">
       <Filter>MainState\Misc</Filter>
     </ClInclude>
-    <ClInclude Include="OpenGL3\OpenGL3.h">
-      <Filter>Utilities\GUI\OpenGL3 Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="OpenGL3Font.h">
-      <Filter>Utilities\GUI</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="MainState">
@@ -312,9 +294,6 @@
     </Filter>
     <Filter Include="MainState\Misc">
       <UniqueIdentifier>{1b24f862-be43-46c5-b48e-88de64b4c1c5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Utilities\GUI\OpenGL3 Renderer">
-      <UniqueIdentifier>{bd373e7c-8f59-4ced-bc40-068bf674a2cd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

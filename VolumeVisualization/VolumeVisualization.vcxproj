@@ -93,8 +93,6 @@
     <ClCompile Include="CGUITerrainControlWidget.cpp" />
     <ClCompile Include="CGUIVolumeControlWidget.cpp" />
     <ClCompile Include="CGUIWidget.cpp" />
-    <ClCompile Include="CGwenEventForwarder.cpp" />
-    <ClCompile Include="OpenGL3Font.cpp" />
     <ClCompile Include="CLoadState.cpp" />
     <ClCompile Include="CMainMenuState.cpp" />
     <ClCompile Include="CMainState.cpp" />
@@ -109,7 +107,6 @@
     <ClCompile Include=".\SciDataParserSimpleTXT.cpp" />
     <ClCompile Include=".\SciDataParserGrid1.cpp" />
     <ClCompile Include=".\SciDataParserCTD.cpp" />
-    <ClCompile Include="OpenGL3\OpenGL3.cpp" />
     <ClCompile Include="Range.cpp" />
     <ClCompile Include="RBFInterpolator\newmat.cpp" />
     <ClCompile Include="RBFInterpolator\RBFInterpolator.cpp" />
@@ -137,8 +134,6 @@
     <ClInclude Include="CGUITerrainControlWidget.h" />
     <ClInclude Include="CGUIVolumeControlWidget.h" />
     <ClInclude Include="CGUIWidget.h" />
-    <ClInclude Include="CGwenEventForwarder.h" />
-    <ClInclude Include="OpenGL3Font.h" />
     <ClInclude Include="CLoadState.h" />
     <ClInclude Include="CMainMenuState.h" />
     <ClInclude Include="CMainState.h" />
@@ -155,7 +150,6 @@
     <ClInclude Include="CVolumeSceneObject.h" />
     <ClInclude Include="IColorMapper.h" />
     <ClInclude Include="Libraries.h" />
-    <ClInclude Include="OpenGL3\OpenGL3.h" />
     <ClInclude Include="ProgressPrinter.h" />
     <ClInclude Include="Range.h" />
     <ClInclude Include="RBFInterpolator\newmat.h" />
