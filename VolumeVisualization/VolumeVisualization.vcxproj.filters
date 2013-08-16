@@ -119,11 +119,11 @@
     <ClCompile Include="SciDataParserPieSlices.cpp">
       <Filter>MainState\Data Management\Parsers</Filter>
     </ClCompile>
-    <ClCompile Include="CGwenOpenGLRendererFont.cpp">
-      <Filter>Utilities\GUI</Filter>
-    </ClCompile>
     <ClCompile Include="OpenGL3\OpenGL3.cpp">
       <Filter>Utilities\GUI\OpenGL3 Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL3Font.cpp">
+      <Filter>Utilities\GUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -245,11 +245,11 @@
     <ClInclude Include="CPlaneGridSceneObject.h">
       <Filter>MainState\Misc</Filter>
     </ClInclude>
-    <ClInclude Include="CGwenOpenGLRenderer.h">
-      <Filter>Utilities\GUI</Filter>
-    </ClInclude>
     <ClInclude Include="OpenGL3\OpenGL3.h">
       <Filter>Utilities\GUI\OpenGL3 Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenGL3Font.h">
+      <Filter>Utilities\GUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

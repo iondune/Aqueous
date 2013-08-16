@@ -5,7 +5,7 @@
 #include <Gwen/Skins/Simple.h>
 #include <Gwen/Controls.h>
 
-#include "CGwenOpenGLRenderer.h"
+#include "OpenGL3Font.h"
 
 
 Gwen::Font * LoadFont(Gwen::UnicodeString const & File, float const Size)
@@ -24,7 +24,7 @@ CGUIManager::CGUIManager()
 
 void CGUIManager::init()
 {
-	Gwen::Renderer::Base * pRenderer = new CGwenOpenGLRendererFont(CApplication::get().getWindowSize());
+	Gwen::Renderer::Base * pRenderer = new Gwen::Renderer::OpenGL3Font(CApplication::get().getWindowSize());
 
 	Gwen::Skin::TexturedBase * skin = new Gwen::Skin::TexturedBase(pRenderer);
 	skin->Init("DefaultSkin.png");
