@@ -134,6 +134,7 @@ void CLoadState::loadScene()
 	Scene.Camera = new CCameraControl(SVector3f(1.f, 1.3f, 4.5f));
 	Scene.Camera->SetProjection(60.f, CApplication::Get().GetWindow().GetAspectRatio(), 0.001f, 100.f);
 	Scene.Camera->setVelocity(1.9f);
+	CMainState::Get().IEventListener<SMouseEvent>::AddChild(Scene.Camera);
 	SceneManager->setActiveCamera(Scene.Camera);
 
 	Scene.OrbitCamera = new CPerspectiveCameraSceneObject();
