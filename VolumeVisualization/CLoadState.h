@@ -36,8 +36,8 @@ public:
 
 	CLoadState();
 
-	void begin();
-	void OnRenderStart(float const Elapsed);
+	void Begin();
+	void Update(f32 const Elapsed);
 
 	void addLabel(std::wstring const & Label, Gwen::Color const & Color = Gwen::Color(255, 255, 255, 84));
 	void OnFinish();

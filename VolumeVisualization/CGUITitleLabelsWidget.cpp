@@ -23,7 +23,7 @@ CGUITitleLabelsWidget::CGUITitleLabelsWidget(SciDataManager * DataManager)
 	// Top Label
 	Gwen::Controls::Label * BigLabel = new Gwen::Controls::Label(GUIManager->getCanvas());
 	BigLabel->SetFont(GUIManager->getLargeFont());
-	BigLabel->SetText(Gwen::UnicodeString(L"Dataset: ") + Gwen::UnicodeString(CMainMenuState::get().DataSetName.begin(), CMainMenuState::get().DataSetName.end()));
+	BigLabel->SetText(Gwen::UnicodeString(L"Dataset: ") + Gwen::UnicodeString(CMainMenuState::Get().DataSetName.begin(), CMainMenuState::Get().DataSetName.end()));
 	BigLabel->SetBounds(10, 10, 1590, 300);
 	BigLabel->SetTextColor(Gwen::Color(235, 255, 235, 215));
 	BigLabel->SetHidden(true);
@@ -60,10 +60,10 @@ void CGUITitleLabelsWidget::resetVolumeRangeIndicator(SciDataManager * DataManag
 		s << std::fixed;
 		s << "Value Range: ";
 		s << std::setprecision(3);
-		s << (CProgramContext::get().Scene.VolumeSceneObject->Control.EmphasisLocation * (ValueRange.second - ValueRange.first) + ValueRange.first) / 100.f;
+		s << (CProgramContext::Get().Scene.VolumeSceneObject->Control.EmphasisLocation * (ValueRange.second - ValueRange.first) + ValueRange.first) / 100.f;
 		s << " ± ";
 		s << std::setprecision(4);
-		s << (CProgramContext::get().Scene.VolumeSceneObject->Control.LocalRange / 2.f * (ValueRange.second - ValueRange.first)) / 100.f;
+		s << (CProgramContext::Get().Scene.VolumeSceneObject->Control.LocalRange / 2.f * (ValueRange.second - ValueRange.first)) / 100.f;
 		VolumeRangeIndicator->SetText(s.str());
 	}
 	
@@ -86,8 +86,8 @@ void CGUITitleLabelsWidget::resetVolumeRangeIndicator(SciDataManager * DataManag
 		s << "Volume: ";
 		s << std::setprecision(3);
 		s << std::scientific;
-		s << DataManager->getGridVolume("Avg Oxy", CProgramContext::get().Scene.VolumeSceneObject->Control.EmphasisLocation * (ValueRange.second - ValueRange.first) + ValueRange.first,
-			CProgramContext::get().Scene.VolumeSceneObject->Control.LocalRange / 2.f * (ValueRange.second - ValueRange.first), 2) * UnitVolume;
+		s << DataManager->getGridVolume("Avg Oxy", CProgramContext::Get().Scene.VolumeSceneObject->Control.EmphasisLocation * (ValueRange.second - ValueRange.first) + ValueRange.first,
+			CProgramContext::Get().Scene.VolumeSceneObject->Control.LocalRange / 2.f * (ValueRange.second - ValueRange.first), 2) * UnitVolume;
 		s << " m^3";
 		VolumeCalculationIndicator->SetText(s.str());
 	}

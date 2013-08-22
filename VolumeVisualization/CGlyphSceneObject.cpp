@@ -21,8 +21,8 @@ CGlyphSceneObject::CGlyphSceneObject()
 	Cube->MeshBuffers[0]->PositionBuffer.syncData();
 
 	// Copy shader
-	Shader = CProgramContext::get().Shaders.Glyph;
-	LineShader = CProgramContext::get().Shaders.GlyphLines;
+	Shader = CProgramContext::Get().Shaders.Glyph;
+	LineShader = CProgramContext::Get().Shaders.GlyphLines;
 }
 
 void CGlyphSceneObject::loadGlyphs(SciDataManager * DataManager, IColorMapper * ColorMapper, 

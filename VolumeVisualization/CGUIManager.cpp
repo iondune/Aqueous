@@ -19,12 +19,12 @@ Gwen::Font * LoadFont(Gwen::UnicodeString const & File, float const Size)
 
 
 CGUIManager::CGUIManager()
-	: Application(CApplication::get())
+	: Application(CApplication::Get())
 {}
 
 void CGUIManager::init()
 {
-	Gwen::Renderer::Base * pRenderer = new Gwen::Renderer::OpenGL3Font(CApplication::get().getWindowSize());
+	Gwen::Renderer::Base * pRenderer = new Gwen::Renderer::OpenGL3Font(CApplication::Get().GetWindow().GetSize());
 
 	Gwen::Skin::TexturedBase * skin = new Gwen::Skin::TexturedBase(pRenderer);
 	skin->Init("DefaultSkin.png");
@@ -35,7 +35,7 @@ void CGUIManager::init()
 	RegularFont = LoadFont(L"OpenSans.ttf", 12.f);
 
 	Canvas = new Gwen::Controls::Canvas(skin);
-	Canvas->SetSize(Application.getWindowSize().X, Application.getWindowSize().Y);
+	Canvas->SetSize(CApplication::Get().GetWindow().GetSize().X, CApplication::Get().GetWindow().GetSize().Y);
 }
 
 void CGUIManager::draw(f32 const Elapsed, bool const ClearAll)
@@ -54,7 +54,7 @@ void CGUIManager::draw(f32 const Elapsed, bool const ClearAll)
 		glMatrixMode(GL_PROJECTION);
 			glLoadIdentity();
 			int left = 0, top = 0;
-			int right = Application.getWindowSize().X, bottom = Application.getWindowSize().Y;
+			int right = Application.GetWindow().GetSize().X, bottom = Application.GetWindow().GetSize().Y;
 			glOrtho(left, right, bottom, top, -1.0, 1.0);
 
 		glMatrixMode(GL_MODELVIEW);

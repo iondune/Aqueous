@@ -13,7 +13,7 @@ CVolumeSceneObject::SControl::SControl()
 {}
 
 CVolumeSceneObject::CVolumeSceneObject()
-	: Cube(0), Shader(0), SceneManager(CApplication::get().getSceneManager())
+	: Cube(0), Shader(0), SceneManager(CApplication::Get().GetSceneManager())
 {
 	setCullingEnabled(false);
 
@@ -97,7 +97,7 @@ CVolumeSceneObject::CVolumeSceneObject()
     Cube->calculateNormalsPerFace();
 	Cube->updateBuffers();
 
-	Shader = CProgramContext::get().Shaders.Volume;
+	Shader = CProgramContext::Get().Shaders.Volume;
 }
 	
 bool CVolumeSceneObject::draw(IScene const * const Scene, sharedPtr<IRenderPass> Pass, bool const CullingEnabled)
@@ -144,7 +144,7 @@ bool CVolumeSceneObject::draw(IScene const * const Scene, sharedPtr<IRenderPass>
 			// Scene depth
 			glEnable(GL_TEXTURE_2D);
 			glActiveTexture(GL_TEXTURE0 + 1);
-			glBindTexture(GL_TEXTURE_2D, CApplication::get().getSceneManager().getSceneDepthTexture()->getTextureHandle());
+			glBindTexture(GL_TEXTURE_2D, CApplication::Get().GetSceneManager().getSceneDepthTexture()->getTextureHandle());
 			Context.uniform("uDepthTexture", 1);
 
 			// Control parameters
@@ -163,7 +163,7 @@ bool CVolumeSceneObject::draw(IScene const * const Scene, sharedPtr<IRenderPass>
 			if (Control.UseShading != 1)
 				Context.uniform("uLightPosition", SceneManager.getActiveCamera()->getPosition());
 			else
-				Context.uniform("uLightPosition", CProgramContext::get().Scene.OrbitCamera->getPosition());
+				Context.uniform("uLightPosition", CProgramContext::Get().Scene.OrbitCamera->getPosition());
 			
 			// Transparency
 			glEnable(GL_BLEND);

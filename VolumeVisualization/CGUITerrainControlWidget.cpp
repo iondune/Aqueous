@@ -9,7 +9,7 @@
 
 
 CGUITerrainControlWidget::CGUITerrainControlWidget()
-	: Terrain(CProgramContext::get().Scene.Terrain), MainState(CMainState::get())
+	: Terrain(CProgramContext::Get().Scene.Terrain), MainState(CMainState::Get())
 {
 	Window = new Gwen::Controls::WindowControl(GUIManager->getCanvas());
 	Window->SetDeleteOnClose(false);
@@ -61,7 +61,7 @@ CGUITerrainControlWidget::CGUITerrainControlWidget()
 
 void CGUITerrainControlWidget::OnToggleTerrain(Gwen::Controls::Base * Control)
 {
-	CProgramContext * Context = & CProgramContext::get();
+	CProgramContext * Context = & CProgramContext::Get();
 
 	if (Context->Scene.Terrain->isVisible())
 	{
@@ -79,25 +79,25 @@ void CGUITerrainControlWidget::OnToggleTerrain(Gwen::Controls::Base * Control)
 
 void CGUITerrainControlWidget::OnSelectElevation(Gwen::Controls::Base * Control)
 {
-	CProgramContext * Context = & CProgramContext::get();
+	CProgramContext * Context = & CProgramContext::Get();
 	Context->Scene.Terrain->DebugHeight = true;
 }
 
 void CGUITerrainControlWidget::OnSelectColor(Gwen::Controls::Base * Control)
 {
-	CProgramContext * Context = & CProgramContext::get();
+	CProgramContext * Context = & CProgramContext::Get();
 	Context->Scene.Terrain->DebugHeight = false;
 }
 
 void CGUITerrainControlWidget::OnSelectSolid(Gwen::Controls::Base * Control)
 {
-	CProgramContext * Context = & CProgramContext::get();
+	CProgramContext * Context = & CProgramContext::Get();
 	Context->Scene.Terrain->disableDebugData(EDebugData::Wireframe);
 }
 
 void CGUITerrainControlWidget::OnSelectWireframe(Gwen::Controls::Base * Control)
 {
-	CProgramContext * Context = & CProgramContext::get();
+	CProgramContext * Context = & CProgramContext::Get();
 	Context->Scene.Terrain->enableDebugData(EDebugData::Wireframe);
 }
 

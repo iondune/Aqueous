@@ -10,13 +10,13 @@
 CMainMenuState::CMainMenuState()
 {}
 
-void CMainMenuState::begin()
+void CMainMenuState::Begin()
 {
 	Context->GUIContext->setupMenuState();
 	std::cout << "Menu State begin." << std::endl;
 }
 
-void CMainMenuState::end()
+void CMainMenuState::End()
 {
 	Context->GUIContext->clear();
 	std::cout << "Menu State end." << std::endl;
@@ -24,7 +24,7 @@ void CMainMenuState::end()
 
 #include "CGlyphSceneObject.h"
 
-void CMainMenuState::OnRenderStart(float const Elapsed)
+void CMainMenuState::Update(f32 const Elapsed)
 {
 	printOpenGLErrors();
 	// Let loading thread run
@@ -35,7 +35,7 @@ void CMainMenuState::OnRenderStart(float const Elapsed)
 	Thread.Sync();
 
 	Context->GUIContext->draw(Elapsed, true);
-	CApplication::get().swapBuffers();
+	CApplication::Get().GetWindow().SwapBuffers();
 
 	static int counter = 0;
 	
@@ -49,7 +49,7 @@ void CMainMenuState::OnRenderStart(float const Elapsed)
 	//loaded = true;
 }
 
-void CMainMenuState::OnWindowResized(SWindowResizedEvent const & Event)
+void CMainMenuState::OnEvent(SWindowResizedEvent & Event)
 {
 	Context->GUIContext->getCanvas()->SetSize(Event.Size.X, Event.Size.Y);
 	Context->GUIContext->getCanvas()->Invalidate();

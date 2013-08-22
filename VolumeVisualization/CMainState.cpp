@@ -8,7 +8,7 @@ CMainState::CMainState()
 	: Scale(1), Mode(0), ShowDepth(false)
 {}
 
-void CMainState::begin()
+void CMainState::Begin()
 {
 	Context->GUIContext->setupMainState();
 
@@ -16,12 +16,12 @@ void CMainState::begin()
 	Context->Scene.GlyphSceneObject->buildLines();
 }
 
-void CMainState::end()
+void CMainState::End()
 {
 	Context->GUIContext->clear();
 }
 
-void CMainState::OnRenderStart(float const Elapsed)
+void CMainState::Update(f32 const Elapsed)
 {
 	CProgramContext::SScene & Scene = Context->Scene;
 
@@ -60,7 +60,7 @@ void CMainState::OnRenderStart(float const Elapsed)
 
 	Context->GUIContext->draw(Elapsed, false);
 
-	CApplication::get().swapBuffers();
+	CApplication::Get().GetWindow().SwapBuffers();
 	if (Scene.Terrain->isVisible())
 		Scene.Terrain->DoCameraUpdate = false;
 }

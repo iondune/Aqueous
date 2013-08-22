@@ -128,11 +128,11 @@ int CTerrainSceneObject::SLayer::sendSample(int const x1, int const y1, int cons
 
 
 CTerrainSceneObject::CTerrainSceneObject()
-	: Application(CApplication::get()), SceneManager(CApplication::get().getSceneManager()), DrawLevel(0), DoCameraUpdate(true), DebugHeight(false)
+	: Application(CApplication::Get()), SceneManager(CApplication::Get().GetSceneManager()), DrawLevel(0), DoCameraUpdate(true), DebugHeight(false)
 {
 	setCullingEnabled(false);
 
-	Shader = CProgramContext::get().Shaders.Terrain;
+	Shader = CProgramContext::Get().Shaders.Terrain;
 
 		
 	for (int y = 0; y < HeightmapSize; ++ y)
@@ -178,7 +178,7 @@ bool CTerrainSceneObject::draw(IScene const * const Scene, sharedPtr<IRenderPass
 	Context.uniform("uViewMatrix", SceneManager.getActiveCamera()->getViewMatrix());
 	Context.uniform("uProjMatrix", SceneManager.getActiveCamera()->getProjectionMatrix());
 	Context.uniform("uLayerWidth", (float) Size);
-	Context.uniform("uLightPosition", CProgramContext::get().Scene.LightPosition);
+	Context.uniform("uLightPosition", CProgramContext::Get().Scene.LightPosition);
 	int DebugHeightUniform = DebugHeight ? 1 : 0;
 	Context.uniform("uDebugHeight", DebugHeightUniform);
 	Context.bindBufferObject("aPosition", VertexData.getHandle(), 2);

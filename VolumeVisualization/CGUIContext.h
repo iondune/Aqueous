@@ -1,5 +1,5 @@
-#ifndef _CGUICONTEXT_H_INCLUDED_
-#define _CGUICONTEXT_H_INCLUDED_
+
+#pragma once
 
 #include "CGUIManager.h"
 
@@ -14,6 +14,7 @@
 
 // Menu State
 #include "CGUIMainMenuWidget.h"
+
 
 class CMainState;
 
@@ -50,5 +51,3 @@ public:
 	CGUIControlPanelWidget * getControlPanel();
 
 };
-
-#endif

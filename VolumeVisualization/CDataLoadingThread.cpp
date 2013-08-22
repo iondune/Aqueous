@@ -73,7 +73,7 @@ void CDataLoadingThread::End()
 	Context->DataManager->createVolumeFromGridValues(& o);
 	Context->Scene.VolumeSceneObject->VolumeHandle = Context->DataManager->getVolumeHandle();
 	
-	CApplication::get().getStateManager().setState(& CMainState::get());
+	CApplication::Get().GetStateManager().SetState(CMainState::GetPtr());
 }
 
 CDataLoadingThread::CDataLoadingThread()

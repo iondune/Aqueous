@@ -24,7 +24,7 @@ CGUISceneControlWidget::CGUISceneControlWidget()
 
 void CGUISceneControlWidget::OnToggleBackdrop(Gwen::Controls::Base * Control)
 {
-	CProgramContext * Context = & CProgramContext::get();
+	CProgramContext * Context = & CProgramContext::Get();
 	
 	Context->Scene.SkyBox->setVisible(! Context->Scene.SkyBox->isVisible());
 	std::stringstream s;

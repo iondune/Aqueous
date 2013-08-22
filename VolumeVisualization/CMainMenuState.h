@@ -16,11 +16,11 @@ public:
 
 	CMainMenuState();
 
-	void begin();
-	void end();
+	void Begin();
+	void End();
+	void Update(f32 const Elapsed);
 
-	void OnRenderStart(float const Elapsed);
-	void OnWindowResized(SWindowResizedEvent const & Event);
+	void OnEvent(SWindowResizedEvent & Event);
 
 	void loadData(std::string const & FileName);
 	void createDataSet();

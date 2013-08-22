@@ -5,7 +5,7 @@
 
 
 CGUIContext::CGUIContext()
-	: MainState(CMainState::get()), Console(0), TitleLabels(0), VolumeControl(0),
+	: MainState(CMainState::Get()), Console(0), TitleLabels(0), VolumeControl(0),
 	TerrainControl(0), GlyphControl(0), SceneControl(0), ControlPanel(0), MainMenu(0)
 {}
 
@@ -15,7 +15,7 @@ void CGUIContext::setupMainState()
 
 	// Widgets
 	addWidget(Console = new CGUIConsoleWidget());
-	addWidget(TitleLabels = new CGUITitleLabelsWidget(CProgramContext::get().DataManager));
+	addWidget(TitleLabels = new CGUITitleLabelsWidget(CProgramContext::Get().DataManager));
 	addWidget(VolumeControl = new CGUIVolumeControlWidget());
 	addWidget(TerrainControl = new CGUITerrainControlWidget());
 	addWidget(GlyphControl = new CGUIGlyphControlWidget());

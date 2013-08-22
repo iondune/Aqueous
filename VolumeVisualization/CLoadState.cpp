@@ -2,7 +2,7 @@
 
 #include "CMainState.h"
 #include "CMainMenuState.h"
-#include "CGwenEventForwarder.h"
+#include "CGUIEventManager.h"
 
 #include "SciDataManager.h"
 #include "CTerrainSceneObject.h"
@@ -13,7 +13,7 @@
 
 void CLoadStateEventHandler::OnFinish(Gwen::Controls::Base * Control)
 {
-	CLoadState::get().OnFinish();
+	CLoadState::Get().OnFinish();
 }
 
 
@@ -26,7 +26,7 @@ void CLoadState::addLabel(std::wstring const & Label, Gwen::Color const & Color)
 	MediumLabel->SetTextColor(Color);
 
 	GUIManager->draw(true);
-	CApplication::get().swapBuffers();
+	CApplication::Get().GetWindow().SwapBuffers();
 
 	LabelHeight += 40;
 }
@@ -38,12 +38,12 @@ CLoadState::CLoadState()
 	Indent = 0;
 }
 
-void CLoadState::begin()
+void CLoadState::Begin()
 {
 	// Load References
-	CApplication & Application = CApplication::get();
-	CMainState & MainState = CMainState::get();
-	CMainMenuState & MenuState = CMainMenuState::get();
+	CApplication & Application = CApplication::Get();
+	CMainState & MainState = CMainState::Get();
+	CMainMenuState & MenuState = CMainMenuState::Get();
 
 	GUIManager = Context->GUIContext;
 	Canvas = GUIManager->getCanvas();
@@ -60,14 +60,13 @@ void CLoadState::begin()
 	BigLabel->SetTextColor(Gwen::Color(255, 255, 255, 84));
 
 	GUIManager->draw(true);
-	CApplication::get().swapBuffers();
+	CApplication::Get().GetWindow().SwapBuffers();
 	
 	addLabel(L"Initializing System...");
-	std::function<void (SMouseEvent const &)> OnUncaughtMouseEvent = [&](SMouseEvent const & Event){CMainState::get().OnUncaughtMouseEvent(Event);};
-	CGwenEventForwarder * Forwarder = new CGwenEventForwarder(GUIManager->getCanvas(), OnUncaughtMouseEvent);
+	CGUIEventManager * Forwarder = new CGUIEventManager(GUIManager->getCanvas());
 	
 	addLabel(L"Loading Scene Shaders...");
-	Application.getSceneManager().init(true, true);
+	Application.GetSceneManager().init(true, true);
 	loadShaders();
 	
 	addLabel(L"Loading Scene Objects...");
@@ -87,10 +86,10 @@ void CLoadState::begin()
 		OnFinish();
 }
 
-void CLoadState::OnRenderStart(float const Elapsed)
+void CLoadState::Update(f32 const Elapsed)
 {
 	Context->GUIContext->draw(Elapsed, true);
-	CApplication::get().swapBuffers();
+	CApplication::Get().GetWindow().SwapBuffers();
 }
 
 void CLoadState::loadShaders()
@@ -121,7 +120,7 @@ void CLoadState::loadScene()
 {
 	// References
 	CProgramContext::SScene & Scene = Context->Scene;
-	CSceneManager * SceneManager = & CApplication::get().getSceneManager();
+	CSceneManager * SceneManager = & CApplication::Get().GetSceneManager();
 
 	// OpenGL Parameters
 	glClearColor(0.3f, 0.5f, 0.5f, 1.0f);
@@ -133,7 +132,7 @@ void CLoadState::loadScene()
 
 	// Cameras
 	Scene.Camera = new CCameraControl(SVector3f(1.f, 1.3f, 4.5f));
-	Scene.Camera->SetProjection(60.f, CApplication::get().getAspectRatio(), 0.001f, 100.f);
+	Scene.Camera->SetProjection(60.f, CApplication::Get().GetWindow().GetAspectRatio(), 0.001f, 100.f);
 	Scene.Camera->setVelocity(1.9f);
 	SceneManager->setActiveCamera(Scene.Camera);
 
@@ -227,5 +226,5 @@ void CLoadState::OnFinish()
 	// Cleanup GUI
 	Canvas->RemoveAllChildren();
 
-	Application->getStateManager().setState(& CMainMenuState::get());
+	Application->GetStateManager().SetState(& CMainMenuState::Get());
 }

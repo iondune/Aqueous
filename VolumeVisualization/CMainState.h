@@ -1,7 +1,9 @@
-#ifndef _CMAINSTATE_H_INCLUDED_
-#define _CMAINSTATE_H_INCLUDED_
+
+#pragma once
 
 #include "CProgramContext.h"
+
+#include <CGUIEventManager.h>
 
 
 class CMainState : public CContextState<CMainState, CProgramContext>
@@ -11,13 +13,13 @@ public:
 
 	CMainState();
 
-	void begin();
-	void end();
+	void Begin();
+	void End();
 
-	void OnRenderStart(float const Elapsed);
+	void Update(f32 const Elapsed);
 
-    void OnKeyboardEvent(SKeyboardEvent const & Event);
-	void OnWindowResized(SWindowResizedEvent const & Event);
+    void OnEvent(SKeyboardEvent & Event);
+	void OnEvent(SWindowResizedEvent & Event);
 
 	void addConsoleMessage(std::string const & Message, Gwen::Color const & Color = Gwen::Color(255, 255, 255, 255));
 
@@ -39,9 +41,6 @@ public:
 	////////////////////////////
 
     glm::vec3 makeSphereVec(int x, int y);
-    void OnMouseEvent(SMouseEvent const & Event);
-    void OnUncaughtMouseEvent(SMouseEvent const & Event);
+    void OnEvent(SMouseEvent & Event);
 
 };
-
-#endif

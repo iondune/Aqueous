@@ -89,7 +89,7 @@ void CGUIMainMenuWidget::OnSelectDataSet(Gwen::Controls::Base * Control)
 {
 	std::string const & FileName = ListBox->GetSelectedRowName();
 	std::cout << "Filename selected: " << FileName;
-	CMainMenuState::get().loadData(std::string(FileName.begin(), FileName.end()));
+	CMainMenuState::Get().loadData(std::string(FileName.begin(), FileName.end()));
 }
 
 void CGUIMainMenuWidget::OnCreateDataSet(Gwen::Controls::Base * Control)
@@ -97,7 +97,7 @@ void CGUIMainMenuWidget::OnCreateDataSet(Gwen::Controls::Base * Control)
 	//Gwen::Controls::WindowControl * Window = new Gwen::Controls::WindowControl(GUIManager->getCanvas());
 	//Window->SetBounds(300, 300, 150, 50);
 	//Window->SetTitle("Please Select Data Set Name");
-	CMainMenuState::get().createDataSet();
+	CMainMenuState::Get().createDataSet();
 
 	ListBox->Clear();
 	createDataSetButtons();

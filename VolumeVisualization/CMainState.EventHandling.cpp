@@ -3,7 +3,7 @@
 #include "SciDataManager.h"
 
 
-void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
+void CMainState::OnEvent(SKeyboardEvent & Event)
 {
 	std::stringstream s;
 
@@ -13,7 +13,7 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
 	case EKey::Escape:
 
 		if (! Event.Pressed)
-			Application->close();
+			Application->Close();
 		break;
 
 		//////////////////
@@ -134,11 +134,11 @@ void CMainState::OnKeyboardEvent(SKeyboardEvent const & Event)
     }
 }
 
-void CMainState::OnWindowResized(SWindowResizedEvent const & Event)
+void CMainState::OnEvent(SWindowResizedEvent & Event)
 {
 	Context->GUIContext->getCanvas()->SetSize(Event.Size.X, Event.Size.Y);
 	Context->GUIContext->getCanvas()->Invalidate();
 	Context->GUIContext->getCanvas()->InvalidateChildren(true);
 
-	Context->Scene.Camera->SetAspectRatio(CApplication::get().getAspectRatio());
+	Context->Scene.Camera->SetAspectRatio(CApplication::Get().GetWindow().GetAspectRatio());
 }

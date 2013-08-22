@@ -27,10 +27,8 @@ void CProgramContext::run()
 	CShaderLoader::ShaderDirectory = "Shaders/";
 
 	// Create Window
-	CApplication & Application = CApplication::get();
-	Application.init(SVector2i(1900, 1000), "Underwater Volume Data Rendering");
-
-	Application.loadEngines();
+	CApplication & Application = CApplication::Get();
+	Application.Init(SVector2i(1900, 1000), "Underwater Volume Data Rendering");
 
 	// Create GUI Engine
 	std::cout << "GUI Engine is initializing..." << std::endl;
@@ -38,9 +36,9 @@ void CProgramContext::run()
 	GUIContext->init();
 
 	// Begin loading
-	CLoadState & LoadState = CLoadState::get();
-	Application.getStateManager().setState(& LoadState);
+	CLoadState & LoadState = CLoadState::Get();
+	Application.GetStateManager().SetState(& LoadState);
 
 	// Run program
-	Application.run();
+	Application.Run();
 }

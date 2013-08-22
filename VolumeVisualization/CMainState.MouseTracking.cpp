@@ -5,8 +5,8 @@
 
 glm::vec3 CMainState::makeSphereVec(int x, int y)
 {
-	float ix = 2*(x / (float) CApplication::get().getWindowSize().X) - 1.f;
-	float iy = 1.f - 2*(y / (float) CApplication::get().getWindowSize().X);
+	float ix = 2*(x / (float) CApplication::Get().GetWindow().GetSize().X) - 1.f;
+	float iy = 1.f - 2*(y / (float) CApplication::Get().GetWindow().GetSize().X);
 
 	float length = sqrt(ix*ix + iy*iy);
 
@@ -20,13 +20,9 @@ glm::vec3 CMainState::makeSphereVec(int x, int y)
 	}
 }
 
-void CMainState::OnMouseEvent(SMouseEvent const & Event)
+void CMainState::OnEvent(SMouseEvent & Event)
 {
-}
-
-void CMainState::OnUncaughtMouseEvent(SMouseEvent const & Event)
-{
-	switch (Event.Type.Value)
+	switch (Event.Type)
 	{
 
 	case SMouseEvent::EType::Click:
@@ -41,10 +37,10 @@ void CMainState::OnUncaughtMouseEvent(SMouseEvent const & Event)
 			float difY = (float) Event.Movement.Y;
 			glm::vec3 NewVec = makeSphereVec(Event.Location.X, Event.Location.Y);
 			glm::mat4 ViewMatrix;
-			if (& CApplication::get().getSceneManager())
-				ViewMatrix = CApplication::get().getSceneManager().getActiveCamera()->getViewMatrix();
+			if (& CApplication::Get().GetSceneManager())
+				ViewMatrix = CApplication::Get().GetSceneManager().getActiveCamera()->getViewMatrix();
 
-			if (CApplication::get().getEventManager().IsMouseDown[Event.Button.Left])
+			if (CApplication::Get().GetWindow().IsMouseDown(SMouseEvent::EButton::Left))
 			{
 				if (Mode == 0) // Rotation (axis vector)
 				{
@@ -61,7 +57,7 @@ void CMainState::OnUncaughtMouseEvent(SMouseEvent const & Event)
 						glm::vec3 rotAxis(axis.x, axis.y, axis.z);
 						glm::mat4 Transformation = glm::rotate(glm::mat4(1.f), dot, rotAxis);
 						Rotation = Transformation*Rotation;
-						if (! Equals(difX, 0.f) && ! Equals(difY, 0.f) && Application->getEventManager().IsKeyDown[EKey::Q])
+						if (! Equals(difX, 0.f) && ! Equals(difY, 0.f) && Application->GetWindow().IsKeyDown(EKey::Q))
 						{
 							glm::vec4 v = Transformation * glm::vec4(Context->Scene.VolumeSceneObject->Control.SliceAxis.GetGLMVector(), 0.f);
 							Context->Scene.VolumeSceneObject->Control.SliceAxis = SVector3f(v.x, v.y, v.z);

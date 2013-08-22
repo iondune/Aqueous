@@ -4,6 +4,7 @@
 #include <ionCore.h>
 #include <ionScene.h>
 #include <ionWindow.h>
+#include <ionFramework.h>
 
 #include "CGUIContext.h"
 

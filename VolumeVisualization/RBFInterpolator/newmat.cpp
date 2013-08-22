@@ -1,4 +1,3 @@
-#define _CRT_SECURE_NO_WARNINGS
 
 //$$ newmat1.cpp   Matrix type functions
 

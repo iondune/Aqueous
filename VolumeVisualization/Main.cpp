@@ -11,7 +11,7 @@ int main()
 {
 	std::cout << "System is initializing..." << std::endl;
 
-	CProgramContext & Context = CProgramContext::get();
+	CProgramContext & Context = CProgramContext::Get();
 	Context.run();
 
 	return 0;

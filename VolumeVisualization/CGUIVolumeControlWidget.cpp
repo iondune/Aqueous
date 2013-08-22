@@ -8,7 +8,7 @@
 
 
 CGUIVolumeControlWidget::CGUIVolumeControlWidget()
-	: VolumeControl(CProgramContext::get().Scene.VolumeSceneObject->Control), MainState(CMainState::get())
+	: VolumeControl(CProgramContext::Get().Scene.VolumeSceneObject->Control), MainState(CMainState::Get())
 {
 	Window = new Gwen::Controls::WindowControl(GUIManager->getCanvas());
 	Window->SetDeleteOnClose(false);
@@ -174,7 +174,7 @@ CGUIVolumeControlWidget::CGUIVolumeControlWidget()
 void CGUIVolumeControlWidget::resetVolumeRange()
 {
 	if (VolumeControl.Mode)
-		GUIContext->getTitleLabels()->resetVolumeRangeIndicator(CProgramContext::get().DataManager);
+		GUIContext->getTitleLabels()->resetVolumeRangeIndicator(CProgramContext::Get().DataManager);
 }
 
 void CGUIVolumeControlWidget::OnEmphasisSlider(Gwen::Controls::Base * Control)
@@ -242,7 +242,7 @@ void CGUIVolumeControlWidget::OnVolumeMode(Gwen::Controls::Base * Control)
 	if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Plane Slices"))
 	{
 		VolumeControl.Mode = 1;
-		CProgramContext::get().GUIContext->getTitleLabels()->clearVolumeRangeIndicator();
+		CProgramContext::Get().GUIContext->getTitleLabels()->clearVolumeRangeIndicator();
 	}
 	else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Isosurface"))
 	{
@@ -252,7 +252,7 @@ void CGUIVolumeControlWidget::OnVolumeMode(Gwen::Controls::Base * Control)
 	else
 	{
 		VolumeControl.Mode = 0;
-		CProgramContext::get().GUIContext->getTitleLabels()->clearVolumeRangeIndicator();
+		CProgramContext::Get().GUIContext->getTitleLabels()->clearVolumeRangeIndicator();
 	}
 }
 
@@ -292,12 +292,12 @@ void CGUIVolumeControlWidget::OnDepthMode(Gwen::Controls::Base * Control)
 {
 	Gwen::Controls::CheckBox * Box = (Gwen::Controls::CheckBox *) Control;
 
-	CMainState::get().ShowDepth = Box->IsChecked();
+	CMainState::Get().ShowDepth = Box->IsChecked();
 }
 
 void CGUIVolumeControlWidget::OnToggleVolume(Gwen::Controls::Base * Control)
 {
-	CProgramContext * Context = & CProgramContext::get();
+	CProgramContext * Context = & CProgramContext::Get();
 
 	if (Context->Scene.VolumeSceneObject->isVisible())
 	{

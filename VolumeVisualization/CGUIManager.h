@@ -3,6 +3,7 @@
 
 #include <ionTypes.h>
 #include <ionWindow.h>
+#include <ionFramework.h>
 
 #include <Gwen/Controls.h>
 

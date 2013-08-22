@@ -39,24 +39,24 @@ CGUIControlPanelWidget::CGUIControlPanelWidget()
 
 void CGUIControlPanelWidget::OnToggleTerrain(Gwen::Controls::Base * Control)
 {
-	CProgramContext * Context = & CProgramContext::get();
+	CProgramContext * Context = & CProgramContext::Get();
 	Context->GUIContext->getTerrainControl()->toggle();
 }
 
 void CGUIControlPanelWidget::OnToggleVolume(Gwen::Controls::Base * Control)
 {
-	CProgramContext * Context = & CProgramContext::get();
+	CProgramContext * Context = & CProgramContext::Get();
 	Context->GUIContext->getVolumeControl()->toggle();
 }
 
 void CGUIControlPanelWidget::OnToggleGlyph(Gwen::Controls::Base * Control)
 {
-	CProgramContext * Context = & CProgramContext::get();
+	CProgramContext * Context = & CProgramContext::Get();
 	Context->GUIContext->getGlyphControl()->toggle();
 }
 
 void CGUIControlPanelWidget::OnToggleScene(Gwen::Controls::Base * Control)
 {
-	CProgramContext * Context = & CProgramContext::get();
+	CProgramContext * Context = & CProgramContext::Get();
 	Context->GUIContext->getSceneControl()->toggle();
 }

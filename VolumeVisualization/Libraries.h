@@ -9,6 +9,7 @@
 
 // ionEngine Libraries
 #pragma comment(lib, "ionWindow.lib")
+#pragma comment(lib, "ionFramework.lib")
 #pragma comment(lib, "ionScene.lib")
 #pragma comment(lib, "ionGUI.lib")
 
