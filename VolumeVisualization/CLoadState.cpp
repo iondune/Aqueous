@@ -63,7 +63,7 @@ void CLoadState::Begin()
 	CApplication::Get().GetWindow().SwapBuffers();
 	
 	addLabel(L"Initializing System...");
-	CGUIEventManager * Forwarder = new CGUIEventManager(GUIManager->getCanvas());
+	CGUIEventManager * Forwarder = new CGUIEventManager(GUIManager->getCanvas(), & Application.GetWindow());
 	
 	addLabel(L"Loading Scene Shaders...");
 	Application.GetSceneManager().init(true, true);
