@@ -31,7 +31,7 @@ void CMainState::Update(f32 const Elapsed)
 
 	float const Distance = 4.f;
 	Scene.OrbitCamera->setPosition(SVector3f(sin(Scene.Timer)*Distance, 2.3f, cos(Scene.Timer)*Distance));
-	Scene.OrbitCamera->setLookAtTarget(SVector3f());
+	Scene.OrbitCamera->SetLookAtTarget(SVector3f());
 
 	Scene.LightPosition = SceneManager->getActiveCamera()->getPosition() + SVector3f(0, 0, 0);
 

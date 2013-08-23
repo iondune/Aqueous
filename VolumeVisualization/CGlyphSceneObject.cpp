@@ -85,8 +85,8 @@ bool CGlyphSceneObject::draw(IScene const * const Scene, sharedPtr<IRenderPass> 
 		Context.bindBufferObject("aNormal", Cube->MeshBuffers[0]->NormalBuffer.getHandle(), 3);
 		Context.bindBufferObject("aPosition", Cube->MeshBuffers[0]->PositionBuffer.getHandle(), 3);
 		
-		Context.uniform("uProjMatrix", SceneManager->getActiveCamera()->getProjectionMatrix());
-		Context.uniform("uViewMatrix", SceneManager->getActiveCamera()->getViewMatrix());
+		Context.uniform("uProjMatrix", SceneManager->getActiveCamera()->GetProjectionMatrix());
+		Context.uniform("uViewMatrix", SceneManager->getActiveCamera()->GetViewMatrix());
 		Context.uniform("uLightPosition", SceneManager->getActiveCamera()->getPosition());
 		
 		Context.uniform("uGlyphSize", GlyphSize);
@@ -109,8 +109,8 @@ bool CGlyphSceneObject::draw(IScene const * const Scene, sharedPtr<IRenderPass> 
 
 		CShaderContext Context(* LineShader);
 		Context.uniform("uModelMatrix", Transformation.getGLMMat4());
-		Context.uniform("uProjMatrix", SceneManager->getActiveCamera()->getProjectionMatrix());
-		Context.uniform("uViewMatrix", SceneManager->getActiveCamera()->getViewMatrix());
+		Context.uniform("uProjMatrix", SceneManager->getActiveCamera()->GetProjectionMatrix());
+		Context.uniform("uViewMatrix", SceneManager->getActiveCamera()->GetViewMatrix());
 		
 		Context.bindBufferObject("aPosition", Lines.getHandle(), 3);
 		Context.bindBufferObject("aColor", LineColors.getHandle(), 3);

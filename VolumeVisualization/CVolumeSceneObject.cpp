@@ -132,8 +132,8 @@ bool CVolumeSceneObject::draw(IScene const * const Scene, sharedPtr<IRenderPass>
 			// Matrices
 			Context.uniform("uModelMatrix", Transformation.getGLMMat4());
 			Context.uniform("uInvModelMatrix", glm::inverse(Transformation.getGLMMat4()));
-			Context.uniform("uProjMatrix", SceneManager.getActiveCamera()->getProjectionMatrix());
-			Context.uniform("uViewMatrix", SceneManager.getActiveCamera()->getViewMatrix());
+			Context.uniform("uProjMatrix", SceneManager.getActiveCamera()->GetProjectionMatrix());
+			Context.uniform("uViewMatrix", SceneManager.getActiveCamera()->GetViewMatrix());
 
 			// Volume texture
 			glEnable(GL_TEXTURE_3D);

@@ -38,7 +38,7 @@ void CMainState::OnEvent(SMouseEvent & Event)
 			glm::vec3 NewVec = makeSphereVec(Event.Location.X, Event.Location.Y);
 			glm::mat4 ViewMatrix;
 			if (& CApplication::Get().GetSceneManager())
-				ViewMatrix = CApplication::Get().GetSceneManager().getActiveCamera()->getViewMatrix();
+				ViewMatrix = CApplication::Get().GetSceneManager().getActiveCamera()->GetViewMatrix();
 
 			if (CApplication::Get().GetWindow().IsMouseDown(SMouseEvent::EButton::Left))
 			{

@@ -175,8 +175,8 @@ bool CTerrainSceneObject::draw(IScene const * const Scene, sharedPtr<IRenderPass
 
 	// Setup shared shader parameters
 	CShaderContext Context(* Shader);
-	Context.uniform("uViewMatrix", SceneManager.getActiveCamera()->getViewMatrix());
-	Context.uniform("uProjMatrix", SceneManager.getActiveCamera()->getProjectionMatrix());
+	Context.uniform("uViewMatrix", SceneManager.getActiveCamera()->GetViewMatrix());
+	Context.uniform("uProjMatrix", SceneManager.getActiveCamera()->GetProjectionMatrix());
 	Context.uniform("uLayerWidth", (float) Size);
 	Context.uniform("uLightPosition", CProgramContext::Get().Scene.LightPosition);
 	int DebugHeightUniform = DebugHeight ? 1 : 0;
