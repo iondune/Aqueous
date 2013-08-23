@@ -1,5 +1,5 @@
-#ifndef _CGUICONTEXTWIDGET_H_INCLUDED_
-#define _CGUICONTEXTWIDGET_H_INCLUDED_
+
+#pragma once
 
 #include "CGUIManager.h"
 #include "CGUIWidget.h"
@@ -19,5 +19,3 @@ public:
 	CGUIContextWidget();
 
 };
-
-#endif

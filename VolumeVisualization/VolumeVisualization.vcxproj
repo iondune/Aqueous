@@ -88,11 +88,9 @@
     <ClCompile Include="CGUIGlyphControlWidget.cpp" />
     <ClCompile Include="CGUILoadingWidget.cpp" />
     <ClCompile Include="CGUIMainMenuWidget.cpp" />
-    <ClCompile Include="CGUIManager.cpp" />
     <ClCompile Include="CGUISceneControlWidget.cpp" />
     <ClCompile Include="CGUITerrainControlWidget.cpp" />
     <ClCompile Include="CGUIVolumeControlWidget.cpp" />
-    <ClCompile Include="CGUIWidget.cpp" />
     <ClCompile Include="CLoadState.cpp" />
     <ClCompile Include="CMainMenuState.cpp" />
     <ClCompile Include="CMainState.cpp" />
@@ -129,11 +127,9 @@
     <ClInclude Include="CGUIGlyphControlWidget.h" />
     <ClInclude Include="CGUILoadingWidget.h" />
     <ClInclude Include="CGUIMainMenuWidget.h" />
-    <ClInclude Include="CGUIManager.h" />
     <ClInclude Include="CGUISceneControlWidget.h" />
     <ClInclude Include="CGUITerrainControlWidget.h" />
     <ClInclude Include="CGUIVolumeControlWidget.h" />
-    <ClInclude Include="CGUIWidget.h" />
     <ClInclude Include="CLoadState.h" />
     <ClInclude Include="CMainMenuState.h" />
     <ClInclude Include="CMainState.h" />

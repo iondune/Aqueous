@@ -26,9 +26,6 @@
     <ClCompile Include="CVolumeSceneObject.cpp">
       <Filter>MainState\Volume</Filter>
     </ClCompile>
-    <ClCompile Include="CGUIManager.cpp">
-      <Filter>Utilities\GUI</Filter>
-    </ClCompile>
     <ClCompile Include="SciDataManager.GridValues.cpp">
       <Filter>MainState\Data Management</Filter>
     </ClCompile>
@@ -46,12 +43,6 @@
     </ClCompile>
     <ClCompile Include="SciData.cpp">
       <Filter>MainState\Data Management\Base Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="CGUIContextWidget.cpp">
-      <Filter>Utilities\GUI\Widgets</Filter>
-    </ClCompile>
-    <ClCompile Include="CGUIWidget.cpp">
-      <Filter>Utilities\GUI\Widgets</Filter>
     </ClCompile>
     <ClCompile Include="CMainMenuState.cpp">
       <Filter>MainMenuState</Filter>
@@ -116,6 +107,9 @@
     <ClCompile Include="SciDataParserPieSlices.cpp">
       <Filter>MainState\Data Management\Parsers</Filter>
     </ClCompile>
+    <ClCompile Include="CGUIContextWidget.cpp">
+      <Filter>Program Context</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CMainState.h">
@@ -152,9 +146,6 @@
     <ClInclude Include="CVolumeSceneObject.h">
       <Filter>MainState\Volume</Filter>
     </ClInclude>
-    <ClInclude Include="CGUIManager.h">
-      <Filter>Utilities\GUI</Filter>
-    </ClInclude>
     <ClInclude Include="SciDataManager.h">
       <Filter>MainState\Data Management</Filter>
     </ClInclude>
@@ -163,12 +154,6 @@
     </ClInclude>
     <ClInclude Include="RBFInterpolator\RBFInterpolator.h">
       <Filter>MainState\RBFInterpolator</Filter>
-    </ClInclude>
-    <ClInclude Include="CGUIWidget.h">
-      <Filter>Utilities\GUI\Widgets</Filter>
-    </ClInclude>
-    <ClInclude Include="CGUIContextWidget.h">
-      <Filter>Utilities\GUI\Widgets</Filter>
     </ClInclude>
     <ClInclude Include="CMainMenuState.h">
       <Filter>MainMenuState</Filter>
@@ -233,6 +218,9 @@
     <ClInclude Include="CPlaneGridSceneObject.h">
       <Filter>MainState\Misc</Filter>
     </ClInclude>
+    <ClInclude Include="CGUIContextWidget.h">
+      <Filter>Program Context</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="MainState">
@@ -268,14 +256,8 @@
     <Filter Include="Program Context">
       <UniqueIdentifier>{621c01a1-e404-419c-9931-35d3cd1bc3fa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Utilities\GUI">
-      <UniqueIdentifier>{e2f73951-6082-4d3a-bcd6-3f07b8ec41d4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Program Context\Widgets">
       <UniqueIdentifier>{69559bbe-9f50-47e8-809c-55d622e1b426}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Utilities\GUI\Widgets">
-      <UniqueIdentifier>{e6e9fb75-ed02-4c48-a34c-0a27f63cd1a7}</UniqueIdentifier>
     </Filter>
     <Filter Include="Program Context\Widgets\Main Menu">
       <UniqueIdentifier>{7ed6a85c-9651-4d88-99fd-87f8f6d6947c}</UniqueIdentifier>
