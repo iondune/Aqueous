@@ -169,19 +169,20 @@ void CLoadState::loadScene()
 	Scale *= 3.f;
 	Scale.X *= -1;
 
-
+	// GPS Coordinates
 	vec2f DataRangeMin(9.53894f, 63.59233f), DataRangeMax(9.54926f, 63.59595f);
 	vec2f MapRangeMin(9.51013f, 63.57518f), MapRangeMax(9.56290f, 63.60297f);
+
 	vec2f DataRangeCenter = (DataRangeMin + DataRangeMax) / 2.f;
 	vec2f ScaleAdjust = (MapRangeMax - MapRangeMin) / (DataRangeMax - DataRangeMin);
 	vec2f TranslationAdjust = (DataRangeCenter - MapRangeMin) / (MapRangeMax - DataRangeCenter);
+
 	vec2f RelativeTranslate;
 	for (int i = 0; i < 2; ++ i)
 	{
 		if (TranslationAdjust[i] > 1.f)
 		{
 			TranslationAdjust[i] = 1.f / TranslationAdjust[i];
-
 			RelativeTranslate[i] = -(1.f - TranslationAdjust[i]);
 		}
 		else
@@ -189,6 +190,7 @@ void CLoadState::loadScene()
 			RelativeTranslate[i] = (1.f - TranslationAdjust[i]);
 		}
 	}
+
 	f32 MaxAdjust;
 	vec3f Adjuster(1.f);
 	if (ScaleAdjust.X > ScaleAdjust.Y)
@@ -205,11 +207,9 @@ void CLoadState::loadScene()
 	Scale.X *= MaxAdjust;
 	Scale.Z *= MaxAdjust;
 	Scale.Y *= (ScaleAdjust.X + ScaleAdjust.Y) / 2.f;
-	//Scale.Y *= 0.75f;
 
 	Scene.Terrain->setScale(Scale);
 	Scene.Terrain->setTranslation(vec3f(-RelativeTranslate.X, 0.f, RelativeTranslate.Y));
-	//Scene.Terrain->setVisible(false);
 
 	// Volume
 	Scene.VolumeSceneObject = new CVolumeSceneObject();

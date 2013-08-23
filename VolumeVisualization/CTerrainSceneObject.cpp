@@ -10,13 +10,7 @@ CTerrainSceneObject::SLayer::SLayer(int const i)
 	ScaleFactor = 1 << i;
 
 	// Create Heightmap Texture
-	STextureCreationFlags Flags;
-	Flags.Filter = GL_LINEAR;
-	Flags.MipMaps = false;
 	ColorMap = new CTexture(CImageLoader::loadImage("../TerrainColorImageSquare.bmp"));
-	Flags.PixelInternalFormat = GL_R32F;
-	//Flags.Wrap = GL_CLAMP;
-
 	HeightMap = new CTexture(CImageLoader::loadImage("../TerrainHeightImageSquare.bmp"));
 
 	// Determine starting ClipRegion
@@ -26,7 +20,6 @@ CTerrainSceneObject::SLayer::SLayer(int const i)
 
 int CTerrainSceneObject::SLayer::sendSample(int const x1, int const y1, int const x2, int const y2, SVector2i const & NewClipPos)
 {
-
 	static const auto noise = [](int const x, int const y) -> float
 	{
 		return (float) 0.f;
@@ -134,7 +127,6 @@ CTerrainSceneObject::CTerrainSceneObject()
 
 	Shader = CProgramContext::Get().Shaders.Terrain;
 
-		
 	for (int y = 0; y < HeightmapSize; ++ y)
 	{
 		for (int x = 0; x < HeightmapSize; ++ x)
@@ -143,7 +135,6 @@ CTerrainSceneObject::CTerrainSceneObject()
 			VertexData.push_back(y * 1.f);
 		}
 	}
-
 
 	VertexData.syncData();
 
@@ -159,10 +150,7 @@ float const CTerrainSceneObject::getTerrainHeight(SVector2f const & Position)
 	{
 		SVector2<int> Index = SVector2<int>(Pos) - Layers[0]->ClipRegion.Position;
 		Index += SVector2<int>(Layers[0]->DataOffset);
-		float Value = Layers[0]->HostHeightMap[Index.X % HeightmapSize][Index.Y % HeightmapSize];
-
-
-		return Value;
+		return Layers[0]->HostHeightMap[Index.X % HeightmapSize][Index.Y % HeightmapSize];
 	}
 		
 	return 0.f;

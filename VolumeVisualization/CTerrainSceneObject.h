@@ -1,5 +1,5 @@
-#ifndef _CTERRAINSCENEOBJECT_H_INCLUDED_
-#define _CTERRAINSCENEOBJECT_H_INCLUDED_
+
+#pragma once
 
 #include <ionCore.h>
 #include <ionMath.h>
@@ -66,5 +66,3 @@ public:
 	bool draw(IScene const * const scene, sharedPtr<IRenderPass> Pass, bool const CullingEnabled);
 
 };
-
-#endif
