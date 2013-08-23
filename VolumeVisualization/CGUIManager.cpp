@@ -43,28 +43,10 @@ void CGUIManager::draw(f32 const Elapsed, bool const ClearAll)
 	for (auto it = Widgets.begin(); it != Widgets.end(); ++ it)
 		(* it)->update(Elapsed);
 
-	{
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-		if (ClearAll)
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		else
-			glClear(GL_DEPTH_BUFFER_BIT);
-
-		glMatrixMode(GL_PROJECTION);
-			glLoadIdentity();
-			int left = 0, top = 0;
-			int right = Application.GetWindow().GetSize().X, bottom = Application.GetWindow().GetSize().Y;
-			glOrtho(left, right, bottom, top, -1.0, 1.0);
-
-		glMatrixMode(GL_MODELVIEW);
-			glLoadIdentity();
-			glViewport(0, 0, right - left, bottom - top);
-			
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, 0);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-	}
+	if (ClearAll)
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	else
+		glClear(GL_DEPTH_BUFFER_BIT);
 
 	Canvas->RenderCanvas();
 }
@@ -98,6 +80,7 @@ void CGUIManager::removeWidget(CGUIWidget * Widget)
 {
 	for (auto it = Widgets.begin(); it != Widgets.end(); ++ it)
 		delete (* it);
+
 	Widgets.erase(std::remove(Widgets.begin(), Widgets.end(), Widget), Widgets.end());
 }
 
