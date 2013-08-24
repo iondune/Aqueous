@@ -32,12 +32,12 @@ CGUITerrainControlWidget::CGUITerrainControlWidget()
 
 		Gwen::Controls::Button * ElevationButton = new Gwen::Controls::Button(Window);
 		ElevationButton->SetBounds(15, 10 + 45 + 25, 140, 25);
-		ElevationButton->SetText("Elevation (Greyscale)");
+		ElevationButton->SetText("Elevation");
 		ElevationButton->onPress.Add(this, & CGUITerrainControlWidget::OnSelectElevation);
 
 		Gwen::Controls::Button * ColorButton = new Gwen::Controls::Button(Window);
 		ColorButton->SetBounds(140 + 15 + 10, 10 + 45 + 25, 140, 25);
-		ColorButton->SetText("GoogleMaps (Color)");
+		ColorButton->SetText("GoogleMaps");
 		ColorButton->onPress.Add(this, & CGUITerrainControlWidget::OnSelectColor);
 
 
