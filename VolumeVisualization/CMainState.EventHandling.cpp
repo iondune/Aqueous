@@ -16,6 +16,7 @@ void CMainState::OnEvent(SKeyboardEvent & Event)
 			Application->Close();
 		break;
 
+
 		//////////////////
 		// Camera Speed //
 		//////////////////
@@ -102,35 +103,33 @@ void CMainState::OnEvent(SKeyboardEvent & Event)
 	case EKey::Y:
 
 		if (! Event.Pressed)
-		{
 			Context->DataManager->produceVolumeMaps();
-		}
-
 		break;
 
 	case EKey::B:
 
 		if (! Event.Pressed)
-		{
 			SceneManager->getEffectManager()->setEffectEnabled(ESE_BLOOM, ! SceneManager->getEffectManager()->isEffectEnabled(ESE_BLOOM));
-		}
-
 		break;
 
-		// To Do : Camera control buttons
+
+		/////////////////////
+		// Camera Controls //
+		/////////////////////
+
 	case EKey::H:
+
 		if (! Event.Pressed)
-		{
 			SceneManager->setActiveCamera(Context->Scene.OrbitCamera);
-		}
 		break;
 		
 	case EKey::N:
+
 		if (! Event.Pressed)
-		{
 			SceneManager->setActiveCamera(Context->Scene.Camera);
-		}
 		break;
+
+		// To Do : Camera control buttons
     }
 }
 
