@@ -4,7 +4,7 @@
 
 
 CTerrainSceneObject::CTerrainSceneObject()
-	: Application(CApplication::Get()), SceneManager(CApplication::Get().GetSceneManager())
+	: Application(CApplication::Get()), SceneManager(CApplication::Get().GetSceneManager()), DebugHeight(false)
 {
 	setCullingEnabled(false);
 
@@ -37,9 +37,10 @@ CTerrainSceneObject::CTerrainSceneObject()
 	}
 	IndexBuffer.syncData();
 	
-	// Create Heightmap Texture
-	ColorMap = new CTexture(CImageLoader::loadImage("../TerrainColorImageSquare.bmp"));
-	HeightMap = new CTexture(CImageLoader::loadImage("../TerrainHeightImageSquare.bmp"));
+	STextureCreationFlags Flags;
+	Flags.Wrap = GL_CLAMP_TO_EDGE;
+	ColorMap = new CTexture(CImageLoader::loadImage("../TerrainColorImageSquare.bmp"), Flags);
+	HeightMap = new CTexture(CImageLoader::loadImage("../TerrainHeightImageSquare.bmp"), Flags);
 }
 
 bool CTerrainSceneObject::draw(IScene const * const Scene, sharedPtr<IRenderPass> Pass, bool const CullingEnabled)

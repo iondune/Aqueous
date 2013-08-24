@@ -2,7 +2,6 @@
 
 in vec3 vLight;
 in vec2 vTexCoords;
-in vec2 vHeightmapCoords;
 in vec4 vScreenPosition;
 
 uniform sampler2D uColorMap;
@@ -21,8 +20,8 @@ void main()
 
 	vec3 vNormal;
 	float Offset = 2.0 / uLayerWidth;
-	vNormal.x = texture(uHeightMap, vHeightmapCoords + vec2((-Offset), 0.0)).r - texture(uHeightMap, vHeightmapCoords + vec2((1.0 / uLayerWidth), 0.0)).r;
-	vNormal.z = texture(uHeightMap, vHeightmapCoords + vec2(0.0, (-Offset))).r - texture(uHeightMap, vHeightmapCoords + vec2(0.0, (Offset))).r;
+	vNormal.x = texture(uHeightMap, vTexCoords + vec2((-Offset), 0.0)).r - texture(uHeightMap, vTexCoords + vec2((1.0 / uLayerWidth), 0.0)).r;
+	vNormal.z = texture(uHeightMap, vTexCoords + vec2(0.0, (-Offset))).r - texture(uHeightMap, vTexCoords + vec2(0.0, (Offset))).r;
 	vNormal.y = 4.0 * Offset;
 	vNormal = normalize(vNormal);
 

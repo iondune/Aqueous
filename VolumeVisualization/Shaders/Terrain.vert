@@ -14,16 +14,14 @@ uniform vec3 uLightPosition;
 
 out vec3 vLight;
 out vec2 vTexCoords;
-out vec2 vHeightmapCoords;
 out vec4 vScreenPosition;
 
 
 void main()
 {
 	vTexCoords = (aPosition.xy) / (uLayerWidth + 1.0);
-	vHeightmapCoords = vTexCoords + (1.0 / uLayerWidth / 2.0);
 
-	vec4 Position = vec4(aPosition.x, texture(uHeightMap, vHeightmapCoords).r, aPosition.y, 1);
+	vec4 Position = vec4(aPosition.x, texture(uHeightMap, vTexCoords).r, aPosition.y, 1);
 	Position.y *= 75.0;
 
 	gl_Position = vScreenPosition = uProjMatrix * uViewMatrix * uModelMatrix * Position;
