@@ -61,8 +61,6 @@ void CMainState::Update(f32 const Elapsed)
 	Context->GUIContext->draw(Elapsed, false);
 
 	CApplication::Get().GetWindow().SwapBuffers();
-	if (Scene.Terrain->isVisible())
-		Scene.Terrain->DoCameraUpdate = false;
 }
 
 void CMainState::addConsoleMessage(std::string const & Message, Gwen::Color const & Color)
