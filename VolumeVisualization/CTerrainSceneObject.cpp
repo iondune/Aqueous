@@ -10,9 +10,9 @@ CTerrainSceneObject::CTerrainSceneObject()
 
 	Shader = CProgramContext::Get().Shaders.Terrain;
 
-	for (u32 y = 0; y < Size; ++ y)
+	for (u32 y = 0; y < HeightmapSize; ++ y)
 	{
-		for (u32 x = 0; x < Size; ++ x)
+		for (u32 x = 0; x < HeightmapSize; ++ x)
 		{
 			VertexData.push_back(x * 1.f);
 			VertexData.push_back(y * 1.f);
@@ -25,14 +25,14 @@ CTerrainSceneObject::CTerrainSceneObject()
 	{
 		for (u32 x = 0; x < Size; ++ x)
 		{
-			u32 const index = (x + y * Size) * 2;
-			IndexBuffer.push_back(index + 0 * 2 + 0 * Size*2);
-			IndexBuffer.push_back(index + 1 * 2 + 0 * Size*2);
-			IndexBuffer.push_back(index + 1 * 2 + 1 * Size*2);
+			u32 const index = x + y * HeightmapSize;
+			IndexBuffer.push_back(index + 0 + 0 * HeightmapSize);
+			IndexBuffer.push_back(index + 1 + 0 * HeightmapSize);
+			IndexBuffer.push_back(index + 1 + 1 * HeightmapSize);
 
-			IndexBuffer.push_back(index + 0 * 2 + 0 * Size*2);
-			IndexBuffer.push_back(index + 1 * 2 + 1 * Size*2);
-			IndexBuffer.push_back(index + 0 * 2 + 1 * Size*2);
+			IndexBuffer.push_back(index + 0 + 0 * HeightmapSize);
+			IndexBuffer.push_back(index + 1 + 1 * HeightmapSize);
+			IndexBuffer.push_back(index + 0 + 1 * HeightmapSize);
 		}
 	}
 	IndexBuffer.syncData();
