@@ -38,16 +38,16 @@ public:
 
 	CGUIContext();
 
-	void setupMainState();
-	void setupMenuState();
-	void clear();
+	void SetupMainState();
+	void SetupMenuState();
+	void Clear();
 	
-	CGUIConsoleWidget * getConsole();
-	CGUITitleLabelsWidget * getTitleLabels();
-	CGUIVolumeControlWidget * getVolumeControl();
-	CGUITerrainControlWidget * getTerrainControl();
-	CGUIGlyphControlWidget * getGlyphControl();
-	CGUISceneControlWidget * getSceneControl();
-	CGUIControlPanelWidget * getControlPanel();
+	CGUIConsoleWidget * GetConsole();
+	CGUITitleLabelsWidget * GetTitleLabels();
+	CGUIVolumeControlWidget * GetVolumeControl();
+	CGUITerrainControlWidget * GetTerrainControl();
+	CGUIGlyphControlWidget * GetGlyphControl();
+	CGUISceneControlWidget * GetSceneControl();
+	CGUIControlPanelWidget * GetControlPanel();
 
 };

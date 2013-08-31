@@ -10,7 +10,7 @@
 
 CGUIControlPanelWidget::CGUIControlPanelWidget()
 {
-	Window = new Gwen::Controls::WindowControl(GUIManager->getCanvas());
+	Window = new Gwen::Controls::WindowControl(GUIManager->GetCanvas());
 	Window->SetDeleteOnClose(false);
 	Window->SetBounds(30, 600, 660 + 30, 85);
 	Window->SetTitle("Control Panel");
@@ -40,23 +40,23 @@ CGUIControlPanelWidget::CGUIControlPanelWidget()
 void CGUIControlPanelWidget::OnToggleTerrain(Gwen::Controls::Base * Control)
 {
 	CProgramContext * Context = & CProgramContext::Get();
-	Context->GUIContext->getTerrainControl()->toggle();
+	Context->GUIContext->GetTerrainControl()->toggle();
 }
 
 void CGUIControlPanelWidget::OnToggleVolume(Gwen::Controls::Base * Control)
 {
 	CProgramContext * Context = & CProgramContext::Get();
-	Context->GUIContext->getVolumeControl()->toggle();
+	Context->GUIContext->GetVolumeControl()->toggle();
 }
 
 void CGUIControlPanelWidget::OnToggleGlyph(Gwen::Controls::Base * Control)
 {
 	CProgramContext * Context = & CProgramContext::Get();
-	Context->GUIContext->getGlyphControl()->toggle();
+	Context->GUIContext->GetGlyphControl()->toggle();
 }
 
 void CGUIControlPanelWidget::OnToggleScene(Gwen::Controls::Base * Control)
 {
 	CProgramContext * Context = & CProgramContext::Get();
-	Context->GUIContext->getSceneControl()->toggle();
+	Context->GUIContext->GetSceneControl()->toggle();
 }

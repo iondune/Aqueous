@@ -65,19 +65,19 @@ void CMainState::OnEvent(SKeyboardEvent & Event)
 	case EKey::T:
 		
 		if (! Event.Pressed)
-			Context->GUIContext->getTerrainControl()->toggle();
+			Context->GUIContext->GetTerrainControl()->toggle();
 		break;
 
 	case EKey::V:
 
 		if (! Event.Pressed)
-			Context->GUIContext->getVolumeControl()->toggle();
+			Context->GUIContext->GetVolumeControl()->toggle();
 		break;
 
 	case EKey::G:
 
 		if (! Event.Pressed)
-			Context->GUIContext->getGlyphControl()->toggle();
+			Context->GUIContext->GetGlyphControl()->toggle();
 		break;
 
 		
@@ -135,9 +135,9 @@ void CMainState::OnEvent(SKeyboardEvent & Event)
 
 void CMainState::OnEvent(SWindowResizedEvent & Event)
 {
-	Context->GUIContext->getCanvas()->SetSize(Event.Size.X, Event.Size.Y);
-	Context->GUIContext->getCanvas()->Invalidate();
-	Context->GUIContext->getCanvas()->InvalidateChildren(true);
+	Context->GUIContext->GetCanvas()->SetSize(Event.Size.X, Event.Size.Y);
+	Context->GUIContext->GetCanvas()->Invalidate();
+	Context->GUIContext->GetCanvas()->InvalidateChildren(true);
 
 	Context->Scene.Camera->SetAspectRatio(CApplication::Get().GetWindow().GetAspectRatio());
 }

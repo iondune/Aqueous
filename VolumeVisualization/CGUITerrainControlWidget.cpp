@@ -11,7 +11,7 @@
 CGUITerrainControlWidget::CGUITerrainControlWidget()
 	: Terrain(CProgramContext::Get().Scene.Terrain), MainState(CMainState::Get())
 {
-	Window = new Gwen::Controls::WindowControl(GUIManager->getCanvas());
+	Window = new Gwen::Controls::WindowControl(GUIManager->GetCanvas());
 	Window->SetDeleteOnClose(false);
 	Window->SetBounds(1200, 500, 330, 235);
 	Window->SetTitle("Terrain Controls");
@@ -25,7 +25,7 @@ CGUITerrainControlWidget::CGUITerrainControlWidget()
 	// Slider Panel
 	{
 		Gwen::Controls::Label * SliderLabel = new Gwen::Controls::Label(Window);
-		SliderLabel->SetFont(GUIManager->getRegularFont());
+		SliderLabel->SetFont(GUIManager->GetRegularFont());
 		SliderLabel->SetText(L"Texture:");
 		SliderLabel->SetBounds(10, 10 + 45, 300, 40);
 		SliderLabel->SetTextColor(Gwen::Color(50, 20, 20, 215));
@@ -42,7 +42,7 @@ CGUITerrainControlWidget::CGUITerrainControlWidget()
 
 
 		Gwen::Controls::Label * ModeLabel = new Gwen::Controls::Label(Window);
-		ModeLabel->SetFont(GUIManager->getRegularFont());
+		ModeLabel->SetFont(GUIManager->GetRegularFont());
 		ModeLabel->SetText(L"Mode:");
 		ModeLabel->SetBounds(10, 10 + 45 + 75, 300, 40);
 		ModeLabel->SetTextColor(Gwen::Color(50, 20, 20, 215));
@@ -66,13 +66,13 @@ void CGUITerrainControlWidget::OnToggleTerrain(Gwen::Controls::Base * Control)
 	if (Context->Scene.Terrain->isVisible())
 	{
 		Context->Scene.Terrain->setVisible(false);
-		GUIContext->getConsole()->addMessage("Terrain View Disabled");
+		GUIContext->GetConsole()->addMessage("Terrain View Disabled");
 		EnableButton->SetText("Enable Terrain");
 	}
 	else
 	{
 		Context->Scene.Terrain->setVisible(true);
-		GUIContext->getConsole()->addMessage("Terrain View Enabled");
+		GUIContext->GetConsole()->addMessage("Terrain View Enabled");
 		EnableButton->SetText("Disable Terrain");
 	}
 }

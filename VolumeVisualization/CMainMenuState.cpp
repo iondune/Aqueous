@@ -12,13 +12,13 @@ CMainMenuState::CMainMenuState()
 
 void CMainMenuState::Begin()
 {
-	Context->GUIContext->setupMenuState();
+	Context->GUIContext->SetupMenuState();
 	std::cout << "Menu State begin." << std::endl;
 }
 
 void CMainMenuState::End()
 {
-	Context->GUIContext->clear();
+	Context->GUIContext->Clear();
 	std::cout << "Menu State end." << std::endl;
 }
 
@@ -34,7 +34,7 @@ void CMainMenuState::Update(f32 const Elapsed)
 
 	Thread.Sync();
 
-	Context->GUIContext->draw(Elapsed, true);
+	Context->GUIContext->Draw(Elapsed, true);
 	CApplication::Get().GetWindow().SwapBuffers();
 
 	static int counter = 0;
@@ -51,9 +51,9 @@ void CMainMenuState::Update(f32 const Elapsed)
 
 void CMainMenuState::OnEvent(SWindowResizedEvent & Event)
 {
-	Context->GUIContext->getCanvas()->SetSize(Event.Size.X, Event.Size.Y);
-	Context->GUIContext->getCanvas()->Invalidate();
-	Context->GUIContext->getCanvas()->InvalidateChildren(true);
+	Context->GUIContext->GetCanvas()->SetSize(Event.Size.X, Event.Size.Y);
+	Context->GUIContext->GetCanvas()->Invalidate();
+	Context->GUIContext->GetCanvas()->InvalidateChildren(true);
 }
 
 void CMainMenuState::loadData(std::string const & FileName)
@@ -65,7 +65,7 @@ void CMainMenuState::loadData(std::string const & FileName)
 	s << FileName;
 
 	Thread.Context = Context;
-	Context->GUIContext->addWidget(Thread.LoadingWidget = new CGUILoadingWidget("Loading data and initializing scene elements"));
+	Context->GUIContext->AddWidget(Thread.LoadingWidget = new CGUILoadingWidget("Loading data and initializing scene elements"));
 	Thread.Run(s.str());
 }
 

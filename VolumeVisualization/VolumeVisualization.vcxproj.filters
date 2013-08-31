@@ -50,35 +50,32 @@
     <ClCompile Include="CProgramContext.cpp">
       <Filter>Program Context</Filter>
     </ClCompile>
-    <ClCompile Include="CGUIContext.cpp">
-      <Filter>Program Context</Filter>
-    </ClCompile>
     <ClCompile Include="CGUIMainMenuWidget.cpp">
-      <Filter>Program Context\Widgets\Main Menu</Filter>
+      <Filter>Program Context\GUI\Main Menu</Filter>
     </ClCompile>
     <ClCompile Include="CGUIControlPanelWidget.cpp">
-      <Filter>Program Context\Widgets\Main State</Filter>
+      <Filter>Program Context\GUI\Main State</Filter>
     </ClCompile>
     <ClCompile Include="CGUIGlyphControlWidget.cpp">
-      <Filter>Program Context\Widgets\Main State</Filter>
+      <Filter>Program Context\GUI\Main State</Filter>
     </ClCompile>
     <ClCompile Include="CGUISceneControlWidget.cpp">
-      <Filter>Program Context\Widgets\Main State</Filter>
+      <Filter>Program Context\GUI\Main State</Filter>
     </ClCompile>
     <ClCompile Include="CGUITerrainControlWidget.cpp">
-      <Filter>Program Context\Widgets\Main State</Filter>
+      <Filter>Program Context\GUI\Main State</Filter>
     </ClCompile>
     <ClCompile Include="CGUITitleLabelsWidget.cpp">
-      <Filter>Program Context\Widgets\Main State</Filter>
+      <Filter>Program Context\GUI\Main State</Filter>
     </ClCompile>
     <ClCompile Include="CGUIVolumeControlWidget.cpp">
-      <Filter>Program Context\Widgets\Main State</Filter>
+      <Filter>Program Context\GUI\Main State</Filter>
     </ClCompile>
     <ClCompile Include="CGUIConsoleWidget.cpp">
-      <Filter>Program Context\Widgets\General</Filter>
+      <Filter>Program Context\GUI\General</Filter>
     </ClCompile>
     <ClCompile Include="CGUILoadingWidget.cpp">
-      <Filter>Program Context\Widgets\General</Filter>
+      <Filter>Program Context\GUI\General</Filter>
     </ClCompile>
     <ClCompile Include="SciDataParserCSV.cpp">
       <Filter>MainState\Data Management\Parsers</Filter>
@@ -107,8 +104,11 @@
     <ClCompile Include="SciDataParserPieSlices.cpp">
       <Filter>MainState\Data Management\Parsers</Filter>
     </ClCompile>
+    <ClCompile Include="CGUIContext.cpp">
+      <Filter>Program Context\GUI</Filter>
+    </ClCompile>
     <ClCompile Include="CGUIContextWidget.cpp">
-      <Filter>Program Context</Filter>
+      <Filter>Program Context\GUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -164,35 +164,32 @@
     <ClInclude Include="ContourConverter.h">
       <Filter>Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="CGUIContext.h">
-      <Filter>Program Context</Filter>
-    </ClInclude>
     <ClInclude Include="CGUIMainMenuWidget.h">
-      <Filter>Program Context\Widgets\Main Menu</Filter>
+      <Filter>Program Context\GUI\Main Menu</Filter>
     </ClInclude>
     <ClInclude Include="CGUIVolumeControlWidget.h">
-      <Filter>Program Context\Widgets\Main State</Filter>
+      <Filter>Program Context\GUI\Main State</Filter>
     </ClInclude>
     <ClInclude Include="CGUIControlPanelWidget.h">
-      <Filter>Program Context\Widgets\Main State</Filter>
+      <Filter>Program Context\GUI\Main State</Filter>
     </ClInclude>
     <ClInclude Include="CGUIGlyphControlWidget.h">
-      <Filter>Program Context\Widgets\Main State</Filter>
+      <Filter>Program Context\GUI\Main State</Filter>
     </ClInclude>
     <ClInclude Include="CGUISceneControlWidget.h">
-      <Filter>Program Context\Widgets\Main State</Filter>
+      <Filter>Program Context\GUI\Main State</Filter>
     </ClInclude>
     <ClInclude Include="CGUITerrainControlWidget.h">
-      <Filter>Program Context\Widgets\Main State</Filter>
+      <Filter>Program Context\GUI\Main State</Filter>
     </ClInclude>
     <ClInclude Include="CGUITitleLabelsWidget.h">
-      <Filter>Program Context\Widgets\Main State</Filter>
+      <Filter>Program Context\GUI\Main State</Filter>
     </ClInclude>
     <ClInclude Include="CGUIConsoleWidget.h">
-      <Filter>Program Context\Widgets\General</Filter>
+      <Filter>Program Context\GUI\General</Filter>
     </ClInclude>
     <ClInclude Include="CGUILoadingWidget.h">
-      <Filter>Program Context\Widgets\General</Filter>
+      <Filter>Program Context\GUI\General</Filter>
     </ClInclude>
     <ClInclude Include="COxygenColorMapper.h">
       <Filter>MainState\Data Management\Color Mapping</Filter>
@@ -218,8 +215,11 @@
     <ClInclude Include="CPlaneGridSceneObject.h">
       <Filter>MainState\Misc</Filter>
     </ClInclude>
+    <ClInclude Include="CGUIContext.h">
+      <Filter>Program Context\GUI</Filter>
+    </ClInclude>
     <ClInclude Include="CGUIContextWidget.h">
-      <Filter>Program Context</Filter>
+      <Filter>Program Context\GUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -256,18 +256,6 @@
     <Filter Include="Program Context">
       <UniqueIdentifier>{621c01a1-e404-419c-9931-35d3cd1bc3fa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Program Context\Widgets">
-      <UniqueIdentifier>{69559bbe-9f50-47e8-809c-55d622e1b426}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Program Context\Widgets\Main Menu">
-      <UniqueIdentifier>{7ed6a85c-9651-4d88-99fd-87f8f6d6947c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Program Context\Widgets\Main State">
-      <UniqueIdentifier>{1a142d81-4987-4603-9bb6-3734c174c09e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Program Context\Widgets\General">
-      <UniqueIdentifier>{1c6e5b8c-9a45-4dcd-86e0-2488a8c1db8e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="LoadState">
       <UniqueIdentifier>{00619c69-b650-43a9-8d5f-0f1ceedc408e}</UniqueIdentifier>
     </Filter>
@@ -276,6 +264,18 @@
     </Filter>
     <Filter Include="MainState\Misc">
       <UniqueIdentifier>{1b24f862-be43-46c5-b48e-88de64b4c1c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program Context\GUI">
+      <UniqueIdentifier>{69559bbe-9f50-47e8-809c-55d622e1b426}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program Context\GUI\Main Menu">
+      <UniqueIdentifier>{7ed6a85c-9651-4d88-99fd-87f8f6d6947c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program Context\GUI\Main State">
+      <UniqueIdentifier>{1a142d81-4987-4603-9bb6-3734c174c09e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Program Context\GUI\General">
+      <UniqueIdentifier>{1c6e5b8c-9a45-4dcd-86e0-2488a8c1db8e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

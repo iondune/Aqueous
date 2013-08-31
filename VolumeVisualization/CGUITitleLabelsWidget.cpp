@@ -21,31 +21,31 @@ CGUITitleLabelsWidget::CGUITitleLabelsWidget(SciDataManager * DataManager)
 	s << ")";
 
 	// Top Label
-	Gwen::Controls::Label * BigLabel = new Gwen::Controls::Label(GUIManager->getCanvas());
-	BigLabel->SetFont(GUIManager->getLargeFont());
+	Gwen::Controls::Label * BigLabel = new Gwen::Controls::Label(GUIManager->GetCanvas());
+	BigLabel->SetFont(GUIManager->GetLargeFont());
 	BigLabel->SetText(Gwen::UnicodeString(L"Dataset: ") + Gwen::UnicodeString(CMainMenuState::Get().DataSetName.begin(), CMainMenuState::Get().DataSetName.end()));
 	BigLabel->SetBounds(10, 10, 1590, 300);
 	BigLabel->SetTextColor(Gwen::Color(235, 255, 235, 215));
 	BigLabel->SetHidden(true);
 
 	// Second Label
-	Gwen::Controls::Label * MediumLabel = new Gwen::Controls::Label(GUIManager->getCanvas());
-	MediumLabel->SetFont(GUIManager->getMediumFont());
+	Gwen::Controls::Label * MediumLabel = new Gwen::Controls::Label(GUIManager->GetCanvas());
+	MediumLabel->SetFont(GUIManager->GetMediumFont());
 	MediumLabel->SetText(Gwen::UnicodeString(L"Current Field: Avg Oxy - ") + Gwen::UnicodeString(s.str()));
 	MediumLabel->SetBounds(20, 70, 1000, 300);
 	MediumLabel->SetTextColor(Gwen::Color(235, 235, 255, 215));
 	MediumLabel->SetHidden(true);
 
 	// Volume Range Label
-	VolumeRangeIndicator = new Gwen::Controls::Label(GUIManager->getCanvas());
-	VolumeRangeIndicator->SetFont(GUIManager->getMediumFont());
+	VolumeRangeIndicator = new Gwen::Controls::Label(GUIManager->GetCanvas());
+	VolumeRangeIndicator->SetFont(GUIManager->GetMediumFont());
 	VolumeRangeIndicator->SetBounds(20, 110, 1000, 300);
 	VolumeRangeIndicator->SetTextColor(Gwen::Color(255, 235, 235, 215));
 	VolumeRangeIndicator->SetHidden(true);
 
 	// Volume Range Label
-	VolumeCalculationIndicator = new Gwen::Controls::Label(GUIManager->getCanvas());
-	VolumeCalculationIndicator->SetFont(GUIManager->getMediumFont());
+	VolumeCalculationIndicator = new Gwen::Controls::Label(GUIManager->GetCanvas());
+	VolumeCalculationIndicator->SetFont(GUIManager->GetMediumFont());
 	VolumeCalculationIndicator->SetBounds(20, 150, 1000, 300);
 	VolumeCalculationIndicator->SetTextColor(Gwen::Color(255, 235, 235, 215));
 	VolumeCalculationIndicator->SetHidden(true);

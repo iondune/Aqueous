@@ -20,12 +20,12 @@ void CLoadStateEventHandler::OnFinish(Gwen::Controls::Base * Control)
 void CLoadState::addLabel(std::wstring const & Label, Gwen::Color const & Color)
 {
 	Gwen::Controls::Label * MediumLabel = new Gwen::Controls::Label(Canvas);
-	MediumLabel->SetFont(GUIManager->getMediumFont());
+	MediumLabel->SetFont(GUIManager->GetMediumFont());
 	MediumLabel->SetText(Label);
 	MediumLabel->SetBounds(20 + Indent, LabelHeight, 1024, 300);
 	MediumLabel->SetTextColor(Color);
 
-	GUIManager->draw(true);
+	GUIManager->Draw(true);
 	CApplication::Get().GetWindow().SwapBuffers();
 
 	LabelHeight += 40;
@@ -46,7 +46,7 @@ void CLoadState::Begin()
 	CMainMenuState & MenuState = CMainMenuState::Get();
 
 	GUIManager = Context->GUIContext;
-	Canvas = GUIManager->getCanvas();
+	Canvas = GUIManager->GetCanvas();
 	
 	// Init Canvas
 	Canvas->SetBackgroundColor(Gwen::Color(32, 48, 48));
@@ -54,16 +54,16 @@ void CLoadState::Begin()
 
 	// Top Label
 	Gwen::Controls::Label * BigLabel = new Gwen::Controls::Label(Canvas);
-	BigLabel->SetFont(GUIManager->getLargeFont());
+	BigLabel->SetFont(GUIManager->GetLargeFont());
 	BigLabel->SetText(L"Loading...");
 	BigLabel->SetBounds(10, 10, 1590, 300);
 	BigLabel->SetTextColor(Gwen::Color(255, 255, 255, 84));
 
-	GUIManager->draw(true);
+	GUIManager->Draw(true);
 	CApplication::Get().GetWindow().SwapBuffers();
 	
 	addLabel(L"Initializing System...");
-	CGUIEventManager * Forwarder = new CGUIEventManager(GUIManager->getCanvas(), & Application.GetWindow());
+	CGUIEventManager * Forwarder = new CGUIEventManager(GUIManager->GetCanvas(), & Application.GetWindow());
 	
 	addLabel(L"Loading Scene Shaders...");
 	Application.GetSceneManager().init(true, true);
@@ -77,7 +77,7 @@ void CLoadState::Begin()
 
 	if (GetConfirmation)
 	{
-		Gwen::Controls::Button * Button = new Gwen::Controls::Button(GUIManager->getCanvas());
+		Gwen::Controls::Button * Button = new Gwen::Controls::Button(GUIManager->GetCanvas());
 		Button->SetBounds(250, 650, 250, 35);
 		Button->SetText(L"Continue");
 		Button->onPress.Add(& Handler, & CLoadStateEventHandler::OnFinish);
@@ -88,7 +88,7 @@ void CLoadState::Begin()
 
 void CLoadState::Update(f32 const Elapsed)
 {
-	Context->GUIContext->draw(Elapsed, true);
+	Context->GUIContext->Draw(Elapsed, true);
 	CApplication::Get().GetWindow().SwapBuffers();
 }
 

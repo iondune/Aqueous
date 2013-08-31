@@ -1,3 +1,4 @@
+
 #include "CProgramContext.h"
 
 #include "CMainState.h"
@@ -6,20 +7,20 @@
 
 
 CProgramContext::SScene::SScene()
-	: Camera(0), OrbitCamera(0), Timer(0.f),
-	LightObject(0), SkyBox(0), Terrain(0), GlyphSceneObject(0), 
-	VolumeSceneObject(0), Cube(0)
+	: Camera(), OrbitCamera(), Timer(0),
+	LightObject(), SkyBox(), Terrain(), GlyphSceneObject(), 
+	VolumeSceneObject(), Cube()
 {}
 
 CProgramContext::SShaders::SShaders()
-	: Diffuse(0), DiffuseTexture(0), Volume(0), Terrain(0), Glyph(0), GlyphLines(0)
+	: Diffuse(), DiffuseTexture(), Volume(), Terrain(), Glyph(), GlyphLines()
 {}
 
 CProgramContext::CProgramContext()
-	: GUIContext(0), DataManager(0)
+	: GUIContext(), DataManager()
 {}
 
-void CProgramContext::run()
+void CProgramContext::Run()
 {
 	// Directory Setup
 	CTextureLoader::ImageDirectory = "Media/";
@@ -33,7 +34,7 @@ void CProgramContext::run()
 	// Create GUI Engine
 	std::cout << "GUI Engine is initializing..." << std::endl;
 	GUIContext = new CGUIContext();
-	GUIContext->init();
+	GUIContext->Init();
 
 	// Begin loading
 	CLoadState & LoadState = CLoadState::Get();

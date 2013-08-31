@@ -10,7 +10,7 @@
 CGUIVolumeControlWidget::CGUIVolumeControlWidget()
 	: VolumeControl(CProgramContext::Get().Scene.VolumeSceneObject->Control), MainState(CMainState::Get())
 {
-	Window = new Gwen::Controls::WindowControl(GUIManager->getCanvas());
+	Window = new Gwen::Controls::WindowControl(GUIManager->GetCanvas());
 	Window->SetDeleteOnClose(false);
 	Window->SetBounds(1200, 10, 330, 620);
 	Window->SetTitle("Volume Controls");
@@ -23,7 +23,7 @@ CGUIVolumeControlWidget::CGUIVolumeControlWidget()
 	// Slider Panel
 	{
 		Gwen::Controls::Label * SliderLabel = new Gwen::Controls::Label(Window);
-		SliderLabel->SetFont(GUIManager->getRegularFont());
+		SliderLabel->SetFont(GUIManager->GetRegularFont());
 		SliderLabel->SetText(L"Selection Value:");
 		SliderLabel->SetBounds(10, 10 + 45, 300, 40);
 		SliderLabel->SetTextColor(Gwen::Color(50, 20, 20, 215));
@@ -34,7 +34,7 @@ CGUIVolumeControlWidget::CGUIVolumeControlWidget()
 		EmphasisSlider->SetFloatValue(0.5f);
 
 		SliderLabel = new Gwen::Controls::Label(Window);
-		SliderLabel->SetFont(GUIManager->getRegularFont());
+		SliderLabel->SetFont(GUIManager->GetRegularFont());
 		SliderLabel->SetText(L"Volume Opacity:");
 		SliderLabel->SetBounds(10, 70 + 45, 300, 40);
 		SliderLabel->SetTextColor(Gwen::Color(50, 20, 20, 215));
@@ -45,7 +45,7 @@ CGUIVolumeControlWidget::CGUIVolumeControlWidget()
 		IntensitySlider->SetFloatValue(1.f);
 
 		SliderLabel = new Gwen::Controls::Label(Window);
-		SliderLabel->SetFont(GUIManager->getRegularFont());
+		SliderLabel->SetFont(GUIManager->GetRegularFont());
 		SliderLabel->SetText(L"Selection Range:");
 		SliderLabel->SetBounds(10, 130 + 45, 300, 40);
 		SliderLabel->SetTextColor(Gwen::Color(50, 20, 20, 215));
@@ -56,7 +56,7 @@ CGUIVolumeControlWidget::CGUIVolumeControlWidget()
 		LocalRangeSlider->SetFloatValue(0.1f);
 
 		SliderLabel = new Gwen::Controls::Label(Window);
-		SliderLabel->SetFont(GUIManager->getRegularFont());
+		SliderLabel->SetFont(GUIManager->GetRegularFont());
 		SliderLabel->SetText(L"Selection Difference:");
 		SliderLabel->SetBounds(10, 190 + 45, 300, 40);
 		SliderLabel->SetTextColor(Gwen::Color(50, 20, 20, 215));
@@ -77,19 +77,19 @@ CGUIVolumeControlWidget::CGUIVolumeControlWidget()
 	// Other Controls Panel
 	{
 		Gwen::Controls::Label * ControlLabel = new Gwen::Controls::Label(Window);
-		ControlLabel->SetFont(GUIManager->getRegularFont());
+		ControlLabel->SetFont(GUIManager->GetRegularFont());
 		ControlLabel->SetText(L"Mode:");
 		ControlLabel->SetBounds(30, 320 + 45 + 6, 90, 40);
 		ControlLabel->SetTextColor(Gwen::Color(50, 50, 20, 215));
 		
 		Gwen::Controls::Label * DebugLabel = new Gwen::Controls::Label(Window);
-		DebugLabel->SetFont(GUIManager->getRegularFont());
+		DebugLabel->SetFont(GUIManager->GetRegularFont());
 		DebugLabel->SetText(L"Debug:");
 		DebugLabel->SetBounds(22, 320 + 45 + 70 + 6, 90, 40);
 		DebugLabel->SetTextColor(Gwen::Color(50, 50, 20, 215));
 
 		Gwen::Controls::Label * ShadingLabel = new Gwen::Controls::Label(Window);
-		ShadingLabel->SetFont(GUIManager->getRegularFont());
+		ShadingLabel->SetFont(GUIManager->GetRegularFont());
 		ShadingLabel->SetText(L"Shading:");
 		ShadingLabel->SetBounds(10, 320 + 45 + 70 + 35 + 6, 90, 40);
 		ShadingLabel->SetTextColor(Gwen::Color(50, 50, 20, 215));
@@ -121,7 +121,7 @@ CGUIVolumeControlWidget::CGUIVolumeControlWidget()
 		ShadingMode->AddItem(L"Fly Camera");
 
 		Gwen::Controls::Label * DepthLabel = new Gwen::Controls::Label(Window);
-		DepthLabel->SetFont(GUIManager->getRegularFont());
+		DepthLabel->SetFont(GUIManager->GetRegularFont());
 		DepthLabel->SetText(L"Depth:");
 		DepthLabel->SetBounds(80 + 100 + 10, 320 + 45 + 70 + 6, 90, 40);
 		DepthLabel->SetTextColor(Gwen::Color(50, 50, 20, 215));
@@ -130,7 +130,7 @@ CGUIVolumeControlWidget::CGUIVolumeControlWidget()
 		DepthMode->SetBounds(80 + 100 + 10 + 60, 120 + 120 + 45 + 35 + 45 + 70 + 6, 15, 15);
 	
 		ControlLabel = new Gwen::Controls::Label(Window);
-		ControlLabel->SetFont(GUIManager->getRegularFont());
+		ControlLabel->SetFont(GUIManager->GetRegularFont());
 		ControlLabel->SetText(L"Axis:");
 		ControlLabel->SetBounds(43, 355 + 45 + 6, 90, 40);
 		ControlLabel->SetTextColor(Gwen::Color(50, 50, 20, 215));
@@ -148,7 +148,7 @@ CGUIVolumeControlWidget::CGUIVolumeControlWidget()
 		pButtonZ->SetText("Z");
 
 		Gwen::Controls::Label * SliderLabel = new Gwen::Controls::Label(Window);
-		SliderLabel->SetFont(GUIManager->getRegularFont());
+		SliderLabel->SetFont(GUIManager->GetRegularFont());
 		SliderLabel->SetText(L"Volume Detail:");
 		SliderLabel->SetBounds(10, 530, 300, 40);
 		SliderLabel->SetTextColor(Gwen::Color(50, 20, 20, 215));
@@ -174,7 +174,7 @@ CGUIVolumeControlWidget::CGUIVolumeControlWidget()
 void CGUIVolumeControlWidget::resetVolumeRange()
 {
 	if (VolumeControl.Mode)
-		GUIContext->getTitleLabels()->resetVolumeRangeIndicator(CProgramContext::Get().DataManager);
+		GUIContext->GetTitleLabels()->resetVolumeRangeIndicator(CProgramContext::Get().DataManager);
 }
 
 void CGUIVolumeControlWidget::OnEmphasisSlider(Gwen::Controls::Base * Control)
@@ -242,7 +242,7 @@ void CGUIVolumeControlWidget::OnVolumeMode(Gwen::Controls::Base * Control)
 	if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Plane Slices"))
 	{
 		VolumeControl.Mode = 1;
-		CProgramContext::Get().GUIContext->getTitleLabels()->clearVolumeRangeIndicator();
+		CProgramContext::Get().GUIContext->GetTitleLabels()->clearVolumeRangeIndicator();
 	}
 	else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Isosurface"))
 	{
@@ -252,7 +252,7 @@ void CGUIVolumeControlWidget::OnVolumeMode(Gwen::Controls::Base * Control)
 	else
 	{
 		VolumeControl.Mode = 0;
-		CProgramContext::Get().GUIContext->getTitleLabels()->clearVolumeRangeIndicator();
+		CProgramContext::Get().GUIContext->GetTitleLabels()->clearVolumeRangeIndicator();
 	}
 }
 
@@ -302,13 +302,13 @@ void CGUIVolumeControlWidget::OnToggleVolume(Gwen::Controls::Base * Control)
 	if (Context->Scene.VolumeSceneObject->isVisible())
 	{
 		Context->Scene.VolumeSceneObject->setVisible(false);
-		GUIContext->getConsole()->addMessage("Volume View Disabled");
+		GUIContext->GetConsole()->addMessage("Volume View Disabled");
 		EnableButton->SetText("Enable Volume View");
 	}
 	else
 	{
 		Context->Scene.VolumeSceneObject->setVisible(true);
-		GUIContext->getConsole()->addMessage("Volume View Enabled");
+		GUIContext->GetConsole()->addMessage("Volume View Enabled");
 		EnableButton->SetText("Disable Volume View");
 	}
 }

@@ -54,18 +54,18 @@ public:
 CGUIMainMenuWidget::CGUIMainMenuWidget()
 	: NewDataSetButton(0)
 {
-	Menu = new Gwen::Controls::MenuStrip(GUIManager->getCanvas());
+	Menu = new Gwen::Controls::MenuStrip(GUIManager->GetCanvas());
 	Gwen::Controls::MenuItem * File = Menu->AddItem("File");
 	File->onPress.Add(new MenuDropDown(File), & MenuDropDown::OnPress);
 
-	Window = new Gwen::Controls::WindowControl(GUIManager->getCanvas());
+	Window = new Gwen::Controls::WindowControl(GUIManager->GetCanvas());
 	Window->SetTitle("Data Sets");
 	Window->SetBounds(30, 60, 650 + 40 + 30, 550);
 	Window->SetDeleteOnClose(false);
 	Window->SetClosable(false);
 
 	Gwen::Controls::Label * MediumLabel = new Gwen::Controls::Label(Window);
-	MediumLabel->SetFont(GUIManager->getMediumFont());
+	MediumLabel->SetFont(GUIManager->GetMediumFont());
 	MediumLabel->SetText(L"Available Data Sets:");
 	MediumLabel->SetBounds(10, 10, 600, 300);
 	MediumLabel->SetTextColor(Gwen::Color(35, 35, 55, 215));

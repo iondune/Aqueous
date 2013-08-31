@@ -3,7 +3,7 @@
 
 CGUILoadingWidget::CGUILoadingWidget(std::string const & Label)
 {
-	Window = new Gwen::Controls::WindowControl(GUIManager->getCanvas());
+	Window = new Gwen::Controls::WindowControl(GUIManager->GetCanvas());
 	Window->SetClosable(false);
 	Window->SetBounds(300, 300, 400, 150);
 	Window->SetTitle("Loading...");
@@ -11,7 +11,7 @@ CGUILoadingWidget::CGUILoadingWidget(std::string const & Label)
 	Window->SetMinimumSize(Gwen::Point(300, 150));
 
 	Gwen::Controls::Label * LabelControl = new Gwen::Controls::Label(Window);
-	LabelControl->SetFont(GUIManager->getRegularFont());
+	LabelControl->SetFont(GUIManager->GetRegularFont());
 	LabelControl->SetText(Gwen::UnicodeString(Label.begin(), Label.end()));
 	LabelControl->SetBounds(10, 10, 600, 300);
 	LabelControl->SetTextColor(Gwen::Color(35, 35, 55, 215));

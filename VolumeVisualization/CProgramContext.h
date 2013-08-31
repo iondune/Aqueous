@@ -1,5 +1,5 @@
-#ifndef _CPROGRAMCONTEXT_H_INCLUDED_
-#define _CPROGRAMCONTEXT_H_INCLUDED_
+
+#pragma once
 
 #include <ionCore.h>
 #include <ionScene.h>
@@ -35,21 +35,14 @@ public:
 		CMeshSceneObject * LightObject;
 		SVector3f LightPosition;
 
-		// Skybox object
+		// Scene object
 		CMeshSceneObject * SkyBox;
-		
-		// Terrain
 		CTerrainSceneObject * Terrain;
-		
-		// Glyph representation
 		CGlyphSceneObject * GlyphSceneObject;
-	
-		// Volume
 		CVolumeSceneObject * VolumeSceneObject;
 
 		// Default cube mesh
 		CMesh * Cube;
-
 
 		SScene();
 	};
@@ -74,8 +67,6 @@ public:
 	SciDataManager * DataManager;
 
 	CProgramContext();
-	void run();
+	void Run();
 
 };
-
-#endif

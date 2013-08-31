@@ -10,7 +10,7 @@
 
 CGUISceneControlWidget::CGUISceneControlWidget()
 {
-	Window = new Gwen::Controls::WindowControl(GUIManager->getCanvas());
+	Window = new Gwen::Controls::WindowControl(GUIManager->GetCanvas());
 	Window->SetDeleteOnClose(false);
 	Window->SetBounds(1200, 670, 330, 160);
 	Window->SetTitle("Scene Controls");
@@ -33,7 +33,7 @@ void CGUISceneControlWidget::OnToggleBackdrop(Gwen::Controls::Base * Control)
 		s << "enabled.";
 	else
 		s << "disabled.";
-	Context->GUIContext->getConsole()->addMessage(s.str());
+	Context->GUIContext->GetConsole()->addMessage(s.str());
 
 	if (Context->Scene.SkyBox->isVisible())
 		((Gwen::Controls::Button *) Control)->SetText("Disable Backdrop");

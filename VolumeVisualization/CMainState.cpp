@@ -10,7 +10,7 @@ CMainState::CMainState()
 
 void CMainState::Begin()
 {
-	Context->GUIContext->setupMainState();
+	Context->GUIContext->SetupMainState();
 
 	Context->Scene.Timer = 0.f;
 	Context->Scene.GlyphSceneObject->buildLines();
@@ -18,7 +18,7 @@ void CMainState::Begin()
 
 void CMainState::End()
 {
-	Context->GUIContext->clear();
+	Context->GUIContext->Clear();
 }
 
 void CMainState::Update(f32 const Elapsed)
@@ -55,12 +55,12 @@ void CMainState::Update(f32 const Elapsed)
 	else
 		Context->Scene.VolumeSceneObject->draw(SceneManager, SceneManager->getDefaultColorRenderPass(), false);
 
-	Context->GUIContext->draw(Elapsed, false);
+	Context->GUIContext->Draw(Elapsed, false);
 
 	CApplication::Get().GetWindow().SwapBuffers();
 }
 
 void CMainState::addConsoleMessage(std::string const & Message, Gwen::Color const & Color)
 {
-	Context->GUIContext->getConsole()->addMessage(Message, Color);
+	Context->GUIContext->GetConsole()->addMessage(Message, Color);
 }

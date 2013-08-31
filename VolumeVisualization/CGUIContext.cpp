@@ -9,32 +9,32 @@ CGUIContext::CGUIContext()
 	TerrainControl(0), GlyphControl(0), SceneControl(0), ControlPanel(0), MainMenu(0)
 {}
 
-void CGUIContext::setupMainState()
+void CGUIContext::SetupMainState()
 {
 	Canvas->SetDrawBackground(false);
 
 	// Widgets
-	addWidget(Console = new CGUIConsoleWidget());
-	addWidget(TitleLabels = new CGUITitleLabelsWidget(CProgramContext::Get().DataManager));
-	addWidget(VolumeControl = new CGUIVolumeControlWidget());
-	addWidget(TerrainControl = new CGUITerrainControlWidget());
-	addWidget(GlyphControl = new CGUIGlyphControlWidget());
-	addWidget(SceneControl = new CGUISceneControlWidget());
-	addWidget(ControlPanel = new CGUIControlPanelWidget());
+	AddWidget(Console = new CGUIConsoleWidget());
+	AddWidget(TitleLabels = new CGUITitleLabelsWidget(CProgramContext::Get().DataManager));
+	AddWidget(VolumeControl = new CGUIVolumeControlWidget());
+	AddWidget(TerrainControl = new CGUITerrainControlWidget());
+	AddWidget(GlyphControl = new CGUIGlyphControlWidget());
+	AddWidget(SceneControl = new CGUISceneControlWidget());
+	AddWidget(ControlPanel = new CGUIControlPanelWidget());
 	
 	Console->addMessage("GUI Initialized.");
 	Console->addMessage("Starting program...", Gwen::Colors::Red);
 }
 
-void CGUIContext::setupMenuState()
+void CGUIContext::SetupMenuState()
 {
 	Canvas->SetDrawBackground(true);
 
 	// Widgets
-	addWidget(MainMenu = new CGUIMainMenuWidget());
+	AddWidget(MainMenu = new CGUIMainMenuWidget());
 }
 
-void CGUIContext::clear()
+void CGUIContext::Clear()
 {
 	Console = 0;
 	TitleLabels = 0;
@@ -46,41 +46,41 @@ void CGUIContext::clear()
 
 	MainMenu = 0;
 
-	removeAllWidgets();
+	RemoveAllWidgets();
 	Canvas->RemoveAllChildren();
 }
 
-CGUIConsoleWidget * CGUIContext::getConsole()
+CGUIConsoleWidget * CGUIContext::GetConsole()
 {
 	return Console;
 }
 
-CGUITitleLabelsWidget * CGUIContext::getTitleLabels()
+CGUITitleLabelsWidget * CGUIContext::GetTitleLabels()
 {
 	return TitleLabels;
 }
 
-CGUIVolumeControlWidget * CGUIContext::getVolumeControl()
+CGUIVolumeControlWidget * CGUIContext::GetVolumeControl()
 {
 	return VolumeControl;
 }
 
-CGUITerrainControlWidget * CGUIContext::getTerrainControl()
+CGUITerrainControlWidget * CGUIContext::GetTerrainControl()
 {
 	return TerrainControl;
 }
 
-CGUIGlyphControlWidget * CGUIContext::getGlyphControl()
+CGUIGlyphControlWidget * CGUIContext::GetGlyphControl()
 {
 	return GlyphControl;
 }
 
-CGUISceneControlWidget * CGUIContext::getSceneControl()
+CGUISceneControlWidget * CGUIContext::GetSceneControl()
 {
 	return SceneControl;
 }
 
-CGUIControlPanelWidget * CGUIContext::getControlPanel()
+CGUIControlPanelWidget * CGUIContext::GetControlPanel()
 {
 	return ControlPanel;
 }
