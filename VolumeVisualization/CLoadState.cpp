@@ -132,8 +132,10 @@ void CLoadState::loadScene()
 
 	// Cameras
 	Scene.Camera = new CCameraControl(SVector3f(1.f, 1.3f, 4.5f));
-	Scene.Camera->SetProjection(60.f, CApplication::Get().GetWindow().GetAspectRatio(), 0.001f, 100.f);
-	Scene.Camera->setVelocity(1.9f);
+	Scene.Camera->SetAspectRatio(CApplication::Get().GetWindow().GetAspectRatio());
+	Scene.Camera->SetNearPlane(0.001f);
+	Scene.Camera->SetFarPlane(100.f);
+	Scene.Camera->SetVelocity(1.9f);
 	CMainState::Get().IEventListener<SMouseEvent>::AddChild(Scene.Camera);
 	SceneManager->setActiveCamera(Scene.Camera);
 

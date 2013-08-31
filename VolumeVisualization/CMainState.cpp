@@ -25,7 +25,7 @@ void CMainState::Update(f32 const Elapsed)
 {
 	CProgramContext::SScene & Scene = Context->Scene;
 
-	Scene.Camera->update(Elapsed);
+	Scene.Camera->Update(Elapsed);
 
 	Scene.Timer += Elapsed * 0.16f;
 
