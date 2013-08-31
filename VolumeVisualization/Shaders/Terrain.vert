@@ -23,7 +23,7 @@ void main()
 {
 	vTexCoords = (aPosition.xy) / (uLayerWidth + 1.0) + vec2(0.5);
 
-	vec4 Position = vec4(aPosition.x, texture(uHeightMap, vTexCoords).r - (1 - texture(uBathyMap, vTexCoords).r) * 0.2, aPosition.y, 1);
+	vec4 Position = vec4(aPosition.x, texture(uHeightMap, vTexCoords).r - (1 - texture(uBathyMap, vTexCoords).r) * 0.6, aPosition.y, 1);
 	Position.y *= 75.0;
 
 	gl_Position = vScreenPosition = uProjMatrix * uViewMatrix * uModelMatrix * Position;

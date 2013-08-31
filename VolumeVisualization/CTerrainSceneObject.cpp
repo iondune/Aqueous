@@ -69,7 +69,7 @@ bool CTerrainSceneObject::draw(IScene const * const Scene, sharedPtr<IRenderPass
 	if (isDebugDataEnabled(EDebugData::Wireframe))
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-	glDrawElements(GL_TRIANGLES, IndexBuffer.getElements().size(), GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_TRIANGLES, IndexBuffer.size(), GL_UNSIGNED_INT, 0);
 	
 	if (isDebugDataEnabled(EDebugData::Wireframe))
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
