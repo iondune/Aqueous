@@ -399,7 +399,7 @@ SColorf const ratioToSpectrum(float Ratio)
 void SciDataManager::produceVolumeMaps()
 {
 	ProgressPrinter p;
-	p.begin();
+	p.Begin();
 
 	Range ValueRange = GridValues.getValueRange("o1", 5.0);
 	CVolumeSceneObject const * const VolumeObject = CProgramContext::Get().Scene.VolumeSceneObject;
@@ -435,7 +435,7 @@ void SciDataManager::produceVolumeMaps()
 				ImageData[Index + 2] = Color.Blue;
 			}
 			
-			p.update(y * 20 / ImageSize + i * 20);
+			p.Update(y * 20 / ImageSize + i * 20);
 		}
 
 		CImage * Image = new CImage(ImageData, ImageSize, ImageSize, false);
@@ -446,6 +446,6 @@ void SciDataManager::produceVolumeMaps()
 		delete Image;
 	}
 
-	p.end();
+	p.End();
 	std::cout << ("Volume maps written!") << std::endl;
 }

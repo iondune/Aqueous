@@ -52,11 +52,11 @@ RBFInterpolator::RBFInterpolator(vector<real> x, vector<real> y, vector<real> z,
 	// the matrix below is symmetric, so I could save some calculations Hmmm. must be a todo
 	ProgressPrinter p;
 	printf("Creating RBF Interpolator...\n");
-	p.begin();
+	p.Begin();
 	for (unsigned int i = 1; i <= M; i++)
 	for (unsigned int j = 1; j <= M; j++)
 	{
-		p.update(i * 100 / M);
+		p.Update(i * 100 / M);
 		real dx = x[i-1] - x[j-1];
 		real dy = y[i-1] - y[j-1];
 		real dz = z[i-1] - z[j-1];
@@ -90,7 +90,7 @@ RBFInterpolator::RBFInterpolator(vector<real> x, vector<real> y, vector<real> z,
 		G( M+4, j ) = z[j-1];
 	}
 
-	p.end();
+	p.End();
 
 	Try 
 	{ 

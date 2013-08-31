@@ -1,5 +1,5 @@
-#ifndef _PROGRESS_PRINTER_H_INCLUDED_
-#define _PROGRESS_PRINTER_H_INCLUDED_
+
+#pragma once
 
 #include <stdio.h>
 
@@ -7,22 +7,19 @@
 class ProgressPrinter
 {
 
-	int Progress;
-	int BarLength;
-
 public:
 
 	ProgressPrinter(int const barLength = 30)
 		: Progress(-1), BarLength(barLength)
 	{}
 
-	void begin()
+	void Begin()
 	{
 		printf("Progress: \n");
-		update(0);
+		Update(0);
 	}
 
-	void update(int const progress)
+	void Update(int const progress)
 	{
 		if (progress <= Progress)
 			return;
@@ -38,12 +35,15 @@ public:
 		printf("]");
 	}
 
-	void end()
+	void End()
 	{
-		update(100);
+		Update(100);
 		printf("\n");
 	}
 
-};
+protected:
 
-#endif
+	int Progress;
+	int BarLength;
+
+};
