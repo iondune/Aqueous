@@ -222,8 +222,8 @@ void CLoadState::loadScene()
 	Scene.VolumeSceneObject->setScale(Adjuster * vec3f(3.f, 1.6f, 3.f));
 	Scene.GlyphSceneObject->setScale(Adjuster  * vec3f(3.f, 1.6f, 3.f) * vec3f(-1, -1, 1));
 
-	Scene.GlyphSceneObject->setTranslation(vec3f(0, 0.4f, 0));
-	Scene.VolumeSceneObject->setTranslation(vec3f(0, 0.4f, 0));
+	Scene.GlyphSceneObject->setTranslation(vec3f(0, 0.4f - 1.f, 0));
+	Scene.VolumeSceneObject->setTranslation(vec3f(0, 0.4f - 1.f, 0));
 }
 
 void CLoadState::OnFinish()
