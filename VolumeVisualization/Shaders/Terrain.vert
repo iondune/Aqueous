@@ -19,7 +19,7 @@ out vec4 vScreenPosition;
 
 void main()
 {
-	vTexCoords = (aPosition.xy) / (uLayerWidth + 1.0);
+	vTexCoords = (aPosition.xy) / (uLayerWidth + 1.0) + vec2(0.5);
 
 	vec4 Position = vec4(aPosition.x, texture(uHeightMap, vTexCoords).r, aPosition.y, 1);
 	Position.y *= 75.0;
