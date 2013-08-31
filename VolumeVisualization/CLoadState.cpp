@@ -107,6 +107,8 @@ void CLoadState::loadShaders()
 		addLabel(L"Failed to load Volume Shader - Volume will not draw.", Gwen::Color(255, 64, 64, 192)), Failed = true;
 	if (! (Context->Shaders.Terrain = CShaderLoader::loadShader("Terrain")))
 		addLabel(L"Failed to load Terrain Shader - Terrain will not draw.", Gwen::Color(255, 64, 64, 192)), Failed = true;
+	if (! (Context->Shaders.Plane = CShaderLoader::loadShader("Plane")))
+		addLabel(L"Failed to load Plane Shader - Plane will not draw.", Gwen::Color(255, 64, 64, 192)), Failed = true;
 
 	if (! Failed)
 		addLabel(L"All shaders compiled successfully.", Gwen::Color(64, 255, 64, 192));
@@ -155,7 +157,7 @@ void CLoadState::loadScene()
 	SceneManager->addSceneObject(Scene.SkyBox);
 
 	CPlaneGridSceneObject * Plane = new CPlaneGridSceneObject(10);
-	Plane->setShader(SceneManager->getDefaultColorRenderPass(), Context->Shaders.GlyphLines);
+	Plane->setShader(SceneManager->getDefaultColorRenderPass(), Context->Shaders.Plane);
 	SceneManager->addSceneObject(Plane);
 
 	// Container Objects

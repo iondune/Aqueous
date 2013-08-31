@@ -56,6 +56,7 @@ public:
 		CShader * Volume;
 		CShader * Glyph;
 		CShader * GlyphLines;
+		CShader * Plane;
 
 		SShaders();
 	};
