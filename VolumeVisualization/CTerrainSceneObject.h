@@ -20,6 +20,7 @@ class CTerrainSceneObject : public ISceneObject
 
 	CTexture * HeightMap;
 	CTexture * ColorMap;
+	CTexture * BathyMap;
 
 	CShader * Shader;
 

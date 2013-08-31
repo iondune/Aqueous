@@ -41,6 +41,7 @@ CTerrainSceneObject::CTerrainSceneObject()
 	Flags.Wrap = GL_CLAMP_TO_EDGE;
 	ColorMap = new CTexture(CImageLoader::loadImage("../TerrainColorImageSquare.bmp"), Flags);
 	HeightMap = new CTexture(CImageLoader::loadImage("../TerrainHeightImageSquare.bmp"), Flags);
+	BathyMap = new CTexture(CImageLoader::loadImage("../TerrainBathymetry.bmp"), Flags);
 }
 
 bool CTerrainSceneObject::draw(IScene const * const Scene, sharedPtr<IRenderPass> Pass, bool const CullingEnabled)
@@ -58,8 +59,9 @@ bool CTerrainSceneObject::draw(IScene const * const Scene, sharedPtr<IRenderPass
 	Context.uniform("uDebugHeight", DebugHeight ? 1 : 0);
 
 	Context.bindBufferObject("aPosition", VertexData.getHandle(), 2);
-
+	
 	Context.bindTexture("uHeightMap", HeightMap->getTextureHandle());
+	Context.bindTexture("uBathyMap", BathyMap->getTextureHandle());
 	Context.bindTexture("uColorMap", ColorMap->getTextureHandle());
 
 	Context.bindIndexBufferObject(IndexBuffer.getHandle());

@@ -9,6 +9,8 @@ uniform mat4 uProjMatrix;
 uniform mat4 uViewMatrix;
 
 uniform sampler2D uHeightMap;
+uniform sampler2D uBathyMap;
+
 uniform float uLayerWidth;
 uniform vec3 uLightPosition;
 
@@ -21,7 +23,7 @@ void main()
 {
 	vTexCoords = (aPosition.xy) / (uLayerWidth + 1.0) + vec2(0.5);
 
-	vec4 Position = vec4(aPosition.x, texture(uHeightMap, vTexCoords).r, aPosition.y, 1);
+	vec4 Position = vec4(aPosition.x, texture(uHeightMap, vTexCoords).r - (1 - texture(uBathyMap, vTexCoords).r) * 0.2, aPosition.y, 1);
 	Position.y *= 75.0;
 
 	gl_Position = vScreenPosition = uProjMatrix * uViewMatrix * uModelMatrix * Position;
