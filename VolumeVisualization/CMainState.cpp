@@ -2,6 +2,7 @@
 
 #include "CTerrainSceneObject.h"
 #include "CGlyphSceneObject.h"
+#include "CWaterSceneObject.h"
 
 
 CMainState::CMainState()
@@ -26,7 +27,6 @@ void CMainState::Update(f32 const Elapsed)
 	CProgramContext::SScene & Scene = Context->Scene;
 
 	Scene.Camera->Update(Elapsed);
-
 	Scene.Timer += Elapsed * 0.16f;
 
 	float const Distance = 4.f;
@@ -36,6 +36,10 @@ void CMainState::Update(f32 const Elapsed)
 	Scene.LightPosition = SceneManager->getActiveCamera()->getPosition() + SVector3f(0, 0, 0);
 
 	SceneManager->drawAll();
+	glEnable(GL_BLEND);
+	glDepthMask(false);
+	Context->Scene.Water->draw(SceneManager, SceneManager->getDefaultColorRenderPass(), false);
+	glDepthMask(true);
 	SceneManager->endDraw();
 
 	if (ShowDepth)

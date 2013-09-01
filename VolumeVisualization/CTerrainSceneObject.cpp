@@ -14,8 +14,8 @@ CTerrainSceneObject::CTerrainSceneObject()
 	{
 		for (u32 x = 0; x < HeightmapSize; ++ x)
 		{
-			VertexData.push_back(x * 1.f - Size / 2.f);
-			VertexData.push_back(y * 1.f - Size / 2.f);
+			VertexData.push_back(x - Size / 2.f);
+			VertexData.push_back(y - Size / 2.f);
 		}
 	}
 	VertexData.syncData();

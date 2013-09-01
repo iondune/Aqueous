@@ -217,16 +217,18 @@ void CLoadState::loadScene()
 	Scale.X *= MaxAdjust;
 	Scale.Z *= MaxAdjust;
 	Scale.Y *= (ScaleAdjust.X + ScaleAdjust.Y) / 2.f;
-
+	
 	Scene.Terrain->setScale(Scale);
 	Scene.Terrain->setTranslation(vec3f(-RelativeTranslate.X, 0.f, RelativeTranslate.Y));
+	Scene.Water->setScale(Scale);
+	Scene.Water->setTranslation(vec3f(-RelativeTranslate.X, 0.f, RelativeTranslate.Y));
 
 	// Volume
 	Scene.Volume = new CVolumeSceneObject();
 	//SceneManager->addSceneObject(Scene.VolumeSceneObject);
 
 	Scene.Volume->setScale(Adjuster * vec3f(3.f, 1.6f, 3.f));
-	Scene.Glyphs->setScale(Adjuster  * vec3f(3.f, 1.6f, 3.f) * vec3f(-1, -1, 1));
+	Scene.Glyphs->setScale(Adjuster * vec3f(3.f, 1.6f, 3.f) * vec3f(-1, -1, 1));
 
 	Scene.Volume->setTranslation(vec3f(0, 0.4f - 1.f, 0));
 	Scene.Glyphs->setTranslation(vec3f(0, 0.4f - 1.f, 0));

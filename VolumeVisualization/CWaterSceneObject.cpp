@@ -15,8 +15,8 @@ CWaterSceneObject::CWaterSceneObject()
 	{
 		for (u32 x = 0; x < HeightmapSize; ++ x)
 		{
-			VertexData.push_back(x * 1.f - Size / 2.f);
-			VertexData.push_back(y * 1.f - Size / 2.f);
+			VertexData.push_back(x - Size / 2.f);
+			VertexData.push_back(y - Size / 2.f);
 		}
 	}
 	VertexData.syncData();
@@ -39,8 +39,8 @@ CWaterSceneObject::CWaterSceneObject()
 	IndexBuffer.syncData();
 	
 	STextureCreationFlags Flags;
-	Flags.Wrap = GL_CLAMP_TO_EDGE;
-	HeightMap = new CTexture(CImageLoader::loadImage("../TerrainHeightImageSquare.bmp"), Flags);
+	//Flags.Wrap = GL_CLAMP_TO_EDGE;
+	HeightMap = new CTexture(CImageLoader::loadImage("../Media/WaterBump.bmp"), Flags);
 }
 
 bool CWaterSceneObject::draw(IScene const * const Scene, sharedPtr<IRenderPass> Pass, bool const CullingEnabled)
@@ -55,6 +55,7 @@ bool CWaterSceneObject::draw(IScene const * const Scene, sharedPtr<IRenderPass> 
 	Context.uniform("uModelMatrix", Transformation.getGLMMat4());
 	Context.uniform("uLayerWidth", (f32) Size);
 	Context.uniform("uLightPosition", CProgramContext::Get().Scene.LightPosition);
+	Context.uniform("uTime", (f32) CApplication::Get().GetRunTime());
 
 	Context.bindBufferObject("aPosition", VertexData.getHandle(), 2);
 	Context.bindTexture("uHeightMap", HeightMap->getTextureHandle());
