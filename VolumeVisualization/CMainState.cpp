@@ -13,7 +13,7 @@ void CMainState::Begin()
 	Context->GUIContext->SetupMainState();
 
 	Context->Scene.Timer = 0.f;
-	Context->Scene.GlyphSceneObject->buildLines();
+	Context->Scene.Glyphs->buildLines();
 }
 
 void CMainState::End()
@@ -53,7 +53,7 @@ void CMainState::Update(f32 const Elapsed)
 		glEnable(GL_DEPTH_TEST);
 	}
 	else
-		Context->Scene.VolumeSceneObject->draw(SceneManager, SceneManager->getDefaultColorRenderPass(), false);
+		Context->Scene.Volume->draw(SceneManager, SceneManager->getDefaultColorRenderPass(), false);
 
 	Context->GUIContext->Draw(Elapsed, false);
 

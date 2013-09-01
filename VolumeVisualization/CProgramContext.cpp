@@ -8,8 +8,8 @@
 
 CProgramContext::SScene::SScene()
 	: Camera(), OrbitCamera(), Timer(0),
-	LightObject(), SkyBox(), Terrain(), GlyphSceneObject(), 
-	VolumeSceneObject(), Cube()
+	LightObject(), SkyBox(), Terrain(), Glyphs(), 
+	Volume(), Cube()
 {}
 
 CProgramContext::SShaders::SShaders()

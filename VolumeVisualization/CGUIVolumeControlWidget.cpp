@@ -8,7 +8,7 @@
 
 
 CGUIVolumeControlWidget::CGUIVolumeControlWidget()
-	: VolumeControl(CProgramContext::Get().Scene.VolumeSceneObject->Control), MainState(CMainState::Get())
+	: VolumeControl(CProgramContext::Get().Scene.Volume->Control), MainState(CMainState::Get())
 {
 	Window = new Gwen::Controls::WindowControl(GUIManager->GetCanvas());
 	Window->SetDeleteOnClose(false);
@@ -299,15 +299,15 @@ void CGUIVolumeControlWidget::OnToggleVolume(Gwen::Controls::Base * Control)
 {
 	CProgramContext * Context = & CProgramContext::Get();
 
-	if (Context->Scene.VolumeSceneObject->isVisible())
+	if (Context->Scene.Volume->isVisible())
 	{
-		Context->Scene.VolumeSceneObject->setVisible(false);
+		Context->Scene.Volume->setVisible(false);
 		GUIContext->GetConsole()->addMessage("Volume View Disabled");
 		EnableButton->SetText("Enable Volume View");
 	}
 	else
 	{
-		Context->Scene.VolumeSceneObject->setVisible(true);
+		Context->Scene.Volume->setVisible(true);
 		GUIContext->GetConsole()->addMessage("Volume View Enabled");
 		EnableButton->SetText("Disable Volume View");
 	}

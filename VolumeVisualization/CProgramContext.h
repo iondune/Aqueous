@@ -12,6 +12,7 @@
 class CTerrainSceneObject;
 class CVolumeSceneObject;
 class CGlyphSceneObject;
+class CWaterSceneObject;
 
 class SciDataManager;
 
@@ -38,8 +39,9 @@ public:
 		// Scene object
 		CMeshSceneObject * SkyBox;
 		CTerrainSceneObject * Terrain;
-		CGlyphSceneObject * GlyphSceneObject;
-		CVolumeSceneObject * VolumeSceneObject;
+		CGlyphSceneObject * Glyphs;
+		CVolumeSceneObject * Volume;
+		CWaterSceneObject * Water;
 
 		// Default cube mesh
 		CMesh * Cube;
@@ -57,6 +59,7 @@ public:
 		CShader * Glyph;
 		CShader * GlyphLines;
 		CShader * Plane;
+		CShader * Water;
 
 		SShaders();
 	};

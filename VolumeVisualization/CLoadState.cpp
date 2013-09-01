@@ -6,6 +6,7 @@
 
 #include "SciDataManager.h"
 #include "CTerrainSceneObject.h"
+#include "CWaterSceneObject.h"
 #include "CVolumeSceneObject.h"
 #include "CGlyphSceneObject.h"
 #include "CPlaneGridSceneObject.h"
@@ -109,6 +110,8 @@ void CLoadState::loadShaders()
 		addLabel(L"Failed to load Terrain Shader - Terrain will not draw.", Gwen::Color(255, 64, 64, 192)), Failed = true;
 	if (! (Context->Shaders.Plane = CShaderLoader::loadShader("Plane")))
 		addLabel(L"Failed to load Plane Shader - Plane will not draw.", Gwen::Color(255, 64, 64, 192)), Failed = true;
+	if (! (Context->Shaders.Water = CShaderLoader::loadShader("Water")))
+		addLabel(L"Failed to load Water Shader - Water will not draw.", Gwen::Color(255, 64, 64, 192)), Failed = true;
 
 	if (! Failed)
 		addLabel(L"All shaders compiled successfully.", Gwen::Color(64, 255, 64, 192));
@@ -161,13 +164,16 @@ void CLoadState::loadScene()
 	SceneManager->addSceneObject(Plane);
 
 	// Container Objects
-	Scene.GlyphSceneObject = new CGlyphSceneObject();
-	SceneManager->addSceneObject(Scene.GlyphSceneObject);
+	Scene.Glyphs = new CGlyphSceneObject();
+	SceneManager->addSceneObject(Scene.Glyphs);
+
+	// Water
+	Scene.Water = new CWaterSceneObject();
+	//SceneManager->addSceneObject(Scene.Water);
 
 	// Terrain
 	Scene.Terrain = new CTerrainSceneObject();
 	SceneManager->addSceneObject(Scene.Terrain);
-	Scene.Terrain->setCullingEnabled(false);
 	vec3f Scale = vec3f(1.f);
 	Scale /= 512.f;
 	Scale *= 3.f;
@@ -216,14 +222,14 @@ void CLoadState::loadScene()
 	Scene.Terrain->setTranslation(vec3f(-RelativeTranslate.X, 0.f, RelativeTranslate.Y));
 
 	// Volume
-	Scene.VolumeSceneObject = new CVolumeSceneObject();
+	Scene.Volume = new CVolumeSceneObject();
 	//SceneManager->addSceneObject(Scene.VolumeSceneObject);
 
-	Scene.VolumeSceneObject->setScale(Adjuster * vec3f(3.f, 1.6f, 3.f));
-	Scene.GlyphSceneObject->setScale(Adjuster  * vec3f(3.f, 1.6f, 3.f) * vec3f(-1, -1, 1));
+	Scene.Volume->setScale(Adjuster * vec3f(3.f, 1.6f, 3.f));
+	Scene.Glyphs->setScale(Adjuster  * vec3f(3.f, 1.6f, 3.f) * vec3f(-1, -1, 1));
 
-	Scene.GlyphSceneObject->setTranslation(vec3f(0, 0.4f - 1.f, 0));
-	Scene.VolumeSceneObject->setTranslation(vec3f(0, 0.4f - 1.f, 0));
+	Scene.Volume->setTranslation(vec3f(0, 0.4f - 1.f, 0));
+	Scene.Glyphs->setTranslation(vec3f(0, 0.4f - 1.f, 0));
 }
 
 void CLoadState::OnFinish()

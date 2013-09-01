@@ -53,7 +53,7 @@ void CDataLoadingThread::Execute()
 
 	COxygenColorMapper o("d1");
 	CSpectrumColorMapper spec("time");
-	Context->Scene.GlyphSceneObject->loadGlyphs(Context->DataManager, & o,
+	Context->Scene.Glyphs->loadGlyphs(Context->DataManager, & o,
 		"x", "y", "z", "Total Water Column (m)");
 	LoadingWidget->setProgress(0.75f);
 
@@ -65,14 +65,14 @@ void CDataLoadingThread::Execute()
 
 void CDataLoadingThread::End()
 {
-	Context->Scene.GlyphSceneObject->buildLines();
+	Context->Scene.Glyphs->buildLines();
 	//Context->Scene.GlyphSceneObject->setScale(vec3f(3.f, 1.5f, 3.f));
 	//Context->Scene.GlyphSceneObject->setScale(Context->Scene.GlyphSceneObject->getScale());
 
 	COxygenColorMapper o("o1");
 	CSpectrumColorMapper spec("temp");
 	Context->DataManager->createVolumeFromGridValues(& o);
-	Context->Scene.VolumeSceneObject->VolumeHandle = Context->DataManager->getVolumeHandle();
+	Context->Scene.Volume->VolumeHandle = Context->DataManager->getVolumeHandle();
 	
 	CApplication::Get().GetStateManager().SetState(CMainState::GetPtr());
 }

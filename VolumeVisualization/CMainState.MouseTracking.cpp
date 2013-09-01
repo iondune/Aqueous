@@ -59,8 +59,8 @@ void CMainState::OnEvent(SMouseEvent & Event)
 						Rotation = Transformation*Rotation;
 						if (! Equals(difX, 0.f) && ! Equals(difY, 0.f) && Application->GetWindow().IsKeyDown(EKey::Q))
 						{
-							glm::vec4 v = Transformation * glm::vec4(Context->Scene.VolumeSceneObject->Control.SliceAxis.GetGLMVector(), 0.f);
-							Context->Scene.VolumeSceneObject->Control.SliceAxis = SVector3f(v.x, v.y, v.z);
+							glm::vec4 v = Transformation * glm::vec4(Context->Scene.Volume->Control.SliceAxis.GetGLMVector(), 0.f);
+							Context->Scene.Volume->Control.SliceAxis = SVector3f(v.x, v.y, v.z);
 
 							//printf("Setting new axis vector! %f %f %f \n", v.x, v.y, v.z);
 						}

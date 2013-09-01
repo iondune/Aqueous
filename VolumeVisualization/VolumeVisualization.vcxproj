@@ -101,6 +101,7 @@
     <ClCompile Include="CTerrainSceneObject.cpp" />
     <ClCompile Include="CGUITitleLabelsWidget.cpp" />
     <ClCompile Include="CVolumeSceneObject.cpp" />
+    <ClCompile Include="CWaterSceneObject.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include=".\SciDataParserSimpleTXT.cpp" />
     <ClCompile Include=".\SciDataParserGrid1.cpp" />
@@ -144,6 +145,7 @@
     <ClInclude Include="CTerrainSceneObject.h" />
     <ClInclude Include="CGUITitleLabelsWidget.h" />
     <ClInclude Include="CVolumeSceneObject.h" />
+    <ClInclude Include="CWaterSceneObject.h" />
     <ClInclude Include="IColorMapper.h" />
     <ClInclude Include="Libraries.h" />
     <ClInclude Include="ProgressPrinter.h" />

@@ -110,6 +110,9 @@
     <ClCompile Include="CGUIContextWidget.cpp">
       <Filter>Program Context\GUI</Filter>
     </ClCompile>
+    <ClCompile Include="CWaterSceneObject.cpp">
+      <Filter>MainState\Water</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CMainState.h">
@@ -221,6 +224,9 @@
     <ClInclude Include="CGUIContextWidget.h">
       <Filter>Program Context\GUI</Filter>
     </ClInclude>
+    <ClInclude Include="CWaterSceneObject.h">
+      <Filter>MainState\Water</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="MainState">
@@ -276,6 +282,9 @@
     </Filter>
     <Filter Include="Program Context\GUI\General">
       <UniqueIdentifier>{1c6e5b8c-9a45-4dcd-86e0-2488a8c1db8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainState\Water">
+      <UniqueIdentifier>{1c0ec171-1f22-41cf-9511-5fe0e0c62da5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

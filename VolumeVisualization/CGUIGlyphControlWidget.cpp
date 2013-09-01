@@ -21,7 +21,7 @@ CGUIGlyphControlWidget::CGUIGlyphControlWidget()
 
 	EnableButton = new Gwen::Controls::Button(Window);
 	EnableButton->SetBounds(15, 10, 290, 25);
-	EnableButton->SetText(Context.Scene.GlyphSceneObject->isVisible() ? "Disable Glyph Visual" : "Enable Glyph Visual");
+	EnableButton->SetText(Context.Scene.Glyphs->isVisible() ? "Disable Glyph Visual" : "Enable Glyph Visual");
 	EnableButton->onPress.Add(this, & CGUIGlyphControlWidget::OnToggleGlyphs);
 
 	// Slider Panel
@@ -62,7 +62,7 @@ void CGUIGlyphControlWidget::SetButtonTitle()
 {
 	CProgramContext * Context = & CProgramContext::Get();
 	
-	if (Context->Scene.GlyphSceneObject->isVisible())
+	if (Context->Scene.Glyphs->isVisible())
 		EnableButton->SetText("Disable Glyph Visual");
 	else
 		EnableButton->SetText("Enable Glyph Visual");
@@ -72,15 +72,15 @@ void CGUIGlyphControlWidget::OnToggleGlyphs(Gwen::Controls::Base * Control)
 {
 	CProgramContext * Context = & CProgramContext::Get();
 
-	if (! Context->Scene.GlyphSceneObject->isVisible())
+	if (! Context->Scene.Glyphs->isVisible())
 	{
-		Context->Scene.GlyphSceneObject->setVisible(true);
+		Context->Scene.Glyphs->setVisible(true);
 		GUIContext->GetConsole()->addMessage("Glyph View Enabled");
 		SetButtonTitle();
 	}
 	else
 	{
-		Context->Scene.GlyphSceneObject->setVisible(false);
+		Context->Scene.Glyphs->setVisible(false);
 		GUIContext->GetConsole()->addMessage("Glyph View Disabled");
 		SetButtonTitle();
 	}
@@ -89,14 +89,14 @@ void CGUIGlyphControlWidget::OnToggleGlyphs(Gwen::Controls::Base * Control)
 void CGUIGlyphControlWidget::OnSelectPoint(Gwen::Controls::Base * Control)
 {
 	CProgramContext * Context = & CProgramContext::Get();
-	Context->Scene.GlyphSceneObject->setVisible(! Context->Scene.GlyphSceneObject->isVisible());
+	Context->Scene.Glyphs->setVisible(! Context->Scene.Glyphs->isVisible());
 	SetButtonTitle();
 }
 
 void CGUIGlyphControlWidget::OnSelectGrid(Gwen::Controls::Base * Control)
 {
 	CProgramContext * Context = & CProgramContext::Get();
-	Context->Scene.GlyphSceneObject->setVisible(! Context->Scene.GlyphSceneObject->isVisible());
+	Context->Scene.Glyphs->setVisible(! Context->Scene.Glyphs->isVisible());
 	SetButtonTitle();
 }
 
@@ -104,7 +104,7 @@ void CGUIGlyphControlWidget::OnSizeSlider(Gwen::Controls::Base * Control)
 {
 	CProgramContext & Context = CProgramContext::Get();
 	Gwen::Controls::Slider * Bar = (Gwen::Controls::Slider *) Control;
-	Context.Scene.GlyphSceneObject->GlyphSize = Bar->GetFloatValue();
+	Context.Scene.Glyphs->GlyphSize = Bar->GetFloatValue();
 }
 
 void CGUIGlyphControlWidget::toggle()

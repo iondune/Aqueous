@@ -402,7 +402,7 @@ void SciDataManager::produceVolumeMaps()
 	p.Begin();
 
 	Range ValueRange = GridValues.getValueRange("o1", 5.0);
-	CVolumeSceneObject const * const VolumeObject = CProgramContext::Get().Scene.VolumeSceneObject;
+	CVolumeSceneObject const * const VolumeObject = CProgramContext::Get().Scene.Volume;
 	CVolumeSceneObject::SControl const & VolumeControl = VolumeObject->Control;
 
 	for (int i = 4; i < 5; ++ i)
