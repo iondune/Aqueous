@@ -11,11 +11,10 @@ varying vec4 vScreenPosition;
 
 void main()
 {
-    vec4 vPosition;
-    
-    vPosition = uModelMatrix * vec4(aPosition - vec3(0.5), 1.0);
-    vScreenPosition = uProjMatrix * uViewMatrix * vPosition;
-    gl_Position = vScreenPosition;
-    
-    vColor = vec4(aColor, 1.0);
+	vec4 Position = uModelMatrix * vec4(aPosition - vec3(0.5), 1.0);
+	vScreenPosition = uProjMatrix * uViewMatrix * Position;
+	gl_ClipDistance[0] = dot(vec4(0, 1, 0, 0), Position);
+	gl_Position = vScreenPosition;
+
+	vColor = vec4(aColor, 1.0);
 }

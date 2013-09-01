@@ -25,8 +25,8 @@ void main()
 
 	vec3 vDiffuse = DiffuseColor * clamp(dot(vNormal, vLight), 0.0, 1.0);
 
-	//gl_FragData[0] = vec4(vDiffuse + AmbientColor, 0.3) * vec4(0, 0.7, 1, 1);
-	gl_FragData[0] = vec4(vDiffuse + AmbientColor, 0.3) * vec4(0, 0.7, 1, 1) + 0.3 *
-		vec4(texture(uReflectMap, (vScreenPosition.xy / vScreenPosition.w) * 0.5 + 0.5).rgb, 1);
+	gl_FragData[0] = 
+		vec4(vDiffuse + AmbientColor, 0.9) * vec4(vec3(0, 0.7, 1) * 0.5, 1) + 
+		0.9 * vec4(texture(uReflectMap, (vScreenPosition.xy / vScreenPosition.w) * 0.5 + 0.5).rgb, 0);
 	gl_FragData[1] = vec4((vScreenPosition.z / vScreenPosition.w + 1.0) / 2.0, 0.0, 0.0, 1.0);
 }
