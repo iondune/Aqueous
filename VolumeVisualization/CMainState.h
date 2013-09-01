@@ -4,6 +4,7 @@
 #include "CProgramContext.h"
 
 #include <CGUIEventManager.h>
+#include <glm/gtc/matrix_transform.hpp>
 
 
 class CReflectionRenderPass : public IRenderPass
@@ -29,19 +30,27 @@ public:
 			std::cerr << "Target Buffer is not valid" << std::endl;
 
 		printOpenGLErrors("Reflection Render Pass created");
+
+		SceneManager = & CApplication::Get().GetSceneManager();
 	}
 
 	void onPreDraw()
 	{
-		TargetBuffer->bind();
+		glm::mat4 ViewMatrix = SceneManager->getActiveCamera()->GetViewMatrix();
+		ViewMatrix = glm::scale(ViewMatrix, glm::vec3(1, -1, 1));
+		SceneManager->getActiveCamera()->SetViewMatrix(ViewMatrix);
 
-		double plane[4] = {0.0, 1.0, 0.0, 0.0};
+		TargetBuffer->bind();
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glEnable(GL_CLIP_PLANE0);
-		glClipPlane(GL_CLIP_PLANE0, plane);
 	}
 
 	void onPostDraw()
 	{
+		glm::mat4 ViewMatrix = SceneManager->getActiveCamera()->GetViewMatrix();
+		ViewMatrix = glm::scale(ViewMatrix, glm::vec3(1, -1, 1));
+		SceneManager->getActiveCamera()->SetViewMatrix(ViewMatrix);
+
 		glDisable(GL_CLIP_PLANE0);
 	}
 
@@ -51,6 +60,8 @@ public:
 	}
 
 protected:
+
+	CSceneManager * SceneManager;
 
 	CFrameBufferObject * TargetBuffer;
 	CTexture * TargetTexture;

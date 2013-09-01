@@ -7,7 +7,6 @@ uniform mat4 uModelMatrix;
 uniform mat4 uProjMatrix;
 uniform mat4 uViewMatrix;
 
-uniform sampler2D uHeightMap;
 uniform float uLayerWidth;
 uniform vec3 uLightPosition;
 uniform float uTime;

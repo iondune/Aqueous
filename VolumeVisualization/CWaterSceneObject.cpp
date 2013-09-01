@@ -2,6 +2,7 @@
 #include "CWaterSceneObject.h"
 
 #include "CProgramContext.h"
+#include "CMainState.h"
 
 
 CWaterSceneObject::CWaterSceneObject()
@@ -59,6 +60,7 @@ bool CWaterSceneObject::draw(IScene const * const Scene, sharedPtr<IRenderPass> 
 
 	Context.bindBufferObject("aPosition", VertexData.getHandle(), 2);
 	Context.bindTexture("uHeightMap", HeightMap->getTextureHandle());
+	Context.bindTexture("uReflectMap", CMainState::Get().ReflectionRenderPass->GetTargetTexture());
 	Context.bindIndexBufferObject(IndexBuffer.getHandle());
 
 	if (isDebugDataEnabled(EDebugData::Wireframe))
