@@ -227,6 +227,9 @@
     <ClInclude Include="CWaterSceneObject.h">
       <Filter>MainState\Water</Filter>
     </ClInclude>
+    <ClInclude Include="BathymetyGenerator.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="MainState">

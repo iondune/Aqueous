@@ -22,12 +22,12 @@ public:
 
 	void convert()
 	{
-		CImage * Image = CImageLoader::loadTGAImage("../terrain_input.tga");
+		CImage * Image = CImage::Load("terrain_input.tga");
 
-		unsigned char * Data = Image->getImageData();
-		unsigned char * DataCopy = new unsigned char[Image->getWidth() * Image->getHeight() * 3];
-		SClassification ** TruthTable = new SClassification *[Image->getWidth() * Image->getHeight()], 
-			** TruthTableCopy = new SClassification *[Image->getWidth() * Image->getHeight()];
+		unsigned char * Data = Image->GetImageData();
+		unsigned char * DataCopy = new unsigned char[Image->GetWidth() * Image->GetHeight() * 3];
+		SClassification ** TruthTable = new SClassification *[Image->GetWidth() * Image->GetHeight()], 
+			** TruthTableCopy = new SClassification *[Image->GetWidth() * Image->GetHeight()];
 
 		// Load Classification List
 		std::vector<SClassification> Classifications;
@@ -92,27 +92,27 @@ public:
 		printf("Pass 1 -> Posterization\n");
 
 		// Use truth table to check for certain values
-		for (int x = 0; x < Image->getWidth(); ++ x)
+		for (int x = 0; x < Image->GetWidth(); ++ x)
 		{
-			for (int y = 0; y < Image->getHeight(); ++ y)
+			for (int y = 0; y < Image->GetHeight(); ++ y)
 			{
-				TruthTable[x + y * Image->getWidth()] = 0;
+				TruthTable[x + y * Image->GetWidth()] = 0;
 			}
 		}
 		
 		// Posterization Pass 1 -> assign certain or near certain class values
-		for (int x = 0; x < Image->getWidth(); ++ x)
+		for (int x = 0; x < Image->GetWidth(); ++ x)
 		{
-			for (int y = 0; y < Image->getHeight(); ++ y)
+			for (int y = 0; y < Image->GetHeight(); ++ y)
 			{
 				SColorc Color = SColorc(
-					Data[x * 3 + y * Image->getWidth() * 3 + 0], 
-					Data[x * 3 + y * Image->getWidth() * 3 + 1], 
-					Data[x * 3 + y * Image->getWidth() * 3 + 2]);
+					Data[x * 3 + y * Image->GetWidth() * 3 + 0], 
+					Data[x * 3 + y * Image->GetWidth() * 3 + 1], 
+					Data[x * 3 + y * Image->GetWidth() * 3 + 2]);
 
 				if (Color == NullClass->Color)
 				{
-					TruthTable[x + y * Image->getWidth()] = NullClass;
+					TruthTable[x + y * Image->GetWidth()] = NullClass;
 				}
 				else
 				{
@@ -120,12 +120,12 @@ public:
 					{
 						if (Color == it->Color)
 						{
-							TruthTable[x + y * Image->getWidth()] = & * it;
+							TruthTable[x + y * Image->GetWidth()] = & * it;
 						}
 					}
 				}
 
-				if (! TruthTable[x + y * Image->getWidth()])
+				if (! TruthTable[x + y * Image->GetWidth()])
 				{
 					auto getColorDistance = [](SColorc const & c1, SColorc const & c2) -> float
 					{
@@ -149,9 +149,9 @@ public:
 					{
 						//printf("Near certain value!\n");
 						if (MinClass)
-							;//TruthTable[x + y * Image->getWidth()] = MinClass;
+							;//TruthTable[x + y * Image->GetWidth()] = MinClass;
 						else
-							TruthTable[x + y * Image->getWidth()] = NullClass;
+							TruthTable[x + y * Image->GetWidth()] = NullClass;
 					}
 				}
 			}
@@ -161,25 +161,25 @@ public:
 		int MaximumCreepCounters = 200;
 		while (-- MaximumCreepCounters != 0)
 		{
-			for (int x = 0; x < Image->getWidth(); ++ x)
+			for (int x = 0; x < Image->GetWidth(); ++ x)
 			{
-				for (int y = 0; y < Image->getHeight(); ++ y)
+				for (int y = 0; y < Image->GetHeight(); ++ y)
 				{
 					SColorc Color = SColorc(0, 0, 0);
 
-					if (! TruthTable[x + y * Image->getWidth()])
+					if (! TruthTable[x + y * Image->GetWidth()])
 					{
 						for (int u = -1; u <= 1; ++ u)
 						{
 							for (int v = -1; v <= 1; ++ v)
 							{
 								bool const Distance = abs(u) + abs(v) == 1;
-								bool const InBounds = (x + u) >= 0 && (x + u) < Image->getWidth() && (y + v) >= 0 && (y + v) < Image->getHeight();
+								bool const InBounds = (x + u) >= 0 && (x + u) < Image->GetWidth() && (y + v) >= 0 && (y + v) < Image->GetHeight();
 								if (Distance && InBounds)
 								{
-									if (TruthTable[(x + u) + (y + v) * Image->getWidth()] && TruthTable[(x + u) + (y + v) * Image->getWidth()] != NullClass)
+									if (TruthTable[(x + u) + (y + v) * Image->GetWidth()] && TruthTable[(x + u) + (y + v) * Image->GetWidth()] != NullClass)
 									{
-										TruthTable[x + y * Image->getWidth()] = TruthTable[(x + u) + (y + v) * Image->getWidth()];
+										TruthTable[x + y * Image->GetWidth()] = TruthTable[(x + u) + (y + v) * Image->GetWidth()];
 									}
 								}
 							}
@@ -190,18 +190,18 @@ public:
 		}
 
 		// Posterization Pass 3 -> colorize output
-		for (int x = 0; x < Image->getWidth(); ++ x)
+		for (int x = 0; x < Image->GetWidth(); ++ x)
 		{
-			for (int y = 0; y < Image->getHeight(); ++ y)
+			for (int y = 0; y < Image->GetHeight(); ++ y)
 			{
 				SColorc Color = SColorc(0, 0, 0);
 
-				if (TruthTable[x + y * Image->getWidth()])
-					Color = TruthTable[x + y * Image->getWidth()]->Color;
+				if (TruthTable[x + y * Image->GetWidth()])
+					Color = TruthTable[x + y * Image->GetWidth()]->Color;
 
-				Data[x * 3 + y * Image->getWidth() * 3 + 0] = Color.Red * 255;
-				Data[x * 3 + y * Image->getWidth() * 3 + 1] = Color.Green * 255;
-				Data[x * 3 + y * Image->getWidth() * 3 + 2] = Color.Blue * 255;
+				Data[x * 3 + y * Image->GetWidth() * 3 + 0] = Color.Red * 255;
+				Data[x * 3 + y * Image->GetWidth() * 3 + 1] = Color.Green * 255;
+				Data[x * 3 + y * Image->GetWidth() * 3 + 2] = Color.Blue * 255;
 			}
 		}
 
@@ -209,16 +209,16 @@ public:
 
 		printf("Pass 2 -> Edge Removal\n");
 		
-		memcpy(TruthTableCopy, TruthTable, Image->getWidth() * Image->getHeight() * sizeof(SClassification *));
+		memcpy(TruthTableCopy, TruthTable, Image->GetWidth() * Image->GetHeight() * sizeof(SClassification *));
 		// Edge Removal Pass 1 -> Detect unset or null set areas and find closest value to choose
-		for (int x = 0; x < Image->getWidth(); ++ x)
+		for (int x = 0; x < Image->GetWidth(); ++ x)
 		{
-			for (int y = 0; y < Image->getHeight(); ++ y)
+			for (int y = 0; y < Image->GetHeight(); ++ y)
 			{
-				if (TruthTable[x + y * Image->getWidth()] == NullClass)
-					TruthTable[x + y * Image->getWidth()] = 0;
+				if (TruthTable[x + y * Image->GetWidth()] == NullClass)
+					TruthTable[x + y * Image->GetWidth()] = 0;
 
-				if (! TruthTable[x + y * Image->getWidth()])
+				if (! TruthTable[x + y * Image->GetWidth()])
 				{
 					for (int i = 0; i < 50; ++ i)
 					{
@@ -227,24 +227,24 @@ public:
 							for (int v = -i - 1; v <= i + 1; ++ v)
 							{
 								bool const Distance = (u*u) + (v*v) == (i*i);
-								bool const InBounds = (x + u) >= 0 && (x + u) < Image->getWidth() && (y + v) >= 0 && (y + v) < Image->getHeight();
+								bool const InBounds = (x + u) >= 0 && (x + u) < Image->GetWidth() && (y + v) >= 0 && (y + v) < Image->GetHeight();
 								if (Distance && InBounds)
 								{
-									if (TruthTableCopy[(x + u) + (y + v) * Image->getWidth()] && TruthTableCopy[(x + u) + (y + v) * Image->getWidth()] != NullClass)
+									if (TruthTableCopy[(x + u) + (y + v) * Image->GetWidth()] && TruthTableCopy[(x + u) + (y + v) * Image->GetWidth()] != NullClass)
 									{
-										TruthTable[x + y * Image->getWidth()] = TruthTableCopy[(x + u) + (y + v) * Image->getWidth()];
+										TruthTable[x + y * Image->GetWidth()] = TruthTableCopy[(x + u) + (y + v) * Image->GetWidth()];
 									}
 								}
 
-								if (TruthTable[x + y * Image->getWidth()])
+								if (TruthTable[x + y * Image->GetWidth()])
 									break;
 							}
 
-							if (TruthTable[x + y * Image->getWidth()])
+							if (TruthTable[x + y * Image->GetWidth()])
 								break;
 						}
 
-						if (TruthTable[x + y * Image->getWidth()])
+						if (TruthTable[x + y * Image->GetWidth()])
 							break;
 					}
 				}
@@ -252,20 +252,20 @@ public:
 		}
 
 		// Edge Removal Pass 2 -> colorize output
-		for (int x = 0; x < Image->getWidth(); ++ x)
+		for (int x = 0; x < Image->GetWidth(); ++ x)
 		{
-			for (int y = 0; y < Image->getHeight(); ++ y)
+			for (int y = 0; y < Image->GetHeight(); ++ y)
 			{
 				SColorc Color = SColorc(0, 0, 0);
 
-				if (TruthTable[x + y * Image->getWidth()])
-					Color = TruthTable[x + y * Image->getWidth()]->Color;
+				if (TruthTable[x + y * Image->GetWidth()])
+					Color = TruthTable[x + y * Image->GetWidth()]->Color;
 				else
 					printf("Error! Unepexted non-classified point in output!\n");
 
-				Data[x * 3 + y * Image->getWidth() * 3 + 0] = Color.Red * 255;
-				Data[x * 3 + y * Image->getWidth() * 3 + 1] = Color.Green * 255;
-				Data[x * 3 + y * Image->getWidth() * 3 + 2] = Color.Blue * 255;
+				Data[x * 3 + y * Image->GetWidth() * 3 + 0] = Color.Red * 255;
+				Data[x * 3 + y * Image->GetWidth() * 3 + 1] = Color.Green * 255;
+				Data[x * 3 + y * Image->GetWidth() * 3 + 2] = Color.Blue * 255;
 			}
 		}
 
@@ -274,15 +274,15 @@ public:
 		printf("Pass 3 -> Value Interpolation\n");
 		ProgressPrinter p;
 		p.begin();
-		for (int x = 0; x < Image->getWidth(); ++ x)
+		for (int x = 0; x < Image->GetWidth(); ++ x)
 		{
-			p.update(x * 100 / Image->getWidth());
-			for (int y = 0; y < Image->getHeight(); ++ y)
+			p.update(x * 100 / Image->GetWidth());
+			for (int y = 0; y < Image->GetHeight(); ++ y)
 			{
-				if (! TruthTable[x + y * Image->getWidth()])
-					TruthTable[x + y * Image->getWidth()] = NullClass;
+				if (! TruthTable[x + y * Image->GetWidth()])
+					TruthTable[x + y * Image->GetWidth()] = NullClass;
 
-				SClassification * Class = TruthTable[x + y * Image->getWidth()], * HigherClass = 0, * LowerClass = 0, * TestClass;
+				SClassification * Class = TruthTable[x + y * Image->GetWidth()], * HigherClass = 0, * LowerClass = 0, * TestClass;
 				SVector2i HigherPos, LowerPos;
 
 				if (! equals(Class->Value, 0.f))
@@ -296,10 +296,10 @@ public:
 								if ((u*u) + (v*v) != (i*i))
 									continue;
 
-								if (! ((x + u) >= 0 && (x + u) < Image->getWidth() && (y + v) >= 0 && (y + v) < Image->getHeight()))
+								if (! ((x + u) >= 0 && (x + u) < Image->GetWidth() && (y + v) >= 0 && (y + v) < Image->GetHeight()))
 									continue;
 
-								TestClass = TruthTable[(x + u) + (y + v) * Image->getWidth()];
+								TestClass = TruthTable[(x + u) + (y + v) * Image->GetWidth()];
 
 								if (TestClass == Class)
 									continue;
@@ -354,21 +354,21 @@ public:
 					float Ratio = LowDistance / (HighDistance + LowDistance);
 					Value = Value * Ratio + LowerClass->Value * (1.f - Ratio);
 
-					DataCopy[x * 3 + y * Image->getWidth() * 3 + 0] = 
-					DataCopy[x * 3 + y * Image->getWidth() * 3 + 1] = 
-					DataCopy[x * 3 + y * Image->getWidth() * 3 + 2] = 
-					Data[x * 3 + y * Image->getWidth() * 3 + 0] = 
-					Data[x * 3 + y * Image->getWidth() * 3 + 1] = 
-					Data[x * 3 + y * Image->getWidth() * 3 + 2] = (unsigned char) (Value * 255);
+					DataCopy[x * 3 + y * Image->GetWidth() * 3 + 0] = 
+					DataCopy[x * 3 + y * Image->GetWidth() * 3 + 1] = 
+					DataCopy[x * 3 + y * Image->GetWidth() * 3 + 2] = 
+					Data[x * 3 + y * Image->GetWidth() * 3 + 0] = 
+					Data[x * 3 + y * Image->GetWidth() * 3 + 1] = 
+					Data[x * 3 + y * Image->GetWidth() * 3 + 2] = (unsigned char) (Value * 255);
 				}
 				else if (equals(Class->Value, 0.f))
 				{
-					DataCopy[x * 3 + y * Image->getWidth() * 3 + 0] = 
-					DataCopy[x * 3 + y * Image->getWidth() * 3 + 1] = 
-					DataCopy[x * 3 + y * Image->getWidth() * 3 + 2] = 0;
-					Data[x * 3 + y * Image->getWidth() * 3 + 0] = 0;
-					Data[x * 3 + y * Image->getWidth() * 3 + 1] = 60;
-					Data[x * 3 + y * Image->getWidth() * 3 + 2] = 160;
+					DataCopy[x * 3 + y * Image->GetWidth() * 3 + 0] = 
+					DataCopy[x * 3 + y * Image->GetWidth() * 3 + 1] = 
+					DataCopy[x * 3 + y * Image->GetWidth() * 3 + 2] = 0;
+					Data[x * 3 + y * Image->GetWidth() * 3 + 0] = 0;
+					Data[x * 3 + y * Image->GetWidth() * 3 + 1] = 60;
+					Data[x * 3 + y * Image->GetWidth() * 3 + 2] = 160;
 				}
 				else
 				{
@@ -382,28 +382,28 @@ public:
 						if (LowerClass)
 						{
 							Value = Value * Ratio + LowerClass->Value * (1.f - Ratio);
-							Data[x * 3 + y * Image->getWidth() * 3 + 0] = 0;
-							Data[x * 3 + y * Image->getWidth() * 3 + 1] = 255;
-							Data[x * 3 + y * Image->getWidth() * 3 + 2] = 0;
+							Data[x * 3 + y * Image->GetWidth() * 3 + 0] = 0;
+							Data[x * 3 + y * Image->GetWidth() * 3 + 1] = 255;
+							Data[x * 3 + y * Image->GetWidth() * 3 + 2] = 0;
 						}
 						else
 						{
 							Value = Value * Ratio + (2 * Value - HigherClass->Value) * (1.f - Ratio);
-							Data[x * 3 + y * Image->getWidth() * 3 + 0] = 255;
-							Data[x * 3 + y * Image->getWidth() * 3 + 1] = 255;
-							Data[x * 3 + y * Image->getWidth() * 3 + 2] = 0;
+							Data[x * 3 + y * Image->GetWidth() * 3 + 0] = 255;
+							Data[x * 3 + y * Image->GetWidth() * 3 + 1] = 255;
+							Data[x * 3 + y * Image->GetWidth() * 3 + 2] = 0;
 						}
 					}
 					else
 					{
-						Data[x * 3 + y * Image->getWidth() * 3 + 0] = 255;
-						Data[x * 3 + y * Image->getWidth() * 3 + 1] = 0;
-						Data[x * 3 + y * Image->getWidth() * 3 + 2] = 0;
+						Data[x * 3 + y * Image->GetWidth() * 3 + 0] = 255;
+						Data[x * 3 + y * Image->GetWidth() * 3 + 1] = 0;
+						Data[x * 3 + y * Image->GetWidth() * 3 + 2] = 0;
 					}
 					
-					DataCopy[x * 3 + y * Image->getWidth() * 3 + 0] = 
-					DataCopy[x * 3 + y * Image->getWidth() * 3 + 1] = 
-					DataCopy[x * 3 + y * Image->getWidth() * 3 + 2] = (unsigned char) (Value * 255);
+					DataCopy[x * 3 + y * Image->GetWidth() * 3 + 0] = 
+					DataCopy[x * 3 + y * Image->GetWidth() * 3 + 1] = 
+					DataCopy[x * 3 + y * Image->GetWidth() * 3 + 2] = (unsigned char) (Value * 255);
 				}
 				
 				
@@ -412,13 +412,13 @@ public:
 		p.end();
 		Image->write("terrain_output_3_interpolated.bmp");
 
-		for (int x = 0; x < Image->getWidth(); ++ x)
+		for (int x = 0; x < Image->GetWidth(); ++ x)
 		{
-			for (int y = 0; y < Image->getHeight(); ++ y)
+			for (int y = 0; y < Image->GetHeight(); ++ y)
 			{
-				Data[x * 3 + y * Image->getWidth() * 3 + 0] = DataCopy[x * 3 + y * Image->getWidth() * 3 + 0];
-				Data[x * 3 + y * Image->getWidth() * 3 + 1] = DataCopy[x * 3 + y * Image->getWidth() * 3 + 1];
-				Data[x * 3 + y * Image->getWidth() * 3 + 2] = DataCopy[x * 3 + y * Image->getWidth() * 3 + 2];
+				Data[x * 3 + y * Image->GetWidth() * 3 + 0] = DataCopy[x * 3 + y * Image->GetWidth() * 3 + 0];
+				Data[x * 3 + y * Image->GetWidth() * 3 + 1] = DataCopy[x * 3 + y * Image->GetWidth() * 3 + 1];
+				Data[x * 3 + y * Image->GetWidth() * 3 + 2] = DataCopy[x * 3 + y * Image->GetWidth() * 3 + 2];
 			}
 		}
 		Image->write("terrain_output_4_final.bmp");

@@ -119,6 +119,7 @@
     <ClCompile Include="SciDataParserPieSlices.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BathymetyGenerator.h" />
     <ClInclude Include="CDataLoadingThread.h" />
     <ClInclude Include="CGlyphSceneObject.h" />
     <ClInclude Include="CGUIConsoleWidget.h" />
