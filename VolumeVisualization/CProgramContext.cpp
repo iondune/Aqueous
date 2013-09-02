@@ -23,7 +23,7 @@ CProgramContext::CProgramContext()
 void CProgramContext::Run()
 {
 	// Directory Setup
-	CTextureLoader::ImageDirectory = "Media/";
+	CTextureLoader::TextureDirectory = "Media/";
 	CMeshLoader::MeshDirectory = "Media/";
 	CShaderLoader::ShaderDirectory = "Shaders/";
 

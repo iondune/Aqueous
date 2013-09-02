@@ -441,7 +441,7 @@ void SciDataManager::produceVolumeMaps()
 		CImage * Image = new CImage(ImageData, ImageSize, ImageSize, false);
 		std::stringstream s;
 		s << "VolumeMapMode" << i << ".bmp";
-		Image->write(s.str());
+		Image->Write(s.str());
 
 		delete Image;
 	}
