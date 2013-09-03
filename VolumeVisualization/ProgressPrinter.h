@@ -39,6 +39,7 @@ public:
 	{
 		Update(100);
 		printf("\n");
+		Progress = 0;
 	}
 
 protected:
