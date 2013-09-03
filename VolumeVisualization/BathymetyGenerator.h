@@ -21,7 +21,7 @@ public:
 		struct SPoint
 		{
 			f32 Height, PingPongHeight;
-			vec2f Gradient;
+			vec2f Gradient, PingPongGradient;
 			f32 Accumulator;
 			bool Set, GradientSet, NewGradientSet;
 		};
@@ -188,6 +188,7 @@ public:
 		}
 		P.End();
 
+		// Diagnostic
 		for (u32 y = 0; y < Height; ++ y)
 		for (u32 x = 0; x < Width; ++ x)
 		{
@@ -195,6 +196,50 @@ public:
 			Image->SetPixel(x, y, color4i(Clamp<s32>(GradNormal.X * 128 + 128, 0, 255), Clamp<s32>(GradNormal.Y * 128 + 128, 0, 255), 0, 0));
 		}
 		Image->Write("OutputNormals.bmp");
+
+		// Blur gradient Pass
+		printf("Gradient blur... ");
+		P.Begin();
+		static s32 const GradientSigma = 12;
+		static s32 const GradientSpread = 3;
+		for (u32 y = 0; y < Height; ++ y)
+		for (u32 x = 0; x < Width; ++ x)
+		{
+			GetPoint(x, y).PingPongGradient = 0;
+			for (s32 i = 1; i < GradientSigma * GradientSpread; ++ i)
+				GetPoint(x, y).PingPongGradient += Gaussian<f32>(i, GradientSigma) * (GetPoint(x+i, y).Gradient + GetPoint(x-i, y).Gradient);
+			GetPoint(x, y).PingPongGradient += Gaussian<f32>(0, GradientSigma) * GetPoint(x, y).Gradient;
+			P.Update(50 * y / Height);
+		}
+		for (u32 y = 0; y < Height; ++ y)
+		for (u32 x = 0; x < Width; ++ x)
+		{
+			GetPoint(x, y).Gradient = GetPoint(x, y).PingPongGradient;
+		}
+		for (u32 y = 0; y < Height; ++ y)
+		for (u32 x = 0; x < Width; ++ x)
+		{
+			GetPoint(x, y).PingPongGradient = 0;
+			for (s32 i = 1; i < GradientSigma * GradientSpread; ++ i)
+				GetPoint(x, y).PingPongGradient += Gaussian<f32>(i, GradientSigma) * (GetPoint(x, y+i).Gradient + GetPoint(x, y-i).Gradient);
+			GetPoint(x, y).PingPongGradient += Gaussian<f32>(0, GradientSigma) * GetPoint(x, y).Gradient;
+			P.Update(50 + 50 * y / Height);
+		}
+		for (u32 y = 0; y < Height; ++ y)
+		for (u32 x = 0; x < Width; ++ x)
+		{
+			GetPoint(x, y).Gradient = GetPoint(x, y).PingPongGradient;
+		}
+		P.End();
+		
+		// Diagnostic
+		for (u32 y = 0; y < Height; ++ y)
+		for (u32 x = 0; x < Width; ++ x)
+		{
+			u8 ColorValue = Clamp<s32>(GetPoint(x, y).Height, 0, 255);
+			Image->SetPixel(x, y, color4i(ColorValue));
+		}
+		Image->Write("OutputBlurred.bmp");
 
 		printf("Calculating Heights... ");
 		P.Begin();
