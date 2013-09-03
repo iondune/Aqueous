@@ -236,10 +236,10 @@ public:
 		for (u32 y = 0; y < Height; ++ y)
 		for (u32 x = 0; x < Width; ++ x)
 		{
-			u8 ColorValue = Clamp<s32>(GetPoint(x, y).Height, 0, 255);
-			Image->SetPixel(x, y, color4i(ColorValue));
+			vec2f GradNormal = GetPoint(x, y).Gradient.GetNormalized();
+			Image->SetPixel(x, y, color4i(Clamp<s32>(GradNormal.X * 128 + 128, 0, 255), Clamp<s32>(GradNormal.Y * 128 + 128, 0, 255), 0, 0));
 		}
-		Image->Write("OutputBlurred.bmp");
+		Image->Write("OutputNormalsGaussian.bmp");
 
 		printf("Calculating Heights... ");
 		P.Begin();
