@@ -140,51 +140,57 @@ public:
 		printf("Bleeding gradients... ");
 		P.Begin();
 		s32 CalculatedCount = 0;
-		static s32 const SquareSize = 15;
-		static s32 const Passes = 50;
-		for (s32 t = 0; t < Passes; ++ t)
+		for (s32 y = 0; y < (s32) Height; ++ y)
+		for (s32 x = 0; x < (s32) Width; ++ x)
 		{
-			for (s32 y = 0; y < (s32) Height; ++ y)
-			for (s32 x = 0; x < (s32) Width; ++ x)
+			if (! GetPoint(x, y).GradientSet)
 			{
-				if (! GetPoint(x, y).GradientSet)
+				struct SFeeler
 				{
-					f32 Accumulator = 0;
-					u32 Contributors = 0;
-					for (s32 i = - SquareSize / 2; i < SquareSize / 2; ++ i)
-					for (s32 j = - SquareSize / 2; j < SquareSize / 2; ++ j)
-					{
-						vec2f const Offset(vec2i(i, j));
-						if (Offset.LengthSq() <= Sq(SquareSize) && GetPoint(x+i, y+j).GradientSet)
-						{
-							f32 const Weight = (1 / Offset.Length()) * Offset.Dot(GetPoint(x+i, y+j).Gradient);
-							GetPoint(x, y).Gradient += Weight * GetPoint(x+i, y+j).Gradient;
-							Accumulator += Weight;
-							Contributors ++;
-						}
-					}
+					vec2f Location;
+					vec2f Direction;
+				};
 
-					GetPoint(x, y).Gradient /= Accumulator;
-					if (Contributors >= 3)
+				std::vector<SFeeler> Feelers(10);
+				for (u32 i = 0; i < Feelers.size(); ++ i)
+				{
+					f32 const Angle = 2 * Constants32::Pi * i / (f32) Feelers.size();
+					Feelers[i].Direction = vec2f(cos(Angle), sin(Angle));
+					Feelers[i].Location = vec2f(x, y) + Feelers[i].Direction;
+				}
+				
+				f32 Accumulator = 0;
+				while (Feelers.size())
+				{
+					for (auto it = Feelers.begin(); it != Feelers.end();)
 					{
-						GetPoint(x, y).NewGradientSet = true;
-						CalculatedCount ++;
-					}
-					else
-					{
-						GetPoint(x, y).Gradient.reset();
+						if (GetPoint(it->Location.X, it->Location.Y).GradientSet)
+						{
+							vec2f const Offset(it->Location - vec2f(x, y));
+							f32 const Weight = (1 / Offset.Length()) * Offset.Dot(GetPoint(it->Location.X, it->Location.Y).Gradient);
+							GetPoint(x, y).Gradient += Weight * GetPoint(it->Location.X, it->Location.Y).Gradient;
+							Accumulator += Weight;
+
+							it = Feelers.erase(it);
+						}
+						else
+						{
+							it->Location += it->Direction;
+							if (it->Location.X < 0 || it->Location.Y < 0 || it->Location.X >= Width || it->Location.Y >= Height)
+								it = Feelers.erase(it);
+							else
+								++ it;
+						}
 					}
 				}
 
-				P.Update(100 * CalculatedCount / SetCount);
+				if (Accumulator > 0)
+					GetPoint(x, y).Gradient /= Accumulator;
+				GetPoint(x, y).NewGradientSet = true;
+				CalculatedCount ++;
 			}
 
-			for (s32 y = 0; y < (s32) Height; ++ y)
-			for (s32 x = 0; x < (s32) Width; ++ x)
-			{
-				if (GetPoint(x, y).NewGradientSet)
-					GetPoint(x, y).GradientSet = true;
-			}
+			P.Update(100 * CalculatedCount / SetCount);
 		}
 		P.End();
 
