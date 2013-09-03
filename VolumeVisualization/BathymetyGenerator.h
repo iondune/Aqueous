@@ -135,13 +135,23 @@ public:
 			Image->SetPixel(x, y, color4i(Clamp<s32>(GradNormal.X * 128 + 128, 0, 255), Clamp<s32>(GradNormal.Y * 128 + 128, 0, 255), 0, 0));
 		}
 		Image->Write("OutputPreNormals.bmp");
+		f32 MaxMagnitude = 0;
+		for (u32 y = 0; y < Height; ++ y)
+		for (u32 x = 0; x < Width; ++ x)
+			MaxMagnitude = Maximum(MaxMagnitude, GetPoint(x, y).Gradient.Length());
+		for (u32 y = 0; y < Height; ++ y)
+		for (u32 x = 0; x < Width; ++ x)
+		{
+			Image->SetPixel(x, y, color4f(GetPoint(x, y).Gradient.Length() / MaxMagnitude));
+		}
+		Image->Write("OutputPreNormalMagnitude.bmp");
 
 		// Gradient bleed
 		printf("Bleeding gradients... ");
 		P.Begin();
 		s32 CalculatedCount = 0;
 		static s32 const SquareSize = 5;
-		static s32 const Passes = 1000;
+		static s32 const Passes = 15;
 		for (s32 t = 0; t < Passes; ++ t)
 		{
 			for (s32 y = 0; y < (s32) Height; ++ y)
@@ -195,12 +205,22 @@ public:
 			vec2f GradNormal = GetPoint(x, y).Gradient.GetNormalized();
 			Image->SetPixel(x, y, color4i(Clamp<s32>(GradNormal.X * 128 + 128, 0, 255), Clamp<s32>(GradNormal.Y * 128 + 128, 0, 255), 0, 0));
 		}
-		Image->Write("OutputNormals.bmp");
+		Image->Write("OutputPostNormals.bmp");
+		MaxMagnitude = 0;
+		for (u32 y = 0; y < Height; ++ y)
+		for (u32 x = 0; x < Width; ++ x)
+			MaxMagnitude = Maximum(MaxMagnitude, GetPoint(x, y).Gradient.Length());
+		for (u32 y = 0; y < Height; ++ y)
+		for (u32 x = 0; x < Width; ++ x)
+		{
+			Image->SetPixel(x, y, color4f(GetPoint(x, y).Gradient.Length() / MaxMagnitude));
+		}
+		Image->Write("OutputPostNormalsMagnitude.bmp");
 
 		// Blur gradient Pass
 		printf("Gradient blur... ");
 		P.Begin();
-		static s32 const GradientSigma = 12;
+		static s32 const GradientSigma = 6;
 		static s32 const GradientSpread = 3;
 		for (u32 y = 0; y < Height; ++ y)
 		for (u32 x = 0; x < Width; ++ x)
@@ -240,6 +260,17 @@ public:
 			Image->SetPixel(x, y, color4i(Clamp<s32>(GradNormal.X * 128 + 128, 0, 255), Clamp<s32>(GradNormal.Y * 128 + 128, 0, 255), 0, 0));
 		}
 		Image->Write("OutputNormalsGaussian.bmp");
+		MaxMagnitude = 0;
+		for (u32 y = 0; y < Height; ++ y)
+		for (u32 x = 0; x < Width; ++ x)
+			MaxMagnitude = Maximum(MaxMagnitude, GetPoint(x, y).Gradient.Length());
+		for (u32 y = 0; y < Height; ++ y)
+		for (u32 x = 0; x < Width; ++ x)
+		{
+			Image->SetPixel(x, y, color4f(GetPoint(x, y).Gradient.Length() / MaxMagnitude));
+		}
+		Image->Write("OutputNormalsGaussianMagnitude.bmp");
+
 
 		printf("Calculating Heights... ");
 		P.Begin();
