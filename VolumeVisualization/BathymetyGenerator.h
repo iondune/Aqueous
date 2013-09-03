@@ -23,7 +23,7 @@ public:
 			f32 Height, PingPongHeight;
 			vec2f Gradient;
 			f32 Accumulator;
-			bool Set, GradientSet;
+			bool Set, GradientSet, NewGradientSet;
 		};
 
 		std::vector<SPoint> Points(Width * Height);
@@ -44,6 +44,7 @@ public:
 			GetPoint(x, y).Height = Color.Red;
 			GetPoint(x, y).Accumulator = 0;
 			GetPoint(x, y).GradientSet = false;
+			GetPoint(x, y).NewGradientSet = false;
 		}
 
 		// Diagnostic
@@ -142,30 +143,48 @@ public:
 		static s32 const SquareSize = 15;
 		static s32 const Passes = 50;
 		for (s32 t = 0; t < Passes; ++ t)
-		for (s32 y = 0; y < (s32) Height; ++ y)
-		for (s32 x = 0; x < (s32) Width; ++ x)
 		{
-			if (! GetPoint(x, y).GradientSet)
+			for (s32 y = 0; y < (s32) Height; ++ y)
+			for (s32 x = 0; x < (s32) Width; ++ x)
 			{
-				f32 Accumulator = 0;
-				for (s32 i = - SquareSize / 2; i < SquareSize / 2; ++ i)
-				for (s32 j = - SquareSize / 2; j < SquareSize / 2; ++ j)
+				if (! GetPoint(x, y).GradientSet)
 				{
-					vec2f const Offset(vec2i(i, j));
-					if (Offset.LengthSq() <= Sq(SquareSize) && GetPoint(x+i, y+j).GradientSet)
+					f32 Accumulator = 0;
+					u32 Contributors = 0;
+					for (s32 i = - SquareSize / 2; i < SquareSize / 2; ++ i)
+					for (s32 j = - SquareSize / 2; j < SquareSize / 2; ++ j)
 					{
-						f32 const Weight = (1 / Offset.Length()) * Offset.Dot(GetPoint(x+i, y+j).Gradient);
-						GetPoint(x, y).Gradient += Weight * GetPoint(x+i, y+j).Gradient;
-						Accumulator += Weight;
+						vec2f const Offset(vec2i(i, j));
+						if (Offset.LengthSq() <= Sq(SquareSize) && GetPoint(x+i, y+j).GradientSet)
+						{
+							f32 const Weight = (1 / Offset.Length()) * Offset.Dot(GetPoint(x+i, y+j).Gradient);
+							GetPoint(x, y).Gradient += Weight * GetPoint(x+i, y+j).Gradient;
+							Accumulator += Weight;
+							Contributors ++;
+						}
+					}
+
+					GetPoint(x, y).Gradient /= Accumulator;
+					if (Contributors >= 3)
+					{
+						GetPoint(x, y).NewGradientSet = true;
+						CalculatedCount ++;
+					}
+					else
+					{
+						GetPoint(x, y).Gradient.reset();
 					}
 				}
 
-				GetPoint(x, y).Gradient /= Accumulator;
-				GetPoint(x, y).GradientSet = true;
-				CalculatedCount ++;
+				P.Update(100 * CalculatedCount / SetCount);
 			}
 
-			P.Update(100 * CalculatedCount / SetCount);
+			for (s32 y = 0; y < (s32) Height; ++ y)
+			for (s32 x = 0; x < (s32) Width; ++ x)
+			{
+				if (GetPoint(x, y).NewGradientSet)
+					GetPoint(x, y).GradientSet = true;
+			}
 		}
 		P.End();
 
