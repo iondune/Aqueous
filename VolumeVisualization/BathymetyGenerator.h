@@ -144,14 +144,14 @@ public:
 		{
 			Image->SetPixel(x, y, color4f(GetPoint(x, y).Gradient.Length() / MaxMagnitude));
 		}
-		Image->Write("OutputPreNormalMagnitude.bmp");
+		Image->Write("OutputPreNormalsMagnitude.bmp");
 
 		// Gradient bleed
 		printf("Bleeding gradients... ");
 		P.Begin();
 		s32 CalculatedCount = 0;
 		static s32 const SquareSize = 5;
-		static s32 const Passes = 15;
+		static s32 const Passes = 100;
 		for (s32 t = 0; t < Passes; ++ t)
 		{
 			for (s32 y = 0; y < (s32) Height; ++ y)
@@ -164,19 +164,22 @@ public:
 					for (s32 i = - SquareSize / 2; i < SquareSize / 2; ++ i)
 					for (s32 j = - SquareSize / 2; j < SquareSize / 2; ++ j)
 					{
-						vec2f const Offset(vec2i(i, j));
-						if (Offset.LengthSq() <= Sq(SquareSize) && GetPoint(x+i, y+j).GradientSet)
+						if (i != 0 && j != 0)
 						{
-							f32 const Weight = (1 / Offset.Length()) * Offset.Dot(GetPoint(x+i, y+j).Gradient);
-							GetPoint(x, y).Gradient += Weight * GetPoint(x+i, y+j).Gradient;
-							Accumulator += Weight;
-							Contributors ++;
+							vec2f const Offset(vec2i(i, j));
+							if (Offset.LengthSq() <= Sq(SquareSize) && GetPoint(x+i, y+j).GradientSet)
+							{
+								f32 const Weight = (1 / Offset.Length()) * Offset.GetNormalized().Dot(GetPoint(x+i, y+j).Gradient.GetNormalized());
+								GetPoint(x, y).Gradient += Weight * GetPoint(x+i, y+j).Gradient;
+								Accumulator += Weight;
+								Contributors ++;
+							}
 						}
 					}
 
-					GetPoint(x, y).Gradient /= Accumulator;
-					if (Contributors >= 3)
+					if (Contributors >= 5)
 					{
+						GetPoint(x, y).Gradient /= Accumulator;
 						GetPoint(x, y).NewGradientSet = true;
 						CalculatedCount ++;
 					}
