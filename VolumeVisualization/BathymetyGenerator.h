@@ -23,7 +23,7 @@ public:
 			f32 Height, PingPongHeight;
 			vec2f Gradient;
 			f32 Accumulator;
-			bool Set;
+			bool Set, GradientSet;
 		};
 
 		std::vector<SPoint> Points(Width * Height);
@@ -43,6 +43,7 @@ public:
 			GetPoint(x, y).Set = (Color.Red > 0);
 			GetPoint(x, y).Height = Color.Red;
 			GetPoint(x, y).Accumulator = 0;
+			GetPoint(x, y).GradientSet = false;
 		}
 
 		// Diagnostic
@@ -52,6 +53,7 @@ public:
 			Image->SetPixel(x, y, GetPoint(x, y).Set ? Colors::Red : Colors::Black);
 		}
 		Image->Write("OutputSetMap.bmp");
+		/*
 		for (u32 y = 0; y < Height; ++ y)
 		for (u32 x = 0; x < Width; ++ x)
 		{
@@ -59,17 +61,19 @@ public:
 			Image->SetPixel(x, y, color4i(ColorValue));
 		}
 		Image->Write("OutputOriginal.bmp");
+		*/
 		
 		// Blur Pass
 		printf("Guassian blur... ");
 		ProgressPrinter P;
 		P.Begin();
-		static s32 const Sigma = 3;
+		static s32 const Sigma = 6;
+		static s32 const Spread = 3;
 		for (u32 y = 0; y < Height; ++ y)
 		for (u32 x = 0; x < Width; ++ x)
 		{
 			GetPoint(x, y).PingPongHeight = 0;
-			for (s32 i = 1; i < Sigma * 3; ++ i)
+			for (s32 i = 1; i < Sigma * Spread; ++ i)
 				GetPoint(x, y).PingPongHeight += Gaussian<f32>(i, Sigma) * (GetPoint(x+i, y).Height + GetPoint(x-i, y).Height);
 			GetPoint(x, y).PingPongHeight += Gaussian<f32>(0, Sigma) * GetPoint(x, y).Height;
 			P.Update(50 * y / Height);
@@ -83,7 +87,7 @@ public:
 		for (u32 x = 0; x < Width; ++ x)
 		{
 			GetPoint(x, y).PingPongHeight = 0;
-			for (s32 i = 1; i < Sigma * 3; ++ i)
+			for (s32 i = 1; i < Sigma * Spread; ++ i)
 				GetPoint(x, y).PingPongHeight += Gaussian<f32>(i, Sigma) * (GetPoint(x, y+i).Height + GetPoint(x, y-i).Height);
 			GetPoint(x, y).PingPongHeight += Gaussian<f32>(0, Sigma) * GetPoint(x, y).Height;
 			P.Update(50 + 50 * y / Height);
@@ -107,13 +111,16 @@ public:
 		// Gradient Pass
 		printf("Calculating gradients... ");
 		P.Begin();
+		s32 SetCount = 0;
 		for (s32 y = 0; y < (s32) Height; ++ y)
 		for (s32 x = 0; x < (s32) Width; ++ x)
 		{
-			if (GetPoint(x, y).Set)// && GetPoint(x, y - 1).Set && GetPoint(x + 1, y).Set && GetPoint(x, y + 1).Set && GetPoint(x - 1, y).Set)
+			if (GetPoint(x, y).Set && GetPoint(x, y - 1).Set && GetPoint(x + 1, y).Set && GetPoint(x, y + 1).Set && GetPoint(x - 1, y).Set)
+			{
 				GetPoint(x, y).Gradient = vec2f(GetPoint(x + 1, y).Height - GetPoint(x - 1, y).Height, GetPoint(x, y + 1).Height - GetPoint(x, y - 1).Height) / 2.f;
-			else
-				GetPoint(x, y).Set = false;
+				GetPoint(x, y).GradientSet = true;
+				SetCount ++;
+			}
 
 			P.Update(100 * y / Height);
 		}
@@ -131,18 +138,21 @@ public:
 		// Gradient bleed
 		printf("Bleeding gradients... ");
 		P.Begin();
+		s32 CalculatedCount = 0;
+		static s32 const SquareSize = 15;
+		static s32 const Passes = 50;
+		for (s32 t = 0; t < Passes; ++ t)
 		for (s32 y = 0; y < (s32) Height; ++ y)
 		for (s32 x = 0; x < (s32) Width; ++ x)
 		{
-			if (! GetPoint(x, y).Set)
+			if (! GetPoint(x, y).GradientSet)
 			{
 				f32 Accumulator = 0;
-				s32 const SquareSize = 15;
 				for (s32 i = - SquareSize / 2; i < SquareSize / 2; ++ i)
 				for (s32 j = - SquareSize / 2; j < SquareSize / 2; ++ j)
 				{
 					vec2f const Offset(vec2i(i, j));
-					if (Offset.LengthSq() <= Sq(SquareSize) && GetPoint(x+i, y+j).Set)
+					if (Offset.LengthSq() <= Sq(SquareSize) && GetPoint(x+i, y+j).GradientSet)
 					{
 						f32 const Weight = (1 / Offset.Length()) * Offset.Dot(GetPoint(x+i, y+j).Gradient);
 						GetPoint(x, y).Gradient += Weight * GetPoint(x+i, y+j).Gradient;
@@ -151,9 +161,11 @@ public:
 				}
 
 				GetPoint(x, y).Gradient /= Accumulator;
+				GetPoint(x, y).GradientSet = true;
+				CalculatedCount ++;
 			}
 
-			P.Update(100 * y / Height);
+			P.Update(100 * CalculatedCount / SetCount);
 		}
 		P.End();
 
