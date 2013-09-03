@@ -32,7 +32,7 @@ public:
 		{
 			color4i const Color = Image->GetPixel(x, y);
 			
-			Points[x + y * Width].Set = Color.Red > 0;
+			Points[x + y * Width].Set = (Color.Red > 0);
 			Points[x + y * Width].Height = Color.Red;
 			Points[x + y * Width].Accumulator = 0;
 		}
@@ -44,11 +44,19 @@ public:
 			return Points[x + y * Width];
 		};
 
+		for (u32 y = 0; y < Height; ++ y)
+		for (u32 x = 0; x < Width; ++ x)
+		{
+			Image->SetPixel(x, y, GetPoint(x, y).Set ? Colors::Red : Colors::Black);
+		}
+		Image->Write("OutputSetMap.bmp");
+
 		for (s32 y = 0; y < (s32) Height; ++ y)
 		for (s32 x = 0; x < (s32) Width; ++ x)
 		{
-			if (GetPoint(x, y).Set && GetPoint(x, y - 1).Set && GetPoint(x + 1, y).Set && GetPoint(x, y + 1).Set && GetPoint(x - 1, y).Set)
+			if (GetPoint(x, y).Set)// && GetPoint(x, y - 1).Set && GetPoint(x + 1, y).Set && GetPoint(x, y + 1).Set && GetPoint(x - 1, y).Set)
 			{
+				//printf("Happened\n");
 				GetPoint(x, y).Gradient = vec2f(GetPoint(x + 1, y).Height - GetPoint(x - 1, y).Height, GetPoint(x, y + 1).Height - GetPoint(x, y - 1).Height) / 2.f;
 			}
 			else
@@ -74,7 +82,7 @@ public:
 			if (! GetPoint(x, y).Set)
 			{
 				f32 Accumulator = 0;
-				s32 const SquareSize = 10;
+				s32 const SquareSize = 50;
 				for (s32 i = - SquareSize / 2; i < SquareSize / 2; ++ i)
 				for (s32 j = - SquareSize / 2; j < SquareSize / 2; ++ j)
 				{
@@ -142,7 +150,7 @@ public:
 		for (u32 y = 0; y < Height; ++ y)
 		for (u32 x = 0; x < Width; ++ x)
 		{
-			u8 ColorValue = Clamp<s32>(GetPoint(x, y).Height, 0, 255);
+			u8 ColorValue = Clamp<s32>(255 - GetPoint(x, y).Height, 0, 255);
 			Image->SetPixel(x, y, color4i(ColorValue));
 		}
 
