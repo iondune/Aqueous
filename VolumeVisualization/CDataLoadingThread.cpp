@@ -54,6 +54,7 @@ void CDataLoadingThread::Execute()
 	COxygenColorMapper o("d1");
 	CSpectrumColorMapper spec("time");
 	Context->Scene.Glyphs->loadGlyphs(Context->DataManager, & o,
+		//"Latitude", "DFS Depth", "Longitude", "Total Water Column (m)");
 		"x", "y", "z", "Total Water Column (m)");
 	LoadingWidget->setProgress(0.75f);
 

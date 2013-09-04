@@ -6,6 +6,7 @@
 #include "CGUILoadingWidget.h"
 #include "CDataLoadingThread.h"
 #include "SciDataManager.h"
+#include "CGlyphSceneObject.h"
 
 
 CMainMenuState::CMainMenuState()
@@ -22,8 +23,6 @@ void CMainMenuState::End()
 	Context->GUIContext->Clear();
 	std::cout << "Menu State end." << std::endl;
 }
-
-#include "CGlyphSceneObject.h"
 
 void CMainMenuState::Update(f32 const Elapsed)
 {
@@ -136,5 +135,5 @@ void CMainMenuState::createDataSet()
 		Context->DataManager->createPointCloudObjects(true, Context->Scene.PointCloudObject, SVector3f(1.f/*-3.f, 0.8f, 3.f*), & o);*/
 	}
 
-	Context->DataManager->writeToFile("Datasets/HopavagenBay1.dat");
+	Context->DataManager->writeToFile("Datasets/HopavagenBayNew1.dat");
 }
