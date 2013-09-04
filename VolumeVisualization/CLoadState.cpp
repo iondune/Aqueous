@@ -17,8 +17,7 @@ void CLoadStateEventHandler::OnFinish(Gwen::Controls::Base * Control)
 	CLoadState::Get().OnFinish();
 }
 
-
-void CLoadState::addLabel(std::wstring const & Label, Gwen::Color const & Color)
+void CLoadState::AddLabel(std::wstring const & Label, Gwen::Color const & Color)
 {
 	Gwen::Controls::Label * MediumLabel = new Gwen::Controls::Label(Canvas);
 	MediumLabel->SetFont(GUIManager->GetMediumFont());
@@ -63,18 +62,18 @@ void CLoadState::Begin()
 	GUIManager->Draw(true);
 	CApplication::Get().GetWindow().SwapBuffers();
 	
-	addLabel(L"Initializing System...");
+	AddLabel(L"Initializing System...");
 	CGUIEventManager * Forwarder = new CGUIEventManager(GUIManager->GetCanvas(), & Application.GetWindow());
 	
-	addLabel(L"Loading Scene Shaders...");
+	AddLabel(L"Loading Scene Shaders...");
 	Application.GetSceneManager().init(true, true);
-	loadShaders();
+	LoadShaders();
 	
-	addLabel(L"Loading Scene Objects...");
-	loadScene();
+	AddLabel(L"Loading Scene Objects...");
+	LoadScene();
 	
 	Context->DataManager = new SciDataManager();
-	addLabel(L"Menu is Starting...");
+	AddLabel(L"Menu is Starting...");
 
 	if (GetConfirmation)
 	{
@@ -84,7 +83,9 @@ void CLoadState::Begin()
 		Button->onPress.Add(& Handler, & CLoadStateEventHandler::OnFinish);
 	}
 	else
+	{
 		OnFinish();
+	}
 }
 
 void CLoadState::Update(f32 const Elapsed)
@@ -93,35 +94,35 @@ void CLoadState::Update(f32 const Elapsed)
 	CApplication::Get().GetWindow().SwapBuffers();
 }
 
-void CLoadState::loadShaders()
+void CLoadState::LoadShaders()
 {
 	Indent = 60;
 	bool Failed = false;
 	
 	if (! (Context->Shaders.Glyph = CShaderLoader::loadShader("Glyph")))
-		addLabel(L"Failed to load Glyph Shader - Glyphs will not draw.", Gwen::Color(255, 32, 32, 192)), Failed = true;
+		AddLabel(L"Failed to load Glyph Shader - Glyphs will not draw.", Gwen::Color(255, 32, 32, 192)), Failed = true;
 	if (! (Context->Shaders.GlyphLines = CShaderLoader::loadShader("GlyphLines")))
-		addLabel(L"Failed to load Glyph Line Shader - Glyphs Lines will not draw.", Gwen::Color(255, 32, 32, 192)), Failed = true;
+		AddLabel(L"Failed to load Glyph Line Shader - Glyphs Lines will not draw.", Gwen::Color(255, 32, 32, 192)), Failed = true;
 	if (! (Context->Shaders.DiffuseTexture = CShaderLoader::loadShader("DiffuseTexture")))
-		addLabel(L"Failed to load Diffuse/Texture Shader - Backdrop will not draw.", Gwen::Color(255, 64, 64, 192)), Failed = true;
+		AddLabel(L"Failed to load Diffuse/Texture Shader - Backdrop will not draw.", Gwen::Color(255, 64, 64, 192)), Failed = true;
 	if (! (Context->Shaders.Volume = CShaderLoader::loadShader("Volume")))
-		addLabel(L"Failed to load Volume Shader - Volume will not draw.", Gwen::Color(255, 64, 64, 192)), Failed = true;
+		AddLabel(L"Failed to load Volume Shader - Volume will not draw.", Gwen::Color(255, 64, 64, 192)), Failed = true;
 	if (! (Context->Shaders.Terrain = CShaderLoader::loadShader("Terrain")))
-		addLabel(L"Failed to load Terrain Shader - Terrain will not draw.", Gwen::Color(255, 64, 64, 192)), Failed = true;
+		AddLabel(L"Failed to load Terrain Shader - Terrain will not draw.", Gwen::Color(255, 64, 64, 192)), Failed = true;
 	if (! (Context->Shaders.Plane = CShaderLoader::loadShader("Plane")))
-		addLabel(L"Failed to load Plane Shader - Plane will not draw.", Gwen::Color(255, 64, 64, 192)), Failed = true;
+		AddLabel(L"Failed to load Plane Shader - Plane will not draw.", Gwen::Color(255, 64, 64, 192)), Failed = true;
 	if (! (Context->Shaders.Water = CShaderLoader::loadShader("Water")))
-		addLabel(L"Failed to load Water Shader - Water will not draw.", Gwen::Color(255, 64, 64, 192)), Failed = true;
+		AddLabel(L"Failed to load Water Shader - Water will not draw.", Gwen::Color(255, 64, 64, 192)), Failed = true;
 
 	if (! Failed)
-		addLabel(L"All shaders compiled successfully.", Gwen::Color(64, 255, 64, 192));
+		AddLabel(L"All shaders compiled successfully.", Gwen::Color(64, 255, 64, 192));
 	else
 		GetConfirmation = true;
 
 	Indent = 0;
 }
 
-void CLoadState::loadScene()
+void CLoadState::LoadScene()
 {
 	// References
 	CProgramContext::SScene & Scene = Context->Scene;
