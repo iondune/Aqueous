@@ -23,7 +23,7 @@ public:
 			f32 Height, PingPongHeight;
 			vec2f Gradient, PingPongGradient;
 			f32 Accumulator;
-			bool Set, GradientSet, NewGradientSet, NewHeightSet;
+			bool Set, GradientSet, NewGradientSet, NewHeightSet, OriginalSet;
 		};
 
 		std::vector<SPoint> Points(Width * Height);
@@ -40,7 +40,7 @@ public:
 		{
 			color4i const Color = Image->GetPixel(x, y);
 			
-			GetPoint(x, y).Set = (Color.Red > 0);
+			GetPoint(x, y).OriginalSet = GetPoint(x, y).Set = (Color.Red > 0);
 			GetPoint(x, y).Height = Color.Red;
 			GetPoint(x, y).Accumulator = 0;
 			GetPoint(x, y).GradientSet = false;
@@ -154,7 +154,7 @@ public:
 		P.Begin();
 		s32 CalculatedCount = 0;
 		static s32 const SquareSize = 5;
-		static s32 const Passes = 500;
+		static s32 const Passes = 1000;
 		for (s32 t = 0; t < Passes && CalculatedCount < SetCount; ++ t)
 		{
 			for (s32 y = 0; y < (s32) Height; ++ y)
@@ -230,7 +230,7 @@ public:
 		// Blur gradient Pass
 		printf("Gradient blur... ");
 		P.Begin();
-		static s32 const GradientSigma = 3;//30;
+		static s32 const GradientSigma = 30;
 		static s32 const GradientSpread = 3;
 		static u32 const GradientBlurPasses = 3;
 		for (u32 t = 0; t < GradientBlurPasses; ++ t)
@@ -304,7 +304,7 @@ public:
 
 		printf("Calculating Heights... ");
 		P.Begin();
-		static u32 const HeightPasses = 100;
+		static u32 const HeightPasses = 1000;
 		for (u32 t = 0; t < HeightPasses; ++ t)
 		{
 			for (s32 y = 0; y < (s32) Height; ++ y)
@@ -315,19 +315,19 @@ public:
 					GetPoint(x, y).Height = 0;
 
 					f32 Accumulator = 0;
-					s32 const SquareSize = 5;
-					for (s32 i = - SquareSize / 2; i < SquareSize / 2; ++ i)
-					for (s32 j = - SquareSize / 2; j < SquareSize / 2; ++ j)
+					s32 const SquareSize = 2;
+					for (s32 i = - SquareSize / 2; i <= SquareSize / 2; ++ i)
+					for (s32 j = - SquareSize / 2; j <= SquareSize / 2; ++ j)
 					{
 						if (i != 0 || j != 0)
 						{
 							vec2f const Offset(vec2i(i, j));
-							if (Offset.LengthSq() <= Sq(SquareSize) && GetPoint(x+i, y+j).Set)
+							if (/*Offset.LengthSq() <= Sq(SquareSize) && */GetPoint(x+i, y+j).Set)
 							{
-								f32 const Weight = (1 / Offset.Length()) * Offset.GetNormalized().Dot(GetPoint(x+i, y+j).Gradient.GetNormalized());
+								//f32 const Weight = (1 / Offset.Length()) * Offset.GetNormalized().Dot(GetPoint(x+i, y+j).Gradient.GetNormalized());
 
-								GetPoint(x, y).Height += Weight * (GetPoint(x+i, y+j).Height + Offset.Length() * Offset.Dot(GetPoint(x+i, y+j).Gradient));
-								Accumulator += Weight;
+								GetPoint(x, y).Height += (GetPoint(x+i, y+j).Height + -Offset.Dot(GetPoint(x+i, y+j).Gradient));
+								Accumulator += 1;
 							}
 						}
 					}
@@ -359,23 +359,106 @@ public:
 		}
 		Image->Write("OutputPostSetMap.bmp");
 
-		
-		MinHeight = -256;
-		MaxHeight = 256;
+		MinHeight = 0;//-256;
+		MaxHeight = 0;//256;
 		for (u32 y = 0; y < Height; ++ y)
 		for (u32 x = 0; x < Width; ++ x)
 		{
-			//MinHeight = Minimum(MinHeight, GetPoint(x, y).Height);
-			//MaxHeight = Maximum(MaxHeight, GetPoint(x, y).Height);
+			MinHeight = Minimum(MinHeight, GetPoint(x, y).Height);
+			MaxHeight = Maximum(MaxHeight, GetPoint(x, y).Height);
 		}
 		printf("Minimum: %f Maximum: %f \n", MinHeight, MaxHeight);
+		
+		for (u32 y = 0; y < Height; ++ y)
+		for (u32 x = 0; x < Width; ++ x)
+		{
+			if (! GetPoint(x, y).Set)
+				GetPoint(x, y).Height = MinHeight;
+		}
+
+		// Final gradient Pass
+		printf("Gradient blur... ");
+		P.Begin();
+		static s32 const FinalSigma = 10;
+		static s32 const FinalSpread = 3;
+		static u32 const FinalBlurPasses = 3;
+		for (u32 t = 0; t < FinalBlurPasses; ++ t)
+		{
+			for (u32 y = 0; y < Height; ++ y)
+			for (u32 x = 0; x < Width; ++ x)
+			{
+				GetPoint(x, y).PingPongHeight = 0;
+				for (s32 i = 1; i < FinalSigma * FinalSpread; ++ i)
+					GetPoint(x, y).PingPongHeight += Gaussian<f32>(i, FinalSigma) * (GetPoint(x+i, y).Height + GetPoint(x-i, y).Height);
+				GetPoint(x, y).PingPongHeight += Gaussian<f32>(0, FinalSigma) * GetPoint(x, y).Height;
+				P.Update(100 * y / Height / 2 / FinalBlurPasses + 100 * t / FinalBlurPasses);
+			}
+			for (u32 y = 0; y < Height; ++ y)
+			for (u32 x = 0; x < Width; ++ x)
+			{
+				GetPoint(x, y).Height = GetPoint(x, y).PingPongHeight;
+			}
+			for (u32 y = 0; y < Height; ++ y)
+			for (u32 x = 0; x < Width; ++ x)
+			{
+				GetPoint(x, y).PingPongHeight = 0;
+				for (s32 i = 1; i < FinalSigma * FinalSpread; ++ i)
+					GetPoint(x, y).PingPongHeight += Gaussian<f32>(i, FinalSigma) * (GetPoint(x, y+i).Height + GetPoint(x, y-i).Height);
+				GetPoint(x, y).PingPongHeight += Gaussian<f32>(0, FinalSigma) * GetPoint(x, y).Height;
+				P.Update(100 * (y + Height) / Height / 2 / FinalBlurPasses + 100 * t / FinalBlurPasses);
+			}
+			for (u32 y = 0; y < Height; ++ y)
+			for (u32 x = 0; x < Width; ++ x)
+			{
+				GetPoint(x, y).Height = GetPoint(x, y).PingPongHeight;
+			}
+		}
+		P.End();
+
+
+		MinHeight = 0;//-256;
+		MaxHeight = 0;//256;
+		for (u32 y = 0; y < Height; ++ y)
+		for (u32 x = 0; x < Width; ++ x)
+		{
+			MinHeight = Minimum(MinHeight, GetPoint(x, y).Height);
+			MaxHeight = Maximum(MaxHeight, GetPoint(x, y).Height);
+		}
+		printf("Post Blur Minimum: %f Maximum: %f \n", MinHeight, MaxHeight);
 		for (u32 y = 0; y < Height; ++ y)
 		for (u32 x = 0; x < Width; ++ x)
 		{
 			Image->SetPixel(x, y, color4f((GetPoint(x, y).Height - MinHeight)/(MaxHeight - MinHeight)));
 		}
+		Image->Write("OutputFull.bmp");
+		
 
-		Image->Write("Output.bmp");
+		MaxHeight = 0;//256;
+		for (u32 y = 0; y < Height; ++ y)
+		for (u32 x = 0; x < Width; ++ x)
+		{
+			f32 Height = Minimum(GetPoint(x, y).Height, 0.f);
+			Image->SetPixel(x, y, color4f((Height - MinHeight)/(MaxHeight - MinHeight)));
+		}
+		Image->Write("OutputNegative.bmp");
+
+		
+		MaxHeight = -std::numeric_limits<f32>::max();
+		for (u32 y = 0; y < Height; ++ y)
+		for (u32 x = 0; x < Width; ++ x)
+		{
+			if (! GetPoint(x, y).OriginalSet)
+				MaxHeight = Maximum(MaxHeight, GetPoint(x, y).Height);
+		}
+		printf("Not Original Set Maximum: %f \n", MaxHeight);
+		for (u32 y = 0; y < Height; ++ y)
+		for (u32 x = 0; x < Width; ++ x)
+		{
+			f32 Height = (GetPoint(x, y).OriginalSet ? MaxHeight : GetPoint(x, y).Height);
+			Image->SetPixel(x, y, color4f((Height - MinHeight)/(MaxHeight - MinHeight)));
+		}
+		Image->Write("OutputFinal.bmp");
+
 		WaitForUser();
 	}
 };
