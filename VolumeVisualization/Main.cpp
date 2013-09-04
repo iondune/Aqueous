@@ -8,11 +8,8 @@ int main()
 {
 	std::cout << "System is initializing..." << std::endl;
 
-	//CProgramContext & Context = CProgramContext::Get();
-	//Context.Run();
-
-	BathymetryGenerator BG;
-	BG.Generate();
+	CProgramContext & Context = CProgramContext::Get();
+	Context.Run();
 
 	return 0;
 }
