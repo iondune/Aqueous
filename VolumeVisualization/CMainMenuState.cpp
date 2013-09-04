@@ -27,8 +27,6 @@ void CMainMenuState::End()
 void CMainMenuState::Update(f32 const Elapsed)
 {
 	printOpenGLErrors();
-	// Let loading thread run
-	//sf::sleep(sf::seconds(0.05f));
 	std::chrono::milliseconds Milliseconds(50);
 	std::this_thread::sleep_for(Milliseconds);
 
@@ -37,16 +35,12 @@ void CMainMenuState::Update(f32 const Elapsed)
 	Context->GUIContext->Draw(Elapsed, true);
 	CApplication::Get().GetWindow().SwapBuffers();
 
-	static int counter = 0;
-	
-	if (! counter--)
+	static int Counter = 0;
+	if (! Counter--)
 	{
 		createDataSet();
-		loadData(//"DenmarkMission1.dat");
-			"HopavagenBayNew1.dat");
+		loadData("HopavagenBay1.dat");
 	}
-
-	//loaded = true;
 }
 
 void CMainMenuState::OnEvent(SWindowResizedEvent & Event)
