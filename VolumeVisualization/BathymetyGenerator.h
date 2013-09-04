@@ -139,12 +139,15 @@ public:
 		for (u32 y = 0; y < Height; ++ y)
 		for (u32 x = 0; x < Width; ++ x)
 			MaxMagnitude = Maximum(MaxMagnitude, GetPoint(x, y).Gradient.Length());
+		printf("Maximum pre normal mag is %f\n", MaxMagnitude);
 		for (u32 y = 0; y < Height; ++ y)
 		for (u32 x = 0; x < Width; ++ x)
 		{
 			Image->SetPixel(x, y, color4f(GetPoint(x, y).Gradient.Length() / MaxMagnitude));
 		}
 		Image->Write("OutputPreNormalsMagnitude.bmp");
+
+		FILE * f = fopen("Output.txt", "w");
 
 		// Gradient bleed
 		printf("Bleeding gradients... ");
@@ -159,17 +162,19 @@ public:
 			{
 				if (! GetPoint(x, y).GradientSet)
 				{
+					GetPoint(x, y).Gradient = vec2f();
+
 					f32 Accumulator = 0;
 					u32 Contributors = 0;
 					for (s32 i = - SquareSize / 2; i < SquareSize / 2; ++ i)
 					for (s32 j = - SquareSize / 2; j < SquareSize / 2; ++ j)
 					{
-						if (i != 0 && j != 0)
+						if (i != 0 || j != 0)
 						{
 							vec2f const Offset(vec2i(i, j));
 							if (Offset.LengthSq() <= Sq(SquareSize) && GetPoint(x+i, y+j).GradientSet)
 							{
-								f32 const Weight = (1 / Offset.Length()) * Offset.GetNormalized().Dot(GetPoint(x+i, y+j).Gradient.GetNormalized());
+								f32 const Weight = (1 / Offset.Length()) * (Offset.GetNormalized().Dot(GetPoint(x+i, y+j).Gradient.GetNormalized()) + 0.2f);
 								GetPoint(x, y).Gradient += Weight * GetPoint(x+i, y+j).Gradient;
 								Accumulator += Weight;
 								Contributors ++;
@@ -177,15 +182,14 @@ public:
 						}
 					}
 
-					if (Contributors >= 5)
+					if (Contributors >= 3 && Accumulator >= 0.1f)
 					{
+						f32 OriginalLength = GetPoint(x, y).Gradient.Length();
 						GetPoint(x, y).Gradient /= Accumulator;
+						fprintf(f, "%04d %f : [%d] (%d, %f) %f\n", 
+							(s32) GetPoint(x, y).Gradient.Length(), GetPoint(x, y).Gradient.Length(), t, Contributors, Accumulator, OriginalLength);
 						GetPoint(x, y).NewGradientSet = true;
 						CalculatedCount ++;
-					}
-					else
-					{
-						GetPoint(x, y).Gradient.reset();
 					}
 				}
 
@@ -198,27 +202,35 @@ public:
 				if (GetPoint(x, y).NewGradientSet)
 					GetPoint(x, y).GradientSet = true;
 			}
+
+			std::stringstream s1;
+			s1 << "OutputPostNormals" << t << ".bmp";
+			// Diagnostic
+			for (u32 y = 0; y < Height; ++ y)
+			for (u32 x = 0; x < Width; ++ x)
+			{
+				vec2f GradNormal = GetPoint(x, y).Gradient.GetNormalized();
+				Image->SetPixel(x, y, color4i(Clamp<s32>(GradNormal.X * 128 + 128, 0, 255), Clamp<s32>(GradNormal.Y * 128 + 128, 0, 255), 0, 0));
+			}
+			Image->Write(s1.str());
+				std::stringstream s2;
+				s2 << "OutputPostNormalsMagnitude" << t << ".bmp";
+			MaxMagnitude = 0;
+			for (u32 y = 0; y < Height; ++ y)
+			for (u32 x = 0; x < Width; ++ x)
+				MaxMagnitude = Maximum(MaxMagnitude, GetPoint(x, y).Gradient.Length());
+			printf("Maximum post normal mag is %f\n", MaxMagnitude);
+			for (u32 y = 0; y < Height; ++ y)
+			for (u32 x = 0; x < Width; ++ x)
+			{
+				Image->SetPixel(x, y, color4f(GetPoint(x, y).Gradient.Length() / MaxMagnitude));
+			}
+			Image->Write(s2.str());
+
 		}
 		P.End();
+		fclose(f);
 
-		// Diagnostic
-		for (u32 y = 0; y < Height; ++ y)
-		for (u32 x = 0; x < Width; ++ x)
-		{
-			vec2f GradNormal = GetPoint(x, y).Gradient.GetNormalized();
-			Image->SetPixel(x, y, color4i(Clamp<s32>(GradNormal.X * 128 + 128, 0, 255), Clamp<s32>(GradNormal.Y * 128 + 128, 0, 255), 0, 0));
-		}
-		Image->Write("OutputPostNormals.bmp");
-		MaxMagnitude = 0;
-		for (u32 y = 0; y < Height; ++ y)
-		for (u32 x = 0; x < Width; ++ x)
-			MaxMagnitude = Maximum(MaxMagnitude, GetPoint(x, y).Gradient.Length());
-		for (u32 y = 0; y < Height; ++ y)
-		for (u32 x = 0; x < Width; ++ x)
-		{
-			Image->SetPixel(x, y, color4f(GetPoint(x, y).Gradient.Length() / MaxMagnitude));
-		}
-		Image->Write("OutputPostNormalsMagnitude.bmp");
 
 		// Blur gradient Pass
 		printf("Gradient blur... ");
@@ -319,5 +331,6 @@ public:
 		}
 
 		Image->Write("Output.bmp");
+		WaitForUser();
 	}
 };
