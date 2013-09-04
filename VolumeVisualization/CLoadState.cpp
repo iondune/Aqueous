@@ -150,11 +150,11 @@ void CLoadState::LoadScene()
 	// Basic Shader/Mesh
 	Scene.Cube = CMeshLoader::createCubeMesh();
 
-	// Backdrop/SkyCube
+	// Backdrop
 	Scene.SkyBox = new CMeshSceneObject();
 	Scene.SkyBox->setMesh(Scene.Cube);
 	Scene.SkyBox->setShader(SceneManager->getDefaultColorRenderPass(), Context->Shaders.DiffuseTexture);
-	Scene.SkyBox->setScale(SVector3f(28.f));
+	Scene.SkyBox->setScale(SVector3f(40.f));
 	Scene.SkyBox->setTexture(0, "Space.bmp");
 	Scene.SkyBox->setCullingEnabled(false);
 	Scene.SkyBox->setVisible(false);
@@ -175,17 +175,18 @@ void CLoadState::LoadScene()
 	// Terrain
 	Scene.Terrain = new CTerrainSceneObject();
 	SceneManager->addSceneObject(Scene.Terrain);
-	vec3f Scale = vec3f(1.f);
-	Scale /= 512.f;
-	Scale *= 3.f;
-	Scale.X *= -1;
 
 	// GPS Coordinates
 	vec2f DataRangeMin(9.53894f, 63.59233f), DataRangeMax(9.54926f, 63.59595f);
 	vec2f MapRangeMin(9.51013f, 63.57518f), MapRangeMax(9.56290f, 63.60297f);
 
 	vec2f DataRangeCenter = (DataRangeMin + DataRangeMax) / 2.f;
+
+	// Ratio of map range size to data range size
 	vec2f ScaleAdjust = (MapRangeMax - MapRangeMin) / (DataRangeMax - DataRangeMin);
+	f32 MaxAdjust = Maximum(ScaleAdjust.X, ScaleAdjust.Y);
+
+	// Ratio of lower-side offset to upper-side offset
 	vec2f TranslationAdjust = (DataRangeCenter - MapRangeMin) / (MapRangeMax - DataRangeCenter);
 
 	vec2f RelativeTranslate;
@@ -202,19 +203,18 @@ void CLoadState::LoadScene()
 		}
 	}
 
-	f32 MaxAdjust;
 	vec3f Adjuster(1.f);
 	if (ScaleAdjust.X > ScaleAdjust.Y)
-	{
 		Adjuster.Z = ScaleAdjust.X / ScaleAdjust.Y;
-		MaxAdjust = ScaleAdjust.X;
-	}
 	else
-	{
 		Adjuster.X = ScaleAdjust.Y / ScaleAdjust.X;
-		MaxAdjust = ScaleAdjust.Y;
-	}
+
 	RelativeTranslate *= MaxAdjust;
+
+	vec3f Scale = vec3f(1.f);
+	Scale /= 512.f;
+	Scale *= 3.f;
+	Scale.X *= -1;
 	Scale.X *= MaxAdjust;
 	Scale.Z *= MaxAdjust;
 	Scale.Y *= (ScaleAdjust.X + ScaleAdjust.Y) / 2.f;
