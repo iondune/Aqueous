@@ -95,7 +95,7 @@ public:
 		bool InvertY;
 
 		STraits()
-			: PositionXField("x"), PositionYField("y"), PositionZField("z"), InvertY(false)
+			: PositionXField("x"), PositionYField("y"), PositionZField("z"), InvertY(true)
 		{}
 	};
 

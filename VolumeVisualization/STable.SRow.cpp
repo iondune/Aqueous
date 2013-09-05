@@ -32,6 +32,8 @@ STable::SRow STable::SRow::operator = (SRow const & Other)
 {
 	assert(& Other.Table == & Table);
 	Index = Other.Index;
+
+	return * this;
 }
 
 STable::SRow::SRow(STable & table, u32 const index)

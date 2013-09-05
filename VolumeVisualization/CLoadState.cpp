@@ -145,6 +145,46 @@ static double DistFrom(double lat1, double lng1, double lat2, double lng2)
 	return (dist * meterConversion);
 }
 
+enum class ECompassDirection
+{
+	N = 1, E = 1,
+	S = -1, W = -1
+};
+
+static f64 LongLatDecimalDegrees(f64 const Deg, f64 const Min, f64 const Sec, ECompassDirection const Direction = ECompassDirection::N)
+{
+	return (Deg + Min/60.0 + Sec/3600.0) * (int) Direction;
+}
+
+static f64 LongLatDecimalDegrees(std::string const & String)
+{
+	f64 Deg, Min, Sec;
+	char Dir, Dummy;
+	ECompassDirection Direction;
+
+	sscanf(String.c_str(), "%lf %c %lf %c %lf %c %c", & Deg, & Dummy, & Min, & Dummy, & Sec, & Dummy, & Dir);
+	
+	switch (tolower(Dir))
+	{
+	default:
+	case 'N':
+		Direction = ECompassDirection::N;
+		break;
+	case 'E':
+		Direction = ECompassDirection::E;
+		break;
+	case 'S':
+		Direction = ECompassDirection::S;
+		break;
+	case 'W':
+		Direction = ECompassDirection::W;
+		break;
+	}
+
+	return LongLatDecimalDegrees(Deg, Min, Sec, Direction);
+
+}
+
 void CLoadState::LoadScene()
 {
 	// References
@@ -185,6 +225,7 @@ void CLoadState::LoadScene()
 
 	CPlaneGridSceneObject * Plane = new CPlaneGridSceneObject(10);
 	Plane->setShader(SceneManager->getDefaultColorRenderPass(), Context->Shaders.Plane);
+	Plane->setVisible(false);
 	SceneManager->addSceneObject(Plane);
 
 	// Container Objects
@@ -199,67 +240,43 @@ void CLoadState::LoadScene()
 	Scene.Terrain = new CTerrainSceneObject();
 	SceneManager->addSceneObject(Scene.Terrain);
 
-	// GPS Coordinates
-	vec2f DataRangeMin(63.59233f, 9.53894f), DataRangeMax(63.59595f, 9.54926f);
-	vec2f MapRangeMin(63.57518f, 9.51013f), MapRangeMax(63.60297f, 9.56290f);
-
-	printf("Data range is %f by %f meters,\n",
-		DistFrom(DataRangeMin.X, DataRangeMin.Y, DataRangeMax.X, DataRangeMin.Y),
-		DistFrom(DataRangeMin.X, DataRangeMin.Y, DataRangeMin.X, DataRangeMax.Y));
-
-	vec2f DataRangeCenter = (DataRangeMin + DataRangeMax) / 2.f;
-
-	// Ratio of map range size to data range size
-	vec2f ScaleAdjust = (MapRangeMax - MapRangeMin) / (DataRangeMax - DataRangeMin);
-	f32 MaxAdjust = Maximum(ScaleAdjust.X, ScaleAdjust.Y);
-
-	// Ratio of lower-side offset to upper-side offset
-	vec2f TranslationAdjust = (DataRangeCenter - MapRangeMin) / (MapRangeMax - DataRangeCenter);
-
-	vec2f RelativeTranslate;
-	for (int i = 0; i < 2; ++ i)
-	{
-		if (TranslationAdjust[i] > 1.f)
-		{
-			TranslationAdjust[i] = 1.f / TranslationAdjust[i];
-			RelativeTranslate[i] = -(1.f - TranslationAdjust[i]);
-		}
-		else
-		{
-			RelativeTranslate[i] = (1.f - TranslationAdjust[i]);
-		}
-	}
-
-	vec3f Adjuster(1.f);
-	if (ScaleAdjust.X > ScaleAdjust.Y)
-		Adjuster.Z = ScaleAdjust.X / ScaleAdjust.Y;
-	else
-		Adjuster.X = ScaleAdjust.Y / ScaleAdjust.X;
-
-	RelativeTranslate *= MaxAdjust;
-
-	vec3f Scale = vec3f(1.f);
-	Scale /= 512.f;
-	Scale *= 3.f;
-	Scale.X *= -1;
-	Scale.X *= MaxAdjust;
-	Scale.Z *= MaxAdjust;
-	Scale.Y *= (ScaleAdjust.X + ScaleAdjust.Y) / 2.f;
-	
-	Scene.Terrain->setScale(Scale);
-	Scene.Terrain->setTranslation(vec3f(-RelativeTranslate.X, 0.f, RelativeTranslate.Y));
-	Scene.Water->setScale(Scale);
-	Scene.Water->setTranslation(vec3f(-RelativeTranslate.X, 0.f, RelativeTranslate.Y));
-
 	// Volume
 	Scene.Volume = new CVolumeSceneObject();
+	Scene.Volume->setVisible(false);
 	//SceneManager->addSceneObject(Scene.VolumeSceneObject);
 
-	Scene.Volume->setScale(Adjuster * vec3f(3.f, 1.6f, 3.f));
-	Scene.Glyphs->setScale(Adjuster * vec3f(3.f, 1.6f, 3.f) * vec3f(-1, -1, 1));
+	// Coordinate Calculations
+	vec2f const DataRangeMin(56.667337f, 9.988503f), DataRangeMax(56.673766f, 9.999437f);
+	vec2f const MapRangeMin(LongLatDecimalDegrees(56, 38, 17.22), LongLatDecimalDegrees(9, 55, 45.32)), MapRangeMax(LongLatDecimalDegrees(56, 41, 59.01), LongLatDecimalDegrees(10, 2, 34.80));
+	
+	vec2f const DataRangeSize = DataRangeMax - DataRangeMin;
+	vec2f const DataRangeCenter = (DataRangeMin + DataRangeMax) / 2.f;
+	vec2f const DataActualSize(DistFrom(DataRangeMin.X, DataRangeCenter.Y, DataRangeMax.X, DataRangeCenter.Y), DistFrom(DataRangeCenter.X, DataRangeMin.Y, DataRangeCenter.X, DataRangeMax.Y));
+	f32 const DataDepth = 15.08980f;
+	
+	vec2f const MapRangeSize = MapRangeMax - MapRangeMin;
+	vec2f const MapRangeCenter = (MapRangeMin + MapRangeMax) / 2.f;
+	vec2f const MapActualSize(DistFrom(MapRangeMin.X, MapRangeCenter.Y, MapRangeMax.X, MapRangeCenter.Y), DistFrom(MapRangeCenter.X, MapRangeMin.Y, MapRangeCenter.X, MapRangeMax.Y));
+	f32 const MapDepth = 600.f;
 
-	Scene.Volume->setTranslation(vec3f(0, 0.4f - 1.f, 0));
-	Scene.Glyphs->setTranslation(vec3f(0, 0.4f - 1.f, 0));
+	printf("Data range is %f by %f meters,\n", DataActualSize.X, DataActualSize.Y);
+	
+	vec2f const ActualOffset = vec2f(DistFrom(DataRangeCenter.X, DataRangeCenter.Y, MapRangeCenter.X, DataRangeCenter.Y), DistFrom(DataRangeCenter.X, DataRangeCenter.Y, DataRangeCenter.X, MapRangeCenter.Y));
+	vec2f const MapOffset = ActualOffset * 3.f / Maximum(DataActualSize.X, DataActualSize.Y);
+	vec3f const DataScale = 3.f * vec3f(DataActualSize.X, DataDepth, DataActualSize.Y) / Maximum(DataActualSize.X, DataActualSize.Y);
+	vec3f const MapScale = DataScale * vec3f(MapActualSize.X, MapDepth, MapActualSize.Y) / vec3f(DataActualSize.X, DataDepth, DataActualSize.Y);
+
+	static f32 const YExaggeration = 3.f;
+	static vec3f const Multiplier = vec3f(1, YExaggeration, 1);
+	
+	Scene.Glyphs->setScale(DataScale * Multiplier);
+	Scene.Glyphs->setTranslation(vec3f(0, -DataScale.Y * YExaggeration / 2, 0));
+
+	Scene.Terrain->setScale(MapScale * Multiplier / CTerrainSceneObject::Size);
+	Scene.Water->setScale(MapScale / CTerrainSceneObject::Size);
+
+	Scene.Terrain->setTranslation(vec3f(MapOffset.X, 0, MapOffset.Y));
+	Scene.Water->setTranslation(vec3f(MapOffset.X, 0, MapOffset.Y));
 }
 
 void CLoadState::OnFinish()

@@ -11,9 +11,18 @@
 class CTerrainSceneObject : public ISceneObject
 {
 
+public:
+
 	static u32 const Size = 512;
 	static u32 const HeightmapSize = Size + 1;
 
+	CTerrainSceneObject();
+	bool draw(IScene const * const scene, sharedPtr<IRenderPass> Pass, bool const CullingEnabled);
+
+	bool DebugHeight;
+
+protected:
+	
 	// Generic flat grid data, used with heightmap offset
 	CBufferObject<f32> VertexData;
 	CBufferObject<u32> IndexBuffer;
@@ -28,13 +37,5 @@ class CTerrainSceneObject : public ISceneObject
 	CSceneManager & SceneManager;
 
 	glm::mat4 ModelMatrix;
-
-public:
-
-	CTerrainSceneObject();
-
-	bool draw(IScene const * const scene, sharedPtr<IRenderPass> Pass, bool const CullingEnabled);
-
-	bool DebugHeight;
 
 };

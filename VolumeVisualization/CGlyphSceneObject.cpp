@@ -35,8 +35,9 @@ void CGlyphSceneObject::LoadGlyphs(SciDataManager * DataManager, IColorMapper * 
 	Range XRange = DataSet.GetFieldRange(DataManager->GetRawValues().Traits.PositionXField, 15.0);
 	Range YRange = DataSet.GetFieldRange(DataManager->GetRawValues().Traits.PositionYField, 15.0);
 	Range ZRange = DataSet.GetFieldRange(DataManager->GetRawValues().Traits.PositionZField, 15.0);
-
-	printf("built in data range is %f by %f\n", XRange.second - XRange.first, ZRange.second - ZRange.first);
+	
+	printf("built in data range is %f %f to %f %f long lat\n", XRange.first, ZRange.first, XRange.second, ZRange.second);
+	printf("depth varies from %f to %f\n", YRange.first, YRange.second);
 
 	bool MaintainXZScale = false;
 
