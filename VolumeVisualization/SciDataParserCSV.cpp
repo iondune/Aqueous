@@ -1,5 +1,5 @@
+
 #include "SciDataParser.h"
-#include "SciData.h"
 #include "SciDataManager.h"
 
 #include <fstream>
@@ -51,12 +51,12 @@ void SciDataParserCSV::load(std::string const & FileName)
 			}
 
 			if (Row.size() != Fields.size())
-				std::cerr << "Mismatched row size at row " << Manager->getRawValues().size() << ", found " << Row.size() << " but expected " << Fields.size() << std::endl;
+				std::cerr << "Mismatched row size at row " << Manager->GetRawValues().Size() << ", found " << Row.size() << " but expected " << Fields.size() << std::endl;
 			u32 Length = std::min(Row.size(), Fields.size());
 
-			SciData d(Manager->getRawValues());
+			STable::SRow & TableRow = Manager->GetRawValues().AddRow();
 			for (u32 i = 0; i < Length; ++ i)
-				d.addField(Fields[i]) = Row[i];
+				TableRow.GetField(Fields[i]) = Row[i];
 		}
 	}
 }
@@ -105,12 +105,12 @@ void SciDataParserSmartTether::load(std::string const & FileName)
 			}
 
 			if (Row.size() != Fields.size())
-				std::cerr << "Mismatched row size at row " << Manager->getRawValues().size() << ", found " << Row.size() << " but expected " << Fields.size() << std::endl;
+				std::cerr << "Mismatched row size at row " << Manager->GetRawValues().Size() << ", found " << Row.size() << " but expected " << Fields.size() << std::endl;
 			u32 Length = std::min(Row.size(), Fields.size());
 
-			SciData d(Manager->getRawValues());
+			STable::SRow & TableRow = Manager->GetRawValues().AddRow();
 			for (u32 i = 0; i < Length; ++ i)
-				d.addField(Fields[i]) = Row[i];
+				TableRow.GetField(Fields[i]) = Row[i];
 		}
 	}
 }
@@ -206,14 +206,14 @@ void SciDataParserCSV::mergedLoad(std::string const & FileName1, std::string con
 			
 			if (Row1.size() != Fields1.size())
 			{
-				std::cerr << "Mismatched row size at row " << Manager->getRawValues().size() << std::endl;
+				std::cerr << "Mismatched row size at row " << Manager->GetRawValues().Size() << std::endl;
 				ReadNext1 = true;
 			}
 			s32 Length1 = std::min(Row1.size(), Fields1.size());
 
 			if (Row2.size() != Fields2.size())
 			{
-				std::cerr << "Mismatched row size at row " << Manager->getRawValues().size() << std::endl;
+				std::cerr << "Mismatched row size at row " << Manager->GetRawValues().Size() << std::endl;
 				ReadNext2 = true;
 			}
 			s32 Length2 = std::min(Row2.size(), Fields2.size());
@@ -224,12 +224,12 @@ void SciDataParserCSV::mergedLoad(std::string const & FileName1, std::string con
 
 				if (std::abs((int) (Field1 - Field2)) <= 2)
 				{
-					SciData d(Manager->getRawValues());
+					STable::SRow & Row = Manager->GetRawValues().AddRow();
 					for (s32 i = 0; i < Length1; ++ i)
-						d.addField(Fields1[i]) = string_to_double(Row1[i]);
+						Row.GetField(Fields1[i]) = string_to_double(Row1[i]);
 					for (s32 i = 0; i < Length2; ++ i)
 						if (i != FieldIndex2)
-							d.addField(Fields2[i]) = string_to_double(Row2[i]);
+							Row.GetField(Fields2[i]) = string_to_double(Row2[i]);
 					ReadNext1 = ReadNext2 = true;
 				}
 				else if (Field1 > Field2)

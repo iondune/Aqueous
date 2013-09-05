@@ -1,12 +1,11 @@
-#ifndef _SCI_DATA_MANAGER_H_INCLUDED_
-#define _SCI_DATA_MANAGER_H_INCLUDED_
+
+#pragma once
 
 #include <vector>
 #include <ionScene.h>
 #include <ionCore.h>
 
-#include "SciDataCollection.h"
-#include "SciDataParser.h"
+#include "STable.h"
 #include "IColorMapper.h"
 
 
@@ -15,8 +14,8 @@ class SciDataManager
 
 	friend class SciDataParser;
 
-	SciDataCollection RawValues;
-	SciDataCollection GridValues;
+	STable RawValues;
+	STable GridValues;
 
 	unsigned int VolumeHandle;
 
@@ -47,11 +46,11 @@ public:
 	void produceVolumeMaps();
 
 	
-	SciDataCollection & getRawValues();
-	SciDataCollection & getGridValues();
+	STable & GetRawValues();
+	STable & GetGridValues();
 
-	SciDataCollection const & getRawValues() const;
-	SciDataCollection const & getGridValues() const;
+	STable const & GetRawValues() const;
+	STable const & GetGridValues() const;
 
 	unsigned int const getVolumeHandle() const;
 	
@@ -59,5 +58,3 @@ public:
 	void setGridDimensions(SVector3u const & gridDimensions);
 
 };
-
-#endif

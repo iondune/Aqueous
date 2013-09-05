@@ -1,6 +1,5 @@
 
 #include "SciDataParser.h"
-#include "SciData.h"
 #include "SciDataManager.h"
 
 #include "matlib/include/mat.h"
@@ -142,11 +141,11 @@ void SciDataParserCTD::load(std::string const &data)
 			double Depth = Data[j + 86 * Dimensions[0]];
 			double Salinty = Data[j + 95 * Dimensions[0]];
 
-			SciData d(Manager->getRawValues());
-			d.addField("salinity") = Salinty;
-			d.addField("x") = Lat;
-			d.addField("y") = Depth;
-			d.addField("z") = Lon;
+			STable::SRow & Row = Manager->GetRawValues().AddRow();
+			Row.GetField("salinity") = Salinty;
+			Row.GetField("x") = Lat;
+			Row.GetField("y") = Depth;
+			Row.GetField("z") = Lon;
 
 			if (writeCsv)
 				printf("\r%3d%%", (int) (100.f * (float) j / (float) (Dimensions[0] - 1.f)));

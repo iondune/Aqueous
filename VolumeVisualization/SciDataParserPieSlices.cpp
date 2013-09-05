@@ -1,5 +1,5 @@
+
 #include "SciDataParser.h"
-#include "SciData.h"
 #include "SciDataManager.h"
 
 #include <fstream>
@@ -210,14 +210,14 @@ void SciDataParserPieSlices::load(std::string const & PieFile, std::string const
 							f64 const radial = (Slice[5]*(1.0 - ratio) + distance*(ratio));
 
 
-							SciData d(Manager->getRawValues());
-							d.addField("time") = HoboTime;
-							d.addField("x") = cos(angle)*radial;
-							d.addField("z") = sin(angle)*radial;
-							d.addField("y") = Depth;
-							d.addField("low") = Hobo[2];
-							d.addField("high") = Hobo[3];
-							d.addField("temp") = Hobo[4];
+							STable::SRow & Row = Manager->GetRawValues().AddRow();
+							Row.GetField("time") = HoboTime;
+							Row.GetField("x") = cos(angle)*radial;
+							Row.GetField("z") = sin(angle)*radial;
+							Row.GetField("y") = Depth;
+							Row.GetField("low") = Hobo[2];
+							Row.GetField("high") = Hobo[3];
+							Row.GetField("temp") = Hobo[4];
 							PointsCreated ++;
 						}
 

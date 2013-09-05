@@ -1,5 +1,5 @@
-#ifndef _SCI_DATA_PARSER_H_INCLUDED_
-#define _SCI_DATA_PARSER_H_INCLUDED_
+
+#pragma once
 
 #include <vector>
 #include <ionScene.h>
@@ -107,5 +107,3 @@ public:
 	void load(std::string const & PieFile, std::string const & HoboFile, std::string const & SmartFile, STimeOffsets const & timeOffsets);
 
 };
-
-#endif

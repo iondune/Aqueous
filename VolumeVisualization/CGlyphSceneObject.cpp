@@ -31,36 +31,36 @@ void CGlyphSceneObject::loadGlyphs(SciDataManager * DataManager, IColorMapper * 
 {
 	Glyphs.clear();
 
-	SciDataCollection & DataSet = DataManager->getRawValues();
-	ColorMapper->preProcessValues(DataSet);
+	STable & DataSet = DataManager->GetRawValues();
+	ColorMapper->PreProcessValues(DataSet);
 
-	Range XRange = DataSet.getValueRange(xField, 15.0);
-	Range YRange = DataSet.getValueRange(yField, 15.0);
-	Range ZRange = DataSet.getValueRange(zField, 15.0);
+	Range XRange = DataSet.GetFieldRange(xField, 15.0);
+	Range YRange = DataSet.GetFieldRange(yField, 15.0);
+	Range ZRange = DataSet.GetFieldRange(zField, 15.0);
 
 	printf("built in data range is %f by %f\n", XRange.second - XRange.first, ZRange.second - ZRange.first);
 
 	bool MaintainXZScale = false;
 
-	for (auto it = DataSet.getValues().begin(); it != DataSet.getValues().end(); ++ it)
+	for (auto it = DataSet.GetValues().begin(); it != DataSet.GetValues().end(); ++ it)
 	{
 		SGlyph g;
 
 		f32 MaxField = Max((XRange.second - XRange.first), (ZRange.second - ZRange.first));
 
-		float X = (float) ((it->getField(xField) - XRange.first) / (MaintainXZScale ? MaxField : (XRange.second - XRange.first)));
+		float X = (float) ((it->GetField(xField) - XRange.first) / (MaintainXZScale ? MaxField : (XRange.second - XRange.first)));
 		if (XRange.first > XRange.second)
 			X = 0.f;
 
-		float Y = 1.f - (float) ((it->getField(yField) - YRange.first) / (YRange.second - YRange.first));
+		float Y = 1.f - (float) ((it->GetField(yField) - YRange.first) / (YRange.second - YRange.first));
 		if (YRange.first > YRange.second)
 			Y = 0.f;
 
-		float Z = (float) ((it->getField(zField) - ZRange.first) / (MaintainXZScale ? MaxField : (ZRange.second - ZRange.first)));
+		float Z = (float) ((it->GetField(zField) - ZRange.first) / (MaintainXZScale ? MaxField : (ZRange.second - ZRange.first)));
 		if (ZRange.first > ZRange.second)
 			Z = 0.f;
 
-		double v = it->getField(FloorLabel);
+		double v = it->GetField(FloorLabel);
 		if (v != 0.f)
 		{
 			f32 Depth = (f32) v / (f32) YRange.second;
@@ -68,7 +68,7 @@ void CGlyphSceneObject::loadGlyphs(SciDataManager * DataManager, IColorMapper * 
 		}
 
 		g.Position = vec3f(X, Y, Z);
-		g.Color = ColorMapper->getColor(* it);
+		g.Color = ColorMapper->GetColor(* it);
 
 		Glyphs.push_back(g);
 	}

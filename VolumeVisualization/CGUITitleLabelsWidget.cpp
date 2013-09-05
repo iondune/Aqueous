@@ -9,7 +9,7 @@
 
 CGUITitleLabelsWidget::CGUITitleLabelsWidget(SciDataManager * DataManager)
 {
-	static Range ValueRange = DataManager->getRawValues().getValueRange("o1", 5.0);
+	static Range ValueRange = DataManager->GetRawValues().GetFieldRange("o1", 5.0);
 
 	std::wstringstream s;
 	s << std::fixed;
@@ -53,7 +53,7 @@ CGUITitleLabelsWidget::CGUITitleLabelsWidget(SciDataManager * DataManager)
 
 void CGUITitleLabelsWidget::resetVolumeRangeIndicator(SciDataManager * DataManager)
 {
-	static Range ValueRange = DataManager->getRawValues().getValueRange("o1", 5.0);
+	static Range ValueRange = DataManager->GetRawValues().GetFieldRange("o1", 5.0);
 
 	{
 		std::wstringstream s;
@@ -68,11 +68,11 @@ void CGUITitleLabelsWidget::resetVolumeRangeIndicator(SciDataManager * DataManag
 	}
 	
 	{
-		static Range ValueRange = DataManager->getGridValues().getValueRange("o1", 5.0);
-		static Range XValueRange = DataManager->getRawValues().getValueRange("x", 5.0);
-		static Range YValueRange = DataManager->getRawValues().getValueRange("y", 5.0);
+		static Range ValueRange = DataManager->GetGridValues().GetFieldRange("o1", 5.0);
+		static Range XValueRange = DataManager->GetRawValues().GetFieldRange("x", 5.0);
+		static Range YValueRange = DataManager->GetRawValues().GetFieldRange("y", 5.0);
 		YValueRange.first = 0.0;
-		static Range ZValueRange = DataManager->getRawValues().getValueRange("z", 5.0);
+		static Range ZValueRange = DataManager->GetRawValues().GetFieldRange("z", 5.0);
 
 		double EntireVolume = 1.0;
 		EntireVolume *= XValueRange.second - XValueRange.first;

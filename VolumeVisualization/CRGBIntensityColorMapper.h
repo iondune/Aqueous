@@ -1,10 +1,9 @@
-#ifndef _CRGBCOLORMAPPER_H_INCLUDED_
-#define _CRGBCOLORMAPPER_H_INCLUDED_
+
+#pragma once
 
 #include <ionScene.h>
 #include <ionCore.h>
 
-#include "SciDataCollection.h"
 #include "IColorMapper.h"
 
 
@@ -20,7 +19,7 @@ public:
 
 	Range FieldRanges[3];
 
-	void initialValues()
+	void InitialValues()
 	{
 		ValueCutoff = 5.0;
 		AcceptedRange = Range();
@@ -29,7 +28,7 @@ public:
 
 	CRGBIntensityColorMapper(std::string const inFields[])
 	{
-		initialValues();
+		InitialValues();
 
 		for (int i = 0; i < 3; ++ i)
 			Fields[i] = inFields[i];
@@ -37,20 +36,20 @@ public:
 
 	CRGBIntensityColorMapper(std::string const & RField, std::string const & GField, std::string const & BField)
 	{
-		initialValues();
+		InitialValues();
 
 		Fields[0] = RField;
 		Fields[1] = GField;
 		Fields[2] = BField;
 	}
 
-	virtual SColorAf const getColor(SciData const & d)
+	virtual SColorAf const GetColor(STable::SRow const & d)
 	{
 		float Color[3] = {0.f, 0.f, 0.f};
 
 		for (int i = 0; i < 3; ++ i)
 		{
-			double const v = d.getField(Fields[i]);
+			double const v = d.GetField(Fields[i]);
 
 			Color[i] = (float) ((v - FieldRanges[i].first) / (FieldRanges[i].second - FieldRanges[i].first));
 		}
@@ -58,12 +57,10 @@ public:
 		return SColorAf(Color[0], Color[1], Color[2], Clamp((Color[0] + Color[1] + Color[2]) * AlphaIntensity / 3.f, 0.f, 1.f));
 	}
 
-	virtual void preProcessValues(SciDataCollection & s)
+	virtual void PreProcessValues(STable & s)
 	{
 		for (int i = 0; i < 3; ++ i)
-			FieldRanges[i] = s.getValueRange(Fields[i], ValueCutoff, AcceptedRange);
+			FieldRanges[i] = s.GetFieldRange(Fields[i], ValueCutoff, AcceptedRange);
 	}
 
 };
-
-#endif

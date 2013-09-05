@@ -39,16 +39,16 @@ void CDataLoadingThread::Execute()
 
 	int Counter = 0;
 
-	for (auto Data : Context->DataManager->getRawValues().getValues())
+	for (auto Data : Context->DataManager->GetRawValues().GetValues())
 	{
-		float Progress = Counter++ / (float) Context->DataManager->getRawValues().getValues().size();
+		float Progress = Counter++ / (float) Context->DataManager->GetRawValues().GetValues().size();
 		LoadingWidget->setProgress(0.1f + 0.65f * Progress);
 
-		double X = distFrom(Data.getField("Base Latitude"), Data.getField("Base Longitude"), Data.getField("Base Latitude"), Data.getField("End Longitude"));
-		double Y = distFrom(Data.getField("Base Latitude"), Data.getField("Base Longitude"), Data.getField("End Latitude"), Data.getField("Base Longitude"));
+		double X = distFrom(Data.GetField("Base Latitude"), Data.GetField("Base Longitude"), Data.GetField("Base Latitude"), Data.GetField("End Longitude"));
+		double Y = distFrom(Data.GetField("Base Latitude"), Data.GetField("Base Longitude"), Data.GetField("End Latitude"), Data.GetField("Base Longitude"));
 
-		Data.getField("End Longitude") = (Data.getField("Base Longitude") > Data.getField("End Longitude") ? 1 : -1) * X;
-		Data.getField("End Latitude") = (Data.getField("Base Latitude") > Data.getField("End Latitude") ? 1 : -1) * Y;
+		Data.GetField("End Longitude") = (Data.GetField("Base Longitude") > Data.GetField("End Longitude") ? 1 : -1) * X;
+		Data.GetField("End Latitude") = (Data.GetField("Base Latitude") > Data.GetField("End Latitude") ? 1 : -1) * Y;
 	}
 
 	COxygenColorMapper o("d1");

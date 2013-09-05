@@ -1,6 +1,5 @@
 
 #include "SciDataParser.h"
-#include "SciData.h"
 #include "SciDataManager.h"
 #include <numeric>
 
@@ -43,6 +42,13 @@ void SciDataParserSimpleTXT::load(std::string const &data)
 	int line = 0;
 	tok = strtok(dataBuf, "\n");
 
+	Manager->GetRawValues().AddField("o2");
+	Manager->GetRawValues().AddField("temp");
+	Manager->GetRawValues().AddField("d1");
+	Manager->GetRawValues().AddField("x");
+	Manager->GetRawValues().AddField("y");
+	Manager->GetRawValues().AddField("z");
+
 	while(tok != NULL)
 	{
 		if(sscanf(tok, "%f %f %f %f %f %f %f", &time, &x, &z, &y, &temp, &O2, &d1) <= 0)
@@ -52,13 +58,13 @@ void SciDataParserSimpleTXT::load(std::string const &data)
 		}
 
 		// push scidata into list
-		SciData d(Manager->getRawValues());
-		d.addField("o2") = O2;
-		d.addField("temp") = temp;
-		d.addField("d1") = d1;
-		d.addField("x") = x;
-		d.addField("y") = -y; // Flip y from depth to coordinate
-		d.addField("z") = z;
+		STable::SRow & Row = Manager->GetRawValues().AddRow();
+		Row.GetField("o2") = O2;
+		Row.GetField("temp") = temp;
+		Row.GetField("d1") = d1;
+		Row.GetField("x") = x;
+		Row.GetField("y") = -y; // Flip y from depth to coordinate
+		Row.GetField("z") = z;
 
 		// move onto next line
 		tok = strtok(NULL, "\n");

@@ -5,13 +5,13 @@ void SciDataManager::createVolumeFromGridValues(IColorMapper * ColorMapper)
 {
 	unsigned int const size = GridDimensions[0] * GridDimensions[1] * GridDimensions[2] * 4;
 
-	if (GridValues.size() != size / 4)
+	if (GridValues.Size() != size / 4)
 	{
 		printf("Unexpected size of grid data.\n");
 		return;
 	}
 
-	ColorMapper->preProcessValues(GridValues);
+	ColorMapper->PreProcessValues(GridValues);
 
 	GLubyte * volumeData = new GLubyte[size];
 
@@ -25,7 +25,7 @@ void SciDataManager::createVolumeFromGridValues(IColorMapper * ColorMapper)
 
 				u32 ValueIndex = k + j * GridDimensions[0] + i * GridDimensions[1] * GridDimensions[0];
 
-				SColorAf Color = ColorMapper->getColor(GridValues.getValues()[ValueIndex]);
+				SColorAf Color = ColorMapper->GetColor(GridValues.GetValues()[ValueIndex]);
 
 				for (u32 t = 0; t < 4; ++ t)
 					volumeData[index * 4 + t] = Clamp<u8>((u8) (Color[t] * 255.f), 0, 255);
@@ -92,7 +92,7 @@ f64 const SciDataManager::getGridVolume(std::string const & Field, f64 const Val
 {
 	unsigned int const size = GridDimensions[0] * GridDimensions[1] * GridDimensions[2] * 4;
 
-	if (GridValues.size() != size / 4)
+	if (GridValues.Size() != size / 4)
 	{
 		printf("Unexpected size of grid data.\n");
 		return 0.0;
@@ -252,7 +252,7 @@ f64 const SciDataManager::getGridVolume(std::string const & Field, f64 const Val
 							{
 								u32 ValueIndex = (k + c) + (j + b) * GridDimensions[0] + (i + a) * GridDimensions[1] * GridDimensions[0];
 								u32 FieldIndex = 4 * c + 2 * b + a;
-								IsoValues[FieldIndex] = Range - abs(GridValues.getValues()[ValueIndex].getField(Field) - Value);
+								IsoValues[FieldIndex] = Range - abs(GridValues.GetValues()[ValueIndex].GetField(Field) - Value);
 							}
 						}
 					}
@@ -276,8 +276,8 @@ f64 const SciDataManager::getGridVolume(std::string const & Field, f64 const Val
 				for (u32 k = 0; k < GridDimensions[0]; ++ k)
 				{
 					u32 ValueIndex = (k + 0) + (j + 0) * GridDimensions[0] + (i + 0) * GridDimensions[1] * GridDimensions[0];
-					SciData const * Data = & GridValues.getValues()[ValueIndex];
-					f64 const IsoValue = Range - abs(Data->getField(Field) - Value);
+					STable::SRow const * Data = & GridValues.GetValues()[ValueIndex];
+					f64 const IsoValue = Range - abs(Data->GetField(Field) - Value);
 
 					if (IsoValue < 0.0)
 						continue; //{printf("%f\t", Data->getField(Field)); continue;}
@@ -308,19 +308,13 @@ f64 const SciDataManager::getGridVolume(std::string const & Field, f64 const Val
 									}
 
 									int ValueIndex = (k + a) + (j + b) * GridDimensions[0] + (i + c) * GridDimensions[1] * GridDimensions[0];
-									SciData const * OtherData = & GridValues.getValues()[ValueIndex];
-									f64 const OtherIsoValue = Range - abs(OtherData->getField(Field) - Value);
+									STable::SRow const * OtherData = & GridValues.GetValues()[ValueIndex];
+									f64 const OtherIsoValue = Range - abs(OtherData->GetField(Field) - Value);
 
 									if (OtherIsoValue >= 0.0)
 										Scale[AxisIndex] += 0.5;
 									else
-									{
-										double ratio = IsoValue / abs(OtherIsoValue - IsoValue);
-										//if (ratio < 0.0)
-										//	ratio += 1.0;
-										Scale[AxisIndex] += ratio;
-										//printf("ratio %f\t", ratio);
-									}
+										Scale[AxisIndex] += IsoValue / abs(OtherIsoValue - IsoValue);
 								}
 							}
 						}
@@ -332,7 +326,7 @@ f64 const SciDataManager::getGridVolume(std::string const & Field, f64 const Val
 		}
 	}
 
-	return TotalSum ;//* 20 * 20;
+	return TotalSum;
 }
 
 SColorf const ratioToSpectrum(float Ratio)
@@ -401,7 +395,7 @@ void SciDataManager::produceVolumeMaps()
 	ProgressPrinter p;
 	p.Begin();
 
-	Range ValueRange = GridValues.getValueRange("o1", 5.0);
+	Range ValueRange = GridValues.GetFieldRange("o1", 5.0);
 	CVolumeSceneObject const * const VolumeObject = CProgramContext::Get().Scene.Volume;
 	CVolumeSceneObject::SControl const & VolumeControl = VolumeObject->Control;
 

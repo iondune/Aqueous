@@ -1,27 +1,27 @@
 #include "SciDataManager.h"
 
 
-SciDataCollection & SciDataManager::getRawValues()
+STable & SciDataManager::GetRawValues()
 {
 	return RawValues;
 }
 
-SciDataCollection & SciDataManager::getGridValues()
+STable & SciDataManager::GetGridValues()
 {
 	return GridValues;
 }
 
-SciDataCollection const & SciDataManager::getRawValues() const
+STable const & SciDataManager::GetRawValues() const
 {
 	return RawValues;
 }
 
-SciDataCollection const & SciDataManager::getGridValues() const
+STable const & SciDataManager::GetGridValues() const
 {
 	return GridValues;
 }
 
-unsigned int const SciDataManager::getVolumeHandle() const
+u32 const SciDataManager::getVolumeHandle() const
 {
 	return VolumeHandle;
 }

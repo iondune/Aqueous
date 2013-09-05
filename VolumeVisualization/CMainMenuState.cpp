@@ -5,8 +5,10 @@
 #include "ColorMappers.h"
 #include "CGUILoadingWidget.h"
 #include "CDataLoadingThread.h"
-#include "SciDataManager.h"
 #include "CGlyphSceneObject.h"
+
+#include "SciDataManager.h"
+#include "SciDataParser.h"
 
 
 CMainMenuState::CMainMenuState()

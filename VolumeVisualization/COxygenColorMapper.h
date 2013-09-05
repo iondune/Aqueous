@@ -1,10 +1,9 @@
-#ifndef _COXYGENCOLORMAPPER_H_INCLUDED_
-#define _COXYGENCOLORMAPPER_H_INCLUDED_
+
+#pragma once
 
 #include <ionScene.h>
 #include <ionCore.h>
 
-#include "SciDataCollection.h"
 #include "IColorMapper.h"
 
 
@@ -19,9 +18,9 @@ public:
 		: Field(field)
 	{}
 
-	virtual SColorAf const getColor(SciData const & d)
+	virtual SColorAf const GetColor(STable::SRow const & d)
 	{
-		double const v = d.getField(Field);
+		double const v = d.GetField(Field);
 
 		float Color[4] = {0.f, 0.f, 0.f, 0.f};
 
@@ -59,10 +58,7 @@ public:
 		return SColorAf(Color[0], Color[1], Color[2], Color[3]);
 	}
 
-	virtual void preProcessValues(SciDataCollection & s)
-	{
-	}
+	virtual void PreProcessValues(STable & s)
+	{}
 
 };
-
-#endif

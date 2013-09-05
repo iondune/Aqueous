@@ -1,10 +1,10 @@
-#ifndef _ICOLORMAPPER_H_INCLUDED_
-#define _ICOLORMAPPER_H_INCLUDED_
+
+#pragma once
 
 #include <ionScene.h>
 #include <ionCore.h>
 
-#include "SciDataCollection.h"
+#include "STable.h"
 
 
 class IColorMapper
@@ -12,9 +12,7 @@ class IColorMapper
 
 public:
 
-	virtual SColorAf const getColor(SciData const & d) = 0;
-	virtual void preProcessValues(SciDataCollection & s) = 0;
+	virtual SColorAf const GetColor(STable::SRow const & d) = 0;
+	virtual void PreProcessValues(STable & s) = 0;
 
 };
-
-#endif

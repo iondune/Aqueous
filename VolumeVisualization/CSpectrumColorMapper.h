@@ -1,10 +1,9 @@
-#ifndef _CSPECTRUMCOLORMAPPER_H_INCLUDED_
-#define _CSPECTRUMCOLORMAPPER_H_INCLUDED_
+
+#pragma once
 
 #include <ionScene.h>
 #include <ionCore.h>
 
-#include "SciDataCollection.h"
 #include "IColorMapper.h"
 
 
@@ -20,7 +19,7 @@ public:
 
 	Range FieldRange;
 
-	void initialValues()
+	void InitialValues()
 	{
 		ValueCutoff = 5.0;
 		AcceptedRange = FullRange;
@@ -29,13 +28,13 @@ public:
 
 	CSpectrumColorMapper(std::string const inField)
 	{
-		initialValues();
+		InitialValues();
 		Field = inField;
 	}
 
-	virtual SColorAf const getColor(SciData const & d)
+	virtual SColorAf const GetColor(STable::SRow const & d)
 	{
-		double const r = d.getField(Field);
+		double const r = d.GetField(Field);
 		float const v = (float) ((r - FieldRange.first) / (FieldRange.second - FieldRange.first));
 
 		float Color[4] = {0.f, 0.f, 0.f, 1.f};
@@ -82,11 +81,9 @@ public:
 		return SColorAf(Color[0], Color[1], Color[2], Color[3]);
 	}
 
-	virtual void preProcessValues(SciDataCollection & s)
+	virtual void PreProcessValues(STable & s)
 	{
-		FieldRange = s.getValueRange(Field, ValueCutoff, AcceptedRange);
+		FieldRange = s.GetFieldRange(Field, ValueCutoff, AcceptedRange);
 	}
 
 };
-
-#endif

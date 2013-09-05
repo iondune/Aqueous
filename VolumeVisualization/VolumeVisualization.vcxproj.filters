@@ -41,9 +41,6 @@
     <ClCompile Include="RBFInterpolator\RBFInterpolator.cpp">
       <Filter>MainState\RBFInterpolator</Filter>
     </ClCompile>
-    <ClCompile Include="SciData.cpp">
-      <Filter>MainState\Data Management\Base Objects</Filter>
-    </ClCompile>
     <ClCompile Include="CMainMenuState.cpp">
       <Filter>MainMenuState</Filter>
     </ClCompile>
@@ -92,9 +89,6 @@
     <ClCompile Include="Range.cpp">
       <Filter>MainState\Data Management\Base Objects</Filter>
     </ClCompile>
-    <ClCompile Include="SciDataCollection.cpp">
-      <Filter>MainState\Data Management\Base Objects</Filter>
-    </ClCompile>
     <ClCompile Include="SciDataManager.cpp">
       <Filter>MainState\Data Management</Filter>
     </ClCompile>
@@ -113,16 +107,19 @@
     <ClCompile Include="CWaterSceneObject.cpp">
       <Filter>MainState\Water</Filter>
     </ClCompile>
+    <ClCompile Include="STable.cpp">
+      <Filter>MainState\Data Management\Base Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="STable.SRow.cpp">
+      <Filter>MainState\Data Management\Base Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="STable.SFieldIterator.cpp">
+      <Filter>MainState\Data Management\Base Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CMainState.h">
       <Filter>MainState</Filter>
-    </ClInclude>
-    <ClInclude Include="SciData.h">
-      <Filter>MainState\Data Management\Base Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="SciDataIterator.h">
-      <Filter>MainState\Data Management\Base Objects</Filter>
     </ClInclude>
     <ClInclude Include="IColorMapper.h">
       <Filter>MainState\Data Management\Color Mapping</Filter>
@@ -209,9 +206,6 @@
     <ClInclude Include="Range.h">
       <Filter>MainState\Data Management\Base Objects</Filter>
     </ClInclude>
-    <ClInclude Include="SciDataCollection.h">
-      <Filter>MainState\Data Management\Base Objects</Filter>
-    </ClInclude>
     <ClInclude Include="SciDataParser.h">
       <Filter>MainState\Data Management\Parsers</Filter>
     </ClInclude>
@@ -229,6 +223,9 @@
     </ClInclude>
     <ClInclude Include="BathymetyGenerator.h">
       <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="STable.h">
+      <Filter>MainState\Data Management\Base Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
