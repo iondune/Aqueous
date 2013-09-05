@@ -122,6 +122,29 @@ void CLoadState::LoadShaders()
 	Indent = 0;
 }
 
+
+static double const pi = 3.14159;
+static double const toRadians(double const deg)
+{
+	return deg * pi / 180;
+}
+
+static double DistFrom(double lat1, double lng1, double lat2, double lng2)
+{
+	double earthRadius = 3958.75;
+	double dLat = toRadians(lat2-lat1);
+	double dLng = toRadians(lng2-lng1);
+	double a = sin(dLat/2) * sin(dLat/2) +
+		cos(toRadians(lat1)) * cos(toRadians(lat2)) *
+		sin(dLng/2) * sin(dLng/2);
+	double c = 2 * atan2(sqrt(a), sqrt(1-a));
+	double dist = earthRadius * c;
+
+	int meterConversion = 1609;
+
+	return (dist * meterConversion);
+}
+
 void CLoadState::LoadScene()
 {
 	// References
@@ -177,8 +200,12 @@ void CLoadState::LoadScene()
 	SceneManager->addSceneObject(Scene.Terrain);
 
 	// GPS Coordinates
-	vec2f DataRangeMin(9.53894f, 63.59233f), DataRangeMax(9.54926f, 63.59595f);
-	vec2f MapRangeMin(9.51013f, 63.57518f), MapRangeMax(9.56290f, 63.60297f);
+	vec2f DataRangeMin(63.59233f, 9.53894f), DataRangeMax(63.59595f, 9.54926f);
+	vec2f MapRangeMin(63.57518f, 9.51013f), MapRangeMax(63.60297f, 9.56290f);
+
+	printf("Data range is %f by %f meters,\n",
+		DistFrom(DataRangeMin.X, DataRangeMin.Y, DataRangeMax.X, DataRangeMin.Y),
+		DistFrom(DataRangeMin.X, DataRangeMin.Y, DataRangeMin.X, DataRangeMax.Y));
 
 	vec2f DataRangeCenter = (DataRangeMin + DataRangeMax) / 2.f;
 

@@ -38,6 +38,8 @@ void CGlyphSceneObject::loadGlyphs(SciDataManager * DataManager, IColorMapper * 
 	Range YRange = DataSet.getValueRange(yField, 15.0);
 	Range ZRange = DataSet.getValueRange(zField, 15.0);
 
+	printf("built in data range is %f by %f\n", XRange.second - XRange.first, ZRange.second - ZRange.first);
+
 	bool MaintainXZScale = false;
 
 	for (auto it = DataSet.getValues().begin(); it != DataSet.getValues().end(); ++ it)
