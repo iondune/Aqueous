@@ -39,9 +39,9 @@ CTerrainSceneObject::CTerrainSceneObject()
 	
 	STextureCreationFlags Flags;
 	Flags.Wrap = GL_CLAMP_TO_EDGE;
-	ColorMap = CImageLoader::LoadTexture("../TerrainColorImageSquare.bmp", Flags);
-	HeightMap = CImageLoader::LoadTexture("../TerrainHeightImageSquare.bmp", Flags);
-	BathyMap = CImageLoader::LoadTexture("../TerrainBathymetry.bmp", Flags);
+	ColorMap = CImageLoader::LoadTexture("../Sites/Denmark/TerrainColor.bmp", Flags);
+	HeightMap = CImageLoader::LoadTexture("../Sites/Denmark/TerrainTopography.bmp", Flags);
+	BathyMap = CImageLoader::LoadTexture("../Sites/Denmark/TerrainBathymetry.bmp", Flags);
 }
 
 bool CTerrainSceneObject::draw(IScene const * const Scene, sharedPtr<IRenderPass> Pass, bool const CullingEnabled)

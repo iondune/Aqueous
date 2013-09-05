@@ -41,7 +41,7 @@ void CMainMenuState::Update(f32 const Elapsed)
 	if (! Counter--)
 	{
 		createDataSet();
-		loadData("HopavagenBay1.dat");
+		loadData("DenmarkNewMission1.dat");
 	}
 }
 
@@ -67,6 +67,17 @@ void CMainMenuState::loadData(std::string const & FileName)
 
 void CMainMenuState::createDataSet()
 {
+	SciDataParserCSV Parser1;
+	Parser1.Manager = Context->DataManager;
+	Parser1.Load("Sites/Denmark/mission1.csv");
+
+	Context->DataManager->GetRawValues().Traits.PositionXField = "Latitude";
+	Context->DataManager->GetRawValues().Traits.PositionYField = "DFS Depth (m)";
+	Context->DataManager->GetRawValues().Traits.PositionZField = "Longitude";
+
+	Context->DataManager->writeToFile("Datasets/DenmarkNewMission1.dat");
+
+	/*
 	SciDataParserSimpleTXT * Parser1 = new SciDataParserSimpleTXT();
 	Parser1->Manager = Context->DataManager;
 	Parser1->load("ForZoe.txt");
@@ -78,4 +89,5 @@ void CMainMenuState::createDataSet()
 	COxygenColorMapper o;
 	Context->DataManager->createVolumeFromGridValues(& o);
 	Context->DataManager->writeToFile("Datasets/HopavagenBay1.dat");
+	*/
 }

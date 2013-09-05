@@ -40,9 +40,7 @@ public:
 
 	CGlyphSceneObject();
 	
-	void loadGlyphs(SciDataManager * DataManager, IColorMapper * ColorMapper, 
-		std::string const & xField, std::string const & yField, std::string const & zField,
-		std::string const & FloorLabel);
+	void LoadGlyphs(SciDataManager * DataManager, IColorMapper * ColorMapper);
 
 	bool draw(IScene const * const scene, sharedPtr<IRenderPass> Pass, bool const CullingEnabled);
 

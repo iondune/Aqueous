@@ -92,9 +92,10 @@ public:
 	struct STraits
 	{
 		std::string PositionXField, PositionYField, PositionZField;
+		bool InvertY;
 
 		STraits()
-			: PositionXField("x"), PositionYField("y"), PositionZField("z")
+			: PositionXField("x"), PositionYField("y"), PositionZField("z"), InvertY(false)
 		{}
 	};
 
