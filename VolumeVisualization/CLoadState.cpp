@@ -131,7 +131,7 @@ static double const toRadians(double const deg)
 
 static double DistFrom(double lat1, double lng1, double lat2, double lng2)
 {
-	double earthRadius = 3958.75;
+	double earthRadius = 6371.0;
 	double dLat = toRadians(lat2-lat1);
 	double dLng = toRadians(lng2-lng1);
 	double a = sin(dLat/2) * sin(dLat/2) +
@@ -140,9 +140,27 @@ static double DistFrom(double lat1, double lng1, double lat2, double lng2)
 	double c = 2 * atan2(sqrt(a), sqrt(1-a));
 	double dist = earthRadius * c;
 
-	int meterConversion = 1609;
+	int meterConversion = 1000;
 
 	return (dist * meterConversion);
+}
+
+static double DistFromLat(double lat1, double lat2, double lng)
+{
+	return DistFrom(lat1, lng, lat2, lng);
+}
+
+static double DistFromLong(double lng1, double lng2, double lat)
+{
+	return DistFrom(lat, lng1, lat, lng2);
+}
+
+static vec2f GetLongLatAreaDimensions(vec2f const & Min, vec2f const & Max)
+{
+	vec2f const Center = (Min + Max) / 2.f;
+	return vec2f(
+		DistFromLong(Min.X, Max.X, Center.Y),
+		DistFromLat(Min.Y, Max.Y, Center.X));
 }
 
 enum class ECompassDirection
@@ -246,18 +264,18 @@ void CLoadState::LoadScene()
 	//SceneManager->addSceneObject(Scene.VolumeSceneObject);
 
 	// Coordinate Calculations
-	vec2f const DataRangeMin(56.667337f, 9.988503f), DataRangeMax(56.673766f, 9.999437f);
-	vec2f const MapRangeMin(LongLatDecimalDegrees(56, 38, 17.22), LongLatDecimalDegrees(9, 55, 45.32)), MapRangeMax(LongLatDecimalDegrees(56, 41, 59.01), LongLatDecimalDegrees(10, 2, 34.80));
+	vec2f const DataRangeMin(9.988503f, 56.667337f), DataRangeMax(9.999437f, 56.673766f);
+	vec2f const MapRangeMin(LongLatDecimalDegrees(9, 55, 45.32), LongLatDecimalDegrees(56, 38, 17.22)), MapRangeMax(LongLatDecimalDegrees(10, 2, 34.80), LongLatDecimalDegrees(56, 41, 59.01));
 	
 	vec2f const DataRangeSize = DataRangeMax - DataRangeMin;
 	vec2f const DataRangeCenter = (DataRangeMin + DataRangeMax) / 2.f;
-	vec2f const DataActualSize(DistFrom(DataRangeMin.X, DataRangeCenter.Y, DataRangeMax.X, DataRangeCenter.Y), DistFrom(DataRangeCenter.X, DataRangeMin.Y, DataRangeCenter.X, DataRangeMax.Y));
+	vec2f const DataActualSize(GetLongLatAreaDimensions(DataRangeMin, DataRangeMax));
 	f32 const DataDepth = 15.08980f;
 	
 	vec2f const MapRangeSize = MapRangeMax - MapRangeMin;
 	vec2f const MapRangeCenter = (MapRangeMin + MapRangeMax) / 2.f;
-	vec2f const MapActualSize(DistFrom(MapRangeMin.X, MapRangeCenter.Y, MapRangeMax.X, MapRangeCenter.Y), DistFrom(MapRangeCenter.X, MapRangeMin.Y, MapRangeCenter.X, MapRangeMax.Y));
-	f32 const MapDepth = 600.f;
+	vec2f const MapActualSize(GetLongLatAreaDimensions(MapRangeMin, MapRangeMax));
+	f32 const MapDepth = 800.f;
 
 	printf("Data range is %f by %f meters,\n", DataActualSize.X, DataActualSize.Y);
 	

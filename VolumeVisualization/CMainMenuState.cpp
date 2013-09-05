@@ -71,9 +71,9 @@ void CMainMenuState::createDataSet()
 	Parser1.Manager = Context->DataManager;
 	Parser1.Load("Sites/Denmark/mission1.csv");
 
-	Context->DataManager->GetRawValues().Traits.PositionXField = "Latitude";
+	Context->DataManager->GetRawValues().Traits.PositionXField = "Longitude";
 	Context->DataManager->GetRawValues().Traits.PositionYField = "DFS Depth (m)";
-	Context->DataManager->GetRawValues().Traits.PositionZField = "Longitude";
+	Context->DataManager->GetRawValues().Traits.PositionZField = "Latitude";
 
 	Context->DataManager->writeToFile("Datasets/DenmarkNewMission1.dat");
 
