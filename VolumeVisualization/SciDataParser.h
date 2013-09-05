@@ -6,6 +6,8 @@
 #include <ionCore.h>
 
 
+f64 const string_to_double(std::string const & s);
+
 class SciDataManager;
 
 class SciDataParser
@@ -16,7 +18,6 @@ public:
 	SciDataManager * Manager;
 
 };
-
 
 class SciDataParserCTD : public SciDataParser
 {
@@ -47,10 +48,27 @@ public:
 	bool FieldNames;
 	std::vector<std::string> Fields;
 
-	virtual void load(std::string const & FileName);
-	virtual void mergedLoad(std::string const & FileName, std::string const & FileName2, std::string const & MatchField);
+	virtual void Load(std::string const & FileName);
 
 	SciDataParserCSV()
+		: FieldDelim(','), ValueDelim(','), FieldNames(true)
+	{}
+
+};
+
+class SciDataParserMergedCSV : public SciDataParser
+{
+
+public:
+
+	char FieldDelim;
+	char ValueDelim;
+	bool FieldNames;
+	std::vector<std::string> Fields;
+
+	virtual void Load(std::string const & FileName, std::string const & FileName2, std::string const & MatchField);
+
+	SciDataParserMergedCSV()
 		: FieldDelim(','), ValueDelim(','), FieldNames(true)
 	{}
 

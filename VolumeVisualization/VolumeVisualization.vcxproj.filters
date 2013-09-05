@@ -116,6 +116,15 @@
     <ClCompile Include="STable.SFieldIterator.cpp">
       <Filter>MainState\Data Management\Base Objects</Filter>
     </ClCompile>
+    <ClCompile Include="SciDataParserMergedCSV.cpp">
+      <Filter>MainState\Data Management\Parsers</Filter>
+    </ClCompile>
+    <ClCompile Include="SciDataParserSmartTether.cpp">
+      <Filter>MainState\Data Management\Parsers</Filter>
+    </ClCompile>
+    <ClCompile Include="SciDataParser.cpp">
+      <Filter>MainState\Data Management\Parsers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CMainState.h">

@@ -2,8 +2,11 @@
 #include "SciDataParser.h"
 #include "SciDataManager.h"
 
+#include <fstream>
+#include <sstream>
 
-void SciDataParserCSV::Load(std::string const & FileName)
+
+void SciDataParserSmartTether::load(std::string const & FileName)
 {
 	std::ifstream File;
 	File.open(FileName);
@@ -27,6 +30,13 @@ void SciDataParserCSV::Load(std::string const & FileName)
 				std::getline(Stream, Label, FieldDelim);
 				Fields.push_back(Label);
 			}
+			Fields[16] = "time";
+			Fields[17] = "z";
+			Fields[18] = "z_cardinal";
+			Fields[19] = "x";
+			Fields[20] = "x_cardinal";
+			Fields[24] = "y";
+			Fields.resize(38);
 			FirstLine = false;
 		}
 		else
@@ -40,8 +50,7 @@ void SciDataParserCSV::Load(std::string const & FileName)
 			}
 
 			if (Row.size() != Fields.size())
-				std::cerr << "Mismatched row size at row " << Manager->GetRawValues().Size() << " in file '" << FileName << "', found " << Row.size() << " but expected " << Fields.size() << std::endl;
-
+				std::cerr << "Mismatched row size at row " << Manager->GetRawValues().Size() << ", found " << Row.size() << " but expected " << Fields.size() << std::endl;
 			u32 Length = std::min(Row.size(), Fields.size());
 
 			STable::SRow & TableRow = Manager->GetRawValues().AddRow();

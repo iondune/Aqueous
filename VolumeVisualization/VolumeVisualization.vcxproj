@@ -109,6 +109,9 @@
     <ClCompile Include="Range.cpp" />
     <ClCompile Include="RBFInterpolator\newmat.cpp" />
     <ClCompile Include="RBFInterpolator\RBFInterpolator.cpp" />
+    <ClCompile Include="SciDataParser.cpp" />
+    <ClCompile Include="SciDataParserMergedCSV.cpp" />
+    <ClCompile Include="SciDataParserSmartTether.cpp" />
     <ClCompile Include="STable.SFieldIterator.cpp" />
     <ClCompile Include="STable.SRow.cpp" />
     <ClCompile Include="SciDataManager.cpp" />
