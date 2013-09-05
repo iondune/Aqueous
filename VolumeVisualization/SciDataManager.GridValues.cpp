@@ -14,16 +14,16 @@ void SciDataManager::createGridDataFromRawValuesRBFI(Range AcceptedValues, doubl
 
 	std::vector<float> X, Y, Z, F;
 
-	Range XRange = RawValues.GetFieldRange("x", Deviations, AcceptedValues);
-	Range YRange = RawValues.GetFieldRange("y", Deviations, AcceptedValues);
-	Range ZRange = RawValues.GetFieldRange("z", Deviations, AcceptedValues);
+	Range XRange = RawValues.GetFieldRange(RawValues.Traits.PositionXField, Deviations, AcceptedValues);
+	Range YRange = RawValues.GetFieldRange(RawValues.Traits.PositionYField, Deviations, AcceptedValues);
+	Range ZRange = RawValues.GetFieldRange(RawValues.Traits.PositionZField, Deviations, AcceptedValues);
 	Range FRange = RawValues.GetFieldRange(Field, Deviations, AcceptedValues);
 
 	for (auto it = RawValues.GetValues().begin(); it != RawValues.GetValues().end(); ++ it)
 	{
-		float x = (float) ((it->GetField("x") - XRange.first) / (XRange.second - XRange.first));
-		float y = (float) ((it->GetField("y") - YRange.first) / (YRange.second - YRange.first));
-		float z = (float) ((it->GetField("z") - ZRange.first) / (ZRange.second - ZRange.first));
+		float x = (float) ((it->GetField(RawValues.Traits.PositionXField) - XRange.first) / (XRange.second - XRange.first));
+		float y = (float) ((it->GetField(RawValues.Traits.PositionYField) - YRange.first) / (YRange.second - YRange.first));
+		float z = (float) ((it->GetField(RawValues.Traits.PositionZField) - ZRange.first) / (ZRange.second - ZRange.first));
 		float f = (float) ((it->GetField(Field) - FRange.first) / (FRange.second - FRange.first));
 
 		//if (! inRange(f, FRan
@@ -41,9 +41,12 @@ void SciDataManager::createGridDataFromRawValuesRBFI(Range AcceptedValues, doubl
 		bool alreadyIn = false;
 		for (u32 i = 0; i < X.size(); ++ i)
 		{
-			//if (equals(x, X[i]) || equals(y, Y[i]) || equals(z, Z[i]) || equals(f, F[i]))
-			if (Equals(x, X[i]) && Equals(y, Y[i]) && Equals(z, Z[i]) && Equals(f, F[i]))
+			if (Equals(x, X[i]) || Equals(y, Y[i]) || Equals(z, Z[i]) || Equals(f, F[i]))
+			//if (Equals(x, X[i]) && Equals(y, Y[i]) && Equals(z, Z[i]) && Equals(f, F[i]))
+			{
 				alreadyIn = true;
+				printf("Rejected a point\n");
+			}
 		}
 
 		if (! alreadyIn)
@@ -52,6 +55,7 @@ void SciDataManager::createGridDataFromRawValuesRBFI(Range AcceptedValues, doubl
 			Y.push_back(y);
 			Z.push_back(z);
 			F.push_back(f);
+			//printf("Accepted a point\n");
 		}
 	}
 

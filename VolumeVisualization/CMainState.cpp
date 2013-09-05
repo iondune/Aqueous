@@ -39,11 +39,7 @@ void CMainState::Update(f32 const Elapsed)
 	Scene.LightPosition = SceneManager->getActiveCamera()->getPosition() + SVector3f(0, 0, 0);
 
 	SceneManager->drawAll();
-	glEnable(GL_BLEND);
-	glDepthMask(false);
-	Context->Scene.Water->draw(SceneManager, SceneManager->getDefaultColorRenderPass(), false);
-	glDepthMask(true);
-	SceneManager->endDraw();
+	//SceneManager->endDraw();
 
 	if (ShowDepth)
 	{
@@ -61,6 +57,13 @@ void CMainState::Update(f32 const Elapsed)
 	}
 	else
 		Context->Scene.Volume->draw(SceneManager, SceneManager->getDefaultColorRenderPass(), false);
+
+	SceneManager->getSceneFrameBuffer()->bind();
+	glEnable(GL_BLEND);
+	glDepthMask(false);
+	Context->Scene.Water->draw(SceneManager, SceneManager->getDefaultColorRenderPass(), false);
+	glDepthMask(true);
+	SceneManager->endDraw();
 
 	Context->GUIContext->Draw(Elapsed, false);
 

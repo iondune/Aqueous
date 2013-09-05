@@ -53,7 +53,8 @@ void CDataLoadingThread::Execute()
 
 	COxygenColorMapper o("d1");
 	CSpectrumColorMapper spec("time");
-	Context->Scene.Glyphs->LoadGlyphs(Context->DataManager, & o); //,
+	CSpectrumColorMapper denmark("Temperature (c)");
+	Context->Scene.Glyphs->LoadGlyphs(Context->DataManager, & denmark); //,
 		//"Latitude", "DFS Depth", "Longitude", "Total Water Column (m)");
 		//"x", "y", "z", "Total Water Column (m)");
 	LoadingWidget->setProgress(0.75f);
@@ -72,7 +73,8 @@ void CDataLoadingThread::End()
 
 	COxygenColorMapper o("o1");
 	CSpectrumColorMapper spec("temp");
-	Context->DataManager->createVolumeFromGridValues(& o);
+	CSpectrumColorMapper denmark("Temperature (c)");
+	Context->DataManager->createVolumeFromGridValues(& denmark);
 	Context->Scene.Volume->VolumeHandle = Context->DataManager->getVolumeHandle();
 	
 	CApplication::Get().GetStateManager().SetState(CMainState::GetPtr());

@@ -260,7 +260,7 @@ void CLoadState::LoadScene()
 
 	// Volume
 	Scene.Volume = new CVolumeSceneObject();
-	Scene.Volume->setVisible(false);
+	//Scene.Volume->setVisible(false);
 	//SceneManager->addSceneObject(Scene.VolumeSceneObject);
 
 	// Coordinate Calculations
@@ -289,6 +289,8 @@ void CLoadState::LoadScene()
 	
 	Scene.Glyphs->setScale(DataScale * Multiplier);
 	Scene.Glyphs->setTranslation(vec3f(0, -DataScale.Y * YExaggeration / 2, 0));
+	Scene.Volume->setScale(DataScale * Multiplier);
+	Scene.Volume->setTranslation(vec3f(0, -DataScale.Y * YExaggeration / 2, 0));
 
 	Scene.Terrain->setScale(MapScale * Multiplier / CTerrainSceneObject::Size);
 	Scene.Water->setScale(MapScale / CTerrainSceneObject::Size);

@@ -40,7 +40,11 @@ void CMainMenuState::Update(f32 const Elapsed)
 	static int Counter = 0;
 	if (! Counter--)
 	{
-		createDataSet();
+		Context->DataManager->GetRawValues().Traits.PositionXField = "Longitude";
+		Context->DataManager->GetRawValues().Traits.PositionYField = "DFS Depth (m)";
+		Context->DataManager->GetRawValues().Traits.PositionZField = "Latitude";
+
+		//createDataSet();
 		loadData("DenmarkNewMission1.dat");
 	}
 }
@@ -68,13 +72,13 @@ void CMainMenuState::loadData(std::string const & FileName)
 void CMainMenuState::createDataSet()
 {
 	SciDataParserCSV Parser1;
+	CSpectrumColorMapper ColorMapper("Temperature (c)");
+
 	Parser1.Manager = Context->DataManager;
 	Parser1.Load("Sites/Denmark/mission1.csv");
 
-	Context->DataManager->GetRawValues().Traits.PositionXField = "Longitude";
-	Context->DataManager->GetRawValues().Traits.PositionYField = "DFS Depth (m)";
-	Context->DataManager->GetRawValues().Traits.PositionZField = "Latitude";
-
+	Context->DataManager->createGridDataFromRawValuesRBFI(FullRange, 15.0, "Temperature (c)");
+	Context->DataManager->createVolumeFromGridValues(& ColorMapper);
 	Context->DataManager->writeToFile("Datasets/DenmarkNewMission1.dat");
 
 	/*
