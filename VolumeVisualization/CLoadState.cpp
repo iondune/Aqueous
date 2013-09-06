@@ -122,87 +122,6 @@ void CLoadState::LoadShaders()
 	Indent = 0;
 }
 
-
-static double const pi = 3.14159;
-static double const toRadians(double const deg)
-{
-	return deg * pi / 180;
-}
-
-static double DistFrom(double lat1, double lng1, double lat2, double lng2)
-{
-	double earthRadius = 6371.0;
-	double dLat = toRadians(lat2-lat1);
-	double dLng = toRadians(lng2-lng1);
-	double a = sin(dLat/2) * sin(dLat/2) +
-		cos(toRadians(lat1)) * cos(toRadians(lat2)) *
-		sin(dLng/2) * sin(dLng/2);
-	double c = 2 * atan2(sqrt(a), sqrt(1-a));
-	double dist = earthRadius * c;
-
-	int meterConversion = 1000;
-
-	return (dist * meterConversion);
-}
-
-static double DistFromLat(double lat1, double lat2, double lng)
-{
-	return DistFrom(lat1, lng, lat2, lng);
-}
-
-static double DistFromLong(double lng1, double lng2, double lat)
-{
-	return DistFrom(lat, lng1, lat, lng2);
-}
-
-static vec2f GetLongLatAreaDimensions(vec2f const & Min, vec2f const & Max)
-{
-	vec2f const Center = (Min + Max) / 2.f;
-	return vec2f(
-		DistFromLong(Min.X, Max.X, Center.Y),
-		DistFromLat(Min.Y, Max.Y, Center.X));
-}
-
-enum class ECompassDirection
-{
-	N = 1, E = 1,
-	S = -1, W = -1
-};
-
-static f64 LongLatDecimalDegrees(f64 const Deg, f64 const Min, f64 const Sec, ECompassDirection const Direction = ECompassDirection::N)
-{
-	return (Deg + Min/60.0 + Sec/3600.0) * (int) Direction;
-}
-
-static f64 LongLatDecimalDegrees(std::string const & String)
-{
-	f64 Deg, Min, Sec;
-	char Dir, Dummy;
-	ECompassDirection Direction;
-
-	sscanf(String.c_str(), "%lf %c %lf %c %lf %c %c", & Deg, & Dummy, & Min, & Dummy, & Sec, & Dummy, & Dir);
-	
-	switch (tolower(Dir))
-	{
-	default:
-	case 'N':
-		Direction = ECompassDirection::N;
-		break;
-	case 'E':
-		Direction = ECompassDirection::E;
-		break;
-	case 'S':
-		Direction = ECompassDirection::S;
-		break;
-	case 'W':
-		Direction = ECompassDirection::W;
-		break;
-	}
-
-	return LongLatDecimalDegrees(Deg, Min, Sec, Direction);
-
-}
-
 void CLoadState::LoadScene()
 {
 	// References
@@ -220,10 +139,8 @@ void CLoadState::LoadScene()
 	// Cameras
 	Scene.Camera = new CCameraControl(SVector3f(1.f, 1.3f, 4.5f));
 	Scene.Camera->SetAspectRatio(CApplication::Get().GetWindow().GetAspectRatio());
-	Scene.Camera->SetNearPlane(0.001f);
-	Scene.Camera->SetFarPlane(100.f);
-	Scene.Camera->SetVelocity(1.9f);
 	Scene.Camera->UpdateProjection();
+	Scene.Camera->SetVelocity(1.9f);
 	CMainState::Get().IEventListener<SMouseEvent>::AddChild(Scene.Camera);
 	SceneManager->setActiveCamera(Scene.Camera);
 
@@ -236,7 +153,6 @@ void CLoadState::LoadScene()
 	Scene.SkyBox = new CMeshSceneObject();
 	Scene.SkyBox->setMesh(Scene.Cube);
 	Scene.SkyBox->setShader(SceneManager->getDefaultColorRenderPass(), Context->Shaders.DiffuseTexture);
-	Scene.SkyBox->setScale(SVector3f(40.f));
 	Scene.SkyBox->setTexture(0, "Space.bmp");
 	Scene.SkyBox->setCullingEnabled(false);
 	Scene.SkyBox->setVisible(false);
@@ -263,45 +179,6 @@ void CLoadState::LoadScene()
 	Scene.Volume = new CVolumeSceneObject();
 	//Scene.Volume->setVisible(false);
 	//SceneManager->addSceneObject(Scene.VolumeSceneObject);
-
-	// Coordinate Calculations
-	vec2f const DataRangeMin(9.988503f, 56.667337f), DataRangeMax(9.999437f, 56.673766f);
-	vec2f const //MapRangeMin(LongLatDecimalDegrees(9, 49, 27.68), LongLatDecimalDegrees(56, 34, 20.96)), MapRangeMax(LongLatDecimalDegrees(10, 11, 1.75), LongLatDecimalDegrees(56, 46, 11.45));
-		MapRangeMin(LongLatDecimalDegrees(9, 55, 45.32), LongLatDecimalDegrees(56, 38, 17.22)), MapRangeMax(LongLatDecimalDegrees(10, 2, 34.80), LongLatDecimalDegrees(56, 41, 59.01));
-		//MapRangeMin(DataRangeMin), MapRangeMax(DataRangeMax);
-	
-	vec2f const DataRangeSize = DataRangeMax - DataRangeMin;
-	vec2f const DataRangeCenter = (DataRangeMin + DataRangeMax) / 2.f;
-	vec2f const DataActualSize(GetLongLatAreaDimensions(DataRangeMin, DataRangeMax));
-	f32 const DataDepth = 15.08980f;
-
-	//vec2f const MapRangeMin(DataRangeCenter - 2*(DataRangeCenter - DataRangeMin)), MapRangeMax(DataRangeCenter + 2*(DataRangeMax - DataRangeCenter));
-	
-	vec2f const MapRangeSize = MapRangeMax - MapRangeMin;
-	vec2f const MapRangeCenter = (MapRangeMin + MapRangeMax) / 2.f;
-	vec2f const MapActualSize(GetLongLatAreaDimensions(MapRangeMin, MapRangeMax));
-	f32 const MapDepth = 800.f;
-
-	printf("Data range is %f by %f meters,\n", DataActualSize.X, DataActualSize.Y);
-	
-	vec2f const ActualOffset = vec2f(DistFrom(DataRangeCenter.X, DataRangeCenter.Y, MapRangeCenter.X, DataRangeCenter.Y), DistFrom(DataRangeCenter.X, DataRangeCenter.Y, DataRangeCenter.X, MapRangeCenter.Y));
-	vec2f const MapOffset = ActualOffset * 3.f / Maximum(DataActualSize.X, DataActualSize.Y);
-	vec3f const DataScale = 3.f * vec3f(DataActualSize.X, DataDepth, DataActualSize.Y) / Maximum(DataActualSize.X, DataActualSize.Y);
-	vec3f const MapScale = DataScale * vec3f(MapActualSize.X, MapDepth, MapActualSize.Y) / vec3f(DataActualSize.X, DataDepth, DataActualSize.Y);
-
-	static f32 const YExaggeration = 3.f;
-	static vec3f const Multiplier = vec3f(1, YExaggeration, 1);
-	
-	Scene.Glyphs->setScale(DataScale * Multiplier);
-	Scene.Glyphs->setTranslation(vec3f(0, -DataScale.Y * YExaggeration / 2, 0));
-	Scene.Volume->setScale(DataScale * Multiplier);
-	Scene.Volume->setTranslation(vec3f(0, -DataScale.Y * YExaggeration / 2, 0));
-
-	Scene.Terrain->setScale(MapScale * Multiplier / CTerrainSceneObject::Size);
-	Scene.Water->setScale(MapScale / CTerrainSceneObject::Size);
-
-	Scene.Terrain->setTranslation(vec3f(MapOffset.X, 0, MapOffset.Y));
-	Scene.Water->setTranslation(vec3f(MapOffset.X, 0, MapOffset.Y));
 }
 
 void CLoadState::OnFinish()

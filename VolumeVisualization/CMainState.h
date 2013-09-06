@@ -85,6 +85,8 @@ public:
 
 	void addConsoleMessage(std::string const & Message, Gwen::Color const & Color = Gwen::Color(255, 255, 255, 255));
 
+	void CalculateDataAlignment();
+
 	bool ShowDepth;
 
 	//////////////////////////////
