@@ -30,6 +30,35 @@ void CMainState::Update(f32 const Elapsed)
 	CProgramContext::SScene & Scene = Context->Scene;
 
 	Scene.Camera->Update(Elapsed);
+
+	f32 Radius = Scene.Camera->GetPosition().Length();
+	if (Radius < 10.f)
+	{
+		Scene.Camera->SetNearPlane(0.001f);
+		Scene.Camera->SetFarPlane(100.f);
+	}
+	else if (Radius < 50.f)
+	{
+		Scene.Camera->SetNearPlane(0.01f);
+		Scene.Camera->SetFarPlane(150.f);
+	}
+	else if (Radius < 500.f)
+	{
+		Scene.Camera->SetNearPlane(10.f);
+		Scene.Camera->SetFarPlane(1000.f);
+	}
+	else if (Radius < 5000.f)
+	{
+		Scene.Camera->SetNearPlane(100.f);
+		Scene.Camera->SetFarPlane(10000.f);
+	}
+	else if (Radius < 15000.f)
+	{
+		Scene.Camera->SetNearPlane(4000.f);
+		Scene.Camera->SetFarPlane(20000.f);
+	}
+	Scene.Camera->UpdateProjection();
+
 	Scene.Timer += Elapsed * 0.16f;
 
 	float const Distance = 4.f;
