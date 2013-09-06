@@ -72,12 +72,12 @@ void CMainMenuState::loadData(std::string const & FileName)
 void CMainMenuState::createDataSet()
 {
 	SciDataParserCSV Parser1;
-	CSpectrumColorMapper ColorMapper("Temperature (c)");
+	CSpectrumColorMapper ColorMapper("Chla Conc");
 
 	Parser1.Manager = Context->DataManager;
 	Parser1.Load("Sites/Denmark/mission1.csv");
 
-	Context->DataManager->createGridDataFromRawValuesRBFI(FullRange, 15.0, "Temperature (c)");
+	Context->DataManager->createGridDataFromRawValuesRBFI(FullRange, 15.0, "Chla Conc");
 	Context->DataManager->createVolumeFromGridValues(& ColorMapper);
 	Context->DataManager->writeToFile("Datasets/DenmarkNewMission1.dat");
 
