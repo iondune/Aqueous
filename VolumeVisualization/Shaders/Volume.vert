@@ -12,8 +12,8 @@ out vec4 vPosition;
 
 void main()
 {
-    vPosition = uProjMatrix * uViewMatrix * uModelMatrix * vec4(aPosition.xyz, 1);
-    gl_Position = vPosition;
-    
-    vColor = aColor;
+	vPosition = uProjMatrix * uViewMatrix * uModelMatrix * vec4(aPosition.xyz, 1);
+	gl_Position = vPosition;
+
+	vColor = aColor;
 }

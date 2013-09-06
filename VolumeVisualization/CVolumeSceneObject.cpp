@@ -118,7 +118,7 @@ bool CVolumeSceneObject::draw(IScene const * const Scene, sharedPtr<IRenderPass>
 	glEnable(GL_CULL_FACE);
 	glDisable(GL_DEPTH_TEST);
 
-	glCullFace(GL_FRONT);
+	glCullFace(GL_BACK);
 	{
 		if (Shader)
 		{

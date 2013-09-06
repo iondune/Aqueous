@@ -172,10 +172,7 @@ void main()
 		vec4 ScreenCoords = uProjMatrix * uViewMatrix * WorldCoords;
 
 		if (! Equals(ScreenCoords.w, 0))
-		{
-			
 			Depth = (ScreenCoords.z / ScreenCoords.w + 1.0) / 2.0;
-		}
 
 		if (uDebugLevel == 5)
 		{
@@ -197,7 +194,7 @@ void main()
 		// Generate samples
 		vec4 ColorSample = GetColorSample(Iterator);
 		float AlphaSample = ColorSample.a * uStepSize * uAlphaIntensity;
-		
+
 		// Accumulate
 		vec3 Normal = GetGradient(Iterator);
 		vec3 Light = normalize(uLightPosition - WorldCoords.xyz);
@@ -211,7 +208,7 @@ void main()
 
 		AlphaAccumulator += AlphaSample;
 		LengthAccumulator += length(DirectionStep);
-		
+
 		// Advance iterator
 		Iterator += DirectionStep;
 
@@ -225,7 +222,7 @@ void main()
 			}
 			break;
 		}
-		
+
 		// Accumulation test
 		if (AlphaAccumulator > uAlphaIntensity)
 		{
@@ -236,20 +233,20 @@ void main()
 			}
 			break;
 		}
-		
+
 		if (uDebugLevel == 4 && IterationMax == i + 1)
 		{
 			outFragColor = vec4(0, 0.1, 0.1, 1);
 			return;
 		}
 	}
-	
+
 	if (uDebugLevel == 4)
 	{
 		outFragColor = vec4(1, 0.5, float(i) / float(IterationMax), 1);
 		return;
 	}
-	
+
 	ColorAccumulator.r = clamp(ColorAccumulator.r, 0.0, 1.0);
 	ColorAccumulator.g = clamp(ColorAccumulator.g, 0.0, 1.0);
 	ColorAccumulator.b = clamp(ColorAccumulator.b, 0.0, 1.0);
