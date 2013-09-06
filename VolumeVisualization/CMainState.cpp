@@ -198,8 +198,9 @@ void CMainState::CalculateDataAlignment()
 	Range ZRange = DataSet.GetFieldRange(DataManager->GetRawValues().Traits.PositionZField, 15.0);
 
 	vec2f const DataRangeMin(XRange.first, ZRange.first), DataRangeMax(XRange.second, ZRange.second);
-	vec2f const //MapRangeMin(LongLatDecimalDegrees(9, 49, 27.68), LongLatDecimalDegrees(56, 34, 20.96)), MapRangeMax(LongLatDecimalDegrees(10, 11, 1.75), LongLatDecimalDegrees(56, 46, 11.45));
-		MapRangeMin(LongLatDecimalDegrees(9, 55, 45.32), LongLatDecimalDegrees(56, 38, 17.22)), MapRangeMax(LongLatDecimalDegrees(10, 2, 34.80), LongLatDecimalDegrees(56, 41, 59.01));
+	vec2f const MapRangeMin(LongLatDecimalDegrees(9, 54, 13.29), LongLatDecimalDegrees(56, 30, 37.33)), MapRangeMax(LongLatDecimalDegrees(10, 27, 10.16), LongLatDecimalDegrees(56, 48, 48.57));
+		//MapRangeMin(LongLatDecimalDegrees(9, 49, 27.68), LongLatDecimalDegrees(56, 34, 20.96)), MapRangeMax(LongLatDecimalDegrees(10, 11, 1.75), LongLatDecimalDegrees(56, 46, 11.45));
+		//MapRangeMin(LongLatDecimalDegrees(9, 55, 45.32), LongLatDecimalDegrees(56, 38, 17.22)), MapRangeMax(LongLatDecimalDegrees(10, 2, 34.80), LongLatDecimalDegrees(56, 41, 59.01));
 		//MapRangeMin(DataRangeMin), MapRangeMax(DataRangeMax);
 	
 	vec2f const DataRangeSize = DataRangeMax - DataRangeMin;
