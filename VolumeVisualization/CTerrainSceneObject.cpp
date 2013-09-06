@@ -39,9 +39,9 @@ CTerrainSceneObject::CTerrainSceneObject()
 	
 	STextureCreationFlags Flags;
 	Flags.Wrap = GL_CLAMP_TO_EDGE;
-	ColorMap = CImageLoader::LoadTexture("../Sites/Denmark/TerrainColor.bmp", Flags);
+	ColorMap = CImageLoader::LoadTexture("../Sites/Denmark/TerrainColorLarge.bmp", Flags);
 	HeightMap = CImageLoader::LoadTexture("../Sites/Denmark/TerrainTopography.bmp", Flags);
-	BathyMap = CImageLoader::LoadTexture("../Sites/Denmark/TerrainBathymetry.bmp", Flags);
+	BathyMap = CImageLoader::LoadTexture("../Sites/Denmark/TerrainBathymetryLarge.bmp", Flags);
 }
 
 bool CTerrainSceneObject::draw(IScene const * const Scene, sharedPtr<IRenderPass> Pass, bool const CullingEnabled)
@@ -60,9 +60,12 @@ bool CTerrainSceneObject::draw(IScene const * const Scene, sharedPtr<IRenderPass
 
 	Context.bindBufferObject("aPosition", VertexData.getHandle(), 2);
 	
-	Context.bindTexture("uHeightMap", HeightMap->getTextureHandle());
-	Context.bindTexture("uBathyMap", BathyMap->getTextureHandle());
-	Context.bindTexture("uColorMap", ColorMap->getTextureHandle());
+	if (HeightMap)
+		Context.bindTexture("uHeightMap", HeightMap->getTextureHandle());
+	if (BathyMap)
+		Context.bindTexture("uBathyMap", BathyMap->getTextureHandle());
+	if (ColorMap)
+		Context.bindTexture("uColorMap", ColorMap->getTextureHandle());
 
 	Context.bindIndexBufferObject(IndexBuffer.getHandle());
 

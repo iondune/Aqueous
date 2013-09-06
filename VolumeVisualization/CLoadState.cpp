@@ -223,6 +223,7 @@ void CLoadState::LoadScene()
 	Scene.Camera->SetNearPlane(0.001f);
 	Scene.Camera->SetFarPlane(100.f);
 	Scene.Camera->SetVelocity(1.9f);
+	Scene.Camera->UpdateProjection();
 	CMainState::Get().IEventListener<SMouseEvent>::AddChild(Scene.Camera);
 	SceneManager->setActiveCamera(Scene.Camera);
 
@@ -265,12 +266,16 @@ void CLoadState::LoadScene()
 
 	// Coordinate Calculations
 	vec2f const DataRangeMin(9.988503f, 56.667337f), DataRangeMax(9.999437f, 56.673766f);
-	vec2f const MapRangeMin(LongLatDecimalDegrees(9, 55, 45.32), LongLatDecimalDegrees(56, 38, 17.22)), MapRangeMax(LongLatDecimalDegrees(10, 2, 34.80), LongLatDecimalDegrees(56, 41, 59.01));
+	vec2f const MapRangeMin(LongLatDecimalDegrees(9, 49, 27.68), LongLatDecimalDegrees(56, 34, 20.96)), MapRangeMax(LongLatDecimalDegrees(10, 11, 1.75), LongLatDecimalDegrees(56, 46, 11.45));
+		//MapRangeMin(LongLatDecimalDegrees(9, 55, 45.32), LongLatDecimalDegrees(56, 38, 17.22)), MapRangeMax(LongLatDecimalDegrees(10, 2, 34.80), LongLatDecimalDegrees(56, 41, 59.01));
+		//MapRangeMin(DataRangeMin), MapRangeMax(DataRangeMax);
 	
 	vec2f const DataRangeSize = DataRangeMax - DataRangeMin;
 	vec2f const DataRangeCenter = (DataRangeMin + DataRangeMax) / 2.f;
 	vec2f const DataActualSize(GetLongLatAreaDimensions(DataRangeMin, DataRangeMax));
 	f32 const DataDepth = 15.08980f;
+
+	//vec2f const MapRangeMin(DataRangeCenter - 2*(DataRangeCenter - DataRangeMin)), MapRangeMax(DataRangeCenter + 2*(DataRangeMax - DataRangeCenter));
 	
 	vec2f const MapRangeSize = MapRangeMax - MapRangeMin;
 	vec2f const MapRangeCenter = (MapRangeMin + MapRangeMax) / 2.f;
