@@ -3,7 +3,6 @@
 
 #include "CProgramContext.h"
 
-#include <CGUIEventManager.h>
 #include <glm/gtc/matrix_transform.hpp>
 
 

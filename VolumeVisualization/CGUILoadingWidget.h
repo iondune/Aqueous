@@ -1,5 +1,5 @@
-#ifndef _CGUILOADINGWIDGET_H_INCLUDED_
-#define _CGUILOADINGWIDGET_H_INCLUDED_
+
+#pragma once
 
 #include <Gwen/Gwen.h>
 #include <Gwen/Controls.h>
@@ -8,7 +8,7 @@
 
 #include "CGUIContextWidget.h"
 
-#include <ionThread.h>
+#include <ionCore/ionThread.h>
 
 
 class CGUILoadingWidget : public CGUIContextWidget
@@ -26,5 +26,3 @@ public:
 	virtual void update(f32 const Elapsed);
 
 };
-
-#endif

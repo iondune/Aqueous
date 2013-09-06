@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include "CGUIManager.h"
+#include <ionGUI.h>
 
 // Main State
 #include "CGUIConsoleWidget.h"

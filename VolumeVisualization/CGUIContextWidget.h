@@ -1,8 +1,7 @@
 
 #pragma once
 
-#include "CGUIManager.h"
-#include "CGUIWidget.h"
+#include <ionGUI.h>
 
 
 class CGUIContext;
@@ -10,12 +9,12 @@ class CGUIContext;
 class CGUIContextWidget : public CGUIWidget
 {
 
-protected:
-
-	CGUIContext * GUIContext;
-
 public:
 
 	CGUIContextWidget();
+
+protected:
+
+	CGUIContext * GUIContext;
 
 };

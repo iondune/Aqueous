@@ -2,7 +2,7 @@
 
 #include "CMainState.h"
 #include "CMainMenuState.h"
-#include "CGUIEventManager.h"
+#include <ionGUI/CGUIEventManager.h>
 
 #include "SciDataManager.h"
 #include "CTerrainSceneObject.h"

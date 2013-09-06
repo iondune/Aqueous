@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include <ionTypes.h>
+#include <ionCore/ionTypes.h>
 #include <algorithm>
 
 
