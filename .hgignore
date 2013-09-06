@@ -12,3 +12,4 @@ syntax: glob
 *.exe
 */ShaderCompileLog.txt
 *.unsuccessfulbuild
+Thumbs.db
