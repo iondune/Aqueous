@@ -250,19 +250,16 @@ void CMainState::CalculateDataAlignment()
 
 	vec2f const DataRangeSize = DataRangeMax - DataRangeMin;
 	vec2f const DataRangeCenter = (DataRangeMin + DataRangeMax) / 2.f;
-	//vec2f const DataActualSize(GetLongLatAreaDimensions(DataRangeMin, DataRangeMax));
 	f32 const DataDepth = YRange.second - YRange.first;
-
-	//vec2f const MapRangeMin(DataRangeCenter - 2*(DataRangeCenter - DataRangeMin)), MapRangeMax(DataRangeCenter + 2*(DataRangeMax - DataRangeCenter));
 	
 	vec2f const MapRangeSize = MapRangeMax - MapRangeMin;
 	vec2f const MapRangeCenter = (MapRangeMin + MapRangeMax) / 2.f;
-	//vec2f const MapActualSize(GetLongLatAreaDimensions(MapRangeMin, MapRangeMax));
 	f32 const MapDepth = 800.f;
-
-	printf("Data range is %f by %f meters,\n", DataRangeSize.X, DataRangeSize.Y);
 	
-	vec2f const ActualOffset = MapRangeCenter - DataRangeCenter;//vec2f(DistFromLong(DataRangeCenter.X, MapRangeCenter.X, DataRangeCenter.Y), DistFromLat(DataRangeCenter.Y, MapRangeCenter.Y, DataRangeCenter.X));
+	printf("Data range is %f by %f meters,\n", DataRangeSize.X, DataRangeSize.Y);
+	printf("Terrain range is %f by %f meters,\n", MapRangeSize.X, MapRangeSize.Y);
+	
+	vec2f const ActualOffset = MapRangeCenter - DataRangeCenter;
 	vec2f const MapOffset = ActualOffset * 3.f / Maximum(DataRangeSize.X, DataRangeSize.Y);
 	vec3f const DataScale = 3.f * vec3f(DataRangeSize.X, DataDepth, DataRangeSize.Y) / Maximum(DataRangeSize.X, DataRangeSize.Y);
 	vec3f const MapScale = DataScale * vec3f(MapRangeSize.X, MapDepth, MapRangeSize.Y) / vec3f(DataRangeSize.X, DataDepth, DataRangeSize.Y);
@@ -289,29 +286,6 @@ void CMainState::CalculateDataAlignment()
 	Scene.Terrain->setScale(Scene.Terrain->getScale() * vec3f(1, 1, -1));
 	Scene.Water->setScale(Scene.Water->getScale() * vec3f(1, 1, -1));
 	Scene.SkyBox->setScale(Scene.SkyBox->getScale() * vec3f(1, 1, -1));
-
-	/*vec2f ScaleAdjust = (MapRangeMax - MapRangeMin) / (DataRangeMax - DataRangeMin);
-	f32 MaxAdjust = Maximum(ScaleAdjust.X, ScaleAdjust.Y);
-	vec2f TranslationAdjust = (DataRangeCenter - MapRangeMin) / (MapRangeMax - DataRangeCenter);
-
-	vec2f RelativeTranslate;
-	for (int i = 0; i < 2; ++ i)
-	{
-		if (TranslationAdjust[i] > 1.f)
-		{
-			TranslationAdjust[i] = 1.f / TranslationAdjust[i];
-			RelativeTranslate[i] = -(1.f - TranslationAdjust[i]);
-		}
-		else
-		{
-			RelativeTranslate[i] = (1.f - TranslationAdjust[i]);
-		}
-	}
-
-	RelativeTranslate *= MaxAdjust;
-
-	Scene.Terrain->setTranslation(vec3f(RelativeTranslate.X, 0.f, -RelativeTranslate.Y));
-	Scene.Water->setTranslation(vec3f(RelativeTranslate.X, 0.f, -RelativeTranslate.Y));*/
 }
 
 void CMainState::SetSite(int site)
