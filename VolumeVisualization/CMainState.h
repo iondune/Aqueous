@@ -88,6 +88,9 @@ public:
 	void CalculateDataAlignment();
 
 	bool ShowDepth;
+	int Site;
+
+	void SetSite(int site);
 
 	//////////////////////////////
 	// Mouse Tracking Varaibles //

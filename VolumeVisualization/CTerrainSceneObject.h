@@ -21,6 +21,8 @@ public:
 
 	bool DebugHeight;
 
+	void SetSite(int Site);
+
 protected:
 	
 	// Generic flat grid data, used with heightmap offset

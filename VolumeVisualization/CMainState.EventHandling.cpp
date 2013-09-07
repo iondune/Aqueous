@@ -130,6 +130,32 @@ void CMainState::OnEvent(SKeyboardEvent & Event)
 		break;
 
 		// To Do : Camera control buttons
+
+
+		//////////
+		// Site //
+		//////////
+
+	case EKey::KeyPad1:
+
+		SetSite(0);
+		break;
+
+	case EKey::KeyPad2:
+
+		SetSite(1);
+		break;
+
+	case EKey::KeyPad3:
+
+		SetSite(2);
+		break;
+
+	case EKey::KeyPad4:
+
+		SetSite(3);
+		break;
+
     }
 }
 

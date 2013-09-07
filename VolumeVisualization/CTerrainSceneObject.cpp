@@ -39,9 +39,35 @@ CTerrainSceneObject::CTerrainSceneObject()
 	
 	STextureCreationFlags Flags;
 	Flags.Wrap = GL_CLAMP_TO_EDGE;
-	ColorMap = CImageLoader::LoadTexture("../Sites/Denmark/TerrainColorXLarge.bmp", Flags);
 	HeightMap = CImageLoader::LoadTexture("../Sites/Denmark/TerrainTopography.bmp", Flags);
-	BathyMap = CImageLoader::LoadTexture("../Sites/Denmark/TerrainBathymetryXLarge.bmp", Flags);
+	SetSite(0);
+}
+
+void CTerrainSceneObject::SetSite(int Site)
+{
+	STextureCreationFlags Flags;
+	Flags.Wrap = GL_CLAMP_TO_EDGE;
+
+	switch (Site)
+	{
+	default:
+	case 0:
+		ColorMap = CImageLoader::LoadTexture("../Sites/Denmark/TerrainColor.bmp", Flags);
+		BathyMap = CImageLoader::LoadTexture("../Sites/Denmark/TerrainBathymetry.bmp", Flags);
+		break;
+	case 1:
+		ColorMap = CImageLoader::LoadTexture("../Sites/Denmark/TerrainColorLarge.bmp", Flags);
+		BathyMap = CImageLoader::LoadTexture("../Sites/Denmark/TerrainBathymetryLarge.bmp", Flags);
+		break;
+	case 2:
+		ColorMap = CImageLoader::LoadTexture("../Sites/Denmark/TerrainColorXLarge.bmp", Flags);
+		BathyMap = CImageLoader::LoadTexture("../Sites/Denmark/TerrainBathymetryXLarge.bmp", Flags);
+		break;
+	case 3:
+		ColorMap = CImageLoader::LoadTexture("../Sites/Denmark/Map6Color.bmp", Flags);
+		BathyMap = CImageLoader::LoadTexture("../Sites/Denmark/Map6Bathy.bmp", Flags);
+		break;
+	}
 }
 
 bool CTerrainSceneObject::draw(IScene const * const Scene, sharedPtr<IRenderPass> Pass, bool const CullingEnabled)

@@ -6,7 +6,7 @@
 
 
 CMainState::CMainState()
-	: Scale(1), Mode(0), ShowDepth(false)
+	: Scale(1), Mode(0), ShowDepth(false), Site(0)
 {}
 
 void CMainState::Begin()
@@ -116,9 +116,9 @@ static double DistFrom(double lat1, double lng1, double lat2, double lng2)
 	double earthRadius = 6371.0;
 	double dLat = toRadians(lat2-lat1);
 	double dLng = toRadians(lng2-lng1);
-	double a = sin(dLat/2) * sin(dLat/2) +
-		cos(toRadians(lat1)) * cos(toRadians(lat2)) *
-		sin(dLng/2) * sin(dLng/2);
+	double a = 
+		sin(dLat/2) * sin(dLat/2) +
+		cos(toRadians(lat1)) * cos(toRadians(lat2)) * sin(dLng/2) * sin(dLng/2);
 	double c = 2 * atan2(sqrt(a), sqrt(1-a));
 	double dist = earthRadius * c;
 
@@ -198,10 +198,28 @@ void CMainState::CalculateDataAlignment()
 	Range ZRange = DataSet.GetFieldRange(DataManager->GetRawValues().Traits.PositionZField, 15.0);
 
 	vec2f const DataRangeMin(XRange.first, ZRange.first), DataRangeMax(XRange.second, ZRange.second);
-	vec2f const MapRangeMin(LongLatDecimalDegrees(9, 54, 13.29), LongLatDecimalDegrees(56, 30, 37.33)), MapRangeMax(LongLatDecimalDegrees(10, 27, 10.16), LongLatDecimalDegrees(56, 48, 48.57));
-		//MapRangeMin(LongLatDecimalDegrees(9, 49, 27.68), LongLatDecimalDegrees(56, 34, 20.96)), MapRangeMax(LongLatDecimalDegrees(10, 11, 1.75), LongLatDecimalDegrees(56, 46, 11.45));
-		//MapRangeMin(LongLatDecimalDegrees(9, 55, 45.32), LongLatDecimalDegrees(56, 38, 17.22)), MapRangeMax(LongLatDecimalDegrees(10, 2, 34.80), LongLatDecimalDegrees(56, 41, 59.01));
-		//MapRangeMin(DataRangeMin), MapRangeMax(DataRangeMax);
+	vec2f MapRangeMin, MapRangeMax;
+	switch (Site)
+	{
+	default:
+	case 0:
+		MapRangeMin = vec2f(LongLatDecimalDegrees(9, 55, 45.32), LongLatDecimalDegrees(56, 38, 17.22));
+		MapRangeMax = vec2f(LongLatDecimalDegrees(10, 2, 34.80), LongLatDecimalDegrees(56, 41, 59.01));
+		break;
+	case 1:
+		MapRangeMin = vec2f(LongLatDecimalDegrees(9, 49, 27.68), LongLatDecimalDegrees(56, 34, 20.96));
+		MapRangeMax = vec2f(LongLatDecimalDegrees(10, 11, 1.75), LongLatDecimalDegrees(56, 46, 11.45));
+		break;
+	case 2:
+		MapRangeMin = vec2f(LongLatDecimalDegrees(9, 54, 13.29), LongLatDecimalDegrees(56, 30, 37.33));
+		MapRangeMax = vec2f(LongLatDecimalDegrees(10, 27, 10.16), LongLatDecimalDegrees(56, 48, 48.57));
+		break;
+	case 3:
+		MapRangeMin = vec2f(LongLatDecimalDegrees(9, 39, 1.38), LongLatDecimalDegrees(56, 37, 13.75));
+		MapRangeMax = vec2f(LongLatDecimalDegrees(10, 17, 17.79), LongLatDecimalDegrees(56, 58, 5.72));
+		break;
+	}
+
 	
 	vec2f const DataRangeSize = DataRangeMax - DataRangeMin;
 	vec2f const DataRangeCenter = (DataRangeMin + DataRangeMax) / 2.f;
@@ -217,7 +235,7 @@ void CMainState::CalculateDataAlignment()
 
 	printf("Data range is %f by %f meters,\n", DataActualSize.X, DataActualSize.Y);
 	
-	vec2f const ActualOffset = vec2f(DistFrom(DataRangeCenter.X, DataRangeCenter.Y, MapRangeCenter.X, DataRangeCenter.Y), DistFrom(DataRangeCenter.X, DataRangeCenter.Y, DataRangeCenter.X, MapRangeCenter.Y));
+	vec2f const ActualOffset = vec2f(DistFromLong(DataRangeCenter.X, MapRangeCenter.X, DataRangeCenter.Y), DistFromLat(DataRangeCenter.Y, MapRangeCenter.Y, DataRangeCenter.X));
 	vec2f const MapOffset = ActualOffset * 3.f / Maximum(DataActualSize.X, DataActualSize.Y);
 	vec3f const DataScale = 3.f * vec3f(DataActualSize.X, DataDepth, DataActualSize.Y) / Maximum(DataActualSize.X, DataActualSize.Y);
 	vec3f const MapScale = DataScale * vec3f(MapActualSize.X, MapDepth, MapActualSize.Y) / vec3f(DataActualSize.X, DataDepth, DataActualSize.Y);
@@ -244,4 +262,13 @@ void CMainState::CalculateDataAlignment()
 	Scene.Terrain->setScale(Scene.Terrain->getScale() * vec3f(1, 1, -1));
 	Scene.Water->setScale(Scene.Water->getScale() * vec3f(1, 1, -1));
 	Scene.SkyBox->setScale(Scene.SkyBox->getScale() * vec3f(1, 1, -1));
+}
+
+void CMainState::SetSite(int site)
+{
+	Site = site;
+
+	CProgramContext::SScene & Scene = Context->Scene;
+	Scene.Terrain->SetSite(Site);
+	CalculateDataAlignment();
 }
