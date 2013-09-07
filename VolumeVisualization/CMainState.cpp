@@ -218,6 +218,10 @@ void CMainState::CalculateDataAlignment()
 		MapLonLatMin = vec2f(LongLatDecimalDegrees(9, 39, 1.38), LongLatDecimalDegrees(56, 37, 13.75));
 		MapLonLatMax = vec2f(LongLatDecimalDegrees(10, 17, 17.79), LongLatDecimalDegrees(56, 58, 5.72));
 		break;
+	case 4:
+		MapLonLatMin = vec2f(LongLatDecimalDegrees(9, 4, 33.9), LongLatDecimalDegrees(56, 13, 56.68));
+		MapLonLatMax = vec2f(LongLatDecimalDegrees(10, 53, 14.45), LongLatDecimalDegrees(57, 13, 29.39));
+		break;
 	}
 
 	vec2f const DataLonLatCenter = (DataLonLatMin + DataLonLatMax) / 2.f;

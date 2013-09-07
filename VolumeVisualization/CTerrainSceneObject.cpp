@@ -67,6 +67,10 @@ void CTerrainSceneObject::SetSite(int Site)
 		ColorMap = CImageLoader::LoadTexture("../Sites/Denmark/Map6Color.bmp", Flags);
 		BathyMap = CImageLoader::LoadTexture("../Sites/Denmark/Map6Bathy.bmp", Flags);
 		break;
+	case 4:
+		ColorMap = CImageLoader::LoadTexture("../Sites/Denmark/Map7Color.bmp", Flags);
+		BathyMap = CImageLoader::LoadTexture("../Sites/Denmark/Map7Bathy.bmp", Flags);
+		break;
 	}
 }
 
