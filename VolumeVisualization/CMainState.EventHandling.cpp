@@ -137,23 +137,54 @@ void CMainState::OnEvent(SKeyboardEvent & Event)
 		//////////
 
 	case EKey::KeyPad1:
-
-		SetSite(0);
+		
+		if (! Event.Pressed)
+			SetSite(0);
 		break;
 
 	case EKey::KeyPad2:
-
-		SetSite(1);
+		
+		if (! Event.Pressed)
+			SetSite(1);
 		break;
 
 	case EKey::KeyPad3:
-
-		SetSite(2);
+		
+		if (! Event.Pressed)
+			SetSite(2);
 		break;
 
 	case EKey::KeyPad4:
+		
+		if (! Event.Pressed)
+			SetSite(3);
+		break;
+		
+	case EKey::Comma:
 
-		SetSite(3);
+		if (! Event.Pressed)
+		{
+			MeterMode = 0;
+			CalculateDataAlignment();
+		}
+		break;
+		
+	case EKey::Period:
+
+		if (! Event.Pressed)
+		{
+			MeterMode = 1;
+			CalculateDataAlignment();
+		}
+		break;
+		
+	case EKey::Slash:
+
+		if (! Event.Pressed)
+		{
+			MeterMode = 2;
+			CalculateDataAlignment();
+		}
 		break;
 
     }

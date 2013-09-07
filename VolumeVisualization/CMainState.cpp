@@ -6,7 +6,7 @@
 
 
 CMainState::CMainState()
-	: Scale(1), Mode(0), ShowDepth(false), Site(0)
+	: Scale(1), Mode(0), ShowDepth(false), Site(0), MeterMode(0)
 {}
 
 void CMainState::Begin()
@@ -197,48 +197,75 @@ void CMainState::CalculateDataAlignment()
 	Range YRange = DataSet.GetFieldRange(DataManager->GetRawValues().Traits.PositionYField, 15.0);
 	Range ZRange = DataSet.GetFieldRange(DataManager->GetRawValues().Traits.PositionZField, 15.0);
 
-	vec2f const DataRangeMin(XRange.first, ZRange.first), DataRangeMax(XRange.second, ZRange.second);
-	vec2f MapRangeMin, MapRangeMax;
+	vec2f const DataLonLatMin(XRange.first, ZRange.first), DataLonLatMax(XRange.second, ZRange.second);
+	vec2f MapLonLatMin, MapLonLatMax;
 	switch (Site)
 	{
 	default:
 	case 0:
-		MapRangeMin = vec2f(LongLatDecimalDegrees(9, 55, 45.32), LongLatDecimalDegrees(56, 38, 17.22));
-		MapRangeMax = vec2f(LongLatDecimalDegrees(10, 2, 34.80), LongLatDecimalDegrees(56, 41, 59.01));
+		MapLonLatMin = vec2f(LongLatDecimalDegrees(9, 55, 45.32), LongLatDecimalDegrees(56, 38, 17.22));
+		MapLonLatMax = vec2f(LongLatDecimalDegrees(10, 2, 34.80), LongLatDecimalDegrees(56, 41, 59.01));
 		break;
 	case 1:
-		MapRangeMin = vec2f(LongLatDecimalDegrees(9, 49, 27.68), LongLatDecimalDegrees(56, 34, 20.96));
-		MapRangeMax = vec2f(LongLatDecimalDegrees(10, 11, 1.75), LongLatDecimalDegrees(56, 46, 11.45));
+		MapLonLatMin = vec2f(LongLatDecimalDegrees(9, 49, 27.68), LongLatDecimalDegrees(56, 34, 20.96));
+		MapLonLatMax = vec2f(LongLatDecimalDegrees(10, 11, 1.75), LongLatDecimalDegrees(56, 46, 11.45));
 		break;
 	case 2:
-		MapRangeMin = vec2f(LongLatDecimalDegrees(9, 54, 13.29), LongLatDecimalDegrees(56, 30, 37.33));
-		MapRangeMax = vec2f(LongLatDecimalDegrees(10, 27, 10.16), LongLatDecimalDegrees(56, 48, 48.57));
+		MapLonLatMin = vec2f(LongLatDecimalDegrees(9, 54, 13.29), LongLatDecimalDegrees(56, 30, 37.33));
+		MapLonLatMax = vec2f(LongLatDecimalDegrees(10, 27, 10.16), LongLatDecimalDegrees(56, 48, 48.57));
 		break;
 	case 3:
-		MapRangeMin = vec2f(LongLatDecimalDegrees(9, 39, 1.38), LongLatDecimalDegrees(56, 37, 13.75));
-		MapRangeMax = vec2f(LongLatDecimalDegrees(10, 17, 17.79), LongLatDecimalDegrees(56, 58, 5.72));
+		MapLonLatMin = vec2f(LongLatDecimalDegrees(9, 39, 1.38), LongLatDecimalDegrees(56, 37, 13.75));
+		MapLonLatMax = vec2f(LongLatDecimalDegrees(10, 17, 17.79), LongLatDecimalDegrees(56, 58, 5.72));
 		break;
 	}
 
+	vec2f const DataLonLatCenter = (DataLonLatMin + DataLonLatMax) / 2.f;
 	
+	vec2f DataRangeMin;
+	vec2f DataRangeMax;
+	vec2f MapRangeMin;
+	vec2f MapRangeMax;
+	if (MeterMode == 0)
+	{
+	DataRangeMin = -vec2f(DistFromLong(DataLonLatMin.X, DataLonLatCenter.X, DataLonLatCenter.Y), DistFromLat(DataLonLatMin.Y, DataLonLatCenter.Y, DataLonLatCenter.X));
+	DataRangeMax = vec2f(DistFromLong(DataLonLatCenter.X, DataLonLatMax.X, DataLonLatCenter.Y), DistFromLat(DataLonLatCenter.Y, DataLonLatMax.Y, DataLonLatCenter.X));
+	MapRangeMin = -vec2f(DistFromLong(MapLonLatMin.X, DataLonLatCenter.X, DataLonLatCenter.Y), DistFromLat(MapLonLatMin.Y, DataLonLatCenter.Y, DataLonLatCenter.X));
+	MapRangeMax = vec2f(DistFromLong(DataLonLatCenter.X, MapLonLatMax.X, DataLonLatCenter.Y), DistFromLat(DataLonLatCenter.Y, MapLonLatMax.Y, DataLonLatCenter.X));
+	}
+	else if (MeterMode == 1)
+	{
+		DataRangeMin = -vec2f(DistFromLong(DataLonLatMin.X, DataLonLatCenter.X, Average(DataLonLatMin.Y, DataLonLatCenter.Y)), DistFromLat(DataLonLatMin.Y, DataLonLatCenter.Y, Average(DataLonLatMin.X, DataLonLatCenter.X)));
+		DataRangeMax = vec2f(DistFromLong(DataLonLatCenter.X, DataLonLatMax.X, Average(DataLonLatMax.Y, DataLonLatCenter.Y)), DistFromLat(DataLonLatCenter.Y, DataLonLatMax.Y, Average(DataLonLatMax.X, DataLonLatCenter.X)));
+		MapRangeMin = -vec2f(DistFromLong(MapLonLatMin.X, DataLonLatCenter.X, Average(MapLonLatMin.Y, DataLonLatCenter.Y)), DistFromLat(MapLonLatMin.Y, DataLonLatCenter.Y, Average(MapLonLatMin.X, DataLonLatCenter.X)));
+		MapRangeMax = vec2f(DistFromLong(DataLonLatCenter.X, MapLonLatMax.X, Average(MapLonLatMax.Y, DataLonLatCenter.Y)), DistFromLat(DataLonLatCenter.Y, MapLonLatMax.Y, Average(MapLonLatMax.X, DataLonLatCenter.X)));
+	}
+	else if (MeterMode == 2)
+	{
+		DataRangeMin = -vec2f(DistFromLong(DataLonLatMin.X, DataLonLatCenter.X, DataLonLatMin.Y), DistFromLat(DataLonLatMin.Y, DataLonLatCenter.Y, DataLonLatMin.X));
+		DataRangeMax = vec2f(DistFromLong(DataLonLatCenter.X, DataLonLatMax.X, DataLonLatMax.Y), DistFromLat(DataLonLatCenter.Y, DataLonLatMax.Y, DataLonLatMax.X));
+		MapRangeMin = -vec2f(DistFromLong(MapLonLatMin.X, DataLonLatCenter.X, MapLonLatMin.Y), DistFromLat(MapLonLatMin.Y, DataLonLatCenter.Y, MapLonLatMin.X));
+		MapRangeMax = vec2f(DistFromLong(DataLonLatCenter.X, MapLonLatMax.X, MapLonLatMax.Y), DistFromLat(DataLonLatCenter.Y, MapLonLatMax.Y, MapLonLatMax.X));
+	}
+
 	vec2f const DataRangeSize = DataRangeMax - DataRangeMin;
 	vec2f const DataRangeCenter = (DataRangeMin + DataRangeMax) / 2.f;
-	vec2f const DataActualSize(GetLongLatAreaDimensions(DataRangeMin, DataRangeMax));
+	//vec2f const DataActualSize(GetLongLatAreaDimensions(DataRangeMin, DataRangeMax));
 	f32 const DataDepth = YRange.second - YRange.first;
 
 	//vec2f const MapRangeMin(DataRangeCenter - 2*(DataRangeCenter - DataRangeMin)), MapRangeMax(DataRangeCenter + 2*(DataRangeMax - DataRangeCenter));
 	
 	vec2f const MapRangeSize = MapRangeMax - MapRangeMin;
 	vec2f const MapRangeCenter = (MapRangeMin + MapRangeMax) / 2.f;
-	vec2f const MapActualSize(GetLongLatAreaDimensions(MapRangeMin, MapRangeMax));
+	//vec2f const MapActualSize(GetLongLatAreaDimensions(MapRangeMin, MapRangeMax));
 	f32 const MapDepth = 800.f;
 
-	printf("Data range is %f by %f meters,\n", DataActualSize.X, DataActualSize.Y);
+	printf("Data range is %f by %f meters,\n", DataRangeSize.X, DataRangeSize.Y);
 	
-	vec2f const ActualOffset = vec2f(DistFromLong(DataRangeCenter.X, MapRangeCenter.X, DataRangeCenter.Y), DistFromLat(DataRangeCenter.Y, MapRangeCenter.Y, DataRangeCenter.X));
-	vec2f const MapOffset = ActualOffset * 3.f / Maximum(DataActualSize.X, DataActualSize.Y);
-	vec3f const DataScale = 3.f * vec3f(DataActualSize.X, DataDepth, DataActualSize.Y) / Maximum(DataActualSize.X, DataActualSize.Y);
-	vec3f const MapScale = DataScale * vec3f(MapActualSize.X, MapDepth, MapActualSize.Y) / vec3f(DataActualSize.X, DataDepth, DataActualSize.Y);
+	vec2f const ActualOffset = MapRangeCenter - DataRangeCenter;//vec2f(DistFromLong(DataRangeCenter.X, MapRangeCenter.X, DataRangeCenter.Y), DistFromLat(DataRangeCenter.Y, MapRangeCenter.Y, DataRangeCenter.X));
+	vec2f const MapOffset = ActualOffset * 3.f / Maximum(DataRangeSize.X, DataRangeSize.Y);
+	vec3f const DataScale = 3.f * vec3f(DataRangeSize.X, DataDepth, DataRangeSize.Y) / Maximum(DataRangeSize.X, DataRangeSize.Y);
+	vec3f const MapScale = DataScale * vec3f(MapRangeSize.X, MapDepth, MapRangeSize.Y) / vec3f(DataRangeSize.X, DataDepth, DataRangeSize.Y);
 
 	static f32 const YExaggeration = 3.f;
 	static vec3f const Multiplier = vec3f(1, YExaggeration, 1);
@@ -262,6 +289,29 @@ void CMainState::CalculateDataAlignment()
 	Scene.Terrain->setScale(Scene.Terrain->getScale() * vec3f(1, 1, -1));
 	Scene.Water->setScale(Scene.Water->getScale() * vec3f(1, 1, -1));
 	Scene.SkyBox->setScale(Scene.SkyBox->getScale() * vec3f(1, 1, -1));
+
+	/*vec2f ScaleAdjust = (MapRangeMax - MapRangeMin) / (DataRangeMax - DataRangeMin);
+	f32 MaxAdjust = Maximum(ScaleAdjust.X, ScaleAdjust.Y);
+	vec2f TranslationAdjust = (DataRangeCenter - MapRangeMin) / (MapRangeMax - DataRangeCenter);
+
+	vec2f RelativeTranslate;
+	for (int i = 0; i < 2; ++ i)
+	{
+		if (TranslationAdjust[i] > 1.f)
+		{
+			TranslationAdjust[i] = 1.f / TranslationAdjust[i];
+			RelativeTranslate[i] = -(1.f - TranslationAdjust[i]);
+		}
+		else
+		{
+			RelativeTranslate[i] = (1.f - TranslationAdjust[i]);
+		}
+	}
+
+	RelativeTranslate *= MaxAdjust;
+
+	Scene.Terrain->setTranslation(vec3f(RelativeTranslate.X, 0.f, -RelativeTranslate.Y));
+	Scene.Water->setTranslation(vec3f(RelativeTranslate.X, 0.f, -RelativeTranslate.Y));*/
 }
 
 void CMainState::SetSite(int site)

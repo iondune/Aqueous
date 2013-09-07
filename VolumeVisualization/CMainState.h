@@ -89,6 +89,7 @@ public:
 
 	bool ShowDepth;
 	int Site;
+	int MeterMode;
 
 	void SetSite(int site);
 
