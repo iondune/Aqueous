@@ -118,7 +118,18 @@ bool CVolumeSceneObject::draw(IScene const * const Scene, sharedPtr<IRenderPass>
 	glEnable(GL_CULL_FACE);
 	glDisable(GL_DEPTH_TEST);
 
-	glCullFace(GL_BACK);
+	int Inversions = 0;
+	if (Scale.X < 0)
+		Inversions ++;
+	if (Scale.Y < 0)
+		Inversions ++;
+	if (Scale.Z < 0)
+		Inversions ++;
+	
+	if (Inversions % 2)
+		glCullFace(GL_BACK);
+	else
+		glCullFace(GL_FRONT);
 	{
 		if (Shader)
 		{
