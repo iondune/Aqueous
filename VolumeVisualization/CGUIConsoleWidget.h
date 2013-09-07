@@ -1,5 +1,5 @@
-#ifndef _CGUICONSOLEWIDGET_H_INCLUDED_
-#define _CGUICONSOLEWIDGET_H_INCLUDED_
+
+#pragma once
 
 #include <Gwen/Gwen.h>
 #include <Gwen/Controls.h>
@@ -24,5 +24,3 @@ public:
 	virtual void addMessage(std::string const & Message, Gwen::Color const & Color = Gwen::Color(255, 255, 255, 255));
 
 };
-
-#endif

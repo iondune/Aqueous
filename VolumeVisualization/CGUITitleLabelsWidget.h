@@ -1,5 +1,5 @@
-#ifndef _CGUITITLELABELSWIDGET_H_INCLUDED_
-#define _CGUITITLELABELSWIDGET_H_INCLUDED_
+
+#pragma once
 
 #include "CGUIContextWidget.h"
 
@@ -22,5 +22,3 @@ public:
 	void clearVolumeRangeIndicator();
 
 };
-
-#endif

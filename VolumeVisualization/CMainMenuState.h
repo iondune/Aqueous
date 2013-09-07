@@ -1,5 +1,5 @@
-#ifndef _CMAINMENUSTATE_H_INCLUDED_
-#define _CMAINMENUSTATE_H_INCLUDED_
+
+#pragma once
 
 #include "CProgramContext.h"
 #include "CDataLoadingThread.h"
@@ -28,5 +28,3 @@ public:
 	std::string DataSetName;
 
 };
-
-#endif

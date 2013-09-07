@@ -1,5 +1,5 @@
-#ifndef _CGUICONTROLPANELWIDGET_H_INCLUDED_
-#define _CGUICONTROLPANELWIDGET_H_INCLUDED_
+
+#pragma once
 
 #include "CGUIContextWidget.h"
 #include <Gwen/Controls/WindowControl.h>
@@ -21,5 +21,3 @@ public:
 	void OnToggleScene(Gwen::Controls::Base * Control);
 
 };
-
-#endif

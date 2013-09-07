@@ -1,5 +1,5 @@
-#ifndef _CGLYPHSCENEOBJECT_H_INCLUDED_
-#define _CGLYPHSCENEOBJECT_H_INCLUDED_
+
+#pragma once
 
 #include <ionCore.h>
 #include <ionScene.h>
@@ -55,5 +55,3 @@ public:
 	f32 GlyphSize;
 
 };
-
-#endif

@@ -1,5 +1,5 @@
-#ifndef _CGUIMAINMENUSWIDGET_H_INCLUDED_
-#define _CGUIMAINMENUSWIDGET_H_INCLUDED_
+
+#pragma once
 
 #include "CGUIContextWidget.h"
 #include <Gwen/Controls/WindowControl.h>
@@ -30,5 +30,3 @@ public:
 	void OnCreateDataSet(Gwen::Controls::Base * Control);
 
 };
-
-#endif

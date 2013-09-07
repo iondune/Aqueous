@@ -1,5 +1,5 @@
-#ifndef PLANE_GRID_SCENE_OBJECT_H_INCLUDED_
-#define PLANE_GRID_SCENE_OBJECT_H_INCLUDED_
+
+#pragma once
 
 #include <ionCore.h>
 #include <ionScene.h>
@@ -14,5 +14,3 @@ public:
 	CPlaneGridSceneObject(s32 const Size);
 
 };
-
-#endif

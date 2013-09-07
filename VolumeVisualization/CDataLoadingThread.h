@@ -1,5 +1,5 @@
-#ifndef _CDATALOADINGTHREAD_H_INCLUDED_
-#define _CDATALOADINGTHREAD_H_INCLUDED_
+
+#pragma once
 
 #include "CProgramContext.h"
 
@@ -31,5 +31,3 @@ public:
 	CGUILoadingWidget * LoadingWidget;
 
 };
-
-#endif

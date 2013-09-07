@@ -1,5 +1,5 @@
-#ifndef _CLOADSTATE_H_INCLUDED_
-#define _CLOADSTATE_H_INCLUDED_
+
+#pragma once
 
 #include "CProgramContext.h"
 
@@ -43,5 +43,3 @@ public:
 	void OnFinish();
 
 };
-
-#endif

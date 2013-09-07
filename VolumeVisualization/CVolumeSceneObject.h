@@ -1,5 +1,5 @@
-#ifndef _CVOLUMESCENEOBJECT_H_INCLUDED_
-#define _CVOLUMESCENEOBJECT_H_INCLUDED_
+
+#pragma once
 
 #include <ionCore.h>
 #include <ionScene.h>
@@ -39,5 +39,3 @@ public:
 	bool draw(IScene const * const scene, sharedPtr<IRenderPass> Pass, bool const CullingEnabled);
 
 };
-
-#endif

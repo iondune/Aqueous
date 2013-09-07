@@ -1,5 +1,5 @@
-#ifndef _CGUIVOLUMECONTROLWIDGET_H_INCLUDED_
-#define _CGUIVOLUMECONTROLWIDGET_H_INCLUDED_
+
+#pragma once
 
 #include "CGUIContextWidget.h"
 #include <Gwen/Controls/WindowControl.h>
@@ -47,5 +47,3 @@ public:
 	void toggle();
 
 };
-
-#endif

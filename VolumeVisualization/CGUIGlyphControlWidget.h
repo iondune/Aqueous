@@ -1,5 +1,5 @@
-#ifndef _CGUIGLPYHCONTROLWIDGET_H_INCLUDED_
-#define _CGUIGLPYHCONTROLWIDGET_H_INCLUDED_
+
+#pragma once
 
 #include "CGUIContextWidget.h"
 #include <Gwen/Controls/WindowControl.h>
@@ -26,5 +26,3 @@ public:
 	void toggle();
 
 };
-
-#endif
