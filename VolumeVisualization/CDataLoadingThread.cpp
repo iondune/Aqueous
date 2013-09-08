@@ -1,8 +1,9 @@
 
 #include "CDataLoadingThread.h"
 
+#include <ionGUI.h>
+
 #include "CProgramContext.h"
-#include "CGUILoadingWidget.h"
 #include "SciDataManager.h"
 #include "ColorMappers.h"
 #include "CGlyphSceneObject.h"
@@ -11,9 +12,9 @@
 
 void CDataLoadingThread::Execute()
 {
-	LoadingWidget->setProgress(0.05f);
+	LoadingWidget->SetProgress(0.05f);
 	Context->DataManager->readFromFile(FileName);
-	LoadingWidget->setProgress(0.1f);
+	LoadingWidget->SetProgress(0.1f);
 
 	int Counter = 0;
 
@@ -38,11 +39,11 @@ void CDataLoadingThread::Execute()
 	Context->Scene.Glyphs->LoadGlyphs(Context->DataManager, & denmark); //,
 		//"Latitude", "DFS Depth", "Longitude", "Total Water Column (m)");
 		//"x", "y", "z", "Total Water Column (m)");
-	LoadingWidget->setProgress(0.75f);
+	LoadingWidget->SetProgress(0.75f);
 
 	//o.Field = "o1";
 	//Context->DataManager->createPointCloudObjects(false, Context->Scene.GridObject, SVector3f(3.f), & o);
-	LoadingWidget->setProgress(1.f);
+	LoadingWidget->SetProgress(1.f);
 	Executing = false;
 }
 

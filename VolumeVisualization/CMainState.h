@@ -83,7 +83,7 @@ public:
 	void OnEvent(SKeyboardEvent & Event);
 	void OnEvent(SWindowResizedEvent & Event);
 
-	void addConsoleMessage(std::string const & Message, Gwen::Color const & Color = Gwen::Color(255, 255, 255, 255));
+	void AddConsoleMessage(std::string const & Message, color4i const & Color = Colors::White);
 
 	void CalculateDataAlignment();
 

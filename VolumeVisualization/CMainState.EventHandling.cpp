@@ -95,7 +95,7 @@ void CMainState::OnEvent(SKeyboardEvent & Event)
 				s << "enabled.";
 			else
 				s << "disabled.";
-			addConsoleMessage(s.str());
+			AddConsoleMessage(s.str());
 		}
 
 		break;

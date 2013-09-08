@@ -7,7 +7,7 @@
 
 
 class CProgramContext;
-class CGUILoadingWidget;
+class CGUIProgressBarWidget;
 
 class CDataLoadingThread
 {
@@ -28,6 +28,6 @@ public:
 	void Sync();
 
 	CProgramContext * Context;
-	CGUILoadingWidget * LoadingWidget;
+	CGUIProgressBarWidget * LoadingWidget;
 
 };

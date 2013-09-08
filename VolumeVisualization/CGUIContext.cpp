@@ -14,16 +14,16 @@ void CGUIContext::SetupMainState()
 	Canvas->SetDrawBackground(false);
 
 	// Widgets
-	AddWidget(Console = new CGUIConsoleWidget());
-	AddWidget(TitleLabels = new CGUITitleLabelsWidget(CProgramContext::Get().DataManager));
-	AddWidget(VolumeControl = new CGUIVolumeControlWidget());
-	AddWidget(TerrainControl = new CGUITerrainControlWidget());
-	AddWidget(GlyphControl = new CGUIGlyphControlWidget());
-	AddWidget(SceneControl = new CGUISceneControlWidget());
-	AddWidget(ControlPanel = new CGUIControlPanelWidget());
+	Console = new CGUIConsoleWidget(this);
+	TitleLabels = new CGUITitleLabelsWidget(CProgramContext::Get().DataManager);
+	VolumeControl = new CGUIVolumeControlWidget();
+	TerrainControl = new CGUITerrainControlWidget();
+	GlyphControl = new CGUIGlyphControlWidget();
+	SceneControl = new CGUISceneControlWidget();
+	ControlPanel = new CGUIControlPanelWidget();
 	
-	Console->addMessage("GUI Initialized.");
-	Console->addMessage("Starting program...", Gwen::Colors::Red);
+	Console->AddMessage("GUI Initialized.");
+	Console->AddMessage("Starting program...", Colors::Red);
 }
 
 void CGUIContext::SetupMenuState()
@@ -31,7 +31,7 @@ void CGUIContext::SetupMenuState()
 	Canvas->SetDrawBackground(true);
 
 	// Widgets
-	AddWidget(MainMenu = new CGUIMainMenuWidget());
+	MainMenu = new CGUIMainMenuWidget();
 }
 
 void CGUIContext::Clear()

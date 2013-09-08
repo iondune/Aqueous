@@ -4,7 +4,6 @@
 #include <ionGUI.h>
 
 // Main State
-#include "CGUIConsoleWidget.h"
 #include "CGUITitleLabelsWidget.h"
 #include "CGUIVolumeControlWidget.h"
 #include "CGUITerrainControlWidget.h"

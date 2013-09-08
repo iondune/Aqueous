@@ -68,12 +68,6 @@
     <ClCompile Include="CGUIVolumeControlWidget.cpp">
       <Filter>Program Context\GUI\Main State</Filter>
     </ClCompile>
-    <ClCompile Include="CGUIConsoleWidget.cpp">
-      <Filter>Program Context\GUI\General</Filter>
-    </ClCompile>
-    <ClCompile Include="CGUILoadingWidget.cpp">
-      <Filter>Program Context\GUI\General</Filter>
-    </ClCompile>
     <ClCompile Include="SciDataParserCSV.cpp">
       <Filter>MainState\Data Management\Parsers</Filter>
     </ClCompile>
@@ -194,12 +188,6 @@
     <ClInclude Include="CGUITitleLabelsWidget.h">
       <Filter>Program Context\GUI\Main State</Filter>
     </ClInclude>
-    <ClInclude Include="CGUIConsoleWidget.h">
-      <Filter>Program Context\GUI\General</Filter>
-    </ClInclude>
-    <ClInclude Include="CGUILoadingWidget.h">
-      <Filter>Program Context\GUI\General</Filter>
-    </ClInclude>
     <ClInclude Include="COxygenColorMapper.h">
       <Filter>MainState\Data Management\Color Mapping</Filter>
     </ClInclude>
@@ -288,9 +276,6 @@
     </Filter>
     <Filter Include="Program Context\GUI\Main State">
       <UniqueIdentifier>{1a142d81-4987-4603-9bb6-3734c174c09e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Program Context\GUI\General">
-      <UniqueIdentifier>{1c6e5b8c-9a45-4dcd-86e0-2488a8c1db8e}</UniqueIdentifier>
     </Filter>
     <Filter Include="MainState\Water">
       <UniqueIdentifier>{1c0ec171-1f22-41cf-9511-5fe0e0c62da5}</UniqueIdentifier>

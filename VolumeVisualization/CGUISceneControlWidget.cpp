@@ -33,7 +33,7 @@ void CGUISceneControlWidget::OnToggleBackdrop(Gwen::Controls::Base * Control)
 		s << "enabled.";
 	else
 		s << "disabled.";
-	Context->GUIContext->GetConsole()->addMessage(s.str());
+	Context->GUIContext->GetConsole()->AddMessage(s.str());
 
 	if (Context->Scene.SkyBox->isVisible())
 		((Gwen::Controls::Button *) Control)->SetText("Disable Backdrop");

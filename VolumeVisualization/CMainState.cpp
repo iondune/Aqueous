@@ -106,9 +106,9 @@ void CMainState::Update(f32 const Elapsed)
 	CApplication::Get().GetWindow().SwapBuffers();
 }
 
-void CMainState::addConsoleMessage(std::string const & Message, Gwen::Color const & Color)
+void CMainState::AddConsoleMessage(std::string const & Message, color4i const & Color)
 {
-	Context->GUIContext->GetConsole()->addMessage(Message, Color);
+	Context->GUIContext->GetConsole()->AddMessage(Message, Color);
 }
 
 void CMainState::CalculateDataAlignment()

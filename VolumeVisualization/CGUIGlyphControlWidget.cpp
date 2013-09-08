@@ -75,13 +75,13 @@ void CGUIGlyphControlWidget::OnToggleGlyphs(Gwen::Controls::Base * Control)
 	if (! Context->Scene.Glyphs->isVisible())
 	{
 		Context->Scene.Glyphs->setVisible(true);
-		GUIContext->GetConsole()->addMessage("Glyph View Enabled");
+		GUIContext->GetConsole()->AddMessage("Glyph View Enabled");
 		SetButtonTitle();
 	}
 	else
 	{
 		Context->Scene.Glyphs->setVisible(false);
-		GUIContext->GetConsole()->addMessage("Glyph View Disabled");
+		GUIContext->GetConsole()->AddMessage("Glyph View Disabled");
 		SetButtonTitle();
 	}
 }

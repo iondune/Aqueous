@@ -66,13 +66,13 @@ void CGUITerrainControlWidget::OnToggleTerrain(Gwen::Controls::Base * Control)
 	if (Context->Scene.Terrain->isVisible())
 	{
 		Context->Scene.Terrain->setVisible(false);
-		GUIContext->GetConsole()->addMessage("Terrain View Disabled");
+		GUIContext->GetConsole()->AddMessage("Terrain View Disabled");
 		EnableButton->SetText("Enable Terrain");
 	}
 	else
 	{
 		Context->Scene.Terrain->setVisible(true);
-		GUIContext->GetConsole()->addMessage("Terrain View Enabled");
+		GUIContext->GetConsole()->AddMessage("Terrain View Enabled");
 		EnableButton->SetText("Disable Terrain");
 	}
 }

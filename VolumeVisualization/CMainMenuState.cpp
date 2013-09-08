@@ -1,9 +1,10 @@
 
 #include "CMainMenuState.h"
 
+#include <ionGUI.h>
+
 #include "CMainState.h"
 #include "ColorMappers.h"
-#include "CGUILoadingWidget.h"
 #include "CDataLoadingThread.h"
 #include "CGlyphSceneObject.h"
 
@@ -65,7 +66,8 @@ void CMainMenuState::LoadData(std::string const & FileName)
 	s << FileName;
 
 	Thread.Context = Context;
-	Context->GUIContext->AddWidget(Thread.LoadingWidget = new CGUILoadingWidget("Loading data and initializing scene elements"));
+	Thread.LoadingWidget = new CGUIProgressBarWidget(Context->GUIContext, "Loading data and initializing scene elements");
+	Thread.LoadingWidget->BeginProgress();
 	Thread.Run(s.str());
 }
 

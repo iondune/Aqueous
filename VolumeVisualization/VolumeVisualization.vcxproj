@@ -81,12 +81,10 @@
   <ItemGroup>
     <ClCompile Include="CDataLoadingThread.cpp" />
     <ClCompile Include="CGlyphSceneObject.cpp" />
-    <ClCompile Include="CGUIConsoleWidget.cpp" />
     <ClCompile Include="CGUIContext.cpp" />
     <ClCompile Include="CGUIContextWidget.cpp" />
     <ClCompile Include="CGUIControlPanelWidget.cpp" />
     <ClCompile Include="CGUIGlyphControlWidget.cpp" />
-    <ClCompile Include="CGUILoadingWidget.cpp" />
     <ClCompile Include="CGUIMainMenuWidget.cpp" />
     <ClCompile Include="CGUISceneControlWidget.cpp" />
     <ClCompile Include="CGUITerrainControlWidget.cpp" />
@@ -126,12 +124,10 @@
     <ClInclude Include="BathymetyGenerator.h" />
     <ClInclude Include="CDataLoadingThread.h" />
     <ClInclude Include="CGlyphSceneObject.h" />
-    <ClInclude Include="CGUIConsoleWidget.h" />
     <ClInclude Include="CGUIContext.h" />
     <ClInclude Include="CGUIContextWidget.h" />
     <ClInclude Include="CGUIControlPanelWidget.h" />
     <ClInclude Include="CGUIGlyphControlWidget.h" />
-    <ClInclude Include="CGUILoadingWidget.h" />
     <ClInclude Include="CGUIMainMenuWidget.h" />
     <ClInclude Include="CGUISceneControlWidget.h" />
     <ClInclude Include="CGUITerrainControlWidget.h" />
