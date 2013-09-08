@@ -35,11 +35,9 @@ void CGlyphSceneObject::LoadGlyphs(SciDataManager * DataManager, IColorMapper * 
 	Range XRange = DataSet.GetFieldRange(DataManager->GetRawValues().Traits.PositionXField, 15.0);
 	Range YRange = DataSet.GetFieldRange(DataManager->GetRawValues().Traits.PositionYField, 15.0);
 	Range ZRange = DataSet.GetFieldRange(DataManager->GetRawValues().Traits.PositionZField, 15.0);
-	
+
 	printf("built in data range is %f %f to %f %f long lat\n", XRange.first, ZRange.first, XRange.second, ZRange.second);
 	printf("depth varies from %f to %f\n", YRange.first, YRange.second);
-
-	bool MaintainXZScale = false;
 
 	for (auto it = DataSet.GetValues().begin(); it != DataSet.GetValues().end(); ++ it)
 	{
@@ -47,23 +45,23 @@ void CGlyphSceneObject::LoadGlyphs(SciDataManager * DataManager, IColorMapper * 
 
 		f32 MaxField = Max((XRange.second - XRange.first), (ZRange.second - ZRange.first));
 
-		f32 X = (float) ((it->GetField(DataManager->GetRawValues().Traits.PositionXField) - XRange.first) / (MaintainXZScale ? MaxField : (XRange.second - XRange.first)));
+		f32 X = (f32) ((it->GetField(DataManager->GetRawValues().Traits.PositionXField) - XRange.first) / (XRange.second - XRange.first));
 		if (XRange.first > XRange.second)
 			X = 0.f;
 
-		f32 Y = (float) ((it->GetField(DataManager->GetRawValues().Traits.PositionYField) - YRange.first) / (YRange.second - YRange.first));
+		f32 Y = (f32) ((it->GetField(DataManager->GetRawValues().Traits.PositionYField) - YRange.first) / (YRange.second - YRange.first));
 		if (DataManager->GetRawValues().Traits.InvertY)
 			Y = 1.f - Y;
 		if (YRange.first > YRange.second)
 			Y = 0.f;
 
-		f32 Z = (float) ((it->GetField(DataManager->GetRawValues().Traits.PositionZField) - ZRange.first) / (MaintainXZScale ? MaxField : (ZRange.second - ZRange.first)));
+		f32 Z = (f32) ((it->GetField(DataManager->GetRawValues().Traits.PositionZField) - ZRange.first) / (ZRange.second - ZRange.first));
 		if (ZRange.first > ZRange.second)
 			Z = 0.f;
 
 		/*
-		double v = it->GetField(FloorLabel);
-		if (v != 0.f)
+		f64 v = it->GetField(FloorLabel);
+		if (v != 0)
 		{
 			f32 Depth = (f32) v / (f32) YRange.second;
 			g.FloorHeight = 1.f - Depth;
@@ -76,7 +74,7 @@ void CGlyphSceneObject::LoadGlyphs(SciDataManager * DataManager, IColorMapper * 
 		Glyphs.push_back(g);
 	}
 }
-	
+
 bool CGlyphSceneObject::draw(IScene const * const Scene, sharedPtr<IRenderPass> Pass, bool const CullingEnabled)
 {
 	if (! ISceneObject::draw(Scene, Pass, CullingEnabled))
@@ -89,16 +87,16 @@ bool CGlyphSceneObject::draw(IScene const * const Scene, sharedPtr<IRenderPass> 
 		Context.uniform("uNormalMatrix", glm::transpose(glm::inverse(Transformation.getGLMMat4())));
 		Context.bindBufferObject("aNormal", Cube->MeshBuffers[0]->NormalBuffer.getHandle(), 3);
 		Context.bindBufferObject("aPosition", Cube->MeshBuffers[0]->PositionBuffer.getHandle(), 3);
-		
+
 		Context.uniform("uProjMatrix", SceneManager->getActiveCamera()->GetProjectionMatrix());
 		Context.uniform("uViewMatrix", SceneManager->getActiveCamera()->GetViewMatrix());
 		Context.uniform("uLightPosition", SceneManager->getActiveCamera()->getPosition());
-		
+
 		Context.uniform("uGlyphSize", GlyphSize);
 		Context.uniform("uScale", Scale);
 
 		Context.bindIndexBufferObject(Cube->MeshBuffers[0]->IndexBuffer.getHandle());
-		
+
 		for (auto it = Glyphs.begin(); it != Glyphs.end(); ++ it)
 		{
 			Context.uniform("uPosition", it->Position);
@@ -116,7 +114,7 @@ bool CGlyphSceneObject::draw(IScene const * const Scene, sharedPtr<IRenderPass> 
 		Context.uniform("uModelMatrix", Transformation.getGLMMat4());
 		Context.uniform("uProjMatrix", SceneManager->getActiveCamera()->GetProjectionMatrix());
 		Context.uniform("uViewMatrix", SceneManager->getActiveCamera()->GetViewMatrix());
-		
+
 		Context.bindBufferObject("aPosition", Lines.getHandle(), 3);
 		Context.bindBufferObject("aColor", LineColors.getHandle(), 3);
 
@@ -126,27 +124,27 @@ bool CGlyphSceneObject::draw(IScene const * const Scene, sharedPtr<IRenderPass> 
 	return true;
 }
 
-void CGlyphSceneObject::setShowFloors(bool const showFloors)
+void CGlyphSceneObject::SetFloorsEnabled(bool const showFloors)
 {
 	ShowFloors = showFloors;
 }
 
-void CGlyphSceneObject::setShowPoints(bool const showPoints)
+void CGlyphSceneObject::SetPointsEnabled(bool const showPoints)
 {
 	ShowPoints = showPoints;
 }
-	
-bool const CGlyphSceneObject::getShowFloors()
+
+bool CGlyphSceneObject::IsFloorsEnabled()
 {
 	return ShowFloors;
 }
 
-bool const CGlyphSceneObject::getShowPoints()
+bool CGlyphSceneObject::IsPointsEnabled()
 {
 	return ShowPoints;
 }
 
-void CGlyphSceneObject::buildLines()
+void CGlyphSceneObject::BuildLines()
 {
 	Lines.clear();
 	LineColors.clear();
@@ -161,7 +159,7 @@ void CGlyphSceneObject::buildLines()
 		Lines.push_back(Glyphs[i].Position.X);
 		Lines.push_back(Glyphs[i].Position.Y);
 		Lines.push_back(Glyphs[i].Position.Z);
-		
+
 		LineColors.push_back(Glyphs[i-1].Color.Red);
 		LineColors.push_back(Glyphs[i-1].Color.Green);
 		LineColors.push_back(Glyphs[i-1].Color.Blue);
@@ -169,7 +167,7 @@ void CGlyphSceneObject::buildLines()
 		LineColors.push_back(Glyphs[i].Color.Green);
 		LineColors.push_back(Glyphs[i].Color.Blue);
 	}
-	
+
 	Lines.syncData();
 	LineColors.syncData();
 }

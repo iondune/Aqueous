@@ -44,13 +44,13 @@ public:
 
 	bool draw(IScene const * const scene, sharedPtr<IRenderPass> Pass, bool const CullingEnabled);
 
-	void setShowFloors(bool const showFloors);
-	void setShowPoints(bool const showPoints);
+	void SetFloorsEnabled(bool const showFloors);
+	void SetPointsEnabled(bool const showPoints);
 	
-	bool const getShowFloors();
-	bool const getShowPoints();
+	bool IsFloorsEnabled();
+	bool IsPointsEnabled();
 
-	void buildLines();
+	void BuildLines();
 
 	f32 GlyphSize;
 

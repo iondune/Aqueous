@@ -17,7 +17,7 @@ void CMainState::Begin()
 	Context->GUIContext->SetupMainState();
 
 	Context->Scene.Timer = 0.f;
-	Context->Scene.Glyphs->buildLines();
+	Context->Scene.Glyphs->BuildLines();
 
 	ReflectionRenderPass = sharedNew<CReflectionRenderPass>(new CReflectionRenderPass);
 	SceneManager->getEffectManager()->RenderPasses.push_back(ReflectionRenderPass);
