@@ -22,8 +22,8 @@ public:
 
 	void OnEvent(SWindowResizedEvent & Event);
 
-	void loadData(std::string const & FileName);
-	void createDataSet();
+	void LoadData(std::string const & FileName);
+	void CreateDataSet();
 
 	std::string DataSetName;
 

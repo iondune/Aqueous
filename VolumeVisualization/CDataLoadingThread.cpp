@@ -9,28 +9,6 @@
 #include "CMainState.h"
 
 
-static double const pi = 3.14159;
-static double const toRadians(double const deg)
-{
-	return deg * pi / 180;
-}
-
-double distFrom(double lat1, double lng1, double lat2, double lng2)
-{
-	double earthRadius = 3958.75;
-	double dLat = toRadians(lat2-lat1);
-	double dLng = toRadians(lng2-lng1);
-	double a = sin(dLat/2) * sin(dLat/2) +
-		cos(toRadians(lat1)) * cos(toRadians(lat2)) *
-		sin(dLng/2) * sin(dLng/2);
-	double c = 2 * atan2(sqrt(a), sqrt(1-a));
-	double dist = earthRadius * c;
-
-	int meterConversion = 1609;
-
-	return (dist * meterConversion);
-}
-
 void CDataLoadingThread::Execute()
 {
 	LoadingWidget->setProgress(0.05f);
@@ -39,6 +17,8 @@ void CDataLoadingThread::Execute()
 
 	int Counter = 0;
 
+	/*
+	// Smart Tether calculations
 	for (auto Data : Context->DataManager->GetRawValues().GetValues())
 	{
 		float Progress = Counter++ / (float) Context->DataManager->GetRawValues().GetValues().size();
@@ -50,6 +30,7 @@ void CDataLoadingThread::Execute()
 		Data.GetField("End Longitude") = (Data.GetField("Base Longitude") > Data.GetField("End Longitude") ? 1 : -1) * X;
 		Data.GetField("End Latitude") = (Data.GetField("Base Latitude") > Data.GetField("End Latitude") ? 1 : -1) * Y;
 	}
+	*/
 
 	COxygenColorMapper o("d1");
 	CSpectrumColorMapper spec("time");

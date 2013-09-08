@@ -3,6 +3,9 @@
 #include "CTerrainSceneObject.h"
 #include "CGlyphSceneObject.h"
 #include "CWaterSceneObject.h"
+#include "SciDataManager.h"
+
+#include <ionScience.h>
 
 
 CMainState::CMainState()
@@ -70,7 +73,18 @@ void CMainState::Update(f32 const Elapsed)
 	Scene.LightPosition = SceneManager->getActiveCamera()->getPosition() + SVector3f(0, 0, 0);
 
 	SceneManager->drawAll();
-	//SceneManager->endDraw();
+
+	if (! ShowDepth)
+	{
+		Context->Scene.Volume->draw(SceneManager, SceneManager->getDefaultColorRenderPass(), false);
+
+		glEnable(GL_BLEND);
+		glDepthMask(false);
+		Context->Scene.Water->draw(SceneManager, SceneManager->getDefaultColorRenderPass(), false);
+		glDepthMask(true);
+
+		SceneManager->endDraw();
+	}
 
 	if (ShowDepth)
 	{
@@ -86,15 +100,6 @@ void CMainState::Update(f32 const Elapsed)
 		}
 		glEnable(GL_DEPTH_TEST);
 	}
-	else
-		Context->Scene.Volume->draw(SceneManager, SceneManager->getDefaultColorRenderPass(), false);
-
-	SceneManager->getSceneFrameBuffer()->bind();
-	glEnable(GL_BLEND);
-	glDepthMask(false);
-	Context->Scene.Water->draw(SceneManager, SceneManager->getDefaultColorRenderPass(), false);
-	glDepthMask(true);
-	SceneManager->endDraw();
 
 	Context->GUIContext->Draw(Elapsed, false);
 
@@ -105,86 +110,6 @@ void CMainState::addConsoleMessage(std::string const & Message, Gwen::Color cons
 {
 	Context->GUIContext->GetConsole()->addMessage(Message, Color);
 }
-
-static double const toRadians(double const deg)
-{
-	return deg * Constants64::Pi / 180;
-}
-
-static double DistFrom(double lat1, double lng1, double lat2, double lng2)
-{
-	double earthRadius = 6371.0;
-	double dLat = toRadians(lat2-lat1);
-	double dLng = toRadians(lng2-lng1);
-	double a = 
-		sin(dLat/2) * sin(dLat/2) +
-		cos(toRadians(lat1)) * cos(toRadians(lat2)) * sin(dLng/2) * sin(dLng/2);
-	double c = 2 * atan2(sqrt(a), sqrt(1-a));
-	double dist = earthRadius * c;
-
-	int meterConversion = 1000;
-
-	return (dist * meterConversion);
-}
-
-static double DistFromLat(double lat1, double lat2, double lng)
-{
-	return DistFrom(lat1, lng, lat2, lng);
-}
-
-static double DistFromLong(double lng1, double lng2, double lat)
-{
-	return DistFrom(lat, lng1, lat, lng2);
-}
-
-static vec2f GetLongLatAreaDimensions(vec2f const & Min, vec2f const & Max)
-{
-	vec2f const Center = (Min + Max) / 2.f;
-	return vec2f(
-		DistFromLong(Min.X, Max.X, Center.Y),
-		DistFromLat(Min.Y, Max.Y, Center.X));
-}
-
-enum class ECompassDirection
-{
-	N = 1, E = 1,
-	S = -1, W = -1
-};
-
-static f64 LongLatDecimalDegrees(f64 const Deg, f64 const Min, f64 const Sec, ECompassDirection const Direction = ECompassDirection::N)
-{
-	return (Deg + Min/60.0 + Sec/3600.0) * (int) Direction;
-}
-
-static f64 LongLatDecimalDegrees(std::string const & String)
-{
-	f64 Deg, Min, Sec;
-	char Dir, Dummy;
-	ECompassDirection Direction;
-
-	sscanf(String.c_str(), "%lf %c %lf %c %lf %c %c", & Deg, & Dummy, & Min, & Dummy, & Sec, & Dummy, & Dir);
-	
-	switch (tolower(Dir))
-	{
-	default:
-	case 'N':
-		Direction = ECompassDirection::N;
-		break;
-	case 'E':
-		Direction = ECompassDirection::E;
-		break;
-	case 'S':
-		Direction = ECompassDirection::S;
-		break;
-	case 'W':
-		Direction = ECompassDirection::W;
-		break;
-	}
-
-	return LongLatDecimalDegrees(Deg, Min, Sec, Direction);
-}
-
-#include "SciDataManager.h"
 
 void CMainState::CalculateDataAlignment()
 {
@@ -197,46 +122,57 @@ void CMainState::CalculateDataAlignment()
 	Range YRange = DataSet.GetFieldRange(DataManager->GetRawValues().Traits.PositionYField, 15.0);
 	Range ZRange = DataSet.GetFieldRange(DataManager->GetRawValues().Traits.PositionZField, 15.0);
 
-	vec2f const DataLonLatMin(XRange.first, ZRange.first), DataLonLatMax(XRange.second, ZRange.second);
-	vec2f MapLonLatMin, MapLonLatMax;
+	longlatf const DataLonLatMin(XRange.first, ZRange.first), DataLonLatMax(XRange.second, ZRange.second);
+	longlatf MapLonLatMin, MapLonLatMax;
 	switch (Site)
 	{
 	default:
 	case 0:
-		MapLonLatMin = vec2f(LongLatDecimalDegrees(9, 55, 45.32), LongLatDecimalDegrees(56, 38, 17.22));
-		MapLonLatMax = vec2f(LongLatDecimalDegrees(10, 2, 34.80), LongLatDecimalDegrees(56, 41, 59.01));
+		MapLonLatMin.Longitude = SLongitudeLatitude<f32>::DMStoDecimal(9, 55, 45.32f);
+		MapLonLatMin.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(56, 38, 17.22f);
+		MapLonLatMax.Longitude = SLongitudeLatitude<f32>::DMStoDecimal(10, 2, 34.80f);
+		MapLonLatMax.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(56, 41, 59.01f);
 		break;
 	case 1:
-		MapLonLatMin = vec2f(LongLatDecimalDegrees(9, 49, 27.68), LongLatDecimalDegrees(56, 34, 20.96));
-		MapLonLatMax = vec2f(LongLatDecimalDegrees(10, 11, 1.75), LongLatDecimalDegrees(56, 46, 11.45));
+		MapLonLatMin.Longitude = SLongitudeLatitude<f32>::DMStoDecimal(9, 49, 27.68f);
+		MapLonLatMin.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(56, 34, 20.96f);
+		MapLonLatMax.Longitude = SLongitudeLatitude<f32>::DMStoDecimal(10, 11, 1.75f);
+		MapLonLatMax.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(56, 46, 11.45f);
 		break;
 	case 2:
-		MapLonLatMin = vec2f(LongLatDecimalDegrees(9, 54, 13.29), LongLatDecimalDegrees(56, 30, 37.33));
-		MapLonLatMax = vec2f(LongLatDecimalDegrees(10, 27, 10.16), LongLatDecimalDegrees(56, 48, 48.57));
+		MapLonLatMin.Longitude = SLongitudeLatitude<f32>::DMStoDecimal(9, 54, 13.29f);
+		MapLonLatMin.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(56, 30, 37.33f);
+		MapLonLatMax.Longitude = SLongitudeLatitude<f32>::DMStoDecimal(10, 27, 10.16f);
+		MapLonLatMax.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(56, 48, 48.57f);
 		break;
 	case 3:
-		MapLonLatMin = vec2f(LongLatDecimalDegrees(9, 39, 1.38), LongLatDecimalDegrees(56, 37, 13.75));
-		MapLonLatMax = vec2f(LongLatDecimalDegrees(10, 17, 17.79), LongLatDecimalDegrees(56, 58, 5.72));
+		MapLonLatMin.Longitude = SLongitudeLatitude<f32>::DMStoDecimal(9, 39, 1.38f);
+		MapLonLatMin.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(56, 37, 13.75f);
+		MapLonLatMax.Longitude = SLongitudeLatitude<f32>::DMStoDecimal(10, 17, 17.79f);
+		MapLonLatMax.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(56, 58, 5.72f);
 		break;
 	case 4:
-		MapLonLatMin = vec2f(LongLatDecimalDegrees(9, 4, 33.9), LongLatDecimalDegrees(56, 13, 56.68));
-		MapLonLatMax = vec2f(LongLatDecimalDegrees(10, 53, 14.45), LongLatDecimalDegrees(57, 13, 29.39));
+		MapLonLatMin.Longitude = SLongitudeLatitude<f32>::DMStoDecimal(9, 4, 33.9f);
+		MapLonLatMin.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(56, 13, 56.68f);
+		MapLonLatMax.Longitude = SLongitudeLatitude<f32>::DMStoDecimal(10, 53, 14.45f);
+		MapLonLatMax.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(57, 13, 29.39f);
 		break;
 	}
 
-	vec2f const DataLonLatCenter = (DataLonLatMin + DataLonLatMax) / 2.f;
+	longlatf const DataLonLatCenter = (DataLonLatMin + DataLonLatMax) / 2.f;
 	
 	vec2f DataRangeMin;
 	vec2f DataRangeMax;
 	vec2f MapRangeMin;
 	vec2f MapRangeMax;
-	if (MeterMode == 0)
+	//if (MeterMode == 0)
 	{
-	DataRangeMin = -vec2f(DistFromLong(DataLonLatMin.X, DataLonLatCenter.X, DataLonLatCenter.Y), DistFromLat(DataLonLatMin.Y, DataLonLatCenter.Y, DataLonLatCenter.X));
-	DataRangeMax = vec2f(DistFromLong(DataLonLatCenter.X, DataLonLatMax.X, DataLonLatCenter.Y), DistFromLat(DataLonLatCenter.Y, DataLonLatMax.Y, DataLonLatCenter.X));
-	MapRangeMin = -vec2f(DistFromLong(MapLonLatMin.X, DataLonLatCenter.X, DataLonLatCenter.Y), DistFromLat(MapLonLatMin.Y, DataLonLatCenter.Y, DataLonLatCenter.X));
-	MapRangeMax = vec2f(DistFromLong(DataLonLatCenter.X, MapLonLatMax.X, DataLonLatCenter.Y), DistFromLat(DataLonLatCenter.Y, MapLonLatMax.Y, DataLonLatCenter.X));
+		DataRangeMin = DataLonLatCenter.OffsetTo(DataLonLatMin);
+		DataRangeMax = DataLonLatCenter.OffsetTo(DataLonLatMax);
+		MapRangeMin = DataLonLatCenter.OffsetTo(MapLonLatMin);
+		MapRangeMax = DataLonLatCenter.OffsetTo(MapLonLatMax);
 	}
+	/*
 	else if (MeterMode == 1)
 	{
 		DataRangeMin = -vec2f(DistFromLong(DataLonLatMin.X, DataLonLatCenter.X, Average(DataLonLatMin.Y, DataLonLatCenter.Y)), DistFromLat(DataLonLatMin.Y, DataLonLatCenter.Y, Average(DataLonLatMin.X, DataLonLatCenter.X)));
@@ -251,6 +187,7 @@ void CMainState::CalculateDataAlignment()
 		MapRangeMin = -vec2f(DistFromLong(MapLonLatMin.X, DataLonLatCenter.X, MapLonLatMin.Y), DistFromLat(MapLonLatMin.Y, DataLonLatCenter.Y, MapLonLatMin.X));
 		MapRangeMax = vec2f(DistFromLong(DataLonLatCenter.X, MapLonLatMax.X, MapLonLatMax.Y), DistFromLat(DataLonLatCenter.Y, MapLonLatMax.Y, MapLonLatMax.X));
 	}
+	*/
 
 	vec2f const DataRangeSize = DataRangeMax - DataRangeMin;
 	vec2f const DataRangeCenter = (DataRangeMin + DataRangeMax) / 2.f;

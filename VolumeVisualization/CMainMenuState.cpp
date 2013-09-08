@@ -44,8 +44,8 @@ void CMainMenuState::Update(f32 const Elapsed)
 		Context->DataManager->GetRawValues().Traits.PositionYField = "DFS Depth (m)";
 		Context->DataManager->GetRawValues().Traits.PositionZField = "Latitude";
 
-		//createDataSet();
-		loadData("DenmarkNewMission1.dat");
+		//CreateDataSet();
+		LoadData("DenmarkNewMission1.dat");
 	}
 }
 
@@ -56,7 +56,7 @@ void CMainMenuState::OnEvent(SWindowResizedEvent & Event)
 	Context->GUIContext->GetCanvas()->InvalidateChildren(true);
 }
 
-void CMainMenuState::loadData(std::string const & FileName)
+void CMainMenuState::LoadData(std::string const & FileName)
 {
 	DataSetName = FileName;
 
@@ -69,7 +69,7 @@ void CMainMenuState::loadData(std::string const & FileName)
 	Thread.Run(s.str());
 }
 
-void CMainMenuState::createDataSet()
+void CMainMenuState::CreateDataSet()
 {
 	SciDataParserCSV Parser1;
 	CSpectrumColorMapper ColorMapper("Chla Conc");

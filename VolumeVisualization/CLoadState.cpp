@@ -2,14 +2,15 @@
 
 #include "CMainState.h"
 #include "CMainMenuState.h"
-#include <ionGUI/CGUIEventManager.h>
-
 #include "SciDataManager.h"
+
 #include "CTerrainSceneObject.h"
 #include "CWaterSceneObject.h"
 #include "CVolumeSceneObject.h"
 #include "CGlyphSceneObject.h"
 #include "CPlaneGridSceneObject.h"
+
+#include <ionGUI/CGUIEventManager.h>
 
 
 void CLoadStateEventHandler::OnFinish(Gwen::Controls::Base * Control)
@@ -167,17 +168,16 @@ void CLoadState::LoadScene()
 	Scene.Glyphs = new CGlyphSceneObject();
 	SceneManager->addSceneObject(Scene.Glyphs);
 
-	// Water
-	Scene.Water = new CWaterSceneObject();
-	//SceneManager->addSceneObject(Scene.Water);
-
 	// Terrain
 	Scene.Terrain = new CTerrainSceneObject();
 	SceneManager->addSceneObject(Scene.Terrain);
 
+	// Water
+	Scene.Water = new CWaterSceneObject();
+	//SceneManager->addSceneObject(Scene.Water);
+
 	// Volume
 	Scene.Volume = new CVolumeSceneObject();
-	//Scene.Volume->setVisible(false);
 	//SceneManager->addSceneObject(Scene.VolumeSceneObject);
 }
 
