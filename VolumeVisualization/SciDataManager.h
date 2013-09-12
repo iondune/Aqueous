@@ -32,7 +32,7 @@ public:
 	
 	//! Interpolate grid data using RBFI
 	void createGridDataFromRawValuesRBFI(Range AcceptedValues = FullRange, double Deviations = 5.0, std::string const & Field = "o2");
-	//! Interpolate grid data using RBFI
+	//! Interpolate grid data
 	void createGridDataFromRawValues(Range AcceptedValues = FullRange, double Deviations = 5.0, std::string const & Field = "o2");
 
 	void writeToFile(std::string const & FileName);
