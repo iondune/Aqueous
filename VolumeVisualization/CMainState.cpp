@@ -10,7 +10,7 @@
 
 
 CMainState::CMainState()
-	: Scale(1), Mode(0), ShowDepth(false), Site(0), MeterMode(0)
+	: Scale(1), Mode(0), ShowDepth(false), Site(0), MeterMode(0), UseVincenty(false)
 {}
 
 void CMainState::Begin()
@@ -162,30 +162,27 @@ void CMainState::CalculateDataAlignment()
 
 	longlatf const DataLonLatCenter = (DataLonLatMin + DataLonLatMax) / 2.f;
 	
-	vec2f DataRangeMin;
-	vec2f DataRangeMax;
-	vec2f MapRangeMin;
-	vec2f MapRangeMax;
+	vec2f DataRangeMin, DataRangeMax, MapRangeMin, MapRangeMax;
 	if (MeterMode == 0)
 	{
-		DataRangeMin = DataLonLatCenter.OffsetTo(DataLonLatMin, SLongitudeLatitude<f32>::EOffsetMode::Left);
-		DataRangeMax = DataLonLatCenter.OffsetTo(DataLonLatMax, SLongitudeLatitude<f32>::EOffsetMode::Left);
-		MapRangeMin = DataLonLatCenter.OffsetTo(MapLonLatMin, SLongitudeLatitude<f32>::EOffsetMode::Left);
-		MapRangeMax = DataLonLatCenter.OffsetTo(MapLonLatMax, SLongitudeLatitude<f32>::EOffsetMode::Left);
+		DataRangeMin = DataLonLatCenter.OffsetTo(DataLonLatMin, SLongitudeLatitude<f32>::EOffsetMode::Left, UseVincenty);
+		DataRangeMax = DataLonLatCenter.OffsetTo(DataLonLatMax, SLongitudeLatitude<f32>::EOffsetMode::Left, UseVincenty);
+		MapRangeMin = DataLonLatCenter.OffsetTo(MapLonLatMin, SLongitudeLatitude<f32>::EOffsetMode::Left, UseVincenty);
+		MapRangeMax = DataLonLatCenter.OffsetTo(MapLonLatMax, SLongitudeLatitude<f32>::EOffsetMode::Left, UseVincenty);
 	}
 	else if (MeterMode == 1)
 	{
-		DataRangeMin = DataLonLatCenter.OffsetTo(DataLonLatMin, SLongitudeLatitude<f32>::EOffsetMode::Average);
-		DataRangeMax = DataLonLatCenter.OffsetTo(DataLonLatMax, SLongitudeLatitude<f32>::EOffsetMode::Average);
-		MapRangeMin = DataLonLatCenter.OffsetTo(MapLonLatMin, SLongitudeLatitude<f32>::EOffsetMode::Average);
-		MapRangeMax = DataLonLatCenter.OffsetTo(MapLonLatMax, SLongitudeLatitude<f32>::EOffsetMode::Average);
+		DataRangeMin = DataLonLatCenter.OffsetTo(DataLonLatMin, SLongitudeLatitude<f32>::EOffsetMode::Average, UseVincenty);
+		DataRangeMax = DataLonLatCenter.OffsetTo(DataLonLatMax, SLongitudeLatitude<f32>::EOffsetMode::Average, UseVincenty);
+		MapRangeMin = DataLonLatCenter.OffsetTo(MapLonLatMin, SLongitudeLatitude<f32>::EOffsetMode::Average, UseVincenty);
+		MapRangeMax = DataLonLatCenter.OffsetTo(MapLonLatMax, SLongitudeLatitude<f32>::EOffsetMode::Average, UseVincenty);
 	}
 	else if (MeterMode == 2)
 	{
-		DataRangeMin = DataLonLatCenter.OffsetTo(DataLonLatMin, SLongitudeLatitude<f32>::EOffsetMode::Right);
-		DataRangeMax = DataLonLatCenter.OffsetTo(DataLonLatMax, SLongitudeLatitude<f32>::EOffsetMode::Right);
-		MapRangeMin = DataLonLatCenter.OffsetTo(MapLonLatMin, SLongitudeLatitude<f32>::EOffsetMode::Right);
-		MapRangeMax = DataLonLatCenter.OffsetTo(MapLonLatMax, SLongitudeLatitude<f32>::EOffsetMode::Right);
+		DataRangeMin = DataLonLatCenter.OffsetTo(DataLonLatMin, SLongitudeLatitude<f32>::EOffsetMode::Right, UseVincenty);
+		DataRangeMax = DataLonLatCenter.OffsetTo(DataLonLatMax, SLongitudeLatitude<f32>::EOffsetMode::Right, UseVincenty);
+		MapRangeMin = DataLonLatCenter.OffsetTo(MapLonLatMin, SLongitudeLatitude<f32>::EOffsetMode::Right, UseVincenty);
+		MapRangeMax = DataLonLatCenter.OffsetTo(MapLonLatMax, SLongitudeLatitude<f32>::EOffsetMode::Right, UseVincenty);
 	}
 
 	vec2f const DataRangeSize = DataRangeMax - DataRangeMin;

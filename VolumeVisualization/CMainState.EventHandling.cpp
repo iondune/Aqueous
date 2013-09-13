@@ -192,6 +192,15 @@ void CMainState::OnEvent(SKeyboardEvent & Event)
 			CalculateDataAlignment();
 		}
 		break;
+		
+	case EKey::BackSlash:
+
+		if (! Event.Pressed)
+		{
+			UseVincenty = ! UseVincenty;
+			CalculateDataAlignment();
+		}
+		break;
 
     }
 }

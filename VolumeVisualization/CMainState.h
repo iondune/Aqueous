@@ -90,6 +90,7 @@ public:
 	bool ShowDepth;
 	int Site;
 	int MeterMode;
+	bool UseVincenty;
 
 	void SetSite(int site);
 
