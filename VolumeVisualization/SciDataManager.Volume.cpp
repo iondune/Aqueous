@@ -34,8 +34,6 @@ void SciDataManager::createVolumeFromGridValues(IColorMapper * ColorMapper)
 	}
 
 
-	glEnable(GL_TEXTURE_3D);
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 	if (! VolumeHandle)
 		glGenTextures(1, & VolumeHandle);
 	glBindTexture(GL_TEXTURE_3D, VolumeHandle);
@@ -47,7 +45,6 @@ void SciDataManager::createVolumeFromGridValues(IColorMapper * ColorMapper)
 	glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA, GridDimensions[0], GridDimensions[2], GridDimensions[1], 0, GL_RGBA, GL_UNSIGNED_BYTE, volumeData);
 	
 	glBindTexture(GL_TEXTURE_3D, 0);
-	glDisable(GL_TEXTURE_3D);
 
 	delete []volumeData;
 }
