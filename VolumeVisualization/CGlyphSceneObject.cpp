@@ -68,7 +68,7 @@ void CGlyphSceneObject::LoadGlyphs(SciDataManager * DataManager, IColorMapper * 
 		}
 		*/
 
-		g.Position = vec3f(X, Y, Z);
+		g.Position = vec3f(X, Y, Z) - 0.5f;
 		g.Color = ColorMapper->GetColor(* it);
 
 		Glyphs.push_back(g);

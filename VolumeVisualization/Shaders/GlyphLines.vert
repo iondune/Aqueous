@@ -11,7 +11,7 @@ varying vec4 vScreenPosition;
 
 void main()
 {
-	vec4 Position = uModelMatrix * vec4(aPosition - vec3(0.5), 1.0);
+	vec4 Position = uModelMatrix * vec4(aPosition, 1.0);
 	vScreenPosition = uProjMatrix * uViewMatrix * Position;
 	gl_ClipDistance[0] = dot(vec4(0, 1, 0, 0), Position);
 	gl_Position = vScreenPosition;

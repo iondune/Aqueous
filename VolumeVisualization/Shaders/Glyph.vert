@@ -16,7 +16,7 @@ varying vec3 vNormal;
 
 void main()
 {
-	vec4 Position = uModelMatrix * vec4((uPosition - vec3(0.5)) + aPosition * vec3(uGlyphSize) / uScale, 1.0);
+	vec4 Position = uModelMatrix * vec4(uPosition + aPosition * vec3(uGlyphSize) / uScale, 1.0);
 	gl_Position = uProjMatrix * uViewMatrix * Position;
 	gl_ClipDistance[0] = dot(vec4(0,1,0,0), Position);
 
