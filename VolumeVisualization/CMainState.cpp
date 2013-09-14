@@ -212,8 +212,8 @@ void CMainState::CalculateDataAlignment()
 	
 	Scene.Glyphs->setScale(DataScale * Multiplier);
 	Scene.Volume->setScale(DataScale * Multiplier);
-	Scene.Glyphs->setTranslation(vec3f(0, -DataScale.Y * YExaggeration / 2, -1));
-	Scene.Volume->setTranslation(vec3f(0, -DataScale.Y * YExaggeration / 2, -1));
+	Scene.Glyphs->setTranslation(vec3f(0, -DataScale.Y * YExaggeration / 2, 0));
+	Scene.Volume->setTranslation(vec3f(0, -DataScale.Y * YExaggeration / 2, 0));
 
 	Scene.Terrain->setScale(MapScale * Multiplier / CTerrainSceneObject::Size);
 	Scene.Water->setScale(MapScale / CTerrainSceneObject::Size);
