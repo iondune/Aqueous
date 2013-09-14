@@ -8,21 +8,24 @@
 
 class CMainState;
 class CTerrainSceneObject;
+class CWaterSceneObject;
 
 class CGUITerrainControlWidget : public CGUIContextWidget
 {
 
 	CTerrainSceneObject * Terrain;
+	CWaterSceneObject * Water;
 	CMainState & MainState;
 
 	Gwen::Controls::WindowControl * Window;
-	Gwen::Controls::Button * EnableButton;
+	Gwen::Controls::Button * TerrainButton, * WaterButton;
 
 public:
 
 	CGUITerrainControlWidget();
-
+	
 	void OnToggleTerrain(Gwen::Controls::Base * Control);
+	void OnToggleWater(Gwen::Controls::Base * Control);
 	void OnSelectElevation(Gwen::Controls::Base * Control);
 	void OnSelectColor(Gwen::Controls::Base * Control);
 	void OnSelectWireframe(Gwen::Controls::Base * Control);
