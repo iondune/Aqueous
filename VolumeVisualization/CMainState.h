@@ -93,6 +93,8 @@ public:
 
 	void SetSite(int site);
 
+	bool GUIEnabled;
+
 	//////////////////////////////
 	// Mouse Tracking Varaibles //
 	//////////////////////////////

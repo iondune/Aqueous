@@ -193,6 +193,13 @@ void CMainState::OnEvent(SKeyboardEvent & Event)
 		}
 		break;
 
+		
+	case EKey::BackSlash:
+
+		if (! Event.Pressed)
+			GUIEnabled = ! GUIEnabled;
+		break;
+
     }
 }
 

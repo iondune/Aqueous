@@ -10,7 +10,7 @@
 
 
 CMainState::CMainState()
-	: Scale(1), Mode(0), ShowDepth(false), Site(0), ProjectionMode(0)
+	: Scale(1), Mode(0), ShowDepth(false), Site(0), ProjectionMode(0), GUIEnabled(true)
 {}
 
 void CMainState::Begin()
@@ -102,7 +102,8 @@ void CMainState::Update(f32 const Elapsed)
 		glEnable(GL_DEPTH_TEST);
 	}
 
-	Context->GUIContext->Draw(Elapsed, false);
+	if (GUIEnabled)
+		Context->GUIContext->Draw(Elapsed, false);
 
 	CApplication::Get().GetWindow().SwapBuffers();
 }
