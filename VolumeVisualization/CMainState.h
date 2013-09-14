@@ -89,8 +89,7 @@ public:
 
 	bool ShowDepth;
 	int Site;
-	int MeterMode;
-	bool UseVincenty;
+	int ProjectionMode;
 
 	void SetSite(int site);
 

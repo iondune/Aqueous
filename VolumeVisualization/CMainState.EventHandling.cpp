@@ -170,7 +170,7 @@ void CMainState::OnEvent(SKeyboardEvent & Event)
 
 		if (! Event.Pressed)
 		{
-			MeterMode = 0;
+			ProjectionMode = 0;
 			CalculateDataAlignment();
 		}
 		break;
@@ -179,7 +179,7 @@ void CMainState::OnEvent(SKeyboardEvent & Event)
 
 		if (! Event.Pressed)
 		{
-			MeterMode = 1;
+			ProjectionMode = 1;
 			CalculateDataAlignment();
 		}
 		break;
@@ -188,16 +188,7 @@ void CMainState::OnEvent(SKeyboardEvent & Event)
 
 		if (! Event.Pressed)
 		{
-			MeterMode = 2;
-			CalculateDataAlignment();
-		}
-		break;
-		
-	case EKey::BackSlash:
-
-		if (! Event.Pressed)
-		{
-			UseVincenty = ! UseVincenty;
+			ProjectionMode = 2;
 			CalculateDataAlignment();
 		}
 		break;

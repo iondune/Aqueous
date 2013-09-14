@@ -10,7 +10,7 @@
 
 
 CMainState::CMainState()
-	: Scale(1), Mode(0), ShowDepth(false), Site(0), MeterMode(0), UseVincenty(false)
+	: Scale(1), Mode(0), ShowDepth(false), Site(0), ProjectionMode(0)
 {}
 
 void CMainState::Begin()
@@ -123,6 +123,9 @@ void CMainState::CalculateDataAlignment()
 	Range YRange = DataSet.GetFieldRange(DataManager->GetRawValues().Traits.PositionYField, 15.0);
 	Range ZRange = DataSet.GetFieldRange(DataManager->GetRawValues().Traits.PositionZField, 15.0);
 
+	
+	printf("Longlat range is %f %f to %f %f\n", XRange.first, ZRange.first, XRange.second, ZRange.second);
+
 	longlatf const DataLonLatMin(XRange.first, ZRange.first), DataLonLatMax(XRange.second, ZRange.second);
 	longlatf MapLonLatMin, MapLonLatMax;
 	switch (Site)
@@ -163,31 +166,27 @@ void CMainState::CalculateDataAlignment()
 	longlatf const DataLonLatCenter = (DataLonLatMin + DataLonLatMax) / 2.f;
 	
 	vec2f DataRangeMin, DataRangeMax, MapRangeMin, MapRangeMax;
-	if (MeterMode == 0)
+	sharedPtr<longlatf::IProjectionSystem> Projection;
+	if (ProjectionMode == 0)
 	{
-		DataRangeMin = DataLonLatCenter.OffsetTo(DataLonLatMin, SLongitudeLatitude<f32>::EOffsetMode::Left, UseVincenty);
-		DataRangeMax = DataLonLatCenter.OffsetTo(DataLonLatMax, SLongitudeLatitude<f32>::EOffsetMode::Left, UseVincenty);
-		MapRangeMin = DataLonLatCenter.OffsetTo(MapLonLatMin, SLongitudeLatitude<f32>::EOffsetMode::Left, UseVincenty);
-		MapRangeMax = DataLonLatCenter.OffsetTo(MapLonLatMax, SLongitudeLatitude<f32>::EOffsetMode::Left, UseVincenty);
+		Projection = sharedNew(new longlatf::CHaversineProjection());
 	}
-	else if (MeterMode == 1)
+	else if (ProjectionMode == 1)
 	{
-		DataRangeMin = DataLonLatCenter.OffsetTo(DataLonLatMin, SLongitudeLatitude<f32>::EOffsetMode::Average, UseVincenty);
-		DataRangeMax = DataLonLatCenter.OffsetTo(DataLonLatMax, SLongitudeLatitude<f32>::EOffsetMode::Average, UseVincenty);
-		MapRangeMin = DataLonLatCenter.OffsetTo(MapLonLatMin, SLongitudeLatitude<f32>::EOffsetMode::Average, UseVincenty);
-		MapRangeMax = DataLonLatCenter.OffsetTo(MapLonLatMax, SLongitudeLatitude<f32>::EOffsetMode::Average, UseVincenty);
+		Projection = sharedNew(new longlatf::CVincentyProjection());
 	}
-	else if (MeterMode == 2)
+	else if (ProjectionMode == 2)
 	{
-		DataRangeMin = DataLonLatCenter.OffsetTo(DataLonLatMin, SLongitudeLatitude<f32>::EOffsetMode::Right, UseVincenty);
-		DataRangeMax = DataLonLatCenter.OffsetTo(DataLonLatMax, SLongitudeLatitude<f32>::EOffsetMode::Right, UseVincenty);
-		MapRangeMin = DataLonLatCenter.OffsetTo(MapLonLatMin, SLongitudeLatitude<f32>::EOffsetMode::Right, UseVincenty);
-		MapRangeMax = DataLonLatCenter.OffsetTo(MapLonLatMax, SLongitudeLatitude<f32>::EOffsetMode::Right, UseVincenty);
+		Projection = sharedNew(new longlatf::CEquirectangularProjection(DataLonLatCenter.Latitude));
 	}
+	DataRangeMin = DataLonLatCenter.OffsetTo(DataLonLatMin, Projection);
+	DataRangeMax = DataLonLatCenter.OffsetTo(DataLonLatMax, Projection);
+	MapRangeMin = DataLonLatCenter.OffsetTo(MapLonLatMin, Projection);
+	MapRangeMax = DataLonLatCenter.OffsetTo(MapLonLatMax, Projection);
 
 	vec2f const DataRangeSize = DataRangeMax - DataRangeMin;
 	vec2f const DataRangeCenter = (DataRangeMin + DataRangeMax) / 2.f;
-	f32 const DataDepth = YRange.second - YRange.first;
+	f32 const DataDepth = (YRange.second - YRange.first);
 	
 	vec2f const MapRangeSize = MapRangeMax - MapRangeMin;
 	vec2f const MapRangeCenter = (MapRangeMin + MapRangeMax) / 2.f;
