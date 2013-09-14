@@ -165,6 +165,12 @@ void CMainState::OnEvent(SKeyboardEvent & Event)
 		if (! Event.Pressed)
 			SetSite(4);
 		break;
+
+	case EKey::KeyPad6:
+		
+		if (! Event.Pressed)
+			SetSite(5);
+		break;
 		
 	case EKey::Comma:
 

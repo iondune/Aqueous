@@ -162,6 +162,12 @@ void CMainState::CalculateDataAlignment()
 		MapLonLatMax.Longitude = SLongitudeLatitude<f32>::DMStoDecimal(10, 53, 14.45f);
 		MapLonLatMax.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(57, 13, 29.39f);
 		break;
+	case 5:
+		MapLonLatMin.Longitude = SLongitudeLatitude<f32>::DMStoDecimal(9, 58, 24.15f);
+		MapLonLatMin.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(56, 39, 43.44f);
+		MapLonLatMax.Longitude = SLongitudeLatitude<f32>::DMStoDecimal(10, 0, 17.62f);
+		MapLonLatMax.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(56, 40, 45.07f);
+		break;
 	}
 
 	longlatf const DataLonLatCenter = (DataLonLatMin + DataLonLatMax) / 2.f;
