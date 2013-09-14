@@ -2,7 +2,6 @@
 #include "Libraries.h"
 #include "CProgramContext.h"
 
-#include "BathymetyGenerator.h"
 
 int main()
 {
