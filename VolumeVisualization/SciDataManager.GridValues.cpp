@@ -67,15 +67,15 @@ void SciDataManager::createGridDataFromRawValuesRBFI(Range AcceptedValues, doubl
 	GridValues.AddField("y");
 	GridValues.AddField("z");
 	
-	for (int j = 0; j < Size; ++ j)//Size - 1; j >= 0; -- j)
 	for (int k = 0; k < Size; ++ k)
+	for (int j = 0; j < Size; ++ j)
 	for (int i = 0; i < Size; ++ i)
 	{
 		STable::SRow & Row = GridValues.AddRow();
-		Row.GetField(Field) = rbfi.interpolate(i / (float) Size, j / (float) Size, k / (float) Size);
-		Row.GetField("x") = i / (float) Size;
-		Row.GetField("y") = j / (float) Size;
-		Row.GetField("z") = k / (float) Size;
+		Row.GetField(Field) = rbfi.interpolate(i / (f32) Size, j / (f32) Size, k / (f32) Size);
+		Row.GetField("x") = i / (f32) Size;
+		Row.GetField("y") = j / (f32) Size;
+		Row.GetField("z") = k / (f32) Size;
 	}
 }
 

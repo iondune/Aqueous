@@ -14,23 +14,16 @@ void SciDataManager::createVolumeFromGridValues(IColorMapper * ColorMapper)
 	ColorMapper->PreProcessValues(GridValues);
 
 	GLubyte * volumeData = new GLubyte[size];
-
-	for (u32 i = 0; i < GridDimensions[2]; ++ i)
+	
+	for (u32 k = 0; k < GridDimensions[2]; ++ k)
+	for (u32 j = 0; j < GridDimensions[1]; ++ j)
+	for (u32 i = 0; i < GridDimensions[0]; ++ i)
 	{
-		for (u32 j = 0; j < GridDimensions[1]; ++ j)
-		{
-			for (u32 k = 0; k < GridDimensions[0]; ++ k)
-			{
-				u32 index = k + (GridDimensions[2] - i - 1) * GridDimensions[0] + j * GridDimensions[2] * GridDimensions[0];
+		u32 const Index = i + j * GridDimensions[0] + k * GridDimensions[0] * GridDimensions[1];
+		color4i const Color = ColorMapper->GetColor(GridValues.GetValues()[Index]);
 
-				u32 ValueIndex = k + j * GridDimensions[0] + i * GridDimensions[1] * GridDimensions[0];
-
-				SColorAf Color = ColorMapper->GetColor(GridValues.GetValues()[ValueIndex]);
-
-				for (u32 t = 0; t < 4; ++ t)
-					volumeData[index * 4 + t] = Clamp<u8>((u8) (Color[t] * 255.f), 0, 255);
-			}
-		}
+		for (u32 t = 0; t < 4; ++ t)
+			volumeData[Index * 4 + t] = Color[t];
 	}
 
 

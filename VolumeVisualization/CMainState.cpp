@@ -229,6 +229,9 @@ void CMainState::CalculateDataAlignment()
 	Scene.Terrain->setScale(Scene.Terrain->getScale() * vec3f(1, 1, -1));
 	Scene.Water->setScale(Scene.Water->getScale() * vec3f(1, 1, -1));
 	Scene.SkyBox->setScale(Scene.SkyBox->getScale() * vec3f(1, 1, -1));
+	
+	// Flip Height -> Depth
+	Scene.Volume->setScale(Scene.Volume->getScale() * vec3f(1, -1, 1));
 }
 
 void CMainState::SetSite(int site)
