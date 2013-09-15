@@ -385,7 +385,7 @@ void SciDataManager::produceVolumeMaps()
 	ProgressPrinter p;
 	p.Begin();
 
-	Range ValueRange = GridValues.GetFieldRange("o1", 5.0);
+	SRange<f64> ValueRange = GridValues.GetFieldRange("o1", 5.0);
 	CVolumeSceneObject const * const VolumeObject = CProgramContext::Get().Scene.Volume;
 	CVolumeSceneObject::SControl const & VolumeControl = VolumeObject->Control;
 
@@ -406,8 +406,8 @@ void SciDataManager::produceVolumeMaps()
 				float const LocalRange = yR;
 
 				f64 const GridVolume = getGridVolume("o1", 
-					EmphasisLocation * (ValueRange.second - ValueRange.first) + ValueRange.first, 
-					LocalRange / 2.f * (ValueRange.second - ValueRange.first), 
+					EmphasisLocation * ValueRange.Size() + ValueRange.Minimum, 
+					LocalRange / 2.f * ValueRange.Size(), 
 					i);
 
 				f32 const VolumeRatio = (f32) GridVolume / (28.f * 23.f * 14.f);

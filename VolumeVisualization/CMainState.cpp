@@ -120,14 +120,14 @@ void CMainState::CalculateDataAlignment()
 	SciDataManager * DataManager = Context->DataManager;
 	STable & DataSet = DataManager->GetRawValues();
 
-	Range XRange = DataSet.GetFieldRange(DataManager->GetRawValues().Traits.PositionXField, 15.0);
-	Range YRange = DataSet.GetFieldRange(DataManager->GetRawValues().Traits.PositionYField, 15.0);
-	Range ZRange = DataSet.GetFieldRange(DataManager->GetRawValues().Traits.PositionZField, 15.0);
+	SRange<f64> XRange = DataSet.GetFieldRange(DataManager->GetRawValues().Traits.PositionXField, 15.0);
+	SRange<f64> YRange = DataSet.GetFieldRange(DataManager->GetRawValues().Traits.PositionYField, 15.0);
+	SRange<f64> ZRange = DataSet.GetFieldRange(DataManager->GetRawValues().Traits.PositionZField, 15.0);
 
 	
-	printf("Longlat range is %f %f to %f %f\n", XRange.first, ZRange.first, XRange.second, ZRange.second);
+	printf("Longlat range is %f %f to %f %f\n", XRange.Minimum, ZRange.Minimum, XRange.Maximum, ZRange.Maximum);
 
-	longlatf const DataLonLatMin(XRange.first, ZRange.first), DataLonLatMax(XRange.second, ZRange.second);
+	longlatf const DataLonLatMin(XRange.Minimum, ZRange.Minimum), DataLonLatMax(XRange.Maximum, ZRange.Maximum);
 	longlatf MapLonLatMin, MapLonLatMax;
 	switch (Site)
 	{
@@ -193,7 +193,7 @@ void CMainState::CalculateDataAlignment()
 
 	vec2f const DataRangeSize = DataRangeMax - DataRangeMin;
 	vec2f const DataRangeCenter = (DataRangeMin + DataRangeMax) / 2.f;
-	f32 const DataDepth = (YRange.second - YRange.first);
+	f32 const DataDepth = YRange.Size();
 	
 	vec2f const MapRangeSize = MapRangeMax - MapRangeMin;
 	vec2f const MapRangeCenter = (MapRangeMin + MapRangeMax) / 2.f;

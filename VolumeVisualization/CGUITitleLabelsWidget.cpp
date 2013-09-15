@@ -9,15 +9,15 @@
 
 CGUITitleLabelsWidget::CGUITitleLabelsWidget(SciDataManager * DataManager)
 {
-	static Range ValueRange = DataManager->GetRawValues().GetFieldRange("o1", 5.0);
+	static SRange<f64> ValueRange = DataManager->GetRawValues().GetFieldRange("o1", 5.0);
 
 	std::wstringstream s;
 	s << std::fixed;
 	s << "Range (";
 	s << std::setprecision(3);
-	s << ValueRange.first;
+	s << ValueRange.Minimum;
 	s << ", ";
-	s << ValueRange.second;
+	s << ValueRange.Maximum;
 	s << ")";
 
 	// Top Label
@@ -53,31 +53,31 @@ CGUITitleLabelsWidget::CGUITitleLabelsWidget(SciDataManager * DataManager)
 
 void CGUITitleLabelsWidget::resetVolumeRangeIndicator(SciDataManager * DataManager)
 {
-	static Range ValueRange = DataManager->GetRawValues().GetFieldRange("o1", 5.0);
+	static SRange<f64> ValueRange = DataManager->GetRawValues().GetFieldRange("o1", 5.0);
 
 	{
 		std::wstringstream s;
 		s << std::fixed;
 		s << "Value Range: ";
 		s << std::setprecision(3);
-		s << (CProgramContext::Get().Scene.Volume->Control.EmphasisLocation * (ValueRange.second - ValueRange.first) + ValueRange.first) / 100.f;
+		s << (CProgramContext::Get().Scene.Volume->Control.EmphasisLocation * ValueRange.Size() + ValueRange.Minimum) / 100.f;
 		s << " ± ";
 		s << std::setprecision(4);
-		s << (CProgramContext::Get().Scene.Volume->Control.LocalRange / 2.f * (ValueRange.second - ValueRange.first)) / 100.f;
+		s << (CProgramContext::Get().Scene.Volume->Control.LocalRange / 2.f * ValueRange.Size()) / 100.f;
 		VolumeRangeIndicator->SetText(s.str());
 	}
 	
 	{
-		static Range ValueRange = DataManager->GetGridValues().GetFieldRange("o1", 5.0);
-		static Range XValueRange = DataManager->GetRawValues().GetFieldRange("x", 5.0);
-		static Range YValueRange = DataManager->GetRawValues().GetFieldRange("y", 5.0);
-		YValueRange.first = 0.0;
-		static Range ZValueRange = DataManager->GetRawValues().GetFieldRange("z", 5.0);
+		static SRange<f64> ValueRange = DataManager->GetGridValues().GetFieldRange("o1", 5.0);
+		static SRange<f64> XValueRange = DataManager->GetRawValues().GetFieldRange("x", 5.0);
+		static SRange<f64> YValueRange = DataManager->GetRawValues().GetFieldRange("y", 5.0);
+		YValueRange.Minimum = 0.0;
+		static SRange<f64> ZValueRange = DataManager->GetRawValues().GetFieldRange("z", 5.0);
 
 		double EntireVolume = 1.0;
-		EntireVolume *= XValueRange.second - XValueRange.first;
-		EntireVolume *= YValueRange.second - YValueRange.first;
-		EntireVolume *= ZValueRange.second - ZValueRange.first;
+		EntireVolume *= XValueRange.Maximum - XValueRange.Minimum;
+		EntireVolume *= YValueRange.Maximum - YValueRange.Minimum;
+		EntireVolume *= ZValueRange.Maximum - ZValueRange.Minimum;
 
 		double UnitVolume = EntireVolume / 24.0 / 24.0 / 24.0;
 		//printf("Entire Volume: %f UnitVolume %f\n", EntireVolume, UnitVolume);
@@ -86,8 +86,8 @@ void CGUITitleLabelsWidget::resetVolumeRangeIndicator(SciDataManager * DataManag
 		s << "Volume: ";
 		s << std::setprecision(3);
 		s << std::scientific;
-		s << DataManager->getGridVolume("Avg Oxy", CProgramContext::Get().Scene.Volume->Control.EmphasisLocation * (ValueRange.second - ValueRange.first) + ValueRange.first,
-			CProgramContext::Get().Scene.Volume->Control.LocalRange / 2.f * (ValueRange.second - ValueRange.first), 2) * UnitVolume;
+		s << DataManager->getGridVolume("Avg Oxy", CProgramContext::Get().Scene.Volume->Control.EmphasisLocation * ValueRange.Size() + ValueRange.Minimum,
+			CProgramContext::Get().Scene.Volume->Control.LocalRange / 2.f * ValueRange.Size(), 2) * UnitVolume;
 		s << " m^3";
 		VolumeCalculationIndicator->SetText(s.str());
 	}

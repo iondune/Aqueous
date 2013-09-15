@@ -1,10 +1,9 @@
 
 #pragma once
 
-#include <ionScene.h>
 #include <ionCore.h>
-
-#include "IColorMapper.h"
+#include <ionScene.h>
+#include <ionScience.h>
 
 
 class COxygenColorMapper : public IColorMapper
@@ -18,7 +17,7 @@ public:
 		: Field(field)
 	{}
 
-	virtual SColorAf const GetColor(STable::SRow const & d)
+	virtual SColorAf const GetColor(IDataRecord<f64> const & d)
 	{
 		double const v = d.GetField(Field);
 
@@ -58,7 +57,7 @@ public:
 		return SColorAf(Color[0], Color[1], Color[2], Color[3]);
 	}
 
-	virtual void PreProcessValues(STable & s)
+	virtual void PreProcessValues(IDatabase<f64> & s)
 	{}
 
 };

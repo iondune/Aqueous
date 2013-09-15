@@ -1,10 +1,9 @@
 
 #pragma once
 
-#include <ionScene.h>
 #include <ionCore.h>
-
-#include "IColorMapper.h"
+#include <ionScene.h>
+#include <ionScience.h>
 
 
 class CSingleFieldColorMapper : public IColorMapper
@@ -14,15 +13,15 @@ public:
 
 	std::string Field;
 	double ValueCutoff;
-	Range AcceptedRange;
+	SRange<f64> AcceptedRange;
 	float AlphaIntensity;
 
-	Range FieldRange;
+	SRange<f64> FieldRange;
 
 	void initialValues()
 	{
 		ValueCutoff = 5.0;
-		AcceptedRange = Range();
+		AcceptedRange = SRange<f64>();
 		AlphaIntensity = 1.f;
 	}
 
@@ -33,12 +32,12 @@ public:
 		Field = inField;
 	}
 
-	virtual SColorAf const GetColor(STable::SRow const & d)
+	virtual SColorAf const GetColor(IDataRecord<f64> const & d)
 	{
-		float Color[3] = {0.f, 0.f, 0.f};
+		f32 Color[3] = {0.f, 0.f, 0.f};
 
-		double const v = d.GetField(Field);
-		float const r = (float) ((v - FieldRange.first) / (FieldRange.second - FieldRange.first));
+		f64 const v = d.GetField(Field);
+		f32 const r = (f32) FieldRange.Normalize(v);
 
 		Color[0] = Color[2] = 1.f - r;
 		Color[1] = r;
@@ -47,7 +46,7 @@ public:
 		return SColorAf(Color[0], Color[1], Color[2], r);
 	}
 
-	virtual void PreProcessValues(STable & s)
+	virtual void PreProcessValues(IDatabase<f64> & s)
 	{
 		FieldRange = s.GetFieldRange(Field, ValueCutoff, AcceptedRange);
 	}

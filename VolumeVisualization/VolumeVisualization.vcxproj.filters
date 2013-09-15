@@ -80,9 +80,6 @@
     <ClCompile Include="CGlyphSceneObject.cpp">
       <Filter>MainState\Glyphs</Filter>
     </ClCompile>
-    <ClCompile Include="Range.cpp">
-      <Filter>MainState\Data Management\Base Objects</Filter>
-    </ClCompile>
     <ClCompile Include="SciDataManager.cpp">
       <Filter>MainState\Data Management</Filter>
     </ClCompile>
@@ -101,15 +98,6 @@
     <ClCompile Include="CWaterSceneObject.cpp">
       <Filter>MainState\Water</Filter>
     </ClCompile>
-    <ClCompile Include="STable.cpp">
-      <Filter>MainState\Data Management\Base Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="STable.SRow.cpp">
-      <Filter>MainState\Data Management\Base Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="STable.SFieldIterator.cpp">
-      <Filter>MainState\Data Management\Base Objects</Filter>
-    </ClCompile>
     <ClCompile Include="SciDataParserMergedCSV.cpp">
       <Filter>MainState\Data Management\Parsers</Filter>
     </ClCompile>
@@ -123,9 +111,6 @@
   <ItemGroup>
     <ClInclude Include="CMainState.h">
       <Filter>MainState</Filter>
-    </ClInclude>
-    <ClInclude Include="IColorMapper.h">
-      <Filter>MainState\Data Management\Color Mapping</Filter>
     </ClInclude>
     <ClInclude Include="CRGBIntensityColorMapper.h">
       <Filter>MainState\Data Management\Color Mapping</Filter>
@@ -200,9 +185,6 @@
     <ClInclude Include="CGlyphSceneObject.h">
       <Filter>MainState\Glyphs</Filter>
     </ClInclude>
-    <ClInclude Include="Range.h">
-      <Filter>MainState\Data Management\Base Objects</Filter>
-    </ClInclude>
     <ClInclude Include="SciDataParser.h">
       <Filter>MainState\Data Management\Parsers</Filter>
     </ClInclude>
@@ -220,9 +202,6 @@
     </ClInclude>
     <ClInclude Include="BathymetyGenerator.h">
       <Filter>Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="STable.h">
-      <Filter>MainState\Data Management\Base Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -243,9 +222,6 @@
     </Filter>
     <Filter Include="MainState\Data Management\Parsers">
       <UniqueIdentifier>{39c602da-763b-40fc-9eeb-1fd7df570632}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MainState\Data Management\Base Objects">
-      <UniqueIdentifier>{91f5d56d-29df-4cbf-8e61-de1d3fa7f9df}</UniqueIdentifier>
     </Filter>
     <Filter Include="MainState\Data Management\Color Mapping">
       <UniqueIdentifier>{85018b9c-10cf-4a50-81b5-fdae04b04d76}</UniqueIdentifier>

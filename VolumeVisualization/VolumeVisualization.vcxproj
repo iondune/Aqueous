@@ -104,20 +104,16 @@
     <ClCompile Include=".\SciDataParserSimpleTXT.cpp" />
     <ClCompile Include=".\SciDataParserGrid1.cpp" />
     <ClCompile Include=".\SciDataParserCTD.cpp" />
-    <ClCompile Include="Range.cpp" />
     <ClCompile Include="RBFInterpolator\newmat.cpp" />
     <ClCompile Include="RBFInterpolator\RBFInterpolator.cpp" />
     <ClCompile Include="SciDataParser.cpp" />
     <ClCompile Include="SciDataParserMergedCSV.cpp" />
     <ClCompile Include="SciDataParserSmartTether.cpp" />
-    <ClCompile Include="STable.SFieldIterator.cpp" />
-    <ClCompile Include="STable.SRow.cpp" />
     <ClCompile Include="SciDataManager.cpp" />
     <ClCompile Include="SciDataManager.GridValues.cpp" />
     <ClCompile Include="SciDataManager.Volume.cpp" />
     <ClCompile Include="SciDataManager.File.cpp" />
     <ClCompile Include="SciDataParserCSV.cpp" />
-    <ClCompile Include="STable.cpp" />
     <ClCompile Include="SciDataParserPieSlices.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -147,14 +143,11 @@
     <ClInclude Include="CGUITitleLabelsWidget.h" />
     <ClInclude Include="CVolumeSceneObject.h" />
     <ClInclude Include="CWaterSceneObject.h" />
-    <ClInclude Include="IColorMapper.h" />
     <ClInclude Include="Libraries.h" />
     <ClInclude Include="ProgressPrinter.h" />
-    <ClInclude Include="Range.h" />
     <ClInclude Include="RBFInterpolator\newmat.h" />
     <ClInclude Include="RBFInterpolator\RBFInterpolator.h" />
     <ClInclude Include="SciDataManager.h" />
-    <ClInclude Include="STable.h" />
     <ClInclude Include="SciDataParser.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

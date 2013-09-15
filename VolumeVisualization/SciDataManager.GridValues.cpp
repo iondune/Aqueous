@@ -3,9 +3,9 @@
 #include "RBFInterpolator/RBFInterpolator.h"
 
 
-void SciDataManager::createGridDataFromRawValuesRBFI(Range AcceptedValues, double Deviations, std::string const & Field)
+void SciDataManager::createGridDataFromRawValuesRBFI(SRange<f64> AcceptedValues, double Deviations, std::string const & Field)
 {
-	int const Size = 20;
+	u32 const Size = 20;
 	GridDimensions[0] = Size;
 	GridDimensions[1] = Size;
 	GridDimensions[2] = Size;
@@ -14,17 +14,17 @@ void SciDataManager::createGridDataFromRawValuesRBFI(Range AcceptedValues, doubl
 
 	std::vector<float> X, Y, Z, F;
 
-	Range XRange = RawValues.GetFieldRange(RawValues.Traits.PositionXField, Deviations, AcceptedValues);
-	Range YRange = RawValues.GetFieldRange(RawValues.Traits.PositionYField, Deviations, AcceptedValues);
-	Range ZRange = RawValues.GetFieldRange(RawValues.Traits.PositionZField, Deviations, AcceptedValues);
-	Range FRange = RawValues.GetFieldRange(Field, Deviations, AcceptedValues);
+	SRange<f64> XRange = RawValues.GetFieldRange(RawValues.Traits.PositionXField, Deviations, AcceptedValues);
+	SRange<f64> YRange = RawValues.GetFieldRange(RawValues.Traits.PositionYField, Deviations, AcceptedValues);
+	SRange<f64> ZRange = RawValues.GetFieldRange(RawValues.Traits.PositionZField, Deviations, AcceptedValues);
+	SRange<f64> FRange = RawValues.GetFieldRange(Field, Deviations, AcceptedValues);
 
 	for (auto it = RawValues.GetValues().begin(); it != RawValues.GetValues().end(); ++ it)
 	{
-		float x = (float) ((it->GetField(RawValues.Traits.PositionXField) - XRange.first) / (XRange.second - XRange.first));
-		float y = (float) ((it->GetField(RawValues.Traits.PositionYField) - YRange.first) / (YRange.second - YRange.first));
-		float z = (float) ((it->GetField(RawValues.Traits.PositionZField) - ZRange.first) / (ZRange.second - ZRange.first));
-		float f = (float) ((it->GetField(Field) - FRange.first) / (FRange.second - FRange.first));
+		f32 x = (f32) XRange.Normalize(it->GetField(RawValues.Traits.PositionXField));
+		f32 y = (f32) YRange.Normalize(it->GetField(RawValues.Traits.PositionYField));
+		f32 z = (f32) ZRange.Normalize(it->GetField(RawValues.Traits.PositionZField));
+		f32 f = (f32) FRange.Normalize(it->GetField(Field));
 
 		//if (! inRange(f, FRan
 
@@ -32,10 +32,10 @@ void SciDataManager::createGridDataFromRawValuesRBFI(Range AcceptedValues, doubl
 			x != x ||
 			y != y ||
 			z != z ||
-			! InRange(f, Range(0, 1)) ||
-			! InRange(x, Range(0, 1)) ||
-			! InRange(y, Range(0, 1)) ||
-			! InRange(z, Range(0, 1)))
+			! SRange<f32>(0, 1).Contains(f) ||
+			! SRange<f32>(0, 1).Contains(x) ||
+			! SRange<f32>(0, 1).Contains(y) ||
+			! SRange<f32>(0, 1).Contains(z))
 			continue;
 
 		bool alreadyIn = false;
@@ -79,7 +79,7 @@ void SciDataManager::createGridDataFromRawValuesRBFI(Range AcceptedValues, doubl
 	}
 }
 
-void SciDataManager::createGridDataFromRawValues(Range AcceptedValues, double Deviations, std::string const & Field)
+void SciDataManager::createGridDataFromRawValues(SRange<f64> AcceptedValues, double Deviations, std::string const & Field)
 {
 	int const Size = 32;
 	GridDimensions[0] = Size;
@@ -94,9 +94,9 @@ void SciDataManager::createGridDataFromRawValues(Range AcceptedValues, double De
 
 	static int const AccumulationRange = 5;
 	
-	Range XRange = RawValues.GetFieldRange("x", Deviations, AcceptedValues);
-	Range YRange = RawValues.GetFieldRange("y", Deviations, AcceptedValues);
-	Range ZRange = RawValues.GetFieldRange("z", Deviations, AcceptedValues);
+	SRange<f64> XRange = RawValues.GetFieldRange("x", Deviations, AcceptedValues);
+	SRange<f64> YRange = RawValues.GetFieldRange("y", Deviations, AcceptedValues);
+	SRange<f64> ZRange = RawValues.GetFieldRange("z", Deviations, AcceptedValues);
 
 	std::vector<STable::SRow> Sorted = RawValues.GetValues();
 	std::sort(Sorted.begin(), Sorted.end(), [](STable::SRow const & d1, STable::SRow const & d2) { return d1.GetPosition().Y < d2.GetPosition().Y; });
@@ -115,24 +115,24 @@ void SciDataManager::createGridDataFromRawValues(Range AcceptedValues, double De
 
 		for (u32 t = 0; t < Sorted.size(); ++ t)
 		{
-			f64 const y = (f64) ((Sorted[t].GetPosition().Y - YRange.first) / (YRange.second - YRange.first));
+			f64 const y = YRange.Normalize(Sorted[t].GetPosition().Y);
 
 			if (y > Y)
 			{
 				for (u32 u = 0; u < AccumulationRange && t >= u; ++ u)
 				{
-					f64 const x = (f64) ((Sorted[t-u].GetPosition().X - XRange.first) / (XRange.second - XRange.first));
-					f64 const y = (f64) ((Sorted[t-u].GetPosition().Y - YRange.first) / (YRange.second - YRange.first));
-					f64 const z = (f64) ((Sorted[t-u].GetPosition().Z - ZRange.first) / (ZRange.second - ZRange.first));
+					f64 const x = XRange.Normalize(Sorted[t-u].GetPosition().X);
+					f64 const y = YRange.Normalize(Sorted[t-u].GetPosition().Y);
+					f64 const z = ZRange.Normalize(Sorted[t-u].GetPosition().Z);
 					Normalization = 1 / (sqrt(Sq(X-x) + Sq(Y-y) + Sq(Z-z)) + 0.1f);
 					FieldAccumulator += Sorted[t-u].GetField(Field) * Normalization;
 					NormalizationAccumulator += Normalization;
 				}
 				for (u32 u = 1; u < AccumulationRange && t + u < Sorted.size(); ++ u)
 				{
-					f64 const x = (f64) ((Sorted[t+u].GetPosition().X - XRange.first) / (XRange.second - XRange.first));
-					f64 const y = (f64) ((Sorted[t+u].GetPosition().Y - YRange.first) / (YRange.second - YRange.first));
-					f64 const z = (f64) ((Sorted[t+u].GetPosition().Z - ZRange.first) / (ZRange.second - ZRange.first));
+					f64 const x = XRange.Normalize(Sorted[t+u].GetPosition().X);
+					f64 const y = YRange.Normalize(Sorted[t+u].GetPosition().Y);
+					f64 const z = ZRange.Normalize(Sorted[t+u].GetPosition().Z);
 					Normalization = 1 / (sqrt(Sq(X-x) + Sq(Y-y) + Sq(Z-z)) + 0.1f);
 					FieldAccumulator += Sorted[t+u].GetField(Field) * Normalization;
 					NormalizationAccumulator += Normalization;

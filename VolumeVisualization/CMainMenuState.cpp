@@ -79,7 +79,7 @@ void CMainMenuState::CreateDataSet()
 	Parser1.Manager = Context->DataManager;
 	Parser1.Load("Sites/Denmark/mission1.csv");
 
-	Context->DataManager->createGridDataFromRawValuesRBFI(FullRange, 15.0, "Chla Conc");
+	Context->DataManager->createGridDataFromRawValuesRBFI(SRange<f64>::Full, 15.0, "Chla Conc");
 	Context->DataManager->createVolumeFromGridValues(& ColorMapper);
 	Context->DataManager->writeToFile("Datasets/DenmarkNewMission1.dat");
 

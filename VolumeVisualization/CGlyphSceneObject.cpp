@@ -32,31 +32,31 @@ void CGlyphSceneObject::LoadGlyphs(SciDataManager * DataManager, IColorMapper * 
 	STable & DataSet = DataManager->GetRawValues();
 	ColorMapper->PreProcessValues(DataSet);
 
-	Range XRange = DataSet.GetFieldRange(DataManager->GetRawValues().Traits.PositionXField, 15.0);
-	Range YRange = DataSet.GetFieldRange(DataManager->GetRawValues().Traits.PositionYField, 15.0);
-	Range ZRange = DataSet.GetFieldRange(DataManager->GetRawValues().Traits.PositionZField, 15.0);
+	SRange<f64> XRange = DataSet.GetFieldRange(DataManager->GetRawValues().Traits.PositionXField, 15.0);
+	SRange<f64> YRange = DataSet.GetFieldRange(DataManager->GetRawValues().Traits.PositionYField, 15.0);
+	SRange<f64> ZRange = DataSet.GetFieldRange(DataManager->GetRawValues().Traits.PositionZField, 15.0);
 
-	printf("built in data range is %f %f to %f %f long lat\n", XRange.first, ZRange.first, XRange.second, ZRange.second);
-	printf("depth varies from %f to %f\n", YRange.first, YRange.second);
+	printf("built in data range is %f %f to %f %f long lat\n", XRange.Minimum, ZRange.Minimum, XRange.Maximum, ZRange.Maximum);
+	printf("depth varies from %f to %f\n", YRange.Minimum, YRange.Maximum);
 
 	for (auto it = DataSet.GetValues().begin(); it != DataSet.GetValues().end(); ++ it)
 	{
 		SGlyph g;
 
-		f32 MaxField = Max((XRange.second - XRange.first), (ZRange.second - ZRange.first));
+		f32 MaxField = Max(XRange.Size(), ZRange.Size());
 
-		f32 X = (f32) ((it->GetField(DataManager->GetRawValues().Traits.PositionXField) - XRange.first) / (XRange.second - XRange.first));
-		if (XRange.first > XRange.second)
+		f32 X = (f32) XRange.Normalize(it->GetField(DataManager->GetRawValues().Traits.PositionXField));
+		if (XRange.IsEmpty())
 			X = 0.f;
 
-		f32 Y = (f32) ((it->GetField(DataManager->GetRawValues().Traits.PositionYField) - YRange.first) / (YRange.second - YRange.first));
+		f32 Y = (f32) YRange.Normalize(it->GetField(DataManager->GetRawValues().Traits.PositionYField));
 		if (DataManager->GetRawValues().Traits.InvertY)
 			Y = 1.f - Y;
-		if (YRange.first > YRange.second)
+		if (YRange.IsEmpty())
 			Y = 0.f;
 
-		f32 Z = (f32) ((it->GetField(DataManager->GetRawValues().Traits.PositionZField) - ZRange.first) / (ZRange.second - ZRange.first));
-		if (ZRange.first > ZRange.second)
+		f32 Z = (f32) ZRange.Normalize(it->GetField(DataManager->GetRawValues().Traits.PositionZField));
+		if (ZRange.IsEmpty())
 			Z = 0.f;
 
 		/*

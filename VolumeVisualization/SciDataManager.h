@@ -1,12 +1,9 @@
 
 #pragma once
 
-#include <vector>
-#include <ionScene.h>
 #include <ionCore.h>
-
-#include "STable.h"
-#include "IColorMapper.h"
+#include <ionScene.h>
+#include <ionScience.h>
 
 
 class SciDataManager
@@ -31,9 +28,9 @@ public:
 	void createVolumeFromGridValues(IColorMapper * ColorMapper);
 	
 	//! Interpolate grid data using RBFI
-	void createGridDataFromRawValuesRBFI(Range AcceptedValues = FullRange, double Deviations = 5.0, std::string const & Field = "o2");
+	void createGridDataFromRawValuesRBFI(SRange<f64> AcceptedValues = SRange<f64>::Full, f64 Deviations = 5.0, std::string const & Field = "o2");
 	//! Interpolate grid data
-	void createGridDataFromRawValues(Range AcceptedValues = FullRange, double Deviations = 5.0, std::string const & Field = "o2");
+	void createGridDataFromRawValues(SRange<f64> AcceptedValues = SRange<f64>::Full, f64 Deviations = 5.0, std::string const & Field = "o2");
 
 	void writeToFile(std::string const & FileName);
 	void readFromFile(std::string const & FileName);
