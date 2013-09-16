@@ -1,6 +1,6 @@
 
 #include "SciDataParser.h"
-#include "SciDataManager.h"
+#include "CDataSet.h"
 
 #include <fstream>
 #include <sstream>
@@ -210,7 +210,7 @@ void SciDataParserPieSlices::load(std::string const & PieFile, std::string const
 							f64 const radial = (Slice[5]*(1.0 - ratio) + distance*(ratio));
 
 
-							STable::SRow & Row = Manager->GetRawValues().AddRow();
+							STable::SRow & Row = DataSet->Points.AddRow();
 							Row.GetField("time") = HoboTime;
 							Row.GetField("x") = cos(angle)*radial;
 							Row.GetField("z") = sin(angle)*radial;

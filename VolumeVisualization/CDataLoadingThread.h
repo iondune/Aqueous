@@ -19,12 +19,11 @@ class CDataLoadingThread
 	bool Running;
 
 	std::thread * Thread;
-	std::string FileName;
 
 public:
 
 	CDataLoadingThread();
-	void Run(std::string const & fileName);
+	void Run();
 	void Sync();
 
 	CProgramContext * Context;

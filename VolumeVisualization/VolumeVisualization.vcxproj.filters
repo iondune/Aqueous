@@ -26,15 +26,6 @@
     <ClCompile Include="CVolumeSceneObject.cpp">
       <Filter>MainState\Volume</Filter>
     </ClCompile>
-    <ClCompile Include="SciDataManager.GridValues.cpp">
-      <Filter>MainState\Data Management</Filter>
-    </ClCompile>
-    <ClCompile Include="SciDataManager.Volume.cpp">
-      <Filter>MainState\Data Management</Filter>
-    </ClCompile>
-    <ClCompile Include="SciDataManager.File.cpp">
-      <Filter>MainState\Data Management</Filter>
-    </ClCompile>
     <ClCompile Include="RBFInterpolator\newmat.cpp">
       <Filter>MainState\RBFInterpolator</Filter>
     </ClCompile>
@@ -80,9 +71,6 @@
     <ClCompile Include="CGlyphSceneObject.cpp">
       <Filter>MainState\Glyphs</Filter>
     </ClCompile>
-    <ClCompile Include="SciDataManager.cpp">
-      <Filter>MainState\Data Management</Filter>
-    </ClCompile>
     <ClCompile Include="CPlaneGridSceneObject.cpp">
       <Filter>MainState\Misc</Filter>
     </ClCompile>
@@ -106,6 +94,15 @@
     </ClCompile>
     <ClCompile Include="SciDataParser.cpp">
       <Filter>MainState\Data Management\Parsers</Filter>
+    </ClCompile>
+    <ClCompile Include="CTerrainLocation.cpp">
+      <Filter>MainState\Data Management\Location</Filter>
+    </ClCompile>
+    <ClCompile Include="CDataSet.cpp">
+      <Filter>MainState\Data Management</Filter>
+    </ClCompile>
+    <ClCompile Include="CSite.cpp">
+      <Filter>MainState\Data Management</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -133,9 +130,6 @@
     <ClInclude Include="Libraries.h" />
     <ClInclude Include="CVolumeSceneObject.h">
       <Filter>MainState\Volume</Filter>
-    </ClInclude>
-    <ClInclude Include="SciDataManager.h">
-      <Filter>MainState\Data Management</Filter>
     </ClInclude>
     <ClInclude Include="RBFInterpolator\newmat.h">
       <Filter>MainState\RBFInterpolator</Filter>
@@ -203,6 +197,18 @@
     <ClInclude Include="BathymetyGenerator.h">
       <Filter>Utilities</Filter>
     </ClInclude>
+    <ClInclude Include="CSite.h">
+      <Filter>MainState\Data Management</Filter>
+    </ClInclude>
+    <ClInclude Include="CTerrainLocation.h">
+      <Filter>MainState\Data Management\Location</Filter>
+    </ClInclude>
+    <ClInclude Include="ILocation.h">
+      <Filter>MainState\Data Management\Location</Filter>
+    </ClInclude>
+    <ClInclude Include="CDataSet.h">
+      <Filter>MainState\Data Management</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="MainState">
@@ -255,6 +261,9 @@
     </Filter>
     <Filter Include="MainState\Water">
       <UniqueIdentifier>{1c0ec171-1f22-41cf-9511-5fe0e0c62da5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainState\Data Management\Location">
+      <UniqueIdentifier>{8440f9e2-4f2e-46ed-9cbd-c310b75cd748}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

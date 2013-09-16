@@ -3,7 +3,7 @@
 #include <ionWindow.h>
 
 #include "CProgramContext.h"
-#include "SciDataManager.h"
+#include "CDataSet.h"
 
 
 CGlyphSceneObject::CGlyphSceneObject()
@@ -25,37 +25,34 @@ CGlyphSceneObject::CGlyphSceneObject()
 	LineShader = CProgramContext::Get().Shaders.GlyphLines;
 }
 
-void CGlyphSceneObject::LoadGlyphs(SciDataManager * DataManager, IColorMapper * ColorMapper)
+void CGlyphSceneObject::LoadGlyphs(CDataSet * DataSet, IColorMapper * ColorMapper)
 {
 	Glyphs.clear();
 
-	STable & DataSet = DataManager->GetRawValues();
-	ColorMapper->PreProcessValues(DataSet);
+	ColorMapper->PreProcessValues(DataSet->Points);
 
-	SRange<f64> XRange = DataSet.GetFieldRange(DataManager->GetRawValues().Traits.PositionXField, 15.0);
-	SRange<f64> YRange = DataSet.GetFieldRange(DataManager->GetRawValues().Traits.PositionYField, 15.0);
-	SRange<f64> ZRange = DataSet.GetFieldRange(DataManager->GetRawValues().Traits.PositionZField, 15.0);
+	SRange<f64> XRange = DataSet->Points.GetFieldRange(DataSet->Traits.PositionXField, 15.0);
+	SRange<f64> YRange = DataSet->Points.GetFieldRange(DataSet->Traits.PositionYField, 15.0);
+	SRange<f64> ZRange = DataSet->Points.GetFieldRange(DataSet->Traits.PositionZField, 15.0);
 
 	printf("built in data range is %f %f to %f %f long lat\n", XRange.Minimum, ZRange.Minimum, XRange.Maximum, ZRange.Maximum);
 	printf("depth varies from %f to %f\n", YRange.Minimum, YRange.Maximum);
 
-	for (auto it = DataSet.GetValues().begin(); it != DataSet.GetValues().end(); ++ it)
+	for (auto Point : DataSet->Points.GetValues())
 	{
-		SGlyph g;
+		SGlyph Glyph;
 
-		f32 MaxField = Max(XRange.Size(), ZRange.Size());
-
-		f32 X = (f32) XRange.Normalize(it->GetField(DataManager->GetRawValues().Traits.PositionXField));
+		f32 X = (f32) XRange.Normalize(Point.GetField(DataSet->Traits.PositionXField));
 		if (XRange.IsEmpty())
 			X = 0.f;
 
-		f32 Y = (f32) YRange.Normalize(it->GetField(DataManager->GetRawValues().Traits.PositionYField));
-		if (DataManager->GetRawValues().Traits.InvertY)
+		f32 Y = (f32) YRange.Normalize(Point.GetField(DataSet->Traits.PositionYField));
+		if (DataSet->Traits.InvertY)
 			Y = 1.f - Y;
 		if (YRange.IsEmpty())
 			Y = 0.f;
 
-		f32 Z = (f32) ZRange.Normalize(it->GetField(DataManager->GetRawValues().Traits.PositionZField));
+		f32 Z = (f32) ZRange.Normalize(Point.GetField(DataSet->Traits.PositionZField));
 		if (ZRange.IsEmpty())
 			Z = 0.f;
 
@@ -64,15 +61,17 @@ void CGlyphSceneObject::LoadGlyphs(SciDataManager * DataManager, IColorMapper * 
 		if (v != 0)
 		{
 			f32 Depth = (f32) v / (f32) YRange.second;
-			g.FloorHeight = 1.f - Depth;
+			Glyph.FloorHeight = 1.f - Depth;
 		}
 		*/
 
-		g.Position = vec3f(X, Y, Z) - 0.5f;
-		g.Color = ColorMapper->GetColor(* it);
+		Glyph.Position = vec3f(X, Y, Z) - 0.5f;
+		Glyph.Color = ColorMapper->GetColor(Point);
 
-		Glyphs.push_back(g);
+		Glyphs.push_back(Glyph);
 	}
+
+	Context->Scene.Glyphs->BuildLines();
 }
 
 bool CGlyphSceneObject::draw(IScene const * const Scene, sharedPtr<IRenderPass> Pass, bool const CullingEnabled)

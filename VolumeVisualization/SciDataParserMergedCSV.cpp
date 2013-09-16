@@ -1,6 +1,6 @@
 
 #include "SciDataParser.h"
-#include "SciDataManager.h"
+#include "CDataSet.h"
 
 #include <fstream>
 #include <sstream>
@@ -97,14 +97,14 @@ void SciDataParserMergedCSV::Load(std::string const & FileName1, std::string con
 			
 			if (Row1.size() != Fields1.size())
 			{
-				std::cerr << "Mismatched row size at row " << Manager->GetRawValues().Size() << std::endl;
+				std::cerr << "Mismatched row size at row " << DataSet->Points.Size() << std::endl;
 				ReadNext1 = true;
 			}
 			s32 Length1 = std::min(Row1.size(), Fields1.size());
 
 			if (Row2.size() != Fields2.size())
 			{
-				std::cerr << "Mismatched row size at row " << Manager->GetRawValues().Size() << std::endl;
+				std::cerr << "Mismatched row size at row " << DataSet->Points.Size() << std::endl;
 				ReadNext2 = true;
 			}
 			s32 Length2 = std::min(Row2.size(), Fields2.size());
@@ -115,7 +115,7 @@ void SciDataParserMergedCSV::Load(std::string const & FileName1, std::string con
 
 				if (std::abs((int) (Field1 - Field2)) <= 2)
 				{
-					STable::SRow & Row = Manager->GetRawValues().AddRow();
+					STable::SRow & Row = DataSet->Points.AddRow();
 					for (s32 i = 0; i < Length1; ++ i)
 						Row.GetField(Fields1[i]) = string_to_double(Row1[i]);
 					for (s32 i = 0; i < Length2; ++ i)

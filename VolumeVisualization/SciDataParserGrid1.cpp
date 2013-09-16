@@ -1,6 +1,6 @@
 
 #include "SciDataParser.h"
-#include "SciDataManager.h"
+#include "CDataSet.h"
 
 #include "matlib/include/mat.h"
 
@@ -42,7 +42,7 @@ void SciDataParserGrid1::load(std::string const &data)
 	int const * Dimensions = mxGetDimensions(pointO1);
 	vec3i Dims;
 	Dims.set(Dimensions);
-	Manager->setGridDimensions(Dims);
+	DataSet->Volume.Dimensions = Dims;
 	double * pointO1Data = mxGetPr(pointO1);
 	double * pointO2Data = mxGetPr(pointO2);
 	double * pointO3Data = mxGetPr(pointO3);
@@ -55,15 +55,15 @@ void SciDataParserGrid1::load(std::string const &data)
 	double * pointYData = mxGetPr(pointY);
 	double * pointZData = mxGetPr(pointZ);
 
-	for (int i = 0; i < Dimensions[2]; ++ i)
+	for (int k = 0; k < Dimensions[2]; ++ k)
 	{
 		for (int j = 0; j < Dimensions[1]; ++ j)
 		{
-			for (int k = 0; k < Dimensions[0]; ++ k)
+			for (int i = 0; i < Dimensions[0]; ++ i)
 			{
-				int index = k + j * Dimensions[0] + i * Dimensions[1] * Dimensions[0];
+				int index = i + j * Dimensions[0] + k * Dimensions[0] * Dimensions[1];
 
-				STable::SRow & Row = Manager->GetGridValues().AddRow();
+				SVolumeDataRecord<f64> & Row = DataSet->Volume[i][j][k];
 				Row.GetField("o1") = pointO1Data[index];
 				Row.GetField("o2") = pointO2Data[index];
 				Row.GetField("o3") = pointO3Data[index];
@@ -73,7 +73,7 @@ void SciDataParserGrid1::load(std::string const &data)
 				Row.GetField("var3") = var3Data[index];
 				Row.GetField("var4") = var4Data[index];
 				Row.GetField("x") = pointXData[index];
-				Row.GetField("y") = -pointZData[index]; // Flip depth
+				Row.GetField("y") = pointZData[index];
 				Row.GetField("z") = pointYData[index];
 			}
 		}

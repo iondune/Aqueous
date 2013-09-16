@@ -3,7 +3,7 @@
 
 #include "CMainState.h"
 #include "CMainMenuState.h"
-#include "SciDataManager.h"
+#include "CSite.h"
 
 #include "CTerrainSceneObject.h"
 #include "CWaterSceneObject.h"
@@ -74,7 +74,7 @@ void CLoadState::Begin()
 	AddLabel(L"Loading Scene Objects...");
 	LoadScene();
 	
-	Context->DataManager = new SciDataManager();
+	Context->CurrentSite = new CSite();
 	AddLabel(L"Menu is Starting...");
 
 	if (GetConfirmation)

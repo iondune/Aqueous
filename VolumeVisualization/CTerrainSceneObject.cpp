@@ -36,46 +36,6 @@ CTerrainSceneObject::CTerrainSceneObject()
 		}
 	}
 	IndexBuffer.syncData();
-	
-	STextureCreationFlags Flags;
-	Flags.Wrap = GL_CLAMP_TO_EDGE;
-	HeightMap = CImageLoader::LoadTexture("../Sites/Denmark/TerrainTopography.bmp", Flags);
-	SetSite(0);
-}
-
-void CTerrainSceneObject::SetSite(int Site)
-{
-	STextureCreationFlags Flags;
-	Flags.Wrap = GL_CLAMP_TO_EDGE;
-
-	switch (Site)
-	{
-	default:
-	case 0:
-		ColorMap = CImageLoader::LoadTexture("../Sites/Denmark/TerrainColor.bmp", Flags);
-		BathyMap = CImageLoader::LoadTexture("../Sites/Denmark/TerrainBathymetry.bmp", Flags);
-		break;
-	case 1:
-		ColorMap = CImageLoader::LoadTexture("../Sites/Denmark/TerrainColorLarge.bmp", Flags);
-		BathyMap = CImageLoader::LoadTexture("../Sites/Denmark/TerrainBathymetryLarge.bmp", Flags);
-		break;
-	case 2:
-		ColorMap = CImageLoader::LoadTexture("../Sites/Denmark/TerrainColorXLarge.bmp", Flags);
-		BathyMap = CImageLoader::LoadTexture("../Sites/Denmark/TerrainBathymetryXLarge.bmp", Flags);
-		break;
-	case 3:
-		ColorMap = CImageLoader::LoadTexture("../Sites/Denmark/Map6Color.bmp", Flags);
-		BathyMap = CImageLoader::LoadTexture("../Sites/Denmark/Map6Bathy.bmp", Flags);
-		break;
-	case 4:
-		ColorMap = CImageLoader::LoadTexture("../Sites/Denmark/Map7Color.bmp", Flags);
-		BathyMap = CImageLoader::LoadTexture("../Sites/Denmark/Map7Bathy.bmp", Flags);
-		break;
-	case 5:
-		ColorMap = CImageLoader::LoadTexture("../Sites/Denmark/Map8.bmp", Flags);
-		BathyMap = new CTexture(new CImage(color4f(0.7f)), Flags);
-		break;
-	}
 }
 
 bool CTerrainSceneObject::draw(IScene const * const Scene, sharedPtr<IRenderPass> Pass, bool const CullingEnabled)
@@ -96,8 +56,8 @@ bool CTerrainSceneObject::draw(IScene const * const Scene, sharedPtr<IRenderPass
 	
 	if (HeightMap)
 		Context.bindTexture("uHeightMap", HeightMap->getTextureHandle());
-	if (BathyMap)
-		Context.bindTexture("uBathyMap", BathyMap->getTextureHandle());
+	if (BathymetryMap)
+		Context.bindTexture("uBathyMap", BathymetryMap->getTextureHandle());
 	if (ColorMap)
 		Context.bindTexture("uColorMap", ColorMap->getTextureHandle());
 
@@ -112,4 +72,29 @@ bool CTerrainSceneObject::draw(IScene const * const Scene, sharedPtr<IRenderPass
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	return true;
+}
+
+void CTerrainSceneObject::SetHeightMap(CTexture * heightMap)
+{
+	HeightMap = heightMap;
+}
+
+void CTerrainSceneObject::SetColorMap(CTexture * colorMap)
+{
+	ColorMap = colorMap;
+}
+
+void CTerrainSceneObject::SetBathymetryMap(CTexture * bathymetryMap)
+{
+	BathymetryMap = bathymetryMap;
+}
+
+void CTerrainSceneObject::SetDebugHeightEnabled(bool const Enabled)
+{
+	DebugHeight = Enabled;
+}
+
+bool CTerrainSceneObject::IsDebugHeightEnabled()
+{
+	return DebugHeight;
 }

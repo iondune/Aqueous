@@ -80,6 +80,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CDataLoadingThread.cpp" />
+    <ClCompile Include="CDataSet.cpp" />
     <ClCompile Include="CGlyphSceneObject.cpp" />
     <ClCompile Include="CGUIContext.cpp" />
     <ClCompile Include="CGUIContextWidget.cpp" />
@@ -96,6 +97,8 @@
     <ClCompile Include="CMainState.MouseTracking.cpp" />
     <ClCompile Include="CPlaneGridSceneObject.cpp" />
     <ClCompile Include="CProgramContext.cpp" />
+    <ClCompile Include="CSite.cpp" />
+    <ClCompile Include="CTerrainLocation.cpp" />
     <ClCompile Include="CTerrainSceneObject.cpp" />
     <ClCompile Include="CGUITitleLabelsWidget.cpp" />
     <ClCompile Include="CVolumeSceneObject.cpp" />
@@ -109,16 +112,13 @@
     <ClCompile Include="SciDataParser.cpp" />
     <ClCompile Include="SciDataParserMergedCSV.cpp" />
     <ClCompile Include="SciDataParserSmartTether.cpp" />
-    <ClCompile Include="SciDataManager.cpp" />
-    <ClCompile Include="SciDataManager.GridValues.cpp" />
-    <ClCompile Include="SciDataManager.Volume.cpp" />
-    <ClCompile Include="SciDataManager.File.cpp" />
     <ClCompile Include="SciDataParserCSV.cpp" />
     <ClCompile Include="SciDataParserPieSlices.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BathymetyGenerator.h" />
     <ClInclude Include="CDataLoadingThread.h" />
+    <ClInclude Include="CDataSet.h" />
     <ClInclude Include="CGlyphSceneObject.h" />
     <ClInclude Include="CGUIContext.h" />
     <ClInclude Include="CGUIContextWidget.h" />
@@ -129,6 +129,8 @@
     <ClInclude Include="CGUITerrainControlWidget.h" />
     <ClInclude Include="CGUIVolumeControlWidget.h" />
     <ClInclude Include="CLoadState.h" />
+    <ClInclude Include="CTerrainLocation.h" />
+    <ClInclude Include="ILocation.h" />
     <ClInclude Include="CMainMenuState.h" />
     <ClInclude Include="CMainState.h" />
     <ClInclude Include="ColorMappers.h" />
@@ -138,6 +140,7 @@
     <ClInclude Include="CProgramContext.h" />
     <ClInclude Include="CRGBIntensityColorMapper.h" />
     <ClInclude Include=".\CSingleFieldColorMapper.h" />
+    <ClInclude Include="CSite.h" />
     <ClInclude Include="CSpectrumColorMapper.h" />
     <ClInclude Include="CTerrainSceneObject.h" />
     <ClInclude Include="CGUITitleLabelsWidget.h" />
@@ -147,7 +150,6 @@
     <ClInclude Include="ProgressPrinter.h" />
     <ClInclude Include="RBFInterpolator\newmat.h" />
     <ClInclude Include="RBFInterpolator\RBFInterpolator.h" />
-    <ClInclude Include="SciDataManager.h" />
     <ClInclude Include="SciDataParser.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

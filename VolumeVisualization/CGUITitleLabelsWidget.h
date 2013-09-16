@@ -4,7 +4,7 @@
 #include "CGUIContextWidget.h"
 
 
-class SciDataManager;
+class CSite;
 
 class CGUITitleLabelsWidget : public CGUIContextWidget
 {
@@ -16,9 +16,9 @@ private:
 
 public:
 
-	CGUITitleLabelsWidget(SciDataManager * DataManager);
+	CGUITitleLabelsWidget(CSite * CurrentSite);
 
-	void resetVolumeRangeIndicator(SciDataManager * DataManager);
+	void resetVolumeRangeIndicator(CSite * CurrentSite);
 	void clearVolumeRangeIndicator();
 
 };

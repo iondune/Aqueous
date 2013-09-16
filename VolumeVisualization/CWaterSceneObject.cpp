@@ -40,8 +40,7 @@ CWaterSceneObject::CWaterSceneObject()
 	IndexBuffer.syncData();
 	
 	STextureCreationFlags Flags;
-	//Flags.Wrap = GL_CLAMP_TO_EDGE;
-	HeightMap = CTextureLoader::LoadTexture("../Media/WaterBump.bmp", Flags);
+	HeightMap = CImageLoader::LoadTexture("../Media/WaterBump.bmp", Flags);
 }
 
 bool CWaterSceneObject::draw(IScene const * const Scene, sharedPtr<IRenderPass> Pass, bool const CullingEnabled)

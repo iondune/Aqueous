@@ -1,15 +1,15 @@
 #include "CGUITitleLabelsWidget.h"
 
 #include "CProgramContext.h"
-#include "SciDataManager.h"
+#include "CSite.h"
 #include "CMainMenuState.h"
 
 #include <iomanip>
 
 
-CGUITitleLabelsWidget::CGUITitleLabelsWidget(SciDataManager * DataManager)
+CGUITitleLabelsWidget::CGUITitleLabelsWidget(CSite * CurrentSite)
 {
-	static SRange<f64> ValueRange = DataManager->GetRawValues().GetFieldRange("o1", 5.0);
+	static SRange<f64> ValueRange = CurrentSite->GetCurrentDataSet()->Points.GetFieldRange("o1", 5.0);
 
 	std::wstringstream s;
 	s << std::fixed;
@@ -23,7 +23,7 @@ CGUITitleLabelsWidget::CGUITitleLabelsWidget(SciDataManager * DataManager)
 	// Top Label
 	Gwen::Controls::Label * BigLabel = new Gwen::Controls::Label(GUIManager->GetCanvas());
 	BigLabel->SetFont(GUIManager->GetLargeFont());
-	BigLabel->SetText(Gwen::UnicodeString(L"Dataset: ") + Gwen::UnicodeString(CMainMenuState::Get().DataSetName.begin(), CMainMenuState::Get().DataSetName.end()));
+	BigLabel->SetText(Gwen::UnicodeString(L"Dataset: ") + /*Gwen::UnicodeString(CMainMenuState::Get().DataSetName.begin(), CMainMenuState::Get().DataSetName.end())*/ L"Data");
 	BigLabel->SetBounds(10, 10, 1590, 300);
 	BigLabel->SetTextColor(Gwen::Color(235, 255, 235, 215));
 	BigLabel->SetHidden(true);
@@ -51,9 +51,9 @@ CGUITitleLabelsWidget::CGUITitleLabelsWidget(SciDataManager * DataManager)
 	VolumeCalculationIndicator->SetHidden(true);
 }
 
-void CGUITitleLabelsWidget::resetVolumeRangeIndicator(SciDataManager * DataManager)
+void CGUITitleLabelsWidget::resetVolumeRangeIndicator(CSite * CurrentSite)
 {
-	static SRange<f64> ValueRange = DataManager->GetRawValues().GetFieldRange("o1", 5.0);
+	static SRange<f64> ValueRange = CurrentSite->GetCurrentDataSet()->Points.GetFieldRange("o1", 5.0);
 
 	{
 		std::wstringstream s;
@@ -68,11 +68,11 @@ void CGUITitleLabelsWidget::resetVolumeRangeIndicator(SciDataManager * DataManag
 	}
 	
 	{
-		static SRange<f64> ValueRange = DataManager->GetGridValues().GetFieldRange("o1", 5.0);
-		static SRange<f64> XValueRange = DataManager->GetRawValues().GetFieldRange("x", 5.0);
-		static SRange<f64> YValueRange = DataManager->GetRawValues().GetFieldRange("y", 5.0);
+		static SRange<f64> ValueRange = CurrentSite->GetCurrentDataSet()->Points.GetFieldRange("o1", 5.0);
+		static SRange<f64> XValueRange = CurrentSite->GetCurrentDataSet()->Points.GetFieldRange("x", 5.0);
+		static SRange<f64> YValueRange = CurrentSite->GetCurrentDataSet()->Points.GetFieldRange("y", 5.0);
 		YValueRange.Minimum = 0.0;
-		static SRange<f64> ZValueRange = DataManager->GetRawValues().GetFieldRange("z", 5.0);
+		static SRange<f64> ZValueRange = CurrentSite->GetCurrentDataSet()->Points.GetFieldRange("z", 5.0);
 
 		double EntireVolume = 1.0;
 		EntireVolume *= XValueRange.Maximum - XValueRange.Minimum;
@@ -82,14 +82,14 @@ void CGUITitleLabelsWidget::resetVolumeRangeIndicator(SciDataManager * DataManag
 		double UnitVolume = EntireVolume / 24.0 / 24.0 / 24.0;
 		//printf("Entire Volume: %f UnitVolume %f\n", EntireVolume, UnitVolume);
 
-		std::wstringstream s;
+		/*std::wstringstream s;
 		s << "Volume: ";
 		s << std::setprecision(3);
 		s << std::scientific;
 		s << DataManager->getGridVolume("Avg Oxy", CProgramContext::Get().Scene.Volume->Control.EmphasisLocation * ValueRange.Size() + ValueRange.Minimum,
 			CProgramContext::Get().Scene.Volume->Control.LocalRange / 2.f * ValueRange.Size(), 2) * UnitVolume;
 		s << " m^3";
-		VolumeCalculationIndicator->SetText(s.str());
+		VolumeCalculationIndicator->SetText(s.str());*/
 	}
 }
 

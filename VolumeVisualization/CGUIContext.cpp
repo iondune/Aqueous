@@ -15,7 +15,7 @@ void CGUIContext::SetupMainState()
 
 	// Widgets
 	Console = new CGUIConsoleWidget(this);
-	TitleLabels = new CGUITitleLabelsWidget(CProgramContext::Get().DataManager);
+	TitleLabels = new CGUITitleLabelsWidget(CProgramContext::Get().CurrentSite);
 	VolumeControl = new CGUIVolumeControlWidget();
 	TerrainControl = new CGUITerrainControlWidget();
 	GlyphControl = new CGUIGlyphControlWidget();

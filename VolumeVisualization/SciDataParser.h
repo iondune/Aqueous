@@ -1,21 +1,20 @@
 
 #pragma once
 
-#include <vector>
-#include <ionScene.h>
 #include <ionCore.h>
+#include <ionScene.h>
 
 
 f64 const string_to_double(std::string const & s);
 
-class SciDataManager;
+class CDataSet;
 
 class SciDataParser
 {
 
 public:
 
-	SciDataManager * Manager;
+	CDataSet * DataSet;
 
 };
 

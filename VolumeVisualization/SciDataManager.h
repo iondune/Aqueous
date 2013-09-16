@@ -1,4 +1,4 @@
-
+#if 0
 #pragma once
 
 #include <ionCore.h>
@@ -55,3 +55,5 @@ public:
 	void setGridDimensions(SVector3u const & gridDimensions);
 
 };
+
+#endif

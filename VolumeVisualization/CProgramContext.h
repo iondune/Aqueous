@@ -5,6 +5,7 @@
 #include <ionScene.h>
 #include <ionWindow.h>
 #include <ionFramework.h>
+#include <ionScience.h>
 
 #include "CGUIContext.h"
 
@@ -14,7 +15,7 @@ class CVolumeSceneObject;
 class CGlyphSceneObject;
 class CWaterSceneObject;
 
-class SciDataManager;
+class CSite;
 
 
 class CProgramContext : public Singleton<CProgramContext>
@@ -68,7 +69,7 @@ public:
 	SScene Scene;
 
 	CGUIContext * GUIContext;
-	SciDataManager * DataManager;
+	CSite * CurrentSite;
 
 	CProgramContext();
 	void Run();

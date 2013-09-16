@@ -100,11 +100,11 @@ void CMainState::OnEvent(SKeyboardEvent & Event)
 
 		break;
 
-	case EKey::Y:
+	//case EKey::Y:
 
-		if (! Event.Pressed)
-			Context->DataManager->produceVolumeMaps();
-		break;
+		//if (! Event.Pressed)
+		//	Context->DataManager->produceVolumeMaps();
+		//break;
 
 	case EKey::B:
 

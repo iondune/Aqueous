@@ -8,7 +8,7 @@
 #include "CDataLoadingThread.h"
 #include "CGlyphSceneObject.h"
 
-#include "SciDataManager.h"
+#include "CSite.h"
 #include "SciDataParser.h"
 
 
@@ -41,11 +41,11 @@ void CMainMenuState::Update(f32 const Elapsed)
 	static int Counter = 0;
 	if (! Counter--)
 	{
-		Context->DataManager->GetRawValues().Traits.PositionXField = "Longitude";
-		Context->DataManager->GetRawValues().Traits.PositionYField = "DFS Depth (m)";
-		Context->DataManager->GetRawValues().Traits.PositionZField = "Latitude";
+		Context->CurrentSite->GetCurrentDataSet()->Traits.PositionXField = "Longitude";
+		Context->CurrentSite->GetCurrentDataSet()->Traits.PositionYField = "DFS Depth (m)";
+		Context->CurrentSite->GetCurrentDataSet()->Traits.PositionZField = "Latitude";
 
-		//CreateDataSet();
+		CreateDataSet();
 		LoadData("DenmarkNewMission1.dat");
 	}
 }
@@ -59,16 +59,16 @@ void CMainMenuState::OnEvent(SWindowResizedEvent & Event)
 
 void CMainMenuState::LoadData(std::string const & FileName)
 {
-	DataSetName = FileName;
+	//DataSetName = FileName;
 
-	std::stringstream s;
-	s << "Datasets/";
-	s << FileName;
+	//std::stringstream s;
+	//s << "Datasets/";
+	//s << FileName;
 
 	Thread.Context = Context;
 	Thread.LoadingWidget = new CGUIProgressBarWidget(Context->GUIContext, "Loading data and initializing scene elements");
 	Thread.LoadingWidget->BeginProgress();
-	Thread.Run(s.str());
+	Thread.Run(/*s.str()*/);
 }
 
 void CMainMenuState::CreateDataSet()
@@ -76,12 +76,12 @@ void CMainMenuState::CreateDataSet()
 	SciDataParserCSV Parser1;
 	CSpectrumColorMapper ColorMapper("Chla Conc");
 
-	Parser1.Manager = Context->DataManager;
+	Parser1.DataSet = Context->CurrentSite->GetCurrentDataSet();
 	Parser1.Load("Sites/Denmark/mission1.csv");
 
-	Context->DataManager->createGridDataFromRawValuesRBFI(SRange<f64>::Full, 15.0, "Chla Conc");
-	Context->DataManager->createVolumeFromGridValues(& ColorMapper);
-	Context->DataManager->writeToFile("Datasets/DenmarkNewMission1.dat");
+	//Context->DataManager->createGridDataFromRawValuesRBFI(SRange<f64>::Full, 15.0, "Chla Conc");
+	//Context->DataManager->createVolumeFromGridValues(& ColorMapper);
+	//Context->DataManager->writeToFile("Datasets/DenmarkNewMission1.dat");
 
 	/*
 	SciDataParserSimpleTXT * Parser1 = new SciDataParserSimpleTXT();

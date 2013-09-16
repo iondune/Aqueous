@@ -1,6 +1,6 @@
 
 #include "SciDataParser.h"
-#include "SciDataManager.h"
+#include "CDataSet.h"
 
 #include "matlib/include/mat.h"
 
@@ -141,7 +141,7 @@ void SciDataParserCTD::load(std::string const &data)
 			double Depth = Data[j + 86 * Dimensions[0]];
 			double Salinty = Data[j + 95 * Dimensions[0]];
 
-			STable::SRow & Row = Manager->GetRawValues().AddRow();
+			STable::SRow & Row = DataSet->Points.AddRow();
 			Row.GetField("salinity") = Salinty;
 			Row.GetField("x") = Lat;
 			Row.GetField("y") = Depth;

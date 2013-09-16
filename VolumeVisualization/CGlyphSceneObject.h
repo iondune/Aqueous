@@ -7,6 +7,7 @@
 #include "CProgramContext.h"
 
 class IColorMapper;
+class CDataSet;
 
 
 class CGlyphSceneObject : public ISceneObject, public CApplicationContextObject<CProgramContext>
@@ -40,7 +41,7 @@ public:
 
 	CGlyphSceneObject();
 	
-	void LoadGlyphs(SciDataManager * DataManager, IColorMapper * ColorMapper);
+	void LoadGlyphs(CDataSet * DataSet, IColorMapper * ColorMapper);
 
 	bool draw(IScene const * const scene, sharedPtr<IRenderPass> Pass, bool const CullingEnabled);
 

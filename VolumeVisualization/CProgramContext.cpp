@@ -17,13 +17,13 @@ CProgramContext::SShaders::SShaders()
 {}
 
 CProgramContext::CProgramContext()
-	: GUIContext(), DataManager()
+	: GUIContext(), CurrentSite()
 {}
 
 void CProgramContext::Run()
 {
 	// Directory Setup
-	CTextureLoader::TextureDirectory = "Media/";
+	CImageLoader::ImageDirectory = "Media/";
 	CMeshLoader::MeshDirectory = "Media/";
 	CShaderLoader::ShaderDirectory = "Shaders/";
 

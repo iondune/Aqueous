@@ -9,32 +9,19 @@
 #include "CGlyphSceneObject.h"
 #include "CMainState.h"
 
+#include "CSite.h"
+
 
 void CDataLoadingThread::Execute()
 {
-	LoadingWidget->SetProgress(0.05f);
-	Context->DataManager->readFromFile(FileName);
-	LoadingWidget->SetProgress(0.1f);
-
-	COxygenColorMapper o("d1");
-	CSpectrumColorMapper spec("time");
-	CSpectrumColorMapper denmark("Chla Conc");
-	Context->Scene.Glyphs->LoadGlyphs(Context->DataManager, & denmark);
-	LoadingWidget->SetProgress(0.75f);
-	LoadingWidget->SetProgress(1.f);
+	Context->CurrentSite->Load();
 	Executing = false;
 }
 
 void CDataLoadingThread::End()
 {
-	Context->Scene.Glyphs->BuildLines();
-
-	COxygenColorMapper o("o1");
-	CSpectrumColorMapper spec("temp");
-	CSpectrumColorMapper denmark("Chla Conc");
-	Context->DataManager->createVolumeFromGridValues(& denmark);
-	Context->Scene.Volume->VolumeHandle = Context->DataManager->getVolumeHandle();
-	
+	Context->CurrentSite->ConcurrentLoad();
+	Context->CurrentSite->InitSceneElements(Context->Scene);
 	CApplication::Get().GetStateManager().SetState(CMainState::GetPtr());
 }
 
@@ -42,12 +29,11 @@ CDataLoadingThread::CDataLoadingThread()
 	: Context(0), LoadingWidget(0), Executing(false), Running(false)
 {}
 
-void CDataLoadingThread::Run(std::string const & fileName)
+void CDataLoadingThread::Run()
 {
 	if (! Running)
 	{
 		Executing = Running = true;
-		FileName = fileName;
 		Thread = new std::thread([](CDataLoadingThread * Thread){Thread->Execute();}, this);
 	}
 }

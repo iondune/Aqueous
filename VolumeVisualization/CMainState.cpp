@@ -4,13 +4,13 @@
 #include "CTerrainSceneObject.h"
 #include "CGlyphSceneObject.h"
 #include "CWaterSceneObject.h"
-#include "SciDataManager.h"
+#include "CSite.h"
 
 #include <ionScience.h>
 
 
 CMainState::CMainState()
-	: Scale(1), Mode(0), ShowDepth(false), Site(0), ProjectionMode(0), GUIEnabled(true)
+	: Scale(1), Mode(0), ShowDepth(false), ProjectionMode(0), GUIEnabled(true)
 {}
 
 void CMainState::Begin()
@@ -117,98 +117,52 @@ void CMainState::CalculateDataAlignment()
 {
 	CProgramContext::SScene & Scene = Context->Scene;
 
-	SciDataManager * DataManager = Context->DataManager;
-	STable & DataSet = DataManager->GetRawValues();
+	CSite * CurrentSite = Context->CurrentSite;
+	STable & DataSet = CurrentSite->GetCurrentDataSet()->Points;
 
-	SRange<f64> XRange = DataSet.GetFieldRange(DataManager->GetRawValues().Traits.PositionXField, 15.0);
-	SRange<f64> YRange = DataSet.GetFieldRange(DataManager->GetRawValues().Traits.PositionYField, 15.0);
-	SRange<f64> ZRange = DataSet.GetFieldRange(DataManager->GetRawValues().Traits.PositionZField, 15.0);
+	SRange<f64> XRange = DataSet.GetFieldRange(CurrentSite->GetCurrentDataSet()->Traits.PositionXField, 15.0);
+	SRange<f64> YRange = DataSet.GetFieldRange(CurrentSite->GetCurrentDataSet()->Traits.PositionYField, 15.0);
+	SRange<f64> ZRange = DataSet.GetFieldRange(CurrentSite->GetCurrentDataSet()->Traits.PositionZField, 15.0);
 
 	
 	printf("Longlat range is %f %f to %f %f\n", XRange.Minimum, ZRange.Minimum, XRange.Maximum, ZRange.Maximum);
 
-	longlatf const DataLonLatMin(XRange.Minimum, ZRange.Minimum), DataLonLatMax(XRange.Maximum, ZRange.Maximum);
-	longlatf MapLonLatMin, MapLonLatMax;
-	switch (Site)
-	{
-	default:
-	case 0:
-		MapLonLatMin.Longitude = SLongitudeLatitude<f32>::DMStoDecimal(9, 55, 45.32f);
-		MapLonLatMin.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(56, 38, 17.22f);
-		MapLonLatMax.Longitude = SLongitudeLatitude<f32>::DMStoDecimal(10, 2, 34.80f);
-		MapLonLatMax.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(56, 41, 59.01f);
-		break;
-	case 1:
-		MapLonLatMin.Longitude = SLongitudeLatitude<f32>::DMStoDecimal(9, 49, 27.68f);
-		MapLonLatMin.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(56, 34, 20.96f);
-		MapLonLatMax.Longitude = SLongitudeLatitude<f32>::DMStoDecimal(10, 11, 1.75f);
-		MapLonLatMax.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(56, 46, 11.45f);
-		break;
-	case 2:
-		MapLonLatMin.Longitude = SLongitudeLatitude<f32>::DMStoDecimal(9, 54, 13.29f);
-		MapLonLatMin.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(56, 30, 37.33f);
-		MapLonLatMax.Longitude = SLongitudeLatitude<f32>::DMStoDecimal(10, 27, 10.16f);
-		MapLonLatMax.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(56, 48, 48.57f);
-		break;
-	case 3:
-		MapLonLatMin.Longitude = SLongitudeLatitude<f32>::DMStoDecimal(9, 39, 1.38f);
-		MapLonLatMin.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(56, 37, 13.75f);
-		MapLonLatMax.Longitude = SLongitudeLatitude<f32>::DMStoDecimal(10, 17, 17.79f);
-		MapLonLatMax.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(56, 58, 5.72f);
-		break;
-	case 4:
-		MapLonLatMin.Longitude = SLongitudeLatitude<f32>::DMStoDecimal(9, 4, 33.9f);
-		MapLonLatMin.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(56, 13, 56.68f);
-		MapLonLatMax.Longitude = SLongitudeLatitude<f32>::DMStoDecimal(10, 53, 14.45f);
-		MapLonLatMax.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(57, 13, 29.39f);
-		break;
-	case 5:
-		MapLonLatMin.Longitude = SLongitudeLatitude<f32>::DMStoDecimal(9, 58, 24.15f);
-		MapLonLatMin.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(56, 39, 43.63f);
-		MapLonLatMax.Longitude = SLongitudeLatitude<f32>::DMStoDecimal(10, 0, 17.12f);
-		MapLonLatMax.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(56, 40, 45.07f);
-		break;
-	}
+	longlatd const DataLonLatMin(XRange.Minimum, ZRange.Minimum), DataLonLatMax(XRange.Maximum, ZRange.Maximum);
+	longlatd const MapLonLatMin(CurrentSite->GetCurrentLocation()->LowerBound), MapLonLatMax(CurrentSite->GetCurrentLocation()->UpperBound);
 
-	longlatf const DataLonLatCenter = (DataLonLatMin + DataLonLatMax) / 2.f;
+	longlatd const DataLonLatCenter = (DataLonLatMin + DataLonLatMax) / 2.f;
 	
-	vec2f DataRangeMin, DataRangeMax, MapRangeMin, MapRangeMax;
-	sharedPtr<longlatf::IProjectionSystem> Projection;
+	vec2d DataRangeMin, DataRangeMax, MapRangeMin, MapRangeMax;
+	sharedPtr<longlatd::IProjectionSystem> Projection;
 	if (ProjectionMode == 0)
-	{
-		Projection = sharedNew(new longlatf::CHaversineProjection());
-	}
+		Projection = sharedNew(new longlatd::CHaversineProjection());
 	else if (ProjectionMode == 1)
-	{
-		Projection = sharedNew(new longlatf::CVincentyProjection());
-	}
+		Projection = sharedNew(new longlatd::CVincentyProjection());
 	else if (ProjectionMode == 2)
-	{
-		Projection = sharedNew(new longlatf::CEquirectangularProjection(DataLonLatCenter.Latitude));
-	}
+		Projection = sharedNew(new longlatd::CEquirectangularProjection(DataLonLatCenter.Latitude));
 	DataRangeMin = DataLonLatCenter.OffsetTo(DataLonLatMin, Projection);
 	DataRangeMax = DataLonLatCenter.OffsetTo(DataLonLatMax, Projection);
 	MapRangeMin = DataLonLatCenter.OffsetTo(MapLonLatMin, Projection);
 	MapRangeMax = DataLonLatCenter.OffsetTo(MapLonLatMax, Projection);
 
-	vec2f const DataRangeSize = DataRangeMax - DataRangeMin;
-	vec2f const DataRangeCenter = (DataRangeMin + DataRangeMax) / 2.f;
-	f32 const DataDepth = YRange.Size();
+	vec2d const DataRangeSize = DataRangeMax - DataRangeMin;
+	vec2d const DataRangeCenter = (DataRangeMin + DataRangeMax) / 2.f;
+	f64 const DataDepth = YRange.Size();
 	
-	vec2f const MapRangeSize = MapRangeMax - MapRangeMin;
-	vec2f const MapRangeCenter = (MapRangeMin + MapRangeMax) / 2.f;
-	f32 const MapDepth = 800.f;
+	vec2d const MapRangeSize = MapRangeMax - MapRangeMin;
+	vec2d const MapRangeCenter = (MapRangeMin + MapRangeMax) / 2.f;
+	f64 const MapDepth = 800.f;
 	
 	printf("Data range is %f by %f meters,\n", DataRangeSize.X, DataRangeSize.Y);
 	printf("Terrain range is %f by %f meters,\n", MapRangeSize.X, MapRangeSize.Y);
 	
-	vec2f const ActualOffset = MapRangeCenter - DataRangeCenter;
-	vec2f const MapOffset = ActualOffset * 3.f / Maximum(DataRangeSize.X, DataRangeSize.Y);
-	vec3f const DataScale = 3.f * vec3f(DataRangeSize.X, DataDepth, DataRangeSize.Y) / Maximum(DataRangeSize.X, DataRangeSize.Y);
-	vec3f const MapScale = DataScale * vec3f(MapRangeSize.X, MapDepth, MapRangeSize.Y) / vec3f(DataRangeSize.X, DataDepth, DataRangeSize.Y);
+	vec2d const ActualOffset = MapRangeCenter - DataRangeCenter;
+	vec2d const MapOffset = ActualOffset * 3.f / Maximum(DataRangeSize.X, DataRangeSize.Y);
+	vec3d const DataScale = 3.0 * vec3d(DataRangeSize.X, DataDepth, DataRangeSize.Y) / Maximum(DataRangeSize.X, DataRangeSize.Y);
+	vec3d const MapScale = DataScale * vec3d(MapRangeSize.X, MapDepth, MapRangeSize.Y) / vec3d(DataRangeSize.X, DataDepth, DataRangeSize.Y);
 
-	static f32 const YExaggeration = 3.f;
-	static vec3f const Multiplier = vec3f(1, YExaggeration, 1);
+	static f64 const YExaggeration = 3.0;
+	static vec3d const Multiplier = vec3d(1, YExaggeration, 1);
 	
 	Scene.Glyphs->setScale(DataScale * Multiplier);
 	Scene.Volume->setScale(DataScale * Multiplier);
@@ -236,9 +190,7 @@ void CMainState::CalculateDataAlignment()
 
 void CMainState::SetSite(int site)
 {
-	Site = site;
-
 	CProgramContext::SScene & Scene = Context->Scene;
-	Scene.Terrain->SetSite(Site);
+	//Scene.Terrain->SetSite(Site);
 	CalculateDataAlignment();
 }

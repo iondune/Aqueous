@@ -1,6 +1,6 @@
 
 #include "SciDataParser.h"
-#include "SciDataManager.h"
+#include "CDataSet.h"
 
 #include <fstream>
 #include <sstream>
@@ -50,10 +50,10 @@ void SciDataParserSmartTether::load(std::string const & FileName)
 			}
 
 			if (Row.size() != Fields.size())
-				std::cerr << "Mismatched row size at row " << Manager->GetRawValues().Size() << ", found " << Row.size() << " but expected " << Fields.size() << std::endl;
+				std::cerr << "Mismatched row size at row " << DataSet->Points.Size() << ", found " << Row.size() << " but expected " << Fields.size() << std::endl;
 			u32 Length = std::min(Row.size(), Fields.size());
 
-			STable::SRow & TableRow = Manager->GetRawValues().AddRow();
+			STable::SRow & TableRow = DataSet->Points.AddRow();
 			for (u32 i = 0; i < Length; ++ i)
 				TableRow.GetField(Fields[i]) = Row[i];
 		}

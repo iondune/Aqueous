@@ -104,13 +104,13 @@ void CGUITerrainControlWidget::OnToggleWater(Gwen::Controls::Base * Control)
 void CGUITerrainControlWidget::OnSelectElevation(Gwen::Controls::Base * Control)
 {
 	CProgramContext * Context = & CProgramContext::Get();
-	Context->Scene.Terrain->DebugHeight = true;
+	Context->Scene.Terrain->SetDebugHeightEnabled(true);
 }
 
 void CGUITerrainControlWidget::OnSelectColor(Gwen::Controls::Base * Control)
 {
 	CProgramContext * Context = & CProgramContext::Get();
-	Context->Scene.Terrain->DebugHeight = false;
+	Context->Scene.Terrain->SetDebugHeightEnabled(false);
 }
 
 void CGUITerrainControlWidget::OnSelectSolid(Gwen::Controls::Base * Control)

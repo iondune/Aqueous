@@ -174,7 +174,7 @@ CGUIVolumeControlWidget::CGUIVolumeControlWidget()
 void CGUIVolumeControlWidget::resetVolumeRange()
 {
 	if (VolumeControl.Mode)
-		GUIContext->GetTitleLabels()->resetVolumeRangeIndicator(CProgramContext::Get().DataManager);
+		GUIContext->GetTitleLabels()->resetVolumeRangeIndicator(CProgramContext::Get().CurrentSite);
 }
 
 void CGUIVolumeControlWidget::OnEmphasisSlider(Gwen::Controls::Base * Control)

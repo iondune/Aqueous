@@ -1,6 +1,6 @@
 
 #include "SciDataParser.h"
-#include "SciDataManager.h"
+#include "CDataSet.h"
 #include <numeric>
 
 
@@ -42,12 +42,12 @@ void SciDataParserSimpleTXT::load(std::string const &data)
 	int line = 0;
 	tok = strtok(dataBuf, "\n");
 
-	Manager->GetRawValues().AddField("o2");
-	Manager->GetRawValues().AddField("temp");
-	Manager->GetRawValues().AddField("d1");
-	Manager->GetRawValues().AddField("x");
-	Manager->GetRawValues().AddField("y");
-	Manager->GetRawValues().AddField("z");
+	DataSet->Points.AddField("o2");
+	DataSet->Points.AddField("temp");
+	DataSet->Points.AddField("d1");
+	DataSet->Points.AddField("x");
+	DataSet->Points.AddField("y");
+	DataSet->Points.AddField("z");
 
 	while(tok != NULL)
 	{
@@ -58,7 +58,7 @@ void SciDataParserSimpleTXT::load(std::string const &data)
 		}
 
 		// push scidata into list
-		STable::SRow & Row = Manager->GetRawValues().AddRow();
+		STable::SRow & Row = DataSet->Points.AddRow();
 		Row.GetField("o2") = O2;
 		Row.GetField("temp") = temp;
 		Row.GetField("d1") = d1;

@@ -88,7 +88,6 @@ public:
 	void CalculateDataAlignment();
 
 	bool ShowDepth;
-	int Site;
 	int ProjectionMode;
 
 	void SetSite(int site);

@@ -18,20 +18,22 @@ public:
 
 	CTerrainSceneObject();
 	bool draw(IScene const * const scene, sharedPtr<IRenderPass> Pass, bool const CullingEnabled);
+	
+	void SetHeightMap(CTexture * heightMap);
+	void SetColorMap(CTexture * colorMap);
+	void SetBathymetryMap(CTexture * bathymetryMap);
 
-	bool DebugHeight;
-
-	void SetSite(int Site);
+	void SetDebugHeightEnabled(bool const Enabled);
+	bool IsDebugHeightEnabled();
 
 protected:
-	
-	// Generic flat grid data, used with heightmap offset
+
 	CBufferObject<f32> VertexData;
 	CBufferObject<u32> IndexBuffer;
 
 	CTexture * HeightMap;
 	CTexture * ColorMap;
-	CTexture * BathyMap;
+	CTexture * BathymetryMap;
 
 	CShader * Shader;
 
@@ -39,5 +41,6 @@ protected:
 	CSceneManager & SceneManager;
 
 	glm::mat4 ModelMatrix;
+	bool DebugHeight;
 
 };
