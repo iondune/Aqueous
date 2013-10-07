@@ -127,7 +127,6 @@
     <ClInclude Include="CTerrainSceneObject.h">
       <Filter>MainState\Terrain</Filter>
     </ClInclude>
-    <ClInclude Include="Libraries.h" />
     <ClInclude Include="CVolumeSceneObject.h">
       <Filter>MainState\Volume</Filter>
     </ClInclude>
