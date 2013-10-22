@@ -5,6 +5,8 @@
 
 void SciDataParserCSV::Load(std::string const & FileName)
 {
+	DataSet->SourceFile = FileName;
+
 	std::ifstream File;
 	File.open(FileName);
 	bool FirstLine = FieldNames;

@@ -131,7 +131,7 @@ void CLoadState::LoadScene()
 	CSceneManager * SceneManager = & CApplication::Get().GetSceneManager();
 
 	// OpenGL Parameters
-	glClearColor(0.3f, 0.5f, 0.5f, 1.0f);
+	glClearColor(0.15f, 0.45f, 0.5f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
 
@@ -144,9 +144,9 @@ void CLoadState::LoadScene()
 	Scene.Camera->UpdateProjection();
 	Scene.Camera->SetVelocity(1.9f);
 	CMainState::Get().IEventListener<SMouseEvent>::AddChild(Scene.Camera);
-	SceneManager->setActiveCamera(Scene.Camera);
 
 	Scene.OrbitCamera = new CPerspectiveCameraSceneObject();
+	SceneManager->setActiveCamera(Scene.OrbitCamera);
 
 	// Basic Shader/Mesh
 	Scene.Cube = CMeshLoader::createCubeMesh();
@@ -179,6 +179,7 @@ void CLoadState::LoadScene()
 
 	// Volume
 	Scene.Volume = new CVolumeSceneObject();
+	Scene.Volume->setVisible(false);
 	//SceneManager->addSceneObject(Scene.VolumeSceneObject);
 }
 

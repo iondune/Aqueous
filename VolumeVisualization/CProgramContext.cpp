@@ -29,7 +29,7 @@ void CProgramContext::Run()
 
 	// Create Window
 	CApplication & Application = CApplication::Get();
-	Application.Init(SVector2i(1900, 1000), "Underwater Volume Data Rendering");
+	Application.Init(SVector2i(900, 700), "Underwater Volume Data Rendering");
 
 	// Create GUI Engine
 	std::cout << "GUI Engine is initializing..." << std::endl;

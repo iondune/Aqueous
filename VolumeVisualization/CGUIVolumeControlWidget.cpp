@@ -14,6 +14,7 @@ CGUIVolumeControlWidget::CGUIVolumeControlWidget()
 	Window->SetDeleteOnClose(false);
 	Window->SetBounds(1200, 10, 330, 620);
 	Window->SetTitle("Volume Controls");
+	Window->SetHidden(true);
 
 	EnableButton = new Gwen::Controls::Button(Window);
 	EnableButton->SetBounds(15, 10, 290, 25);

@@ -33,5 +33,6 @@ public:
 
 	longlatd LowerBounds, UpperBounds;
 	std::string PointFileName, VolumeFileName;
+	std::string SourceFile;
 
 };

@@ -67,9 +67,14 @@ void CMainState::Update(f32 const Elapsed)
 
 	Scene.Timer += Elapsed * 0.16f;
 
-	float const Distance = 4.f;
-	Scene.OrbitCamera->setPosition(SVector3f(sin(Scene.Timer)*Distance, 2.3f, cos(Scene.Timer)*Distance));
-	Scene.OrbitCamera->SetLookAtTarget(SVector3f());
+	float const Distance = 3.5f;
+	f32 const Speed = 20.f;
+	static f32 Timer = 0;
+	Scene.OrbitCamera->setPosition(SVector3f(sin(Speed*Timer)*Distance, 0.4f, cos(Speed*Timer)*Distance));
+	Scene.OrbitCamera->SetLookAtTarget(vec3f(0, -0.5f, 0));
+	Timer += 0.009f;
+	if (Speed*Timer >= 2*Constants32::Pi)
+		Application->Close();
 
 	Scene.LightPosition = SceneManager->getActiveCamera()->getPosition() + SVector3f(0, 0, 0);
 
@@ -104,6 +109,26 @@ void CMainState::Update(f32 const Elapsed)
 
 	if (GUIEnabled)
 		Context->GUIContext->Draw(Elapsed, false);
+
+	
+    // Read screen colors
+	u32 const FrameWidth = Application->GetWindow().GetSize().X;
+	u32 const FrameHeight = Application->GetWindow().GetSize().Y;
+	unsigned char * ImageData = new unsigned char[FrameWidth * FrameHeight * 3];
+
+	static u32 Counter = 0;
+	glReadPixels(0, 0, FrameWidth, FrameHeight, GL_RGB, GL_UNSIGNED_BYTE, ImageData);
+	CImage * Image = new CImage(ImageData, FrameWidth, FrameHeight, false);
+	std::string Label = Context->CurrentSite->GetCurrentDataSet()->SourceFile;
+	Label = Label.substr(Label.find_last_of('/'));
+	Label = Label.substr(0, Label.find_last_of('.'));
+	std::stringstream Stream;
+	Stream << "OutputImages";
+	Stream << Label;
+	Stream << "-";
+	Stream << Counter++;
+	Stream << ".bmp";
+	Image->Write(Stream.str());
 
 	CApplication::Get().GetWindow().SwapBuffers();
 }

@@ -22,8 +22,8 @@ void CGUIContext::SetupMainState()
 	SceneControl = new CGUISceneControlWidget();
 	ControlPanel = new CGUIControlPanelWidget();
 	
-	Console->AddMessage("GUI Initialized.");
-	Console->AddMessage("Starting program...", Colors::Red);
+	//Console->AddMessage("GUI Initialized.");
+	//Console->AddMessage("Starting program...", Colors::Red);
 }
 
 void CGUIContext::SetupMenuState()
