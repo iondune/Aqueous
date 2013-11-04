@@ -22,7 +22,7 @@ CGlyphSceneObject::CGlyphSceneObject()
 
 	// Copy shader
 	Shader = CProgramContext::Get().Shaders.Glyph;
-	LineShader = CProgramContext::Get().Shaders.GlyphLines;
+	LineShader = 0;//CProgramContext::Get().Shaders.GlyphLines;
 }
 
 void CGlyphSceneObject::LoadGlyphs(CDataSet * DataSet, IColorMapper * ColorMapper)

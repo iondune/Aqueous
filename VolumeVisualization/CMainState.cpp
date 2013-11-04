@@ -203,7 +203,7 @@ void CMainState::CalculateDataAlignment()
 	vec3d const DataScale = 3.0 * vec3d(DataRangeSize.X, DataDepth, DataRangeSize.Y) / Maximum(DataRangeSize.X, DataRangeSize.Y);
 	vec3d const MapScale = DataScale * vec3d(MapRangeSize.X, MapDepth, MapRangeSize.Y) / vec3d(DataRangeSize.X, DataDepth, DataRangeSize.Y);
 
-	static f64 const YExaggeration = 3.0;
+	static f64 const YExaggeration = 1.0;
 	static vec3d const Multiplier = vec3d(1, YExaggeration, 1);
 	
 	Scene.Glyphs->setScale(DataScale * Multiplier);

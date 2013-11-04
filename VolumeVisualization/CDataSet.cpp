@@ -33,5 +33,6 @@ void CDataSet::InitSceneElements(CProgramContext::SScene & Scene)
 	Scene.Volume->VolumeHandle = VolumeHandle;
 
 	CSpectrumColorMapper ColorMapper("Temperature (c)");
+	//ColorMapper.ValueCutoff = 1.0;
 	Scene.Glyphs->LoadGlyphs(this, & ColorMapper);
 }
