@@ -78,7 +78,7 @@ void CMainMenuState::CreateDataSet()
 
 	Parser1.DataSet = Context->CurrentSite->GetCurrentDataSet();
 	Parser1.FieldDelim = Parser1.ValueDelim = ';';
-	Parser1.Load("Sites/Catalina/20131006_130020_catalina_shallow_10_IVER2-132.log");
+	//Parser1.Load("Sites/Catalina/20131006_130020_catalina_shallow_10_IVER2-132.log");
 	//Parser1.Load("Sites/Catalina/20131005_191049_catalina_10_IVER2-132.log");
 	//Parser1.Load("Sites/Catalina/20131006_120459_catalina_10_IVER2-132.log");
 	//Parser1.Load("Sites/Catalina/20131006_121530_catalina_10_IVER2-132.log");
@@ -86,7 +86,7 @@ void CMainMenuState::CreateDataSet()
 	//Parser1.Load("Sites/Catalina/20131006_124220_catalina_10_IVER2-132.log");
 	//Parser1.Load("Sites/Catalina/20131006_130020_catalina_shallow_10_IVER2-132.log");
 	//Parser1.Load("Sites/Catalina/20131006_142755_catalina_undulate_10_IVER2-132.log");
-	//Parser1.Load("Sites/Catalina/20131006_143331_catalina_undulate_10_IVER2-132.log");
+	Parser1.Load("Sites/Catalina/20131006_143331_catalina_undulate_10_IVER2-132.log");
 	//Parser1.Load("Sites/Catalina/20131006_221316_catalina_10_IVER2-132.log");
 	//Parser1.Load("Sites/Catalina/20131006_221639_catalina_10_IVER2-132.log");
 	//Parser1.Load("Sites/Catalina/20131006_222457_catalina_10_IVER2-132.log");

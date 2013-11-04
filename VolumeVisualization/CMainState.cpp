@@ -72,7 +72,7 @@ void CMainState::Update(f32 const Elapsed)
 	static f32 Timer = 0;
 	Scene.OrbitCamera->setPosition(SVector3f(sin(Speed*Timer)*Distance, 0.4f, cos(Speed*Timer)*Distance));
 	Scene.OrbitCamera->SetLookAtTarget(vec3f(0, -0.5f, 0));
-	Timer += 0.009f;
+	Timer += 0.0005f;
 	if (Speed*Timer >= 2*Constants32::Pi)
 		Application->Close();
 
@@ -126,9 +126,10 @@ void CMainState::Update(f32 const Elapsed)
 	Stream << "OutputImages";
 	Stream << Label;
 	Stream << "-";
-	Stream << Counter++;
+	Stream << std::setw(5) << std::setfill('0') << Counter++;
 	Stream << ".bmp";
 	Image->Write(Stream.str());
+	delete Image;
 
 	CApplication::Get().GetWindow().SwapBuffers();
 }
