@@ -6,6 +6,9 @@
 #include <ionScience.h>
 
 
+extern f64 GlobalMin, GlobalMax;
+
+
 class CSpectrumColorMapper : public IColorMapper
 {
 
@@ -31,11 +34,8 @@ public:
 		Field = inField;
 	}
 
-	virtual SColorAf const GetColor(IDataRecord<f64> const & d)
+	static color4f MapColor(f32 const v)
 	{
-		f64 const r = d.GetField(Field);
-		f32 const v = (f32) FieldRange.Normalize(r);
-
 		f32 Color[4] = {0.f, 0.f, 0.f, 1.f};
 
 		if (v <= 0.0)
@@ -80,9 +80,19 @@ public:
 		return SColorAf(Color[0], Color[1], Color[2], Color[3]);
 	}
 
+	virtual SColorAf const GetColor(IDataRecord<f64> const & d)
+	{
+		f64 const r = d.GetField(Field);
+		f32 const v = (f32) FieldRange.Normalize(r);
+
+		return MapColor(v);
+	}
+
 	virtual void PreProcessValues(IDatabase<f64> & s)
 	{
 		FieldRange = s.GetFieldRange(Field, ValueCutoff, AcceptedRange);
+		GlobalMin = FieldRange.Minimum;
+		GlobalMax = FieldRange.Maximum;
 	}
 
 };

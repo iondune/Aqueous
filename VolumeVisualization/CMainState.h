@@ -76,6 +76,8 @@ protected:
 
 	GifWriter * gifWriter;
 
+	freetype::font_data Font;
+
 public:
 
 	CMainState();

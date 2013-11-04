@@ -5,6 +5,7 @@
 #include "CGlyphSceneObject.h"
 #include "CWaterSceneObject.h"
 #include "CSite.h"
+#include "CSpectrumColorMapper.h"
 
 #include <ionScience.h>
 
@@ -25,6 +26,8 @@ void CMainState::Begin()
 
 	CalculateDataAlignment();
 	OrbitCameraTimer = 0;
+
+	Font.init("OpenSans.ttf", 18);
 }
 
 void CMainState::End()
@@ -51,6 +54,8 @@ void CMainState::EndGifDraw()
 	delete gifWriter;
 	gifWriter = 0;
 }
+
+f64 GlobalMin, GlobalMax;
 
 void CMainState::Update(f32 const Elapsed)
 {
@@ -88,7 +93,7 @@ void CMainState::Update(f32 const Elapsed)
 
 	Scene.Timer += Elapsed * 0.16f;
 
-	float const Distance = 3.5f;
+	float const Distance = 2.5f;
 	static f32 const Speed = 1.f;
 	static f32 const Increment = 0.1f;
 	Scene.OrbitCamera->setPosition(SVector3f(sin(Speed*OrbitCameraTimer)*Distance, 0.4f, cos(Speed*OrbitCameraTimer)*Distance));
@@ -128,7 +133,28 @@ void CMainState::Update(f32 const Elapsed)
 
 	if (GUIEnabled)
 		Context->GUIContext->Draw(Elapsed, false);
-
+	
+	auto GetValueAt = [](f32 const v)
+	{
+		color4f Color = CSpectrumColorMapper::MapColor(v);
+		glColor3f(Color.Red, Color.Green, Color.Blue);
+		return GlobalMin * (1 - v) + GlobalMax * v;
+	};
+	int Counter = 10;
+	auto DrawColor = [this, & Counter, GetValueAt](c8 const * const Label, f32 const v)
+	{
+		f32 Value = GetValueAt(v);
+		freetype::print(Font, 10, Counter, "%s:", Label);
+		freetype::print(Font, 120, Counter, "%.3f °C", Value);
+		Counter += 25;
+	};
+	DrawColor("Black", 0.f);
+	DrawColor("Blue", 0.15f);
+	DrawColor("Green", 0.4f);
+	DrawColor("Yellow", 0.6f);
+	DrawColor("Orange", 0.7f);
+	DrawColor("Red", 0.8f);
+	DrawColor("White", 1.f);
 	
     // Read screen colors
 	if (gifWriter)
