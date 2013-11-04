@@ -95,7 +95,7 @@ void CMainState::Update(f32 const Elapsed)
 
 	float const Distance = 2.5f;
 	static f32 const Speed = 1.f;
-	static f32 const Increment = 0.1f;
+	static f32 const Increment = 0.05f;
 	Scene.OrbitCamera->setPosition(SVector3f(sin(Speed*OrbitCameraTimer)*Distance, 0.4f, cos(Speed*OrbitCameraTimer)*Distance));
 	Scene.OrbitCamera->SetLookAtTarget(vec3f(0, -0.5f, 0));
 	OrbitCameraTimer += Increment;
@@ -165,7 +165,7 @@ void CMainState::Update(f32 const Elapsed)
 
 		static u32 Counter = 0;
 		glReadPixels(0, 0, FrameWidth, FrameHeight, GL_RGB, GL_UNSIGNED_BYTE, ImageData);
-		gifWriter->AddFrame(ImageData, 0.f);
+		gifWriter->AddFrame(ImageData, 0.12f);
 
 		delete [] ImageData;
 
