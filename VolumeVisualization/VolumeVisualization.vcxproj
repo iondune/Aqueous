@@ -40,9 +40,23 @@
     <Import Project="$(VisualStudioDir)\Projects\ionEngine\ionDefaultBuild.props" />
     <Import Project="$(VisualStudioDir)\Projects\ionEngine\ionDefaultTarget.props" />
   </ImportGroup>
+  <PropertyGroup>
+    <IncludePath>
+      ;$(VisualStudioDir)\SDKs\giflib-4.2.3\lib;
+      ;$(IncludePath);
+    </IncludePath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      ;$(VisualStudioDir)\SDKs\giflib-4.2.3\Debug;
+      ;$(LibraryPath);
+    </LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      ;$(VisualStudioDir)\SDKs\giflib-4.2.3\Release;
+      ;$(LibraryPath);
+    </LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup>
     <Link>
-      <AdditionalDependencies>matlib/libmat.lib;matlib/libmx.lib;matlib/libmex.lib;matlib/libeng.lib;matlib/libmwlapack.lib;matlib/libdflapack.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>giflib-4.2.3.lib;matlib/libmat.lib;matlib/libmx.lib;matlib/libmex.lib;matlib/libeng.lib;matlib/libmwlapack.lib;matlib/libdflapack.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -70,6 +84,7 @@
     <ClCompile Include="CGUITitleLabelsWidget.cpp" />
     <ClCompile Include="CVolumeSceneObject.cpp" />
     <ClCompile Include="CWaterSceneObject.cpp" />
+    <ClCompile Include="GifWriter.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include=".\SciDataParserSimpleTXT.cpp" />
     <ClCompile Include=".\SciDataParserGrid1.cpp" />
@@ -97,6 +112,7 @@
     <ClInclude Include="CGUIVolumeControlWidget.h" />
     <ClInclude Include="CLoadState.h" />
     <ClInclude Include="CTerrainLocation.h" />
+    <ClInclude Include="GifWriter.h" />
     <ClInclude Include="ILocation.h" />
     <ClInclude Include="CMainMenuState.h" />
     <ClInclude Include="CMainState.h" />

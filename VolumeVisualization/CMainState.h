@@ -2,6 +2,7 @@
 #pragma once
 
 #include "CProgramContext.h"
+#include "GifWriter.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -70,6 +71,10 @@ protected:
 
 class CMainState : public CContextState<CMainState, CProgramContext>
 {
+
+protected:
+
+	GifWriter * gifWriter;
 
 public:
 

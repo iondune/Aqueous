@@ -24,11 +24,14 @@ void CMainState::Begin()
 	SceneManager->getEffectManager()->RenderPasses.push_back(ReflectionRenderPass);
 
 	CalculateDataAlignment();
+	gifWriter = new GifWriter(SceneManager->getScreenSize()); 
 }
 
 void CMainState::End()
 {
 	Context->GUIContext->Clear();
+	gifWriter->Save("output.gif");
+	delete gifWriter;
 }
 
 void CMainState::Update(f32 const Elapsed)
@@ -72,7 +75,7 @@ void CMainState::Update(f32 const Elapsed)
 	static f32 Timer = 0;
 	Scene.OrbitCamera->setPosition(SVector3f(sin(Speed*Timer)*Distance, 0.4f, cos(Speed*Timer)*Distance));
 	Scene.OrbitCamera->SetLookAtTarget(vec3f(0, -0.5f, 0));
-	Timer += 0.0005f;
+	Timer += 0.001f;
 	if (Speed*Timer >= 2*Constants32::Pi)
 		Application->Close();
 
@@ -118,8 +121,9 @@ void CMainState::Update(f32 const Elapsed)
 
 	static u32 Counter = 0;
 	glReadPixels(0, 0, FrameWidth, FrameHeight, GL_RGB, GL_UNSIGNED_BYTE, ImageData);
-	CImage * Image = new CImage(ImageData, FrameWidth, FrameHeight, false);
-	std::string Label = Context->CurrentSite->GetCurrentDataSet()->SourceFile;
+	gifWriter->AddFrame(ImageData, 0.01f);
+	//CImage * Image = new CImage(ImageData, FrameWidth, FrameHeight, false);
+	/*std::string Label = Context->CurrentSite->GetCurrentDataSet()->SourceFile;
 	Label = Label.substr(Label.find_last_of('/'));
 	Label = Label.substr(0, Label.find_last_of('.'));
 	std::stringstream Stream;
@@ -128,8 +132,9 @@ void CMainState::Update(f32 const Elapsed)
 	Stream << "-";
 	Stream << std::setw(5) << std::setfill('0') << Counter++;
 	Stream << ".bmp";
-	Image->Write(Stream.str());
-	delete Image;
+	Image->Write(Stream.str());*/
+
+	//delete Image;
 
 	CApplication::Get().GetWindow().SwapBuffers();
 }

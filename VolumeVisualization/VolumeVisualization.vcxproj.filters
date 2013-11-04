@@ -104,6 +104,9 @@
     <ClCompile Include="CSite.cpp">
       <Filter>MainState\Data Management</Filter>
     </ClCompile>
+    <ClCompile Include="GifWriter.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CMainState.h">
@@ -207,6 +210,9 @@
     </ClInclude>
     <ClInclude Include="CDataSet.h">
       <Filter>MainState\Data Management</Filter>
+    </ClInclude>
+    <ClInclude Include="GifWriter.h">
+      <Filter>Utilities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
