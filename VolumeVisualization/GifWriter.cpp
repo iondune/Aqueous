@@ -73,17 +73,23 @@ static bool AddLoop(GifFileType *gf)
 	{
 		char nsle[12] = "NETSCAPE2.0";
 		char subblock[3];
-		if (EGifPutExtension(gf, APPLICATION_EXT_FUNC_CODE, 11, nsle) == GIF_ERROR)
+		EGifPutExtensionLeader(gf, APPLICATION_EXT_FUNC_CODE);
+		if (EGifPutExtensionBlock(gf, 11, nsle) == GIF_ERROR)
 		{
+			std::cerr << "Failed to add extension 11" << std::endl;
+			WaitForUser();
 			return false;
 		}
 		subblock[0] = 1;
 		subblock[2] = loop_count % 256;
 		subblock[1] = loop_count / 256;
-		if (EGifPutExtension(gf, APPLICATION_EXT_FUNC_CODE, 3, subblock) == GIF_ERROR)
+		if (EGifPutExtensionBlock(gf, 3, subblock) == GIF_ERROR)
 		{
+			std::cerr << "Failed to add extension 3" << std::endl;
+			WaitForUser();
 			return false;
 		}
+		EGifPutExtensionTrailer(gf);
 
 	}
 	return true;
@@ -94,12 +100,13 @@ bool GifWriter::Save(std::string const & fileName)
 	if (Frames.size() == 0)
 		return false;
 
-	GifFileType *GifFile = EGifOpenFileName(fileName.c_str(), FALSE, FALSE);
+	GifFileType * GifFile = EGifOpenFileName(fileName.c_str(), FALSE, FALSE);
 
 	if (!GifFile)
 		return false;
 
-	if (EGifPutScreenDesc(GifFile, Size.X, Size.Y, 8, 0, OutputPalette) == GIF_ERROR) return false;
+	if (EGifPutScreenDesc(GifFile, Size.X, Size.Y, 8, 0, OutputPalette) == GIF_ERROR)
+		return false;
 
 	if (! AddLoop(GifFile))
 		return false;

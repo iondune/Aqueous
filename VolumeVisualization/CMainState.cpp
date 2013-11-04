@@ -30,7 +30,11 @@ void CMainState::Begin()
 void CMainState::End()
 {
 	Context->GUIContext->Clear();
-	gifWriter->Save("output.gif");
+	if (! gifWriter->Save("output.gif"))
+	{
+		std::cerr << "GIF writing failed" << std::endl;
+		WaitForUser();
+	}
 	delete gifWriter;
 }
 
