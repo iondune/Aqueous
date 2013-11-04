@@ -46,8 +46,9 @@ public:
 	char ValueDelim;
 	bool FieldNames;
 	std::vector<std::string> Fields;
-
+	
 	virtual void Load(std::string const & FileName);
+	virtual void LoadAdditional(std::string const & FileName);
 
 	SciDataParserCSV()
 		: FieldDelim(','), ValueDelim(','), FieldNames(true)

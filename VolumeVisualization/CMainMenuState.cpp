@@ -78,22 +78,22 @@ void CMainMenuState::CreateDataSet()
 
 	Parser1.DataSet = Context->CurrentSite->GetCurrentDataSet();
 	Parser1.FieldDelim = Parser1.ValueDelim = ';';
-	//Parser1.Load("Sites/Catalina/20131006_130020_catalina_shallow_10_IVER2-132.log");
-	//Parser1.Load("Sites/Catalina/20131005_191049_catalina_10_IVER2-132.log");
-	//Parser1.Load("Sites/Catalina/20131006_120459_catalina_10_IVER2-132.log");
-	//Parser1.Load("Sites/Catalina/20131006_121530_catalina_10_IVER2-132.log");
-	//Parser1.Load("Sites/Catalina/20131006_122601_catalina_10_IVER2-132.log");
-	//Parser1.Load("Sites/Catalina/20131006_124220_catalina_10_IVER2-132.log");
-	//Parser1.Load("Sites/Catalina/20131006_130020_catalina_shallow_10_IVER2-132.log");
-	//Parser1.Load("Sites/Catalina/20131006_142755_catalina_undulate_10_IVER2-132.log");
-	Parser1.Load("Sites/Catalina/20131006_143331_catalina_undulate_10_IVER2-132.log");
-	//Parser1.Load("Sites/Catalina/20131006_221316_catalina_10_IVER2-132.log");
-	//Parser1.Load("Sites/Catalina/20131006_221639_catalina_10_IVER2-132.log");
-	//Parser1.Load("Sites/Catalina/20131006_222457_catalina_10_IVER2-132.log");
-	//Parser1.Load("Sites/Catalina/20131006_222608_catalina_10_IVER2-132.log");
-	//Parser1.Load("Sites/Catalina/20131006_222654_catalina_10_IVER2-132.log");
-	//Parser1.Load("Sites/Catalina/20131006_223043_catalina_10_IVER2-132.log");
-	//Parser1.Load("Sites/Catalina/20131007_100031_catalina_10_IVER2-132.log");
+	Parser1.Load("Sites/Catalina/20131006_130020_catalina_shallow_10_IVER2-132.log");
+	Parser1.LoadAdditional("Sites/Catalina/20131005_191049_catalina_10_IVER2-132.log");
+	Parser1.LoadAdditional("Sites/Catalina/20131006_120459_catalina_10_IVER2-132.log");
+	Parser1.LoadAdditional("Sites/Catalina/20131006_121530_catalina_10_IVER2-132.log");
+	Parser1.LoadAdditional("Sites/Catalina/20131006_122601_catalina_10_IVER2-132.log");
+	Parser1.LoadAdditional("Sites/Catalina/20131006_124220_catalina_10_IVER2-132.log");
+	Parser1.LoadAdditional("Sites/Catalina/20131006_130020_catalina_shallow_10_IVER2-132.log");
+	Parser1.LoadAdditional("Sites/Catalina/20131006_142755_catalina_undulate_10_IVER2-132.log");
+	Parser1.LoadAdditional("Sites/Catalina/20131006_143331_catalina_undulate_10_IVER2-132.log");
+	Parser1.LoadAdditional("Sites/Catalina/20131006_221316_catalina_10_IVER2-132.log");
+	Parser1.LoadAdditional("Sites/Catalina/20131006_221639_catalina_10_IVER2-132.log");
+	Parser1.LoadAdditional("Sites/Catalina/20131006_222457_catalina_10_IVER2-132.log");
+	Parser1.LoadAdditional("Sites/Catalina/20131006_222608_catalina_10_IVER2-132.log");
+	Parser1.LoadAdditional("Sites/Catalina/20131006_222654_catalina_10_IVER2-132.log");
+	Parser1.LoadAdditional("Sites/Catalina/20131006_223043_catalina_10_IVER2-132.log");
+	Parser1.LoadAdditional("Sites/Catalina/20131007_100031_catalina_10_IVER2-132.log");
 
 	//Context->DataManager->createGridDataFromRawValuesRBFI(SRange<f64>::Full, 15.0, "Chla Conc");
 	//Context->DataManager->createVolumeFromGridValues(& ColorMapper);

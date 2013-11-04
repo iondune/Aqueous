@@ -80,7 +80,7 @@ void CMainState::Update(f32 const Elapsed)
 	static f32 Timer = 0;
 	Scene.OrbitCamera->setPosition(SVector3f(sin(Speed*Timer)*Distance, 0.4f, cos(Speed*Timer)*Distance));
 	Scene.OrbitCamera->SetLookAtTarget(vec3f(0, -0.5f, 0));
-	Timer += 0.0001f;
+	Timer += 0.001f;
 	if (Speed*Timer >= 2*Constants32::Pi)
 		Application->Close();
 
