@@ -35,6 +35,7 @@ void CMainState::End()
 		std::cerr << "GIF writing failed" << std::endl;
 		WaitForUser();
 	}
+
 	delete gifWriter;
 }
 
@@ -79,7 +80,7 @@ void CMainState::Update(f32 const Elapsed)
 	static f32 Timer = 0;
 	Scene.OrbitCamera->setPosition(SVector3f(sin(Speed*Timer)*Distance, 0.4f, cos(Speed*Timer)*Distance));
 	Scene.OrbitCamera->SetLookAtTarget(vec3f(0, -0.5f, 0));
-	Timer += 0.001f;
+	Timer += 0.0001f;
 	if (Speed*Timer >= 2*Constants32::Pi)
 		Application->Close();
 
@@ -125,7 +126,7 @@ void CMainState::Update(f32 const Elapsed)
 
 	static u32 Counter = 0;
 	glReadPixels(0, 0, FrameWidth, FrameHeight, GL_RGB, GL_UNSIGNED_BYTE, ImageData);
-	gifWriter->AddFrame(ImageData, 0.01f);
+	gifWriter->AddFrame(ImageData, 0.f);
 	//CImage * Image = new CImage(ImageData, FrameWidth, FrameHeight, false);
 	/*std::string Label = Context->CurrentSite->GetCurrentDataSet()->SourceFile;
 	Label = Label.substr(Label.find_last_of('/'));
@@ -139,6 +140,7 @@ void CMainState::Update(f32 const Elapsed)
 	Image->Write(Stream.str());*/
 
 	//delete Image;
+	delete [] ImageData;
 
 	CApplication::Get().GetWindow().SwapBuffers();
 }
@@ -221,6 +223,7 @@ void CMainState::CalculateDataAlignment()
 	
 	// Flip Height -> Depth
 	Scene.Volume->setScale(Scene.Volume->getScale() * vec3f(1, -1, 1));
+	Scene.Glyphs->setScale(Scene.Glyphs->getScale() * vec3f(1, -1, 1));
 }
 
 void CMainState::SetSite(int site)

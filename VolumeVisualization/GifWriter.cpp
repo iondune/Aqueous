@@ -30,10 +30,16 @@ bool GifWriter::AddFrame(u8 const * const data, float deltaTime)
 		OutputPalette = GifMakeMapObject(PaletteSize, NULL);
 
 		if (! OutputPalette)
+		{
+			std::cerr << "Could not create color palette" << std::endl;
 			return false;
+		}
 
 		if (GifQuantizeBuffer(Size.X, Size.Y, & PaletteSize, & (r[0]), & (g[0]), & (b[0]), & (output.Data[0]), OutputPalette->Colors) == GIF_ERROR)
+		{
+			std::cerr << "Could not quantize color buffer" << std::endl;
 			return false;
+		}
 	}
 	else
 	{
@@ -43,7 +49,8 @@ bool GifWriter::AddFrame(u8 const * const data, float deltaTime)
 			GifColorType *c = OutputPalette->Colors;
 
 			/* Find closest color in first color map to this color. */
-			for (int k = 0; k < OutputPalette->ColorCount; k++) {
+			for (int k = 0; k < OutputPalette->ColorCount; k++)
+			{
 				int dr = (int(c[k].Red) - data[j] ) ;
 				int dg = (int(c[k].Green) - data[j+1] ) ;
 				int db = (int(c[k].Blue) - data[j+2] ) ;
@@ -98,18 +105,30 @@ static bool AddLoop(GifFileType *gf)
 bool GifWriter::Save(std::string const & fileName)
 {
 	if (Frames.size() == 0)
+	{
+		std::cerr << "No frames in GIF" << std::endl;
 		return false;
+	}
 
 	GifFileType * GifFile = EGifOpenFileName(fileName.c_str(), FALSE, FALSE);
 
-	if (!GifFile)
+	if (! GifFile)
+	{
+		std::cerr << "Could not create file for writing" << std::endl;
 		return false;
+	}
 
 	if (EGifPutScreenDesc(GifFile, Size.X, Size.Y, 8, 0, OutputPalette) == GIF_ERROR)
+	{
+		std::cerr << "Failed to write header" << std::endl;
 		return false;
+	}
 
 	if (! AddLoop(GifFile))
+	{
+		std::cerr << "Failed to enable looping" << std::endl;
 		return false;
+	}
 
 	for (u32 ni = 0; ni < Frames.size(); ni++)
 	{      
@@ -125,18 +144,28 @@ bool GifWriter::Save(std::string const & fileName)
 		EGifPutExtension(GifFile, GRAPHICS_EXT_FUNC_CODE, 4, ExtStr);
 
 
-		if (EGifPutImageDesc(
-			GifFile,
-			0, 0, Size.X, Size.Y, FALSE, NULL
-			) == GIF_ERROR)  return false;
+		if (EGifPutImageDesc(GifFile, 0, 0, Size.X, Size.Y, FALSE, NULL) == GIF_ERROR)
+		{
+			std::cerr << "Failed to write frame info " << ni << std::endl;
+			return false;
+		}
 
 
-		for (int y = 0, j=(Size.Y-1)*Size.X; y < Size.Y; y++, j-=Size.X) {
-			if (EGifPutLine(GifFile, &(Frames[ni].Data[j]), Size.X) == GIF_ERROR) return false;
+		for (int y = 0, j=(Size.Y-1)*Size.X; y < Size.Y; y++, j-=Size.X)
+		{
+			if (EGifPutLine(GifFile, &(Frames[ni].Data[j]), Size.X) == GIF_ERROR)
+			{
+				std::cerr << "Failed to write frame " << ni << std::endl;
+				return false;
+			}
 		}
 	}
 
-	if (EGifCloseFile(GifFile) == GIF_ERROR) return false;
+	if (EGifCloseFile(GifFile) == GIF_ERROR)
+	{
+		std::cerr << "Failed to close GIF file" << std::endl;
+		return false;
+	}
 
 	return true;       
 }
