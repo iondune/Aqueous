@@ -128,6 +128,17 @@ void CMainState::OnEvent(SKeyboardEvent & Event)
 		if (! Event.Pressed)
 			SceneManager->setActiveCamera(Context->Scene.Camera);
 		break;
+		
+	case EKey::M:
+
+		if (! Event.Pressed)
+		{
+			if (gifWriter)
+				EndGifDraw();
+			else
+				BeginGifDraw();
+		}
+		break;
 
 		// To Do : Camera control buttons
 

@@ -97,6 +97,10 @@ public:
 
 	void SetSite(int site);
 
+	void BeginGifDraw();
+	void EndGifDraw();
+	f32 OrbitCameraTimer;
+
 	bool GUIEnabled;
 
 	//////////////////////////////

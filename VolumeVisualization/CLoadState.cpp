@@ -146,7 +146,7 @@ void CLoadState::LoadScene()
 	CMainState::Get().IEventListener<SMouseEvent>::AddChild(Scene.Camera);
 
 	Scene.OrbitCamera = new CPerspectiveCameraSceneObject();
-	SceneManager->setActiveCamera(Scene.OrbitCamera);
+	SceneManager->setActiveCamera(Scene.Camera);
 
 	// Basic Shader/Mesh
 	Scene.Cube = CMeshLoader::createCubeMesh();

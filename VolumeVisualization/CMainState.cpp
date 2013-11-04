@@ -10,7 +10,7 @@
 
 
 CMainState::CMainState()
-	: Scale(1), Mode(0), ShowDepth(false), ProjectionMode(0), GUIEnabled(true)
+	: Scale(1), Mode(0), ShowDepth(false), ProjectionMode(0), GUIEnabled(true), OrbitCameraTimer(0), gifWriter()
 {}
 
 void CMainState::Begin()
@@ -24,12 +24,24 @@ void CMainState::Begin()
 	SceneManager->getEffectManager()->RenderPasses.push_back(ReflectionRenderPass);
 
 	CalculateDataAlignment();
-	gifWriter = new GifWriter(SceneManager->getScreenSize()); 
+	OrbitCameraTimer = 0;
 }
 
 void CMainState::End()
 {
 	Context->GUIContext->Clear();
+}
+
+void CMainState::BeginGifDraw()
+{
+	SceneManager->setActiveCamera(Context->Scene.OrbitCamera);
+	gifWriter = new GifWriter(SceneManager->getScreenSize());
+	OrbitCameraTimer = 0;
+}
+
+void CMainState::EndGifDraw()
+{
+	SceneManager->setActiveCamera(Context->Scene.Camera);
 	if (! gifWriter->Save("output.gif"))
 	{
 		std::cerr << "GIF writing failed" << std::endl;
@@ -37,6 +49,7 @@ void CMainState::End()
 	}
 
 	delete gifWriter;
+	gifWriter = 0;
 }
 
 void CMainState::Update(f32 const Elapsed)
@@ -76,13 +89,11 @@ void CMainState::Update(f32 const Elapsed)
 	Scene.Timer += Elapsed * 0.16f;
 
 	float const Distance = 3.5f;
-	f32 const Speed = 20.f;
-	static f32 Timer = 0;
-	Scene.OrbitCamera->setPosition(SVector3f(sin(Speed*Timer)*Distance, 0.4f, cos(Speed*Timer)*Distance));
+	static f32 const Speed = 1.f;
+	static f32 const Increment = 0.1f;
+	Scene.OrbitCamera->setPosition(SVector3f(sin(Speed*OrbitCameraTimer)*Distance, 0.4f, cos(Speed*OrbitCameraTimer)*Distance));
 	Scene.OrbitCamera->SetLookAtTarget(vec3f(0, -0.5f, 0));
-	Timer += 0.001f;
-	if (Speed*Timer >= 2*Constants32::Pi)
-		Application->Close();
+	OrbitCameraTimer += Increment;
 
 	Scene.LightPosition = SceneManager->getActiveCamera()->getPosition() + SVector3f(0, 0, 0);
 
@@ -120,27 +131,21 @@ void CMainState::Update(f32 const Elapsed)
 
 	
     // Read screen colors
-	u32 const FrameWidth = Application->GetWindow().GetSize().X;
-	u32 const FrameHeight = Application->GetWindow().GetSize().Y;
-	unsigned char * ImageData = new unsigned char[FrameWidth * FrameHeight * 3];
+	if (gifWriter)
+	{
+		u32 const FrameWidth = Application->GetWindow().GetSize().X;
+		u32 const FrameHeight = Application->GetWindow().GetSize().Y;
+		unsigned char * ImageData = new unsigned char[FrameWidth * FrameHeight * 3];
 
-	static u32 Counter = 0;
-	glReadPixels(0, 0, FrameWidth, FrameHeight, GL_RGB, GL_UNSIGNED_BYTE, ImageData);
-	gifWriter->AddFrame(ImageData, 0.f);
-	//CImage * Image = new CImage(ImageData, FrameWidth, FrameHeight, false);
-	/*std::string Label = Context->CurrentSite->GetCurrentDataSet()->SourceFile;
-	Label = Label.substr(Label.find_last_of('/'));
-	Label = Label.substr(0, Label.find_last_of('.'));
-	std::stringstream Stream;
-	Stream << "OutputImages";
-	Stream << Label;
-	Stream << "-";
-	Stream << std::setw(5) << std::setfill('0') << Counter++;
-	Stream << ".bmp";
-	Image->Write(Stream.str());*/
+		static u32 Counter = 0;
+		glReadPixels(0, 0, FrameWidth, FrameHeight, GL_RGB, GL_UNSIGNED_BYTE, ImageData);
+		gifWriter->AddFrame(ImageData, 0.f);
 
-	//delete Image;
-	delete [] ImageData;
+		delete [] ImageData;
+
+		if (Speed*OrbitCameraTimer >= 2*Constants32::Pi)
+			EndGifDraw();
+	}
 
 	CApplication::Get().GetWindow().SwapBuffers();
 }
