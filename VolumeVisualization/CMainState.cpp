@@ -191,9 +191,15 @@ void CMainState::CalculateDataAlignment()
 	SRange<f64> XRange = DataSet.GetFieldRange(CurrentSite->GetCurrentDataSet()->Traits.PositionXField, 15.0);
 	SRange<f64> YRange = DataSet.GetFieldRange(CurrentSite->GetCurrentDataSet()->Traits.PositionYField, 15.0);
 	SRange<f64> ZRange = DataSet.GetFieldRange(CurrentSite->GetCurrentDataSet()->Traits.PositionZField, 15.0);
-
 	
-	printf("Longlat range is %f %f to %f %f\n", XRange.Minimum, ZRange.Minimum, XRange.Maximum, ZRange.Maximum);
+	if (XRange.IsEmpty())
+		XRange = SRange<f64>(-1, 1);
+	if (YRange.IsEmpty())
+		YRange = SRange<f64>(-1, 1);
+	if (ZRange.IsEmpty())
+		ZRange = SRange<f64>(-1, 1);
+
+	printf("Longlat range is %g %g to %g %g\n", XRange.Minimum, ZRange.Minimum, XRange.Maximum, ZRange.Maximum);
 
 	longlatd const DataLonLatMin(XRange.Minimum, ZRange.Minimum), DataLonLatMax(XRange.Maximum, ZRange.Maximum);
 	longlatd const MapLonLatMin(CurrentSite->GetCurrentLocation()->LowerBound), MapLonLatMax(CurrentSite->GetCurrentLocation()->UpperBound);

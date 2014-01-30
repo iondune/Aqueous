@@ -35,8 +35,15 @@ void CGlyphSceneObject::LoadGlyphs(CDataSet * DataSet, IColorMapper * ColorMappe
 	SRange<f64> YRange = DataSet->Points.GetFieldRange(DataSet->Traits.PositionYField, 15.0);
 	SRange<f64> ZRange = DataSet->Points.GetFieldRange(DataSet->Traits.PositionZField, 15.0);
 
-	printf("built in data range is %f %f to %f %f long lat\n", XRange.Minimum, ZRange.Minimum, XRange.Maximum, ZRange.Maximum);
-	printf("depth varies from %f to %f\n", YRange.Minimum, YRange.Maximum);
+	if (XRange.IsEmpty())
+		XRange = SRange<f64>(-1, 1);
+	if (YRange.IsEmpty())
+		YRange = SRange<f64>(-1, 1);
+	if (ZRange.IsEmpty())
+		ZRange = SRange<f64>(-1, 1);
+
+	printf("built in data range is %g %g to %g %g long lat\n", XRange.Minimum, ZRange.Minimum, XRange.Maximum, ZRange.Maximum);
+	printf("depth varies from %g to %g\n", YRange.Minimum, YRange.Maximum);
 
 	for (auto Point : DataSet->Points.GetValues())
 	{
