@@ -26,6 +26,8 @@ public:
 	void SetDebugHeightEnabled(bool const Enabled);
 	bool IsDebugHeightEnabled();
 
+	int DebugMode;
+
 protected:
 
 	CBufferObject<f32> VertexData;

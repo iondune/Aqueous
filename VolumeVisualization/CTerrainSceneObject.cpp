@@ -4,7 +4,7 @@
 
 
 CTerrainSceneObject::CTerrainSceneObject()
-	: Application(CApplication::Get()), SceneManager(CApplication::Get().GetSceneManager()), DebugHeight(false)
+	: Application(CApplication::Get()), SceneManager(CApplication::Get().GetSceneManager()), DebugHeight(false), DebugMode(0)
 {
 	setCullingEnabled(false);
 
@@ -51,6 +51,7 @@ bool CTerrainSceneObject::draw(IScene const * const Scene, sharedPtr<IRenderPass
 	Context.uniform("uLayerWidth", (f32) Size);
 	Context.uniform("uLightPosition", CProgramContext::Get().Scene.LightPosition);
 	Context.uniform("uDebugHeight", DebugHeight ? 1 : 0);
+	Context.uniform("uDebugMode", DebugMode);
 
 	Context.bindBufferObject("aPosition", VertexData.getHandle(), 2);
 	

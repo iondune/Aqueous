@@ -1,6 +1,7 @@
 #include "CMainState.h"
 
 #include "SciDataManager.h"
+#include "CTerrainSceneObject.h"
 
 
 void CMainState::OnEvent(SKeyboardEvent & Event)
@@ -98,6 +99,18 @@ void CMainState::OnEvent(SKeyboardEvent & Event)
 			AddConsoleMessage(s.str());
 		}
 
+		break;
+
+	case EKey::LeftBracket:
+
+		if (! Event.Pressed)
+			Context->Scene.Terrain->DebugMode ++;
+		break;
+
+	case EKey::RightBracket:
+
+		if (! Event.Pressed)
+			Context->Scene.Terrain->DebugMode --;
 		break;
 
 	//case EKey::Y:
