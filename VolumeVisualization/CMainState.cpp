@@ -134,27 +134,27 @@ void CMainState::Update(f32 const Elapsed)
 	if (GUIEnabled)
 		Context->GUIContext->Draw(Elapsed, false);
 	
-	auto GetValueAt = [](f32 const v)
-	{
-		color4f Color = CSpectrumColorMapper::MapColor(v);
-		glColor3f(Color.Red, Color.Green, Color.Blue);
-		return GlobalMin * (1 - v) + GlobalMax * v;
-	};
-	int Counter = 10;
-	auto DrawColor = [this, & Counter, GetValueAt](c8 const * const Label, f32 const v)
-	{
-		f32 Value = GetValueAt(v);
-		freetype::print(Font, 10, Counter, "%s:", Label);
-		freetype::print(Font, 120, Counter, "%.3f °C", Value);
-		Counter += 25;
-	};
-	DrawColor("Black", 0.f);
-	DrawColor("Blue", 0.15f);
-	DrawColor("Green", 0.4f);
-	DrawColor("Yellow", 0.6f);
-	DrawColor("Orange", 0.7f);
-	DrawColor("Red", 0.8f);
-	DrawColor("White", 1.f);
+	//auto GetValueAt = [](f32 const v)
+	//{
+	//	color4f Color = CSpectrumColorMapper::MapColor(v);
+	//	glColor3f(Color.Red, Color.Green, Color.Blue);
+	//	return GlobalMin * (1 - v) + GlobalMax * v;
+	//};
+	//int Counter = 10;
+	//auto DrawColor = [this, & Counter, GetValueAt](c8 const * const Label, f32 const v)
+	//{
+	//	f32 Value = GetValueAt(v);
+	//	freetype::print(Font, 10, Counter, "%s:", Label);
+	//	freetype::print(Font, 120, Counter, "%.3f °C", Value);
+	//	Counter += 25;
+	//};
+	//DrawColor("Black", 0.f);
+	//DrawColor("Blue", 0.15f);
+	//DrawColor("Green", 0.4f);
+	//DrawColor("Yellow", 0.6f);
+	//DrawColor("Orange", 0.7f);
+	//DrawColor("Red", 0.8f);
+	//DrawColor("White", 1.f);
 	
     // Read screen colors
 	if (gifWriter)
