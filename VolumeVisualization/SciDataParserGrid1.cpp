@@ -54,6 +54,11 @@ void SciDataParserGrid1::load(std::string const &data)
 	double * pointXData = mxGetPr(pointX);
 	double * pointYData = mxGetPr(pointY);
 	double * pointZData = mxGetPr(pointZ);
+	
+	DataSet->Volume.Dimensions.X = Dimensions[0];
+	DataSet->Volume.Dimensions.Y = Dimensions[1];
+	DataSet->Volume.Dimensions.Z = Dimensions[2];
+	//DataSet->Volume.Allocate();
 
 	for (int k = 0; k < Dimensions[2]; ++ k)
 	{
