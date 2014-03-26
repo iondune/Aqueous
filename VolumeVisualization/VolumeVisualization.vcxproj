@@ -42,6 +42,7 @@
   </ImportGroup>
   <PropertyGroup>
     <IncludePath>
+      ;$(VisualStudioDir)\SDKs\FreeImage\dist;
       ;$(VisualStudioDir)\SDKs\giflib-4.2.3\lib;
       ;$(IncludePath);
     </IncludePath>
@@ -56,7 +57,39 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
     <Link>
-      <AdditionalDependencies>giflib-4.2.3.lib;matlib/libmat.lib;matlib/libmx.lib;matlib/libmex.lib;matlib/libeng.lib;matlib/libmwlapack.lib;matlib/libdflapack.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>
+        ;ionGL.lib;
+        ;FreeImage.lib;
+        ;giflib-4.2.3.lib;
+        ;%(AdditionalDependencies);
+      </AdditionalDependencies>
+      <AdditionalDependencies>
+        ;matlib/libmat.lib;
+        ;matlib/libmx.lib;
+        ;matlib/libmex.lib;
+        ;matlib/libeng.lib;
+        ;matlib/libmwlapack.lib;
+        ;matlib/libdflapack.lib;
+        ;%(AdditionalDependencies);
+      </AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Link>
+      <AdditionalDependencies>
+        ;GWEND-Renderer-OpenGLd.lib;
+        ;gwen_staticd.lib;
+        ;%(AdditionalDependencies);
+      </AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Link>
+      <AdditionalDependencies>
+        ;GWEN-Renderer-OpenGL.lib;
+        ;gwen_static.lib;
+        ;%(AdditionalDependencies);
+      </AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
