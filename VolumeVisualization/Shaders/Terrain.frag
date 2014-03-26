@@ -16,7 +16,7 @@ out vec4 gl_FragData[2];
 
 float getHeightAt(vec2 Offset)
 {
-	return texture(uHeightMap, vTexCoords + Offset);
+	return texture(uColorMap, vTexCoords + Offset).g;
 }
 
 float maxabs(vec3 v)
@@ -30,7 +30,7 @@ void main()
 	const vec3 DiffuseColor = vec3(0.3);
 
 	vec3 Normal;
-	float Offset = 8.0 / uLayerWidth;
+	float Offset = 1.0 / uLayerWidth;
 	Normal.x = texture(uHeightMap, vTexCoords + vec2(-Offset, 0.0)).r - texture(uHeightMap, vTexCoords + vec2(Offset, 0.0)).r;
 	Normal.z = texture(uHeightMap, vTexCoords + vec2(0.0, Offset)).r - texture(uHeightMap, vTexCoords + vec2(0.0, -Offset)).r;
 	Normal.y = 4.0 * Offset;
@@ -40,6 +40,20 @@ void main()
 	float here = getHeightAt(vec2(0, 0));
 	float step;
 
+	step = getHeightAt(vec2(Offset, 0));
+	if (step > here)
+		occlusion += step - here;
+	step = getHeightAt(vec2(-Offset, 0));
+	if (step > here)
+		occlusion += step - here;
+	step = getHeightAt(vec2(0, Offset));
+	if (step > here)
+		occlusion += step - here;
+	step = getHeightAt(vec2(0, -Offset));
+	if (step > here)
+		occlusion += step - here;
+
+	Offset *= 2;
 	step = getHeightAt(vec2(Offset, 0));
 	if (step > here)
 		occlusion += step - here;
@@ -77,7 +91,7 @@ void main()
 		if (uDebugMode == 0)
 			gl_FragData[0] =
 				vec4(1.0)
-				* vec4(vec3(1.0 - occlusion*0.5), 1.0)
+				* vec4(vec3(1.0 - occlusion*0.0005), 1.0)
 				// * vec4(Diffuse, 1)
 				// * vec4(Ambient, 1)
 				* vec4(Diffuse + Ambient, 1)
@@ -92,7 +106,7 @@ void main()
 		else if (uDebugMode == 3)
 			gl_FragData[0] = vec4(Diffuse + Ambient, 1);
 		else if (uDebugMode == 4)
-			gl_FragData[0] = vec4(vec3(1.0 - occlusion*0.5), 1.0);
+			gl_FragData[0] = vec4(vec3(1.0 - occlusion*0.2), 1.0);
 		else if (uDebugMode == 5)
 			gl_FragData[0] = vec4(Diffuse + Ambient, 1) * vec4(vec3(1.0 - occlusion*0.5), 1.0);
 		else if (uDebugMode == 6)
