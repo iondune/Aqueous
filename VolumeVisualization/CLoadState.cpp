@@ -179,8 +179,8 @@ void CLoadState::LoadScene()
 
 	// Volume
 	Scene.Volume = new CVolumeSceneObject();
-	Scene.Volume->setVisible(false);
-	//SceneManager->addSceneObject(Scene.VolumeSceneObject);
+	//Scene.Volume->setVisible(false);
+	SceneManager->addSceneObject(Scene.Volume);
 }
 
 void CLoadState::OnFinish()

@@ -24,7 +24,7 @@ void CDataSet::Load()
 void CDataSet::ConcurrentLoad()
 {
 	glGenTextures(1, & VolumeHandle);
-	CSpectrumColorMapper ColorMapper("Chla Conc");
+	CSpectrumColorMapper ColorMapper("o1");
 	Volume.MakeOpenGLVolume(VolumeHandle, & ColorMapper);
 }
 

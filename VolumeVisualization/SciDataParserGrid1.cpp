@@ -58,7 +58,7 @@ void SciDataParserGrid1::load(std::string const &data)
 	DataSet->Volume.Dimensions.X = Dimensions[0];
 	DataSet->Volume.Dimensions.Y = Dimensions[1];
 	DataSet->Volume.Dimensions.Z = Dimensions[2];
-	//DataSet->Volume.Allocate();
+	DataSet->Volume.Allocate();
 
 	for (int k = 0; k < Dimensions[2]; ++ k)
 	{

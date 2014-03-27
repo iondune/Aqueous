@@ -129,13 +129,13 @@ void CMainMenuState::CreateDataSet()
 	Context->DataManager->createVolumeFromGridValues(& o);
 	Context->DataManager->writeToFile("Datasets/Catalina1.dat");*/
 
-	//SciDataParserSimpleTXT * Parser1 = new SciDataParserSimpleTXT();
-	//Parser1->DataSet = Context->CurrentSite->GetCurrentDataSet();
-	//Parser1->load("ForZoe.txt");
+	SciDataParserSimpleTXT * Parser1 = new SciDataParserSimpleTXT();
+	Parser1->DataSet = Context->CurrentSite->GetCurrentDataSet();
+	Parser1->load("ForZoe.txt");
 
-	//SciDataParserGrid1 * Parser2 = new SciDataParserGrid1();
-	//Parser2->DataSet = Context->CurrentSite->GetCurrentDataSet();
-	//Parser2->load("oxyMaps.mat");
+	SciDataParserGrid1 * Parser2 = new SciDataParserGrid1();
+	Parser2->DataSet = Context->CurrentSite->GetCurrentDataSet();
+	Parser2->load("oxyMaps.mat");
 
 	//COxygenColorMapper o;
 	//Context->CurrentSite->GetCurrentDataSet()->createVolumeFromGridValues(& o);
