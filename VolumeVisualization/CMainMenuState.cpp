@@ -41,9 +41,9 @@ void CMainMenuState::Update(f32 const Elapsed)
 	static int Counter = 0;
 	if (! Counter--)
 	{
-		Context->CurrentSite->GetCurrentDataSet()->Traits.PositionXField = "Longitude";
-		Context->CurrentSite->GetCurrentDataSet()->Traits.PositionYField = "DFS Depth (m)";
-		Context->CurrentSite->GetCurrentDataSet()->Traits.PositionZField = "Latitude";
+		Context->CurrentSite->GetCurrentDataSet()->Traits.PositionXField = "x";
+		Context->CurrentSite->GetCurrentDataSet()->Traits.PositionYField = "y";
+		Context->CurrentSite->GetCurrentDataSet()->Traits.PositionZField = "z";
 
 		CreateDataSet();
 		LoadData("HopavagenBay1.dat");

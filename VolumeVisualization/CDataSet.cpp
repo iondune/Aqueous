@@ -24,7 +24,7 @@ void CDataSet::Load()
 void CDataSet::ConcurrentLoad()
 {
 	glGenTextures(1, & VolumeHandle);
-	CSpectrumColorMapper ColorMapper("o1");
+	CSpectrumColorMapper ColorMapper("o2");
 	Volume.MakeOpenGLVolume(VolumeHandle, & ColorMapper);
 }
 
@@ -32,7 +32,7 @@ void CDataSet::InitSceneElements(CProgramContext::SScene & Scene)
 {
 	Scene.Volume->VolumeHandle = VolumeHandle;
 
-	CSpectrumColorMapper ColorMapper("Chla Conc");
+	CSpectrumColorMapper ColorMapper("o2");
 	//ColorMapper.ValueCutoff = 1.0;
 	Scene.Glyphs->LoadGlyphs(this, & ColorMapper);
 }
