@@ -7,10 +7,10 @@
 CSite::CSite()
 {
 	CTerrainLocation * Location = new CTerrainLocation;
-	Location->LowerBound.Longitude = SLongitudeLatitude<f32>::DMStoDecimal(9, 55, 45.32f);
-	Location->LowerBound.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(56, 38, 17.22f);
-	Location->UpperBound.Longitude = SLongitudeLatitude<f32>::DMStoDecimal(10, 2, 34.80f);
-	Location->UpperBound.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(56, 41, 59.01f);
+	Location->LowerBound.Longitude = SLongitudeLatitude<f64>::DMStoDecimal(9, 30, 32.26);
+	Location->LowerBound.Latitude = SLongitudeLatitude<f64>::DMStoDecimal(63, 34, 38.89);
+	Location->UpperBound.Longitude = SLongitudeLatitude<f64>::DMStoDecimal(9, 33, 47.82);
+	Location->UpperBound.Latitude = SLongitudeLatitude<f64>::DMStoDecimal(63, 36, 5.87);
 	Location->ColorFile = "../TerrainColorImageSquare.bmp";
 	Location->BathymetryFile = "../TerrainBathymetry.bmp";
 	Location->HeightFile = "../TerrainHeightImageSquare.bmp";
