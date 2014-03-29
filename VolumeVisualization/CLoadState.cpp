@@ -175,12 +175,13 @@ void CLoadState::LoadScene()
 
 	// Water
 	Scene.Water = new CWaterSceneObject();
+	Scene.Water->setVisible(false);
 	//SceneManager->addSceneObject(Scene.Water);
 
 	// Volume
 	Scene.Volume = new CVolumeSceneObject();
 	//Scene.Volume->setVisible(false);
-	SceneManager->addSceneObject(Scene.Volume);
+	//SceneManager->addSceneObject(Scene.Volume);
 }
 
 void CLoadState::OnFinish()
