@@ -225,7 +225,7 @@ void CMainState::CalculateDataAlignment()
 	
 	vec2d const MapRangeSize = MapRangeMax - MapRangeMin;
 	vec2d const MapRangeCenter = (MapRangeMin + MapRangeMax) / 2.f;
-	f64 const MapDepth = 120.0;
+	f64 const MapDepth = 180.0;
 	
 	printf("Data range is %f by %f meters,\n", DataRangeSize.X, DataRangeSize.Y);
 	printf("Terrain range is %f by %f meters,\n", MapRangeSize.X, MapRangeSize.Y);
@@ -235,7 +235,7 @@ void CMainState::CalculateDataAlignment()
 	vec3d const DataScale = 3.0 * vec3d(DataRangeSize.X, DataDepth, DataRangeSize.Y) / Maximum(DataRangeSize.X, DataRangeSize.Y);
 	vec3d const MapScale = DataScale * vec3d(MapRangeSize.X, MapDepth, MapRangeSize.Y) / vec3d(DataRangeSize.X, DataDepth, DataRangeSize.Y);
 
-	static f64 const YExaggeration = 1.0;
+	static f64 const YExaggeration = 8.0;
 	static vec3d const Multiplier = vec3d(1, YExaggeration, 1);
 	
 	Scene.Glyphs->setScale(DataScale * Multiplier);
