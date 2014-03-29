@@ -104,13 +104,13 @@ void CMainState::OnEvent(SKeyboardEvent & Event)
 	case EKey::LeftBracket:
 
 		if (! Event.Pressed)
-			Context->Scene.Terrain->DebugMode ++;
+			printf("%d\n", ++ Context->Scene.Terrain->DebugMode);
 		break;
 
 	case EKey::RightBracket:
 
 		if (! Event.Pressed)
-			Context->Scene.Terrain->DebugMode --;
+			printf("%d\n", -- Context->Scene.Terrain->DebugMode);
 		break;
 
 	//case EKey::Y:

@@ -164,7 +164,7 @@ void CLoadState::LoadScene()
 				jt.TextureCoordinates.Y = (jt.TextureCoordinates.Y - 0.5) * 2;
 			else
 				jt.TextureCoordinates.Y = (0.5 - jt.TextureCoordinates.Y) * 2;
-			static f32 Scale = 0.9f;
+			static f32 Scale = 0.8f;
 			jt.TextureCoordinates.Y = jt.TextureCoordinates.Y * Scale + (1 - Scale);
 		}
 	}
