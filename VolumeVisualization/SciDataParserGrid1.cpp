@@ -56,8 +56,8 @@ void SciDataParserGrid1::load(std::string const &data)
 	double * pointZData = mxGetPr(pointZ);
 	
 	DataSet->Volume.Dimensions.X = Dimensions[0];
-	DataSet->Volume.Dimensions.Y = Dimensions[1];
-	DataSet->Volume.Dimensions.Z = Dimensions[2];
+	DataSet->Volume.Dimensions.Y = Dimensions[2];
+	DataSet->Volume.Dimensions.Z = Dimensions[1];
 	DataSet->Volume.Allocate();
 
 	for (int k = 0; k < Dimensions[2]; ++ k)
@@ -68,7 +68,7 @@ void SciDataParserGrid1::load(std::string const &data)
 			{
 				int index = i + j * Dimensions[0] + k * Dimensions[0] * Dimensions[1];
 
-				SVolumeDataRecord<f64> & Row = DataSet->Volume[i][j][k];
+				SVolumeDataRecord<f64> & Row = DataSet->Volume[i][k][j];
 				Row.GetField("o1") = pointO1Data[index];
 				Row.GetField("o2") = pointO2Data[index];
 				Row.GetField("o3") = pointO3Data[index];
