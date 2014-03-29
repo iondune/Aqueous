@@ -13,7 +13,7 @@ CProgramContext::SScene::SScene()
 {}
 
 CProgramContext::SShaders::SShaders()
-	: Diffuse(), DiffuseTexture(), Volume(), Terrain(), Glyph(), GlyphLines()
+: Diffuse(), DiffuseTexture(), Volume(), Terrain(), Glyph(), GlyphLines(), SkyBox()
 {}
 
 CProgramContext::CProgramContext()

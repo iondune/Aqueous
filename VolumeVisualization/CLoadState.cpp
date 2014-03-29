@@ -115,6 +115,8 @@ void CLoadState::LoadShaders()
 		AddLabel(L"Failed to load Plane Shader - Plane will not draw.", Gwen::Color(255, 64, 64, 192)), Failed = true;
 	if (! (Context->Shaders.Water = CShaderLoader::loadShader("Water")))
 		AddLabel(L"Failed to load Water Shader - Water will not draw.", Gwen::Color(255, 64, 64, 192)), Failed = true;
+	if (! (Context->Shaders.SkyBox = CShaderLoader::loadShader("Skybox")))
+		AddLabel(L"Failed to load Skybox Shader - Skybox will not draw.", Gwen::Color(255, 64, 64, 192)), Failed = true;
 
 	if (! Failed)
 		AddLabel(L"All shaders compiled successfully.", Gwen::Color(64, 255, 64, 192));
@@ -153,12 +155,26 @@ void CLoadState::LoadScene()
 
 	// Backdrop
 	Scene.SkyBox = new CMeshSceneObject();
-	Scene.SkyBox->setMesh(Scene.Cube);
-	Scene.SkyBox->setShader(SceneManager->getDefaultColorRenderPass(), Context->Shaders.DiffuseTexture);
-	Scene.SkyBox->setTexture(0, "Space.bmp");
+	CMesh * SphereMesh = CMeshLoader::load3dsMesh("Sphere.3ds");
+	for (auto & it : SphereMesh->MeshBuffers)
+	{
+		for (auto & jt : it->Vertices)
+		{
+			if (jt.TextureCoordinates.Y > 0.5)
+				jt.TextureCoordinates.Y = (jt.TextureCoordinates.Y - 0.5) * 2;
+			else
+				jt.TextureCoordinates.Y = (0.5 - jt.TextureCoordinates.Y) * 2;
+			static f32 Scale = 0.9f;
+			jt.TextureCoordinates.Y = jt.TextureCoordinates.Y * Scale + (1 - Scale);
+		}
+	}
+	SphereMesh->resizeMesh(vec3f(1));
+	Scene.SkyBox->setMesh(SphereMesh);
+	Scene.SkyBox->setShader(SceneManager->getDefaultColorRenderPass(), Context->Shaders.SkyBox);
+	Scene.SkyBox->setTexture(0, "SkyMap.jpg");
 	Scene.SkyBox->setCullingEnabled(false);
-	Scene.SkyBox->setVisible(false);
-	SceneManager->addSceneObject(Scene.SkyBox);
+	//Scene.SkyBox->setVisible(false);
+	//SceneManager->addSceneObject(Scene.SkyBox);
 
 	CPlaneGridSceneObject * Plane = new CPlaneGridSceneObject(10);
 	Plane->setShader(SceneManager->getDefaultColorRenderPass(), Context->Shaders.Plane);

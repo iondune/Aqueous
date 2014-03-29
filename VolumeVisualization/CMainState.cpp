@@ -102,6 +102,20 @@ void CMainState::Update(f32 const Elapsed)
 
 	Scene.LightPosition = SceneManager->getActiveCamera()->getPosition() + SVector3f(0, 0, 0);
 
+	SceneManager->getDefaultColorRenderPass()->onPreDraw();
+	glClearColor(1.f, 0.25f, 0.05f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClearColor(0.15f, 0.45f, 0.5f, 1.0f);
+
+	glDisable(GL_DEPTH_TEST);
+	Context->Scene.SkyBox->setPosition(SceneManager->getActiveCamera()->getPosition());
+	Context->Scene.SkyBox->update();
+	Context->Scene.SkyBox->updateAbsoluteTransformation();
+	SceneManager->update();
+	Context->Scene.SkyBox->load(SceneManager, SceneManager->getDefaultColorRenderPass());
+	Context->Scene.SkyBox->draw(SceneManager, SceneManager->getDefaultColorRenderPass(), false);
+	glEnable(GL_DEPTH_TEST);
+
 	SceneManager->drawAll();
 
 	if (! ShowDepth)
@@ -245,18 +259,18 @@ void CMainState::CalculateDataAlignment()
 	
 	Scene.Terrain->setScale(MapScale * Multiplier / CTerrainSceneObject::Size);
 	Scene.Water->setScale(MapScale / CTerrainSceneObject::Size);
-	Scene.SkyBox->setScale(SVector3f(MapScale.X, 30.f, MapScale.Z));
+	//Scene.SkyBox->setScale(SVector3f(MapScale.X, 30.f, MapScale.Z));
 
 	Scene.Terrain->setTranslation(vec3f(MapOffset.X, 0, -MapOffset.Y));
 	Scene.Water->setTranslation(vec3f(MapOffset.X, 0, -MapOffset.Y));
-	Scene.SkyBox->setTranslation(vec3f(MapOffset.X, 0, -MapOffset.Y));
+	//Scene.SkyBox->setTranslation(vec3f(MapOffset.X, 0, -MapOffset.Y));
 	
 	// Flip for RHC->LHC
 	Scene.Glyphs->setScale(Scene.Glyphs->getScale() * vec3f(1, 1, -1));
 	Scene.Volume->setScale(Scene.Volume->getScale() * vec3f(1, 1, -1));
 	Scene.Terrain->setScale(Scene.Terrain->getScale() * vec3f(1, 1, -1));
 	Scene.Water->setScale(Scene.Water->getScale() * vec3f(1, 1, -1));
-	Scene.SkyBox->setScale(Scene.SkyBox->getScale() * vec3f(1, 1, -1));
+	//Scene.SkyBox->setScale(Scene.SkyBox->getScale() * vec3f(1, 1, -1));
 	
 	// Flip Height -> Depth
 	Scene.Volume->setScale(Scene.Volume->getScale() * vec3f(1, -1, 1));

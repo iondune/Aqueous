@@ -61,6 +61,7 @@ public:
 		CShader * GlyphLines;
 		CShader * Plane;
 		CShader * Water;
+		CShader * SkyBox;
 
 		SShaders();
 	};
