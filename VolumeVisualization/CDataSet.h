@@ -30,6 +30,7 @@ public:
 	STable Points;
 	SVolumeDatabase<f64> Volume;
 	u32 VolumeHandle;
+	u32 ProximityTextureHandle;
 
 	longlatd LowerBounds, UpperBounds;
 	std::string PointFileName, VolumeFileName;

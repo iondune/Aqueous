@@ -34,6 +34,7 @@ public:
 	SControl Control;
 
 	unsigned int VolumeHandle;
+	uint ProximityTextureHandle;
 
 	CVolumeSceneObject();
 	bool draw(IScene const * const scene, sharedPtr<IRenderPass> Pass, bool const CullingEnabled);

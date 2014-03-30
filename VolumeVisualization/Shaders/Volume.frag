@@ -6,6 +6,7 @@ in vec4 vPosition;
 out vec4 outFragColor;
 
 uniform sampler3D uVolumeData;
+uniform sampler3D uProximityData;
 uniform sampler2D uDepthTexture;
 
 uniform mat4 uModelMatrix;
@@ -87,6 +88,7 @@ vec4 GetColorSample(vec3 coords)
 		}
 		break;
 	}
+	sample.a *= texture(uProximityData, coords).r;
 
 	return sample;
 }
@@ -120,7 +122,7 @@ void main()
 	// Calculate surface point
 	vec3 FrontPosition;
 	vec3 CameraPosition = (uInvModelMatrix * vec4(uCameraPosition, 1.0)).xyz;
-	
+
 	if (CameraPosition.x >= -0.5 &&
 		CameraPosition.y >= -0.5 &&
 		CameraPosition.z >= -0.5 &&
@@ -149,18 +151,18 @@ void main()
 
 	vec3 Direction = BackPosition - FrontPosition;
 	float Length = length(Direction);
-	
+
 	Direction = normalize(Direction);
 	vec3 DirectionStep = Direction * uStepSize;
-	
+
 	vec3 Iterator = FrontPosition;
-	
+
 	vec4 ColorAccumulator = vec4(0.0);
 	float AlphaAccumulator = 0.0;
 	float LengthAccumulator = 0.0;
 
 	float CurrentDepth = texture2D(uDepthTexture, ((vPosition.xy / vPosition.w) + 1.0) / 2.0).r;
-	
+
 	const int IterationMax = 1000;
 
 	int i;

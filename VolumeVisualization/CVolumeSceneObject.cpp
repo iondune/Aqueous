@@ -152,11 +152,17 @@ bool CVolumeSceneObject::draw(IScene const * const Scene, sharedPtr<IRenderPass>
 			glBindTexture(GL_TEXTURE_3D, VolumeHandle);
 			Context.uniform("uVolumeData", 0);
 
+			// Volume proximity texture
+			glEnable(GL_TEXTURE_3D);
+			glActiveTexture(GL_TEXTURE0 + 1);
+			glBindTexture(GL_TEXTURE_3D, ProximityTextureHandle);
+			Context.uniform("uProximityData", 1);
+
 			// Scene depth
 			glEnable(GL_TEXTURE_2D);
-			glActiveTexture(GL_TEXTURE0 + 1);
+			glActiveTexture(GL_TEXTURE0 + 2);
 			glBindTexture(GL_TEXTURE_2D, CApplication::Get().GetSceneManager().getSceneDepthTexture()->getTextureHandle());
-			Context.uniform("uDepthTexture", 1);
+			Context.uniform("uDepthTexture", 2);
 
 			// Control parameters
 			Context.uniform("uAlphaIntensity", Control.AlphaIntensity);

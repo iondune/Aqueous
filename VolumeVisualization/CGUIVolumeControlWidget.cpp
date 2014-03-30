@@ -101,7 +101,8 @@ CGUIVolumeControlWidget::CGUIVolumeControlWidget()
 		
 		Gwen::Controls::ComboBox * VolumeMode = new Gwen::Controls::ComboBox(Window);
 		VolumeMode->SetBounds(80, 120 + 120 + 45 + 35 + 45, 200, 25);
-		VolumeMode->AddItem(L"Full Volume");
+		VolumeMode->AddItem(L"Constant");
+		VolumeMode->AddItem(L"Sample Alpha");
 		VolumeMode->AddItem(L"Plane Slices");
 		VolumeMode->AddItem(L"Isosurface");
 
@@ -250,9 +251,14 @@ void CGUIVolumeControlWidget::OnVolumeMode(Gwen::Controls::Base * Control)
 		VolumeControl.Mode = 2;
 		resetVolumeRange();
 	}
-	else
+	else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Constant"))
 	{
 		VolumeControl.Mode = 0;
+		CProgramContext::Get().GUIContext->GetTitleLabels()->clearVolumeRangeIndicator();
+	}
+	else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Sample Alpha"))
+	{
+		VolumeControl.Mode = 3;
 		CProgramContext::Get().GUIContext->GetTitleLabels()->clearVolumeRangeIndicator();
 	}
 }
