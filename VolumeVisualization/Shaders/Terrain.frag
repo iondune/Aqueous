@@ -140,8 +140,13 @@ void main()
 	Normal = normalize(Normal);
 
 	float occlusion = getOcclusion(Offset*8.0)*1.3;
-	float occlusion2 = getHighFrequencyOcclusion(Offset)*1.3;
-
+	float occlusionhigh = getHighFrequencyOcclusion(Offset)*1.3;
+	float occlusionmid =
+		getHighFrequencyOcclusion(Offset*4.0) +
+		getHighFrequencyOcclusion(Offset*8.0) +
+		getHighFrequencyOcclusion(Offset*16.0) +
+		getHighFrequencyOcclusion(Offset*24.0);
+	occlusionmid /= 4;
 
 
 	vec3 Diffuse = DiffuseColor * clamp(dot(Normal, vLight), 0.0, 1.0);
@@ -150,18 +155,30 @@ void main()
 	if (uDebugHeight == 0)
 	{
 		if (uDebugMode == 0)
-			gl_FragData[0] = texture(uColorMap, vTexCoords);
+			gl_FragData[0] = vec4(vec3(
+				((1.0 - occlusionmid*0.15) + (1.0 - occlusionhigh*0.15) + (1.0 - occlusion*0.3)) / 3.0
+				), 1.0) * texture(uColorMap, vTexCoords);
 		else if (uDebugMode == 1)
-			gl_FragData[0] = texture(uColorMap, vTexCoords) * vec4(vec3(1.0 - occlusion2*0.15), 1.0);
+			gl_FragData[0] = vec4(vec3(1.0 - getHighFrequencyOcclusion(Offset*4.0)*1.3*0.15), 1.0);//texture(uColorMap, vTexCoords);
 		else if (uDebugMode == 2)
-			gl_FragData[0] = texture(uColorMap, vTexCoords) * vec4(vec3(1.0 - occlusion*0.3), 1.0);
+			gl_FragData[0] = vec4(vec3(1.0 - getHighFrequencyOcclusion(Offset*8.0)*1.3*0.15), 1.0);//texture(uColorMap, vTexCoords) * vec4(vec3(1.0 - occlusion2*0.15), 1.0);
 		else if (uDebugMode == 3)
-			gl_FragData[0] = texture(uColorMap, vTexCoords) * vec4(vec3(1.0 - occlusion2*0.15), 1.0) * vec4(vec3(1.0 - occlusion*0.3), 1.0);
+			gl_FragData[0] = vec4(vec3(1.0 - getHighFrequencyOcclusion(Offset*16.0)*1.3*0.15), 1.0);//texture(uColorMap, vTexCoords) * vec4(vec3(1.0 - occlusion*0.3), 1.0);
 		else if (uDebugMode == 4)
-			gl_FragData[0] = vec4(vec3(1.0 - occlusion2*0.15), 1.0);
+			gl_FragData[0] = vec4(vec3(1.0 - getHighFrequencyOcclusion(Offset*24.0)*1.3*0.15), 1.0);//texture(uColorMap, vTexCoords) * vec4(vec3(1.0 - occlusion2*0.15), 1.0) * vec4(vec3(1.0 - occlusion*0.3), 1.0);
 		else if (uDebugMode == 5)
-			gl_FragData[0] = vec4(vec3(1.0 - occlusion*0.3), 1.0);
+			gl_FragData[0] = vec4(vec3(1.0 - occlusionmid*0.15), 1.0);
 		else if (uDebugMode == 6)
+			gl_FragData[0] = vec4(vec3(1.0 - occlusionhigh*0.15), 1.0);
+		else if (uDebugMode == 7)
+			gl_FragData[0] = vec4(vec3(1.0 - occlusion*0.3), 1.0);
+		else if (uDebugMode == 8)
+			gl_FragData[0] = texture(uColorMap, vTexCoords);
+		else if (uDebugMode == 9)
+			gl_FragData[0] = vec4(vec3(
+				((1.0 - occlusionmid*0.15) + (1.0 - occlusionhigh*0.15) + (1.0 - occlusion*0.3)) / 3.0
+				), 1.0);
+		else
 			gl_FragData[0] = texture(uColorMap, vTexCoords);
 	}
 	else
