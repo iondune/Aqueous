@@ -11,7 +11,7 @@ CSite::CSite()
 	Location->LowerBound.Latitude = SLongitudeLatitude<f64>::DMStoDecimal(63, 34, 38.89);
 	Location->UpperBound.Longitude = SLongitudeLatitude<f64>::DMStoDecimal(9, 33, 47.82);
 	Location->UpperBound.Latitude = SLongitudeLatitude<f64>::DMStoDecimal(63, 36, 5.87);
-	Location->ColorFile = "../TerrainColorImageSquare.bmp";
+	Location->ColorFile = "../TerrainColorImageSquareSupplement.bmp";
 	Location->BathymetryFile = "../TerrainBathymetry.bmp";
 	Location->HeightFile = "../TerrainHeightImageSquare.bmp";
 	Locations.push_back(Location);
