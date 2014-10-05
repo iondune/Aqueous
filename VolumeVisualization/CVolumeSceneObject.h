@@ -1,11 +1,11 @@
 
 #pragma once
-
+/*
 #include <ionCore.h>
 #include <ionScene.h>
 
 
-class CVolumeSceneObject : public ISceneObject
+class CVolumeSceneObject : public ISceneNode
 {
 	
 	CSceneManager & SceneManager;
@@ -40,3 +40,4 @@ public:
 	bool draw(IScene const * const scene, sharedPtr<IRenderPass> Pass, bool const CullingEnabled);
 
 };
+*/

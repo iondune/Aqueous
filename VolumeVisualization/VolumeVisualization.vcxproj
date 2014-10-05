@@ -36,9 +36,7 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets">
-    <Import Project="$(VisualStudioDir)\Projects\ionEngine\ionEngine.props" />
-    <Import Project="$(VisualStudioDir)\Projects\ionEngine\ionDefaultBuild.props" />
-    <Import Project="$(VisualStudioDir)\Projects\ionEngine\ionDefaultTarget.props" />
+    <Import Project="$(VisualStudioDir)\Projects\ionEngine\Properties\ionDefaultTarget.props" />
   </ImportGroup>
   <PropertyGroup>
     <IncludePath>
@@ -132,6 +130,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BathymetyGenerator.h" />
+    <ClInclude Include="CContextState.h" />
     <ClInclude Include="CDataLoadingThread.h" />
     <ClInclude Include="CDataSet.h" />
     <ClInclude Include="CGlyphSceneObject.h" />

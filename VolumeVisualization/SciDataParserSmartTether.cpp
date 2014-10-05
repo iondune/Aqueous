@@ -51,7 +51,7 @@ void SciDataParserSmartTether::load(std::string const & FileName)
 
 			if (Row.size() != Fields.size())
 				std::cerr << "Mismatched row size at row " << DataSet->Points.Size() << ", found " << Row.size() << " but expected " << Fields.size() << std::endl;
-			u32 Length = std::min(Row.size(), Fields.size());
+			u32 Length = Min(Row.size(), Fields.size());
 
 			STable::SRow & TableRow = DataSet->Points.AddRow();
 			for (u32 i = 0; i < Length; ++ i)

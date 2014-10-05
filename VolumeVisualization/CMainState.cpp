@@ -19,15 +19,15 @@ void CMainState::Begin()
 	Context->GUIContext->SetupMainState();
 
 	Context->Scene.Timer = 0.f;
-	Context->Scene.Glyphs->BuildLines();
+	//Context->Scene.Glyphs->BuildLines();
 
-	ReflectionRenderPass = sharedNew<CReflectionRenderPass>(new CReflectionRenderPass);
-	SceneManager->getEffectManager()->RenderPasses.push_back(ReflectionRenderPass);
+	//ReflectionRenderPass = sharedNew<CReflectionRenderPass>(new CReflectionRenderPass);
+	//SceneManager->getEffectManager()->RenderPasses.push_back(ReflectionRenderPass);
 
 	CalculateDataAlignment();
 	OrbitCameraTimer = 0;
 
-	Font.init("OpenSans.ttf", 18);
+	Font = IFont::init("OpenSans.ttf", 18);
 }
 
 void CMainState::End()
@@ -37,14 +37,14 @@ void CMainState::End()
 
 void CMainState::BeginGifDraw()
 {
-	SceneManager->setActiveCamera(Context->Scene.OrbitCamera);
-	gifWriter = new GifWriter(SceneManager->getScreenSize());
+	SceneManager->GetScene()->SetActiveCamera(Context->Scene.OrbitCamera);
+	gifWriter = new GifWriter(Context->Window->GetSize());
 	OrbitCameraTimer = 0;
 }
 
 void CMainState::EndGifDraw()
 {
-	SceneManager->setActiveCamera(Context->Scene.Camera);
+	SceneManager->GetScene()->SetActiveCamera(Context->Scene.Camera);
 	if (! gifWriter->Save("output.gif"))
 	{
 		std::cerr << "GIF writing failed" << std::endl;
@@ -61,7 +61,7 @@ void CMainState::Update(f32 const Elapsed)
 {
 	CProgramContext::SScene & Scene = Context->Scene;
 
-	Scene.Camera->Update(Elapsed);
+	Scene.CameraController->Update(Elapsed);
 
 	f32 Radius = Scene.Camera->GetPosition().Length();
 	if (Radius < 10.f)
@@ -89,64 +89,63 @@ void CMainState::Update(f32 const Elapsed)
 		Scene.Camera->SetNearPlane(4000.f);
 		Scene.Camera->SetFarPlane(20000.f);
 	}
-	Scene.Camera->UpdateProjection();
 
 	Scene.Timer += Elapsed * 0.16f;
 
 	float const Distance = 2.5f;
 	static f32 const Speed = 1.f;
 	static f32 const Increment = 0.05f;
-	Scene.OrbitCamera->setPosition(SVector3f(sin(Speed*OrbitCameraTimer)*Distance, 0.4f, cos(Speed*OrbitCameraTimer)*Distance));
+	Scene.OrbitCamera->SetPosition(SVector3f(sin(Speed*OrbitCameraTimer)*Distance, 0.4f, cos(Speed*OrbitCameraTimer)*Distance));
 	Scene.OrbitCamera->SetLookAtTarget(vec3f(0, -0.5f, 0));
 	OrbitCameraTimer += Increment;
 
-	Scene.LightPosition = SceneManager->getActiveCamera()->getPosition() + SVector3f(0, 0, 0);
+	Scene.LightPosition = SceneManager->GetScene()->GetActiveCamera()->GetPosition() + SVector3f(0, 0, 0);
 
-	SceneManager->getDefaultColorRenderPass()->onPreDraw();
+	//SceneManager->GetDefaultColorRenderPass()->onPreDraw();
 	glClearColor(1.f, 0.25f, 0.05f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glClearColor(0.15f, 0.45f, 0.5f, 1.0f);
 
 	glDisable(GL_DEPTH_TEST);
-	Context->Scene.SkyBox->setPosition(SceneManager->getActiveCamera()->getPosition());
-	Context->Scene.SkyBox->update();
-	Context->Scene.SkyBox->updateAbsoluteTransformation();
-	SceneManager->update();
-	Context->Scene.SkyBox->load(SceneManager, SceneManager->getDefaultColorRenderPass());
-	Context->Scene.SkyBox->draw(SceneManager, SceneManager->getDefaultColorRenderPass(), false);
+	Context->Scene.SkyBox->SetPosition(SceneManager->GetScene()->GetActiveCamera()->GetPosition());
+	Context->Scene.SkyBox->Update();
+	Context->Scene.SkyBox->UpdateAbsoluteTransformation();
+
+	//Context->Scene.SkyBox->load(SceneManager, SceneManager->getDefaultColorRenderPass());
+	//Context->Scene.SkyBox->draw(SceneManager, SceneManager->getDefaultColorRenderPass(), false);
 	glEnable(GL_DEPTH_TEST);
 
-	SceneManager->drawAll();
+	SceneManager->DrawAll();
 
 	if (! ShowDepth)
 	{
-		Context->Scene.Volume->draw(SceneManager, SceneManager->getDefaultColorRenderPass(), false);
+		//Context->Scene.Volume->draw(SceneManager, SceneManager->getDefaultColorRenderPass(), false);
 
-		glEnable(GL_BLEND);
-		glDepthMask(false);
-		Context->Scene.Water->draw(SceneManager, SceneManager->getDefaultColorRenderPass(), false);
-		glDepthMask(true);
+		//glEnable(GL_BLEND);
+		//glDepthMask(false);
+		//Context->Scene.Water->draw(SceneManager, SceneManager->getDefaultColorRenderPass(), false);
+		//glDepthMask(true);
 
-		SceneManager->endDraw();
+		//SceneManager->endDraw();
 	}
 
-	if (ShowDepth)
-	{
-		CFrameBufferObject::bindDeviceBackBuffer();
-		glDisable(GL_DEPTH_TEST);
-		{
-			CShaderContext Context(* CShaderLoader::loadShader("FBO/QuadCopy"));
+	//if (ShowDepth)
+	//{
+	//	CFrameBufferObject::bindDeviceBackBuffer();
+	//	glDisable(GL_DEPTH_TEST);
+	//	{
+	//		CShaderContext Context(* CShaderLoader::loadShader("FBO/QuadCopy"));
 
-			Context.bindTexture("uTexColor", SceneManager->getSceneDepthTexture());
-			Context.bindBufferObject("aPosition", CSceneManager::getQuadHandle(), 2);
+	//		Context.bindTexture("uTexColor", SceneManager->getSceneDepthTexture());
+	//		Context.bindBufferObject("aPosition", CSceneManager::getQuadHandle(), 2);
 
-			glDrawArrays(GL_QUADS, 0, 4);
-		}
-		glEnable(GL_DEPTH_TEST);
-	}
+	//		glDrawArrays(GL_QUADS, 0, 4);
+	//	}
+	//	glEnable(GL_DEPTH_TEST);
+	//}
 
 	if (GUIEnabled)
-		Context->GUIContext->Draw(Elapsed, false);
+		Context->GUIContext->Manager->Draw(Elapsed, false);
 	
 	//auto GetValueAt = [](f32 const v)
 	//{
@@ -173,8 +172,8 @@ void CMainState::Update(f32 const Elapsed)
     // Read screen colors
 	if (gifWriter)
 	{
-		u32 const FrameWidth = Application->GetWindow().GetSize().X;
-		u32 const FrameHeight = Application->GetWindow().GetSize().Y;
+		u32 const FrameWidth = Context->Window->GetSize().X;
+		u32 const FrameHeight = Context->Window->GetSize().Y;
 		unsigned char * ImageData = new unsigned char[FrameWidth * FrameHeight * 3];
 
 		static u32 Counter = 0;
@@ -187,7 +186,7 @@ void CMainState::Update(f32 const Elapsed)
 			EndGifDraw();
 	}
 
-	CApplication::Get().GetWindow().SwapBuffers();
+	Context->Window->SwapBuffers();
 }
 
 void CMainState::AddConsoleMessage(std::string const & Message, color4i const & Color)
@@ -252,29 +251,29 @@ void CMainState::CalculateDataAlignment()
 	static f64 const YExaggeration = 8.0;
 	static vec3d const Multiplier = vec3d(1, YExaggeration, 1);
 	
-	Scene.Glyphs->setScale(DataScale * Multiplier);
-	Scene.Volume->setScale(DataScale * Multiplier);
-	Scene.Glyphs->setTranslation(vec3f(0, -DataScale.Y * YExaggeration / 2, 0));
-	Scene.Volume->setTranslation(vec3f(0, -DataScale.Y * YExaggeration / 2, 0));
-	
-	Scene.Terrain->setScale(MapScale * Multiplier / CTerrainSceneObject::Size);
-	Scene.Water->setScale(MapScale / CTerrainSceneObject::Size);
-	//Scene.SkyBox->setScale(SVector3f(MapScale.X, 30.f, MapScale.Z));
+	//Scene.Glyphs->SetScale(DataScale * Multiplier);
+	//Scene.Volume->SetScale(DataScale * Multiplier);
+	//Scene.Glyphs->SetTranslation(vec3f(0, -DataScale.Y * YExaggeration / 2, 0));
+	//Scene.Volume->SetTranslation(vec3f(0, -DataScale.Y * YExaggeration / 2, 0));
+	//
+	//Scene.Terrain->SetScale(MapScale * Multiplier / CTerrainSceneObject::Size);
+	//Scene.Water->SetScale(MapScale / CTerrainSceneObject::Size);
+	////Scene.SkyBox->SetScale(SVector3f(MapScale.X, 30.f, MapScale.Z));
 
-	Scene.Terrain->setTranslation(vec3f(MapOffset.X, 0, -MapOffset.Y));
-	Scene.Water->setTranslation(vec3f(MapOffset.X, 0, -MapOffset.Y));
-	//Scene.SkyBox->setTranslation(vec3f(MapOffset.X, 0, -MapOffset.Y));
-	
-	// Flip for RHC->LHC
-	Scene.Glyphs->setScale(Scene.Glyphs->getScale() * vec3f(1, 1, -1));
-	Scene.Volume->setScale(Scene.Volume->getScale() * vec3f(1, 1, -1));
-	Scene.Terrain->setScale(Scene.Terrain->getScale() * vec3f(1, 1, -1));
-	Scene.Water->setScale(Scene.Water->getScale() * vec3f(1, 1, -1));
-	//Scene.SkyBox->setScale(Scene.SkyBox->getScale() * vec3f(1, 1, -1));
-	
-	// Flip Height -> Depth
-	Scene.Volume->setScale(Scene.Volume->getScale() * vec3f(1, -1, 1));
-	Scene.Glyphs->setScale(Scene.Glyphs->getScale() * vec3f(1, -1, 1));
+	//Scene.Terrain->SetTranslation(vec3f(MapOffset.X, 0, -MapOffset.Y));
+	//Scene.Water->SetTranslation(vec3f(MapOffset.X, 0, -MapOffset.Y));
+	////Scene.SkyBox->setTranslation(vec3f(MapOffset.X, 0, -MapOffset.Y));
+	//
+	//// Flip for RHC->LHC
+	//Scene.Glyphs->SetScale(Scene.Glyphs->GetScale() * vec3f(1, 1, -1));
+	//Scene.Volume->SetScale(Scene.Volume->GetScale() * vec3f(1, 1, -1));
+	//Scene.Terrain->SetScale(Scene.Terrain->GetScale() * vec3f(1, 1, -1));
+	//Scene.Water->SetScale(Scene.Water->GetScale() * vec3f(1, 1, -1));
+	////Scene.SkyBox->SetScale(Scene.SkyBox->GetScale() * vec3f(1, 1, -1));
+	//
+	//// Flip Height -> Depth
+	//Scene.Volume->SetScale(Scene.Volume->GetScale() * vec3f(1, -1, 1));
+	//Scene.Glyphs->SetScale(Scene.Glyphs->GetScale() * vec3f(1, -1, 1));
 }
 
 void CMainState::SetSite(int site)

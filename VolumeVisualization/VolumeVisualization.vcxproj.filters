@@ -214,6 +214,9 @@
     <ClInclude Include="GifWriter.h">
       <Filter>Utilities</Filter>
     </ClInclude>
+    <ClInclude Include="CContextState.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="MainState">

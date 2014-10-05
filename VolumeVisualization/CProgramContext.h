@@ -6,9 +6,10 @@
 #include <ionWindow.h>
 #include <ionFramework.h>
 #include <ionScience.h>
+#include <ionBootstrap.h>
 
 #include "CGUIContext.h"
-
+#include "CContextState.h"
 
 class CTerrainSceneObject;
 class CVolumeSceneObject;
@@ -27,18 +28,19 @@ public:
 	struct SScene
 	{
 		// Cameras
-		CCameraControl * Camera;
-		ICameraSceneObject * OrbitCamera;
+		CPerspectiveCamera * Camera;
+		CCameraController * CameraController;
+		ICamera * OrbitCamera;
 
 		// Orbit Camera Timer
 		float Timer;
 
 		// Lighting
-		CMeshSceneObject * LightObject;
+		CSceneNode * LightObject;
 		SVector3f LightPosition;
 
 		// Scene object
-		CMeshSceneObject * SkyBox;
+		CSceneNode * SkyBox;
 		CTerrainSceneObject * Terrain;
 		CGlyphSceneObject * Glyphs;
 		CVolumeSceneObject * Volume;
@@ -71,6 +73,7 @@ public:
 
 	CGUIContext * GUIContext;
 	CSite * CurrentSite;
+	CWindow * Window;
 
 	CProgramContext();
 	void Run();

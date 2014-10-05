@@ -1,5 +1,5 @@
 #include "CTerrainSceneObject.h"
-
+/*
 #include "CProgramContext.h"
 
 
@@ -99,3 +99,4 @@ bool CTerrainSceneObject::IsDebugHeightEnabled()
 {
 	return DebugHeight;
 }
+*/

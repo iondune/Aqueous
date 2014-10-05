@@ -8,7 +8,7 @@
 
 
 CGUIVolumeControlWidget::CGUIVolumeControlWidget()
-	: VolumeControl(CProgramContext::Get().Scene.Volume->Control), MainState(CMainState::Get())
+	: /*VolumeControl(CProgramContext::Get().Scene.Volume->Control),*/ MainState(CMainState::Get())
 {
 	Window = new Gwen::Controls::WindowControl(GUIManager->GetCanvas());
 	Window->SetDeleteOnClose(false);
@@ -158,7 +158,7 @@ CGUIVolumeControlWidget::CGUIVolumeControlWidget()
 		Gwen::Controls::HorizontalSlider * StepSizeSlider = new Gwen::Controls::HorizontalSlider(Window);
 		StepSizeSlider->SetBounds(10, 545, 300, 40);
 		StepSizeSlider->SetRange(10.f, 300.f);
-		StepSizeSlider->SetFloatValue(VolumeControl.StepSize);
+		//StepSizeSlider->SetFloatValue(VolumeControl.StepSize);
 
 		// Wire Up Events
 		pButton2->onPress.Add(this,					& CGUIVolumeControlWidget::OnResetAlpha);
@@ -175,66 +175,66 @@ CGUIVolumeControlWidget::CGUIVolumeControlWidget()
 
 void CGUIVolumeControlWidget::resetVolumeRange()
 {
-	if (VolumeControl.Mode)
-		GUIContext->GetTitleLabels()->resetVolumeRangeIndicator(CProgramContext::Get().CurrentSite);
+	//if (VolumeControl.Mode)
+	//	GUIContext->GetTitleLabels()->resetVolumeRangeIndicator(CProgramContext::Get().CurrentSite);
 }
 
 void CGUIVolumeControlWidget::OnEmphasisSlider(Gwen::Controls::Base * Control)
 {
 	Gwen::Controls::Slider * Bar = (Gwen::Controls::Slider *) Control;
-	VolumeControl.EmphasisLocation = Bar->GetFloatValue();
+	//VolumeControl.EmphasisLocation = Bar->GetFloatValue();
 	resetVolumeRange();
 }
 
 void CGUIVolumeControlWidget::OnIntensitySlider(Gwen::Controls::Base * Control)
 {
 	Gwen::Controls::Slider * Bar = (Gwen::Controls::Slider *) Control;
-	VolumeControl.AlphaIntensity = Bar->GetFloatValue();
+	//VolumeControl.AlphaIntensity = Bar->GetFloatValue();
 }
 
 void CGUIVolumeControlWidget::OnMinimumAlphaSlider(Gwen::Controls::Base * Control)
 {
 	Gwen::Controls::Slider * Bar = (Gwen::Controls::Slider *) Control;
-	VolumeControl.MinimumAlpha = Bar->GetFloatValue();
+	//VolumeControl.MinimumAlpha = Bar->GetFloatValue();
 }
 
 void CGUIVolumeControlWidget::OnLocalRangeSlider(Gwen::Controls::Base * Control)
 {
 	Gwen::Controls::Slider * Bar = (Gwen::Controls::Slider *) Control;
-	VolumeControl.LocalRange = Bar->GetFloatValue();
+	//VolumeControl.LocalRange = Bar->GetFloatValue();
 	resetVolumeRange();
 }
 
 void CGUIVolumeControlWidget::OnStepSizeSlider(Gwen::Controls::Base * Control)
 {
 	Gwen::Controls::Slider * Bar = (Gwen::Controls::Slider *) Control;
-	VolumeControl.StepSize = Bar->GetFloatValue();
+	//VolumeControl.StepSize = Bar->GetFloatValue();
 }
 
 void CGUIVolumeControlWidget::OnResetVolume(Gwen::Controls::Base * Control)
 {
-	VolumeControl.Mode = 0;
+	//VolumeControl.Mode = 0;
 }
 
 void CGUIVolumeControlWidget::OnResetAlpha(Gwen::Controls::Base * Control)
 {
 	IntensitySlider->SetFloatValue(1.f);
-	VolumeControl.AlphaIntensity = 1.f;
+	//VolumeControl.AlphaIntensity = 1.f;
 }
 
 void CGUIVolumeControlWidget::OnSetXAxis(Gwen::Controls::Base * Control)
 {
-	VolumeControl.SliceAxis = SVector3f(1.f, 0.f, 0.f);
+	//VolumeControl.SliceAxis = SVector3f(1.f, 0.f, 0.f);
 }
 
 void CGUIVolumeControlWidget::OnSetYAxis(Gwen::Controls::Base * Control)
 {
-	VolumeControl.SliceAxis = SVector3f(0.f, 1.f, 0.f);
+	//VolumeControl.SliceAxis = SVector3f(0.f, 1.f, 0.f);
 }
 
 void CGUIVolumeControlWidget::OnSetZAxis(Gwen::Controls::Base * Control)
 {
-	VolumeControl.SliceAxis = SVector3f(0.f, 0.f, 1.f);
+	//VolumeControl.SliceAxis = SVector3f(0.f, 0.f, 1.f);
 }
 
 void CGUIVolumeControlWidget::OnVolumeMode(Gwen::Controls::Base * Control)
@@ -243,22 +243,22 @@ void CGUIVolumeControlWidget::OnVolumeMode(Gwen::Controls::Base * Control)
 
 	if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Plane Slices"))
 	{
-		VolumeControl.Mode = 1;
+		//VolumeControl.Mode = 1;
 		CProgramContext::Get().GUIContext->GetTitleLabels()->clearVolumeRangeIndicator();
 	}
 	else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Isosurface"))
 	{
-		VolumeControl.Mode = 2;
+		//VolumeControl.Mode = 2;
 		resetVolumeRange();
 	}
 	else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Constant"))
 	{
-		VolumeControl.Mode = 0;
+		//VolumeControl.Mode = 0;
 		CProgramContext::Get().GUIContext->GetTitleLabels()->clearVolumeRangeIndicator();
 	}
 	else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Sample Alpha"))
 	{
-		VolumeControl.Mode = 3;
+		//VolumeControl.Mode = 3;
 		CProgramContext::Get().GUIContext->GetTitleLabels()->clearVolumeRangeIndicator();
 	}
 }
@@ -267,32 +267,32 @@ void CGUIVolumeControlWidget::OnShadingMode(Gwen::Controls::Base * Control)
 {
 	Gwen::Controls::ComboBox * Box = (Gwen::Controls::ComboBox *) Control;
 
-	if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"No Shading"))
-		VolumeControl.UseShading = 0;
-	else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Orbit Camera"))
-		VolumeControl.UseShading = 1;
-	else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Fly Camera"))
-		VolumeControl.UseShading = 2;
+	//if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"No Shading"))
+		//VolumeControl.UseShading = 0;
+	//else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Orbit Camera"))
+		//VolumeControl.UseShading = 1;
+	//else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Fly Camera"))
+		//VolumeControl.UseShading = 2;
 }
 
 void CGUIVolumeControlWidget::OnDebugMode(Gwen::Controls::Base * Control)
 {
 	Gwen::Controls::ComboBox * Box = (Gwen::Controls::ComboBox *) Control;
 
-	if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Disabled"))
-		VolumeControl.DebugLevel = 0;
-	else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Front"))
-		VolumeControl.DebugLevel = 1;
-	else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Cutoff"))
-		VolumeControl.DebugLevel = 2;
-	else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Accumulator"))
-		VolumeControl.DebugLevel = 3;
-	else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Iterations"))
-		VolumeControl.DebugLevel = 4;
-	else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Box Depth"))
-		VolumeControl.DebugLevel = 5;
-	else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Gradient"))
-		VolumeControl.DebugLevel = 6;
+	//if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Disabled"))
+	//	VolumeControl.DebugLevel = 0;
+	//else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Front"))
+	//	VolumeControl.DebugLevel = 1;
+	//else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Cutoff"))
+	//	VolumeControl.DebugLevel = 2;
+	//else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Accumulator"))
+	//	VolumeControl.DebugLevel = 3;
+	//else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Iterations"))
+	//	VolumeControl.DebugLevel = 4;
+	//else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Box Depth"))
+	//	VolumeControl.DebugLevel = 5;
+	//else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Gradient"))
+	//	VolumeControl.DebugLevel = 6;
 }
 
 void CGUIVolumeControlWidget::OnDepthMode(Gwen::Controls::Base * Control)
@@ -306,18 +306,18 @@ void CGUIVolumeControlWidget::OnToggleVolume(Gwen::Controls::Base * Control)
 {
 	CProgramContext * Context = & CProgramContext::Get();
 
-	if (Context->Scene.Volume->isVisible())
-	{
-		Context->Scene.Volume->setVisible(false);
-		GUIContext->GetConsole()->AddMessage("Volume View Disabled");
-		EnableButton->SetText("Enable Volume View");
-	}
-	else
-	{
-		Context->Scene.Volume->setVisible(true);
-		GUIContext->GetConsole()->AddMessage("Volume View Enabled");
-		EnableButton->SetText("Disable Volume View");
-	}
+	//if (Context->Scene.Volume->isVisible())
+	//{
+	//	Context->Scene.Volume->setVisible(false);
+	//	GUIContext->GetConsole()->AddMessage("Volume View Disabled");
+	//	EnableButton->SetText("Enable Volume View");
+	//}
+	//else
+	//{
+	//	Context->Scene.Volume->setVisible(true);
+	//	GUIContext->GetConsole()->AddMessage("Volume View Enabled");
+	//	EnableButton->SetText("Disable Volume View");
+	//}
 }
 
 void CGUIVolumeControlWidget::toggle()

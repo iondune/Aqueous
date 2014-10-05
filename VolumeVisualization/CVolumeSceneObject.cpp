@@ -1,5 +1,5 @@
 #include "CVolumeSceneObject.h"
-
+/*
 #include <ionWindow.h>
 
 #include "CProgramContext.h"
@@ -206,3 +206,4 @@ bool CVolumeSceneObject::draw(IScene const * const Scene, sharedPtr<IRenderPass>
 
 	return true;
 }
+*/

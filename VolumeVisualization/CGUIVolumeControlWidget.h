@@ -13,7 +13,7 @@ class CMainState;
 class CGUIVolumeControlWidget : public CGUIContextWidget
 {
 
-	CVolumeSceneObject::SControl & VolumeControl;
+	//CVolumeSceneObject::SControl & VolumeControl;
 	CMainState & MainState;
 
 	Gwen::Controls::WindowControl * Window;

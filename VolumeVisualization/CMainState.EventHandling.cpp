@@ -13,8 +13,8 @@ void CMainState::OnEvent(SKeyboardEvent & Event)
 
 	case EKey::Escape:
 
-		if (! Event.Pressed)
-			Application->Close();
+		//if (! Event.Pressed)
+		//	Application->Close();
 		break;
 
 
@@ -25,37 +25,37 @@ void CMainState::OnEvent(SKeyboardEvent & Event)
 	case EKey::Num6:
 
 		if (! Event.Pressed)
-			Context->Scene.Camera->SetVelocity(500.f);
+			Context->Scene.CameraController->SetVelocity(500.f);
 		break;
 
 	case EKey::Num5:
 
 		if (! Event.Pressed)
-			Context->Scene.Camera->SetVelocity(50.f);
+			Context->Scene.CameraController->SetVelocity(50.f);
 		break;
 
 	case EKey::Num4:
 
 		if (! Event.Pressed)
-			Context->Scene.Camera->SetVelocity(10.f);
+			Context->Scene.CameraController->SetVelocity(10.f);
 		break;
 
 	case EKey::Num3:
 
 		if (! Event.Pressed)
-			Context->Scene.Camera->SetVelocity(2.5f);
+			Context->Scene.CameraController->SetVelocity(2.5f);
 		break;
 
 	case EKey::Num2:
 
 		if (! Event.Pressed)
-			Context->Scene.Camera->SetVelocity(0.75f);
+			Context->Scene.CameraController->SetVelocity(0.75f);
 		break;
 
 	case EKey::Num1:
 
 		if (! Event.Pressed)
-			Context->Scene.Camera->SetVelocity(0.1f);
+			Context->Scene.CameraController->SetVelocity(0.1f);
 		break;
 
 
@@ -90,9 +90,9 @@ void CMainState::OnEvent(SKeyboardEvent & Event)
 
 		if (! Event.Pressed)
 		{
-			Context->Scene.SkyBox->setVisible(! Context->Scene.SkyBox->isVisible());
+			Context->Scene.SkyBox->SetVisible(! Context->Scene.SkyBox->IsVisible());
 			s << "Skybox object ";
-			if (Context->Scene.SkyBox->isVisible())
+			if (Context->Scene.SkyBox->IsVisible())
 				s << "enabled.";
 			else
 				s << "disabled.";
@@ -103,14 +103,14 @@ void CMainState::OnEvent(SKeyboardEvent & Event)
 
 	case EKey::LeftBracket:
 
-		if (! Event.Pressed)
-			printf("%d\n", ++ Context->Scene.Terrain->DebugMode);
+		//if (! Event.Pressed)
+		//	printf("%d\n", ++ Context->Scene.Terrain->DebugMode);
 		break;
 
 	case EKey::RightBracket:
 
-		if (! Event.Pressed)
-			printf("%d\n", -- Context->Scene.Terrain->DebugMode);
+		//if (! Event.Pressed)
+		//	printf("%d\n", -- Context->Scene.Terrain->DebugMode);
 		break;
 
 	//case EKey::Y:
@@ -121,8 +121,8 @@ void CMainState::OnEvent(SKeyboardEvent & Event)
 
 	case EKey::B:
 
-		if (! Event.Pressed)
-			SceneManager->getEffectManager()->setEffectEnabled(ESE_BLOOM, ! SceneManager->getEffectManager()->isEffectEnabled(ESE_BLOOM));
+		//if (! Event.Pressed)
+		//	SceneManager->getEffectManager()->setEffectEnabled(ESE_BLOOM, ! SceneManager->getEffectManager()->isEffectEnabled(ESE_BLOOM));
 		break;
 
 
@@ -133,13 +133,13 @@ void CMainState::OnEvent(SKeyboardEvent & Event)
 	case EKey::H:
 
 		if (! Event.Pressed)
-			SceneManager->setActiveCamera(Context->Scene.OrbitCamera);
+			SceneManager->GetScene()->SetActiveCamera(Context->Scene.OrbitCamera);
 		break;
 		
 	case EKey::N:
 
 		if (! Event.Pressed)
-			SceneManager->setActiveCamera(Context->Scene.Camera);
+			SceneManager->GetScene()->SetActiveCamera(Context->Scene.Camera);
 		break;
 		
 	case EKey::M:
@@ -239,5 +239,5 @@ void CMainState::OnEvent(SWindowResizedEvent & Event)
 	Context->GUIContext->GetCanvas()->Invalidate();
 	Context->GUIContext->GetCanvas()->InvalidateChildren(true);
 
-	Context->Scene.Camera->SetAspectRatio(CApplication::Get().GetWindow().GetAspectRatio());
+	Context->Scene.Camera->SetAspectRatio(Context->Window->GetAspectRatio());
 }

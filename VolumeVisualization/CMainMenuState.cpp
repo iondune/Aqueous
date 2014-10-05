@@ -29,14 +29,13 @@ void CMainMenuState::End()
 
 void CMainMenuState::Update(f32 const Elapsed)
 {
-	printOpenGLErrors();
 	std::chrono::milliseconds Milliseconds(50);
 	std::this_thread::sleep_for(Milliseconds);
 
 	Thread.Sync();
 
-	Context->GUIContext->Draw(Elapsed, true);
-	CApplication::Get().GetWindow().SwapBuffers();
+	Context->GUIContext->Manager->Draw(Elapsed, true);
+	Context->Window->SwapBuffers();
 
 	static int Counter = 0;
 	if (! Counter--)
@@ -66,7 +65,7 @@ void CMainMenuState::LoadData(std::string const & FileName)
 	//s << FileName;
 
 	Thread.Context = Context;
-	Thread.LoadingWidget = new CGUIProgressBarWidget(Context->GUIContext, "Loading data and initializing scene elements");
+	Thread.LoadingWidget = new CGUIProgressBarWidget(Context->GUIContext->Manager.Get(), "Loading data and initializing scene elements");
 	Thread.LoadingWidget->BeginProgress();
 	Thread.Run(/*s.str()*/);
 }

@@ -17,29 +17,41 @@ CProgramContext::SShaders::SShaders()
 {}
 
 CProgramContext::CProgramContext()
-	: GUIContext(), CurrentSite()
+	: GUIContext(), CurrentSite(), Window()
 {}
 
 void CProgramContext::Run()
 {
-	// Directory Setup
-	CImageLoader::ImageDirectory = "Media/";
-	CMeshLoader::MeshDirectory = "Media/";
-	CShaderLoader::ShaderDirectory = "Shaders/";
+	SingletonPointer<CWindowManager> WindowManager;
+	SingletonPointer<CSceneManager> SceneManager;
+	SingletonPointer<CTimeManager> TimeManager;
+	SingletonPointer<CStateManager> StateManager;
 
-	// Create Window
-	CApplication & Application = CApplication::Get();
-	Application.Init(SVector2i(1600, 1000), "Underwater Volume Data Rendering");
+	WindowManager->Init();
+	Window = WindowManager->CreateWindow(vec2i(1600, 1000), "Underwater Volume Data Rendering", EWindowType::Windowed);
+	
+	SceneManager->GetTextureLibrary()->SetBaseDirectory("Media/");
+	SceneManager->GetMeshLibrary()->SetBaseDirectory("Media/");
+	SceneManager->GetShaderLibrary()->SetBaseDirectory("Shaders/");
 
 	// Create GUI Engine
 	std::cout << "GUI Engine is initializing..." << std::endl;
 	GUIContext = new CGUIContext();
-	GUIContext->Init();
+	GUIContext->Manager->Init();
 
 	// Begin loading
 	CLoadState & LoadState = CLoadState::Get();
-	Application.GetStateManager().SetState(& LoadState);
+	StateManager->SetState(& LoadState);
 
 	// Run program
-	Application.Run();
+	ion::GL::Context::Init();
+	TimeManager->Init();
+	while (! WindowManager->ShouldClose())
+	{
+		WindowManager->PollEvents();
+		TimeManager->Update();
+
+		SceneManager->DrawAll();
+		Window->SwapBuffers();
+	}
 }

@@ -1,5 +1,5 @@
 #include "CGlyphSceneObject.h"
-
+/*
 #include <ionWindow.h>
 
 #include "CProgramContext.h"
@@ -70,7 +70,7 @@ void CGlyphSceneObject::LoadGlyphs(CDataSet * DataSet, IColorMapper * ColorMappe
 			f32 Depth = (f32) v / (f32) YRange.second;
 			Glyph.FloorHeight = 1.f - Depth;
 		}
-		*/
+		* /
 
 		Glyph.Position = vec3f(X, Y, Z) - 0.5f;
 		Glyph.Color = ColorMapper->GetColor(Point);
@@ -177,3 +177,4 @@ void CGlyphSceneObject::BuildLines()
 	Lines.syncData();
 	LineColors.syncData();
 }
+*/

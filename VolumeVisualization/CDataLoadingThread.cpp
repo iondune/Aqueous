@@ -22,7 +22,7 @@ void CDataLoadingThread::End()
 {
 	Context->CurrentSite->ConcurrentLoad();
 	Context->CurrentSite->InitSceneElements(Context->Scene);
-	CApplication::Get().GetStateManager().SetState(CMainState::GetPtr());
+	CStateManager::Get().SetState(CMainState::GetPtr());
 }
 
 CDataLoadingThread::CDataLoadingThread()

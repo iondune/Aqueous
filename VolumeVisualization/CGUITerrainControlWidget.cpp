@@ -20,12 +20,12 @@ CGUITerrainControlWidget::CGUITerrainControlWidget()
 
 	TerrainButton = new Gwen::Controls::Button(Window);
 	TerrainButton->SetBounds(15, 10, 290, 25);
-	TerrainButton->SetText(Terrain->isVisible() ? "Disable Terrain" : "Enable Terrain");
+	//TerrainButton->SetText(Terrain->isVisible() ? "Disable Terrain" : "Enable Terrain");
 	TerrainButton->onPress.Add(this, & CGUITerrainControlWidget::OnToggleTerrain);
 
 	WaterButton = new Gwen::Controls::Button(Window);
 	WaterButton->SetBounds(15, 10 + 35, 290, 25);
-	WaterButton->SetText(Water->isVisible() ? "Disable Water" : "Enable Water");
+	//WaterButton->SetText(Water->isVisible() ? "Disable Water" : "Enable Water");
 	WaterButton->onPress.Add(this, & CGUITerrainControlWidget::OnToggleWater);
 
 	// Panel
@@ -69,60 +69,60 @@ void CGUITerrainControlWidget::OnToggleTerrain(Gwen::Controls::Base * Control)
 {
 	CProgramContext * Context = & CProgramContext::Get();
 
-	if (Context->Scene.Terrain->isVisible())
-	{
-		Context->Scene.Terrain->setVisible(false);
-		GUIContext->GetConsole()->AddMessage("Terrain View Disabled");
-		TerrainButton->SetText("Enable Terrain");
-	}
-	else
-	{
-		Context->Scene.Terrain->setVisible(true);
-		GUIContext->GetConsole()->AddMessage("Terrain View Enabled");
-		TerrainButton->SetText("Disable Terrain");
-	}
+	//if (Context->Scene.Terrain->isVisible())
+	//{
+	//	Context->Scene.Terrain->setVisible(false);
+	//	GUIContext->GetConsole()->AddMessage("Terrain View Disabled");
+	//	TerrainButton->SetText("Enable Terrain");
+	//}
+	//else
+	//{
+	//	Context->Scene.Terrain->setVisible(true);
+	//	GUIContext->GetConsole()->AddMessage("Terrain View Enabled");
+	//	TerrainButton->SetText("Disable Terrain");
+	//}
 }
 
 void CGUITerrainControlWidget::OnToggleWater(Gwen::Controls::Base * Control)
 {
 	CProgramContext * Context = & CProgramContext::Get();
 
-	if (Context->Scene.Water->isVisible())
-	{
-		Context->Scene.Water->setVisible(false);
-		GUIContext->GetConsole()->AddMessage("Water View Disabled");
-		WaterButton->SetText("Enable Water");
-	}
-	else
-	{
-		Context->Scene.Water->setVisible(true);
-		GUIContext->GetConsole()->AddMessage("Water View Enabled");
-		WaterButton->SetText("Disable Water");
-	}
+	//if (Context->Scene.Water->isVisible())
+	//{
+	//	Context->Scene.Water->setVisible(false);
+	//	GUIContext->GetConsole()->AddMessage("Water View Disabled");
+	//	WaterButton->SetText("Enable Water");
+	//}
+	//else
+	//{
+	//	Context->Scene.Water->setVisible(true);
+	//	GUIContext->GetConsole()->AddMessage("Water View Enabled");
+	//	WaterButton->SetText("Disable Water");
+	//}
 }
 
 void CGUITerrainControlWidget::OnSelectElevation(Gwen::Controls::Base * Control)
 {
 	CProgramContext * Context = & CProgramContext::Get();
-	Context->Scene.Terrain->SetDebugHeightEnabled(true);
+	//Context->Scene.Terrain->SetDebugHeightEnabled(true);
 }
 
 void CGUITerrainControlWidget::OnSelectColor(Gwen::Controls::Base * Control)
 {
 	CProgramContext * Context = & CProgramContext::Get();
-	Context->Scene.Terrain->SetDebugHeightEnabled(false);
+	//Context->Scene.Terrain->SetDebugHeightEnabled(false);
 }
 
 void CGUITerrainControlWidget::OnSelectSolid(Gwen::Controls::Base * Control)
 {
 	CProgramContext * Context = & CProgramContext::Get();
-	Context->Scene.Terrain->disableDebugData(EDebugData::Wireframe);
+	//Context->Scene.Terrain->disableDebugData(EDebugData::Wireframe);
 }
 
 void CGUITerrainControlWidget::OnSelectWireframe(Gwen::Controls::Base * Control)
 {
 	CProgramContext * Context = & CProgramContext::Get();
-	Context->Scene.Terrain->enableDebugData(EDebugData::Wireframe);
+	//Context->Scene.Terrain->enableDebugData(EDebugData::Wireframe);
 }
 
 void CGUITerrainControlWidget::toggle()

@@ -17,21 +17,8 @@
 
 class CMainState;
 
-class CGUIContext : public CGUIManager
+class CGUIContext
 {
-
-protected:
-
-	CMainState & MainState;
-	
-	CGUIConsoleWidget * Console;
-	CGUITitleLabelsWidget * TitleLabels;
-	CGUIVolumeControlWidget * VolumeControl;
-	CGUITerrainControlWidget * TerrainControl;
-	CGUIGlyphControlWidget * GlyphControl;
-	CGUISceneControlWidget * SceneControl;
-	CGUIControlPanelWidget * ControlPanel;
-	CGUIMainMenuWidget * MainMenu;
 
 public:
 
@@ -48,5 +35,22 @@ public:
 	CGUIGlyphControlWidget * GetGlyphControl();
 	CGUISceneControlWidget * GetSceneControl();
 	CGUIControlPanelWidget * GetControlPanel();
+	
+	Gwen::Controls::Canvas * GetCanvas();
+
+	SingletonPointer<CGUIManager> Manager;
+
+protected:
+
+	CMainState & MainState;
+	
+	CGUIConsoleWidget * Console;
+	CGUITitleLabelsWidget * TitleLabels;
+	CGUIVolumeControlWidget * VolumeControl;
+	CGUITerrainControlWidget * TerrainControl;
+	CGUIGlyphControlWidget * GlyphControl;
+	CGUISceneControlWidget * SceneControl;
+	CGUIControlPanelWidget * ControlPanel;
+	CGUIMainMenuWidget * MainMenu;
 
 };
