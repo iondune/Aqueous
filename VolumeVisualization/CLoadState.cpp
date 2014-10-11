@@ -184,5 +184,5 @@ void CLoadState::OnFinish()
 	// Cleanup GUI
 	Canvas->RemoveAllChildren();
 
-	//Application->GetStateManager().SetState(& CMainMenuState::Get());
+	StateManager->SetState(CMainMenuState::GetPtr());
 }
