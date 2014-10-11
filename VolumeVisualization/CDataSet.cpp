@@ -43,9 +43,9 @@ void CDataSet::ConcurrentLoad()
 	if (ZRange.IsEmpty())
 		ZRange = SRange<f64>(-1, 1);
 
-	for (s32 k = 0; k < Dimensions.Z; ++ k)
-		for (s32 j = 0; j < Dimensions.Y; ++ j)
-			for (s32 i = 0; i < Dimensions.X; ++ i)
+	for (u32 k = 0; k < Dimensions.Z; ++ k)
+		for (u32 j = 0; j < Dimensions.Y; ++ j)
+			for (u32 i = 0; i < Dimensions.X; ++ i)
 			{
 				u32 const Index = i + j * Dimensions.X + k * Dimensions.X * Dimensions.Y;
 
