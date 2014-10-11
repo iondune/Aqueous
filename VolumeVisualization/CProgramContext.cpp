@@ -6,20 +6,6 @@
 #include "CLoadState.h"
 
 
-CProgramContext::SScene::SScene()
-	: Camera(), OrbitCamera(), Timer(0),
-	LightObject(), SkyBox(), Terrain(), Glyphs(), 
-	Volume(), Cube()
-{}
-
-CProgramContext::SShaders::SShaders()
-: Diffuse(), DiffuseTexture(), Volume(), Terrain(), Glyph(), GlyphLines(), SkyBox()
-{}
-
-CProgramContext::CProgramContext()
-	: GUIContext(), CurrentSite(), Window()
-{}
-
 void CProgramContext::Run()
 {
 	SingletonPointer<CWindowManager> WindowManager;
@@ -27,31 +13,34 @@ void CProgramContext::Run()
 	SingletonPointer<CTimeManager> TimeManager;
 	SingletonPointer<CStateManager> StateManager;
 
+	// Window Initialization
 	WindowManager->Init();
 	Window = WindowManager->CreateWindow(vec2i(1600, 1000), "Underwater Volume Data Rendering", EWindowType::Windowed);
 	
+	// Directory Setup
 	SceneManager->GetTextureLibrary()->SetBaseDirectory("Media/");
 	SceneManager->GetMeshLibrary()->SetBaseDirectory("Media/");
 	SceneManager->GetShaderLibrary()->SetBaseDirectory("Shaders/");
 
 	// Create GUI Engine
 	std::cout << "GUI Engine is initializing..." << std::endl;
-	GUIContext = new CGUIContext();
-	GUIContext->Manager->Init();
+	SingletonPointer<CGUIContext> GUIContext;
+	GUIContext->Init();
 
 	// Begin loading
-	CLoadState & LoadState = CLoadState::Get();
-	StateManager->SetState(& LoadState);
+	SingletonPointer<CLoadState> LoadState;
+	StateManager->SetState(LoadState);
 
 	// Run program
-	ion::GL::Context::Init();
 	TimeManager->Init();
 	while (! WindowManager->ShouldClose())
 	{
+		StateManager->DoStateChange();
+
 		WindowManager->PollEvents();
 		TimeManager->Update();
 
-		SceneManager->DrawAll();
+		StateManager->Update(TimeManager->GetElapsedTime());
 		Window->SwapBuffers();
 	}
 }

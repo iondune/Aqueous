@@ -5,10 +5,10 @@
 #include "CMainState.h"
 
 
-CGUIContext::CGUIContext()
-	: MainState(CMainState::Get()), Console(0), TitleLabels(0), VolumeControl(0),
-	TerrainControl(0), GlyphControl(0), SceneControl(0), ControlPanel(0), MainMenu(0)
-{}
+void CGUIContext::Init()
+{
+	Manager->Init();
+}
 
 void CGUIContext::SetupMainState()
 {

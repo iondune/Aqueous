@@ -43,8 +43,8 @@ CLoadState::CLoadState()
 void CLoadState::Begin()
 {
 	// Load References
-	CMainState & MainState = CMainState::Get();
-	CMainMenuState & MenuState = CMainMenuState::Get();
+	SingletonPointer<CMainState> MainState;
+	SingletonPointer<CMainMenuState> MenuState;
 
 	GUIManager = Context->GUIContext->Manager.Get();
 	Canvas = GUIManager->GetCanvas();
@@ -60,7 +60,7 @@ void CLoadState::Begin()
 	BigLabel->SetBounds(10, 10, 1590, 300);
 	BigLabel->SetTextColor(Gwen::Color(255, 255, 255, 84));
 
-	GUIManager->Draw(true);
+	GUIManager->Draw(0, true);
 	Context->Window->SwapBuffers();
 	
 	AddLabel(L"Initializing System...");
@@ -91,8 +91,7 @@ void CLoadState::Begin()
 
 void CLoadState::Update(f32 const Elapsed)
 {
-	Context->GUIContext->Manager->Draw(Elapsed, true);
-	Context->Window->SwapBuffers();
+	GUIManager->Draw(Elapsed, true);
 }
 
 void CLoadState::LoadShaders()
