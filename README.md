@@ -10,3 +10,5 @@ win64 bin directory is in your PATH, e.g.:
 ```
 C:\Program Files\MATLAB\MATLAB Compiler Runtime\v84\bin\win64
 ```
+
+and that the post-build event in the `.vcxproj` is copying `libmat.dll` from the same correct directory.
