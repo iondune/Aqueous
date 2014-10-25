@@ -12,9 +12,12 @@ void CTerrainLocation::Load()
 
 void CTerrainLocation::ConcurrentLoad()
 {	
-	ColorMap = ColorImage->MakeTexture()->SetWrapMode(CTexture2D::EWrapMode::Clamp);
-	HeightMap = HeightImage->MakeTexture()->SetWrapMode(CTexture2D::EWrapMode::Clamp);
-	BathymetryMap = BathymetryImage->MakeTexture()->SetWrapMode(CTexture2D::EWrapMode::Clamp);
+	if (ColorImage)
+		ColorMap = ColorImage->MakeTexture()->SetWrapMode(CTexture2D::EWrapMode::Clamp);
+	if (HeightImage)
+		HeightMap = HeightImage->MakeTexture()->SetWrapMode(CTexture2D::EWrapMode::Clamp);
+	if (BathymetryImage)
+		BathymetryMap = BathymetryImage->MakeTexture()->SetWrapMode(CTexture2D::EWrapMode::Clamp);
 }
 
 void CTerrainLocation::InitSceneElements(CProgramContext::SScene & Scene)

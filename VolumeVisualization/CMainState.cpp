@@ -185,8 +185,6 @@ void CMainState::Update(f32 const Elapsed)
 		if (Speed*OrbitCameraTimer >= 2*Constants32::Pi)
 			EndGifDraw();
 	}
-
-	Context->Window->SwapBuffers();
 }
 
 void CMainState::AddConsoleMessage(std::string const & Message, color4i const & Color)

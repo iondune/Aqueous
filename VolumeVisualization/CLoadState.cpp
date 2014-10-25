@@ -152,6 +152,8 @@ void CLoadState::LoadScene()
 	SceneManager->GetMeshLibrary()->Add("Cube", CGeometryCreator::CreateCube());
 	SceneManager->GetMeshLibrary()->Add("Sphere", CGeometryCreator::CreateSphere());
 
+	SceneManager->GetTextureLibrary()->Load("SkyMap.jpg");
+
 	// Backdrop
 	Scene.SkyBox = SceneManager->GetFactory()->AddSkySphereNode("SkyMap.jpg");
 
