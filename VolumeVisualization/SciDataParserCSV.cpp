@@ -49,7 +49,7 @@ void SciDataParserCSV::Load(std::string const & FileName)
 			if (Row.size() != Fields.size())
 				std::cerr << "Mismatched row size at row " << DataSet->Points.Size() << " in file '" << FileName << "', found " << Row.size() << " but expected " << Fields.size() << std::endl;
 
-			u32 Length = std::min(Row.size(), Fields.size());
+			size_t Length = std::min(Row.size(), Fields.size());
 
 			STable::SRow & TableRow = DataSet->Points.AddRow();
 			for (u32 i = 0; i < Length; ++ i)

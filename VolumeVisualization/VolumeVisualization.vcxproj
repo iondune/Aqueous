@@ -1,42 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debug|Win32">
+    <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
-      <Platform>Win32</Platform>
+      <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|Win32">
+    <ProjectConfiguration Include="Release|x64">
       <Configuration>Release</Configuration>
-      <Platform>Win32</Platform>
+      <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{49493720-8AB7-D8B2-29A9-10F6ABB84016}</ProjectGuid>
     <RootNamespace>VolumeVisualization</RootNamespace>
   </PropertyGroup>
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
-    <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
-    <CharacterSet>MultiByte</CharacterSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>MultiByte</CharacterSet>
-  </PropertyGroup>
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
   <ImportGroup Label="PropertySheets">
-    <Import Project="$(VisualStudioDir)\Projects\ionEngine\Properties\ionDefaultTarget.props" />
+    <Import Project="$(VisualStudioDir)\Projects\ionEngine\Properties\FullApplication.props" />
+    <Import Project="$(VisualStudioDir)\Projects\ionEngine\Properties\Deploy.props" />
   </ImportGroup>
   <PropertyGroup>
     <IncludePath>
@@ -44,48 +24,28 @@
       ;$(VisualStudioDir)\SDKs\giflib-4.2.3\lib;
       ;$(IncludePath);
     </IncludePath>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-      ;$(VisualStudioDir)\SDKs\giflib-4.2.3\Debug;
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      ;$(VisualStudioDir)\SDKs\giflib-4.2.3\x64\Debug;
       ;$(LibraryPath);
     </LibraryPath>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      ;$(VisualStudioDir)\SDKs\giflib-4.2.3\Release;
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      ;$(VisualStudioDir)\SDKs\giflib-4.2.3\x64\Release;
       ;$(LibraryPath);
     </LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <Link>
       <AdditionalDependencies>
-        ;ionGL.lib;
-        ;FreeImage.lib;
         ;giflib-4.2.3.lib;
         ;%(AdditionalDependencies);
       </AdditionalDependencies>
       <AdditionalDependencies>
-        ;matlib/libmat.lib;
+<!--         ;matlib/libmat.lib;
         ;matlib/libmx.lib;
         ;matlib/libmex.lib;
         ;matlib/libeng.lib;
         ;matlib/libmwlapack.lib;
-        ;matlib/libdflapack.lib;
-        ;%(AdditionalDependencies);
-      </AdditionalDependencies>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <Link>
-      <AdditionalDependencies>
-        ;GWEND-Renderer-OpenGLd.lib;
-        ;gwen_staticd.lib;
-        ;%(AdditionalDependencies);
-      </AdditionalDependencies>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <Link>
-      <AdditionalDependencies>
-        ;GWEN-Renderer-OpenGL.lib;
-        ;gwen_static.lib;
+        ;matlib/libdflapack.lib; -->
         ;%(AdditionalDependencies);
       </AdditionalDependencies>
     </Link>

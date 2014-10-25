@@ -2,11 +2,12 @@
 #include "SciDataParser.h"
 #include "CDataSet.h"
 
-#include "matlib/include/mat.h"
+//#include "matlib/include/mat.h"
 
 
 void SciDataParserCTD::load(std::string const &data)
 {
+#if 0
 	bool writeCsv = false;
 
 	const char * filename = data.c_str();
@@ -157,10 +158,12 @@ void SciDataParserCTD::load(std::string const &data)
 			printf("\nDone reading mat.\n");
 		}
 	}
+#endif
 }
 
 void SciDataParserCTD::examine(std::string const & FileName)
 {
+#if 0
 	char const * const Indent = "+---";
 	MATFile * File = matOpen(FileName.c_str(), "r");
 
@@ -190,4 +193,5 @@ void SciDataParserCTD::examine(std::string const & FileName)
 			}
 		}
 	} while (Variable);
+#endif
 }

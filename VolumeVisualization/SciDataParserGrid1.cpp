@@ -2,13 +2,14 @@
 #include "SciDataParser.h"
 #include "CDataSet.h"
 
-#include "matlib/include/mat.h"
+//#include "matlib/include/mat.h"
 
 #include <ionScene.h>
 
 
 void SciDataParserGrid1::load(std::string const &data)
 {
+#if 0
 	MATFile * File = matOpen(data.c_str(), "r");
 
 	mxArray * var1 = matGetVariable(File, "var1");
@@ -83,4 +84,5 @@ void SciDataParserGrid1::load(std::string const &data)
 			}
 		}
 	}
+#endif
 }
