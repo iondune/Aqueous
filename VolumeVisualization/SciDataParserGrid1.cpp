@@ -2,14 +2,13 @@
 #include "SciDataParser.h"
 #include "CDataSet.h"
 
-//#include "matlib/include/mat.h"
+#include <mat.h>
 
 #include <ionScene.h>
 
 
 void SciDataParserGrid1::load(std::string const &data)
 {
-#if 0
 	MATFile * File = matOpen(data.c_str(), "r");
 
 	mxArray * var1 = matGetVariable(File, "var1");
@@ -23,7 +22,7 @@ void SciDataParserGrid1::load(std::string const &data)
 	mxArray * pointX = matGetVariable(File, "pointX");
 	mxArray * pointY = matGetVariable(File, "pointY");
 	mxArray * pointZ = matGetVariable(File, "pointZ");
-
+	
 	if (mxGetNumberOfDimensions(pointO1) != 3 || 
 		mxGetNumberOfDimensions(pointO2) != 3 || 
 		mxGetNumberOfDimensions(pointO3) != 3 || 
@@ -40,9 +39,8 @@ void SciDataParserGrid1::load(std::string const &data)
 		return;
 	}
 
-	int const * Dimensions = mxGetDimensions(pointO1);
-	vec3i Dims;
-	Dims.set(Dimensions);
+	size_t const * Dimensions = mxGetDimensions(pointO1);
+	vec3i Dims((int) Dimensions[0], (int) Dimensions[1], (int) Dimensions[2]);
 	DataSet->Volume.Dimensions = Dims;
 	double * pointO1Data = mxGetPr(pointO1);
 	double * pointO2Data = mxGetPr(pointO2);
@@ -56,9 +54,9 @@ void SciDataParserGrid1::load(std::string const &data)
 	double * pointYData = mxGetPr(pointY);
 	double * pointZData = mxGetPr(pointZ);
 	
-	DataSet->Volume.Dimensions.X = Dimensions[0];
-	DataSet->Volume.Dimensions.Y = Dimensions[2];
-	DataSet->Volume.Dimensions.Z = Dimensions[1];
+	DataSet->Volume.Dimensions.X = (int) Dimensions[0];
+	DataSet->Volume.Dimensions.Y = (int) Dimensions[2];
+	DataSet->Volume.Dimensions.Z = (int) Dimensions[1];
 	DataSet->Volume.Allocate();
 
 	for (int k = 0; k < Dimensions[2]; ++ k)
@@ -67,7 +65,7 @@ void SciDataParserGrid1::load(std::string const &data)
 		{
 			for (int i = 0; i < Dimensions[0]; ++ i)
 			{
-				int index = i + j * Dimensions[0] + k * Dimensions[0] * Dimensions[1];
+				size_t index = i + j * Dimensions[0] + k * Dimensions[0] * Dimensions[1];
 
 				SVolumeDataRecord<f64> & Row = DataSet->Volume[i][k][j];
 				Row.GetField("o1") = pointO1Data[index];
@@ -84,5 +82,4 @@ void SciDataParserGrid1::load(std::string const &data)
 			}
 		}
 	}
-#endif
 }

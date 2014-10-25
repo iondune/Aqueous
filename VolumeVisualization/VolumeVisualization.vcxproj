@@ -20,10 +20,14 @@
   </ImportGroup>
   <PropertyGroup>
     <IncludePath>
-      ;$(VisualStudioDir)\SDKs\FreeImage\dist;
       ;$(VisualStudioDir)\SDKs\giflib-4.2.3\lib;
+      ;$(ProgramW6432)\MATLAB\MATLAB Compiler Runtime\v84\extern\include;
       ;$(IncludePath);
     </IncludePath>
+    <LibraryPath>
+      ;$(ProgramW6432)\MATLAB\MATLAB Compiler Runtime\v84\extern\lib\win64\microsoft;
+      ;$(LibraryPath);
+    </LibraryPath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
       ;$(VisualStudioDir)\SDKs\giflib-4.2.3\x64\Debug;
       ;$(LibraryPath);
@@ -37,18 +41,17 @@
     <Link>
       <AdditionalDependencies>
         ;giflib-4.2.3.lib;
-        ;%(AdditionalDependencies);
-      </AdditionalDependencies>
-      <AdditionalDependencies>
-<!--         ;matlib/libmat.lib;
-        ;matlib/libmx.lib;
-        ;matlib/libmex.lib;
-        ;matlib/libeng.lib;
-        ;matlib/libmwlapack.lib;
-        ;matlib/libdflapack.lib; -->
+        ;libmat.lib;
+        ;libmx.lib;
         ;%(AdditionalDependencies);
       </AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>
+        copy "$(ProgramW6432)\MATLAB\MATLAB Compiler Runtime\v84\bin\win64\libmat.dll" "$(TargetDir)"
+        %(Command)
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CDataLoadingThread.cpp" />
