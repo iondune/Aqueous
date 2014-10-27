@@ -140,10 +140,8 @@ void CLoadState::LoadScene()
 	// Cameras
 	Scene.Camera = SceneManager->GetFactory()->AddPerspectiveCamera(Context->Window->GetAspectRatio());
 	Scene.CameraController = new CCameraController(Scene.Camera);//SVector3f(1.f, 1.3f, 4.5f));
-	//Scene.Camera->SetAspectRatio(Context->Window->GetAspectRatio());
-	//Scene.Camera->UpdateProjection();
 	Scene.CameraController->SetVelocity(1.9f);
-	//CMainState::Get().IEventListener<SMouseEvent>::AddChild(Scene.Camera);
+	Context->Window->AddListener(Scene.CameraController);
 
 	Scene.OrbitCamera = SceneManager->GetFactory()->AddPerspectiveCamera(Context->Window->GetAspectRatio());
 	SceneManager->GetScene()->SetActiveCamera(Scene.Camera);
