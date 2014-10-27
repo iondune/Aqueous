@@ -2,7 +2,7 @@
 
 #include "CProgramContext.h"
 #include "CMainState.h"
-#include "CTerrainSceneObject.h"
+#include "CTerrainNodeManager.h"
 #include "CGlyphSceneObject.h"
 
 #include <Gwen/Controls.h>

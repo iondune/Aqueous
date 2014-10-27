@@ -1,7 +1,7 @@
 #include "CMainState.h"
 
 #include "SciDataManager.h"
-#include "CTerrainSceneObject.h"
+#include "CTerrainNodeManager.h"
 
 
 void CMainState::OnEvent(SKeyboardEvent & Event)

@@ -74,7 +74,7 @@
     <ClCompile Include="CProgramContext.cpp" />
     <ClCompile Include="CSite.cpp" />
     <ClCompile Include="CTerrainLocation.cpp" />
-    <ClCompile Include="CTerrainSceneObject.cpp" />
+    <ClCompile Include="CTerrainNodeManager.cpp" />
     <ClCompile Include="CGUITitleLabelsWidget.cpp" />
     <ClCompile Include="CVolumeSceneObject.cpp" />
     <ClCompile Include="CWaterSceneObject.cpp" />
@@ -120,7 +120,7 @@
     <ClInclude Include=".\CSingleFieldColorMapper.h" />
     <ClInclude Include="CSite.h" />
     <ClInclude Include="CSpectrumColorMapper.h" />
-    <ClInclude Include="CTerrainSceneObject.h" />
+    <ClInclude Include="CTerrainNodeManager.h" />
     <ClInclude Include="CGUITitleLabelsWidget.h" />
     <ClInclude Include="CVolumeSceneObject.h" />
     <ClInclude Include="CWaterSceneObject.h" />

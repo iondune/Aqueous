@@ -20,9 +20,6 @@
     <ClCompile Include="CMainState.MouseTracking.cpp">
       <Filter>MainState</Filter>
     </ClCompile>
-    <ClCompile Include="CTerrainSceneObject.cpp">
-      <Filter>MainState\Terrain</Filter>
-    </ClCompile>
     <ClCompile Include="CVolumeSceneObject.cpp">
       <Filter>MainState\Volume</Filter>
     </ClCompile>
@@ -107,6 +104,9 @@
     <ClCompile Include="GifWriter.cpp">
       <Filter>Utilities</Filter>
     </ClCompile>
+    <ClCompile Include="CTerrainNodeManager.cpp">
+      <Filter>MainState\Terrain</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CMainState.h">
@@ -126,9 +126,6 @@
     </ClInclude>
     <ClInclude Include="CSpectrumColorMapper.h">
       <Filter>MainState\Data Management\Color Mapping</Filter>
-    </ClInclude>
-    <ClInclude Include="CTerrainSceneObject.h">
-      <Filter>MainState\Terrain</Filter>
     </ClInclude>
     <ClInclude Include="CVolumeSceneObject.h">
       <Filter>MainState\Volume</Filter>
@@ -216,6 +213,9 @@
     </ClInclude>
     <ClInclude Include="CContextState.h">
       <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="CTerrainNodeManager.h">
+      <Filter>MainState\Terrain</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

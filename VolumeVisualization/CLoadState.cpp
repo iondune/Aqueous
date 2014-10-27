@@ -5,7 +5,7 @@
 #include "CMainMenuState.h"
 #include "CSite.h"
 
-#include "CTerrainSceneObject.h"
+#include "CTerrainNodeManager.h"
 #include "CWaterSceneObject.h"
 #include "CVolumeSceneObject.h"
 #include "CGlyphSceneObject.h"
@@ -165,8 +165,7 @@ void CLoadState::LoadScene()
 	//SceneManager->addSceneObject(Scene.Glyphs);
 
 	// Terrain
-	//Scene.Terrain = new CTerrainSceneObject();
-	//SceneManager->addSceneObject(Scene.Terrain);
+	Scene.Terrain->Load();
 
 	// Water
 	//Scene.Water = new CWaterSceneObject();

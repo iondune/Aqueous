@@ -7,13 +7,13 @@
 
 
 class CMainState;
-class CTerrainSceneObject;
+class CTerrainNodeManager;
 class CWaterSceneObject;
 
 class CGUITerrainControlWidget : public CGUIContextWidget
 {
 
-	CTerrainSceneObject * Terrain;
+	CTerrainNodeManager * Terrain;
 	CWaterSceneObject * Water;
 	CMainState & MainState;
 

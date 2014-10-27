@@ -1,7 +1,7 @@
 
 #include "CMainState.h"
 
-#include "CTerrainSceneObject.h"
+#include "CTerrainNodeManager.h"
 #include "CGlyphSceneObject.h"
 #include "CWaterSceneObject.h"
 #include "CSite.h"
@@ -254,18 +254,18 @@ void CMainState::CalculateDataAlignment()
 	//Scene.Glyphs->SetTranslation(vec3f(0, -DataScale.Y * YExaggeration / 2, 0));
 	//Scene.Volume->SetTranslation(vec3f(0, -DataScale.Y * YExaggeration / 2, 0));
 	//
-	//Scene.Terrain->SetScale(MapScale * Multiplier / CTerrainSceneObject::Size);
+	Scene.Terrain->GetNode()->SetScale(MapScale * Multiplier / CTerrainNodeManager::Size);
 	//Scene.Water->SetScale(MapScale / CTerrainSceneObject::Size);
 	////Scene.SkyBox->SetScale(SVector3f(MapScale.X, 30.f, MapScale.Z));
 
-	//Scene.Terrain->SetTranslation(vec3f(MapOffset.X, 0, -MapOffset.Y));
+	Scene.Terrain->GetNode()->SetTranslation(vec3f(MapOffset.X, 0, -MapOffset.Y));
 	//Scene.Water->SetTranslation(vec3f(MapOffset.X, 0, -MapOffset.Y));
 	////Scene.SkyBox->setTranslation(vec3f(MapOffset.X, 0, -MapOffset.Y));
 	//
 	//// Flip for RHC->LHC
 	//Scene.Glyphs->SetScale(Scene.Glyphs->GetScale() * vec3f(1, 1, -1));
 	//Scene.Volume->SetScale(Scene.Volume->GetScale() * vec3f(1, 1, -1));
-	//Scene.Terrain->SetScale(Scene.Terrain->GetScale() * vec3f(1, 1, -1));
+	Scene.Terrain->GetNode()->SetScale(Scene.Terrain->GetNode()->GetScale() * vec3f(1, 1, -1));
 	//Scene.Water->SetScale(Scene.Water->GetScale() * vec3f(1, 1, -1));
 	////Scene.SkyBox->SetScale(Scene.SkyBox->GetScale() * vec3f(1, 1, -1));
 	//

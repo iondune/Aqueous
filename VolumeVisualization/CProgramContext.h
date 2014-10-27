@@ -11,7 +11,7 @@
 #include "CGUIContext.h"
 #include "CContextState.h"
 
-class CTerrainSceneObject;
+class CTerrainNodeManager;
 class CVolumeSceneObject;
 class CGlyphSceneObject;
 class CWaterSceneObject;
@@ -41,7 +41,7 @@ public:
 
 		// Scene object
 		CSceneNode * SkyBox = 0;
-		CTerrainSceneObject * Terrain = 0;
+		SingletonPointer<CTerrainNodeManager> Terrain;
 		CGlyphSceneObject * Glyphs = 0;
 		CVolumeSceneObject * Volume = 0;
 		CWaterSceneObject * Water = 0;

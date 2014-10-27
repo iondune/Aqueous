@@ -2,7 +2,7 @@
 
 #include "CProgramContext.h"
 #include "CMainState.h"
-#include "CTerrainSceneObject.h"
+#include "CTerrainNodeManager.h"
 #include "CWaterSceneObject.h"
 
 #include <Gwen/Controls.h>
@@ -20,7 +20,7 @@ CGUITerrainControlWidget::CGUITerrainControlWidget()
 
 	TerrainButton = new Gwen::Controls::Button(Window);
 	TerrainButton->SetBounds(15, 10, 290, 25);
-	//TerrainButton->SetText(Terrain->isVisible() ? "Disable Terrain" : "Enable Terrain");
+	TerrainButton->SetText(Terrain->GetNode()->IsVisible() ? "Disable Terrain" : "Enable Terrain");
 	TerrainButton->onPress.Add(this, & CGUITerrainControlWidget::OnToggleTerrain);
 
 	WaterButton = new Gwen::Controls::Button(Window);
@@ -69,18 +69,18 @@ void CGUITerrainControlWidget::OnToggleTerrain(Gwen::Controls::Base * Control)
 {
 	CProgramContext * Context = & CProgramContext::Get();
 
-	//if (Context->Scene.Terrain->isVisible())
-	//{
-	//	Context->Scene.Terrain->setVisible(false);
-	//	GUIContext->GetConsole()->AddMessage("Terrain View Disabled");
-	//	TerrainButton->SetText("Enable Terrain");
-	//}
-	//else
-	//{
-	//	Context->Scene.Terrain->setVisible(true);
-	//	GUIContext->GetConsole()->AddMessage("Terrain View Enabled");
-	//	TerrainButton->SetText("Disable Terrain");
-	//}
+	if (Context->Scene.Terrain->GetNode()->IsVisible())
+	{
+		Context->Scene.Terrain->GetNode()->SetVisible(false);
+		GUIContext->GetConsole()->AddMessage("Terrain View Disabled");
+		TerrainButton->SetText("Enable Terrain");
+	}
+	else
+	{
+		Context->Scene.Terrain->GetNode()->SetVisible(true);
+		GUIContext->GetConsole()->AddMessage("Terrain View Enabled");
+		TerrainButton->SetText("Disable Terrain");
+	}
 }
 
 void CGUITerrainControlWidget::OnToggleWater(Gwen::Controls::Base * Control)
@@ -104,25 +104,25 @@ void CGUITerrainControlWidget::OnToggleWater(Gwen::Controls::Base * Control)
 void CGUITerrainControlWidget::OnSelectElevation(Gwen::Controls::Base * Control)
 {
 	CProgramContext * Context = & CProgramContext::Get();
-	//Context->Scene.Terrain->SetDebugHeightEnabled(true);
+	Context->Scene.Terrain->SetDebugHeightEnabled(true);
 }
 
 void CGUITerrainControlWidget::OnSelectColor(Gwen::Controls::Base * Control)
 {
 	CProgramContext * Context = & CProgramContext::Get();
-	//Context->Scene.Terrain->SetDebugHeightEnabled(false);
+	Context->Scene.Terrain->SetDebugHeightEnabled(false);
 }
 
 void CGUITerrainControlWidget::OnSelectSolid(Gwen::Controls::Base * Control)
 {
 	CProgramContext * Context = & CProgramContext::Get();
-	//Context->Scene.Terrain->disableDebugData(EDebugData::Wireframe);
+	Context->Scene.Terrain->GetNode()->SetFeatureEnabled(ion::GL::EDrawFeature::Wireframe, false);
 }
 
 void CGUITerrainControlWidget::OnSelectWireframe(Gwen::Controls::Base * Control)
 {
 	CProgramContext * Context = & CProgramContext::Get();
-	//Context->Scene.Terrain->enableDebugData(EDebugData::Wireframe);
+	Context->Scene.Terrain->GetNode()->SetFeatureEnabled(ion::GL::EDrawFeature::Wireframe, true);
 }
 
 void CGUITerrainControlWidget::toggle()

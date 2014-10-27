@@ -1,6 +1,6 @@
 
 #include "CTerrainLocation.h"
-#include "CTerrainSceneObject.h"
+#include "CTerrainNodeManager.h"
 
 
 void CTerrainLocation::Load()
@@ -22,7 +22,7 @@ void CTerrainLocation::ConcurrentLoad()
 
 void CTerrainLocation::InitSceneElements(CProgramContext::SScene & Scene)
 {
-	//Scene.Terrain->SetColorMap(ColorMap);
-	//Scene.Terrain->SetHeightMap(HeightMap);
-	//Scene.Terrain->SetBathymetryMap(BathymetryMap);
+	Scene.Terrain->SetColorMap(ColorMap);
+	Scene.Terrain->SetHeightMap(HeightMap);
+	Scene.Terrain->SetBathymetryMap(BathymetryMap);
 }
