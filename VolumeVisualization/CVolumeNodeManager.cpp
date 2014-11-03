@@ -103,7 +103,7 @@ bool CVolumeNodeManager::Load()
 	{
 		Node->SetShader(Shader, IRenderPass::GetDefaultPostProcessPass());
 		Node->SetFeatureEnabled(ion::GL::EDrawFeature::DisableDepthTest);
-		//Node->SetFeatureEnabled(ion::GL::EDrawFeature::Blend);
+		Node->SetFeatureEnabled(ion::GL::EDrawFeature::Blend);
 
 		Node->SetUniform("uModelMatrix", & Node->GetTransformationUniform());
 		Node->SetUniform("uInvModelMatrix", & InvModelMatrix);
