@@ -111,7 +111,7 @@ bool CVolumeNodeManager::Load()
 		Node->SetUniform("uLocalRange", & Control.LocalRange);
 		Node->SetUniform("uMinimumAlpha", & Control.MinimumAlpha);
 		Node->SetUniform("uEmphasisLocation", & Control.EmphasisLocation);
-		Node->SetUniform("uStepSize", & Control.StepSize);
+		Node->SetUniform("uStepSize", & Control.StepSizeUniform);
 		Node->SetUniform("uDebugLevel", & Control.DebugLevel);
 		Node->SetUniform("uUseShading", & Control.UseShading);
 		
@@ -155,6 +155,8 @@ void CVolumeNodeManager::Update()
 		Node->SetTexture("uVolumeData", VolumeData);
 		Node->SetTexture("uProximityData", ProximityTexture);
 		//Node->SetTexture("uDepthTexture", );
+
+		Control.StepSizeUniform = 1.f / Control.StepSize;
 	}
 }
 

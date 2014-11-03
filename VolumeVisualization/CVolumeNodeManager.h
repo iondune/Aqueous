@@ -21,8 +21,9 @@ public:
 		CUniformValue<float> MinimumAlpha;
 		CUniformValue<float> EmphasisLocation;
 		CUniformValue<float> AlphaIntensity;
-
-		CUniformValue<f32> StepSize;
+		
+		f32 StepSize;
+		CUniformValue<f32> StepSizeUniform;
 
 		SControl();
 	};
