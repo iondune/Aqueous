@@ -36,7 +36,7 @@ void CMainMenuState::Update(f32 const Elapsed)
 
 	Context->GUIContext->Manager->Draw(Elapsed, true);
 
-	/*static int Counter = 0;
+	static int Counter = 0;
 	if (! Counter--)
 	{
 		Context->CurrentSite->GetCurrentDataSet()->Traits.PositionXField = "x";
@@ -45,7 +45,7 @@ void CMainMenuState::Update(f32 const Elapsed)
 
 		CreateDataSet();
 		LoadData("HopavagenBay1.dat");
-	}*/
+	}
 }
 
 void CMainMenuState::OnEvent(SWindowResizedEvent & Event)
