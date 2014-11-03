@@ -115,6 +115,8 @@ void CMainState::Update(f32 const Elapsed)
 	//Context->Scene.SkyBox->draw(SceneManager, SceneManager->getDefaultColorRenderPass(), false);
 	glEnable(GL_DEPTH_TEST);
 
+	Scene.Volume->Update();
+
 	SceneManager->DrawAll();
 
 	if (! ShowDepth)

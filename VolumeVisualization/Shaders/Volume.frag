@@ -15,7 +15,7 @@ uniform mat4 uProjMatrix;
 uniform mat4 uViewMatrix;
 
 uniform vec3 uCameraPosition;
-uniform vec3 uLightPosition;
+//uniform vec3 uLightPosition;
 
 uniform float uAlphaIntensity;
 uniform float uStepSize;
@@ -161,7 +161,7 @@ void main()
 	float AlphaAccumulator = 0.0;
 	float LengthAccumulator = 0.0;
 
-	float CurrentDepth = texture2D(uDepthTexture, ((vPosition.xy / vPosition.w) + 1.0) / 2.0).r;
+	float CurrentDepth = 1.0/*texture2D(uDepthTexture, ((vPosition.xy / vPosition.w) + 1.0) / 2.0).r*/;
 
 	const int IterationMax = 1000;
 
@@ -199,7 +199,7 @@ void main()
 
 		// Accumulate
 		vec3 Normal = GetGradient(Iterator);
-		vec3 Light = normalize(uLightPosition - WorldCoords.xyz);
+		vec3 Light = normalize(/*uLightPosition*/vec3(0,0,0) - WorldCoords.xyz);
 
 		if (uDebugLevel == 6)
 			ColorAccumulator += (1.0 - AlphaAccumulator / uAlphaIntensity) * AlphaSample * 3 * vec4(Normal / 2.0 + vec3(0.5), ColorSample.a);

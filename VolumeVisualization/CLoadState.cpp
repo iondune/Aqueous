@@ -7,7 +7,7 @@
 
 #include "CTerrainNodeManager.h"
 #include "CWaterSceneObject.h"
-#include "CVolumeSceneObject.h"
+#include "CVolumeNodeManager.h"
 #include "CGlyphSceneObject.h"
 #include "CPlaneGridSceneObject.h"
 
@@ -173,9 +173,7 @@ void CLoadState::LoadScene()
 	//SceneManager->addSceneObject(Scene.Water);
 
 	// Volume
-	//Scene.Volume = new CVolumeSceneObject();
-	//Scene.Volume->setVisible(false);
-	//SceneManager->addSceneObject(Scene.Volume);
+	Scene.Volume->Load();
 }
 
 void CLoadState::OnFinish()

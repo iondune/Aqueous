@@ -12,7 +12,7 @@
 #include "CContextState.h"
 
 class CTerrainNodeManager;
-class CVolumeSceneObject;
+class CVolumeNodeManager;
 class CGlyphSceneObject;
 class CWaterSceneObject;
 
@@ -43,7 +43,7 @@ public:
 		CSceneNode * SkyBox = 0;
 		SingletonPointer<CTerrainNodeManager> Terrain;
 		CGlyphSceneObject * Glyphs = 0;
-		CVolumeSceneObject * Volume = 0;
+		SingletonPointer<CVolumeNodeManager> Volume;
 		CWaterSceneObject * Water = 0;
 
 		// Default cube mesh
