@@ -97,11 +97,14 @@ bool CVolumeNodeManager::Load()
 
 	Shader = CProgramContext::Get().Shaders.Volume;
 
-	Node = SceneManager->GetFactory()->AddSceneNode("Volume");
-	Node->SetFeatureEnabled(ion::GL::EDrawFeature::DisableDepthTest);
+	Node = SceneManager->GetFactory()->AddSceneNode();
 
 	if (Node)
 	{
+		Node->SetShader(Shader, IRenderPass::GetDefaultPostProcessPass());
+		Node->SetFeatureEnabled(ion::GL::EDrawFeature::DisableDepthTest);
+		//Node->SetFeatureEnabled(ion::GL::EDrawFeature::Blend);
+
 		Node->SetUniform("uModelMatrix", & Node->GetTransformationUniform());
 		Node->SetUniform("uInvModelMatrix", & InvModelMatrix);
 
