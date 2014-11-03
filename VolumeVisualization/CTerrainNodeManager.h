@@ -12,7 +12,6 @@ public:
 	static u32 const Size = 512;
 	static u32 const HeightmapSize = Size + 1;
 
-	CTerrainNodeManager();
 	bool Load();
 	
 	void SetHeightMap(CTexture * heightMap);
@@ -44,5 +43,10 @@ protected:
 
 	CSceneNode * Node = nullptr;
 	CUniformValue<f32> LayerWidth;
+
+private:
+	
+	friend class Singleton<CTerrainNodeManager>;
+	CTerrainNodeManager();
 
 };
