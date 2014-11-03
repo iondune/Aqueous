@@ -24,7 +24,7 @@ RBFInterpolator::RBFInterpolator(vector<real> x, vector<real> y, vector<real> z,
 
 	successfullyInitialized = false; // default value for if we end init prematurely.
 
-	M = f.size();
+	M = (unsigned int) f.size();
 
 	// all four input vectors must have the same length.
 	if ( x.size() != M || y.size() != M || z.size() != M )
