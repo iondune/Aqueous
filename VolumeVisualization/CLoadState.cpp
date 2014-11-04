@@ -174,6 +174,19 @@ void CLoadState::LoadScene()
 
 	// Volume
 	Scene.Volume->Load();
+
+	CRenderPassManager * RenderPassManager = SceneManager->GetRenderPassManager();
+
+	CFrameBuffer * DefaultFrameBuffer = new CFrameBuffer{};
+	Context->SceneColorTexture = DefaultFrameBuffer->MakeScreenSizedColorAttachment(0);
+	Context->SceneDepthBuffer = DefaultFrameBuffer->MakeScreenSizedDepthTextureAttachment();
+	RenderPassManager->AddRenderPass("Default", DefaultFrameBuffer);
+
+	CFrameBuffer * VolumeFrameBuffer = new CFrameBuffer{};
+	VolumeFrameBuffer->AttachColorTexture(DefaultFrameBuffer->GetColorTextureAttachment(0), 0);
+	RenderPassManager->AddRenderPass("Volume", VolumeFrameBuffer)->SetClearTarget(false);
+
+	RenderPassManager->SetRenderPassOrder({"Default", "Volume"});
 }
 
 void CLoadState::OnFinish()

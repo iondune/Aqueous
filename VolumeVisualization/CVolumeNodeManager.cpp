@@ -101,7 +101,7 @@ bool CVolumeNodeManager::Load()
 
 	if (Node)
 	{
-		Node->SetShader(Shader, IRenderPass::GetDefaultPostProcessPass());
+		Node->SetShader(Shader, "Volume");
 		Node->SetFeatureEnabled(ion::GL::EDrawFeature::DisableDepthTest);
 		Node->SetFeatureEnabled(ion::GL::EDrawFeature::Blend);
 		Node->SetFeatureEnabled(ion::GL::EDrawFeature::CullFront);

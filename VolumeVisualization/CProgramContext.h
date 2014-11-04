@@ -70,6 +70,8 @@ public:
 	SingletonPointer<CGUIContext> GUIContext;
 	CSite * CurrentSite = 0;
 	CWindow * Window = 0;
+	CTexture2D * SceneColorTexture = nullptr;
+	CTexture2D * SceneDepthBuffer = nullptr;
 
 	void Run();
 

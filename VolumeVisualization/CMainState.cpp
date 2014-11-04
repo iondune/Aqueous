@@ -118,6 +118,7 @@ void CMainState::Update(f32 const Elapsed)
 	Scene.Volume->Update();
 
 	SceneManager->DrawAll();
+	CFrameBuffer::DrawTextureToScreen(Context->SceneColorTexture);
 
 	if (! ShowDepth)
 	{
