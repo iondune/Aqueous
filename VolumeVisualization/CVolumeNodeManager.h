@@ -36,6 +36,7 @@ public:
 
 	bool Load();
 	void Update();
+	void LoadTextures();
 
 protected:
 

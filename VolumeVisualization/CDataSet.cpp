@@ -92,6 +92,7 @@ void CDataSet::InitSceneElements(CProgramContext::SScene & Scene)
 {
 	Scene.Volume->VolumeData = new CTexture3D(VolumeHandle);
 	Scene.Volume->ProximityTexture = new CTexture3D(ProximityTextureHandle);
+	Scene.Volume->LoadTextures();
 
 	CSpectrumColorMapper ColorMapper("o2");
 	//ColorMapper.ValueCutoff = 1.0;

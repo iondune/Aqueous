@@ -252,9 +252,9 @@ void CMainState::CalculateDataAlignment()
 	static vec3d const Multiplier = vec3d(1, YExaggeration, 1);
 	
 	//Scene.Glyphs->SetScale(DataScale * Multiplier);
-	//Scene.Volume->SetScale(DataScale * Multiplier);
+	Scene.Volume->GetNode()->SetScale(DataScale * Multiplier);
 	//Scene.Glyphs->SetTranslation(vec3f(0, -DataScale.Y * YExaggeration / 2, 0));
-	//Scene.Volume->SetTranslation(vec3f(0, -DataScale.Y * YExaggeration / 2, 0));
+	Scene.Volume->GetNode()->SetTranslation(vec3f(0, -DataScale.Y * YExaggeration / 2, 0));
 	//
 	Scene.Terrain->GetNode()->SetScale(MapScale * Multiplier / CTerrainNodeManager::Size);
 	//Scene.Water->SetScale(MapScale / CTerrainSceneObject::Size);
@@ -266,13 +266,13 @@ void CMainState::CalculateDataAlignment()
 	//
 	//// Flip for RHC->LHC
 	//Scene.Glyphs->SetScale(Scene.Glyphs->GetScale() * vec3f(1, 1, -1));
-	//Scene.Volume->SetScale(Scene.Volume->GetScale() * vec3f(1, 1, -1));
+	Scene.Volume->GetNode()->SetScale(Scene.Volume->GetNode()->GetScale() * vec3f(1, 1, -1));
 	Scene.Terrain->GetNode()->SetScale(Scene.Terrain->GetNode()->GetScale() * vec3f(1, 1, -1));
 	//Scene.Water->SetScale(Scene.Water->GetScale() * vec3f(1, 1, -1));
 	////Scene.SkyBox->SetScale(Scene.SkyBox->GetScale() * vec3f(1, 1, -1));
 	//
 	//// Flip Height -> Depth
-	//Scene.Volume->SetScale(Scene.Volume->GetScale() * vec3f(1, -1, 1));
+	Scene.Volume->GetNode()->SetScale(Scene.Volume->GetNode()->GetScale() * vec3f(1, -1, 1));
 	//Scene.Glyphs->SetScale(Scene.Glyphs->GetScale() * vec3f(1, -1, 1));
 }
 

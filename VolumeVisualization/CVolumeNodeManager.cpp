@@ -104,6 +104,7 @@ bool CVolumeNodeManager::Load()
 		Node->SetShader(Shader, IRenderPass::GetDefaultPostProcessPass());
 		Node->SetFeatureEnabled(ion::GL::EDrawFeature::DisableDepthTest);
 		Node->SetFeatureEnabled(ion::GL::EDrawFeature::Blend);
+		Node->SetFeatureEnabled(ion::GL::EDrawFeature::CullFront);
 
 		Node->SetUniform("uModelMatrix", & Node->GetTransformationUniform());
 		Node->SetUniform("uInvModelMatrix", & InvModelMatrix);
@@ -128,37 +129,21 @@ bool CVolumeNodeManager::Load()
 	return false;
 }
 
+void CVolumeNodeManager::LoadTextures()
+{
+	if (Node)
+	{
+		Node->SetTexture("uVolumeData", VolumeData);
+		Node->SetTexture("uProximityData", ProximityTexture);
+		//Node->SetTexture("uDepthTexture", );
+	}
+}
+
 void CVolumeNodeManager::Update()
 {
 	if (Node)
 	{
 		InvModelMatrix = glm::inverse(Node->GetTransformationUniform().GetValue());
-
-		vec3f const Scale = Node->GetPosition();
-
-		int Inversions = 0;
-		if (Scale.X < 0)
-			Inversions ++;
-		if (Scale.Y < 0)
-			Inversions ++;
-		if (Scale.Z < 0)
-			Inversions ++;
-
-		if (Inversions % 2)
-		{
-			Node->SetFeatureEnabled(ion::GL::EDrawFeature::CullBack);
-			Node->SetFeatureEnabled(ion::GL::EDrawFeature::CullFront, false);
-		}
-		else
-		{
-			Node->SetFeatureEnabled(ion::GL::EDrawFeature::CullFront);
-			Node->SetFeatureEnabled(ion::GL::EDrawFeature::CullBack, false);
-		}
-
-		Node->SetTexture("uVolumeData", VolumeData);
-		Node->SetTexture("uProximityData", ProximityTexture);
-		//Node->SetTexture("uDepthTexture", );
-
 		Control.StepSizeUniform = 1.f / Control.StepSize;
 	}
 }
