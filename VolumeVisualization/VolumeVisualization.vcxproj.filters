@@ -89,23 +89,23 @@
     <ClCompile Include="CGUIControlPanelWidget.cpp">
       <Filter>MainState\GUI</Filter>
     </ClCompile>
-    <ClCompile Include="CGUIGlyphControlWidget.cpp">
-      <Filter>MainState\GUI</Filter>
-    </ClCompile>
     <ClCompile Include="CGUISceneControlWidget.cpp">
-      <Filter>MainState\GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="CGUITerrainControlWidget.cpp">
       <Filter>MainState\GUI</Filter>
     </ClCompile>
     <ClCompile Include="CGUITitleLabelsWidget.cpp">
       <Filter>MainState\GUI</Filter>
     </ClCompile>
-    <ClCompile Include="CGUIVolumeControlWidget.cpp">
-      <Filter>MainState\GUI</Filter>
-    </ClCompile>
     <ClCompile Include="CGUIMainMenuWidget.cpp">
       <Filter>MainMenuState\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CGUIVolumeControlWidget.cpp">
+      <Filter>MainState\Volume</Filter>
+    </ClCompile>
+    <ClCompile Include="CGUITerrainControlWidget.cpp">
+      <Filter>MainState\Terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="CGUIGlyphControlWidget.cpp">
+      <Filter>MainState\Glyphs</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -199,23 +199,23 @@
     <ClInclude Include="CGUIControlPanelWidget.h">
       <Filter>MainState\GUI</Filter>
     </ClInclude>
-    <ClInclude Include="CGUIGlyphControlWidget.h">
-      <Filter>MainState\GUI</Filter>
-    </ClInclude>
     <ClInclude Include="CGUISceneControlWidget.h">
-      <Filter>MainState\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="CGUITerrainControlWidget.h">
       <Filter>MainState\GUI</Filter>
     </ClInclude>
     <ClInclude Include="CGUITitleLabelsWidget.h">
       <Filter>MainState\GUI</Filter>
     </ClInclude>
-    <ClInclude Include="CGUIVolumeControlWidget.h">
-      <Filter>MainState\GUI</Filter>
-    </ClInclude>
     <ClInclude Include="CGUIMainMenuWidget.h">
       <Filter>MainMenuState\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="CGUIVolumeControlWidget.h">
+      <Filter>MainState\Volume</Filter>
+    </ClInclude>
+    <ClInclude Include="CGUITerrainControlWidget.h">
+      <Filter>MainState\Terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="CGUIGlyphControlWidget.h">
+      <Filter>MainState\Glyphs</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
