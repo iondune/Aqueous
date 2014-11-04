@@ -161,7 +161,7 @@ void main()
 	float AlphaAccumulator = 0.0;
 	float LengthAccumulator = 0.0;
 
-	float CurrentDepth = 1.0/*texture2D(uDepthTexture, ((vPosition.xy / vPosition.w) + 1.0) / 2.0).r*/;
+	float CurrentDepth = texture2D(uDepthTexture, ((vPosition.xy / vPosition.w) + 1.0) / 2.0).r;
 
 	const int IterationMax = 1000;
 

@@ -135,7 +135,7 @@ void CVolumeNodeManager::LoadTextures()
 	{
 		Node->SetTexture("uVolumeData", VolumeData);
 		Node->SetTexture("uProximityData", ProximityTexture);
-		//Node->SetTexture("uDepthTexture", );
+		Node->SetTexture("uDepthTexture", CProgramContext::Get().SceneDepthBuffer);
 	}
 }
 
