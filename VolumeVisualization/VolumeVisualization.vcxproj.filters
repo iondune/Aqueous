@@ -32,27 +32,6 @@
     <ClCompile Include="CProgramContext.cpp">
       <Filter>Program Context</Filter>
     </ClCompile>
-    <ClCompile Include="CGUIMainMenuWidget.cpp">
-      <Filter>Program Context\GUI\Main Menu</Filter>
-    </ClCompile>
-    <ClCompile Include="CGUIControlPanelWidget.cpp">
-      <Filter>Program Context\GUI\Main State</Filter>
-    </ClCompile>
-    <ClCompile Include="CGUIGlyphControlWidget.cpp">
-      <Filter>Program Context\GUI\Main State</Filter>
-    </ClCompile>
-    <ClCompile Include="CGUISceneControlWidget.cpp">
-      <Filter>Program Context\GUI\Main State</Filter>
-    </ClCompile>
-    <ClCompile Include="CGUITerrainControlWidget.cpp">
-      <Filter>Program Context\GUI\Main State</Filter>
-    </ClCompile>
-    <ClCompile Include="CGUITitleLabelsWidget.cpp">
-      <Filter>Program Context\GUI\Main State</Filter>
-    </ClCompile>
-    <ClCompile Include="CGUIVolumeControlWidget.cpp">
-      <Filter>Program Context\GUI\Main State</Filter>
-    </ClCompile>
     <ClCompile Include="SciDataParserCSV.cpp">
       <Filter>MainState\Data Management\Parsers</Filter>
     </ClCompile>
@@ -107,6 +86,27 @@
     <ClCompile Include="CVolumeNodeManager.cpp">
       <Filter>MainState\Volume</Filter>
     </ClCompile>
+    <ClCompile Include="CGUIControlPanelWidget.cpp">
+      <Filter>MainState\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CGUIGlyphControlWidget.cpp">
+      <Filter>MainState\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CGUISceneControlWidget.cpp">
+      <Filter>MainState\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CGUITerrainControlWidget.cpp">
+      <Filter>MainState\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CGUITitleLabelsWidget.cpp">
+      <Filter>MainState\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CGUIVolumeControlWidget.cpp">
+      <Filter>MainState\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CGUIMainMenuWidget.cpp">
+      <Filter>MainMenuState\GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CMainState.h">
@@ -141,27 +141,6 @@
     </ClInclude>
     <ClInclude Include="ContourConverter.h">
       <Filter>Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="CGUIMainMenuWidget.h">
-      <Filter>Program Context\GUI\Main Menu</Filter>
-    </ClInclude>
-    <ClInclude Include="CGUIVolumeControlWidget.h">
-      <Filter>Program Context\GUI\Main State</Filter>
-    </ClInclude>
-    <ClInclude Include="CGUIControlPanelWidget.h">
-      <Filter>Program Context\GUI\Main State</Filter>
-    </ClInclude>
-    <ClInclude Include="CGUIGlyphControlWidget.h">
-      <Filter>Program Context\GUI\Main State</Filter>
-    </ClInclude>
-    <ClInclude Include="CGUISceneControlWidget.h">
-      <Filter>Program Context\GUI\Main State</Filter>
-    </ClInclude>
-    <ClInclude Include="CGUITerrainControlWidget.h">
-      <Filter>Program Context\GUI\Main State</Filter>
-    </ClInclude>
-    <ClInclude Include="CGUITitleLabelsWidget.h">
-      <Filter>Program Context\GUI\Main State</Filter>
     </ClInclude>
     <ClInclude Include="COxygenColorMapper.h">
       <Filter>MainState\Data Management\Color Mapping</Filter>
@@ -217,6 +196,27 @@
     <ClInclude Include="CVolumeNodeManager.h">
       <Filter>MainState\Volume</Filter>
     </ClInclude>
+    <ClInclude Include="CGUIControlPanelWidget.h">
+      <Filter>MainState\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="CGUIGlyphControlWidget.h">
+      <Filter>MainState\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="CGUISceneControlWidget.h">
+      <Filter>MainState\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="CGUITerrainControlWidget.h">
+      <Filter>MainState\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="CGUITitleLabelsWidget.h">
+      <Filter>MainState\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="CGUIVolumeControlWidget.h">
+      <Filter>MainState\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="CGUIMainMenuWidget.h">
+      <Filter>MainMenuState\GUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="MainState">
@@ -261,17 +261,17 @@
     <Filter Include="Program Context\GUI">
       <UniqueIdentifier>{69559bbe-9f50-47e8-809c-55d622e1b426}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Program Context\GUI\Main Menu">
-      <UniqueIdentifier>{7ed6a85c-9651-4d88-99fd-87f8f6d6947c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Program Context\GUI\Main State">
-      <UniqueIdentifier>{1a142d81-4987-4603-9bb6-3734c174c09e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="MainState\Water">
       <UniqueIdentifier>{1c0ec171-1f22-41cf-9511-5fe0e0c62da5}</UniqueIdentifier>
     </Filter>
     <Filter Include="MainState\Data Management\Location">
       <UniqueIdentifier>{8440f9e2-4f2e-46ed-9cbd-c310b75cd748}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainState\GUI">
+      <UniqueIdentifier>{8d37c36b-409f-4687-b8ec-c149f261876d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainMenuState\GUI">
+      <UniqueIdentifier>{9ca08e71-6ecd-42e6-bac3-564d365dbc93}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
