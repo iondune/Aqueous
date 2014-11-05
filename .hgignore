@@ -9,7 +9,9 @@ syntax: glob
 *.opensdf
 *.sdf
 *.v11.suo
+*.v12.suo
 *.exe
+*.dll
 */ShaderCompileLog.txt
 *.unsuccessfulbuild
 Thumbs.db

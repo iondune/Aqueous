@@ -7,13 +7,23 @@
 CSite::CSite()
 {
 	CTerrainLocation * Location = new CTerrainLocation;
+	Location->LowerBound.Longitude = SLongitudeLatitude<f64>::DMStoDecimal(9, 30, 32.26);
+	Location->LowerBound.Latitude = SLongitudeLatitude<f64>::DMStoDecimal(63, 34, 38.89);
+	Location->UpperBound.Longitude = SLongitudeLatitude<f64>::DMStoDecimal(9, 33, 47.82);
+	Location->UpperBound.Latitude = SLongitudeLatitude<f64>::DMStoDecimal(63, 36, 5.87);
+	Location->ColorFile = "TerrainColorImageSquareSupplement.bmp";
+	Location->BathymetryFile = "TerrainBathymetry.bmp";
+	Location->HeightFile = "TerrainHeightImageSquare.bmp";
+	Locations.push_back(Location);
+	
+	Location = new CTerrainLocation;
 	Location->LowerBound.Longitude = SLongitudeLatitude<f32>::DMStoDecimal(9, 55, 45.32f);
 	Location->LowerBound.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(56, 38, 17.22f);
 	Location->UpperBound.Longitude = SLongitudeLatitude<f32>::DMStoDecimal(10, 2, 34.80f);
 	Location->UpperBound.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(56, 41, 59.01f);
-	Location->ColorFile = "../Sites/Denmark/TerrainColor.bmp";
-	Location->BathymetryFile = "../Sites/Denmark/TerrainBathymetry.bmp";
-	Location->HeightFile = "../Sites/Denmark/TerrainTopography.bmp";
+	Location->ColorFile = "Sites/Denmark/TerrainColor.bmp";
+	Location->BathymetryFile = "Sites/Denmark/TerrainBathymetry.bmp";
+	Location->HeightFile = "Sites/Denmark/TerrainTopography.bmp";
 	Locations.push_back(Location);
 
 	Location = new CTerrainLocation;
@@ -21,9 +31,9 @@ CSite::CSite()
 	Location->LowerBound.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(56, 34, 20.96f);
 	Location->UpperBound.Longitude = SLongitudeLatitude<f32>::DMStoDecimal(10, 11, 1.75f);
 	Location->UpperBound.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(56, 46, 11.45f);
-	Location->ColorFile = "../Sites/Denmark/TerrainColorLarge.bmp";
-	Location->BathymetryFile = "../Sites/Denmark/TerrainBathymetryLarge.bmp";
-	Location->HeightFile = "../Sites/Denmark/TerrainTopography.bmp";
+	Location->ColorFile = "Sites/Denmark/TerrainColorLarge.bmp";
+	Location->BathymetryFile = "Sites/Denmark/TerrainBathymetryLarge.bmp";
+	Location->HeightFile = "Sites/Denmark/TerrainTopography.bmp";
 	Locations.push_back(Location);
 	
 	Location = new CTerrainLocation;
@@ -31,9 +41,9 @@ CSite::CSite()
 	Location->LowerBound.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(56, 30, 37.33f);
 	Location->UpperBound.Longitude = SLongitudeLatitude<f32>::DMStoDecimal(10, 27, 10.16f);
 	Location->UpperBound.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(56, 48, 48.57f);
-	Location->ColorFile = "../Sites/Denmark/TerrainColorXLarge.bmp";
-	Location->BathymetryFile = "../Sites/Denmark/TerrainBathymetryXLarge.bmp";
-	Location->HeightFile = "../Sites/Denmark/TerrainTopography.bmp";
+	Location->ColorFile = "Sites/Denmark/TerrainColorXLarge.bmp";
+	Location->BathymetryFile = "Sites/Denmark/TerrainBathymetryXLarge.bmp";
+	Location->HeightFile = "Sites/Denmark/TerrainTopography.bmp";
 	Locations.push_back(Location);
 	
 	Location = new CTerrainLocation;
@@ -41,9 +51,9 @@ CSite::CSite()
 	Location->LowerBound.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(56, 37, 13.75f);
 	Location->UpperBound.Longitude = SLongitudeLatitude<f32>::DMStoDecimal(10, 17, 17.79f);
 	Location->UpperBound.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(56, 58, 5.72f);
-	Location->ColorFile = "../Sites/Denmark/Map6Color.bmp";
-	Location->BathymetryFile = "../Sites/Denmark/Map6Bathy.bmp";
-	Location->HeightFile = "../Sites/Denmark/TerrainTopography.bmp";
+	Location->ColorFile = "Sites/Denmark/Map6Color.bmp";
+	Location->BathymetryFile = "Sites/Denmark/Map6Bathy.bmp";
+	Location->HeightFile = "Sites/Denmark/TerrainTopography.bmp";
 	Locations.push_back(Location);
 	
 	Location = new CTerrainLocation;
@@ -51,9 +61,9 @@ CSite::CSite()
 	Location->LowerBound.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(56, 13, 56.68f);
 	Location->UpperBound.Longitude = SLongitudeLatitude<f32>::DMStoDecimal(10, 53, 14.45f);
 	Location->UpperBound.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(57, 13, 29.39f);
-	Location->ColorFile = "../Sites/Denmark/Map7Color.bmp";
-	Location->BathymetryFile = "../Sites/Denmark/Map7Bathy.bmp";
-	Location->HeightFile = "../Sites/Denmark/TerrainTopography.bmp";
+	Location->ColorFile = "Sites/Denmark/Map7Color.bmp";
+	Location->BathymetryFile = "Sites/Denmark/Map7Bathy.bmp";
+	Location->HeightFile = "Sites/Denmark/TerrainTopography.bmp";
 	Locations.push_back(Location);
 	
 	Location = new CTerrainLocation;
@@ -61,9 +71,9 @@ CSite::CSite()
 	Location->LowerBound.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(56, 39, 43.63f);
 	Location->UpperBound.Longitude = SLongitudeLatitude<f32>::DMStoDecimal(10, 0, 17.12f);
 	Location->UpperBound.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(56, 40, 45.07f);
-	Location->ColorFile = "../Sites/Denmark/Map8.bmp";
+	Location->ColorFile = "Sites/Denmark/Map8.bmp";
 	Location->BathymetryFile = "Grey7";
-	Location->HeightFile = "../Sites/Denmark/TerrainTopography.bmp";
+	Location->HeightFile = "Sites/Denmark/TerrainTopography.bmp";
 	Locations.push_back(Location);
 
 

@@ -1,5 +1,6 @@
 #include "CPlaneGridSceneObject.h"
 
+/*
 CPlaneGridSceneObject::CPlaneGridSceneObject(s32 const Size)
 {
 	enableDebugData(EDebugData::Wireframe);
@@ -38,3 +39,4 @@ CPlaneGridSceneObject::CPlaneGridSceneObject(s32 const Size)
 	setTranslation(vec3f(-Size/2.f, 0, -Size/2.f));
 	setCullingEnabled(false);
 }
+*/

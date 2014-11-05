@@ -1,24 +1,23 @@
 
 #include "CTerrainLocation.h"
-#include "CTerrainSceneObject.h"
+#include "CTerrainNodeManager.h"
 
 
-#undef LoadImage // To Do : WHYYYYYYY
 void CTerrainLocation::Load()
 {
-	ColorImage = CImageLoader::LoadImage(ColorFile);
-	HeightImage = CImageLoader::LoadImage(HeightFile);
-	BathymetryImage = CImageLoader::LoadImage(BathymetryFile);
+	ColorImage = CImage::Load(ColorFile);
+	HeightImage = CImage::Load(HeightFile);
+	BathymetryImage = CImage::Load(BathymetryFile);
 }
 
 void CTerrainLocation::ConcurrentLoad()
-{
-	STextureCreationFlags Flags;
-	Flags.Wrap = GL_CLAMP_TO_EDGE;
-	
-	ColorMap = CImageLoader::LoadTexture(ColorImage, Flags);
-	HeightMap = CImageLoader::LoadTexture(HeightImage, Flags);
-	BathymetryMap = CImageLoader::LoadTexture(BathymetryImage, Flags);
+{	
+	if (ColorImage)
+		ColorMap = ColorImage->MakeTexture()->SetWrapMode(CTexture2D::EWrapMode::Clamp);
+	if (HeightImage)
+		HeightMap = HeightImage->MakeTexture()->SetWrapMode(CTexture2D::EWrapMode::Clamp);
+	if (BathymetryImage)
+		BathymetryMap = BathymetryImage->MakeTexture()->SetWrapMode(CTexture2D::EWrapMode::Clamp);
 }
 
 void CTerrainLocation::InitSceneElements(CProgramContext::SScene & Scene)

@@ -100,14 +100,14 @@ void SciDataParserMergedCSV::Load(std::string const & FileName1, std::string con
 				std::cerr << "Mismatched row size at row " << DataSet->Points.Size() << std::endl;
 				ReadNext1 = true;
 			}
-			s32 Length1 = std::min(Row1.size(), Fields1.size());
+			int Length1 = (int) std::min(Row1.size(), Fields1.size());
 
 			if (Row2.size() != Fields2.size())
 			{
 				std::cerr << "Mismatched row size at row " << DataSet->Points.Size() << std::endl;
 				ReadNext2 = true;
 			}
-			s32 Length2 = std::min(Row2.size(), Fields2.size());
+			int Length2 = (int) std::min(Row2.size(), Fields2.size());
 
 			if (Length1 > FieldIndex1 && Length2 > FieldIndex2)
 			{

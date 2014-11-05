@@ -6,12 +6,13 @@
 #include <ionWindow.h>
 #include <ionFramework.h>
 #include <ionScience.h>
+#include <ionBootstrap.h>
 
 #include "CGUIContext.h"
+#include "CContextState.h"
 
-
-class CTerrainSceneObject;
-class CVolumeSceneObject;
+class CTerrainNodeManager;
+class CVolumeNodeManager;
 class CGlyphSceneObject;
 class CWaterSceneObject;
 
@@ -27,51 +28,51 @@ public:
 	struct SScene
 	{
 		// Cameras
-		CCameraControl * Camera;
-		ICameraSceneObject * OrbitCamera;
+		CPerspectiveCamera * Camera = 0;
+		CCameraController * CameraController = 0;
+		ICamera * OrbitCamera = 0;
 
 		// Orbit Camera Timer
-		float Timer;
+		float Timer = 0;
 
 		// Lighting
-		CMeshSceneObject * LightObject;
-		SVector3f LightPosition;
+		CSceneNode * LightObject = 0;
+		SVector3f LightPosition = 0;
 
 		// Scene object
-		CMeshSceneObject * SkyBox;
-		CTerrainSceneObject * Terrain;
-		CGlyphSceneObject * Glyphs;
-		CVolumeSceneObject * Volume;
-		CWaterSceneObject * Water;
+		CSceneNode * SkyBox = 0;
+		SingletonPointer<CTerrainNodeManager> Terrain;
+		CGlyphSceneObject * Glyphs = 0;
+		SingletonPointer<CVolumeNodeManager> Volume;
+		CWaterSceneObject * Water = 0;
 
 		// Default cube mesh
-		CMesh * Cube;
-
-		SScene();
+		CMesh * Cube = 0;
 	};
 
 	//! Holds shaders
 	struct SShaders
 	{
-		CShader * Diffuse;
-		CShader * DiffuseTexture;
-		CShader * Terrain;
-		CShader * Volume;
-		CShader * Glyph;
-		CShader * GlyphLines;
-		CShader * Plane;
-		CShader * Water;
-
-		SShaders();
+		CShader * Diffuse = 0;
+		CShader * DiffuseTexture = 0;
+		CShader * Terrain = 0;
+		CShader * Volume = 0;
+		CShader * Glyph = 0;
+		CShader * GlyphLines = 0;
+		CShader * Plane = 0;
+		CShader * Water = 0;
+		CShader * SkyBox = 0;
 	};
 
 	SShaders Shaders;
 	SScene Scene;
 
-	CGUIContext * GUIContext;
-	CSite * CurrentSite;
+	SingletonPointer<CGUIContext> GUIContext;
+	CSite * CurrentSite = 0;
+	CWindow * Window = 0;
+	CTexture2D * SceneColorTexture = nullptr;
+	CTexture2D * SceneDepthBuffer = nullptr;
 
-	CProgramContext();
 	void Run();
 
 };

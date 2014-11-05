@@ -1,9 +1,9 @@
 
 #pragma once
-
 #include "CProgramContext.h"
 #include "GifWriter.h"
 
+/*
 #include <glm/gtc/matrix_transform.hpp>
 
 
@@ -20,10 +20,10 @@ public:
 
 		TargetBuffer = new CFrameBufferObject();
 
-		TargetTexture = new CTexture(CApplication::Get().GetWindow().GetSize(), true, Flags);
+		TargetTexture = new CTexture(Context->Window->GetSize(), true, Flags);
 		TargetBuffer->attachColorTexture(TargetTexture, 0);
 
-		DepthTexture = new CRenderBufferObject(GL_DEPTH_COMPONENT, CApplication::Get().GetWindow().GetSize());
+		DepthTexture = new CRenderBufferObject(GL_DEPTH_COMPONENT, Context->Window->GetSize());
 		TargetBuffer->attachDepthRenderBuffer(DepthTexture);
 
 		if (! TargetBuffer->isValid())
@@ -68,7 +68,7 @@ protected:
 	CRenderBufferObject * DepthTexture;
 
 };
-
+*/
 class CMainState : public CContextState<CMainState, CProgramContext>
 {
 
@@ -76,7 +76,7 @@ protected:
 
 	GifWriter * gifWriter;
 
-	freetype::font_data Font;
+	IFont * Font;
 
 public:
 
@@ -114,7 +114,7 @@ public:
 	SVector3f Translation, Scale;
 	glm::mat4 Rotation;
 
-	sharedPtr<CReflectionRenderPass> ReflectionRenderPass;
+	//sharedPtr<CReflectionRenderPass> ReflectionRenderPass;
 
 
 	////////////////////////////

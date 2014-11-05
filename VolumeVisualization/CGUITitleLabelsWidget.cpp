@@ -60,10 +60,10 @@ void CGUITitleLabelsWidget::resetVolumeRangeIndicator(CSite * CurrentSite)
 		s << std::fixed;
 		s << "Value Range: ";
 		s << std::setprecision(3);
-		s << (CProgramContext::Get().Scene.Volume->Control.EmphasisLocation * ValueRange.Size() + ValueRange.Minimum) / 100.f;
+		//s << (CProgramContext::Get().Scene.Volume->Control.EmphasisLocation * ValueRange.Size() + ValueRange.Minimum) / 100.f;
 		s << " ± ";
 		s << std::setprecision(4);
-		s << (CProgramContext::Get().Scene.Volume->Control.LocalRange / 2.f * ValueRange.Size()) / 100.f;
+		//s << (CProgramContext::Get().Scene.Volume->Control.LocalRange / 2.f * ValueRange.Size()) / 100.f;
 		VolumeRangeIndicator->SetText(s.str());
 	}
 	

@@ -2,7 +2,7 @@
 
 #include "CProgramContext.h"
 #include "CMainState.h"
-#include "CTerrainSceneObject.h"
+#include "CTerrainNodeManager.h"
 
 #include <Gwen/Controls.h>
 #include <Gwen/Controls/ComboBox.h>
@@ -26,16 +26,16 @@ void CGUISceneControlWidget::OnToggleBackdrop(Gwen::Controls::Base * Control)
 {
 	CProgramContext * Context = & CProgramContext::Get();
 	
-	Context->Scene.SkyBox->setVisible(! Context->Scene.SkyBox->isVisible());
+	Context->Scene.SkyBox->SetVisible(! Context->Scene.SkyBox->IsVisible());
 	std::stringstream s;
 	s << "Skybox object ";
-	if (Context->Scene.SkyBox->isVisible())
+	if (Context->Scene.SkyBox->IsVisible())
 		s << "enabled.";
 	else
 		s << "disabled.";
 	Context->GUIContext->GetConsole()->AddMessage(s.str());
 
-	if (Context->Scene.SkyBox->isVisible())
+	if (Context->Scene.SkyBox->IsVisible())
 		((Gwen::Controls::Button *) Control)->SetText("Disable Backdrop");
 	else
 		((Gwen::Controls::Button *) Control)->SetText("Enable Backdrop");

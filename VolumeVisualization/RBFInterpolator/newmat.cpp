@@ -7907,7 +7907,7 @@ namespace RBD_COMMON {
 	{
 		if (a_what)
 		{
-			int l = strlen(a_what); int r = LastOne - SoFar;
+			int l = (int) strlen(a_what); int r = LastOne - SoFar;
 			if (l < r) { strcpy(what_error+SoFar, a_what); SoFar += l; }
 			else if (r > 0)
 			{

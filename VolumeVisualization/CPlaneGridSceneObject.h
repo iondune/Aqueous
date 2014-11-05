@@ -5,8 +5,8 @@
 #include <ionScene.h>
 #include <ionWindow.h>
 
-
-class CPlaneGridSceneObject : public CSceneObject
+/*
+class CPlaneGridSceneObject : public CSceneNode
 {
 
 public:
@@ -14,3 +14,4 @@ public:
 	CPlaneGridSceneObject(s32 const Size);
 
 };
+*/

@@ -2,7 +2,7 @@
 
 #include "CProgramContext.h"
 #include "CMainState.h"
-#include "CTerrainSceneObject.h"
+#include "CTerrainNodeManager.h"
 
 #include <Gwen/Controls.h>
 #include <Gwen/Controls/ComboBox.h>
@@ -15,7 +15,6 @@ CGUIControlPanelWidget::CGUIControlPanelWidget()
 	Window->SetBounds(30, 600, 660 + 30, 85);
 	Window->SetTitle("Control Panel");
 	Window->SetClosable(false);
-	Window->SetHidden(true);
 
 	Gwen::Controls::Button * EnableButton = new Gwen::Controls::Button(Window);
 	EnableButton->SetBounds(15, 10, 150, 35);

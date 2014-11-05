@@ -8,7 +8,7 @@ char * textFileRead(char const * fn)
 {	
 	FILE * fp;
 	char * content = NULL;
-	int count = 0;
+	size_t count = 0;
 
 	if (fn != NULL)
 	{

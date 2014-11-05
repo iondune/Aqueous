@@ -29,24 +29,22 @@ void CMainMenuState::End()
 
 void CMainMenuState::Update(f32 const Elapsed)
 {
-	printOpenGLErrors();
 	std::chrono::milliseconds Milliseconds(50);
 	std::this_thread::sleep_for(Milliseconds);
 
 	Thread.Sync();
 
-	Context->GUIContext->Draw(Elapsed, true);
-	CApplication::Get().GetWindow().SwapBuffers();
+	Context->GUIContext->Manager->Draw(Elapsed, true);
 
 	static int Counter = 0;
 	if (! Counter--)
 	{
-		Context->CurrentSite->GetCurrentDataSet()->Traits.PositionXField = "Longitude";
-		Context->CurrentSite->GetCurrentDataSet()->Traits.PositionYField = "DFS Depth (ft)";
-		Context->CurrentSite->GetCurrentDataSet()->Traits.PositionZField = "Latitude";
+		Context->CurrentSite->GetCurrentDataSet()->Traits.PositionXField = "x";
+		Context->CurrentSite->GetCurrentDataSet()->Traits.PositionYField = "y";
+		Context->CurrentSite->GetCurrentDataSet()->Traits.PositionZField = "z";
 
 		CreateDataSet();
-		LoadData("Catalina1.dat");
+		LoadData("HopavagenBay1.dat");
 	}
 }
 
@@ -66,18 +64,18 @@ void CMainMenuState::LoadData(std::string const & FileName)
 	//s << FileName;
 
 	Thread.Context = Context;
-	Thread.LoadingWidget = new CGUIProgressBarWidget(Context->GUIContext, "Loading data and initializing scene elements");
+	Thread.LoadingWidget = new CGUIProgressBarWidget(Context->GUIContext->Manager.Get(), "Loading data and initializing scene elements");
 	Thread.LoadingWidget->BeginProgress();
 	Thread.Run(/*s.str()*/);
 }
 
 void CMainMenuState::CreateDataSet()
 {
-	SciDataParserCSV Parser1;
-	CSpectrumColorMapper ColorMapper("Chla Conc");
+	//SciDataParserCSV Parser1;
+	//CSpectrumColorMapper ColorMapper("Chla Conc");
 
-	Parser1.DataSet = Context->CurrentSite->GetCurrentDataSet();
-	Parser1.FieldDelim = Parser1.ValueDelim = ';';
+	//Parser1.DataSet = Context->CurrentSite->GetCurrentDataSet();
+	//Parser1.FieldDelim = Parser1.ValueDelim = ';';
 	////Parser1.Load("Sites/Catalina/20131006_130020_catalina_shallow_10_IVER2-132.log");
 	////Parser1.Load("Sites/Catalina/20131005_191049_catalina_10_IVER2-132.log"); // BAD!
 	//Parser1.Load("Sites/Catalina/20131006_120459_catalina_10_IVER2-132.log");
@@ -99,10 +97,10 @@ void CMainMenuState::CreateDataSet()
 	//Parser1.Load("Sites/Catalina/20131006_120459_catalina_10_IVER2-132.log");
 	//Parser1.Load("Sites/Catalina/20131006_121530_catalina_10_IVER2-132.log");
 	//Parser1.Load("Sites/Catalina/20131006_122601_catalina_10_IVER2-132.log");
-	Parser1.Load("Sites/Catalina/20131006_124220_catalina_10_IVER2-132.log");
-	Parser1.Load("Sites/Catalina/20131006_130020_catalina_shallow_10_IVER2-132.log");
+	//Parser1.Load("Sites/Catalina/20131006_124220_catalina_10_IVER2-132.log");
+	//Parser1.Load("Sites/Catalina/20131006_130020_catalina_shallow_10_IVER2-132.log");
 	//Parser1.Load("Sites/Catalina/20131006_142755_catalina_undulate_10_IVER2-132.log");
-	Parser1.Load("Sites/Catalina/20131006_143331_catalina_undulate_10_IVER2-132.log");
+	//Parser1.Load("Sites/Catalina/20131006_143331_catalina_undulate_10_IVER2-132.log");
 	//Parser1.Load("Sites/Catalina/20131006_221316_catalina_10_IVER2-132.log");
 	//Parser1.Load("Sites/Catalina/20131006_221639_catalina_10_IVER2-132.log");
 	//Parser1.Load("Sites/Catalina/20131006_222457_catalina_10_IVER2-132.log");
@@ -115,6 +113,7 @@ void CMainMenuState::CreateDataSet()
 	//Context->DataManager->createVolumeFromGridValues(& ColorMapper);
 	//Context->DataManager->writeToFile("Datasets/DenmarkNewMission1.dat");
 
+	
 	/*
 	SciDataParserSimpleTXT * Parser1 = new SciDataParserSimpleTXT();
 	Parser1->Manager = Context->DataManager;
@@ -127,4 +126,16 @@ void CMainMenuState::CreateDataSet()
 	COxygenColorMapper o;
 	Context->DataManager->createVolumeFromGridValues(& o);
 	Context->DataManager->writeToFile("Datasets/Catalina1.dat");*/
+
+	SciDataParserSimpleTXT * Parser1 = new SciDataParserSimpleTXT();
+	Parser1->DataSet = Context->CurrentSite->GetCurrentDataSet();
+	Parser1->load("ForZoe.txt");
+
+	SciDataParserGrid1 * Parser2 = new SciDataParserGrid1();
+	Parser2->DataSet = Context->CurrentSite->GetCurrentDataSet();
+	Parser2->load("oxyMaps.mat");
+
+	//COxygenColorMapper o;
+	//Context->CurrentSite->GetCurrentDataSet()->createVolumeFromGridValues(& o);
+	//Context->DataManager->writeToFile("Datasets/HopavagenBay1.dat");
 }

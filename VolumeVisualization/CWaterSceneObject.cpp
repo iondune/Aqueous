@@ -1,6 +1,6 @@
 
 #include "CWaterSceneObject.h"
-
+/*
 #include "CProgramContext.h"
 #include "CMainState.h"
 
@@ -72,3 +72,4 @@ bool CWaterSceneObject::draw(IScene const * const Scene, sharedPtr<IRenderPass> 
 
 	return true;
 }
+*/

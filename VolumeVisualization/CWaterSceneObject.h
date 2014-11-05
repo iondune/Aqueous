@@ -1,6 +1,6 @@
 
 #pragma once
-
+/*
 #include <ionCore.h>
 #include <ionMath.h>
 #include <ionScene.h>
@@ -34,3 +34,4 @@ protected:
 	CShader * Shader;
 
 };
+*/

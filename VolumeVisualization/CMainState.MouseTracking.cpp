@@ -1,12 +1,12 @@
 #include "CMainState.h"
 
-#include "CTerrainSceneObject.h"
+//#include "CTerrainSceneObject.h"
 
 
 glm::vec3 CMainState::makeSphereVec(int x, int y)
 {
-	float ix = 2*(x / (float) CApplication::Get().GetWindow().GetSize().X) - 1.f;
-	float iy = 1.f - 2*(y / (float) CApplication::Get().GetWindow().GetSize().X);
+	float ix = 2*(x / (float) Context->Window->GetSize().X) - 1.f;
+	float iy = 1.f - 2*(y / (float) Context->Window->GetSize().X);
 
 	float length = sqrt(ix*ix + iy*iy);
 
@@ -37,10 +37,10 @@ void CMainState::OnEvent(SMouseEvent & Event)
 			float difY = (float) Event.Movement.Y;
 			glm::vec3 NewVec = makeSphereVec(Event.Location.X, Event.Location.Y);
 			glm::mat4 ViewMatrix;
-			if (& CApplication::Get().GetSceneManager())
-				ViewMatrix = CApplication::Get().GetSceneManager().getActiveCamera()->GetViewMatrix();
+			if (SceneManager->GetScene() && SceneManager->GetScene()->GetActiveCamera())
+				ViewMatrix = SceneManager->GetScene()->GetActiveCamera()->GetViewMatrix();
 
-			if (CApplication::Get().GetWindow().IsMouseDown(SMouseEvent::EButton::Left))
+			if (Context->Window->IsMouseDown(SMouseEvent::EButton::Left))
 			{
 				if (Mode == 0) // Rotation (axis vector)
 				{
@@ -57,10 +57,10 @@ void CMainState::OnEvent(SMouseEvent & Event)
 						glm::vec3 rotAxis(axis.x, axis.y, axis.z);
 						glm::mat4 Transformation = glm::rotate(glm::mat4(1.f), dot, rotAxis);
 						Rotation = Transformation*Rotation;
-						if (! Equals(difX, 0.f) && ! Equals(difY, 0.f) && Application->GetWindow().IsKeyDown(EKey::Q))
+						if (! Equals(difX, 0.f) && ! Equals(difY, 0.f) && Context->Window->IsKeyDown(EKey::Q))
 						{
-							glm::vec4 v = Transformation * glm::vec4(Context->Scene.Volume->Control.SliceAxis.GetGLMVector(), 0.f);
-							Context->Scene.Volume->Control.SliceAxis = SVector3f(v.x, v.y, v.z);
+							//glm::vec4 v = Transformation * glm::vec4(Context->Scene.Volume->Control.SliceAxis.GetGLMVector(), 0.f);
+							//Context->Scene.Volume->Control.SliceAxis = SVector3f(v.x, v.y, v.z);
 
 							//printf("Setting new axis vector! %f %f %f \n", v.x, v.y, v.z);
 						}
@@ -72,9 +72,9 @@ void CMainState::OnEvent(SMouseEvent & Event)
 					glm::vec4 trans(difX*moveSpeed, -difY*moveSpeed, 0, 0);
 					trans = glm::inverse(ViewMatrix) * trans;
 					Translation.X += trans.x;
-					Translation.Y = Context->Scene.Terrain->getTranslation().Y;//trans.y;
+					//Translation.Y = Context->Scene.Terrain->GetTranslation().Y;//trans.y;
 					Translation.Z += trans.z;
-					Context->Scene.Terrain->setTranslation(Translation);
+					//Context->Scene.Terrain->SetTranslation(Translation);
 					printf("Translation: %f %f %f\n", Translation.X, Translation.Y, Translation.Z);
 
 				}
@@ -83,7 +83,7 @@ void CMainState::OnEvent(SMouseEvent & Event)
 					float const scaleSpeed = 0.0001f;
 					Scale = SVector3f(std::max(std::min(Scale.X + difX*scaleSpeed, 0.05f), 0.001f));
 					//Scale.Y = 1.f;
-					Context->Scene.Terrain->setScale(Scale * vec3f(-1, 1, 1));
+					//Context->Scene.Terrain->SetScale(Scale * vec3f(-1, 1, 1));
 					printf("Scale: %f %f %f\n", Scale.X, Scale.Y, Scale.Z);
 				}
 				else if (Mode == 3) // Translate (light)

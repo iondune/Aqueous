@@ -112,7 +112,7 @@ void LoadCSVFile(std::string const & fileName, T & operation)
 
 			//if (Row.size() != Fields.size())
 			//	std::cerr << "Mismatched row size at row " << row << ", found " << Row.size() << " but expected " << Fields.size() << std::endl;
-			u32 Length = std::min(Row.size(), Fields.size());
+			size_t Length = std::min(Row.size(), Fields.size());
 
 			operation(Row);
 			row ++;

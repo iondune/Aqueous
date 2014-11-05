@@ -5,7 +5,7 @@
 #include <Gwen/Controls/WindowControl.h>
 #include <Gwen/Controls/HorizontalSlider.h>
 
-#include "CVolumeSceneObject.h"
+#include "CVolumeNodeManager.h"
 
 
 class CMainState;
@@ -13,7 +13,7 @@ class CMainState;
 class CGUIVolumeControlWidget : public CGUIContextWidget
 {
 
-	CVolumeSceneObject::SControl & VolumeControl;
+	CVolumeNodeManager::SControl & VolumeControl;
 	CMainState & MainState;
 
 	Gwen::Controls::WindowControl * Window;

@@ -2,7 +2,7 @@
 #include "SciDataParser.h"
 #include "CDataSet.h"
 
-#include "matlib/include/mat.h"
+#include <mat.h>
 
 
 void SciDataParserCTD::load(std::string const &data)
@@ -36,10 +36,10 @@ void SciDataParserCTD::load(std::string const &data)
 			/*
 			* Diagnose array pa
 			*/
-			int num_of_dim, num_of_field;
-			printf("\nArray %s has %d dimensions, %d elements and %d fields.\n", name, num_of_dim = mxGetNumberOfDimensions(pa), mxGetNumberOfElements(pa), num_of_field = mxGetNumberOfFields(pa));
+			size_t num_of_dim, num_of_field;
+			printf("\nArray %s has %Iu dimensions, %Iu elements and %Iu fields.\n", name, num_of_dim = mxGetNumberOfDimensions(pa), mxGetNumberOfElements(pa), num_of_field = mxGetNumberOfFields(pa));
         
-			int const * dims = mxGetDimensions(pa);
+			size_t const * dims = mxGetDimensions(pa);
 			for (int i = 0; i < num_of_dim; ++ i)
 			{
 				printf("Dimension %d has length %d.\n", i + 1, dims[i]);
@@ -52,9 +52,9 @@ void SciDataParserCTD::load(std::string const &data)
 
 			
 				mxArray * field = mxGetFieldByNumber(pa, 0, i);
-				int num_of_dim, num_of_field;
-				printf("Field %33s has %d dim, %8d elmnts and %d fld\n", fieldname, num_of_dim = mxGetNumberOfDimensions(field), mxGetNumberOfElements(field), num_of_field = mxGetNumberOfFields(field));
-				int const * fieldDims = mxGetDimensions(field);
+				size_t num_of_dim, num_of_field;
+				printf("Field %33s has %Iu dim, %8Iu elmnts and %Iu fld\n", fieldname, num_of_dim = mxGetNumberOfDimensions(field), mxGetNumberOfElements(field), num_of_field = mxGetNumberOfFields(field));
+				size_t const * fieldDims = mxGetDimensions(field);
 			}
 			//print matrix elements
 			//mlfPrintMatrix(pa);
@@ -100,8 +100,8 @@ void SciDataParserCTD::load(std::string const &data)
 
 		mxArray * DataField = mxGetField(ctd, 0, "data");
 
-		int const NumberOfDimensions = mxGetNumberOfDimensions(DataField);
-		int const * Dimensions = mxGetDimensions(DataField);
+		size_t const NumberOfDimensions = mxGetNumberOfDimensions(DataField);
+		size_t const * Dimensions = mxGetDimensions(DataField);
 
 		for (int i = 0; i < NumberOfDimensions; ++ i)
 			printf("Dimension[%d] is %d\n", i, Dimensions[i]);
@@ -120,7 +120,7 @@ void SciDataParserCTD::load(std::string const &data)
 		{
 			for (int i = 0; i < Dimensions[1]; ++ i)
 			{
-				int index = j + i * Dimensions[0];
+				size_t index = j + i * Dimensions[0];
 				
 				//printf("Trying to access %d %d with index %d\n", i, j, index);
 				if (writeCsv)
@@ -173,10 +173,10 @@ void SciDataParserCTD::examine(std::string const & FileName)
 		{
 			std::cout << Name << std::endl;
 
-			int const NumberOfDimensions = mxGetNumberOfDimensions(Variable);
+			size_t const NumberOfDimensions = mxGetNumberOfDimensions(Variable);
 			std::cout << Indent << NumberOfDimensions << " dimensions." << std::endl;
 
-			int const * Dimensions = mxGetDimensions(Variable);
+			size_t const * Dimensions = mxGetDimensions(Variable);
 			for (int i = 0; i < NumberOfDimensions; ++ i)
 				std::cout << Indent << "Dimension[" << i << "] is " << Dimensions[i] << std::endl;
 

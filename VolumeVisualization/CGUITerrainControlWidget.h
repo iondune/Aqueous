@@ -7,13 +7,13 @@
 
 
 class CMainState;
-class CTerrainSceneObject;
+class CTerrainNodeManager;
 class CWaterSceneObject;
 
 class CGUITerrainControlWidget : public CGUIContextWidget
 {
 
-	CTerrainSceneObject * Terrain;
+	CTerrainNodeManager * Terrain;
 	CWaterSceneObject * Water;
 	CMainState & MainState;
 
@@ -28,8 +28,7 @@ public:
 	void OnToggleWater(Gwen::Controls::Base * Control);
 	void OnSelectElevation(Gwen::Controls::Base * Control);
 	void OnSelectColor(Gwen::Controls::Base * Control);
-	void OnSelectWireframe(Gwen::Controls::Base * Control);
-	void OnSelectSolid(Gwen::Controls::Base * Control);
+	void OnModeSelect(Gwen::Controls::Base * Control);
 
 	void toggle();
 

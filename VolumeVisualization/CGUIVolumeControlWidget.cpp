@@ -101,7 +101,8 @@ CGUIVolumeControlWidget::CGUIVolumeControlWidget()
 		
 		Gwen::Controls::ComboBox * VolumeMode = new Gwen::Controls::ComboBox(Window);
 		VolumeMode->SetBounds(80, 120 + 120 + 45 + 35 + 45, 200, 25);
-		VolumeMode->AddItem(L"Full Volume");
+		VolumeMode->AddItem(L"Constant");
+		VolumeMode->AddItem(L"Sample Alpha");
 		VolumeMode->AddItem(L"Plane Slices");
 		VolumeMode->AddItem(L"Isosurface");
 
@@ -157,7 +158,7 @@ CGUIVolumeControlWidget::CGUIVolumeControlWidget()
 		Gwen::Controls::HorizontalSlider * StepSizeSlider = new Gwen::Controls::HorizontalSlider(Window);
 		StepSizeSlider->SetBounds(10, 545, 300, 40);
 		StepSizeSlider->SetRange(10.f, 300.f);
-		StepSizeSlider->SetFloatValue(VolumeControl.StepSize);
+		//StepSizeSlider->SetFloatValue(VolumeControl.StepSize);
 
 		// Wire Up Events
 		pButton2->onPress.Add(this,					& CGUIVolumeControlWidget::OnResetAlpha);
@@ -250,9 +251,14 @@ void CGUIVolumeControlWidget::OnVolumeMode(Gwen::Controls::Base * Control)
 		VolumeControl.Mode = 2;
 		resetVolumeRange();
 	}
-	else
+	else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Constant"))
 	{
 		VolumeControl.Mode = 0;
+		CProgramContext::Get().GUIContext->GetTitleLabels()->clearVolumeRangeIndicator();
+	}
+	else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Sample Alpha"))
+	{
+		VolumeControl.Mode = 3;
 		CProgramContext::Get().GUIContext->GetTitleLabels()->clearVolumeRangeIndicator();
 	}
 }
@@ -300,15 +306,15 @@ void CGUIVolumeControlWidget::OnToggleVolume(Gwen::Controls::Base * Control)
 {
 	CProgramContext * Context = & CProgramContext::Get();
 
-	if (Context->Scene.Volume->isVisible())
+	if (Context->Scene.Volume->GetNode()->IsVisible())
 	{
-		Context->Scene.Volume->setVisible(false);
+		Context->Scene.Volume->GetNode()->SetVisible(false);
 		GUIContext->GetConsole()->AddMessage("Volume View Disabled");
 		EnableButton->SetText("Enable Volume View");
 	}
 	else
 	{
-		Context->Scene.Volume->setVisible(true);
+		Context->Scene.Volume->GetNode()->SetVisible(true);
 		GUIContext->GetConsole()->AddMessage("Volume View Enabled");
 		EnableButton->SetText("Disable Volume View");
 	}

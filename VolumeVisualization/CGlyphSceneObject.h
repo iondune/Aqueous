@@ -1,6 +1,6 @@
 
 #pragma once
-
+/*
 #include <ionCore.h>
 #include <ionScene.h>
 
@@ -56,3 +56,4 @@ public:
 	f32 GlyphSize;
 
 };
+*/

@@ -17,30 +17,18 @@
 
 class CMainState;
 
-class CGUIContext : public CGUIManager
+class CGUIContext : public Singleton<CGUIContext>
 {
 
-protected:
-
-	CMainState & MainState;
-	
-	CGUIConsoleWidget * Console;
-	CGUITitleLabelsWidget * TitleLabels;
-	CGUIVolumeControlWidget * VolumeControl;
-	CGUITerrainControlWidget * TerrainControl;
-	CGUIGlyphControlWidget * GlyphControl;
-	CGUISceneControlWidget * SceneControl;
-	CGUIControlPanelWidget * ControlPanel;
-	CGUIMainMenuWidget * MainMenu;
+	friend class Singleton<CGUIContext>;
 
 public:
-
-	CGUIContext();
 
 	void SetupMainState();
 	void SetupMenuState();
 	void Clear();
-	
+	void Init();
+
 	CGUIConsoleWidget * GetConsole();
 	CGUITitleLabelsWidget * GetTitleLabels();
 	CGUIVolumeControlWidget * GetVolumeControl();
@@ -48,5 +36,27 @@ public:
 	CGUIGlyphControlWidget * GetGlyphControl();
 	CGUISceneControlWidget * GetSceneControl();
 	CGUIControlPanelWidget * GetControlPanel();
+
+	Gwen::Controls::Canvas * GetCanvas();
+
+	SingletonPointer<CGUIManager> Manager;
+
+protected:
+
+	SingletonPointer<CMainState> MainState;
+
+	CGUIConsoleWidget * Console = 0;
+	CGUITitleLabelsWidget * TitleLabels = 0;
+	CGUIVolumeControlWidget * VolumeControl = 0;
+	CGUITerrainControlWidget * TerrainControl = 0;
+	CGUIGlyphControlWidget * GlyphControl = 0;
+	CGUISceneControlWidget * SceneControl = 0;
+	CGUIControlPanelWidget * ControlPanel = 0;
+	CGUIMainMenuWidget * MainMenu = 0;
+
+private:
+
+	CGUIContext()
+	{}
 
 };
