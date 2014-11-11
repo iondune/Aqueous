@@ -184,7 +184,7 @@ void CLoadState::LoadScene()
 
 	CFrameBuffer * VolumeFrameBuffer = new CFrameBuffer{};
 	VolumeFrameBuffer->AttachColorTexture(DefaultFrameBuffer->GetColorTextureAttachment(0), 0);
-	RenderPassManager->AddRenderPass("Volume", VolumeFrameBuffer)->SetClearTarget(false);
+	RenderPassManager->AddRenderPass("Volume", VolumeFrameBuffer)->SetClearBuffers({});
 
 	RenderPassManager->SetRenderPassOrder({"Default", "Volume"});
 }
