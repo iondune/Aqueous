@@ -2,19 +2,19 @@
 #pragma once
 
 #include "CGUIContextWidget.h"
+#include <ionScene.h>
 #include <Gwen/Controls/WindowControl.h>
 #include <Gwen/Controls/HorizontalSlider.h>
 
 
 class CMainState;
 class CTerrainNodeManager;
-class CWaterSceneObject;
 
 class CGUITerrainControlWidget : public CGUIContextWidget
 {
 
 	CTerrainNodeManager * Terrain;
-	CWaterSceneObject * Water;
+	CSceneNode * Water;
 	CMainState & MainState;
 
 	Gwen::Controls::WindowControl * Window;

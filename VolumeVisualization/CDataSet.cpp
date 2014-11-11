@@ -30,7 +30,7 @@ void CDataSet::ConcurrentLoad()
 
 
 	vec3u Dimensions = Volume.Dimensions; // (10);
-	u8 * const VolumeData = new u8[Dimensions.X * Dimensions.Y * Dimensions.Z];
+	u8 * const VolumeData = new u8[Dimensions.X * Dimensions.Y * Dimensions.Z]();
 
 	SRange<f64> XRange = Points.GetFieldRange(Traits.PositionXField, 15.0);
 	SRange<f64> YRange = Points.GetFieldRange(Traits.PositionYField, 15.0);

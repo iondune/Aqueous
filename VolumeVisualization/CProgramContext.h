@@ -14,7 +14,6 @@
 class CTerrainNodeManager;
 class CVolumeNodeManager;
 class CGlyphSceneObject;
-class CWaterSceneObject;
 
 class CSite;
 
@@ -44,7 +43,7 @@ public:
 		SingletonPointer<CTerrainNodeManager> Terrain;
 		CGlyphSceneObject * Glyphs = 0;
 		SingletonPointer<CVolumeNodeManager> Volume;
-		CWaterSceneObject * Water = 0;
+		CSceneNode * Water = 0;
 
 		// Default cube mesh
 		CMesh * Cube = 0;
@@ -62,6 +61,8 @@ public:
 		CShader * Plane = 0;
 		CShader * Water = 0;
 		CShader * SkyBox = 0;
+		CShader * Merge = 0;
+		CShader * Refract = 0;
 	};
 
 	SShaders Shaders;
@@ -72,6 +73,7 @@ public:
 	CWindow * Window = 0;
 	CTexture2D * SceneColorTexture = nullptr;
 	CTexture2D * SceneDepthBuffer = nullptr;
+	CTexture2D * SceneRefractColor = nullptr;
 
 	void Run();
 

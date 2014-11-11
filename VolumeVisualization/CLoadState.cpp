@@ -115,6 +115,10 @@ void CLoadState::LoadShaders()
 		AddLabel(L"Failed to load Water Shader - Water will not draw.", Gwen::Color(255, 64, 64, 192)), Failed = true;
 	if (! (Context->Shaders.SkyBox = SceneManager->GetShaderLibrary()->Load("Skybox")))
 		AddLabel(L"Failed to load Skybox Shader - Skybox will not draw.", Gwen::Color(255, 64, 64, 192)), Failed = true;
+	if (! (Context->Shaders.Merge = SceneManager->GetShaderLibrary()->Load("Merge")))
+		AddLabel(L"Failed to load Merge Shader - Water surface will not draw.", Gwen::Color(255, 64, 64, 192)), Failed = true;
+	if (! (Context->Shaders.Refract = SceneManager->GetShaderLibrary()->Load("Refract")))
+		AddLabel(L"Failed to load Merge Shader - Water surface  will not draw.", Gwen::Color(255, 64, 64, 192)), Failed = true;
 
 	if (! Failed)
 		AddLabel(L"All shaders compiled successfully.", Gwen::Color(64, 255, 64, 192));
@@ -130,7 +134,7 @@ void CLoadState::LoadScene()
 	CProgramContext::SScene & Scene = Context->Scene;
 
 	// OpenGL Parameters
-	glClearColor(0.15f, 0.45f, 0.5f, 1.0f);
+	//glClearColor(0.15f, 0.45f, 0.5f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
 
@@ -149,8 +153,10 @@ void CLoadState::LoadScene()
 	// Basic Shader/Mesh
 	SceneManager->GetMeshLibrary()->Add("Cube", CGeometryCreator::CreateCube());
 	SceneManager->GetMeshLibrary()->Add("Sphere", CGeometryCreator::CreateSphere());
-
+	SceneManager->GetMeshLibrary()->Add("Plane", CGeometryCreator::CreatePlane());
+	
 	SceneManager->GetTextureLibrary()->Load("SkyMap.jpg");
+	SceneManager->GetTextureLibrary()->Load("WaterNormals.jpg");
 
 	// Backdrop
 	Scene.SkyBox = SceneManager->GetFactory()->AddSkySphereNode("SkyMap.jpg");
@@ -167,11 +173,6 @@ void CLoadState::LoadScene()
 	// Terrain
 	Scene.Terrain->Load();
 
-	// Water
-	//Scene.Water = new CWaterSceneObject();
-	//Scene.Water->setVisible(false);
-	//SceneManager->addSceneObject(Scene.Water);
-
 	// Volume
 	Scene.Volume->Load();
 
@@ -186,7 +187,20 @@ void CLoadState::LoadScene()
 	VolumeFrameBuffer->AttachColorTexture(DefaultFrameBuffer->GetColorTextureAttachment(0), 0);
 	RenderPassManager->AddRenderPass("Volume", VolumeFrameBuffer)->SetClearBuffers({});
 
-	RenderPassManager->SetRenderPassOrder({"Default", "Volume"});
+	CFrameBuffer * RefractFrameBuffer = new CFrameBuffer();
+	Context->SceneRefractColor = RefractFrameBuffer->MakeScreenSizedColorAttachment(0);
+	RefractFrameBuffer->AttachDepthTexture(Context->SceneDepthBuffer);
+	RenderPassManager->AddRenderPass("Refraction", RefractFrameBuffer)->SetClearBuffers({ion::GL::EBuffer::Color});
+
+	RenderPassManager->SetRenderPassOrder({"Default", "Volume", "Refraction"});
+
+	// Water
+	Scene.Water = SceneManager->GetFactory()->AddSceneNode();
+	Scene.Water->SetMesh(SceneManager->GetMeshLibrary()->Get("Plane"));
+	Scene.Water->SetShader(SceneManager->GetShaderLibrary()->Get("Refract"), "Refraction");
+	Scene.Water->SetTexture(0, SceneManager->GetTextureLibrary()->Get("WaterNormals.jpg"));
+	Scene.Water->SetTexture(1, Context->SceneColorTexture);
+	Scene.Water->SetScale(vec3f(20.f));
 }
 
 void CLoadState::OnFinish()

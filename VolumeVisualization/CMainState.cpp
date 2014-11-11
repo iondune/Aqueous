@@ -102,9 +102,9 @@ void CMainState::Update(f32 const Elapsed)
 	Scene.LightPosition = SceneManager->GetScene()->GetActiveCamera()->GetPosition() + SVector3f(0, 0, 0);
 
 	//SceneManager->GetDefaultColorRenderPass()->onPreDraw();
-	glClearColor(1.f, 0.25f, 0.05f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glClearColor(0.15f, 0.45f, 0.5f, 1.0f);
+	//glClearColor(1.f, 0.25f, 0.05f, 1.0f);
+	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	//glClearColor(0.15f, 0.45f, 0.5f, 1.0f);
 
 	glDisable(GL_DEPTH_TEST);
 	Context->Scene.SkyBox->SetPosition(SceneManager->GetScene()->GetActiveCamera()->GetPosition());
@@ -118,7 +118,26 @@ void CMainState::Update(f32 const Elapsed)
 	Scene.Volume->Update();
 
 	SceneManager->DrawAll();
-	CFrameBuffer::DrawTextureToScreen(Context->SceneColorTexture);
+	if (Context->Window->IsKeyDown(EKey::F1))
+		CFrameBuffer::DrawTextureToScreen(Context->SceneColorTexture);
+	else if (Context->Window->IsKeyDown(EKey::F2))
+		CFrameBuffer::DrawTextureToScreen(Context->SceneRefractColor);
+	else if (Context->Window->IsKeyDown(EKey::F3))
+		CFrameBuffer::DrawTextureToScreen(Context->SceneDepthBuffer);
+	else
+	{
+		ion::GL::Context::Clear();
+
+		CDrawConfig DrawConfig(SceneManager->GetShaderLibrary()->Get("Merge"), ion::GL::EPrimativeType::Quads);
+		DrawConfig.AddVertexBuffer("aPosition", CFrameBuffer::GetQuadVertexBuffer());
+		DrawConfig.SetIndexBuffer(CFrameBuffer::GetQuadIndexBuffer());
+		DrawConfig.AddTexture("uSceneColor", Context->SceneColorTexture);
+		DrawConfig.AddTexture("uRefractColor", Context->SceneRefractColor);
+
+		ion::GL::DrawContext DrawContext;
+		DrawContext.LoadProgram(SceneManager->GetShaderLibrary()->Get("Merge"));
+		DrawContext.Draw(& DrawConfig);
+	}
 
 	if (! ShowDepth)
 	{
@@ -147,8 +166,8 @@ void CMainState::Update(f32 const Elapsed)
 	//	glEnable(GL_DEPTH_TEST);
 	//}
 
-	if (GUIEnabled)
-		Context->GUIContext->Manager->Draw(Elapsed, false);
+	//if (GUIEnabled)
+	//	Context->GUIContext->Manager->Draw(Elapsed, false);
 	
 	//auto GetValueAt = [](f32 const v)
 	//{
@@ -258,7 +277,7 @@ void CMainState::CalculateDataAlignment()
 	Scene.Volume->GetNode()->SetTranslation(vec3f(0, -DataScale.Y * YExaggeration / 2, 0));
 	//
 	Scene.Terrain->GetNode()->SetScale(MapScale * Multiplier / CTerrainNodeManager::Size);
-	//Scene.Water->SetScale(MapScale / CTerrainSceneObject::Size);
+	//Scene.Water->SetScale(MapScale / CTerrainNodeManager::Size);
 	////Scene.SkyBox->SetScale(SVector3f(MapScale.X, 30.f, MapScale.Z));
 
 	Scene.Terrain->GetNode()->SetTranslation(vec3f(MapOffset.X, 0, -MapOffset.Y));
