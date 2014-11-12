@@ -25,6 +25,7 @@ uniform sampler2D Texture2;
 uniform int uLightCount;
 uniform SLight uLights[LIGHT_MAX];
 uniform SMaterial uMaterial;
+uniform float uElapsedTime;
 
 out vec4 outColor;
 
@@ -36,7 +37,9 @@ float sq(float v)
 
 void main()
 {
-	const vec2 OffsetScale = vec2(0.1);
+	const vec2 OffsetScale = vec2(0.02);
+	const vec2 RippleSpeed = vec2(0.1, 0.2);
+	const vec2 RippleFrequency = vec2(8.0);
 
 	vec3 Diffuse = vec3(0);
 	vec2 ScreenTexCoords = ((vScreenPosition.xy / vScreenPosition.w) + 1.0) / 2.0;
@@ -58,7 +61,8 @@ void main()
 	}
 
 	vec3 ShadedColor = Diffuse + uMaterial.AmbientColor;
-	vec3 OffsetValue = texture(Texture0, vTexCoord).rgb - 0.5;
+	vec2 TextureAnimation = vec2(uElapsedTime) * RippleSpeed;
+	vec3 OffsetValue = texture(Texture0, vTexCoord * RippleFrequency + TextureAnimation).rgb - 0.5;
 	vec2 SampleCoords = ScreenTexCoords + OffsetValue.rg*OffsetScale;
 
 	if (SampleCoords.x >= 1.0)
