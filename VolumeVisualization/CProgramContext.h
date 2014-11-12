@@ -63,6 +63,7 @@ public:
 		CShader * SkyBox = 0;
 		CShader * Merge = 0;
 		CShader * Refract = 0;
+		CShader * White = 0;
 	};
 
 	SShaders Shaders;
@@ -74,6 +75,7 @@ public:
 	CTexture2D * SceneColorTexture = nullptr;
 	CTexture2D * SceneDepthBuffer = nullptr;
 	CTexture2D * SceneRefractColor = nullptr;
+	CTexture2D * RefractMaskTexture = nullptr;
 
 	void Run();
 

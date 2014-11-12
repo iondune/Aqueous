@@ -118,7 +118,9 @@ void CLoadState::LoadShaders()
 	if (! (Context->Shaders.Merge = SceneManager->GetShaderLibrary()->Load("Merge")))
 		AddLabel(L"Failed to load Merge Shader - Water surface will not draw.", Gwen::Color(255, 64, 64, 192)), Failed = true;
 	if (! (Context->Shaders.Refract = SceneManager->GetShaderLibrary()->Load("Refract")))
-		AddLabel(L"Failed to load Merge Shader - Water surface  will not draw.", Gwen::Color(255, 64, 64, 192)), Failed = true;
+		AddLabel(L"Failed to load Refract Shader - Water surface  will not draw.", Gwen::Color(255, 64, 64, 192)), Failed = true;
+	if (! (Context->Shaders.White = SceneManager->GetShaderLibrary()->Load("White")))
+		AddLabel(L"Failed to load White Shader - Water surface  will not draw.", Gwen::Color(255, 64, 64, 192)), Failed = true;
 
 	if (! Failed)
 		AddLabel(L"All shaders compiled successfully.", Gwen::Color(64, 255, 64, 192));
@@ -187,20 +189,28 @@ void CLoadState::LoadScene()
 	VolumeFrameBuffer->AttachColorTexture(DefaultFrameBuffer->GetColorTextureAttachment(0), 0);
 	RenderPassManager->AddRenderPass("Volume", VolumeFrameBuffer)->SetClearBuffers({});
 
+	CFrameBuffer * MaskFrameBuffer = new CFrameBuffer();
+	CTexture2D * MaskTexture = Context->RefractMaskTexture = MaskFrameBuffer->MakeScreenSizedColorAttachment(0);
+	MaskFrameBuffer->AttachDepthTexture(Context->SceneDepthBuffer);
+	RenderPassManager->AddRenderPass("RefractionMask", MaskFrameBuffer)->SetClearBuffers({ion::GL::EBuffer::Color});
+
 	CFrameBuffer * RefractFrameBuffer = new CFrameBuffer();
 	Context->SceneRefractColor = RefractFrameBuffer->MakeScreenSizedColorAttachment(0);
 	RefractFrameBuffer->AttachDepthTexture(Context->SceneDepthBuffer);
 	RenderPassManager->AddRenderPass("Refraction", RefractFrameBuffer)->SetClearBuffers({ion::GL::EBuffer::Color});
 
-	RenderPassManager->SetRenderPassOrder({"Default", "Volume", "Refraction"});
+	RenderPassManager->SetRenderPassOrder({"Default", "Volume", "RefractionMask", "Refraction"});
 
 	// Water
 	Scene.Water = SceneManager->GetFactory()->AddSceneNode();
 	Scene.Water->SetMesh(SceneManager->GetMeshLibrary()->Get("Plane"));
 	Scene.Water->SetShader(SceneManager->GetShaderLibrary()->Get("Refract"), "Refraction");
+	Scene.Water->SetShader(SceneManager->GetShaderLibrary()->Get("White"), "RefractionMask");
 	Scene.Water->SetTexture(0, SceneManager->GetTextureLibrary()->Get("WaterNormals.jpg"));
 	Scene.Water->SetTexture(1, Context->SceneColorTexture);
-	Scene.Water->SetScale(vec3f(20.f));
+	Scene.Water->SetTexture(2, MaskTexture);
+	Scene.Water->SetScale(vec3f(25.f));
+	Scene.Water->SetFeatureEnabled(ion::GL::EDrawFeature::DisableDepthTest, "Refraction", true);
 }
 
 void CLoadState::OnFinish()

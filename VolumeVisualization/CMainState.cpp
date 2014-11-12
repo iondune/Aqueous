@@ -124,6 +124,8 @@ void CMainState::Update(f32 const Elapsed)
 		CFrameBuffer::DrawTextureToScreen(Context->SceneRefractColor);
 	else if (Context->Window->IsKeyDown(EKey::F3))
 		CFrameBuffer::DrawTextureToScreen(Context->SceneDepthBuffer);
+	else if (Context->Window->IsKeyDown(EKey::F4))
+		CFrameBuffer::DrawTextureToScreen(Context->RefractMaskTexture);
 	else
 	{
 		ion::GL::Context::Clear();
@@ -166,8 +168,8 @@ void CMainState::Update(f32 const Elapsed)
 	//	glEnable(GL_DEPTH_TEST);
 	//}
 
-	//if (GUIEnabled)
-	//	Context->GUIContext->Manager->Draw(Elapsed, false);
+	if (GUIEnabled)
+		Context->GUIContext->Manager->Draw(Elapsed, false);
 	
 	//auto GetValueAt = [](f32 const v)
 	//{
