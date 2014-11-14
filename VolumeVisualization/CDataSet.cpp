@@ -49,32 +49,33 @@ void CDataSet::ConcurrentLoad()
 			{
 				u32 const Index = i + j * Dimensions.X + k * Dimensions.X * Dimensions.Y;
 
-				f32 MinDistance = 1.0;
-				for (auto Point : Points.GetValues())
-				{
-					f32 X = (f32) XRange.Normalize(Point.GetField(Traits.PositionXField));
-					if (XRange.IsEmpty())
-						X = 0.f;
+				//f32 MinDistance = 1.0;
+				//for (auto Point : Points.GetValues())
+				//{
+				//	f32 X = (f32) XRange.Normalize(Point.GetField(Traits.PositionXField));
+				//	if (XRange.IsEmpty())
+				//		X = 0.f;
 
-					f32 Y = (f32) YRange.Normalize(Point.GetField(Traits.PositionYField));
-					if (Traits.InvertY)
-						Y = 1.f - Y;
-					if (YRange.IsEmpty())
-						Y = 0.f;
+				//	f32 Y = (f32) YRange.Normalize(Point.GetField(Traits.PositionYField));
+				//	if (Traits.InvertY)
+				//		Y = 1.f - Y;
+				//	if (YRange.IsEmpty())
+				//		Y = 0.f;
 
-					f32 Z = (f32) ZRange.Normalize(Point.GetField(Traits.PositionZField));
-					if (ZRange.IsEmpty())
-						Z = 0.f;
+				//	f32 Z = (f32) ZRange.Normalize(Point.GetField(Traits.PositionZField));
+				//	if (ZRange.IsEmpty())
+				//		Z = 0.f;
 
-					f32 Distance = vec3f(X, Y, Z).GetDistanceSqFrom(vec3f(i / (f32) Dimensions.X, j / (f32) Dimensions.Y, k / (f32) Dimensions.Z));
-					if (Distance < MinDistance)
-						MinDistance = Distance;
-				}
+				//	f32 Distance = vec3f(X, Y, Z).GetDistanceSqFrom(vec3f(i / (f32) Dimensions.X, j / (f32) Dimensions.Y, k / (f32) Dimensions.Z));
+				//	if (Distance < MinDistance)
+				//		MinDistance = Distance;
+				//}
 
-				f64 Value = 1.0 - 24.0 * MinDistance;
-				if (Value < 0)
-					Value = 0;
-				VolumeData[Index] = Clamp<u32>(Value * 255.0, 0, 255);
+				//f64 Value = 1.0 - 24.0 * MinDistance;
+				//if (Value < 0)
+				//	Value = 0;
+				//VolumeData[Index] = Clamp<u32>(Value * 255.0, 0, 255);
+				VolumeData[Index] = 255;
 			}
 
 	glGenTextures(1, & ProximityTextureHandle);
