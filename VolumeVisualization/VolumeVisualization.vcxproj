@@ -21,6 +21,7 @@
   <PropertyGroup>
     <IncludePath>
       ;$(VisualStudioDir)\SDKs\giflib-4.2.3\lib;
+      ;$(VisualStudioDir)\SDKs\cereal\include;
       ;$(ProgramW6432)\MATLAB\MATLAB Compiler Runtime\v84\extern\include;
       ;$(IncludePath);
     </IncludePath>
