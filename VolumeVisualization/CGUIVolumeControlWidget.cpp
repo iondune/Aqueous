@@ -1,6 +1,7 @@
 #include "CGUIVolumeControlWidget.h"
 
 #include "CProgramContext.h"
+#include "CGUIContext.h"
 #include "CMainState.h"
 
 #include <Gwen/Controls.h>

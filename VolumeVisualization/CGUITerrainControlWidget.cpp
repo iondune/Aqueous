@@ -4,6 +4,7 @@
 #include "CMainState.h"
 #include "CTerrainNodeManager.h"
 #include "CWaterSceneObject.h"
+#include "CGUIContext.h"
 
 #include <Gwen/Controls.h>
 #include <Gwen/Controls/ComboBox.h>

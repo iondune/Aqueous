@@ -7,6 +7,7 @@
 #include "ColorMappers.h"
 #include "CDataLoadingThread.h"
 #include "CGlyphSceneObject.h"
+#include "CGUIContext.h"
 
 #include "CSite.h"
 #include "SciDataParser.h"

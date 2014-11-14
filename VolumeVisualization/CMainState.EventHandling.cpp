@@ -2,6 +2,7 @@
 
 #include "SciDataManager.h"
 #include "CTerrainNodeManager.h"
+#include "CGUIContext.h"
 
 
 void CMainState::OnEvent(SKeyboardEvent & Event)

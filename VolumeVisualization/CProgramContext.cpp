@@ -1,5 +1,6 @@
 
 #include "CProgramContext.h"
+#include "CGUIContext.h"
 
 #include "CMainState.h"
 #include "CMainMenuState.h"

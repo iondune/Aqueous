@@ -1,15 +1,11 @@
 
 #pragma once
 
-#include <ionCore.h>
-#include <ionScene.h>
-#include <ionWindow.h>
-#include <ionFramework.h>
-#include <ionScience.h>
-#include <ionBootstrap.h>
-
-#include "CGUIContext.h"
+#include <ionEngine.h>
 #include "CContextState.h"
+#include "CGUIContext.h"
+
+class CGUIContext;
 
 class CTerrainNodeManager;
 class CVolumeNodeManager;

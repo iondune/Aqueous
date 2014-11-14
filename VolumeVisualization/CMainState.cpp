@@ -6,6 +6,7 @@
 #include "CWaterSceneObject.h"
 #include "CSite.h"
 #include "CSpectrumColorMapper.h"
+#include "CGUIContext.h"
 
 #include <ionScience.h>
 
