@@ -32,7 +32,6 @@ public:
 
 		// Lighting
 		CSceneNode * LightObject = 0;
-		SVector3f LightPosition = 0;
 
 		// Scene object
 		CSceneNode * SkyBox = 0;

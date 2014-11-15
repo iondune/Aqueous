@@ -100,7 +100,7 @@ void CMainState::Update(f32 const Elapsed)
 	Scene.OrbitCamera->SetLookAtTarget(vec3f(0, -0.5f, 0));
 	OrbitCameraTimer += Increment;
 
-	Scene.LightPosition = SceneManager->GetScene()->GetActiveCamera()->GetPosition() + SVector3f(0, 0, 0);
+	//Scene.LightPosition = SceneManager->GetScene()->GetActiveCamera()->GetPosition() + SVector3f(0, 0, 0);
 
 	//SceneManager->GetDefaultColorRenderPass()->onPreDraw();
 	//glClearColor(1.f, 0.25f, 0.05f, 1.0f);

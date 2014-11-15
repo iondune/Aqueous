@@ -135,13 +135,29 @@ void CLoadState::LoadScene()
 	// References
 	CProgramContext::SScene & Scene = Context->Scene;
 
-	// OpenGL Parameters
-	//glClearColor(0.15f, 0.45f, 0.5f, 1.0f);
-	glEnable(GL_DEPTH_TEST);
-	glDepthFunc(GL_LEQUAL);
+	// Render Pass Setup
+	CRenderPassManager * RenderPassManager = SceneManager->GetRenderPassManager();
 
-	// Global Light Position
-	Scene.LightPosition = SVector3f(0.2f, 0.4f, 0.2f);
+	CFrameBuffer * DefaultFrameBuffer = new CFrameBuffer{};
+	Context->SceneColorTexture = DefaultFrameBuffer->MakeScreenSizedColorAttachment(0);
+	Context->SceneDepthBuffer = DefaultFrameBuffer->MakeScreenSizedDepthTextureAttachment();
+	RenderPassManager->AddRenderPass("Default", DefaultFrameBuffer);
+
+	CFrameBuffer * VolumeFrameBuffer = new CFrameBuffer{};
+	VolumeFrameBuffer->AttachColorTexture(DefaultFrameBuffer->GetColorTextureAttachment(0), 0);
+	RenderPassManager->AddRenderPass("Volume", VolumeFrameBuffer)->SetClearBuffers({});
+
+	CFrameBuffer * MaskFrameBuffer = new CFrameBuffer();
+	CTexture2D * MaskTexture = Context->RefractMaskTexture = MaskFrameBuffer->MakeScreenSizedColorAttachment(0);
+	MaskFrameBuffer->AttachDepthTexture(Context->SceneDepthBuffer);
+	RenderPassManager->AddRenderPass("RefractionMask", MaskFrameBuffer)->SetClearBuffers({ion::GL::EBuffer::Color});
+
+	CFrameBuffer * RefractFrameBuffer = new CFrameBuffer();
+	Context->SceneRefractColor = RefractFrameBuffer->MakeScreenSizedColorAttachment(0);
+	RefractFrameBuffer->AttachDepthTexture(Context->SceneDepthBuffer);
+	RenderPassManager->AddRenderPass("Refraction", RefractFrameBuffer)->SetClearBuffers({ion::GL::EBuffer::Color});
+
+	RenderPassManager->SetRenderPassOrder({"Default", "Volume", "RefractionMask", "Refraction"});
 
 	// Cameras
 	Scene.Camera = SceneManager->GetFactory()->AddPerspectiveCamera(Context->Window->GetAspectRatio());
@@ -177,29 +193,6 @@ void CLoadState::LoadScene()
 
 	// Volume
 	Scene.Volume->Load();
-
-	CRenderPassManager * RenderPassManager = SceneManager->GetRenderPassManager();
-
-	CFrameBuffer * DefaultFrameBuffer = new CFrameBuffer{};
-	Context->SceneColorTexture = DefaultFrameBuffer->MakeScreenSizedColorAttachment(0);
-	Context->SceneDepthBuffer = DefaultFrameBuffer->MakeScreenSizedDepthTextureAttachment();
-	RenderPassManager->AddRenderPass("Default", DefaultFrameBuffer);
-
-	CFrameBuffer * VolumeFrameBuffer = new CFrameBuffer{};
-	VolumeFrameBuffer->AttachColorTexture(DefaultFrameBuffer->GetColorTextureAttachment(0), 0);
-	RenderPassManager->AddRenderPass("Volume", VolumeFrameBuffer)->SetClearBuffers({});
-
-	CFrameBuffer * MaskFrameBuffer = new CFrameBuffer();
-	CTexture2D * MaskTexture = Context->RefractMaskTexture = MaskFrameBuffer->MakeScreenSizedColorAttachment(0);
-	MaskFrameBuffer->AttachDepthTexture(Context->SceneDepthBuffer);
-	RenderPassManager->AddRenderPass("RefractionMask", MaskFrameBuffer)->SetClearBuffers({ion::GL::EBuffer::Color});
-
-	CFrameBuffer * RefractFrameBuffer = new CFrameBuffer();
-	Context->SceneRefractColor = RefractFrameBuffer->MakeScreenSizedColorAttachment(0);
-	RefractFrameBuffer->AttachDepthTexture(Context->SceneDepthBuffer);
-	RenderPassManager->AddRenderPass("Refraction", RefractFrameBuffer)->SetClearBuffers({ion::GL::EBuffer::Color});
-
-	RenderPassManager->SetRenderPassOrder({"Default", "Volume", "RefractionMask", "Refraction"});
 
 	// Water
 	Scene.Water = SceneManager->GetFactory()->AddSceneNode();

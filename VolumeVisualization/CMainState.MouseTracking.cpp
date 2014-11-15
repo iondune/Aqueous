@@ -91,9 +91,9 @@ void CMainState::OnEvent(SMouseEvent & Event)
 					float const moveSpeed = 0.01f;
 					glm::vec4 trans(difX*moveSpeed, -difY*moveSpeed, 0, 0);
 					trans = glm::inverse(ViewMatrix) * trans;
-					Context->Scene.LightPosition.X += trans.x;
-					Context->Scene.LightPosition.Y += trans.y;
-					Context->Scene.LightPosition.Z += trans.z;
+					//Context->Scene.LightPosition.X += trans.x;
+					//Context->Scene.LightPosition.Y += trans.y;
+					//Context->Scene.LightPosition.Z += trans.z;
 				}
 			}
 
