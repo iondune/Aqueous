@@ -1,29 +1,33 @@
+
 #include "CGUIMainMenuWidget.h"
 
 #include "CMainMenuState.h"
-#include "dirent.h"
+#include "CProgramContext.h"
+#include "CSite.h"
+#include "CGUISiteWidget.h"
 
 #include <sstream>
 
 #include <Gwen/Controls/Menu.h>
 
 
-void CGUIMainMenuWidget::createDataSetButtons()
+void CGUIMainMenuWidget::CreateSitePanels()
 {
-	DIR * dir = opendir("Datasets/");
+	auto Canvas = GUIManager->GetCanvas();
 
-	if (dir)
+	auto ScrollControl = new Gwen::Controls::ScrollControl(Canvas);
+	ScrollControl->Dock(Gwen::Pos::Fill);
+	ScrollControl->SetMargin(Gwen::Margin(0, 60, 0, 0));
+
+	int Offset = 10;
+	for (auto FileName : Directory::Read("Sites/"))
 	{
-		dirent * ent;
-		while (ent = readdir(dir))
-		{
-			std::string const FileName = ent->d_name;
-			if (FileName == "." || FileName == "..")
-				continue;
+		auto SiteButton = new Gwen::Controls::Button(ScrollControl);
+		SiteButton->SetText(FileName);
+		SiteButton->SetBounds(10, Offset, 200, 30);
+		SiteButton->onPress.Add(this, & CGUIMainMenuWidget::OnSelectSite);
 
-			ListBox->AddItem(FileName, FileName);
-		}
-		closedir(dir);
+		Offset += 30 + 10;
 	}
 }
 
@@ -58,8 +62,26 @@ CGUIMainMenuWidget::CGUIMainMenuWidget()
 	Gwen::Controls::MenuItem * File = Menu->AddItem("File");
 	File->onPress.Add(new MenuDropDown(File), & MenuDropDown::OnPress);
 
-	Window = new Gwen::Controls::WindowControl(GUIManager->GetCanvas());
-	Window->SetTitle("Data Sets");
+	auto Canvas = GUIManager->GetCanvas();
+
+	
+	//PageControl = new Gwen::Controls::PageControl(Canvas);
+	//PageControl->SetUseFinishButton(false);
+	//PageControl->RemoveAllChildren();
+	//PageControl->Dock(Gwen::Pos::Fill);
+	//PageControl->SetPageCount(2);
+	//SitePage = PageControl->GetPage(0);
+	
+	Gwen::Controls::Label * Title = new Gwen::Controls::Label(Canvas);
+	Title->SetFont(GUIManager->GetMediumFont());
+	Title->SetText(L"Available Sites:");
+	Title->SetBounds(10, 40, 600, 100);
+	Title->SetTextColor(Gwen::Color(235, 235, 255, 215));
+
+	CreateSitePanels();
+
+	/*Window = new Gwen::Controls::WindowControl(GUIManager->GetCanvas());
+	Window->SetTitle("Sites");
 	Window->SetBounds(30, 60, 650 + 40 + 30, 550);
 	Window->SetDeleteOnClose(false);
 	Window->SetClosable(false);
@@ -72,24 +94,47 @@ CGUIMainMenuWidget::CGUIMainMenuWidget()
 
 	ListBox = new Gwen::Controls::ListBox(Window);
 	ListBox->SetBounds(10, 50, 690, 410);
+
 	
 	Gwen::Controls::Button * OKButton = new Gwen::Controls::Button(Window);
-	OKButton->SetText("OK");
+	OKButton->SetText("Select Cite");
 	OKButton->SetBounds(10+130, 60+400+16, 200, 30);
-	OKButton->onPress.Add(this, & CGUIMainMenuWidget::OnSelectDataSet);
+	OKButton->onPress.Add(this, & CGUIMainMenuWidget::OnSelectDataSet);*/
+}
 
-	Gwen::Controls::Button * CancelButton = new Gwen::Controls::Button(Window);
-	CancelButton->SetText("Cancel");
-	CancelButton->SetBounds(10+130+200+20, 60+400+16, 200, 30);
+void CGUIMainMenuWidget::OnSelectSite(Gwen::Controls::Base * Control)
+{
+	SingletonPointer<CProgramContext> Context;
 
-	createDataSetButtons();
+	string const & SiteName = ((Gwen::Controls::Button *) Control)->GetText().c_str();
+	cout << "Site selected: " << SiteName << endl;
+	
+	auto Site = Context->CurrentSite = new CSite(SiteName);
+	Site->ReadConfiguration();
+	CGUISiteWidget * SiteWidget = new CGUISiteWidget(Site);
+
+	//PageControl->NextPage();
+
+	//auto Window = new Gwen::Controls::WindowControl(GUIManager->GetCanvas());
+	//Window->SetTitle(SiteName);
+	//Window->SetBounds(30, 60, 650 + 40 + 30, 550);
+	//Window->MakeModal();
+
+	//auto OKButton = new Gwen::Controls::Button(Window);
+	//OKButton->SetText("Open");
+	//OKButton->SetBounds(10+130, 60+400+16, 200, 30);
+	//OKButton->onPress.Add(this, & CGUIMainMenuWidget::OnSelectDataSet);
 }
 
 void CGUIMainMenuWidget::OnSelectDataSet(Gwen::Controls::Base * Control)
 {
-	std::string const & FileName = ListBox->GetSelectedRowName();
-	std::cout << "Filename selected: " << FileName;
-	CMainMenuState::Get().LoadData(std::string(FileName.begin(), FileName.end()));
+	SingletonPointer<CProgramContext> Context;
+
+	//string const & FileName = ListBox->GetSelectedRowName();
+	//cout << "Filename selected: " << FileName << endl;
+
+	//Context->CurrentSite = new CSite(FileName);
+	//CMainMenuState::Get().LoadData(std::string(FileName.begin(), FileName.end()));
 }
 
 void CGUIMainMenuWidget::OnCreateDataSet(Gwen::Controls::Base * Control)
@@ -100,5 +145,5 @@ void CGUIMainMenuWidget::OnCreateDataSet(Gwen::Controls::Base * Control)
 	CMainMenuState::Get().CreateDataSet();
 
 	ListBox->Clear();
-	createDataSetButtons();
+	//CreateSitePanels();
 }

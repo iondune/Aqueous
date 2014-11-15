@@ -3,82 +3,97 @@
 
 #include "CTerrainLocation.h"
 
+#include <rapidjson/document.h>
 
-CSite::CSite()
+
+CSite::CSite(string const & Name)
 {
-	CTerrainLocation * Location = new CTerrainLocation;
-	Location->LowerBound.Longitude = SLongitudeLatitude<f64>::DMStoDecimal(9, 30, 32.26);
-	Location->LowerBound.Latitude = SLongitudeLatitude<f64>::DMStoDecimal(63, 34, 38.89);
-	Location->UpperBound.Longitude = SLongitudeLatitude<f64>::DMStoDecimal(9, 33, 47.82);
-	Location->UpperBound.Latitude = SLongitudeLatitude<f64>::DMStoDecimal(63, 36, 5.87);
-	Location->ColorFile = "TerrainColorImageSquareSupplement.bmp";
-	Location->BathymetryFile = "TerrainBathymetry.bmp";
-	Location->HeightFile = "TerrainHeightImageSquare.bmp";
-	Locations.push_back(Location);
-	
-	Location = new CTerrainLocation;
-	Location->LowerBound.Longitude = SLongitudeLatitude<f32>::DMStoDecimal(9, 55, 45.32f);
-	Location->LowerBound.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(56, 38, 17.22f);
-	Location->UpperBound.Longitude = SLongitudeLatitude<f32>::DMStoDecimal(10, 2, 34.80f);
-	Location->UpperBound.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(56, 41, 59.01f);
-	Location->ColorFile = "Sites/Denmark/TerrainColor.bmp";
-	Location->BathymetryFile = "Sites/Denmark/TerrainBathymetry.bmp";
-	Location->HeightFile = "Sites/Denmark/TerrainTopography.bmp";
-	Locations.push_back(Location);
+	this->Name = Name;
+	this->Path = "Sites/" + Name;
+}
 
-	Location = new CTerrainLocation;
-	Location->LowerBound.Longitude = SLongitudeLatitude<f32>::DMStoDecimal(9, 49, 27.68f);
-	Location->LowerBound.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(56, 34, 20.96f);
-	Location->UpperBound.Longitude = SLongitudeLatitude<f32>::DMStoDecimal(10, 11, 1.75f);
-	Location->UpperBound.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(56, 46, 11.45f);
-	Location->ColorFile = "Sites/Denmark/TerrainColorLarge.bmp";
-	Location->BathymetryFile = "Sites/Denmark/TerrainBathymetryLarge.bmp";
-	Location->HeightFile = "Sites/Denmark/TerrainTopography.bmp";
-	Locations.push_back(Location);
-	
-	Location = new CTerrainLocation;
-	Location->LowerBound.Longitude = SLongitudeLatitude<f32>::DMStoDecimal(9, 54, 13.29f);
-	Location->LowerBound.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(56, 30, 37.33f);
-	Location->UpperBound.Longitude = SLongitudeLatitude<f32>::DMStoDecimal(10, 27, 10.16f);
-	Location->UpperBound.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(56, 48, 48.57f);
-	Location->ColorFile = "Sites/Denmark/TerrainColorXLarge.bmp";
-	Location->BathymetryFile = "Sites/Denmark/TerrainBathymetryXLarge.bmp";
-	Location->HeightFile = "Sites/Denmark/TerrainTopography.bmp";
-	Locations.push_back(Location);
-	
-	Location = new CTerrainLocation;
-	Location->LowerBound.Longitude = SLongitudeLatitude<f32>::DMStoDecimal(9, 39, 1.38f);
-	Location->LowerBound.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(56, 37, 13.75f);
-	Location->UpperBound.Longitude = SLongitudeLatitude<f32>::DMStoDecimal(10, 17, 17.79f);
-	Location->UpperBound.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(56, 58, 5.72f);
-	Location->ColorFile = "Sites/Denmark/Map6Color.bmp";
-	Location->BathymetryFile = "Sites/Denmark/Map6Bathy.bmp";
-	Location->HeightFile = "Sites/Denmark/TerrainTopography.bmp";
-	Locations.push_back(Location);
-	
-	Location = new CTerrainLocation;
-	Location->LowerBound.Longitude = SLongitudeLatitude<f32>::DMStoDecimal(9, 4, 33.9f);
-	Location->LowerBound.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(56, 13, 56.68f);
-	Location->UpperBound.Longitude = SLongitudeLatitude<f32>::DMStoDecimal(10, 53, 14.45f);
-	Location->UpperBound.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(57, 13, 29.39f);
-	Location->ColorFile = "Sites/Denmark/Map7Color.bmp";
-	Location->BathymetryFile = "Sites/Denmark/Map7Bathy.bmp";
-	Location->HeightFile = "Sites/Denmark/TerrainTopography.bmp";
-	Locations.push_back(Location);
-	
-	Location = new CTerrainLocation;
-	Location->LowerBound.Longitude = SLongitudeLatitude<f32>::DMStoDecimal(9, 58, 24.15f);
-	Location->LowerBound.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(56, 39, 43.63f);
-	Location->UpperBound.Longitude = SLongitudeLatitude<f32>::DMStoDecimal(10, 0, 17.12f);
-	Location->UpperBound.Latitude = SLongitudeLatitude<f32>::DMStoDecimal(56, 40, 45.07f);
-	Location->ColorFile = "Sites/Denmark/Map8.bmp";
-	Location->BathymetryFile = "Grey7";
-	Location->HeightFile = "Sites/Denmark/TerrainTopography.bmp";
-	Locations.push_back(Location);
+void CSite::ReadConfiguration()
+{
+	rapidjson::Document d;
+	d.Parse(File::ReadAsString(Path + "/Site.json").c_str());
+	string Error;
 
+	if (d.HasMember("DataSets"))
+	{
+		auto & dDataSets = d["DataSets"];
+		if (dDataSets.IsArray())
+		{
+			for (uint i = 0; i < dDataSets.Size(); ++ i)
+			{
+				auto & dDataSet = dDataSets[i];
+				SConfiguration::SDataSet DataSet;
+				DataSet.PositionXField = dDataSet["PositionXField"].GetString();
+				DataSet.PositionYField = dDataSet["PositionYField"].GetString();
+				DataSet.PositionZField = dDataSet["PositionZField"].GetString();
 
-	CDataSet * DataSet = new CDataSet;
-	DataSets.push_back(DataSet);
+				if (dDataSet.HasMember("Assets"))
+				{
+					auto & dAssets = dDataSet["Assets"];
+					for (uint i = 0; i < dAssets.Size(); ++ i)
+					{
+						auto & dAsset = dAssets[i];
+						SConfiguration::SDataSet::SAsset Asset;
+						if (dAsset.HasMember("File"))
+						{
+							if (dAsset["File"].IsString())
+								Asset.File = dAsset["File"].GetString();
+							else
+								cerr << "Failed to read site configuration file: " << "File member is not a string" << endl;
+								
+						}
+						Asset.Parser = dAsset["Parser"].GetString();
+
+						DataSet.Assets.push_back(Asset);
+					}
+				}
+				else
+				{
+					cerr << "Failed to read site configuration file: " << "unable to find Assets member" << endl;
+				}
+
+				Configuration.DataSets.push_back(DataSet);
+			}
+		}
+	}
+	else
+	{
+		cerr << "Failed to read site configuration file: " << "unable to find DataSets member" << endl;
+	}
+
+	if (d.HasMember("Locations"))
+	{
+		auto & dLocations = d["Locations"];
+		if (dLocations.IsArray())
+		{
+			for (uint i = 0; i < dLocations.Size(); ++ i)
+			{
+				auto & dLocation = dLocations[i];
+				SConfiguration::SLocation Location;
+				Location.ColorFile = dLocation["ColorFile"].GetString();
+				Location.BathymetryFile = dLocation["BathymetryFile"].GetString();
+				Location.HeightFile = dLocation["HeightFile"].GetString();
+
+				auto & dLowerBound = dLocation["LowerBound"];
+				Location.LowerBound.Longitude = dLowerBound["Longitude"].GetString();
+				Location.LowerBound.Latitude = dLowerBound["Latitude"].GetString();
+
+				auto & dUpperBound = dLocation["UpperBound"];
+				Location.UpperBound.Longitude = dUpperBound["Longitude"].GetString();
+				Location.UpperBound.Latitude = dUpperBound["Latitude"].GetString();
+
+				Configuration.Locations.push_back(Location);
+			}
+		}
+	}
+	else
+	{
+		cerr << "Failed to read site configuration file: " << "unable to find Locations member" << endl;
+	}
 }
 
 void CSite::Load()
@@ -116,4 +131,14 @@ CDataSet * CSite::GetCurrentDataSet()
 ILocation * CSite::GetCurrentLocation()
 {
 	return Locations[0];
+}
+
+string const & CSite::GetName() const
+{
+	return Name;
+}
+
+string const & CSite::GetPath() const
+{
+	return Path;
 }

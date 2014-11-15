@@ -27,14 +27,6 @@ void CGUIContext::SetupMainState()
 	Console->AddMessage("Starting program...", Colors::Red);
 }
 
-void CGUIContext::SetupMenuState()
-{
-	GetCanvas()->SetDrawBackground(true);
-
-	// Widgets
-	MainMenu = new CGUIMainMenuWidget();
-}
-
 void CGUIContext::Clear()
 {
 	Console = 0;
@@ -44,8 +36,6 @@ void CGUIContext::Clear()
 	GlyphControl = 0;
 	SceneControl = 0;
 	ControlPanel = 0;
-
-	MainMenu = 0;
 
 	Manager->RemoveAllWidgets();
 	GetCanvas()->RemoveAllChildren();

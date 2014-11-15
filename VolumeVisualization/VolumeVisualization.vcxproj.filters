@@ -107,6 +107,9 @@
     <ClCompile Include="CGUIGlyphControlWidget.cpp">
       <Filter>MainState\Glyphs</Filter>
     </ClCompile>
+    <ClCompile Include="CGUISiteWidget.cpp">
+      <Filter>MainMenuState\GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CMainState.h">
@@ -216,6 +219,9 @@
     </ClInclude>
     <ClInclude Include="CGUIGlyphControlWidget.h">
       <Filter>MainState\Glyphs</Filter>
+    </ClInclude>
+    <ClInclude Include="CGUISiteWidget.h">
+      <Filter>MainMenuState\GUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

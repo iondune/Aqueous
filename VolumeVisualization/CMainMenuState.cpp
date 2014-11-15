@@ -18,7 +18,8 @@ CMainMenuState::CMainMenuState()
 
 void CMainMenuState::Begin()
 {
-	Context->GUIContext->SetupMenuState();
+	Context->GUIContext->GetCanvas()->SetDrawBackground(true);
+	CGUIMainMenuWidget * MainMenu = new CGUIMainMenuWidget();
 	std::cout << "Menu State begin." << std::endl;
 }
 
@@ -30,23 +31,23 @@ void CMainMenuState::End()
 
 void CMainMenuState::Update(f32 const Elapsed)
 {
-	std::chrono::milliseconds Milliseconds(50);
+	std::chrono::milliseconds Milliseconds(1);
 	std::this_thread::sleep_for(Milliseconds);
 
 	Thread.Sync();
 
 	Context->GUIContext->Manager->Draw(Elapsed, true);
 
-	static int Counter = 0;
-	if (! Counter--)
-	{
+	//static int Counter = 0;
+	//if (! Counter--)
+	/*{
 		Context->CurrentSite->GetCurrentDataSet()->Traits.PositionXField = "x";
 		Context->CurrentSite->GetCurrentDataSet()->Traits.PositionYField = "y";
 		Context->CurrentSite->GetCurrentDataSet()->Traits.PositionZField = "z";
 
 		CreateDataSet();
 		LoadData("HopavagenBay1.dat");
-	}
+	}*/
 }
 
 void CMainMenuState::OnEvent(SWindowResizedEvent & Event)

@@ -22,6 +22,7 @@
     <IncludePath>
       ;$(VisualStudioDir)\SDKs\giflib-4.2.3\lib;
       ;$(VisualStudioDir)\SDKs\cereal\include;
+      ;$(VisualStudioDir)\SDKs\rapidjson\include;
       ;$(ProgramW6432)\MATLAB\MATLAB Compiler Runtime\v84\extern\include;
       ;$(IncludePath);
     </IncludePath>
@@ -64,6 +65,7 @@
     <ClCompile Include="CGUIGlyphControlWidget.cpp" />
     <ClCompile Include="CGUIMainMenuWidget.cpp" />
     <ClCompile Include="CGUISceneControlWidget.cpp" />
+    <ClCompile Include="CGUISiteWidget.cpp" />
     <ClCompile Include="CGUITerrainControlWidget.cpp" />
     <ClCompile Include="CGUIVolumeControlWidget.cpp" />
     <ClCompile Include="CLoadState.cpp" />
@@ -107,6 +109,7 @@
     <ClInclude Include="CGUITerrainControlWidget.h" />
     <ClInclude Include="CGUIVolumeControlWidget.h" />
     <ClInclude Include="CLoadState.h" />
+    <ClInclude Include="CGUISiteWidget.h" />
     <ClInclude Include="CTerrainLocation.h" />
     <ClInclude Include="GifWriter.h" />
     <ClInclude Include="ILocation.h" />

@@ -73,7 +73,6 @@ void CLoadState::Begin()
 	AddLabel(L"Loading Scene Objects...");
 	LoadScene();
 	
-	Context->CurrentSite = new CSite();
 	AddLabel(L"Menu is Starting...");
 
 	if (GetConfirmation)

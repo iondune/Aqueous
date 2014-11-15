@@ -25,7 +25,6 @@ class CGUIContext : public Singleton<CGUIContext>
 public:
 
 	void SetupMainState();
-	void SetupMenuState();
 	void Clear();
 	void Init();
 
@@ -52,7 +51,6 @@ protected:
 	CGUIGlyphControlWidget * GlyphControl = 0;
 	CGUISceneControlWidget * SceneControl = 0;
 	CGUIControlPanelWidget * ControlPanel = 0;
-	CGUIMainMenuWidget * MainMenu = 0;
 
 private:
 

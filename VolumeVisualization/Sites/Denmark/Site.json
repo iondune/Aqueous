@@ -1,0 +1,112 @@
+{
+	"DataSets" : [
+		{
+			"PositionXField" : "x",
+			"PositionYField" : "y",
+			"PositionZField" : "z",
+			"Assets" : [
+				{
+					"File" : "ForZoe.txt",
+					"Parser" : "SimpleTXT"
+				},
+				{
+					"File" : "oxyMaps.mat",
+					"Parser" : "Grid1"
+				}
+			]
+		}
+	],
+	"Locations" : [
+		{
+			"LowerBound" : {
+				"Longitude" : "DMS(9, 30, 32.26)",
+				"Latitude" :"DMS (63, 34, 38.89)"
+			},
+			"UpperBound" : {
+				"Longitude" : "DMS(9, 33, 47.82)",
+				"Latitude" : "DMS(63, 36, 5.87)"
+			},
+			"ColorFile" : "TerrainColorImageSquareSupplement.bmp",
+			"BathymetryFile" : "TerrainBathymetry.bmp",
+			"HeightFile" : "TerrainHeightImageSquare.bmp"
+		},
+		{
+			"LowerBound" : {
+				"Longitude" : "DMS(9, 55, 45.32f)",
+				"Latitude" : "DMS(56, 38, 17.22f)"
+			},
+			"UpperBound" : {
+				"Longitude" : "DMS(10, 2, 34.80f)",
+				"Latitude" : "DMS(56, 41, 59.01f)"
+			},
+			"ColorFile" : "Sites/Denmark/TerrainColor.bmp",
+			"BathymetryFile" : "Sites/Denmark/TerrainBathymetry.bmp",
+			"HeightFile" : "Sites/Denmark/TerrainTopography.bmp"
+		},
+		{
+			"LowerBound" : {
+				"Longitude" : "DMS(9, 49, 27.68f)",
+				"Latitude" : "DMS(56, 34, 20.96f)"
+			},
+			"UpperBound" : {
+				"Longitude" : "DMS(10, 11, 1.75f)",
+				"Latitude" : "DMS(56, 46, 11.45f)"
+			},
+			"ColorFile" : "Sites/Denmark/TerrainColorLarge.bmp",
+			"BathymetryFile" : "Sites/Denmark/TerrainBathymetryLarge.bmp",
+			"HeightFile" : "Sites/Denmark/TerrainTopography.bmp"
+		},
+		{
+			"LowerBound" : {
+				"Longitude" : "DMS(9, 54, 13.29f)",
+				"Latitude" : "DMS(56, 30, 37.33f)"
+			},
+			"UpperBound" : {
+				"Longitude" : "DMS(10, 27, 10.16f)",
+				"Latitude" : "DMS(56, 48, 48.57f)"
+			},
+			"ColorFile" : "Sites/Denmark/TerrainColorXLarge.bmp",
+			"BathymetryFile" : "Sites/Denmark/TerrainBathymetryXLarge.bmp",
+			"HeightFile" : "Sites/Denmark/TerrainTopography.bmp"
+		},
+		{
+			"LowerBound" : {
+				"Longitude" : "DMS(9, 39, 1.38f)",
+				"Latitude" : "DMS(56, 37, 13.75f)"
+			},
+			"UpperBound" : {
+				"Longitude" : "DMS(10, 17, 17.79f)",
+				"Latitude" : "DMS(56, 58, 5.72f)"
+			},
+			"ColorFile" : "Sites/Denmark/Map6Color.bmp",
+			"BathymetryFile" : "Sites/Denmark/Map6Bathy.bmp",
+			"HeightFile" : "Sites/Denmark/TerrainTopography.bmp"
+		},
+		{
+			"LowerBound" : {
+				"Longitude" : "DMS(9, 4, 33.9f)",
+				"Latitude" : "DMS(56, 13, 56.68f)"
+			},
+			"UpperBound" : {
+				"Longitude" : "DMS(10, 53, 14.45f)",
+				"Latitude" : "DMS(57, 13, 29.39f)"
+			},
+			"ColorFile" : "Sites/Denmark/Map7Color.bmp",
+			"BathymetryFile" : "Sites/Denmark/Map7Bathy.bmp",
+			"HeightFile" : "Sites/Denmark/TerrainTopography.bmp"
+		},
+		{
+			"LowerBound" : {
+				"Longitude" : "DMS(9, 58, 24.15f)",
+				"Latitude" : "DMS(56, 39, 43.63f)"
+			},
+			"UpperBound" : {
+				"Longitude" : "DMS(10, 0, 17.12f)",
+				"Latitude" : "DMS(56, 40, 45.07f)"
+			},
+			"ColorFile" : "Sites/Denmark/Map8.bmp",
+			"BathymetryFile" : "Grey7",
+			"HeightFile" : "Sites/Denmark/TerrainTopography.bmp"
+		}
+	]
+}
