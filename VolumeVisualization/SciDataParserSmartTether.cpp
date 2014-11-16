@@ -6,7 +6,7 @@
 #include <sstream>
 
 
-void SciDataParserSmartTether::load(std::string const & FileName)
+void SciDataParserSmartTether::Load()
 {
 	std::ifstream File;
 	File.open(FileName);

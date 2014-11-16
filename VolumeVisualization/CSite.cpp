@@ -26,10 +26,10 @@ void CSite::ReadConfiguration()
 			for (uint i = 0; i < dDataSets.Size(); ++ i)
 			{
 				auto & dDataSet = dDataSets[i];
-				SConfiguration::SDataSet DataSet;
-				DataSet.PositionXField = dDataSet["PositionXField"].GetString();
-				DataSet.PositionYField = dDataSet["PositionYField"].GetString();
-				DataSet.PositionZField = dDataSet["PositionZField"].GetString();
+				CDataSet * DataSet = new CDataSet();
+				DataSet->Traits.PositionXField = dDataSet["PositionXField"].GetString();
+				DataSet->Traits.PositionYField = dDataSet["PositionYField"].GetString();
+				DataSet->Traits.PositionZField = dDataSet["PositionZField"].GetString();
 
 				if (dDataSet.HasMember("Assets"))
 				{
@@ -37,7 +37,7 @@ void CSite::ReadConfiguration()
 					for (uint i = 0; i < dAssets.Size(); ++ i)
 					{
 						auto & dAsset = dAssets[i];
-						SConfiguration::SDataSet::SAsset Asset;
+						CDataSet::SAsset Asset;
 						if (dAsset.HasMember("File"))
 						{
 							if (dAsset["File"].IsString())
@@ -48,7 +48,7 @@ void CSite::ReadConfiguration()
 						}
 						Asset.Parser = dAsset["Parser"].GetString();
 
-						DataSet.Assets.push_back(Asset);
+						DataSet->Assets.push_back(Asset);
 					}
 				}
 				else
@@ -56,7 +56,7 @@ void CSite::ReadConfiguration()
 					cerr << "Failed to read site configuration file: " << "unable to find Assets member" << endl;
 				}
 
-				Configuration.DataSets.push_back(DataSet);
+				DataSets.push_back(DataSet);
 			}
 		}
 	}
@@ -73,20 +73,20 @@ void CSite::ReadConfiguration()
 			for (uint i = 0; i < dLocations.Size(); ++ i)
 			{
 				auto & dLocation = dLocations[i];
-				SConfiguration::SLocation Location;
-				Location.ColorFile = dLocation["ColorFile"].GetString();
-				Location.BathymetryFile = dLocation["BathymetryFile"].GetString();
-				Location.HeightFile = dLocation["HeightFile"].GetString();
+				CTerrainLocation * Location = new CTerrainLocation();
+				Location->ColorFile = dLocation["ColorFile"].GetString();
+				Location->BathymetryFile = dLocation["BathymetryFile"].GetString();
+				Location->HeightFile = dLocation["HeightFile"].GetString();
 
 				auto & dLowerBound = dLocation["LowerBound"];
-				Location.LowerBound.Longitude = dLowerBound["Longitude"].GetString();
-				Location.LowerBound.Latitude = dLowerBound["Latitude"].GetString();
+				Location->LowerBound.Longitude = SLongitudeLatituded::DMStoDecimal(dLowerBound["Longitude"].GetString());
+				Location->LowerBound.Latitude = SLongitudeLatituded::DMStoDecimal(dLowerBound["Latitude"].GetString());
 
 				auto & dUpperBound = dLocation["UpperBound"];
-				Location.UpperBound.Longitude = dUpperBound["Longitude"].GetString();
-				Location.UpperBound.Latitude = dUpperBound["Latitude"].GetString();
+				Location->UpperBound.Longitude = SLongitudeLatituded::DMStoDecimal(dUpperBound["Longitude"].GetString());
+				Location->UpperBound.Latitude = SLongitudeLatituded::DMStoDecimal(dUpperBound["Latitude"].GetString());
 
-				Configuration.Locations.push_back(Location);
+				Locations.push_back(Location);
 			}
 		}
 	}

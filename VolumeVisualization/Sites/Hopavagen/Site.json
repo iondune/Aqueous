@@ -19,12 +19,12 @@
 	"Locations" : [
 		{
 			"LowerBound" : {
-				"Longitude" : "DMS(9, 30, 32.26)",
-				"Latitude" :"DMS (63, 34, 38.89)"
+				"Longitude" : "9 30 32.26 N",
+				"Latitude" :"63 34 38.89 E"
 			},
 			"UpperBound" : {
-				"Longitude" : "DMS(9, 33, 47.82)",
-				"Latitude" : "DMS(63, 36, 5.87)"
+				"Longitude" : "9 33 47.82 N",
+				"Latitude" : "63 36 5.87 E"
 			},
 			"ColorFile" : "TerrainColorImageSquareSupplement.bmp",
 			"BathymetryFile" : "TerrainBathymetry.bmp",

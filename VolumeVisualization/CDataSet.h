@@ -27,6 +27,14 @@ public:
 
 	STraits Traits;
 
+	struct SAsset
+	{
+		string File;
+		string Parser;
+	};
+
+	vector<SAsset> Assets;
+
 	STable Points;
 	SVolumeDatabase<f64> Volume;
 	u32 VolumeHandle;

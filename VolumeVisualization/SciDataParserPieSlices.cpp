@@ -120,8 +120,9 @@ void LoadCSVFile(std::string const & fileName, T & operation)
 	}
 }
 
-void SciDataParserPieSlices::load(std::string const & PieFile, std::string const & HoboFile, std::string const & SmartFile, STimeOffsets const & timeOffsets)
+void SciDataParserPieSlices::Load()
 {
+	string const PieFile = FileName;
 	std::vector<std::vector<f64>> PieSlices, HoboData, SmartTetherData;
 	
 	auto SavePieValues = [&PieSlices](std::vector<f64> const & v) {PieSlices.push_back(v);};
@@ -138,7 +139,7 @@ void SciDataParserPieSlices::load(std::string const & PieFile, std::string const
 	{
 		std::cout << "Slice at angle " << Slice[0] << std::endl;
 
-		f64 const PieStart = Slice[1] - timeOffsets[ETimes::Pie], PieEnd = Slice[2] - timeOffsets[ETimes::Pie];
+		f64 const PieStart = Slice[1] - TimeOffsets[ETimes::Pie], PieEnd = Slice[2] - TimeOffsets[ETimes::Pie];
 		std::cout << "Start time: " << PieStart << "   End time: " << PieEnd << std::endl;
 
 		int HoboSamples = 0, TetherSamples = 0, PointsCreated = 0;
@@ -146,7 +147,7 @@ void SciDataParserPieSlices::load(std::string const & PieFile, std::string const
 
 		for (auto Hobo : HoboData)
 		{
-			f64 const HoboTime = Hobo[1] - timeOffsets[ETimes::Hobo];
+			f64 const HoboTime = Hobo[1] - TimeOffsets[ETimes::Hobo];
 			MinHoboTime = std::min(HoboTime, MinHoboTime);
 			MaxHoboTime = std::max(HoboTime, MaxHoboTime);
 
@@ -166,7 +167,7 @@ void SciDataParserPieSlices::load(std::string const & PieFile, std::string const
 
 				for (auto Smart : SmartTetherData)
 				{
-					f64 const SmartTime = Smart[37] - timeOffsets[ETimes::SmartTether];
+					f64 const SmartTime = Smart[37] - TimeOffsets[ETimes::SmartTether];
 
 					if (SmartTime >= PieStart && SmartTime < PieEnd)
 					{

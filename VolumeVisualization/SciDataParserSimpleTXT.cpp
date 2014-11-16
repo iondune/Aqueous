@@ -32,10 +32,10 @@ char * textFileRead(char const * fn)
 }
 
 
-void SciDataParserSimpleTXT::load(std::string const &data)
+void SciDataParserSimpleTXT::Load()
 {
 	// read the files into buffers
-	char* dataBuf = textFileRead(data.c_str());
+	char* dataBuf = textFileRead(FileName.c_str());
 
 	float time, O2, x, y, z, temp, d1;
 	char *tok;

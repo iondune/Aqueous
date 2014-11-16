@@ -5,11 +5,11 @@
 #include <mat.h>
 
 
-void SciDataParserCTD::load(std::string const &data)
+void SciDataParserCTD::Load()
 {
 	bool writeCsv = false;
 
-	const char * filename = data.c_str();
+	const char * filename = FileName.c_str();
 
 	if (false)
 	{

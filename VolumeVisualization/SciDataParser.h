@@ -15,6 +15,10 @@ class SciDataParser
 public:
 
 	CDataSet * DataSet;
+	string FileName;
+	string Field;
+
+	virtual void Load() = 0;
 
 };
 
@@ -23,7 +27,7 @@ class SciDataParserCTD : public SciDataParser
 
 public:
 
-	void load(std::string const & FileName);
+	void Load();
 	void examine(std::string const & FileName);
 
 };
@@ -33,7 +37,7 @@ class SciDataParserSimpleTXT : public SciDataParser
 
 public:
 
-	void load(std::string const & FileName);
+	void Load();
 
 };
 
@@ -47,7 +51,7 @@ public:
 	bool FieldNames;
 	std::vector<std::string> Fields;
 	
-	virtual void Load(std::string const & FileName);
+	void Load();
 
 	SciDataParserCSV()
 		: FieldDelim(','), ValueDelim(','), FieldNames(true)
@@ -63,9 +67,11 @@ public:
 	char FieldDelim;
 	char ValueDelim;
 	bool FieldNames;
+	string OtherFileName;
+	string MatchField;
 	std::vector<std::string> Fields;
-
-	virtual void Load(std::string const & FileName, std::string const & FileName2, std::string const & MatchField);
+	
+	void Load();
 
 	SciDataParserMergedCSV()
 		: FieldDelim(','), ValueDelim(','), FieldNames(true)
@@ -77,8 +83,8 @@ class SciDataParserSmartTether : public SciDataParserCSV
 {
 
 public:
-
-	virtual void load(std::string const & FileName);
+	
+	void Load();
 
 };
 
@@ -86,8 +92,8 @@ class SciDataParserGrid1 : public SciDataParser
 {
 
 public:
-
-	void load(std::string const & FileName);
+	
+	void Load();
 
 };
 
@@ -121,6 +127,10 @@ class SciDataParserPieSlices : public SciDataParser
 
 public:
 
-	void load(std::string const & PieFile, std::string const & HoboFile, std::string const & SmartFile, STimeOffsets const & timeOffsets);
+	string HoboFile;
+	string SmartFile;
+	STimeOffsets TimeOffsets;
+	
+	void Load();
 
 };

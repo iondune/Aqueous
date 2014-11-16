@@ -3,7 +3,7 @@
 #include "CDataSet.h"
 
 
-void SciDataParserCSV::Load(std::string const & FileName)
+void SciDataParserCSV::Load()
 {
 	DataSet->SourceFile = FileName;
 

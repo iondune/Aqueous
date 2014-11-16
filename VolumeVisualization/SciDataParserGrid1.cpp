@@ -7,9 +7,9 @@
 #include <ionScene.h>
 
 
-void SciDataParserGrid1::load(std::string const &data)
+void SciDataParserGrid1::Load()
 {
-	MATFile * File = matOpen(data.c_str(), "r");
+	MATFile * File = matOpen(FileName.c_str(), "r");
 
 	mxArray * var1 = matGetVariable(File, "var1");
 	mxArray * var2 = matGetVariable(File, "var2");

@@ -21,8 +21,11 @@ u32 const timeToSeconds(std::string const & Field)
 	return Out;
 }
 
-void SciDataParserMergedCSV::Load(std::string const & FileName1, std::string const & FileName2, std::string const & MatchField)
+void SciDataParserMergedCSV::Load()
 {
+	string const FileName1 = FileName;
+	string const FileName2 = OtherFileName;
+
 	std::ifstream File1, File2;
 	File1.open(FileName1);
 	File2.open(FileName2);

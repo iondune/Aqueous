@@ -3,6 +3,7 @@
 
 #include "ColorMappers.h"
 #include "CGlyphSceneObject.h"
+#include "SciDataParser.h"
 
 
 CDataSet::CDataSet()
@@ -19,6 +20,18 @@ void CDataSet::Load()
 		Points.ReadFromFile(PointFile);
 	if (VolumeFile.is_open())
 		Volume.ReadFromFile(VolumeFile);
+
+	for (auto Asset : Assets)
+	{
+		SciDataParser * Parser = nullptr;
+		if (Asset.Parser == "SimpleTXT")
+			Parser = new SciDataParserSimpleTXT();
+		else if (Asset.Parser == "Grid1")
+			Parser = new SciDataParserGrid1();
+
+		Parser->DataSet = this;
+		Parser->Load();
+	}
 }
 
 void CDataSet::ConcurrentLoad()
