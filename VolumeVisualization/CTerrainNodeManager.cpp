@@ -43,6 +43,7 @@ bool CTerrainNodeManager::Load()
 	IndexBuffer->Data(Indices);
 
 	Node = SceneManager->GetFactory()->AddSceneNode("Terrain");
+	Node->SetDebugName("Terrain");
 
 	if (Node)
 	{

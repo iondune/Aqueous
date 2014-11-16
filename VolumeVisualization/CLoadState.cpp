@@ -194,6 +194,7 @@ void CLoadState::LoadScene()
 
 	// Water
 	Scene.Water = SceneManager->GetFactory()->AddSceneNode();
+	Scene.Water->SetDebugName("Water");
 	Scene.Water->SetMesh(SceneManager->GetMeshLibrary()->Get("Plane"));
 	Scene.Water->SetShader(SceneManager->GetShaderLibrary()->Get("Refract"), "Refraction");
 	Scene.Water->SetShader(SceneManager->GetShaderLibrary()->Get("White"), "RefractionMask");

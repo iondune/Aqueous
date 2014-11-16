@@ -98,6 +98,7 @@ bool CVolumeNodeManager::Load()
 	Shader = CProgramContext::Get().Shaders.Volume;
 
 	Node = SceneManager->GetFactory()->AddSceneNode();
+	Node->SetDebugName("Volume");
 
 	if (Node)
 	{
