@@ -9,7 +9,7 @@ class CDataSet
 
 public:
 
-	CDataSet();
+	CDataSet(CSite * Site);
 
 	void Load();
 	void ConcurrentLoad();
@@ -43,5 +43,7 @@ public:
 	longlatd LowerBounds, UpperBounds;
 	std::string PointFileName, VolumeFileName;
 	std::string SourceFile;
+
+	CSite * Site;
 
 };

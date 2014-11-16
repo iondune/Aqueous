@@ -8,6 +8,8 @@ class CLocation
 {
 
 public:
+
+	CLocation(CSite * Site);
 	
 	longlatd LowerBound, UpperBound;
 
@@ -18,5 +20,7 @@ public:
 	virtual void Load();
 	virtual void ConcurrentLoad();
 	virtual void InitSceneElements(CProgramContext::SScene & Scene);
+
+	CSite * Site;
 
 };

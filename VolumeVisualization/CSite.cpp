@@ -9,7 +9,7 @@
 CSite::CSite(string const & Name)
 {
 	this->Name = Name;
-	this->Path = "Sites/" + Name;
+	this->Path = "Sites/" + Name + "/";
 }
 
 void CSite::ReadConfiguration()
@@ -26,7 +26,7 @@ void CSite::ReadConfiguration()
 			for (uint i = 0; i < dDataSets.Size(); ++ i)
 			{
 				auto & dDataSet = dDataSets[i];
-				CDataSet * DataSet = new CDataSet();
+				CDataSet * DataSet = new CDataSet(this);
 				DataSet->Traits.PositionXField = dDataSet["PositionXField"].GetString();
 				DataSet->Traits.PositionYField = dDataSet["PositionYField"].GetString();
 				DataSet->Traits.PositionZField = dDataSet["PositionZField"].GetString();
@@ -73,7 +73,7 @@ void CSite::ReadConfiguration()
 			for (uint i = 0; i < dLocations.Size(); ++ i)
 			{
 				auto & dLocation = dLocations[i];
-				CLocation * Location = new CLocation();
+				CLocation * Location = new CLocation(this);
 				Location->ColorFile = dLocation["ColorFile"].GetString();
 				Location->BathymetryFile = dLocation["BathymetryFile"].GetString();
 				Location->HeightFile = dLocation["HeightFile"].GetString();

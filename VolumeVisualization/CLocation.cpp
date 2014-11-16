@@ -1,13 +1,19 @@
 
 #include "CLocation.h"
 #include "CTerrainNodeManager.h"
+#include "CSite.h"
 
+
+CLocation::CLocation(CSite * Site)
+{
+	this->Site = Site;
+}
 
 void CLocation::Load()
 {
-	ColorImage = CImage::Load(ColorFile);
-	HeightImage = CImage::Load(HeightFile);
-	BathymetryImage = CImage::Load(BathymetryFile);
+	ColorImage = CImage::Load(Site->GetPath() + ColorFile);
+	HeightImage = CImage::Load(Site->GetPath() + HeightFile);
+	BathymetryImage = CImage::Load(Site->GetPath() + BathymetryFile);
 }
 
 void CLocation::ConcurrentLoad()

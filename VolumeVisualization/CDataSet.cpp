@@ -4,11 +4,14 @@
 #include "ColorMappers.h"
 #include "CGlyphSceneObject.h"
 #include "SciDataParser.h"
+#include "CSite.h"
 
 
-CDataSet::CDataSet()
+CDataSet::CDataSet(CSite * Site)
 	: VolumeHandle()
-{}
+{
+	this->Site = Site;
+}
 
 void CDataSet::Load()
 {
@@ -30,7 +33,7 @@ void CDataSet::Load()
 			Parser = new SciDataParserGrid1();
 
 		Parser->DataSet = this;
-		Parser->FileName = Asset.File;
+		Parser->FileName = Site->GetPath() + Asset.File;
 		Parser->Load();
 	}
 }
@@ -40,7 +43,6 @@ void CDataSet::ConcurrentLoad()
 	glGenTextures(1, & VolumeHandle);
 	CSpectrumColorMapper ColorMapper("o2");
 	Volume.MakeOpenGLVolume(VolumeHandle, & ColorMapper);
-
 
 
 	vec3u Dimensions = Volume.Dimensions; // (10);
