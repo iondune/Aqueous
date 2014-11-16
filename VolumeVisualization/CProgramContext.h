@@ -5,6 +5,7 @@
 #include "CContextState.h"
 #include "CGUIContext.h"
 
+
 class CGUIContext;
 
 class CTerrainNodeManager;
@@ -12,7 +13,6 @@ class CVolumeNodeManager;
 class CGlyphSceneObject;
 
 class CSite;
-
 
 class CProgramContext : public Singleton<CProgramContext>
 {

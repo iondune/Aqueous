@@ -14,7 +14,7 @@ public:
 
 	void ReadConfiguration();
 
-	void Load();
+	void Load(IProgressBar * Progress);
 	void ConcurrentLoad();
 	void InitSceneElements(CProgramContext::SScene & Scene);
 

@@ -13,7 +13,7 @@ CDataSet::CDataSet(CSite * Site)
 	this->Site = Site;
 }
 
-void CDataSet::Load()
+void CDataSet::Load(IProgressBar::CTask * Task)
 {
 	std::ifstream PointFile, VolumeFile;
 	PointFile.open(PointFileName);
@@ -24,6 +24,8 @@ void CDataSet::Load()
 	if (VolumeFile.is_open())
 		Volume.ReadFromFile(VolumeFile);
 
+	int Done = 0;
+	f64 Total = Assets.size();
 	for (auto Asset : Assets)
 	{
 		SciDataParser * Parser = nullptr;
@@ -35,6 +37,7 @@ void CDataSet::Load()
 		Parser->DataSet = this;
 		Parser->FileName = Site->GetPath() + Asset.File;
 		Parser->Load();
+		Task->Update(++Done / Total);
 	}
 }
 

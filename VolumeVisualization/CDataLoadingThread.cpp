@@ -14,7 +14,7 @@
 
 void CDataLoadingThread::Execute()
 {
-	Context->CurrentSite->Load();
+	Context->CurrentSite->Load(LoadingWidget);
 	Executing = false;
 }
 

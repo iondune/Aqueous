@@ -11,7 +11,7 @@ public:
 
 	CDataSet(CSite * Site);
 
-	void Load();
+	void Load(IProgressBar::CTask * Task);
 	void ConcurrentLoad();
 	void InitSceneElements(CProgramContext::SScene & Scene);
 

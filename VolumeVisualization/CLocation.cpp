@@ -9,11 +9,14 @@ CLocation::CLocation(CSite * Site)
 	this->Site = Site;
 }
 
-void CLocation::Load()
+void CLocation::Load(IProgressBar::CTask * Task)
 {
 	ColorImage = CImage::Load(Site->GetPath() + ColorFile);
+	Task->Update(0.33);
 	HeightImage = CImage::Load(Site->GetPath() + HeightFile);
+	Task->Update(0.66);
 	BathymetryImage = CImage::Load(Site->GetPath() + BathymetryFile);
+	Task->Update(1.0);
 }
 
 void CLocation::ConcurrentLoad()

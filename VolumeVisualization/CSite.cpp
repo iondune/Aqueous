@@ -96,12 +96,17 @@ void CSite::ReadConfiguration()
 	}
 }
 
-void CSite::Load()
+void CSite::Load(IProgressBar * Progress)
 {
+	Progress->BeginProgress();
+
+	f64 Total = Locations.size() + DataSets.size();
 	for (auto Location : Locations)
-		Location->Load();
+		Location->Load(Progress->NewTask(1 / Total));
 	for (auto DataSet : DataSets)
-		DataSet->Load();
+		DataSet->Load(Progress->NewTask(1 / Total));
+
+	Progress->EndProgress();
 }
 
 void CSite::ConcurrentLoad()
