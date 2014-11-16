@@ -63,6 +63,60 @@ CGUISiteWidget::CGUISiteWidget(CSite * Site)
 		s << Location->LowerBound.Latitude;
 		Text2->SetText(s.str());
 
+		auto Label4 = new Gwen::Controls::Label(Panel);
+		Label4->SetBounds(10+500, 30, 1000, 1000);
+		Label4->SetText("Upper Bound");
+
+		auto Label5 = new Gwen::Controls::Label(Panel);
+		Label5->SetBounds(10+500, 30+30, 1000, 1000);
+		Label5->SetText("Longitude:");
+
+		auto Label6 = new Gwen::Controls::Label(Panel);
+		Label6->SetBounds(10+500, 30+60, 1000, 1000);
+		Label6->SetText("Latitude:");
+
+		auto Text5 = new Gwen::Controls::TextBox(Panel);
+		Text5->SetBounds(10+500+150, 30+30, 100, 20);
+		s.str(string());
+		s << Location->UpperBound.Longitude;
+		Text5->SetText(s.str());
+
+		auto Text6 = new Gwen::Controls::TextBox(Panel);
+		Text6->SetBounds(10+500+150, 30+60, 100, 20);
+		s.str(string());
+		s << Location->UpperBound.Latitude;
+		Text6->SetText(s.str());
+
+		auto Label7 = new Gwen::Controls::Label(Panel);
+		Label7->SetBounds(10, 30+120, 1000, 1000);
+		Label7->SetText("Color File:");
+
+		auto Text7 = new Gwen::Controls::TextBox(Panel);
+		Text7->SetBounds(10+150, 30+120, 450, 20);
+		s.str(string());
+		s << Location->ColorFile;
+		Text7->SetText(s.str());
+
+		auto Label8 = new Gwen::Controls::Label(Panel);
+		Label8->SetBounds(10, 30+150, 1000, 1000);
+		Label8->SetText("Height File:");
+
+		auto Text8 = new Gwen::Controls::TextBox(Panel);
+		Text8->SetBounds(10+150, 30+150, 450, 20);
+		s.str(string());
+		s << Location->HeightFile;
+		Text8->SetText(s.str());
+
+		auto Label9 = new Gwen::Controls::Label(Panel);
+		Label9->SetBounds(10, 30+180, 1000, 1000);
+		Label9->SetText("Bathy File:");
+
+		auto Text9 = new Gwen::Controls::TextBox(Panel);
+		Text9->SetBounds(10+150, 30+180, 450, 20);
+		s.str(string());
+		s << Location->BathymetryFile;
+		Text9->SetText(s.str());
+
 		Offset += 300;
 	}
 
@@ -77,7 +131,7 @@ CGUISiteWidget::CGUISiteWidget(CSite * Site)
 		stringstream s;
 		s << "Data Set " << Index;
 		Panel->SetText(s.str());
-		Panel->SetBounds(10, Offset, 1000-50, 250);
+		Panel->SetBounds(10, Offset, 1000-50, 320);
 
 		auto Label1 = new Gwen::Controls::Label(Panel);
 		Label1->SetBounds(10, 30, 1000, 1000);
@@ -109,6 +163,42 @@ CGUISiteWidget::CGUISiteWidget(CSite * Site)
 		s << DataSet->Traits.PositionZField;
 		Text3->SetText(s.str());
 
+		auto AssetsScrollControl = new Gwen::Controls::ScrollControl(Panel);
+		AssetsScrollControl->SetBounds(10, 30+90, 920, 150);
+
+		int InnerOffset = 0;
+		int InnerIndex = 0;
+		for (auto Asset : DataSet->Assets)
+		{
+			auto Panel = new Gwen::Controls::GroupBox(AssetsScrollControl);
+			stringstream s;
+			s << "Asset " << ++InnerIndex;
+			Panel->SetText(s.str());
+			Panel->SetBounds(10, InnerOffset, 920-50, 125);
+
+			auto Label1 = new Gwen::Controls::Label(Panel);
+			Label1->SetBounds(10, 30, 1000, 1000);
+			Label1->SetText("File:");
+
+			auto Text1 = new Gwen::Controls::TextBox(Panel);
+			Text1->SetBounds(10+150, 30, 600, 20);
+			Text1->SetText(Asset.File);
+
+			auto Label2 = new Gwen::Controls::Label(Panel);
+			Label2->SetBounds(10, 30+30, 1000, 1000);
+			Label2->SetText("Parser:");
+
+			auto Text2 = new Gwen::Controls::TextBox(Panel);
+			Text2->SetBounds(10+150, 30+30, 600, 20);
+			Text2->SetText(Asset.Parser);
+
+			InnerOffset += 150;
+		}
+
+		auto AddAssetButton = new Gwen::Controls::Button(AssetsScrollControl);
+		AddAssetButton->SetText("New");
+		AddAssetButton->SetBounds(10, InnerOffset, 200, 30);
+		
 		Offset += 300;
 	}
 }
