@@ -130,7 +130,7 @@ void CMainState::Update(f32 const Elapsed)
 	{
 		ion::GL::Context::Clear();
 
-		CDrawConfig DrawConfig(SceneManager->GetShaderLibrary()->Get("Merge"), ion::GL::EPrimativeType::Quads);
+		CDrawConfig DrawConfig(SceneManager->GetShaderLibrary()->Get("Merge"), ion::GL::EPrimitiveType::Quads);
 		DrawConfig.AddVertexBuffer("aPosition", CFrameBuffer::GetQuadVertexBuffer());
 		DrawConfig.SetIndexBuffer(CFrameBuffer::GetQuadIndexBuffer());
 		DrawConfig.AddTexture("uSceneColor", Context->SceneColorTexture);
