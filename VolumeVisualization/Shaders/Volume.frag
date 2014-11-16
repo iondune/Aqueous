@@ -15,7 +15,6 @@ uniform mat4 uProjMatrix;
 uniform mat4 uViewMatrix;
 
 uniform vec3 uCameraPosition;
-//uniform vec3 uLightPosition;
 
 uniform float uAlphaIntensity;
 uniform float uStepSize;
