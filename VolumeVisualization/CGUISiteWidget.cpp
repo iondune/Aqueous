@@ -1,5 +1,6 @@
 
 #include "CGUISiteWidget.h"
+#include "CMainMenuState.h"
 #include "CSite.h"
 
 
@@ -17,7 +18,7 @@ CGUISiteWidget::CGUISiteWidget(CSite * Site)
 	auto OKButton = new Gwen::Controls::Button(Window);
 	OKButton->SetText("Open");
 	OKButton->SetBounds(10, 10, 200, 30);
-	OKButton->onPress.Add(this, & CGUIMainMenuWidget::OnSelectDataSet);
+	OKButton->onPress.Add(this, & CGUISiteWidget::OnOpenSite);
 
 	auto TabControl = new Gwen::Controls::TabControl(Window);
 	TabControl->Dock(Gwen::Pos::Fill);
@@ -110,4 +111,12 @@ CGUISiteWidget::CGUISiteWidget(CSite * Site)
 
 		Offset += 300;
 	}
+}
+
+void CGUISiteWidget::OnOpenSite(Gwen::Controls::Base * Control)
+{
+	SingletonPointer<CProgramContext> Context;
+
+	Context->CurrentSite = Site;
+	CMainMenuState::Get().LoadData();
 }

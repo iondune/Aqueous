@@ -30,6 +30,7 @@ void CDataSet::Load()
 			Parser = new SciDataParserGrid1();
 
 		Parser->DataSet = this;
+		Parser->FileName = Asset.File;
 		Parser->Load();
 	}
 }

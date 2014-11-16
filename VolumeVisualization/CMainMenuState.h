@@ -22,7 +22,7 @@ public:
 
 	void OnEvent(SWindowResizedEvent & Event);
 
-	void LoadData(std::string const & FileName);
+	void LoadData();
 	void CreateDataSet();
 
 };

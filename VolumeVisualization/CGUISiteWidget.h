@@ -13,7 +13,7 @@ public:
 
 	CGUISiteWidget(CSite * Site);
 	
-	void OnSelectSite(Gwen::Controls::Base * Control);
+	void OnOpenSite(Gwen::Controls::Base * Control);
 
 protected:
 

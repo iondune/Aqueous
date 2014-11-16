@@ -126,17 +126,6 @@ void CGUIMainMenuWidget::OnSelectSite(Gwen::Controls::Base * Control)
 	//OKButton->onPress.Add(this, & CGUIMainMenuWidget::OnSelectDataSet);
 }
 
-void CGUIMainMenuWidget::OnSelectDataSet(Gwen::Controls::Base * Control)
-{
-	SingletonPointer<CProgramContext> Context;
-
-	//string const & FileName = ListBox->GetSelectedRowName();
-	//cout << "Filename selected: " << FileName << endl;
-
-	//Context->CurrentSite = new CSite(FileName);
-	//CMainMenuState::Get().LoadData(std::string(FileName.begin(), FileName.end()));
-}
-
 void CGUIMainMenuWidget::OnCreateDataSet(Gwen::Controls::Base * Control)
 {	
 	//Gwen::Controls::WindowControl * Window = new Gwen::Controls::WindowControl(GUIManager->getCanvas());

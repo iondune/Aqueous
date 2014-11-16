@@ -56,7 +56,7 @@ void CMainMenuState::OnEvent(SWindowResizedEvent & Event)
 	Context->GUIContext->GetCanvas()->InvalidateChildren(true);
 }
 
-void CMainMenuState::LoadData(std::string const & FileName)
+void CMainMenuState::LoadData()
 {
 	//DataSetName = FileName;
 
