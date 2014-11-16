@@ -1,20 +1,22 @@
 
 #pragma once
 
-#include "ILocation.h"
+#include "CProgramContext.h"
 
 
-class CTerrainLocation : public ILocation
+class CLocation
 {
 
 public:
+	
+	longlatd LowerBound, UpperBound;
 
 	std::string HeightFile, ColorFile, BathymetryFile;
 	CImage * HeightImage = nullptr, * ColorImage = nullptr, * BathymetryImage = nullptr;
 	CTexture * HeightMap = nullptr, * ColorMap = nullptr, * BathymetryMap = nullptr;
-
-	void Load();
-	void ConcurrentLoad();
-	void InitSceneElements(CProgramContext::SScene & Scene);
+	
+	virtual void Load();
+	virtual void ConcurrentLoad();
+	virtual void InitSceneElements(CProgramContext::SScene & Scene);
 
 };

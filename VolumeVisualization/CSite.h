@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include "ILocation.h"
+#include "CLocation.h"
 #include "CDataSet.h"
 
 
@@ -20,14 +20,17 @@ public:
 
 	void AddDataSet(CDataSet * DataSet);
 	CDataSet * GetCurrentDataSet();
-	ILocation * GetCurrentLocation();
+	CLocation * GetCurrentLocation();
 
 	string const & GetName() const;
 	string const & GetPath() const;
 
+	std::vector<CLocation *> const & GetLocations() const;
+	std::vector<CDataSet *> const & GetDataSets() const;
+
 protected:
 	
-	std::vector<ILocation *> Locations;
+	std::vector<CLocation *> Locations;
 	std::vector<CDataSet *> DataSets;
 
 	string Name;

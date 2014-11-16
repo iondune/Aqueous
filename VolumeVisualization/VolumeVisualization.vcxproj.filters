@@ -68,9 +68,6 @@
     <ClCompile Include="SciDataParser.cpp">
       <Filter>MainState\Data Management\Parsers</Filter>
     </ClCompile>
-    <ClCompile Include="CTerrainLocation.cpp">
-      <Filter>MainState\Data Management\Location</Filter>
-    </ClCompile>
     <ClCompile Include="CDataSet.cpp">
       <Filter>MainState\Data Management</Filter>
     </ClCompile>
@@ -109,6 +106,9 @@
     </ClCompile>
     <ClCompile Include="CGUISiteWidget.cpp">
       <Filter>MainMenuState\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CLocation.cpp">
+      <Filter>MainState\Data Management\Location</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -178,12 +178,6 @@
     <ClInclude Include="CSite.h">
       <Filter>MainState\Data Management</Filter>
     </ClInclude>
-    <ClInclude Include="CTerrainLocation.h">
-      <Filter>MainState\Data Management\Location</Filter>
-    </ClInclude>
-    <ClInclude Include="ILocation.h">
-      <Filter>MainState\Data Management\Location</Filter>
-    </ClInclude>
     <ClInclude Include="CDataSet.h">
       <Filter>MainState\Data Management</Filter>
     </ClInclude>
@@ -222,6 +216,9 @@
     </ClInclude>
     <ClInclude Include="CGUISiteWidget.h">
       <Filter>MainMenuState\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="CLocation.h">
+      <Filter>MainState\Data Management\Location</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

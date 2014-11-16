@@ -1,16 +1,16 @@
 
-#include "CTerrainLocation.h"
+#include "CLocation.h"
 #include "CTerrainNodeManager.h"
 
 
-void CTerrainLocation::Load()
+void CLocation::Load()
 {
 	ColorImage = CImage::Load(ColorFile);
 	HeightImage = CImage::Load(HeightFile);
 	BathymetryImage = CImage::Load(BathymetryFile);
 }
 
-void CTerrainLocation::ConcurrentLoad()
+void CLocation::ConcurrentLoad()
 {	
 	if (ColorImage)
 		ColorMap = ColorImage->MakeTexture()->SetWrapMode(CTexture2D::EWrapMode::Clamp);
@@ -20,7 +20,7 @@ void CTerrainLocation::ConcurrentLoad()
 		BathymetryMap = BathymetryImage->MakeTexture()->SetWrapMode(CTexture2D::EWrapMode::Clamp);
 }
 
-void CTerrainLocation::InitSceneElements(CProgramContext::SScene & Scene)
+void CLocation::InitSceneElements(CProgramContext::SScene & Scene)
 {
 	Scene.Terrain->SetColorMap(ColorMap);
 	Scene.Terrain->SetHeightMap(HeightMap);

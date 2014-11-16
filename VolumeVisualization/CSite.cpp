@@ -1,7 +1,7 @@
 
 #include "CSite.h"
 
-#include "CTerrainLocation.h"
+#include "CLocation.h"
 
 #include <rapidjson/document.h>
 
@@ -73,7 +73,7 @@ void CSite::ReadConfiguration()
 			for (uint i = 0; i < dLocations.Size(); ++ i)
 			{
 				auto & dLocation = dLocations[i];
-				CTerrainLocation * Location = new CTerrainLocation();
+				CLocation * Location = new CLocation();
 				Location->ColorFile = dLocation["ColorFile"].GetString();
 				Location->BathymetryFile = dLocation["BathymetryFile"].GetString();
 				Location->HeightFile = dLocation["HeightFile"].GetString();
@@ -128,7 +128,7 @@ CDataSet * CSite::GetCurrentDataSet()
 	return DataSets[0];
 }
 
-ILocation * CSite::GetCurrentLocation()
+CLocation * CSite::GetCurrentLocation()
 {
 	return Locations[0];
 }
@@ -141,4 +141,14 @@ string const & CSite::GetName() const
 string const & CSite::GetPath() const
 {
 	return Path;
+}
+
+std::vector<CLocation *> const & CSite::GetLocations() const
+{
+	return Locations;
+}
+
+std::vector<CDataSet *> const & CSite::GetDataSets() const
+{
+	return DataSets;
 }

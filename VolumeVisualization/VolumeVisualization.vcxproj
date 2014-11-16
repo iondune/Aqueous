@@ -76,7 +76,7 @@
     <ClCompile Include="CPlaneGridSceneObject.cpp" />
     <ClCompile Include="CProgramContext.cpp" />
     <ClCompile Include="CSite.cpp" />
-    <ClCompile Include="CTerrainLocation.cpp" />
+    <ClCompile Include="CLocation.cpp" />
     <ClCompile Include="CTerrainNodeManager.cpp" />
     <ClCompile Include="CGUITitleLabelsWidget.cpp" />
     <ClCompile Include="CVolumeNodeManager.cpp" />
@@ -110,9 +110,8 @@
     <ClInclude Include="CGUIVolumeControlWidget.h" />
     <ClInclude Include="CLoadState.h" />
     <ClInclude Include="CGUISiteWidget.h" />
-    <ClInclude Include="CTerrainLocation.h" />
     <ClInclude Include="GifWriter.h" />
-    <ClInclude Include="ILocation.h" />
+    <ClInclude Include="CLocation.h" />
     <ClInclude Include="CMainMenuState.h" />
     <ClInclude Include="CMainState.h" />
     <ClInclude Include="ColorMappers.h" />
