@@ -11,6 +11,9 @@ void SciDataParserGrid1::Load()
 {
 	MATFile * File = matOpen(FileName.c_str(), "r");
 
+	if (! File)
+		return;
+
 	mxArray * var1 = matGetVariable(File, "var1");
 	mxArray * var2 = matGetVariable(File, "var2");
 	mxArray * var3 = matGetVariable(File, "var3");

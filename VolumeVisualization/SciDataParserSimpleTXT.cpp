@@ -36,6 +36,8 @@ void SciDataParserSimpleTXT::Load()
 {
 	// read the files into buffers
 	char* dataBuf = textFileRead(FileName.c_str());
+	if (! dataBuf)
+		return;
 
 	float time, O2, x, y, z, temp, d1;
 	char *tok;
