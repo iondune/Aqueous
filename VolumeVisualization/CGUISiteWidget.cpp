@@ -20,9 +20,25 @@ CGUISiteWidget::CGUISiteWidget(CSite * Site)
 	OKButton->SetBounds(10, 10, 200, 30);
 	OKButton->onPress.Add(this, & CGUISiteWidget::OnOpenSite);
 
+	auto Label1 = new Gwen::Controls::Label(Window);
+	Label1->SetBounds(10, 60, 1000, 1000);
+	Label1->SetText("Name:");
+
+	auto Text1 = new Gwen::Controls::TextBox(Window);
+	Text1->SetBounds(10+150, 60, 600, 20);
+	Text1->SetText(Site->GetName());
+
+	auto Label2 = new Gwen::Controls::Label(Window);
+	Label2->SetBounds(10, 60+30, 1000, 1000);
+	Label2->SetText("Path:");
+
+	auto Text2 = new Gwen::Controls::TextBox(Window);
+	Text2->SetBounds(10+150, 60+30, 600, 20);
+	Text2->SetText(Site->GetPath());
+
 	auto TabControl = new Gwen::Controls::TabControl(Window);
 	TabControl->Dock(Gwen::Pos::Fill);
-	TabControl->SetMargin(Gwen::Margin(0, 60, 0, 0));
+	TabControl->SetMargin(Gwen::Margin(0, 120, 0, 0));
 	auto LocationsTab = TabControl->AddPage("Locations")->GetPage();
 	auto DataSetsTab = TabControl->AddPage("Data Sets")->GetPage();
 
@@ -35,6 +51,7 @@ CGUISiteWidget::CGUISiteWidget(CSite * Site)
 	{
 		auto Panel = new Gwen::Controls::GroupBox(LocationScrollControl);
 		stringstream s;
+		//s << std::setprecision(10);
 		s << "Location " << Index;
 		Panel->SetText(s.str());
 		Panel->SetBounds(10, Offset, 1000-50, 250);
@@ -47,21 +64,49 @@ CGUISiteWidget::CGUISiteWidget(CSite * Site)
 		Label2->SetBounds(10, 30+30, 1000, 1000);
 		Label2->SetText("Longitude:");
 
-		auto Text1 = new Gwen::Controls::TextBox(Panel);
-		Text1->SetBounds(10+150, 30+30, 100, 20);
-		s.str(string());
-		s << Location->LowerBound.Longitude;
-		Text1->SetText(s.str());
+		{
+			f64 Degrees, Minutes, Seconds;
+			SLongitudeLatituded::DecimalToDMS(Location->LowerBound.Longitude, Degrees, Minutes, Seconds);
+			auto Text1a = new Gwen::Controls::TextBox(Panel);
+			Text1a->SetBounds(10+150, 30+30, 60, 20);
+			s.str(string());
+			s << Degrees;
+			Text1a->SetText(s.str());
+			auto Text1b = new Gwen::Controls::TextBox(Panel);
+			Text1b->SetBounds(10+150+70, 30+30, 60, 20);
+			s.str(string());
+			s << Minutes;
+			Text1b->SetText(s.str());
+			auto Text1c = new Gwen::Controls::TextBox(Panel);
+			Text1c->SetBounds(10+150+140, 30+30, 60, 20);
+			s.str(string());
+			s << Seconds;
+			Text1c->SetText(s.str());
+		}
 
 		auto Label3 = new Gwen::Controls::Label(Panel);
 		Label3->SetBounds(10, 30+60, 1000, 1000);
 		Label3->SetText("Latitude:");
 
-		auto Text2 = new Gwen::Controls::TextBox(Panel);
-		Text2->SetBounds(10+150, 30+60, 100, 20);
-		s.str(string());
-		s << Location->LowerBound.Latitude;
-		Text2->SetText(s.str());
+		{
+			f64 Degrees, Minutes, Seconds;
+			SLongitudeLatituded::DecimalToDMS(Location->LowerBound.Latitude, Degrees, Minutes, Seconds);
+			auto Text1a = new Gwen::Controls::TextBox(Panel);
+			Text1a->SetBounds(10+150, 30+60, 60, 20);
+			s.str(string());
+			s << Degrees;
+			Text1a->SetText(s.str());
+			auto Text1b = new Gwen::Controls::TextBox(Panel);
+			Text1b->SetBounds(10+150+70, 30+60, 60, 20);
+			s.str(string());
+			s << Minutes;
+			Text1b->SetText(s.str());
+			auto Text1c = new Gwen::Controls::TextBox(Panel);
+			Text1c->SetBounds(10+150+140, 30+60, 60, 20);
+			s.str(string());
+			s << Seconds;
+			Text1c->SetText(s.str());
+		}
 
 		auto Label4 = new Gwen::Controls::Label(Panel);
 		Label4->SetBounds(10+500, 30, 1000, 1000);
@@ -75,17 +120,45 @@ CGUISiteWidget::CGUISiteWidget(CSite * Site)
 		Label6->SetBounds(10+500, 30+60, 1000, 1000);
 		Label6->SetText("Latitude:");
 
-		auto Text5 = new Gwen::Controls::TextBox(Panel);
-		Text5->SetBounds(10+500+150, 30+30, 100, 20);
-		s.str(string());
-		s << Location->UpperBound.Longitude;
-		Text5->SetText(s.str());
+		{
+			f64 Degrees, Minutes, Seconds;
+			SLongitudeLatituded::DecimalToDMS(Location->UpperBound.Longitude, Degrees, Minutes, Seconds);
+			auto Text1a = new Gwen::Controls::TextBox(Panel);
+			Text1a->SetBounds(10+500+150, 30+30, 60, 20);
+			s.str(string());
+			s << Degrees;
+			Text1a->SetText(s.str());
+			auto Text1b = new Gwen::Controls::TextBox(Panel);
+			Text1b->SetBounds(10+500+150+70, 30+30, 60, 20);
+			s.str(string());
+			s << Minutes;
+			Text1b->SetText(s.str());
+			auto Text1c = new Gwen::Controls::TextBox(Panel);
+			Text1c->SetBounds(10+500+150+140, 30+30, 60, 20);
+			s.str(string());
+			s << Seconds;
+			Text1c->SetText(s.str());
+		}
 
-		auto Text6 = new Gwen::Controls::TextBox(Panel);
-		Text6->SetBounds(10+500+150, 30+60, 100, 20);
-		s.str(string());
-		s << Location->UpperBound.Latitude;
-		Text6->SetText(s.str());
+		{
+			f64 Degrees, Minutes, Seconds;
+			SLongitudeLatituded::DecimalToDMS(Location->UpperBound.Latitude, Degrees, Minutes, Seconds);
+			auto Text1a = new Gwen::Controls::TextBox(Panel);
+			Text1a->SetBounds(10+500+150, 30+60, 60, 20);
+			s.str(string());
+			s << Degrees;
+			Text1a->SetText(s.str());
+			auto Text1b = new Gwen::Controls::TextBox(Panel);
+			Text1b->SetBounds(10+500+150+70, 30+60, 60, 20);
+			s.str(string());
+			s << Minutes;
+			Text1b->SetText(s.str());
+			auto Text1c = new Gwen::Controls::TextBox(Panel);
+			Text1c->SetBounds(10+500+150+140, 30+60, 60, 20);
+			s.str(string());
+			s << Seconds;
+			Text1c->SetText(s.str());
+		}
 
 		auto Label7 = new Gwen::Controls::Label(Panel);
 		Label7->SetBounds(10, 30+120, 1000, 1000);
