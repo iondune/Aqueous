@@ -124,9 +124,6 @@
     <ClInclude Include=".\CSingleFieldColorMapper.h">
       <Filter>MainState\Data Management\Color Mapping</Filter>
     </ClInclude>
-    <ClInclude Include="ProgressPrinter.h">
-      <Filter>Utilities</Filter>
-    </ClInclude>
     <ClInclude Include="CSpectrumColorMapper.h">
       <Filter>MainState\Data Management\Color Mapping</Filter>
     </ClInclude>

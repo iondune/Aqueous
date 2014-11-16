@@ -127,7 +127,6 @@
     <ClInclude Include="CGUITitleLabelsWidget.h" />
     <ClInclude Include="CVolumeNodeManager.h" />
     <ClInclude Include="CWaterSceneObject.h" />
-    <ClInclude Include="ProgressPrinter.h" />
     <ClInclude Include="RBFInterpolator\newmat.h" />
     <ClInclude Include="RBFInterpolator\RBFInterpolator.h" />
     <ClInclude Include="SciDataParser.h" />
