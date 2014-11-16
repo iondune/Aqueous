@@ -6,7 +6,6 @@
 #include "CSite.h"
 
 #include "CTerrainNodeManager.h"
-#include "CWaterSceneObject.h"
 #include "CVolumeNodeManager.h"
 #include "CGlyphSceneObject.h"
 #include "CPlaneGridSceneObject.h"

@@ -56,9 +56,6 @@
     <ClCompile Include="CGUIContextWidget.cpp">
       <Filter>Program Context\GUI</Filter>
     </ClCompile>
-    <ClCompile Include="CWaterSceneObject.cpp">
-      <Filter>MainState\Water</Filter>
-    </ClCompile>
     <ClCompile Include="SciDataParserMergedCSV.cpp">
       <Filter>MainState\Data Management\Parsers</Filter>
     </ClCompile>
@@ -166,9 +163,6 @@
     <ClInclude Include="CGUIContextWidget.h">
       <Filter>Program Context\GUI</Filter>
     </ClInclude>
-    <ClInclude Include="CWaterSceneObject.h">
-      <Filter>MainState\Water</Filter>
-    </ClInclude>
     <ClInclude Include="BathymetyGenerator.h">
       <Filter>Utilities</Filter>
     </ClInclude>
@@ -260,9 +254,6 @@
     </Filter>
     <Filter Include="Program Context\GUI">
       <UniqueIdentifier>{69559bbe-9f50-47e8-809c-55d622e1b426}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MainState\Water">
-      <UniqueIdentifier>{1c0ec171-1f22-41cf-9511-5fe0e0c62da5}</UniqueIdentifier>
     </Filter>
     <Filter Include="MainState\Data Management\Location">
       <UniqueIdentifier>{8440f9e2-4f2e-46ed-9cbd-c310b75cd748}</UniqueIdentifier>
