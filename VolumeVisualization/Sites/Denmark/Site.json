@@ -19,94 +19,81 @@
 	"Locations" : [
 		{
 			"LowerBound" : {
-				"Longitude" : "DMS(9, 30, 32.26)",
-				"Latitude" :"DMS (63, 34, 38.89)"
+				"Longitude" : "9 55 45.32",
+				"Latitude" : "56 38 17.22"
 			},
 			"UpperBound" : {
-				"Longitude" : "DMS(9, 33, 47.82)",
-				"Latitude" : "DMS(63, 36, 5.87)"
+				"Longitude" : "10 2 34.80",
+				"Latitude" : "56 41 59.01"
 			},
-			"ColorFile" : "TerrainColorImageSquareSupplement.bmp",
+			"ColorFile" : "TerrainColor.bmp",
 			"BathymetryFile" : "TerrainBathymetry.bmp",
-			"HeightFile" : "TerrainHeightImageSquare.bmp"
+			"HeightFile" : "TerrainTopography.bmp"
 		},
 		{
 			"LowerBound" : {
-				"Longitude" : "DMS(9, 55, 45.32f)",
-				"Latitude" : "DMS(56, 38, 17.22f)"
+				"Longitude" : "9 49 27.68",
+				"Latitude" : "56 34 20.96"
 			},
 			"UpperBound" : {
-				"Longitude" : "DMS(10, 2, 34.80f)",
-				"Latitude" : "DMS(56, 41, 59.01f)"
+				"Longitude" : "10 11 1.75",
+				"Latitude" : "56 46 11.45"
 			},
-			"ColorFile" : "Sites/Denmark/TerrainColor.bmp",
-			"BathymetryFile" : "Sites/Denmark/TerrainBathymetry.bmp",
-			"HeightFile" : "Sites/Denmark/TerrainTopography.bmp"
+			"ColorFile" : "TerrainColorLarge.bmp",
+			"BathymetryFile" : "TerrainBathymetryLarge.bmp",
+			"HeightFile" : "TerrainTopography.bmp"
 		},
 		{
 			"LowerBound" : {
-				"Longitude" : "DMS(9, 49, 27.68f)",
-				"Latitude" : "DMS(56, 34, 20.96f)"
+				"Longitude" : "9 54 13.29",
+				"Latitude" : "56 30 37.33"
 			},
 			"UpperBound" : {
-				"Longitude" : "DMS(10, 11, 1.75f)",
-				"Latitude" : "DMS(56, 46, 11.45f)"
+				"Longitude" : "10 27 10.16",
+				"Latitude" : "56 48 48.57"
 			},
-			"ColorFile" : "Sites/Denmark/TerrainColorLarge.bmp",
-			"BathymetryFile" : "Sites/Denmark/TerrainBathymetryLarge.bmp",
-			"HeightFile" : "Sites/Denmark/TerrainTopography.bmp"
+			"ColorFile" : "TerrainColorXLarge.bmp",
+			"BathymetryFile" : "TerrainBathymetryXLarge.bmp",
+			"HeightFile" : "TerrainTopography.bmp"
 		},
 		{
 			"LowerBound" : {
-				"Longitude" : "DMS(9, 54, 13.29f)",
-				"Latitude" : "DMS(56, 30, 37.33f)"
+				"Longitude" : "9 39 1.38",
+				"Latitude" : "56 37 13.75"
 			},
 			"UpperBound" : {
-				"Longitude" : "DMS(10, 27, 10.16f)",
-				"Latitude" : "DMS(56, 48, 48.57f)"
+				"Longitude" : "10 17 17.79",
+				"Latitude" : "56 58 5.72"
 			},
-			"ColorFile" : "Sites/Denmark/TerrainColorXLarge.bmp",
-			"BathymetryFile" : "Sites/Denmark/TerrainBathymetryXLarge.bmp",
-			"HeightFile" : "Sites/Denmark/TerrainTopography.bmp"
+			"ColorFile" : "Map6Color.bmp",
+			"BathymetryFile" : "Map6Bathy.bmp",
+			"HeightFile" : "TerrainTopography.bmp"
 		},
 		{
 			"LowerBound" : {
-				"Longitude" : "DMS(9, 39, 1.38f)",
-				"Latitude" : "DMS(56, 37, 13.75f)"
+				"Longitude" : "9 4 33.9",
+				"Latitude" : "56 13 56.68"
 			},
 			"UpperBound" : {
-				"Longitude" : "DMS(10, 17, 17.79f)",
-				"Latitude" : "DMS(56, 58, 5.72f)"
+				"Longitude" : "10 53 14.45",
+				"Latitude" : "57 13 29.39"
 			},
-			"ColorFile" : "Sites/Denmark/Map6Color.bmp",
-			"BathymetryFile" : "Sites/Denmark/Map6Bathy.bmp",
-			"HeightFile" : "Sites/Denmark/TerrainTopography.bmp"
+			"ColorFile" : "Map7Color.bmp",
+			"BathymetryFile" : "Map7Bathy.bmp",
+			"HeightFile" : "TerrainTopography.bmp"
 		},
 		{
 			"LowerBound" : {
-				"Longitude" : "DMS(9, 4, 33.9f)",
-				"Latitude" : "DMS(56, 13, 56.68f)"
+				"Longitude" : "9 58 24.15",
+				"Latitude" : "56 39 43.63"
 			},
 			"UpperBound" : {
-				"Longitude" : "DMS(10, 53, 14.45f)",
-				"Latitude" : "DMS(57, 13, 29.39f)"
+				"Longitude" : "10 0 17.12",
+				"Latitude" : "56 40 45.07"
 			},
-			"ColorFile" : "Sites/Denmark/Map7Color.bmp",
-			"BathymetryFile" : "Sites/Denmark/Map7Bathy.bmp",
-			"HeightFile" : "Sites/Denmark/TerrainTopography.bmp"
-		},
-		{
-			"LowerBound" : {
-				"Longitude" : "DMS(9, 58, 24.15f)",
-				"Latitude" : "DMS(56, 39, 43.63f)"
-			},
-			"UpperBound" : {
-				"Longitude" : "DMS(10, 0, 17.12f)",
-				"Latitude" : "DMS(56, 40, 45.07f)"
-			},
-			"ColorFile" : "Sites/Denmark/Map8.bmp",
+			"ColorFile" : "Map8.bmp",
 			"BathymetryFile" : "Grey7",
-			"HeightFile" : "Sites/Denmark/TerrainTopography.bmp"
+			"HeightFile" : "TerrainTopography.bmp"
 		}
 	]
 }
