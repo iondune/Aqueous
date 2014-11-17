@@ -221,11 +221,12 @@ void CMainState::CalculateDataAlignment()
 	CProgramContext::SScene & Scene = Context->Scene;
 
 	CSite * CurrentSite = Context->CurrentSite;
-	STable & DataSet = CurrentSite->GetCurrentDataSet()->Points;
+	CDataSet const * const DataSet = CurrentSite->GetCurrentDataSet();
+	STable & Points = CurrentSite->GetCurrentDataSet()->Points;
 
-	SRange<f64> XRange = DataSet.GetFieldRange(CurrentSite->GetCurrentDataSet()->Traits.PositionXField, 15.0);
-	SRange<f64> YRange = DataSet.GetFieldRange(CurrentSite->GetCurrentDataSet()->Traits.PositionYField, 15.0);
-	SRange<f64> ZRange = DataSet.GetFieldRange(CurrentSite->GetCurrentDataSet()->Traits.PositionZField, 15.0);
+	SRange<f64> XRange = Points.GetFieldRange(CurrentSite->GetCurrentDataSet()->Traits.PositionXField, 15.0);
+	SRange<f64> YRange = Points.GetFieldRange(CurrentSite->GetCurrentDataSet()->Traits.PositionYField, 15.0);
+	SRange<f64> ZRange = Points.GetFieldRange(CurrentSite->GetCurrentDataSet()->Traits.PositionZField, 15.0);
 	
 	if (XRange.IsEmpty())
 		XRange = SRange<f64>(-1, 1);
@@ -239,7 +240,7 @@ void CMainState::CalculateDataAlignment()
 	longlatd const DataLonLatMin(XRange.Minimum, ZRange.Minimum), DataLonLatMax(XRange.Maximum, ZRange.Maximum);
 	longlatd const MapLonLatMin(CurrentSite->GetCurrentLocation()->LowerBound), MapLonLatMax(CurrentSite->GetCurrentLocation()->UpperBound);
 
-	longlatd const DataLonLatCenter = longlatd(SLongitudeLatitude<f64>::DMStoDecimal(9, 32, 23.44 - 3.1), SLongitudeLatitude<f64>::DMStoDecimal(63, 35, 35.37 - 2.4));// (DataLonLatMin + DataLonLatMax) / 2.f;
+	longlatd const DataLonLatCenter = (DataSet->ManuallySetDataLongLat ? DataSet->DataLonLatCenter : (DataLonLatMin + DataLonLatMax) / 2.f);
 	
 	vec2d DataRangeMin, DataRangeMax, MapRangeMin, MapRangeMax;
 	sharedPtr<longlatd::IProjectionSystem> Projection;
@@ -254,13 +255,13 @@ void CMainState::CalculateDataAlignment()
 	MapRangeMin = DataLonLatCenter.OffsetTo(MapLonLatMin, Projection);
 	MapRangeMax = DataLonLatCenter.OffsetTo(MapLonLatMax, Projection);
 
-	vec2d const DataRangeSize = DataLonLatMax - DataLonLatMin;// DataRangeMax - DataRangeMin;
-	vec2d const DataRangeCenter = DataRangeSize / 2;// (DataLonLatMin + DataLonLatMax) / 2.f;// (DataRangeMin + DataRangeMax) / 2.f;
+	vec2d const DataRangeSize = (DataSet->ManuallySetDataLongLat ? DataLonLatMax - DataLonLatMin : DataRangeMax - DataRangeMin);
+	vec2d const DataRangeCenter = (DataSet->ManuallySetDataLongLat ? DataRangeSize / 2 : (DataRangeMin + DataRangeMax) / 2.f);
 	f64 const DataDepth = YRange.Size();
 	
 	vec2d const MapRangeSize = MapRangeMax - MapRangeMin;
 	vec2d const MapRangeCenter = (MapRangeMin + MapRangeMax) / 2.f;
-	f64 const MapDepth = 180.0;
+	f64 const MapDepth = DataSet->MapDepth;
 	
 	printf("Data range is %f by %f meters,\n", DataRangeSize.X, DataRangeSize.Y);
 	printf("Terrain range is %f by %f meters,\n", MapRangeSize.X, MapRangeSize.Y);
@@ -270,7 +271,7 @@ void CMainState::CalculateDataAlignment()
 	vec3d const DataScale = 3.0 * vec3d(DataRangeSize.X, DataDepth, DataRangeSize.Y) / Maximum(DataRangeSize.X, DataRangeSize.Y);
 	vec3d const MapScale = DataScale * vec3d(MapRangeSize.X, MapDepth, MapRangeSize.Y) / vec3d(DataRangeSize.X, DataDepth, DataRangeSize.Y);
 
-	static f64 const YExaggeration = 8.0;
+	static f64 const YExaggeration = DataSet->YExaggeration;
 	static vec3d const Multiplier = vec3d(1, YExaggeration, 1);
 	
 	//Scene.Glyphs->SetScale(DataScale * Multiplier);

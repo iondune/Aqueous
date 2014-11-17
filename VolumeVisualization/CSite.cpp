@@ -31,6 +31,15 @@ void CSite::ReadConfiguration()
 				DataSet->Traits.PositionYField = dDataSet["PositionYField"].GetString();
 				DataSet->Traits.PositionZField = dDataSet["PositionZField"].GetString();
 
+				if (dDataSet.HasMember("DataLonLatCenter") && dDataSet["DataLonLatCenter"].IsObject())
+				{
+					SLongitudeLatituded DataLonLatCenter;
+					DataLonLatCenter.Longitude = SLongitudeLatituded::DMStoDecimal(dDataSet["DataLonLatCenter"]["Longitude"].GetString());
+					DataLonLatCenter.Latitude = SLongitudeLatituded::DMStoDecimal(dDataSet["DataLonLatCenter"]["Latitude"].GetString());
+					DataSet->DataLonLatCenter = DataLonLatCenter;
+					DataSet->ManuallySetDataLongLat = true;
+				}
+
 				if (dDataSet.HasMember("Assets"))
 				{
 					auto & dAssets = dDataSet["Assets"];

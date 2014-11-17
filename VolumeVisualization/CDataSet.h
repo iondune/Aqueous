@@ -44,6 +44,12 @@ public:
 	std::string PointFileName, VolumeFileName;
 	std::string SourceFile;
 
+	bool ManuallySetDataLongLat = false;
+	longlatd DataLonLatCenter;
+
+	f64 YExaggeration = 8.0;
+	f64 MapDepth = 180.0;
+
 	CSite * Site;
 
 };

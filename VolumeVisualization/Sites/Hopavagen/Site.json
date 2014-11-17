@@ -4,6 +4,10 @@
 			"PositionXField" : "x",
 			"PositionYField" : "y",
 			"PositionZField" : "z",
+			"DataLonLatCenter" : {
+				"Longitude" : "9 32 20.34",
+				"Latitude" : "63 35 32.97"
+			},
 			"Assets" : [
 				{
 					"File" : "ForZoe.txt",
