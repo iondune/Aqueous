@@ -26,7 +26,7 @@ CGUITerrainControlWidget::CGUITerrainControlWidget()
 	WaterButton = new Gwen::Controls::Button(Window);
 	WaterButton->SetBounds(15, 10 + 35, 290, 25);
 	WaterButton->SetText("Enable Water");
-	//WaterButton->SetText(Water->isVisible() ? "Disable Water" : "Enable Water");
+	WaterButton->SetText(Water->IsVisible() ? "Disable Water" : "Enable Water");
 	WaterButton->onPress.Add(this, & CGUITerrainControlWidget::OnToggleWater);
 
 	// Panel
@@ -92,18 +92,18 @@ void CGUITerrainControlWidget::OnToggleWater(Gwen::Controls::Base * Control)
 {
 	CProgramContext * Context = & CProgramContext::Get();
 
-	//if (Context->Scene.Water->isVisible())
-	//{
-	//	Context->Scene.Water->setVisible(false);
-	//	GUIContext->GetConsole()->AddMessage("Water View Disabled");
-	//	WaterButton->SetText("Enable Water");
-	//}
-	//else
-	//{
-	//	Context->Scene.Water->setVisible(true);
-	//	GUIContext->GetConsole()->AddMessage("Water View Enabled");
-	//	WaterButton->SetText("Disable Water");
-	//}
+	if (Context->Scene.Water->IsVisible())
+	{
+		Context->Scene.Water->SetVisible(false);
+		GUIContext->GetConsole()->AddMessage("Water View Disabled");
+		WaterButton->SetText("Enable Water");
+	}
+	else
+	{
+		Context->Scene.Water->SetVisible(true);
+		GUIContext->GetConsole()->AddMessage("Water View Enabled");
+		WaterButton->SetText("Disable Water");
+	}
 }
 
 void CGUITerrainControlWidget::OnSelectElevation(Gwen::Controls::Base * Control)
