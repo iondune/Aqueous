@@ -4,6 +4,11 @@
 #include "CTerrainNodeManager.h"
 #include "CGUIContext.h"
 
+void CMainState::OnEvent(IEvent & Event)
+{
+	if (InstanceOf<SKeyboardEvent>(Event))
+		OnEvent(As<SKeyboardEvent>(Event));
+}
 
 void CMainState::OnEvent(SKeyboardEvent & Event)
 {
