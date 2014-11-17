@@ -28,10 +28,15 @@ public:
 	std::vector<CLocation *> const & GetLocations() const;
 	std::vector<CDataSet *> const & GetDataSets() const;
 
+	void SetSelectedLocation(int const SelectedLocation);
+
 protected:
 	
 	std::vector<CLocation *> Locations;
 	std::vector<CDataSet *> DataSets;
+
+	int SelectedLocation = 0;
+	int SelectedDataSet = 0;
 
 	string Name;
 	string Path;

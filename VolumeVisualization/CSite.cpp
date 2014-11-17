@@ -138,8 +138,8 @@ void CSite::ConcurrentLoad()
 
 void CSite::InitSceneElements(CProgramContext::SScene & Scene)
 {
-	Locations[0]->InitSceneElements(Scene);
-	DataSets[0]->InitSceneElements(Scene);
+	Locations[SelectedLocation]->InitSceneElements(Scene);
+	DataSets[SelectedDataSet]->InitSceneElements(Scene);
 }
 
 void CSite::AddDataSet(CDataSet * DataSet)
@@ -149,12 +149,12 @@ void CSite::AddDataSet(CDataSet * DataSet)
 
 CDataSet * CSite::GetCurrentDataSet()
 {
-	return DataSets[0];
+	return DataSets[SelectedDataSet];
 }
 
 CLocation * CSite::GetCurrentLocation()
 {
-	return Locations[0];
+	return Locations[SelectedLocation];
 }
 
 string const & CSite::GetName() const
@@ -175,4 +175,9 @@ std::vector<CLocation *> const & CSite::GetLocations() const
 std::vector<CDataSet *> const & CSite::GetDataSets() const
 {
 	return DataSets;
+}
+
+void CSite::SetSelectedLocation(int const SelectedLocation)
+{
+	this->SelectedLocation = Clamp<int>(SelectedLocation, 0, (int) Locations.size() - 1);
 }

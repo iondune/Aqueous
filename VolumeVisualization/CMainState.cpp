@@ -302,6 +302,7 @@ void CMainState::CalculateDataAlignment()
 void CMainState::SetSite(int site)
 {
 	CProgramContext::SScene & Scene = Context->Scene;
-	//Scene.Terrain->SetSite(Site);
+	Context->CurrentSite->SetSelectedLocation(site);
+	Context->CurrentSite->InitSceneElements(Context->Scene);
 	CalculateDataAlignment();
 }

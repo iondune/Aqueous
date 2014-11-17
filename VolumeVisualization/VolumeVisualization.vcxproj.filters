@@ -105,7 +105,7 @@
       <Filter>MainMenuState\GUI</Filter>
     </ClCompile>
     <ClCompile Include="CLocation.cpp">
-      <Filter>MainState\Data Management\Location</Filter>
+      <Filter>MainState\Data Management</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -209,7 +209,7 @@
       <Filter>MainMenuState\GUI</Filter>
     </ClInclude>
     <ClInclude Include="CLocation.h">
-      <Filter>MainState\Data Management\Location</Filter>
+      <Filter>MainState\Data Management</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -254,9 +254,6 @@
     </Filter>
     <Filter Include="Program Context\GUI">
       <UniqueIdentifier>{69559bbe-9f50-47e8-809c-55d622e1b426}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MainState\Data Management\Location">
-      <UniqueIdentifier>{8440f9e2-4f2e-46ed-9cbd-c310b75cd748}</UniqueIdentifier>
     </Filter>
     <Filter Include="MainState\GUI">
       <UniqueIdentifier>{8d37c36b-409f-4687-b8ec-c149f261876d}</UniqueIdentifier>
