@@ -33,6 +33,14 @@ void CDataSet::Load(IProgressBar::CTask * Task)
 			Parser = new SciDataParserSimpleTXT();
 		else if (Asset.Parser == "Grid1")
 			Parser = new SciDataParserGrid1();
+		else if (Asset.Parser == "CSV")
+		{
+			SciDataParserCSV * CSV = new SciDataParserCSV();
+			CSV->FieldDelim = Asset.FieldDelimiter;
+			CSV->ValueDelim = Asset.ValueDelimiter;
+
+			Parser = CSV;
+		}
 
 		Parser->DataSet = this;
 		Parser->FileName = Site->GetPath() + Asset.File;

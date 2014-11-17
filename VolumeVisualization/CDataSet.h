@@ -31,6 +31,8 @@ public:
 	{
 		string File;
 		string Parser;
+		char FieldDelimiter = ',';
+		char ValueDelimiter = ',';
 	};
 
 	vector<SAsset> Assets;

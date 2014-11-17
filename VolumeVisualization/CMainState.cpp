@@ -223,23 +223,23 @@ void CMainState::CalculateDataAlignment()
 	CSite * CurrentSite = Context->CurrentSite;
 	CDataSet const * const DataSet = CurrentSite->GetCurrentDataSet();
 	STable & Points = CurrentSite->GetCurrentDataSet()->Points;
+	
+	longlatd const MapLonLatMin(CurrentSite->GetCurrentLocation()->LowerBound), MapLonLatMax(CurrentSite->GetCurrentLocation()->UpperBound);
 
 	SRange<f64> XRange = Points.GetFieldRange(CurrentSite->GetCurrentDataSet()->Traits.PositionXField, 15.0);
 	SRange<f64> YRange = Points.GetFieldRange(CurrentSite->GetCurrentDataSet()->Traits.PositionYField, 15.0);
 	SRange<f64> ZRange = Points.GetFieldRange(CurrentSite->GetCurrentDataSet()->Traits.PositionZField, 15.0);
 	
 	if (XRange.IsEmpty())
-		XRange = SRange<f64>(-1, 1);
+		XRange = SRange<f64>(MapLonLatMin.Longitude, MapLonLatMax.Longitude);
 	if (YRange.IsEmpty())
 		YRange = SRange<f64>(-1, 1);
 	if (ZRange.IsEmpty())
-		ZRange = SRange<f64>(-1, 1);
+		ZRange = SRange<f64>(MapLonLatMin.Latitude, MapLonLatMax.Latitude);
 
 	printf("Longlat range is %g %g to %g %g\n", XRange.Minimum, ZRange.Minimum, XRange.Maximum, ZRange.Maximum);
 
 	longlatd const DataLonLatMin(XRange.Minimum, ZRange.Minimum), DataLonLatMax(XRange.Maximum, ZRange.Maximum);
-	longlatd const MapLonLatMin(CurrentSite->GetCurrentLocation()->LowerBound), MapLonLatMax(CurrentSite->GetCurrentLocation()->UpperBound);
-
 	longlatd const DataLonLatCenter = (DataSet->ManuallySetDataLongLat ? DataSet->DataLonLatCenter : (DataLonLatMin + DataLonLatMax) / 2.f);
 	
 	vec2d DataRangeMin, DataRangeMax, MapRangeMin, MapRangeMax;

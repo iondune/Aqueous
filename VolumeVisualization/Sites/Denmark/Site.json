@@ -1,19 +1,18 @@
 {
 	"DataSets" : [
 		{
-			"PositionXField" : "x",
-			"PositionYField" : "y",
-			"PositionZField" : "z",
+			"PositionXField" : "Longitude",
+			"PositionYField" : "DFS Depth (m)",
+			"PositionZField" : "Latitude",
 			"Assets" : [
 				{
-					"File" : "ForZoe.txt",
-					"Parser" : "SimpleTXT"
-				},
-				{
-					"File" : "oxyMaps.mat",
-					"Parser" : "Grid1"
+					"File" : "mission1.csv",
+					"Parser" : "CSV",
+					"FieldDelimiter" : ";",
+					"ValueDelimiter" : ";"
 				}
-			]
+			],
+			"MapDepth" : 800.0
 		}
 	],
 	"Locations" : [

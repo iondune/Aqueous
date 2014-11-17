@@ -30,6 +30,9 @@ void CSite::ReadConfiguration()
 				DataSet->Traits.PositionXField = dDataSet["PositionXField"].GetString();
 				DataSet->Traits.PositionYField = dDataSet["PositionYField"].GetString();
 				DataSet->Traits.PositionZField = dDataSet["PositionZField"].GetString();
+				
+				if (dDataSet.HasMember("MapDepth") && dDataSet["MapDepth"].IsDouble())
+					DataSet->MapDepth = dDataSet["MapDepth"].GetDouble();
 
 				if (dDataSet.HasMember("DataLonLatCenter") && dDataSet["DataLonLatCenter"].IsObject())
 				{
@@ -47,15 +50,22 @@ void CSite::ReadConfiguration()
 					{
 						auto & dAsset = dAssets[i];
 						CDataSet::SAsset Asset;
-						if (dAsset.HasMember("File"))
-						{
-							if (dAsset["File"].IsString())
-								Asset.File = dAsset["File"].GetString();
-							else
-								cerr << "Failed to read site configuration file: " << "File member is not a string" << endl;
-								
-						}
-						Asset.Parser = dAsset["Parser"].GetString();
+
+						if (dAsset.HasMember("File") && dAsset["File"].IsString())
+							Asset.File = dAsset["File"].GetString();
+						else
+							cerr << "Failed to read site configuration file: " << "File member is not a string or does not exist" << endl;
+
+						if (dAsset.HasMember("Parser") && dAsset["Parser"].IsString())
+							Asset.Parser = dAsset["Parser"].GetString();
+						else
+							cerr << "Failed to read site configuration file: " << "Parser member is not a string or does not exist" << endl;
+						
+						if (dAsset.HasMember("FieldDelimiter") && dAsset["FieldDelimiter"].IsString())
+							Asset.FieldDelimiter = dAsset["FieldDelimiter"].GetString()[0];
+
+						if (dAsset.HasMember("ValueDelimiter") && dAsset["ValueDelimiter"].IsString())
+							Asset.ValueDelimiter = dAsset["ValueDelimiter"].GetString()[0];
 
 						DataSet->Assets.push_back(Asset);
 					}
