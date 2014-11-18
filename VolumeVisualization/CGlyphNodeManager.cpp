@@ -26,11 +26,11 @@ void CGlyphNodeManager::Init()
 
 void CGlyphNodeManager::LoadSceneElements()
 {
-	size_t const MaxParticles = Glyphs.size();
+	size_t const FloatsNeeded = Glyphs.size() * 3;
 	PositionBuffer = new ion::GL::VertexBuffer;
-	PositionBuffer->Data<f32>(MaxParticles * sizeof(f32), nullptr, 3);
+	PositionBuffer->Data<f32>(FloatsNeeded * sizeof(f32), nullptr, 3);
 	ColorBuffer = new ion::GL::VertexBuffer;
-	ColorBuffer->Data<f32>(MaxParticles * sizeof(f32), nullptr, 3);
+	ColorBuffer->Data<f32>(FloatsNeeded * sizeof(f32), nullptr, 3);
 	
 	if (Node)
 	{
@@ -43,7 +43,6 @@ void CGlyphNodeManager::LoadSceneElements()
 	Positions.clear();
 	Colors.clear();
 
-	size_t const FloatsNeeded = Glyphs.size() * 3;
 	if (Positions.size() < FloatsNeeded)
 	{
 		Positions.resize(FloatsNeeded);
@@ -124,7 +123,6 @@ void CGlyphNodeManager::LoadGlyphs(CDataSet * DataSet, IColorMapper * ColorMappe
 		Glyphs.push_back(Glyph);
 	}
 
-	//Context->Scene.Glyphs->BuildLines();
 	LoadSceneElements();
 }
 
