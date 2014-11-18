@@ -1,0 +1,22 @@
+{
+	"DataSets" : [
+		{
+			"PositionXField" : "Long",
+			"PositionYField" : "Depth",
+			"PositionZField" : "Lat",
+			"ColorMapper" : "Spectrum",
+			"ColorField" : "Temp",
+			"YExaggeration" : 1.0,
+			"MapDepth" : 50.0,
+			"Assets" : [
+				{
+					"File" : "MergeFrame0_20140717.csv",
+					"Parser" : "CSV",
+					"FieldDelimiter" : ",",
+					"ValueDelimiter" : ","
+				}
+			]
+		}
+	],
+	"Locations" : []
+}
