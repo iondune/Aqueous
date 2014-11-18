@@ -138,8 +138,10 @@ void CSite::ConcurrentLoad()
 
 void CSite::InitSceneElements(CProgramContext::SScene & Scene)
 {
-	Locations[SelectedLocation]->InitSceneElements(Scene);
-	DataSets[SelectedDataSet]->InitSceneElements(Scene);
+	if (Locations.size())
+		Locations[SelectedLocation]->InitSceneElements(Scene);
+	if (DataSets.size())
+		DataSets[SelectedDataSet]->InitSceneElements(Scene);
 }
 
 void CSite::AddDataSet(CDataSet * DataSet)
@@ -149,12 +151,18 @@ void CSite::AddDataSet(CDataSet * DataSet)
 
 CDataSet * CSite::GetCurrentDataSet()
 {
-	return DataSets[SelectedDataSet];
+	if (DataSets.size())
+		return DataSets[SelectedDataSet];
+	else
+		return nullptr;
 }
 
 CLocation * CSite::GetCurrentLocation()
 {
-	return Locations[SelectedLocation];
+	if (Locations.size())
+		return Locations[SelectedLocation];
+	else
+		return nullptr;
 }
 
 string const & CSite::GetName() const

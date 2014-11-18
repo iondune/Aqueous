@@ -224,7 +224,14 @@ void CMainState::CalculateDataAlignment()
 	CDataSet const * const DataSet = CurrentSite->GetCurrentDataSet();
 	STable & Points = CurrentSite->GetCurrentDataSet()->Points;
 	
-	longlatd const MapLonLatMin(CurrentSite->GetCurrentLocation()->LowerBound), MapLonLatMax(CurrentSite->GetCurrentLocation()->UpperBound);
+	longlatd MapLonLatMin;
+	longlatd MapLonLatMax;
+
+	if (CurrentSite->GetCurrentLocation())
+	{
+		MapLonLatMin = (CurrentSite->GetCurrentLocation()->LowerBound);
+		MapLonLatMax = (CurrentSite->GetCurrentLocation()->UpperBound);
+	}
 
 	SRange<f64> XRange = Points.GetFieldRange(CurrentSite->GetCurrentDataSet()->Traits.PositionXField, 15.0);
 	SRange<f64> YRange = Points.GetFieldRange(CurrentSite->GetCurrentDataSet()->Traits.PositionYField, 15.0);
@@ -252,8 +259,16 @@ void CMainState::CalculateDataAlignment()
 		Projection = sharedNew(new longlatd::CEquirectangularProjection(DataLonLatCenter.Latitude));
 	DataRangeMin = DataLonLatCenter.OffsetTo(DataLonLatMin, Projection);
 	DataRangeMax = DataLonLatCenter.OffsetTo(DataLonLatMax, Projection);
-	MapRangeMin = DataLonLatCenter.OffsetTo(MapLonLatMin, Projection);
-	MapRangeMax = DataLonLatCenter.OffsetTo(MapLonLatMax, Projection);
+	if (CurrentSite->GetCurrentLocation())
+	{
+		MapRangeMin = DataLonLatCenter.OffsetTo(MapLonLatMin, Projection);
+		MapRangeMax = DataLonLatCenter.OffsetTo(MapLonLatMax, Projection);
+	}
+	else
+	{
+		MapRangeMin = DataLonLatCenter.OffsetTo(DataLonLatMin, Projection);
+		MapRangeMax = DataLonLatCenter.OffsetTo(DataLonLatMax, Projection);
+	}
 
 	vec2d const DataRangeSize = (DataSet->ManuallySetDataLongLat ? DataLonLatMax - DataLonLatMin : DataRangeMax - DataRangeMin);
 	vec2d const DataRangeCenter = (DataSet->ManuallySetDataLongLat ? DataRangeSize / 2 : (DataRangeMin + DataRangeMax) / 2.f);
