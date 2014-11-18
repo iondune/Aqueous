@@ -33,6 +33,9 @@ public:
 	void Init();
 	void LoadGlyphs(CDataSet * DataSet, IColorMapper * ColorMapper);
 	void EmitParticles(int Count, vec3f const & Position, color3f const & Color);
+	
+	CSceneNode * GetNode();
+	CSceneNode const * GetNode() const;
 
 protected:
 

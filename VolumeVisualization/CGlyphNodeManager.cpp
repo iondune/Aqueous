@@ -36,6 +36,7 @@ void CGlyphNodeManager::LoadSceneElements()
 	{
 		Node->SetVertexBuffer("vPosition", PositionBuffer);
 		Node->SetVertexBuffer("vColor", ColorBuffer);
+		Node->SetUniform("Model", & Node->GetTransformationUniform());
 		Node->SetPrimitiveType(ion::GL::EPrimitiveType::Points);
 	}
 
@@ -125,4 +126,14 @@ void CGlyphNodeManager::LoadGlyphs(CDataSet * DataSet, IColorMapper * ColorMappe
 
 	//Context->Scene.Glyphs->BuildLines();
 	LoadSceneElements();
+}
+
+CSceneNode * CGlyphNodeManager::GetNode()
+{
+	return Node;
+}
+
+CSceneNode const * CGlyphNodeManager::GetNode() const
+{
+	return Node;
 }
