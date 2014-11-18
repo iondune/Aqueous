@@ -3,7 +3,7 @@
 #include "CProgramContext.h"
 #include "CMainState.h"
 #include "CTerrainNodeManager.h"
-#include "CGlyphSceneObject.h"
+#include "CGlyphNodeManager.h"
 
 #include <Gwen/Controls.h>
 #include <Gwen/Controls/ComboBox.h>

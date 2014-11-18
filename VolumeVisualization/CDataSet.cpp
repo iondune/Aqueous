@@ -2,7 +2,7 @@
 #include "CDataSet.h"
 
 #include "ColorMappers.h"
-#include "CGlyphSceneObject.h"
+#include "CGlyphNodeManager.h"
 #include "SciDataParser.h"
 #include "CSite.h"
 
@@ -122,7 +122,10 @@ void CDataSet::InitSceneElements(CProgramContext::SScene & Scene)
 	Scene.Volume->ProximityTexture = new CTexture3D(ProximityTextureHandle);
 	Scene.Volume->LoadTextures();
 
+
 	CSpectrumColorMapper ColorMapper("o2");
 	//ColorMapper.ValueCutoff = 1.0;
 	//Scene.Glyphs->LoadGlyphs(this, & ColorMapper);
+
+	Scene.Glyphs->LoadGlyphs(this, & ColorMapper);
 }

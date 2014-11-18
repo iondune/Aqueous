@@ -6,7 +6,7 @@
 #include "CMainState.h"
 #include "ColorMappers.h"
 #include "CDataLoadingThread.h"
-#include "CGlyphSceneObject.h"
+#include "CGlyphNodeManager.h"
 #include "CGUIContext.h"
 
 #include "CSite.h"

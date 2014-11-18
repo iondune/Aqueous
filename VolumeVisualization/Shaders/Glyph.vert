@@ -1,25 +1,14 @@
-attribute vec3 aPosition;
-attribute vec3 aNormal;
 
-uniform mat4 uModelMatrix;
-uniform mat4 uProjMatrix;
-uniform mat4 uViewMatrix;
-uniform mat4 uNormalMatrix;
-uniform float uGlyphSize;
-uniform vec3 uScale;
-uniform vec3 uPosition;
+#version 150
 
-uniform vec3 uLightPosition;
+in vec3 vPosition;
+in vec3 vColor;
 
-varying vec3 vLight;
-varying vec3 vNormal;
+out vec3 geColor;
+
 
 void main()
 {
-	vec4 Position = uModelMatrix * vec4(uPosition + aPosition * vec3(uGlyphSize) / uScale, 1.0);
-	gl_Position = uProjMatrix * uViewMatrix * Position;
-	gl_ClipDistance[0] = dot(vec4(0,1,0,0), Position);
-
-	vLight = uLightPosition - vec3(Position);
-	vNormal = normalize(vec3(uNormalMatrix * vec4(aNormal, 1)));
+	gl_Position = vec4(vPosition, 1.0);
+	geColor = vColor;
 }

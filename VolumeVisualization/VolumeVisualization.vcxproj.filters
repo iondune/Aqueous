@@ -41,9 +41,6 @@
     <ClCompile Include="CLoadState.cpp">
       <Filter>LoadState</Filter>
     </ClCompile>
-    <ClCompile Include="CGlyphSceneObject.cpp">
-      <Filter>MainState\Glyphs</Filter>
-    </ClCompile>
     <ClCompile Include="CPlaneGridSceneObject.cpp">
       <Filter>MainState\Misc</Filter>
     </ClCompile>
@@ -107,6 +104,9 @@
     <ClCompile Include="CLocation.cpp">
       <Filter>MainState\Data Management</Filter>
     </ClCompile>
+    <ClCompile Include="CGlyphNodeManager.cpp">
+      <Filter>MainState\Glyphs</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CMainState.h">
@@ -147,9 +147,6 @@
     </ClInclude>
     <ClInclude Include="CLoadState.h">
       <Filter>LoadState</Filter>
-    </ClInclude>
-    <ClInclude Include="CGlyphSceneObject.h">
-      <Filter>MainState\Glyphs</Filter>
     </ClInclude>
     <ClInclude Include="SciDataParser.h">
       <Filter>MainState\Data Management\Parsers</Filter>
@@ -210,6 +207,9 @@
     </ClInclude>
     <ClInclude Include="CLocation.h">
       <Filter>MainState\Data Management</Filter>
+    </ClInclude>
+    <ClInclude Include="CGlyphNodeManager.h">
+      <Filter>MainState\Glyphs</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

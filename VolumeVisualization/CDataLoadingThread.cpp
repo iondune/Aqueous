@@ -6,7 +6,7 @@
 #include "CProgramContext.h"
 #include "SciDataManager.h"
 #include "ColorMappers.h"
-#include "CGlyphSceneObject.h"
+#include "CGlyphNodeManager.h"
 #include "CMainState.h"
 
 #include "CSite.h"

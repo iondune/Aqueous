@@ -2,7 +2,7 @@
 #include "CMainState.h"
 
 #include "CTerrainNodeManager.h"
-#include "CGlyphSceneObject.h"
+#include "CGlyphNodeManager.h"
 #include "CSite.h"
 #include "CSpectrumColorMapper.h"
 #include "CGUIContext.h"

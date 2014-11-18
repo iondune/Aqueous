@@ -7,7 +7,7 @@
 
 #include "CTerrainNodeManager.h"
 #include "CVolumeNodeManager.h"
-#include "CGlyphSceneObject.h"
+#include "CGlyphNodeManager.h"
 #include "CPlaneGridSceneObject.h"
 
 #include <ionGUI/CGUIEventManager.h>
@@ -183,8 +183,7 @@ void CLoadState::LoadScene()
 	//SceneManager->addSceneObject(Plane);
 
 	// Container Objects
-	//Scene.Glyphs = new CGlyphSceneObject();
-	//SceneManager->addSceneObject(Scene.Glyphs);
+	Scene.Glyphs->Init();
 
 	// Terrain
 	Scene.Terrain->Load();

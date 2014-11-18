@@ -58,7 +58,7 @@
   <ItemGroup>
     <ClCompile Include="CDataLoadingThread.cpp" />
     <ClCompile Include="CDataSet.cpp" />
-    <ClCompile Include="CGlyphSceneObject.cpp" />
+    <ClCompile Include="CGlyphNodeManager.cpp" />
     <ClCompile Include="CGUIContext.cpp" />
     <ClCompile Include="CGUIContextWidget.cpp" />
     <ClCompile Include="CGUIControlPanelWidget.cpp" />
@@ -98,7 +98,7 @@
     <ClInclude Include="CContextState.h" />
     <ClInclude Include="CDataLoadingThread.h" />
     <ClInclude Include="CDataSet.h" />
-    <ClInclude Include="CGlyphSceneObject.h" />
+    <ClInclude Include="CGlyphNodeManager.h" />
     <ClInclude Include="CGUIContext.h" />
     <ClInclude Include="CGUIContextWidget.h" />
     <ClInclude Include="CGUIControlPanelWidget.h" />

@@ -10,7 +10,7 @@ class CGUIContext;
 
 class CTerrainNodeManager;
 class CVolumeNodeManager;
-class CGlyphSceneObject;
+class CGlyphNodeManager;
 
 class CSite;
 
@@ -36,7 +36,7 @@ public:
 		// Scene object
 		CSceneNode * SkyBox = 0;
 		SingletonPointer<CTerrainNodeManager> Terrain;
-		CGlyphSceneObject * Glyphs = 0;
+		SingletonPointer<CGlyphNodeManager> Glyphs;
 		SingletonPointer<CVolumeNodeManager> Volume;
 		CSceneNode * Water = 0;
 
