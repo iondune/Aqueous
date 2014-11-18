@@ -8,8 +8,8 @@
 				{
 					"File" : "mission1.csv",
 					"Parser" : "CSV",
-					"FieldDelimiter" : ";",
-					"ValueDelimiter" : ";"
+					"FieldDelimiter" : ",",
+					"ValueDelimiter" : ","
 				}
 			],
 			"MapDepth" : 800.0
