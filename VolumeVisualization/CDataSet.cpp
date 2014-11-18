@@ -123,9 +123,10 @@ void CDataSet::InitSceneElements(CProgramContext::SScene & Scene)
 	Scene.Volume->LoadTextures();
 
 
-	CSpectrumColorMapper ColorMapper("o2");
-	//ColorMapper.ValueCutoff = 1.0;
-	//Scene.Glyphs->LoadGlyphs(this, & ColorMapper);
+	IColorMapper * Mapper = nullptr;
 
-	Scene.Glyphs->LoadGlyphs(this, & ColorMapper);
+	if (ColorMapper == "Spectrum")
+		Mapper = new CSpectrumColorMapper(ColorField);
+
+	Scene.Glyphs->LoadGlyphs(this, Mapper);
 }

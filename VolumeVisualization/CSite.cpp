@@ -33,6 +33,15 @@ void CSite::ReadConfiguration()
 				
 				if (dDataSet.HasMember("MapDepth") && dDataSet["MapDepth"].IsDouble())
 					DataSet->MapDepth = dDataSet["MapDepth"].GetDouble();
+				
+				if (dDataSet.HasMember("YExaggeration") && dDataSet["YExaggeration"].IsDouble())
+					DataSet->YExaggeration = dDataSet["YExaggeration"].GetDouble();
+				
+				if (dDataSet.HasMember("ColorMapper") && dDataSet["ColorMapper"].IsString())
+					DataSet->ColorMapper = dDataSet["ColorMapper"].GetString();
+				
+				if (dDataSet.HasMember("ColorField") && dDataSet["ColorField"].IsString())
+					DataSet->ColorField = dDataSet["ColorField"].GetString();
 
 				if (dDataSet.HasMember("DataLonLatCenter") && dDataSet["DataLonLatCenter"].IsObject())
 				{
