@@ -47,15 +47,15 @@ public:
 	//! Holds shaders
 	struct SShaders
 	{
-		CShader * Diffuse = 0;
-		CShader * DiffuseTexture = 0;
-		CShader * Terrain = 0;
-		CShader * Volume = 0;
-		CShader * Glyph = 0;
-		CShader * Water = 0;
-		CShader * Merge = 0;
-		CShader * Refract = 0;
-		CShader * White = 0;
+		CShader * Diffuse = nullptr;
+		CShader * DiffuseTexture = nullptr;
+		CShader * Terrain = nullptr;
+		CShader * Volume = nullptr;
+		CShader * Glyph = nullptr;
+		CShader * Water = nullptr;
+		CShader * Merge = nullptr;
+		CShader * Refract = nullptr;
+		CShader * White = nullptr;
 	};
 
 	SShaders Shaders;
