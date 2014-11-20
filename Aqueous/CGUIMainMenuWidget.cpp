@@ -91,8 +91,7 @@ void CGUIMainMenuWidget::OnCreateDataSet(Gwen::Controls::Base * Control)
 	//Gwen::Controls::WindowControl * Window = new Gwen::Controls::WindowControl(GUIManager->getCanvas());
 	//Window->SetBounds(300, 300, 150, 50);
 	//Window->SetTitle("Please Select Data Set Name");
-	CMainMenuState::Get().CreateDataSet();
 
-	ListBox->Clear();
+	//ListBox->Clear();
 	//CreateSitePanels();
 }

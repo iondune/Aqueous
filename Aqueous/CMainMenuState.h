@@ -10,8 +10,6 @@ class CDataLoadingThread;
 class CMainMenuState : public CContextState<CMainMenuState, CProgramContext>
 {
 
-	CDataLoadingThread Thread;
-
 public:
 
 	CMainMenuState();
@@ -21,8 +19,10 @@ public:
 	void Update(f32 const Elapsed);
 
 	void OnEvent(SWindowResizedEvent & Event);
-
 	void LoadData();
-	void CreateDataSet();
+
+protected:
+
+	CDataLoadingThread Thread;
 
 };
