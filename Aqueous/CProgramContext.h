@@ -23,25 +23,25 @@ public:
 	struct SScene
 	{
 		// Cameras
-		CPerspectiveCamera * Camera = 0;
-		CCameraController * CameraController = 0;
-		ICamera * OrbitCamera = 0;
+		CPerspectiveCamera * Camera = nullptr;
+		CCameraController * CameraController = nullptr;
+		ICamera * OrbitCamera = nullptr;
 
 		// Orbit Camera Timer
 		float Timer = 0;
 
 		// Lighting
-		CSceneNode * LightObject = 0;
+		CSceneNode * LightObject = nullptr;
 
 		// Scene object
-		CSceneNode * SkyBox = 0;
+		CSceneNode * SkyBox = nullptr;
 		SingletonPointer<CTerrainNodeManager> Terrain;
 		SingletonPointer<CGlyphNodeManager> Glyphs;
 		SingletonPointer<CVolumeNodeManager> Volume;
-		CSceneNode * Water = 0;
+		CSceneNode * Water = nullptr;
 
 		// Default cube mesh
-		CMesh * Cube = 0;
+		CMesh * Cube = nullptr;
 	};
 
 	//! Holds shaders
