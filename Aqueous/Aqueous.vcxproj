@@ -12,7 +12,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{49493720-8AB7-D8B2-29A9-10F6ABB84016}</ProjectGuid>
-    <RootNamespace>VolumeVisualization</RootNamespace>
+    <RootNamespace>Aqueous</RootNamespace>
   </PropertyGroup>
   <ImportGroup Label="PropertySheets">
     <Import Project="$(VisualStudioDir)\Projects\ionEngine\Properties\FullApplication.props" />
