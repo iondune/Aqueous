@@ -5,5 +5,5 @@ cd "$ScriptDirectory"
 cp hgrc ../.hg/hgrc
 
 cd ..
-
+echo "Running in $ScriptDirectory"
 /home/ian/.dotfiles/bin/SyncAndGitPushHgChanges.sh .
