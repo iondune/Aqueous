@@ -33,10 +33,8 @@ void CLoadState::AddLabel(std::wstring const & Label, Gwen::Color const & Color)
 }
 
 CLoadState::CLoadState()
-	: LabelHeight(0), Indent(0), GetConfirmation(false)
 {
 	LabelHeight = 70;
-	Indent = 0;
 }
 
 void CLoadState::Begin()
@@ -45,7 +43,6 @@ void CLoadState::Begin()
 	SingletonPointer<CMainState> MainState;
 	SingletonPointer<CMainMenuState> MenuState;
 
-	GUIManager = Context->GUIContext->Manager.Get();
 	Canvas = GUIManager->GetCanvas();
 	
 	// Init Canvas

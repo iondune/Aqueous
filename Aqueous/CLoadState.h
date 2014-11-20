@@ -18,20 +18,6 @@ public:
 class CLoadState : public CContextState<CLoadState, CProgramContext>
 {
 
-protected:
-
-	CGUIManager * GUIManager;
-	Gwen::Controls::Canvas * Canvas;
-
-	s32 LabelHeight, Indent;
-
-	CLoadStateEventHandler Handler;
-	
-	void LoadShaders();
-	void LoadScene();
-
-	bool GetConfirmation;
-
 public:
 
 	CLoadState();
@@ -41,5 +27,19 @@ public:
 
 	void AddLabel(std::wstring const & Label, Gwen::Color const & Color = Gwen::Color(255, 255, 255, 84));
 	void OnFinish();
+
+protected:
+
+	SingletonPointer<CGUIManager> GUIManager;
+	Gwen::Controls::Canvas * Canvas = nullptr;
+
+	s32 LabelHeight = 0, Indent = 0;
+
+	CLoadStateEventHandler Handler;
+	
+	void LoadShaders();
+	void LoadScene();
+
+	bool GetConfirmation = false;
 
 };
