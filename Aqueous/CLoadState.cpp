@@ -66,7 +66,6 @@ void CLoadState::Begin()
 	CGUIEventManager * Forwarder = new CGUIEventManager(GUIManager->GetCanvas(), Context->Window);
 	
 	AddLabel(L"Loading Scene Shaders...");
-	//SceneManager->init(true, true);
 	LoadShaders();
 	
 	AddLabel(L"Loading Scene Objects...");
@@ -160,7 +159,6 @@ void CLoadState::LoadScene()
 	Scene.OrbitCamera = SceneManager->GetFactory()->AddPerspectiveCamera(Context->Window->GetAspectRatio());
 	SceneManager->GetScene()->SetActiveCamera(Scene.Camera);
 
-	// Basic Shader/Mesh
 	SceneManager->GetMeshLibrary()->Add("Cube", CGeometryCreator::CreateCube());
 	SceneManager->GetMeshLibrary()->Add("Sphere", CGeometryCreator::CreateSphere());
 	SceneManager->GetMeshLibrary()->Add("Plane", CGeometryCreator::CreatePlane());
@@ -168,21 +166,12 @@ void CLoadState::LoadScene()
 	SceneManager->GetTextureLibrary()->Load("SkyMap.jpg");
 	SceneManager->GetTextureLibrary()->Load("WaterNormals.jpg");
 
-	// Backdrop
 	Scene.SkyBox = SceneManager->GetFactory()->AddSkySphereNode("SkyMap.jpg");
 
-	//CPlaneGridSceneObject * Plane = new CPlaneGridSceneObject(10);
-	//Plane->setShader(SceneManager->getDefaultColorRenderPass(), Context->Shaders.Plane);
-	//Plane->setVisible(false);
-	//SceneManager->addSceneObject(Plane);
-
-	// Container Objects
 	Scene.Glyphs->Init();
 
-	// Terrain
 	Scene.Terrain->Load();
 
-	// Volume
 	Scene.Volume->Load();
 
 	// Water
@@ -200,8 +189,6 @@ void CLoadState::LoadScene()
 
 void CLoadState::OnFinish()
 {
-	// Cleanup GUI
 	Canvas->RemoveAllChildren();
-
 	StateManager->SetState(CMainMenuState::GetPtr());
 }
