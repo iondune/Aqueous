@@ -52,10 +52,7 @@ public:
 		CShader * Terrain = 0;
 		CShader * Volume = 0;
 		CShader * Glyph = 0;
-		CShader * GlyphLines = 0;
-		CShader * Plane = 0;
 		CShader * Water = 0;
-		CShader * SkyBox = 0;
 		CShader * Merge = 0;
 		CShader * Refract = 0;
 		CShader * White = 0;

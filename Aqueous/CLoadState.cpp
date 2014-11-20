@@ -99,20 +99,14 @@ void CLoadState::LoadShaders()
 	
 	if (! (Context->Shaders.Glyph = SceneManager->GetShaderLibrary()->Load("Glyph")))
 		AddLabel(L"Failed to load Glyph Shader - Glyphs will not draw.", Gwen::Color(255, 32, 32, 192)), Failed = true;
-	if (! (Context->Shaders.GlyphLines = SceneManager->GetShaderLibrary()->Load("GlyphLines")))
-		AddLabel(L"Failed to load Glyph Line Shader - Glyphs Lines will not draw.", Gwen::Color(255, 32, 32, 192)), Failed = true;
 	if (! (Context->Shaders.DiffuseTexture = SceneManager->GetShaderLibrary()->Load("DiffuseTexture")))
 		AddLabel(L"Failed to load Diffuse/Texture Shader - Backdrop will not draw.", Gwen::Color(255, 64, 64, 192)), Failed = true;
 	if (! (Context->Shaders.Volume = SceneManager->GetShaderLibrary()->Load("Volume")))
 		AddLabel(L"Failed to load Volume Shader - Volume will not draw.", Gwen::Color(255, 64, 64, 192)), Failed = true;
 	if (! (Context->Shaders.Terrain = SceneManager->GetShaderLibrary()->Load("Terrain")))
 		AddLabel(L"Failed to load Terrain Shader - Terrain will not draw.", Gwen::Color(255, 64, 64, 192)), Failed = true;
-	if (! (Context->Shaders.Plane = SceneManager->GetShaderLibrary()->Load("Plane")))
-		AddLabel(L"Failed to load Plane Shader - Plane will not draw.", Gwen::Color(255, 64, 64, 192)), Failed = true;
 	if (! (Context->Shaders.Water = SceneManager->GetShaderLibrary()->Load("Water")))
 		AddLabel(L"Failed to load Water Shader - Water will not draw.", Gwen::Color(255, 64, 64, 192)), Failed = true;
-	if (! (Context->Shaders.SkyBox = SceneManager->GetShaderLibrary()->Load("Skybox")))
-		AddLabel(L"Failed to load Skybox Shader - Skybox will not draw.", Gwen::Color(255, 64, 64, 192)), Failed = true;
 	if (! (Context->Shaders.Merge = SceneManager->GetShaderLibrary()->Load("Merge")))
 		AddLabel(L"Failed to load Merge Shader - Water surface will not draw.", Gwen::Color(255, 64, 64, 192)), Failed = true;
 	if (! (Context->Shaders.Refract = SceneManager->GetShaderLibrary()->Load("Refract")))
