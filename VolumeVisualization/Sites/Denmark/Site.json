@@ -4,6 +4,7 @@
 			"PositionXField" : "Longitude",
 			"PositionYField" : "DFS Depth (m)",
 			"PositionZField" : "Latitude",
+			"ColorField" : "Avg Oxy",
 			"Assets" : [
 				{
 					"File" : "mission1.csv",
