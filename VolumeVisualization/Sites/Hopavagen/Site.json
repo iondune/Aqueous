@@ -30,9 +30,9 @@
 				"Longitude" : "9 33 47.82 N",
 				"Latitude" : "63 36 5.87 E"
 			},
-			"ColorFile" : "TerrainColorImageSquareSupplement.bmp",
+			"ColorFile" : "TerrainColorImageSquareSupplement.png",
 			"BathymetryFile" : "TerrainBathymetrySmooth.png",
-			"HeightFile" : "TerrainHeightImageSquare.bmp"
+			"HeightFile" : "TerrainHeightImageSquare.png"
 		}
 	]
 }
