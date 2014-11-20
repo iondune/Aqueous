@@ -64,14 +64,6 @@ CGUIMainMenuWidget::CGUIMainMenuWidget()
 	File->onPress.Add(new MenuDropDown(File), & MenuDropDown::OnPress);
 
 	auto Canvas = GUIManager->GetCanvas();
-
-	
-	//PageControl = new Gwen::Controls::PageControl(Canvas);
-	//PageControl->SetUseFinishButton(false);
-	//PageControl->RemoveAllChildren();
-	//PageControl->Dock(Gwen::Pos::Fill);
-	//PageControl->SetPageCount(2);
-	//SitePage = PageControl->GetPage(0);
 	
 	Gwen::Controls::Label * Title = new Gwen::Controls::Label(Canvas);
 	Title->SetFont(GUIManager->GetMediumFont());
@@ -80,27 +72,6 @@ CGUIMainMenuWidget::CGUIMainMenuWidget()
 	Title->SetTextColor(Gwen::Color(235, 235, 255, 215));
 
 	CreateSitePanels();
-
-	/*Window = new Gwen::Controls::WindowControl(GUIManager->GetCanvas());
-	Window->SetTitle("Sites");
-	Window->SetBounds(30, 60, 650 + 40 + 30, 550);
-	Window->SetDeleteOnClose(false);
-	Window->SetClosable(false);
-
-	Gwen::Controls::Label * MediumLabel = new Gwen::Controls::Label(Window);
-	MediumLabel->SetFont(GUIManager->GetMediumFont());
-	MediumLabel->SetText(L"Available Data Sets:");
-	MediumLabel->SetBounds(10, 10, 600, 300);
-	MediumLabel->SetTextColor(Gwen::Color(35, 35, 55, 215));
-
-	ListBox = new Gwen::Controls::ListBox(Window);
-	ListBox->SetBounds(10, 50, 690, 410);
-
-	
-	Gwen::Controls::Button * OKButton = new Gwen::Controls::Button(Window);
-	OKButton->SetText("Select Cite");
-	OKButton->SetBounds(10+130, 60+400+16, 200, 30);
-	OKButton->onPress.Add(this, & CGUIMainMenuWidget::OnSelectDataSet);*/
 }
 
 void CGUIMainMenuWidget::OnSelectSite(Gwen::Controls::Base * Control)
@@ -113,18 +84,6 @@ void CGUIMainMenuWidget::OnSelectSite(Gwen::Controls::Base * Control)
 	auto Site = Context->CurrentSite = new CSite(SiteName);
 	Site->ReadConfiguration();
 	CGUISiteWidget * SiteWidget = new CGUISiteWidget(Site);
-
-	//PageControl->NextPage();
-
-	//auto Window = new Gwen::Controls::WindowControl(GUIManager->GetCanvas());
-	//Window->SetTitle(SiteName);
-	//Window->SetBounds(30, 60, 650 + 40 + 30, 550);
-	//Window->MakeModal();
-
-	//auto OKButton = new Gwen::Controls::Button(Window);
-	//OKButton->SetText("Open");
-	//OKButton->SetBounds(10+130, 60+400+16, 200, 30);
-	//OKButton->onPress.Add(this, & CGUIMainMenuWidget::OnSelectDataSet);
 }
 
 void CGUIMainMenuWidget::OnCreateDataSet(Gwen::Controls::Base * Control)

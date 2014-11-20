@@ -36,17 +36,6 @@ void CMainMenuState::Update(f32 const Elapsed)
 	Thread.Sync();
 
 	Context->GUIContext->Manager->Draw(Elapsed, true);
-
-	//static int Counter = 0;
-	//if (! Counter--)
-	/*{
-		Context->CurrentSite->GetCurrentDataSet()->Traits.PositionXField = "x";
-		Context->CurrentSite->GetCurrentDataSet()->Traits.PositionYField = "y";
-		Context->CurrentSite->GetCurrentDataSet()->Traits.PositionZField = "z";
-
-		CreateDataSet();
-		LoadData("HopavagenBay1.dat");
-	}*/
 }
 
 void CMainMenuState::OnEvent(SWindowResizedEvent & Event)
@@ -58,16 +47,10 @@ void CMainMenuState::OnEvent(SWindowResizedEvent & Event)
 
 void CMainMenuState::LoadData()
 {
-	//DataSetName = FileName;
-
-	//std::stringstream s;
-	//s << "Datasets/";
-	//s << FileName;
-
 	Thread.Context = Context;
 	Thread.LoadingWidget = new CGUIProgressBarWidget(Context->GUIContext->Manager.Get(), "Loading data and initializing scene elements");
 	Thread.LoadingWidget->BeginProgress();
-	Thread.Run(/*s.str()*/);
+	Thread.Run();
 }
 
 void CMainMenuState::CreateDataSet()
