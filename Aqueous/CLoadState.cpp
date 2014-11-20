@@ -159,6 +159,7 @@ void CLoadState::LoadScene()
 	Scene.OrbitCamera = SceneManager->GetFactory()->AddPerspectiveCamera(Context->Window->GetAspectRatio());
 	SceneManager->GetScene()->SetActiveCamera(Scene.Camera);
 
+	// Assets
 	SceneManager->GetMeshLibrary()->Add("Cube", CGeometryCreator::CreateCube());
 	SceneManager->GetMeshLibrary()->Add("Sphere", CGeometryCreator::CreateSphere());
 	SceneManager->GetMeshLibrary()->Add("Plane", CGeometryCreator::CreatePlane());
@@ -166,15 +167,13 @@ void CLoadState::LoadScene()
 	SceneManager->GetTextureLibrary()->Load("SkyMap.jpg");
 	SceneManager->GetTextureLibrary()->Load("WaterNormals.jpg");
 
+	// Nodes
 	Scene.SkyBox = SceneManager->GetFactory()->AddSkySphereNode("SkyMap.jpg");
 
 	Scene.Glyphs->Init();
-
 	Scene.Terrain->Load();
-
 	Scene.Volume->Load();
 
-	// Water
 	Scene.Water = SceneManager->GetFactory()->AddSceneNode();
 	Scene.Water->SetDebugName("Water");
 	Scene.Water->SetMesh(SceneManager->GetMeshLibrary()->Get("Plane"));
