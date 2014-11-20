@@ -229,11 +229,16 @@ void CMainState::OnEvent(SKeyboardEvent & Event)
 		}
 		break;
 
-		
 	case EKey::BackSlash:
 
 		if (! Event.Pressed)
 			GUIEnabled = ! GUIEnabled;
+		break;
+
+	case EKey::K:
+
+		if (! Event.Pressed)
+			ShowKey = ! ShowKey;
 		break;
 
     }

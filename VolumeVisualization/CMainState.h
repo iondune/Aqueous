@@ -40,6 +40,7 @@ public:
 	f32 OrbitCameraTimer;
 
 	bool GUIEnabled;
+	bool ShowKey = false;
 
 	//////////////////////////////
 	// Mouse Tracking Varaibles //
