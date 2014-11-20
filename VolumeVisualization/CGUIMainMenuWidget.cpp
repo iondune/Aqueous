@@ -13,6 +13,7 @@
 
 void CGUIMainMenuWidget::CreateSitePanels()
 {
+	SingletonPointer<CProgramContext> Context;
 	auto Canvas = GUIManager->GetCanvas();
 
 	auto ScrollControl = new Gwen::Controls::ScrollControl(Canvas);
@@ -20,7 +21,7 @@ void CGUIMainMenuWidget::CreateSitePanels()
 	ScrollControl->SetMargin(Gwen::Margin(0, 60, 0, 0));
 
 	int Offset = 10;
-	for (auto FileName : Directory::Read("Sites/"))
+	for (auto FileName : Directory::Read(Context->SitePath))
 	{
 		auto SiteButton = new Gwen::Controls::Button(ScrollControl);
 		SiteButton->SetText(FileName);

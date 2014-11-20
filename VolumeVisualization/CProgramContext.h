@@ -72,6 +72,9 @@ public:
 	CTexture2D * SceneRefractColor = nullptr;
 	CTexture2D * RefractMaskTexture = nullptr;
 
+	string SitePath = "./Sites/";
+
 	void Run();
+	void LoadConfig();
 
 };

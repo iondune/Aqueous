@@ -8,8 +8,10 @@
 
 CSite::CSite(string const & Name)
 {
+	SingletonPointer<CProgramContext> Context;
+
 	this->Name = Name;
-	this->Path = "Sites/" + Name + "/";
+	this->Path = Context->SitePath + "/" + Name + "/";
 }
 
 void CSite::ReadConfiguration()

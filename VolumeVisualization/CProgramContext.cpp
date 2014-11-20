@@ -6,6 +6,8 @@
 #include "CMainMenuState.h"
 #include "CLoadState.h"
 
+#include <rapidjson/document.h>
+
 
 void CProgramContext::Run()
 {
@@ -28,6 +30,8 @@ void CProgramContext::Run()
 	SingletonPointer<CGUIContext> GUIContext;
 	GUIContext->Init();
 
+	LoadConfig();
+
 	// Begin loading
 	SingletonPointer<CLoadState> LoadState;
 	StateManager->SetState(LoadState);
@@ -44,4 +48,13 @@ void CProgramContext::Run()
 		StateManager->Update(TimeManager->GetElapsedTime());
 		Window->SwapBuffers();
 	}
+}
+
+void CProgramContext::LoadConfig()
+{
+	rapidjson::Document d;
+	d.Parse(File::ReadAsString("./Config.json").c_str());
+	
+	if (d.HasMember("SitePath") && d["SitePath"].IsString())
+		SitePath = d["SitePath"].GetString();
 }
