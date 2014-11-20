@@ -7,7 +7,7 @@
 
 void CGUIContext::Init()
 {
-	Manager->Init();
+	Manager->Init("Media/GUI/DefaultSkin.png", "Media/GUI/OpenSans.ttf");
 }
 
 void CGUIContext::SetupMainState()
