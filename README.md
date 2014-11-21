@@ -12,3 +12,7 @@ C:\Program Files\MATLAB\MATLAB Compiler Runtime\v84\bin\win64
 ```
 
 and that the post-build event in the `.vcxproj` is copying `libmat.dll` from the same correct directory. You may also need to reboot.
+
+## License
+
+Aqueous is licensed under the [ISC license](http://opensource.org/licenses/ISC)
