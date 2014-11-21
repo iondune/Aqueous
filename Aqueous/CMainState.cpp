@@ -118,6 +118,7 @@ void CMainState::Update(f32 const Elapsed)
 	Scene.Volume->Update();
 
 	SceneManager->DrawAll();
+
 	if (Context->Window->IsKeyDown(EKey::F1))
 		CFrameBuffer::DrawTextureToScreen(Context->SceneColorTexture);
 	else if (Context->Window->IsKeyDown(EKey::F2))
@@ -126,20 +127,10 @@ void CMainState::Update(f32 const Elapsed)
 		CFrameBuffer::DrawTextureToScreen(Context->SceneDepthBuffer);
 	else if (Context->Window->IsKeyDown(EKey::F4))
 		CFrameBuffer::DrawTextureToScreen(Context->RefractMaskTexture);
+	else if (Context->Window->IsKeyDown(EKey::F5))
+		CFrameBuffer::DrawTextureToScreen(Context->FinalColor);
 	else
-	{
-		ion::GL::Context::Clear();
-
-		CDrawConfig DrawConfig(SceneManager->GetShaderLibrary()->Get("Merge"), ion::GL::EPrimitiveType::Quads);
-		DrawConfig.AddVertexBuffer("aPosition", CFrameBuffer::GetQuadVertexBuffer());
-		DrawConfig.SetIndexBuffer(CFrameBuffer::GetQuadIndexBuffer());
-		DrawConfig.AddTexture("uSceneColor", Context->SceneColorTexture);
-		DrawConfig.AddTexture("uRefractColor", Context->SceneRefractColor);
-
-		ion::GL::DrawContext DrawContext;
-		DrawContext.LoadProgram(SceneManager->GetShaderLibrary()->Get("Merge"));
-		DrawContext.Draw(& DrawConfig);
-	}
+		CFrameBuffer::DrawTextureToScreen(Context->AAColor);
 
 	if (! ShowDepth)
 	{

@@ -56,6 +56,7 @@ public:
 		CShader * Merge = nullptr;
 		CShader * Refract = nullptr;
 		CShader * White = nullptr;
+		CShader * FXAA = nullptr;
 	};
 
 	SShaders Shaders;
@@ -68,6 +69,8 @@ public:
 	CTexture2D * SceneDepthBuffer = nullptr;
 	CTexture2D * SceneRefractColor = nullptr;
 	CTexture2D * RefractMaskTexture = nullptr;
+	CTexture2D * FinalColor = nullptr;
+	CTexture2D * AAColor = nullptr;
 
 	string SitePath = "./Sites/";
 

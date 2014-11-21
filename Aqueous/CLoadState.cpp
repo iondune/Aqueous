@@ -109,6 +109,8 @@ void CLoadState::LoadShaders()
 		AddLabel(L"Failed to load Refract Shader - Water surface  will not draw.", Gwen::Color(255, 64, 64, 192)), Failed = true;
 	if (! (Context->Shaders.White = SceneManager->GetShaderLibrary()->Load("White")))
 		AddLabel(L"Failed to load White Shader - Water surface  will not draw.", Gwen::Color(255, 64, 64, 192)), Failed = true;
+	if (! (Context->Shaders.FXAA = SceneManager->GetShaderLibrary()->Load("FXAA", "QuadCopy", "FXAA")))
+		AddLabel(L"Failed to load FXAA Shader - Anti-aliasing will be disabled.", Gwen::Color(255, 64, 64, 192)), Failed = true;
 
 	if (! Failed)
 		AddLabel(L"All shaders compiled successfully.", Gwen::Color(64, 255, 64, 192));
@@ -145,7 +147,15 @@ void CLoadState::LoadScene()
 	RefractFrameBuffer->AttachDepthTexture(Context->SceneDepthBuffer);
 	RenderPassManager->AddRenderPass("Refraction", RefractFrameBuffer)->SetClearBuffers({ion::GL::EBuffer::Color});
 
-	RenderPassManager->SetRenderPassOrder({"Default", "Volume", "RefractionMask", "Refraction"});
+	CFrameBuffer * MergeFrameBuffer = new CFrameBuffer();
+	Context->FinalColor = MergeFrameBuffer->MakeScreenSizedColorAttachment(0);
+	RenderPassManager->AddRenderPass("Merge", MergeFrameBuffer);
+
+	CFrameBuffer * FXAAFrameBuffer = new CFrameBuffer();
+	Context->AAColor = FXAAFrameBuffer->MakeScreenSizedColorAttachment(0);
+	RenderPassManager->AddRenderPass("FXAA", FXAAFrameBuffer);
+
+	RenderPassManager->SetRenderPassOrder({"Default", "Volume", "RefractionMask", "Refraction", "Merge", "FXAA"});
 
 	// Cameras
 	Scene.Camera = SceneManager->GetFactory()->AddPerspectiveCamera(Context->Window->GetAspectRatio());
@@ -170,6 +180,17 @@ void CLoadState::LoadScene()
 	Scene.Glyphs->Init();
 	Scene.Terrain->Load();
 	Scene.Volume->Load();
+
+	CSceneNode * MergePass = SceneManager->GetFactory()->AddPostProcessingSceneNode("Merge", "Merge");
+	if (MergePass)
+	{
+		MergePass->SetTexture("uSceneColor", Context->SceneColorTexture);
+		MergePass->SetTexture("uRefractColor", Context->SceneRefractColor);
+	}
+
+	CSceneNode * FXAAPass = SceneManager->GetFactory()->AddPostProcessingSceneNode("FXAA", "FXAA");
+	if (FXAAPass)
+		FXAAPass->SetTexture("uInputTexture", Context->FinalColor);
 
 	Scene.Water = SceneManager->GetFactory()->AddSceneNode();
 	Scene.Water->SetDebugName("Water");
