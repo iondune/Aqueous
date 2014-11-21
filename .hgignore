@@ -16,3 +16,4 @@ syntax: glob
 *.unsuccessfulbuild
 Thumbs.db
 *.psd
+*/Screenshots/*

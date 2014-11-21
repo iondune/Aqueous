@@ -18,7 +18,7 @@ void CProgramContext::Run()
 
 	// Window Initialization
 	WindowManager->Init();
-	Window = WindowManager->CreateWindow(vec2i(1600, 1000), "Underwater Volume Data Rendering", EWindowType::Windowed);
+	Window = WindowManager->CreateWindow(vec2i(1920, 1080), "Underwater Volume Data Rendering", EWindowType::Windowed);
 	
 	// Directory Setup
 	SceneManager->GetTextureLibrary()->SetBaseDirectory("Media/");

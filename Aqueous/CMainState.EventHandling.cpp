@@ -241,6 +241,20 @@ void CMainState::OnEvent(SKeyboardEvent & Event)
 			ShowKey = ! ShowKey;
 		break;
 
+	case EKey::F9:
+
+		if (! Event.Pressed)
+		{
+			CImage * Save = CImage::FromScreen();
+			
+			auto t = std::time(nullptr);
+			auto tm = *std::localtime(&t);
+			stringstream s;
+			s << "Screenshots/" << std::put_time(&tm, "%d-%m-%Y %H-%M-%S") << ".png";
+
+			Save->Write(s.str());
+		}
+
     }
 }
 
