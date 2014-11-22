@@ -57,6 +57,9 @@ CGUITerrainControlWidget::CGUITerrainControlWidget()
 		ModeBox->SetBounds(15, 10 + 15 + 45 + 20 + 75, 200, 25);
 		ModeBox->AddItem(L"Solid");
 		ModeBox->AddItem(L"Wireframe");
+		ModeBox->AddItem(L"Diffuse");
+		ModeBox->AddItem(L"Normal Map");
+		ModeBox->AddItem(L"Normals");
 		ModeBox->AddItem(L"AO1");
 		ModeBox->AddItem(L"AO2");
 		ModeBox->AddItem(L"AO3");
@@ -176,6 +179,21 @@ void CGUITerrainControlWidget::OnModeSelect(Gwen::Controls::Base * Control)
 	else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"AO9"))
 	{
 		Context->Scene.Terrain->DebugMode = 9;
+		Context->Scene.Terrain->GetNode()->SetFeatureEnabled(ion::GL::EDrawFeature::Wireframe, false);
+	}
+	else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Normal Map"))
+	{
+		Context->Scene.Terrain->DebugMode = 10;
+		Context->Scene.Terrain->GetNode()->SetFeatureEnabled(ion::GL::EDrawFeature::Wireframe, false);
+	}
+	else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Normals"))
+	{
+		Context->Scene.Terrain->DebugMode = 11;
+		Context->Scene.Terrain->GetNode()->SetFeatureEnabled(ion::GL::EDrawFeature::Wireframe, false);
+	}
+	else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Diffuse"))
+	{
+		Context->Scene.Terrain->DebugMode = 12;
 		Context->Scene.Terrain->GetNode()->SetFeatureEnabled(ion::GL::EDrawFeature::Wireframe, false);
 	}
 }

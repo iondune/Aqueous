@@ -6,6 +6,7 @@ in vec4 vScreenPosition;
 
 uniform sampler2D uColorMap;
 uniform sampler2D uHeightMap;
+uniform sampler2D uNormalMap;
 
 uniform int uDebugHeight;
 uniform int uDebugMode;
@@ -17,6 +18,11 @@ out vec4 gl_FragData[2];
 float getHeightAt(vec2 Offset)
 {
 	return texture(uHeightMap, vTexCoords + Offset);
+}
+
+vec3 getNormalAt(vec2 Offset)
+{
+	return texture(uNormalMap, vTexCoords + Offset).rgb * vec3(2.0) - vec3(1.0);
 }
 
 float getColorAt(vec2 Offset)
@@ -138,6 +144,7 @@ void main()
 	Normal.z = texture(uHeightMap, vTexCoords + vec2(0.0, Offset)).r - texture(uHeightMap, vTexCoords + vec2(0.0, -Offset)).r;
 	Normal.y = 4.0 * Offset;
 	Normal = normalize(Normal);
+	Normal *= normalize(getNormalAt(vec2(0.0)));
 
 	float occlusion = getOcclusion(Offset*8.0)*1.3;
 	float occlusionhigh = getHighFrequencyOcclusion(Offset)*1.3;
@@ -178,6 +185,12 @@ void main()
 			gl_FragData[0] = vec4(vec3(
 				((1.0 - occlusionmid*0.15) + (1.0 - occlusionhigh*0.15) + (1.0 - occlusion*0.3)) / 3.0
 				), 1.0);
+		else if (uDebugMode == 10)
+			gl_FragData[0] = vec4(texture(uNormalMap, vTexCoords).rgb, 1.0);
+		else if (uDebugMode == 11)
+			gl_FragData[0] = vec4(Normal * vec3(0.5) + vec3(0.5), 1.0);
+		else if (uDebugMode == 12)
+			gl_FragData[0] = vec4(Diffuse + Ambient, 1.0);
 		else
 			gl_FragData[0] = texture(uColorMap, vTexCoords);
 	}

@@ -61,6 +61,8 @@ bool CTerrainNodeManager::Load()
 			Node->SetTexture("uColorMap", ColorMap);
 		if (BathymetryMap)
 			Node->SetTexture("uBathyMap", BathymetryMap);
+		if (NormalMap)
+			Node->SetTexture("uNormalMap", NormalMap);
 
 		return true;
 	}
@@ -87,6 +89,13 @@ void CTerrainNodeManager::SetBathymetryMap(CTexture * bathymetryMap)
 	BathymetryMap = bathymetryMap;
 	if (Node && BathymetryMap)
 		Node->SetTexture("uBathyMap", BathymetryMap);
+}
+
+void CTerrainNodeManager::SetNormalMap(CTexture * normalMap)
+{
+	NormalMap = normalMap;
+	if (Node && NormalMap)
+		Node->SetTexture("uNormalMap", NormalMap);
 }
 
 void CTerrainNodeManager::SetDebugHeightEnabled(bool const Enabled)

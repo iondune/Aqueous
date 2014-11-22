@@ -17,6 +17,7 @@ public:
 	void SetHeightMap(CTexture * heightMap);
 	void SetColorMap(CTexture * colorMap);
 	void SetBathymetryMap(CTexture * bathymetryMap);
+	void SetNormalMap(CTexture * normalMap);
 
 	void SetDebugHeightEnabled(bool const Enabled);
 	bool IsDebugHeightEnabled();
@@ -33,6 +34,7 @@ protected:
 	CTexture * HeightMap = nullptr;
 	CTexture * ColorMap = nullptr;
 	CTexture * BathymetryMap = nullptr;
+	CTexture * NormalMap = nullptr;
 
 	CShader * Shader = nullptr;
 

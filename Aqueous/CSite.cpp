@@ -107,6 +107,8 @@ void CSite::ReadConfiguration()
 				Location->ColorFile = dLocation["ColorFile"].GetString();
 				Location->BathymetryFile = dLocation["BathymetryFile"].GetString();
 				Location->HeightFile = dLocation["HeightFile"].GetString();
+				if (dLocation.HasMember("NormalFile") && dLocation["NormalFile"].IsString())
+					Location->NormalFile = dLocation["NormalFile"].GetString();
 
 				auto & dLowerBound = dLocation["LowerBound"];
 				Location->LowerBound.Longitude = SLongitudeLatituded::DMStoDecimal(dLowerBound["Longitude"].GetString());
