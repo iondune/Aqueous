@@ -5,6 +5,7 @@
 #include "CGlyphNodeManager.h"
 #include "SciDataParser.h"
 #include "CSite.h"
+#include "RBFInterpolator/RBFInterpolator.h"
 
 
 CDataSet::CDataSet(CSite * Site)
@@ -52,7 +53,7 @@ void CDataSet::Load(IProgressBar::CTask * Task)
 void CDataSet::ConcurrentLoad()
 {
 	glGenTextures(1, & VolumeHandle);
-	CSpectrumColorMapper ColorMapper("o2");
+	CSpectrumColorMapper ColorMapper(ColorField);
 	Volume.MakeOpenGLVolume(VolumeHandle, & ColorMapper);
 
 
@@ -129,4 +130,75 @@ void CDataSet::InitSceneElements(CProgramContext::SScene & Scene)
 		Mapper = new CSpectrumColorMapper(ColorField);
 
 	Scene.Glyphs->LoadGlyphs(this, Mapper);
+}
+
+void CDataSet::GenerateVolumeFromPointData()
+{
+	SRange<f64> XRange = Points.GetFieldRange(Traits.PositionXField, 15.0);
+	SRange<f64> YRange = Points.GetFieldRange(Traits.PositionYField, 15.0);
+	SRange<f64> ZRange = Points.GetFieldRange(Traits.PositionZField, 15.0);
+	SRange<f64> FRange = Points.GetFieldRange(ColorField, 15.0);
+
+	CPrintProgressBar print;
+	cout << "Loading interpolator values..." << endl;
+
+	vector<real> Xs, Ys, Zs, Fs;
+	int Count = 0;
+	print.BeginProgress();
+	for (auto Point : Points)
+	{
+		f64 const X = XRange.Normalize(Point.GetField(Traits.PositionXField));
+		f64 const Y = YRange.Normalize(Point.GetField(Traits.PositionYField));
+		f64 const Z = ZRange.Normalize(Point.GetField(Traits.PositionZField));
+		f64 const F = FRange.Normalize(Point.GetField(ColorField));
+
+		bool Skip = false;
+
+		for (auto & x : Xs)
+			if (X == x)
+				Skip = true;
+		for (auto & y : Ys)
+			if (Y == y)
+				Skip = true;
+		for (auto & z : Zs)
+			if (Z == z)
+				Skip = true;
+		for (auto & f : Fs)
+			if (F == f)
+				Skip = true;
+		
+		if (! Skip)
+		{
+			Xs.push_back(X);
+			Ys.push_back(Y);
+			Zs.push_back(Z);
+			Fs.push_back(F);
+		}
+
+		print.SetProgress(++Count / (f32) Points.Size());
+	}
+	print.EndProgress();
+	
+	cout << "Creating interpolator..." << endl;
+	RBFInterpolator rbfi(Xs, Ys, Zs, Fs);
+	cout << "Interpolating..." << endl;
+	
+	int const Resolution = 28;
+	f64 const Scale = Resolution - 1;
+	Volume.Dimensions = vec3i(Resolution);
+	Volume.Allocate();
+	print.BeginProgress();
+	for (int k = 0; k < Volume.Dimensions.Z; ++ k)
+	{
+		for (int j = 0; j < Volume.Dimensions.Y; ++ j)
+		{
+			for (int i = 0; i < Volume.Dimensions.X; ++ i)
+			{
+				SVolumeDataRecord<f64> & Row = Volume[i][k][j];
+				Row.GetField(ColorField) = rbfi.interpolate(j / Scale, 1.0 - k / Scale, i / Scale);
+			}
+		}
+
+		print.SetProgress(k / (f32) Volume.Dimensions.Z);
+	}
 }

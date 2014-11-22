@@ -20,6 +20,7 @@ void CDataLoadingThread::Execute()
 
 void CDataLoadingThread::End()
 {
+	//Context->CurrentSite->GetCurrentDataSet()->GenerateVolumeFromPointData();
 	Context->CurrentSite->ConcurrentLoad();
 	Context->CurrentSite->InitSceneElements(Context->Scene);
 	CStateManager::Get().SetState(CMainState::GetPtr());

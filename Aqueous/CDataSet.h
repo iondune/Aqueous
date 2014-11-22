@@ -12,6 +12,7 @@ public:
 	CDataSet(CSite * Site);
 
 	void Load(IProgressBar::CTask * Task);
+	void GenerateVolumeFromPointData();
 	void ConcurrentLoad();
 	void InitSceneElements(CProgramContext::SScene & Scene);
 
