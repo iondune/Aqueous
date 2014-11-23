@@ -27,7 +27,7 @@ void CMainState::Begin()
 	CalculateDataAlignment();
 	OrbitCameraTimer = 0;
 
-	Font = IFont::init("OpenSans.ttf", 18);
+	Font = IFont::init("Media/GUI/OpenSans.ttf", 18);
 }
 
 void CMainState::End()
@@ -162,7 +162,7 @@ void CMainState::Update(f32 const Elapsed)
 	if (GUIEnabled)
 		Context->GUIContext->Manager->Draw(Elapsed, false);
 	
-	if (ShowKey)
+	if (ShowKey && Font)
 	{
 		auto GetValueAt = [](f32 const v)
 		{
