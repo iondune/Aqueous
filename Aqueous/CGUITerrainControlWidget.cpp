@@ -60,6 +60,9 @@ CGUITerrainControlWidget::CGUITerrainControlWidget()
 		ModeBox->AddItem(L"Diffuse");
 		ModeBox->AddItem(L"Normal Map");
 		ModeBox->AddItem(L"Normals");
+		ModeBox->AddItem(L"Color Map");
+		ModeBox->AddItem(L"Elevation Map");
+		ModeBox->AddItem(L"Bathymetry Map");
 		ModeBox->AddItem(L"AO1");
 		ModeBox->AddItem(L"AO2");
 		ModeBox->AddItem(L"AO3");
@@ -207,6 +210,21 @@ void CGUITerrainControlWidget::OnModeSelect(Gwen::Controls::Base * Control)
 	else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Diffuse"))
 	{
 		Context->Scene.Terrain->DebugMode = 12;
+		Context->Scene.Terrain->GetNode()->SetFeatureEnabled(ion::GL::EDrawFeature::Wireframe, false);
+	}
+	else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Color Map"))
+	{
+		Context->Scene.Terrain->DebugMode = 13;
+		Context->Scene.Terrain->GetNode()->SetFeatureEnabled(ion::GL::EDrawFeature::Wireframe, false);
+	}
+	else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Elevation Map"))
+	{
+		Context->Scene.Terrain->DebugMode = 14;
+		Context->Scene.Terrain->GetNode()->SetFeatureEnabled(ion::GL::EDrawFeature::Wireframe, false);
+	}
+	else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Bathymetry Map"))
+	{
+		Context->Scene.Terrain->DebugMode = 15;
 		Context->Scene.Terrain->GetNode()->SetFeatureEnabled(ion::GL::EDrawFeature::Wireframe, false);
 	}
 }

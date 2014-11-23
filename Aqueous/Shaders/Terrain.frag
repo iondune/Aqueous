@@ -7,6 +7,7 @@ in float vHeight;
 
 uniform sampler2D uColorMap;
 uniform sampler2D uHeightMap;
+uniform sampler2D uBathyMap;
 uniform sampler2D uNormalMap;
 
 uniform int uDebugHeight;
@@ -192,6 +193,12 @@ void main()
 			gl_FragData[0] = vec4(Normal * vec3(0.5) + vec3(0.5), 1.0);
 		else if (uDebugMode == 12)
 			gl_FragData[0] = vec4(Diffuse + Ambient, 1.0);
+		else if (uDebugMode == 13)
+			gl_FragData[0] = vec4(texture(uColorMap, vTexCoords).rgb, 1.0);
+		else if (uDebugMode == 14)
+			gl_FragData[0] = vec4(texture(uHeightMap, vTexCoords).rgb, 1.0);
+		else if (uDebugMode == 15)
+			gl_FragData[0] = vec4(texture(uBathyMap, vTexCoords).rgb, 1.0);
 		else
 			gl_FragData[0] = texture(uColorMap, vTexCoords);
 	}
