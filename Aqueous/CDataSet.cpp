@@ -53,8 +53,14 @@ void CDataSet::Load(IProgressBar::CTask * Task)
 void CDataSet::ConcurrentLoad()
 {
 	glGenTextures(1, & VolumeHandle);
-	CSpectrumColorMapper ColorMapper(ColorField);
-	Volume.MakeOpenGLVolume(VolumeHandle, & ColorMapper);
+	IColorMapper * Mapper = nullptr;
+
+	if (VolumeColorMapper == "Spectrum")
+		Mapper = new CSpectrumColorMapper(ColorField);
+	else if (VolumeColorMapper == "Oxygen")
+		Mapper = new COxygenColorMapper();
+
+	Volume.MakeOpenGLVolume(VolumeHandle, Mapper);
 
 
 	vec3u Dimensions = Volume.Dimensions; // (10);
@@ -126,8 +132,10 @@ void CDataSet::InitSceneElements(CProgramContext::SScene & Scene)
 
 	IColorMapper * Mapper = nullptr;
 
-	if (ColorMapper == "Spectrum")
+	if (GlyphColorMapper == "Spectrum")
 		Mapper = new CSpectrumColorMapper(ColorField);
+	else if (GlyphColorMapper == "Oxygen")
+		Mapper = new COxygenColorMapper();
 
 	Scene.Glyphs->LoadGlyphs(this, Mapper);
 }

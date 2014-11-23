@@ -47,7 +47,7 @@ public:
 	std::string PointFileName, VolumeFileName;
 	std::string SourceFile;
 
-	string ColorMapper = "Spectrum", ColorField = "o2";
+	string VolumeColorMapper = "Spectrum", GlyphColorMapper = "Spectrum", ColorField = "o2";
 
 	bool ManuallySetDataLongLat = false;
 	longlatd DataLonLatCenter;

@@ -39,8 +39,11 @@ void CSite::ReadConfiguration()
 				if (dDataSet.HasMember("YExaggeration") && dDataSet["YExaggeration"].IsDouble())
 					DataSet->YExaggeration = dDataSet["YExaggeration"].GetDouble();
 				
-				if (dDataSet.HasMember("ColorMapper") && dDataSet["ColorMapper"].IsString())
-					DataSet->ColorMapper = dDataSet["ColorMapper"].GetString();
+				if (dDataSet.HasMember("GlyphColorMapper") && dDataSet["GlyphColorMapper"].IsString())
+					DataSet->GlyphColorMapper = dDataSet["GlyphColorMapper"].GetString();
+				
+				if (dDataSet.HasMember("VolumeColorMapper") && dDataSet["VolumeColorMapper"].IsString())
+					DataSet->VolumeColorMapper = dDataSet["VolumeColorMapper"].GetString();
 				
 				if (dDataSet.HasMember("ColorField") && dDataSet["ColorField"].IsString())
 					DataSet->ColorField = dDataSet["ColorField"].GetString();
