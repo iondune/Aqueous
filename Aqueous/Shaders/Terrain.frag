@@ -3,6 +3,7 @@
 in vec3 vLight;
 in vec2 vTexCoords;
 in vec4 vScreenPosition;
+in float vHeight;
 
 uniform sampler2D uColorMap;
 uniform sampler2D uHeightMap;
@@ -195,7 +196,7 @@ void main()
 			gl_FragData[0] = texture(uColorMap, vTexCoords);
 	}
 	else
-		gl_FragData[0] = vec4(Diffuse + AmbientColor, 1) * texture(uHeightMap, vTexCoords);
+		gl_FragData[0] = vec4(vec3(vHeight), 1.0);
 
 	gl_FragData[1] = vec4((vScreenPosition.z / vScreenPosition.w + 1.0) / 2.0, 0.0, 0.0, 1.0);
 }

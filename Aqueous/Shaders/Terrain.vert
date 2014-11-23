@@ -17,6 +17,7 @@ uniform int uHeightInterpolationMode;
 out vec3 vLight;
 out vec2 vTexCoords;
 out vec4 vScreenPosition;
+out float vHeight;
 
 
 float BicubicInterpolateHeight(sampler2D Texture, float Offset)
@@ -51,6 +52,7 @@ void main()
 	else // if (uHeightInterpolationMode == 0)
 		Position.y = MaxTerrainElevation * Height(uHeightMap) - MaxBathyDepth * (1.0 - Height(uBathyMap));
 
+	vHeight = (Position.y + MaxBathyDepth) / (MaxTerrainElevation + MaxBathyDepth);
 	vLight = normalize(LightPosition - vec3(uModelMatrix * Position));
 
 	gl_ClipDistance[0] = dot(vec4(0,1,0,0), Position);
