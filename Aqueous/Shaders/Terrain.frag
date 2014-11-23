@@ -48,11 +48,6 @@ float GetHeight(vec2 Offset)
 	return (Value + 1.0) / 2.0;
 }
 
-float getHeightAt(vec2 Offset)
-{
-	return GetHeight(Offset);
-}
-
 vec3 getNormalAt(vec2 Offset)
 {
 	return texture(uNormalMap, vTexCoords + Offset).rgb * vec3(2.0) - vec3(1.0);
@@ -66,6 +61,12 @@ float getColorAt(vec2 Offset)
 float maxabs(vec3 v)
 {
 	return max(abs(v.x), max(abs(v.y), abs(v.z)));
+}
+
+float getHeightAt(vec2 Offset)
+{
+	return (getNormalAt(Offset).r + getNormalAt(Offset).g + getNormalAt(Offset).b) / 3.0 / 4.0 / 4.0 +
+		GetHeight(Offset);
 }
 
 float getOcclusion(float Offset)
