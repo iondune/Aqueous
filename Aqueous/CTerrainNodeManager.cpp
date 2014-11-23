@@ -42,10 +42,11 @@ bool CTerrainNodeManager::Load()
 	IndexBuffer->Data(Indices);
 
 	Node = SceneManager->GetFactory()->AddSceneNode("Terrain");
-	Node->SetDebugName("Terrain");
 
 	if (Node)
 	{
+		Node->SetDebugName("Terrain");
+
 		Node->SetUniform("uModelMatrix", & Node->GetTransformationUniform());
 		Node->SetUniform("uLayerWidth", & LayerWidth);
 		Node->SetUniform("uDebugHeight", & DebugHeight);
