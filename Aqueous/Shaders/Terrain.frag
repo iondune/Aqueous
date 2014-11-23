@@ -13,13 +13,44 @@ uniform sampler2D uNormalMap;
 uniform int uDebugHeight;
 uniform int uDebugMode;
 uniform float uLayerWidth;
+uniform int uHeightInterpolationMode;
 
 out vec4 gl_FragData[2];
 
 
+float BicubicInterpolateHeight(sampler2D Texture, vec2 Offset)
+{
+	float PixelWidth = 1.0 / uLayerWidth;
+
+	return
+		(texture(Texture, vTexCoords + vec2( PixelWidth,  PixelWidth) + Offset).r  +
+		(texture(Texture, vTexCoords + vec2( PixelWidth, -PixelWidth) + Offset).r) +
+		(texture(Texture, vTexCoords + vec2(-PixelWidth,  PixelWidth) + Offset).r) +
+		(texture(Texture, vTexCoords + vec2(-PixelWidth, -PixelWidth) + Offset).r)) / 4.0;
+}
+
+float Height(sampler2D Texture, vec2 Offset)
+{
+	return texture(Texture, vTexCoords + Offset).r;
+}
+
+float GetHeight(vec2 Offset)
+{
+	float Value = 0;
+
+	if (uHeightInterpolationMode == 1)
+		Value = Height(uHeightMap, Offset) - (1.0 - BicubicInterpolateHeight(uBathyMap, Offset));
+	else if (uHeightInterpolationMode == 2)
+		Value = BicubicInterpolateHeight(uHeightMap, Offset) - (1.0 - BicubicInterpolateHeight(uBathyMap, Offset));
+	else // if (uHeightInterpolationMode == 0)
+		Value = Height(uHeightMap, Offset) - (1.0 - Height(uBathyMap, Offset));
+
+	return (Value + 1.0) / 2.0;
+}
+
 float getHeightAt(vec2 Offset)
 {
-	return texture(uHeightMap, vTexCoords + Offset);
+	return GetHeight(Offset);
 }
 
 vec3 getNormalAt(vec2 Offset)
@@ -140,14 +171,15 @@ void main()
 	const vec3 AmbientColor = vec3(1.1);
 	const vec3 DiffuseColor = vec3(0.3);
 
-	vec3 Normal;
-	float Offset = 1.0 / uLayerWidth;
-	Normal.x = texture(uHeightMap, vTexCoords + vec2(-Offset, 0.0)).r - texture(uHeightMap, vTexCoords + vec2(Offset, 0.0)).r;
-	Normal.z = texture(uHeightMap, vTexCoords + vec2(0.0, Offset)).r - texture(uHeightMap, vTexCoords + vec2(0.0, -Offset)).r;
-	Normal.y = 4.0 * Offset;
+	vec3 Normal = vec3(0.0);
+	float Offset = 2.0 / uLayerWidth;
+	Normal.x = GetHeight(vec2(-Offset, 0.0)) - GetHeight(vec2(Offset, 0.0));
+	Normal.y = GetHeight(vec2(0.0, Offset))  - GetHeight(vec2(0.0, -Offset));
+	Normal.z = 4.0 * Offset;
 	Normal = normalize(Normal);
-	Normal *= normalize(getNormalAt(vec2(0.0)));
+	Normal = normalize(Normal + (normalize(getNormalAt(vec2(0.0))) * 0.5 - vec3(0.0, 1.0, 0.0)));
 
+	Offset = 1.0 / uLayerWidth;
 	float occlusion = getOcclusion(Offset*8.0)*1.3;
 	float occlusionhigh = getHighFrequencyOcclusion(Offset)*1.3;
 	float occlusionmid =

@@ -20,13 +20,18 @@ out vec4 vScreenPosition;
 out float vHeight;
 
 
-float BicubicInterpolateHeight(sampler2D Texture, float Offset)
+const float MaxTerrainElevation = 75.0;
+const float MaxBathyDepth = 45.0;
+
+float BicubicInterpolateHeight(sampler2D Texture)
 {
+	float PixelWidth = 1.0 / uLayerWidth;
+
 	return
-		(texture(Texture, vTexCoords + vec2( Offset,  Offset)).r  +
-		(texture(Texture, vTexCoords + vec2( Offset, -Offset)).r) +
-		(texture(Texture, vTexCoords + vec2(-Offset,  Offset)).r) +
-		(texture(Texture, vTexCoords + vec2(-Offset, -Offset)).r)) / 4.0;
+		(texture(Texture, vTexCoords + vec2( PixelWidth,  PixelWidth)).r  +
+		(texture(Texture, vTexCoords + vec2( PixelWidth, -PixelWidth)).r) +
+		(texture(Texture, vTexCoords + vec2(-PixelWidth,  PixelWidth)).r) +
+		(texture(Texture, vTexCoords + vec2(-PixelWidth, -PixelWidth)).r)) / 4.0;
 }
 
 float Height(sampler2D Texture)
@@ -34,23 +39,23 @@ float Height(sampler2D Texture)
 	return texture(Texture, vTexCoords).r;
 }
 
+float GetHeight()
+{
+	if (uHeightInterpolationMode == 1)
+		return MaxTerrainElevation * Height(uHeightMap) - MaxBathyDepth * (1.0 - BicubicInterpolateHeight(uBathyMap));
+	else if (uHeightInterpolationMode == 2)
+		return MaxTerrainElevation * BicubicInterpolateHeight(uHeightMap) - MaxBathyDepth * (1.0 - BicubicInterpolateHeight(uBathyMap));
+	else // if (uHeightInterpolationMode == 0)
+		return MaxTerrainElevation * Height(uHeightMap) - MaxBathyDepth * (1.0 - Height(uBathyMap));
+}
+
 void main()
 {
 	const vec3 LightPosition = vec3(10.0, 10.0, 10.0);
-	const float MaxTerrainElevation = 75.0;
-	const float MaxBathyDepth = 45.0;
 
 	vTexCoords = (aPosition.xy) / (uLayerWidth + 1.0) + vec2(0.5);
 
-	float Offset = 1.0 / uLayerWidth;
-	vec4 Position = vec4(aPosition.x, 0, aPosition.y, 1);
-
-	if (uHeightInterpolationMode == 1)
-		Position.y = MaxTerrainElevation * Height(uHeightMap) - MaxBathyDepth * (1.0 - BicubicInterpolateHeight(uBathyMap, Offset));
-	else if (uHeightInterpolationMode == 2)
-		Position.y = MaxTerrainElevation * BicubicInterpolateHeight(uHeightMap, Offset) - MaxBathyDepth * (1.0 - BicubicInterpolateHeight(uBathyMap, Offset));
-	else // if (uHeightInterpolationMode == 0)
-		Position.y = MaxTerrainElevation * Height(uHeightMap) - MaxBathyDepth * (1.0 - Height(uBathyMap));
+	vec4 Position = vec4(aPosition.x, GetHeight(), aPosition.y, 1);
 
 	vHeight = (Position.y + MaxBathyDepth) / (MaxTerrainElevation + MaxBathyDepth);
 	vLight = normalize(LightPosition - vec3(uModelMatrix * Position));
