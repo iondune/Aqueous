@@ -187,6 +187,11 @@ void CMainState::Update(f32 const Elapsed)
 		DrawColor("White", 1.f);
 	}
 	
+	if (Context->Window->IsKeyDown(EKey::Grave) && Font)
+	{
+		Font->print(10, 10, "Camera Position: %.3f %.3f %.3f\n", Scene.Camera->GetPosition().X, Scene.Camera->GetPosition().Y, Scene.Camera->GetPosition().Z);
+	}
+	
     // Read screen colors
 	if (gifWriter)
 	{
