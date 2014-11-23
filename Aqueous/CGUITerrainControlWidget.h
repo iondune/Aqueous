@@ -29,6 +29,7 @@ public:
 	void OnSelectElevation(Gwen::Controls::Base * Control);
 	void OnSelectColor(Gwen::Controls::Base * Control);
 	void OnModeSelect(Gwen::Controls::Base * Control);
+	void OnInterpolationModeSelect(Gwen::Controls::Base * Control);
 
 	void toggle();
 

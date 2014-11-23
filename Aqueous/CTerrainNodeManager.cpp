@@ -4,7 +4,6 @@
 
 
 CTerrainNodeManager::CTerrainNodeManager()
-	: DebugHeight(false), DebugMode(0)
 {}
 
 bool CTerrainNodeManager::Load()
@@ -51,6 +50,7 @@ bool CTerrainNodeManager::Load()
 		Node->SetUniform("uLayerWidth", & LayerWidth);
 		Node->SetUniform("uDebugHeight", & DebugHeight);
 		Node->SetUniform("uDebugMode", & DebugMode);
+		Node->SetUniform("uHeightInterpolationMode", & HeightInterpolationMode);
 
 		Node->SetVertexBuffer("aPosition", VertexData);
 		Node->SetIndexBuffer(IndexBuffer);

@@ -14,7 +14,7 @@ CGUITerrainControlWidget::CGUITerrainControlWidget()
 {
 	Window = new Gwen::Controls::WindowControl(GUIManager->GetCanvas());
 	Window->SetDeleteOnClose(false);
-	Window->SetBounds(1200, 500, 330, 235);
+	Window->SetBounds(1200, 500, 330, 300);
 	Window->SetTitle("Terrain Controls");
 	Window->SetHidden(true);
 
@@ -70,6 +70,19 @@ CGUITerrainControlWidget::CGUITerrainControlWidget()
 		ModeBox->AddItem(L"AO8");
 		ModeBox->AddItem(L"AO9");
 		ModeBox->onSelection.Add(this, & CGUITerrainControlWidget::OnModeSelect);
+
+		auto InterpLabel = new Gwen::Controls::Label(Window);
+		InterpLabel->SetFont(GUIManager->GetRegularFont());
+		InterpLabel->SetText(L"Heightmap Interpolation:");
+		InterpLabel->SetBounds(10, 10 + 15 + 45 + 75 + 20 + 45, 300, 40);
+		InterpLabel->SetTextColor(Gwen::Color(50, 20, 20, 215));
+
+		auto InterpBox = new Gwen::Controls::ComboBox(Window);
+		InterpBox->SetBounds(15, 10 + 15 + 45 + 75 + 20 + 45 + 20, 200, 25);
+		InterpBox->AddItem(L"Both");
+		InterpBox->AddItem(L"Bathymetry");
+		InterpBox->AddItem(L"None");
+		InterpBox->onSelection.Add(this, & CGUITerrainControlWidget::OnInterpolationModeSelect);
 	}
 }
 
@@ -195,6 +208,25 @@ void CGUITerrainControlWidget::OnModeSelect(Gwen::Controls::Base * Control)
 	{
 		Context->Scene.Terrain->DebugMode = 12;
 		Context->Scene.Terrain->GetNode()->SetFeatureEnabled(ion::GL::EDrawFeature::Wireframe, false);
+	}
+}
+
+void CGUITerrainControlWidget::OnInterpolationModeSelect(Gwen::Controls::Base * Control)
+{
+	CProgramContext * Context = & CProgramContext::Get();
+	Gwen::Controls::ComboBox * Box = (Gwen::Controls::ComboBox *) Control;
+	
+	if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"None"))
+	{
+		Context->Scene.Terrain->HeightInterpolationMode = 0;
+	}
+	else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Bathymetry"))
+	{
+		Context->Scene.Terrain->HeightInterpolationMode = 1;
+	}
+	else if (Box->GetSelectedItem()->GetText() == Gwen::UnicodeString(L"Both"))
+	{
+		Context->Scene.Terrain->HeightInterpolationMode = 2;
 	}
 }
 

@@ -12,27 +12,44 @@ uniform sampler2D uHeightMap;
 uniform sampler2D uBathyMap;
 
 uniform float uLayerWidth;
+uniform int uHeightInterpolationMode;
 
 out vec3 vLight;
 out vec2 vTexCoords;
 out vec4 vScreenPosition;
 
 
+float BicubicInterpolateHeight(sampler2D Texture, float Offset)
+{
+	return
+		(texture(Texture, vTexCoords + vec2( Offset,  Offset)).r  +
+		(texture(Texture, vTexCoords + vec2( Offset, -Offset)).r) +
+		(texture(Texture, vTexCoords + vec2(-Offset,  Offset)).r) +
+		(texture(Texture, vTexCoords + vec2(-Offset, -Offset)).r)) / 4.0;
+}
+
+float Height(sampler2D Texture)
+{
+	return texture(Texture, vTexCoords).r;
+}
+
 void main()
 {
 	const vec3 LightPosition = vec3(10.0, 10.0, 10.0);
+	const float MaxTerrainElevation = 75.0;
+	const float MaxBathyDepth = 45.0;
 
 	vTexCoords = (aPosition.xy) / (uLayerWidth + 1.0) + vec2(0.5);
 
 	float Offset = 1.0 / uLayerWidth;
-	float Bathy =
-		(1 - texture(uBathyMap, vTexCoords + vec2(Offset, Offset)).r) +
-		(1 - texture(uBathyMap, vTexCoords + vec2(Offset, -Offset)).r) +
-		(1 - texture(uBathyMap, vTexCoords + vec2(-Offset, Offset)).r) +
-		(1 - texture(uBathyMap, vTexCoords + vec2(-Offset, -Offset)).r);
-	Bathy /= 4.0;
-	vec4 Position = vec4(aPosition.x, texture(uHeightMap, vTexCoords).r - Bathy * 0.6, aPosition.y, 1);
-	Position.y *= 75.0;
+	vec4 Position = vec4(aPosition.x, 0, aPosition.y, 1);
+
+	if (uHeightInterpolationMode == 1)
+		Position.y = MaxTerrainElevation * Height(uHeightMap) - MaxBathyDepth * (1.0 - BicubicInterpolateHeight(uBathyMap, Offset));
+	else if (uHeightInterpolationMode == 2)
+		Position.y = MaxTerrainElevation * BicubicInterpolateHeight(uHeightMap, Offset) - MaxBathyDepth * (1.0 - BicubicInterpolateHeight(uBathyMap, Offset));
+	else // if (uHeightInterpolationMode == 0)
+		Position.y = MaxTerrainElevation * Height(uHeightMap) - MaxBathyDepth * (1.0 - Height(uBathyMap));
 
 	vLight = normalize(LightPosition - vec3(uModelMatrix * Position));
 

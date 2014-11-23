@@ -24,7 +24,8 @@ public:
 
 	CSceneNode * GetNode();
 
-	CUniformValue<int> DebugMode;
+	CUniformValue<int> DebugMode = 0;
+	CUniformValue<int> HeightInterpolationMode = 2;
 
 protected:
 
@@ -40,8 +41,8 @@ protected:
 
 	SingletonPointer<CApplication> Application;
 	SingletonPointer<CSceneManager> SceneManager;
-
-	CUniformValue<bool> DebugHeight;
+	
+	CUniformValue<bool> DebugHeight = false;
 
 	CSceneNode * Node = nullptr;
 	CUniformValue<f32> LayerWidth;
